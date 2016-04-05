@@ -1,0 +1,25 @@
+{
+  "name": "dropbox-sdk",
+  "version": "0.0.1",
+  "description": "Dropbox API v2 JavaScript client.",
+  "main": "index.js",
+  "browser": "./dist/dropbox-sdk.js",
+  "scripts": {
+    "build": "browserify src/browser.js --standalone DropboxApi >> dist/dropbox-sdk.js",
+    "watch": "watchify src/browser.js -d -v -s DropboxApi -o dist/dropbox-sdk.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dropbox"
+  ],
+  "author": "Riley Tomasek",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "es6-promise": "^3.1.2",
+    "request": "^2.69.0"
+  }
+}
