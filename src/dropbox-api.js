@@ -1,10 +1,7 @@
-// This file sets up and exports the base class for the Dropbox Api sdk.
-// It is extended in browse and node with the environment appropriate request
-// and error handling.
+var rpcRequest = require('./rpc-request');
 
 var DropboxApi = function () {
   this.accessToken = '';
-  this.BASE_URI = 'https://api.dropboxapi.com/2/';
 };
 
 DropboxApi.prototype.setAccessToken = function (accessToken) {
@@ -12,8 +9,7 @@ DropboxApi.prototype.setAccessToken = function (accessToken) {
 };
 
 DropboxApi.prototype.listFolder = function (path) {
-  var url = this.BASE_URI + 'files/list_folder';
-  return this.genericPostRequest(url, { path: path });
+  return rpcRequest('files/list_folder', { path: path }, this.accessToken);
 };
 
 module.exports = DropboxApi;
