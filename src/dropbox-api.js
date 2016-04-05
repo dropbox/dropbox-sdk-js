@@ -8,8 +8,12 @@ DropboxApi.prototype.setAccessToken = function (accessToken) {
   this.accessToken = accessToken;
 };
 
+DropboxApi.prototype.getAccessToken = function () {
+  return this.accessToken;
+};
+
 DropboxApi.prototype.listFolder = function (path) {
-  return rpcRequest('files/list_folder', { path: path }, this.accessToken);
+  return rpcRequest('files/list_folder', { path: path }, this.getAccessToken());
 };
 
 module.exports = DropboxApi;
