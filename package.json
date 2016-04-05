@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npm run browserify && npm run uglify && npm run compressed-size",
     "watch": "watchify src/dropbox-api.js -d -v -s DropboxApi -o dist/dropbox-sdk.js",
+    "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "browserify": "browserify src/dropbox-api.js --standalone DropboxApi -o dist/dropbox-sdk.js",
     "uglify": "uglifyjs dist/dropbox-sdk.js -mc 'warnings=false' -o dist/dropbox-sdk.min.js",
@@ -18,6 +19,8 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "^13.0.0",
+    "eslint": "^2.7.0",
+    "eslint-config-airbnb": "^6.2.0",
     "pretty-bytes": "^2.0.1",
     "uglify-js": "^2.6.2",
     "watchify": "^3.7.0"
