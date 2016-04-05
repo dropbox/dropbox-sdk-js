@@ -3,10 +3,17 @@ var Promise = require('es6-promise').Promise;
 
 var BASE_URL = 'https://api.dropboxapi.com/2/';
 
-var rpcRequest = function(path, body, accessToken) {
+// This doesn't match what was spec'd in paper doc yet
+var buildCustomError = function (error, response) {
+  return {
+    status: error.status,
+    error: response.text,
+    response: response
+  };
+};
 
-  var promiseFunction = function(resolve, reject) {
-
+var rpcRequest = function (path, body, accessToken) {
+  var promiseFunction = function (resolve, reject) {
     function success(data) {
       if (resolve) {
         resolve(data);
@@ -23,7 +30,7 @@ var rpcRequest = function(path, body, accessToken) {
       .type('application/json')
       .set('Authorization', 'Bearer ' + accessToken)
       .send(body)
-      .end(function(error, response) {
+      .end(function (error, response) {
         if (error) {
           failure(buildCustomError(error, response));
         } else {
@@ -33,15 +40,6 @@ var rpcRequest = function(path, body, accessToken) {
   };
 
   return new Promise(promiseFunction);
-};
-
-// This doesn't match what was spec'd in paper doc yet
-var buildCustomError = function(error, response) {
-  return {
-    status: error.status,
-    error: response.text,
-    response: response
-  };
 };
 
 module.exports = rpcRequest;
