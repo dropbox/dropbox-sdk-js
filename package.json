@@ -19,9 +19,12 @@
   "license": "MIT",
   "devDependencies": {
     "browserify": "^13.0.0",
+    "chai": "^3.5.0",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
+    "mocha": "^2.4.5",
     "pretty-bytes": "^2.0.1",
+    "sinon": "^1.17.3",
     "uglify-js": "^2.6.2",
     "watchify": "^3.7.0"
   },
