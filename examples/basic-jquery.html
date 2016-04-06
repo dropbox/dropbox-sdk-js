@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+<head>
+  <title>Dropbox API JavaScript Client</title>
+  <script src="../dist/dropbox-sdk.js"></script>
+</head>
+<body>
+  <script>
+    var ACCESS_TOKEN = 'hjIsF2ns3_AAAAAAAAhd2Z2E1FXHksrwqnTYbssExyc1yAN6UBZ1mhXeCIY2JrzP';
+    var dbx = new DropboxApi({ accessToken: ACCESS_TOKEN });
+    dbx.useJqueryRpc();
+    dbx.listFolder('/Screenshots')
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  </script>
+</body>
+</html>
