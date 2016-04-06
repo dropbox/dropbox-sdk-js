@@ -1,7 +1,7 @@
 var rpcRequest = require('./rpc-request');
 
-var DropboxApi = function () {
-  this.accessToken = '';
+var DropboxApi = function (options) {
+  this.accessToken = options && options.accessToken || '';
 };
 
 DropboxApi.prototype.setAccessToken = function (accessToken) {

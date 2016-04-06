@@ -6,9 +6,8 @@
 </head>
 <body>
   <script>
-    var dbx = new DropboxApi();
     accessToken = window.prompt('Enter an access token');
-    dbx.setAccessToken(accessToken);
+    var dbx = new DropboxApi({ accessToken: accessToken });
     dbx.listFolder('/Screenshots')
       .then(function(response) {
         console.log(response);

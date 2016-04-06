@@ -5,8 +5,7 @@ var xhr, requests, dbx;
 var ACCESS_TOKEN = 'ACCESS_TOKEN';
 
 before(function () {
-  dbx = new DropboxApi();
-  dbx.setAccessToken(ACCESS_TOKEN);
+  dbx = new DropboxApi({ accessToken: ACCESS_TOKEN });
   xhr = sinon.useFakeXMLHttpRequest();
   requests = [];
   xhr.onCreate = function (req) { requests.push(req); };
