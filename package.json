@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run browserify && npm run uglify && npm run compressed-size",
-    "watch": "watchify src/dropbox-api.js -d -v -s DropboxApi -o dist/dropbox-sdk.js",
+    "develop": "npm run examples-server & npm run watch",
     "lint": "eslint src",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "watchify src/dropbox-api.js -d -v -s DropboxApi -o dist/dropbox-sdk.js",
     "browserify": "browserify src/dropbox-api.js --standalone DropboxApi -o dist/dropbox-sdk.js",
     "uglify": "uglifyjs dist/dropbox-sdk.js -mc 'warnings=false' -o dist/dropbox-sdk.min.js",
-    "compressed-size": "echo 'dropbox-sdk.min.js gzipped will weigh' $(cat dist/dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)"
+    "compressed-size": "echo 'dropbox-sdk.min.js gzipped will weigh' $(cat dist/dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
+    "examples-server": "python -m SimpleHTTPServer 8000"
   },
   "keywords": [
     "dropbox"
