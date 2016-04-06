@@ -20,3 +20,7 @@ $ npm run build
 
 ## Examples
 See `examples/` for examples of how the client can be used in a few different environments.
+
+## Tests
+Open `test/browser/index.html` to run the browser tests in your browser.
+> A proper PhantomJS test runner with command line test execution is coming.
