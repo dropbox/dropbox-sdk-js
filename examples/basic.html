@@ -6,8 +6,8 @@
 </head>
 <body>
   <script>
-    accessToken = window.prompt('Enter an access token');
-    var dbx = new DropboxApi({ accessToken: accessToken });
+    var ACCESS_TOKEN = 'hjIsF2ns3_AAAAAAAAhd2Z2E1FXHksrwqnTYbssExyc1yAN6UBZ1mhXeCIY2JrzP';
+    var dbx = new DropboxApi({ accessToken: ACCESS_TOKEN });
     dbx.listFolder('/Screenshots')
       .then(function(response) {
         console.log(response);
