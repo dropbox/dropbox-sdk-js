@@ -17,7 +17,7 @@ after(function () {
   dbx = null;
 });
 
-describe('DropboxApi', function () {
+describe('DropboxApi [Browser]', function () {
   it('makes a POST request for folder items', function () {
     var request;
     dbx.listFolder('/Screenshots');
