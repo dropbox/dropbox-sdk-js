@@ -1,4 +1,5 @@
 var rpcRequest = require('./rpc-request');
+require('./polyfills');
 
 var DropboxApi = function (options) {
   this.accessToken = options && options.accessToken || '';
