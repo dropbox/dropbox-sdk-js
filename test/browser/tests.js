@@ -20,7 +20,7 @@ after(function () {
 describe('DropboxApi [Browser]', function () {
   it('makes a POST request for folder items', function () {
     var request;
-    dbx.listFolder({ path: '/Screenshots' });
+    dbx.filesListFolder({ path: '/Screenshots' });
     request = requests[0];
     assert.equal(requests.length, 1);
     assert.equal(request.requestHeaders.Authorization, 'Bearer ' + ACCESS_TOKEN);
