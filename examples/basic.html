@@ -8,7 +8,7 @@
   <script>
     var ACCESS_TOKEN = 'hjIsF2ns3_AAAAAAAAhd2Z2E1FXHksrwqnTYbssExyc1yAN6UBZ1mhXeCIY2JrzP';
     var dbx = new DropboxApi({ accessToken: ACCESS_TOKEN });
-    dbx.listFolder('/Screenshots')
+    dbx.listFolder({path: '/Screenshots'})
       .then(function(response) {
         console.log(response);
       })
