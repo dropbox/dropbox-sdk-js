@@ -1,4 +1,5 @@
 var endpoints = require('./endpoints');
+var rpcRequest = require('./rpc-request');
 require('./polyfills');
 
 var DropboxApi = function (options) {
@@ -11,6 +12,16 @@ DropboxApi.prototype.setAccessToken = function (accessToken) {
 
 DropboxApi.prototype.getAccessToken = function () {
   return this.accessToken;
+};
+
+DropboxApi.prototype.rpcRequest = rpcRequest;
+
+DropboxApi.prototype.setRpcRequest = function (rpcRequest) {
+  DropboxApi.prototype.rpcRequest = rpcRequest;
+};
+
+DropboxApi.prototype.getRpcRequest = function (rpcRequest) {
+  return DropboxApi.prototype.rpcRequest;
 };
 
 DropboxApi.prototype = Object.assign(DropboxApi.prototype, endpoints);

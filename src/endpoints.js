@@ -1,4 +1,3 @@
-var rpcRequest = require('./rpc-request');
 var endpoints = {};
 
 /**
@@ -11,7 +10,7 @@ var endpoints = {};
  * @returns {Object}
  * */
 endpoints.filesListFolder = function (params) {
-  return rpcRequest('files/list_folder', params, this.getAccessToken());
+  return this.rpcRequest('files/list_folder', params, this.getAccessToken());
 };
 
 module.exports = endpoints;
