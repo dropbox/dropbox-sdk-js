@@ -30,6 +30,7 @@
     "mocha": "^2.4.5",
     "mocha-phantomjs": "^4.0.2",
     "pretty-bytes": "^2.0.1",
+    "prompt": "^1.0.0",
     "sinon": "^1.17.3",
     "uglify-js": "^2.6.2",
     "watchify": "^3.7.0"

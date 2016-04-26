@@ -1,12 +1,21 @@
 var DropboxApi = require('../index');
+var prompt = require('prompt');
 
-var dbx = new DropboxApi();
-accessToken = 'hjIsF2ns3_AAAAAAAAhd2Z2E1FXHksrwqnTYbssExyc1yAN6UBZ1mhXeCIY2JrzP';
-dbx.setAccessToken({ accessToken: accessToken });
-dbx.filesListFolder({ path: '/Screenshots' })
-  .then(function(response) {
-    console.log(response);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });
+prompt.start();
+
+prompt.get({
+  properties: {
+    accessToken: {
+      description: 'Please enter an API V2 access token'
+    }
+  }
+}, function(error, result) {
+  var dbx = new DropboxApi({ accessToken: result.accessToken });
+  dbx.filesListFolder({ path: '/Screenshots' })
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});

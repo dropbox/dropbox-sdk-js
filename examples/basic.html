@@ -6,7 +6,7 @@
 </head>
 <body>
   <script>
-    var ACCESS_TOKEN = 'hjIsF2ns3_AAAAAAAAhd2Z2E1FXHksrwqnTYbssExyc1yAN6UBZ1mhXeCIY2JrzP';
+    var ACCESS_TOKEN = prompt('Please enter an API V2 access token');
     var dbx = new DropboxApi({ accessToken: ACCESS_TOKEN });
     dbx.filesListFolder({path: '/Screenshots'})
       .then(function(response) {
