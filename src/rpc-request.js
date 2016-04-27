@@ -1,7 +1,6 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
 
-var BASE_URL = 'https://meta-dbdev.dev.corp.dropbox.com/2/';
 
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
@@ -26,27 +25,29 @@ var rpcRequest = function (path, body, authDetails) {
       }
     }
 
-    var requestObj = request.post(BASE_URL + path).type('application/json');
-
-    // Setup access token or cookie based auth
-    if (this.useCookieAuth) {
-      requestObj
-        .set('X-Dropbox-Subject-User', this.getSubjectUid())
-        .set('X-CSRF-Token', this.getCsrfToken())
-        .withCredentials();
-    } else {
-      requestObj.set('Authorization', 'Bearer ' + this.getAccessToken());
+    function responseHandler(error, response) {
+      if (error) {
+        failure(buildCustomError(error, response));
+      } else {
+        success(response.body);
+      }
     }
 
-    requestObj
-      .send(body)
-      .end(function (error, response) {
-        if (error) {
-          failure(buildCustomError(error, response));
-        } else {
-          success(response.body);
-        }
-      });
+    if (this.useCookieAuth) {
+      request.post(this.getBaseUrls().cookieAuth + path)
+        .type('application/json')
+        .set('X-Dropbox-Subject-User', this.getSubjectUid())
+        .set('X-CSRF-Token', this.getCsrfToken())
+        .withCredentials()
+        .send(body)
+        .end(responseHandler);
+    } else {
+      request.post(this.getBaseUrls().tokenAuth + path)
+        .type('application/json')
+        .set('Authorization', 'Bearer ' + this.getAccessToken())
+        .send(body)
+        .end(responseHandler);
+    }
   };
 
   return new Promise(promiseFunction.bind(this));
