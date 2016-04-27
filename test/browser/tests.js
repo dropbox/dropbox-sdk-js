@@ -5,7 +5,6 @@ var xhr, requests, dbx;
 var ACCESS_TOKEN = 'ACCESS_TOKEN';
 
 before(function () {
-  dbx = new DropboxApi({ accessToken: ACCESS_TOKEN });
   xhr = sinon.useFakeXMLHttpRequest();
   requests = [];
   xhr.onCreate = function (req) { requests.push(req); };
@@ -18,8 +17,41 @@ after(function () {
 });
 
 describe('DropboxApi [Browser]', function () {
+  describe('access token', function () {
+    it('defaults to an empty string', function () {
+      dbx = new DropboxApi();
+      assert.equal(dbx.getAccessToken(), '');
+    });
+
+    it('can be set in the constructor', function () {
+      dbx = new DropboxApi({ accessToken: 'foo' });
+      assert.equal(dbx.getAccessToken(), 'foo');
+    });
+
+    it('can be set after being instantiated', function () {
+      dbx = new DropboxApi();
+      dbx.setAccessToken('foo');
+      assert.equal(dbx.getAccessToken(), 'foo');
+    });
+  });
+
+  describe('rpcRequest', function () {
+    it('defaults to the libraries implementation', function () {
+      dbx = new DropboxApi();
+      assert.equal(dbx.getAccessToken(), '');
+    });
+
+    it('can be set to something else by the user', function () {
+      var aFunc = function () {};
+      dbx = new DropboxApi();
+      dbx.setRpcRequest(aFunc);
+      assert.equal(dbx.getRpcRequest(), aFunc);
+    });
+  });
+
   it('makes a POST request for folder items', function () {
     var request;
+    dbx = new DropboxApi({ accessToken: ACCESS_TOKEN });
     dbx.filesListFolder({ path: '/Screenshots' });
     request = requests[0];
     assert.equal(requests.length, 1);
