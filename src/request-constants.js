@@ -1,0 +1,7 @@
+var REQUEST_CONSTANTS = {
+  RPC: 'RPC',
+  DOWNLOAD: 'DOWNLOAD',
+  UPLOAD: 'UPLOAD'
+};
+
+module.exports = REQUEST_CONSTANTS;
