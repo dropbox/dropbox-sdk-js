@@ -33,24 +33,24 @@ var rpcRequest = function (path, body, authDetails) {
       }
     }
 
-    if (this.useCookieAuth) {
-      request.post(this.getBaseUrls().cookieAuth + path)
+    if (authDetails.useCookieAuth) {
+      request.post(authDetails.baseUrls.cookieAuth + path)
         .type('application/json')
-        .set('X-Dropbox-Subject-User', this.getSubjectUid())
-        .set('X-CSRF-Token', this.getCsrfToken())
+        .set('X-Dropbox-Subject-User', authDetails.subjectUid)
+        .set('X-CSRF-Token', authDetails.csrfToken)
         .withCredentials()
         .send(body)
         .end(responseHandler);
     } else {
-      request.post(this.getBaseUrls().tokenAuth + path)
+      request.post(authDetails.baseUrls.tokenAuth + path)
         .type('application/json')
-        .set('Authorization', 'Bearer ' + this.getAccessToken())
+        .set('Authorization', 'Bearer ' + authDetails.accessToken)
         .send(body)
         .end(responseHandler);
     }
   };
 
-  return new Promise(promiseFunction.bind(this));
+  return new Promise(promiseFunction);
 };
 
 module.exports = rpcRequest;

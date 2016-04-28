@@ -50,7 +50,13 @@ DropboxApi.prototype.getBaseUrls = function () {
 
 DropboxApi.prototype.request = function (path, body, type) {
   if (type === REQUEST_CONSTANTS.RPC) {
-    return this.rpcRequest(path, body);
+    return this.rpcRequest(path, body, {
+      baseUrls: this.getBaseUrls(),
+      accessToken: this.getAccessToken(),
+      csrfToken: this.getCsrfToken(),
+      subjectUid: this.getSubjectUid(),
+      useCookieAuth: this.useCookieAuth
+    });
   } else {
     throw new Error('Invalid request type');
   }
