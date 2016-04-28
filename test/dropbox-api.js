@@ -47,6 +47,14 @@ describe('DropboxApi', function () {
       assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
       assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
     });
+    it('throws an error for invalid request types', function () {
+      dbx = new DropboxApi();
+      assert.throws(
+        DropboxApi.prototype.request.bind(DropboxApi, '', {}, 'BADTYPE'),
+        Error,
+        'Invalid request type'
+      );
+    });
   });
 
   describe('api method', function () {
