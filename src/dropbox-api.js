@@ -1,4 +1,4 @@
-var endpoints = require('./endpoints');
+var routes = require('./routes');
 var rpcRequest = require('./rpc-request');
 var REQUEST_CONSTANTS = require('./request-constants');
 require('./polyfills');
@@ -49,7 +49,9 @@ DropboxApi.prototype.getBaseUrls = function () {
 };
 
 DropboxApi.prototype.request = function (path, body, type) {
-  if (type === REQUEST_CONSTANTS.RPC) {
+  // The null type check here is to work around a problem with the generator.
+  // Once the generator and output rpc type, it should be removed.
+  if (type === REQUEST_CONSTANTS.RPC || type === null) {
     return this.rpcRequest(path, body, {
       baseUrls: this.getBaseUrls(),
       accessToken: this.getAccessToken(),
@@ -72,6 +74,6 @@ DropboxApi.prototype.getRpcRequest = function (rpcRequest) {
   return DropboxApi.prototype.rpcRequest;
 };
 
-DropboxApi.prototype = Object.assign(DropboxApi.prototype, endpoints);
+DropboxApi.prototype = Object.assign(DropboxApi.prototype, routes);
 
 module.exports = DropboxApi;
