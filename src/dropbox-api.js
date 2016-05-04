@@ -59,6 +59,10 @@ DropboxApi.prototype.request = function (path, body, type) {
       subjectUid: this.getSubjectUid(),
       useCookieAuth: this.useCookieAuth
     });
+  } else if (type === REQUEST_CONSTANTS.DOWNLOAD) {
+    throw new Error('Download endpoints are not yet implemented');
+  } else if (type === REQUEST_CONSTANTS.upload) {
+    throw new Error('Upload endpoints are not yet implemented');
   } else {
     throw new Error('Invalid request type');
   }
