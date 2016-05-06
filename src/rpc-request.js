@@ -1,6 +1,7 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
 
+var BASE_URL = 'https://api.dropboxapi.com/2/';
 
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
@@ -11,7 +12,7 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var rpcRequest = function (path, body, authDetails) {
+var rpcRequest = function (path, body, accessToken) {
   var promiseFunction = function (resolve, reject) {
     function success(data) {
       if (resolve) {
@@ -33,21 +34,11 @@ var rpcRequest = function (path, body, authDetails) {
       }
     }
 
-    if (authDetails.useCookieAuth) {
-      request.post(authDetails.baseUrls.cookieAuth + path)
-        .type('application/json')
-        .set('X-Dropbox-Subject-User', authDetails.subjectUid)
-        .set('X-CSRF-Token', authDetails.csrfToken)
-        .withCredentials()
-        .send(body)
-        .end(responseHandler);
-    } else {
-      request.post(authDetails.baseUrls.tokenAuth + path)
-        .type('application/json')
-        .set('Authorization', 'Bearer ' + authDetails.accessToken)
-        .send(body)
-        .end(responseHandler);
-    }
+    request.post(BASE_URL + path)
+      .type('application/json')
+      .set('Authorization', 'Bearer ' + accessToken)
+      .send(body)
+      .end(responseHandler);
   };
 
   return new Promise(promiseFunction);
