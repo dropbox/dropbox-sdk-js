@@ -20,7 +20,7 @@ Use [npm](https://www.npmjs.com/) for [nodejs](https://nodejs.org/en/), [webpack
 $ npm install @TODO --save
 ```
 
-#### <script>
+#### `<script>`
 
 The UMD build is available on [npmcdn](https://npmcdn.com/):
 
@@ -32,7 +32,7 @@ You can find the library on `window.DropboxApi`.
 
 ## Usage
 
-#### Browser with <script>
+#### Browser with `<script>`
 
 ```html
 <script src="https://npmcdn.com/dropbox/@TODO.min.js"></script>
