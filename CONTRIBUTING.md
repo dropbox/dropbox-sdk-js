@@ -36,7 +36,19 @@ $ npm test
 ```
 
 ## Submitting an issue
-@TODO
+- Search the issue tracker before opening an issue.
+- Ensure you're using the latest version.
+- Use a clear and descriptive title.
+- Include as much information as possible: Steps to reproduce the issue, error message, Node.js version, operating system, etc.
+- The more time you put into an issue, the more we will.
+- The best issue report is a failing test proving it.
 
 ## Submitting a pull request
-@TODO
+- Non-trivial changes are often best discussed in an issue first, to prevent you from doing unnecessary work.
+- New features should be accompanied with tests and documentation.
+- Don't include unrelated changes.
+- Lint and test before submitting the pull request by running `$ npm test`.
+- Make the pull request from a topic branch, not master.
+- Use a clear and descriptive title for the pull request and commits.
+- Write a convincing description of why we should land your pull request. It's your job to convince us. Answer "why" it's needed and provide use-cases.
+- You might be asked to do changes to your pull request. There's never a need to open another pull request. Just update the existing one.
