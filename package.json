@@ -4,16 +4,13 @@
   "description": "Dropbox API v2 JavaScript client.",
   "main": "index.js",
   "scripts": {
-    "build": "npm run browserify && npm run uglify && npm run compressed-size",
-    "develop": "npm run watch & npm run examples-server",
-    "lint": "eslint src",
-    "test": "mocha  'test/*.js'",
-    "watch": "npm run clean && watchify src/dropbox-api.js -d -v -s DropboxApi -o dist/dropbox-sdk.js",
-    "browserify": "npm run clean && browserify src/dropbox-api.js --standalone DropboxApi -o dist/dropbox-sdk.js",
-    "uglify": "uglifyjs dist/dropbox-sdk.js -mc 'warnings=false' -o dist/dropbox-sdk.min.js",
+    "build": "npm run build-cjs && npm run build-umd && npm run compressed-size",
+    "build-cjs": "webpack",
+    "build-umd": "webpack -p --config webpack-umd.config.js",
     "compressed-size": "echo 'dropbox-sdk.min.js gzipped will weigh' $(cat dist/dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
-    "examples-server": "python -m SimpleHTTPServer 8000",
-    "clean": "rm -rf dist && mkdir dist"
+    "lint": "eslint src",
+    "start": "node examples/server.js",
+    "test": "mocha  'test/*.js'"
   },
   "keywords": [
     "dropbox"
@@ -21,16 +18,17 @@
   "author": "Riley Tomasek",
   "license": "MIT",
   "devDependencies": {
-    "browserify": "^13.0.0",
     "chai": "^3.5.0",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
+    "express": "^4.13.4",
+    "express-urlrewrite": "^1.2.0",
     "mocha": "^2.4.5",
     "pretty-bytes": "^2.0.1",
     "prompt": "^1.0.0",
     "sinon": "^1.17.3",
-    "uglify-js": "^2.6.2",
-    "watchify": "^3.7.0"
+    "webpack": "^1.13.0",
+    "webpack-dev-middleware": "^1.6.1"
   },
   "dependencies": {
     "es6-promise": "^3.1.2",
