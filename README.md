@@ -68,19 +68,23 @@ See [examples/](examples/) for working examples of how the client can be used in
 
 ## Documentation
 
-For documentation of all of the available endpoints, the parameters it receives and the data it returns, see @TODO. All other documentation can be found below.
-
 #### Authentication
 
-@TODO
+The Dropbox API uses [OAuth2](http://oauth.net/) for authorizing API requests. The DropboxApi requires an access token to make authenticated requests. The access token can be supplied at instantiation or set later using the `setAccessToken()` method.
+
+For more information on how to obtain an access token using OAuth, please see our [OAuth Guide](https://www.dropbox.com/developers/reference/oauth-guide).
+
+@TODO: We need helpers, examples and more info here.
+
+#### Endpoints
+
+For documentation of all of the available endpoints, the parameters they receive and the data they return, see [src/routes.js](src/routes.js). These methods are all available directly from an instance of the API class, ex: `dbx.filesListFolder()`.
+
+@TODO: Autogenerate docs from JSDocs in routes.js.
 
 #### Promises implementation
 
-@TODO
-
-#### Chaining promises
-
-@TODO
+The client returns Promises using the [native Promise implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise) and polyfills with [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise) when needed.
 
 ## Contributing
 
