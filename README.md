@@ -1,26 +1,87 @@
-# Dropbox API v2 JavaScript Client
+# Dropbox API JavaScript Client
 
-A lightweight JavaScript client that allows users to easily access the Dropbox API with a promise based interface.
+DropboxApi is lightweight JavaScript client that provides a promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.
 
-## Development
-You will need Node.js and npm installed on your machine.
-```bash
-# From repo root
-$ npm install && npm run develop
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Examples](#examples)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+
+## Installation
+
+#### npm
+
+Use [npm](https://www.npmjs.com/) for [nodejs](https://nodejs.org/en/), [webpack](https://github.com/webpack/webpack) or [browserify](http://browserify.org/):
+
+```console
+$ npm install @TODO --save
 ```
-As you make changes to `src/` files, they will be recompiled to `dist/dropbox-sdk.js` and the examples directory will be available at [http://0.0.0.0:8000/examples/](http://0.0.0.0:8000/examples/)
 
-The develop command is a combination of `watch`, which watches for changes in `src/` and recompiles `dist/dropbox-sdk.js` and `examples-server`, which is just a simple python server for the examples html.
+#### <script>
 
-## Build
-Run the following command to build an uglified and minified version of the client at `dist/dropbox-sdk.min.js`.
-```bash
-$ npm run build
+The UMD build is available on [npmcdn](https://npmcdn.com/):
+
+```html
+<script src="https://npmcdn.com/dropbox/@TODO.min.js"></script>
+```
+
+You can find the library on `window.DropboxApi`.
+
+## Usage
+
+#### Browser with <script>
+
+```html
+<script src="https://npmcdn.com/dropbox/@TODO.min.js"></script>
+<script>
+  var dbx = new DropboxApi({ accessToken: 'accessToken' });
+  dbx.filesListFolder({path: '/'})
+    .then(function(response) {
+      console.log(response);
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+</script>
+```
+
+#### Nodejs, Browserify or Webpack
+
+```javascript
+var DropboxApi = require('@TODO');
+var dbx = new DropboxApi({ accessToken: 'accessToken' });
+dbx.filesListFolder({path: '/'})
+  .then(function(response) {
+    console.log(response);
+  })
+  .catch(function(error) {
+    console.log(error);
+  });
 ```
 
 ## Examples
-See `examples/` for examples of how the client can be used in a few different environments.
 
-## Tests
-Open `test/browser/index.html` to run the browser tests in your browser.
-> A proper PhantomJS test runner with command line test execution is coming.
+See `examples/` for working examples of how the client can be used in a few different environments.
+
+## Documentation
+
+For documentation of all of the available endpoints, the parameters it receives and the data it returns, see @TODO. All other documentation can be found below.
+
+#### Authentication
+
+@TODO
+
+#### Promises implementation
+
+@TODO
+
+#### Chaining promises
+
+@TODO
+
+## Contributing
+
+Please see `CONTRIBUTNIG.md` for information on how to contribute, setup the development environment and run tests.
