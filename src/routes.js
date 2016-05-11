@@ -40,18 +40,6 @@ routes.filesDelete = function (arg) {
 }
 
 /**
- * Download a file from a user's Dropbox.
- * @arg {Object} arg - The request parameters.
- * @arg {String} arg.path - The path of the file to download.
- * @arg {String|null} arg.rev - Deprecated. Please specify revision in path
- * instead
- * @returns {Object}
- */
-routes.filesDownload = function (arg) {
-    return this.request("files/download", arg, "download");
-}
-
-/**
  * Returns the metadata for a file or folder. Note: Metadata for the root folder
  * is unsupported.
  * @arg {Object} arg - The request parameters.
@@ -62,36 +50,6 @@ routes.filesDownload = function (arg) {
  */
 routes.filesGetMetadata = function (arg) {
     return this.request("files/get_metadata", arg, null);
-}
-
-/**
- * Get a preview for a file. Currently previews are only generated for the files
- * with  the following extensions: .doc, .docx, .docm, .ppt, .pps, .ppsx, .ppsm,
- * .pptx, .pptm,  .xls, .xlsx, .xlsm, .rtf
- * @arg {Object} arg - The request parameters.
- * @arg {String} arg.path - The path of the file to preview.
- * @arg {String|null} arg.rev - Deprecated. Please specify revision in path
- * instead
- * @returns {Object}
- */
-routes.filesGetPreview = function (arg) {
-    return this.request("files/get_preview", arg, "download");
-}
-
-/**
- * Get a thumbnail for an image. This method currently supports files with the
- * following file extensions: jpg, jpeg, png, tiff, tif, gif and bmp. Photos
- * that are larger than 20MB in size won't be converted to a thumbnail.
- * @arg {Object} arg - The request parameters.
- * @arg {String} arg.path - The path to the image file you want to thumbnail.
- * @arg {Object} arg.format - The format for the thumbnail image, jpeg (default)
- * or png. For  images that are photos, jpeg should be preferred, while png is
- * better for screenshots and digital arts.
- * @arg {Object} arg.size - The size for the thumbnail image.
- * @returns {Object}
- */
-routes.filesGetThumbnail = function (arg) {
-    return this.request("files/get_thumbnail", arg, "download");
 }
 
 /**
@@ -238,71 +196,6 @@ routes.filesSearch = function (arg) {
 }
 
 /**
- * Create a new file with the contents provided in the request. Do not use this
- * to upload a file larger than 150 MB. Instead, create an upload session with
- * upload_session/start.
- * @arg {Object} arg - The request parameters.
- * @arg {String} arg.path - Path in the user's Dropbox to save the file.
- * @arg {Object} arg.mode - Selects what to do if the file already exists.
- * @arg {Boolean} arg.autorename - If there's a conflict, as determined by mode,
- * have the Dropbox server try to autorename the file to avoid conflict.
- * @arg {Object|null} arg.client_modified - The value to store as the
- * client_modified timestamp. Dropbox automatically records the time at which
- * the file was written to the Dropbox servers. It can also record an additional
- * timestamp, provided by Dropbox desktop clients, mobile clients, and API apps
- * of when the file was actually created or modified.
- * @arg {Boolean} arg.mute - Normally, users are made aware of any file
- * modifications in their Dropbox account via notifications in the client
- * software. If true, this tells the clients that this modification shouldn't
- * result in a user notification.
- * @returns {Object}
- */
-routes.filesUpload = function (arg) {
-    return this.request("files/upload", arg, "upload");
-}
-
-/**
- * Append more data to an upload session. A single request should not upload
- * more than 150 MB of file contents.
- * @arg {Object} arg - The request parameters.
- * @arg {String} arg.session_id - The upload session ID (returned by
- * upload_session/start).
- * @arg {Number} arg.offset - The amount of data that has been uploaded so far.
- * We use this to make sure upload data isn't lost or duplicated in the event of
- * a network error.
- * @returns {null}
- */
-routes.filesUploadSessionAppend = function (arg) {
-    return this.request("files/upload_session/append", arg, "upload");
-}
-
-/**
- * Finish an upload session and save the uploaded data to the given file path. A
- * single request should not upload more than 150 MB of file contents.
- * @arg {Object} arg - The request parameters.
- * @arg {Object} arg.cursor - Contains the upload session ID and the offset.
- * @arg {Object} arg.commit - Contains the path and other optional modifiers for
- * the commit.
- * @returns {Object}
- */
-routes.filesUploadSessionFinish = function (arg) {
-    return this.request("files/upload_session/finish", arg, "upload");
-}
-
-/**
- * Upload sessions allow you to upload a single file using multiple requests.
- * This call starts a new upload session with the given data.  You can then use
- * upload_session/append to add more data and upload_session/finish to save all
- * the data to a file in Dropbox. A single request should not upload more than
- * 150 MB of file contents.
- * @arg {null} arg - The request parameters.
- * @returns {Object}
- */
-routes.filesUploadSessionStart = function (arg) {
-    return this.request("files/upload_session/start", arg, "upload");
-}
-
-/**
  * Allows an owner or editor (if the ACL update policy allows) of a shared
  * folder to add another member. For the new member to get access to all the
  * functionality for this folder, you will need to call mount_folder on their
@@ -396,15 +289,6 @@ routes.sharingCreateSharedLinkWithSettings = function (arg) {
  */
 routes.sharingGetFolderMetadata = function (arg) {
     return this.request("sharing/get_folder_metadata", arg, null);
-}
-
-/**
- * Download the shared link's file from a user's Dropbox.
- * @arg {Object} arg - The request parameters.
- * @returns {Object}
- */
-routes.sharingGetSharedLinkFile = function (arg) {
-    return this.request("sharing/get_shared_link_file", arg, "download");
 }
 
 /**
