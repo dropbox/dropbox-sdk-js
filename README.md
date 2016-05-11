@@ -37,7 +37,7 @@ You can find the library on `window.DropboxApi`.
 ```html
 <script src="https://npmcdn.com/dropbox/@TODO.min.js"></script>
 <script>
-  var dbx = new DropboxApi({ accessToken: 'accessToken' });
+  var dbx = new DropboxApi({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
   dbx.filesListFolder({path: '/'})
     .then(function(response) {
       console.log(response);
@@ -52,7 +52,7 @@ You can find the library on `window.DropboxApi`.
 
 ```javascript
 var DropboxApi = require('@TODO');
-var dbx = new DropboxApi({ accessToken: 'accessToken' });
+var dbx = new DropboxApi({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 dbx.filesListFolder({path: '/'})
   .then(function(response) {
     console.log(response);
