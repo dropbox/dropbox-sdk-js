@@ -22,12 +22,12 @@ You will need [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/
 
 ```console
 $ git clone @TODO dropbox-api && cd dropbox-api
-$ npm install && npm run develop
+$ npm install && npm start
 ```
 
-As you make changes to `src/` files, they will be recompiled to `dist/dropbox-sdk.js` and the examples directory will be available at <http://0.0.0.0:8000/examples/>
+The development/examples server is now live at <http://0.0.0.0:8080/>.
 
-The develop command is a combination of `watch`, which watches for changes in `src/` and recompiles `dist/dropbox-sdk.js` and `examples-server`, which is just a simple python server for the examples html.
+You can now make changes to `src/` files and they will be recompiled and used by the development/examples server.
 
 #### Tests
 The following command runs the test suite:
