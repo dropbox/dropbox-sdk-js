@@ -64,7 +64,7 @@ dbx.filesListFolder({path: '/'})
 
 ## Examples
 
-See `examples/` for working examples of how the client can be used in a few different environments.
+See [examples/](examples/) for working examples of how the client can be used in a few different environments.
 
 ## Documentation
 
@@ -84,4 +84,4 @@ For documentation of all of the available endpoints, the parameters it receives 
 
 ## Contributing
 
-Please see `CONTRIBUTNIG.md` for information on how to contribute, setup the development environment and run tests.
+Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for information on how to contribute, setup the development environment and run tests.
