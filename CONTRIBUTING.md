@@ -18,14 +18,14 @@ Bug fixes, code improvements and better tests are always welcome. Please see the
 
 #### Development environment
 
-You will need Node.js and npm installed on your machine. Run the following commands to setup a local development environment:
+You will need [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) installed on your machine. Run the following commands to setup a local development environment:
 
 ```console
 $ git clone @TODO dropbox-api && cd dropbox-api
 $ npm install && npm run develop
 ```
 
-As you make changes to `src/` files, they will be recompiled to `dist/dropbox-sdk.js` and the examples directory will be available at [http://0.0.0.0:8000/examples/](http://0.0.0.0:8000/examples/)
+As you make changes to `src/` files, they will be recompiled to `dist/dropbox-sdk.js` and the examples directory will be available at <http://0.0.0.0:8000/examples/>
 
 The develop command is a combination of `watch`, which watches for changes in `src/` and recompiles `dist/dropbox-sdk.js` and `examples-server`, which is just a simple python server for the examples html.
 
