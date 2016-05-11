@@ -70,7 +70,7 @@ See [examples/](examples/) for working examples of how the client can be used in
 
 #### Authentication
 
-The Dropbox API uses [OAuth2](http://oauth.net/) for authorizing API requests. The DropboxApi requires an access token to make authenticated requests. The access token can be supplied at instantiation or set later using the `setAccessToken()` method.
+The Dropbox API uses [OAuth2](http://oauth.net/) for authorizing API requests. DropboxApi requires an access token to make authenticated requests. The access token can be supplied at instantiation or set later using the `setAccessToken()` method.
 
 For more information on how to obtain an access token using OAuth, please see our [OAuth Guide](https://www.dropbox.com/developers/reference/oauth-guide).
 
