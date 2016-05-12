@@ -38,6 +38,7 @@ DropboxApi.prototype.getAuthenticationUrl = function (redirectUri, state) {
   if (!redirectUri) {
     throw new Error('A redirect uri is required.');
   }
+
   authUrl = AUTH_BASE_URL + '?response_type=token&client_id=' + clientId;
   if (redirectUri) {
     authUrl = authUrl + '&redirect_uri=' + redirectUri;
