@@ -35,7 +35,7 @@ DropboxApi.prototype.setRpcRequest = function (rpcRequest) {
   DropboxApi.prototype.rpcRequest = rpcRequest;
 };
 
-DropboxApi.prototype.getRpcRequest = function (rpcRequest) {
+DropboxApi.prototype.getRpcRequest = function () {
   return DropboxApi.prototype.rpcRequest;
 };
 
