@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <title>Dropbox API JavaScript Client</title>
+  <script src="/__build__/dropbox-sdk.min.js"></script>
+  <script src="/utils.js"></script>
+</head>
+<body>
+  <div id="pre-auth-section" style="display:none;">
+    <h1>Dropbox JavaScript SDK Example App</h1>
+    <p>This example shows how to use the .getAuthenticationUrl() method to help authenticated users.</p>
+    <p>Once authenticated, it will use the access token to list the files in your root directory.</p>
+    <a href="" id="authlink">Authenticate</a>
+  </div>
+
+  <div id="authed-section" style="display:none;">
+    <h1>Dropbox JavaScript SDK Example App</h1>
+    <p>You have successfully authenticated. Below are the contents of your root directory. They were fetched using the SDK and access token.</p>
+    <ul id="files"></ul>
+  </div>
+
+  <script>
+    var urlHash = window.location.hash;
+    var hash = parseQueryString(urlHash);
+    var accessToken = hash.access_token;
+
+    if (accessToken) {
+      // Show the part of the page for authenticated users
+      document.getElementById('authed-section').style.display = 'block';
+
+      function renderItems(items) {
+        var filesContainer = document.getElementById('files');
+        items.forEach(function(item) {
+          var li = document.createElement('li');
+          li.innerHTML = item.name;
+          filesContainer.appendChild(li);
+        });
+      }
+
+      var dbx = new DropboxApi({ accessToken: accessToken });
+      dbx.filesListFolder({path: ''})
+        .then(function(response) {
+          renderItems(response.entries);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    } else {
+      // Show the part of the page for unauthenticated users
+      document.getElementById('pre-auth-section').style.display = 'block';
+
+      // Set the login anchors href using dbx.getAuthenticationUrl()
+      var CLIENT_ID = '42zjexze6mfpf7x';
+      var dbx = new DropboxApi({ clientId: CLIENT_ID });
+      var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/auth');
+      document.getElementById('authlink').href = authUrl;
+    }
+  </script>
+</body>
+</html>
