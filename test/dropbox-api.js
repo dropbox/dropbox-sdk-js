@@ -42,17 +42,18 @@ describe('DropboxApi', function () {
     it('throws an error if the client id isn\'t set', function () {
       dbx = new DropboxApi();
       assert.throws(
-        DropboxApi.prototype.getAuthenticationUrl.bind(dbx),
+        DropboxApi.prototype.getAuthenticationUrl.bind(dbx, 'https://redirecturl.com'),
         Error,
         'A client id is required. You can set the client id using .setClientId().'
       );
     });
 
-    it('returns a valid auth url', function () {
+    it('throws an error if the redirect url isn\'t set', function () {
       dbx = new DropboxApi({ clientId: 'CLIENT_ID' });
-      assert.equal(
-        dbx.getAuthenticationUrl(),
-        'https://www.dropbox.com/oauth2/authorize?response_type=token&client_id=CLIENT_ID'
+      assert.throws(
+        DropboxApi.prototype.getAuthenticationUrl.bind(dbx),
+        Error,
+        'A redirect uri is required.'
       );
     });
 
