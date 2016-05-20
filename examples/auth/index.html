@@ -21,7 +21,7 @@
 
   <script>
     var urlHash = window.location.hash;
-    var hash = parseQueryString(urlHash);
+    var hash = utils.parseQueryString(urlHash);
     var accessToken = hash.access_token;
 
     if (accessToken) {
