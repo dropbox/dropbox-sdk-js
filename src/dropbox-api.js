@@ -1,11 +1,14 @@
 var routes = require('./routes');
 var rpcRequest = require('./rpc-request');
 var REQUEST_CONSTANTS = require('./request-constants');
-require('./polyfills');
+var DropboxApi;
 
 var AUTH_BASE_URL = 'https://www.dropbox.com/oauth2/authorize';
 
-var DropboxApi = function (options) {
+// Polyfill Object.assign() for older browsers
+require('./object-assign-polyfill');
+
+DropboxApi = function (options) {
   this.accessToken = options && options.accessToken || '';
   this.clientId = options && options.clientId || '';
 };
@@ -61,8 +64,8 @@ DropboxApi.prototype.request = function (path, body, type) {
 
 DropboxApi.prototype.rpcRequest = rpcRequest;
 
-DropboxApi.prototype.setRpcRequest = function (rpcRequest) {
-  DropboxApi.prototype.rpcRequest = rpcRequest;
+DropboxApi.prototype.setRpcRequest = function (newRpcRequest) {
+  DropboxApi.prototype.rpcRequest = newRpcRequest;
 };
 
 DropboxApi.prototype.getRpcRequest = function () {
