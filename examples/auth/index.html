@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Dropbox API JavaScript Client</title>
+  <link rel="stylesheet" href="/styles.css">
   <script src="/__build__/dropbox-sdk.min.js"></script>
   <script src="/utils.js"></script>
 </head>
@@ -20,24 +21,41 @@
   </div>
 
   <script>
-    var urlHash = window.location.hash;
-    var hash = utils.parseQueryString(urlHash);
-    var accessToken = hash.access_token;
+    var CLIENT_ID = '42zjexze6mfpf7x';
 
-    if (accessToken) {
-      // Show the part of the page for authenticated users
-      document.getElementById('authed-section').style.display = 'block';
+    // Parses the url and gets the access token if it is in the urls hash
+    function getAccessTokenFromUrl() {
+     return utils.parseQueryString(window.location.hash).access_token;
+    }
 
-      function renderItems(items) {
-        var filesContainer = document.getElementById('files');
-        items.forEach(function(item) {
-          var li = document.createElement('li');
-          li.innerHTML = item.name;
-          filesContainer.appendChild(li);
-        });
-      }
+    // If the user was just redirected from authenticating, the urls hash will
+    // contain the access token.
+    function isAuthenticated() {
+      return !!getAccessTokenFromUrl();
+    }
 
-      var dbx = new DropboxApi({ accessToken: accessToken });
+    // Render a list of items to #files
+    function renderItems(items) {
+      var filesContainer = document.getElementById('files');
+      items.forEach(function(item) {
+        var li = document.createElement('li');
+        li.innerHTML = item.name;
+        filesContainer.appendChild(li);
+      });
+    }
+
+    // This example keeps both the authenticate and non-authenticated setions
+    // in the DOM and uses this function to show/hide the correct section.
+    function showPageSection(elementId) {
+      document.getElementById(elementId).style.display = 'block';
+    }
+
+    if (isAuthenticated()) {
+      showPageSection('authed-section');
+
+      // Create an instance of DropboxApi with the access token and use it to
+      // fetch and render the files in the users root directory.
+      var dbx = new DropboxApi({ accessToken: getAccessTokenFromUrl() });
       dbx.filesListFolder({path: ''})
         .then(function(response) {
           renderItems(response.entries);
@@ -46,11 +64,9 @@
           console.log(error);
         });
     } else {
-      // Show the part of the page for unauthenticated users
-      document.getElementById('pre-auth-section').style.display = 'block';
+      showPageSection('pre-auth-section');
 
       // Set the login anchors href using dbx.getAuthenticationUrl()
-      var CLIENT_ID = '42zjexze6mfpf7x';
       var dbx = new DropboxApi({ clientId: CLIENT_ID });
       var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/auth');
       document.getElementById('authlink').href = authUrl;
