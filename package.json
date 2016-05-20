@@ -8,7 +8,7 @@
     "build-cjs": "webpack",
     "build-umd": "webpack -p --config webpack-umd.config.js",
     "compressed-size": "echo 'dropbox-sdk.min.js gzipped will weigh' $(cat dist/dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
-    "lint": "eslint src",
+    "lint": "eslint src --ignore-pattern src/routes.js",
     "start": "node examples/server.js",
     "test": "mocha  'test/*.js'"
   },
