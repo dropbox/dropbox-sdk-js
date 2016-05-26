@@ -80,11 +80,14 @@ requests. DropboxApi requires an access token to make authenticated
 requests. The access token can be supplied at instantiation or set later
 using the `setAccessToken()` method.
 
+`DropboxApi.getAuthenticationUrl()` is a method that is very helpful for
+authenticating users. See the [authentication
+example](examples/auth/index.html) for a basic example of how it can be
+used.
+
 For more information on how to obtain an access token using OAuth, please
 see our [OAuth
 Guide](https://www.dropbox.com/developers/reference/oauth-guide).
-
-@TODO: We need helpers, examples and more info here.
 
 #### Endpoints
 
