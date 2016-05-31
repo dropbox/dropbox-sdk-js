@@ -52,7 +52,7 @@ def main():
         stone_path = args.stone
 
     dropbox_pkg_path = os.path.abspath(
-        os.path.join(os.path.dirname(sys.argv[0]), 'src'))
+        os.path.join(os.path.dirname(sys.argv[0]), '../src'))
     if verbose:
         print('Dropbox package path: %s' % dropbox_pkg_path)
 
