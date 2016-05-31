@@ -10,6 +10,7 @@ environments.
 - [Usage](#usage)
 - [Examples](#examples)
 - [Documentation](#documentation)
+- [Versioning](#versioning)
 - [Contributing](#contributing)
 
 ## Installation
@@ -105,6 +106,14 @@ implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/G
 and polyfills with
 [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise)
 when needed.
+
+## Versioning
+
+We will try to follow [semver](http://semver.org/) as close as possible.
+That means bug fixes will be patch releases (1.0.1 -> 1.0.2), additional
+functionality like new endpoints will be minor releases (1.0.1 -> 1.1.0)
+and breaking changes to both the library and the API endpoints it hits,
+will be major releases (1.0.1 -> 2.0.0).
 
 ## Contributing
 
