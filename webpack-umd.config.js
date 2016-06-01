@@ -6,7 +6,7 @@ module.exports = {
 
   output: {
     filename: 'dropbox-sdk.min.js',
-    library: 'DropboxApi',
+    library: 'Dropbox',
     libraryTarget: 'umd',
     path: __dirname + '/dist'
   },

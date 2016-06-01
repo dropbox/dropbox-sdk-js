@@ -1,4 +1,4 @@
-# Contributing to Dropbox API JavaScript Client
+# Contributing to Dropbox JavaScript SDK
 
 ## How to contribute
 
@@ -17,7 +17,7 @@ up issues saves a lot of time and leads to things getting fixed faster.
 
 Bug fixes, code improvements and better tests are always welcome. Please
 see the steps below to get up and running. Please open an issue if you are
-considering opening a pull request for new funtionality.
+considering opening a pull request for new functionality.
 
 > Note that `/src/routes.js` is a generated file and cannot be updated by
 > changes to this repository

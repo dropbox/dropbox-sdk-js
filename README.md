@@ -1,6 +1,6 @@
-# Dropbox API JavaScript Client
+# Dropbox JavaScript SDK
 
-DropboxApi is lightweight JavaScript client that provides a promise based
+The Dropbox JavaScript SDK is lightweight and provides a promise based
 interface to the Dropbox v2 API that works in both nodejs and browser
 environments.
 
@@ -33,7 +33,7 @@ The UMD build is available on [npmcdn](https://npmcdn.com/):
 <script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
 ```
 
-You can find the library on `window.DropboxApi`.
+You can find the library on `window.Dropbox`.
 
 ## Usage
 
@@ -42,7 +42,7 @@ You can find the library on `window.DropboxApi`.
 ```html
 <script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
 <script>
-  var dbx = new DropboxApi({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
+  var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
   dbx.filesListFolder({path: '/'})
     .then(function(response) {
       console.log(response);
@@ -56,8 +56,8 @@ You can find the library on `window.DropboxApi`.
 #### Nodejs, Browserify or Webpack
 
 ```javascript
-var DropboxApi = require('dropbox');
-var dbx = new DropboxApi({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
+var Dropbox = require('dropbox');
+var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 dbx.filesListFolder({path: '/'})
   .then(function(response) {
     console.log(response);
@@ -69,19 +69,19 @@ dbx.filesListFolder({path: '/'})
 
 ## Examples
 
-See [examples/](examples/) for working examples of how the client can be
-used in a few different environments.
+See [examples/](examples/) for working examples of how the SDK can be used
+in a few different environments.
 
 ## Documentation
 
 #### Authentication
 
-The Dropbox API uses [OAuth2](http://oauth.net/) for authorizing API
-requests. DropboxApi requires an access token to make authenticated
-requests. The access token can be supplied at instantiation or set later
-using the `setAccessToken()` method.
+The Dropbox SDK uses [OAuth2](http://oauth.net/) for authorizing API
+requests. Dropbox requires an access token to make authenticated requests.
+The access token can be supplied at instantiation or set later using the
+`setAccessToken()` method.
 
-`DropboxApi.getAuthenticationUrl()` is a method that is very helpful for
+`Dropbox.getAuthenticationUrl()` is a method that is very helpful for
 authenticating users. See the [authentication
 example](examples/auth/index.html) for a basic example of how it can be
 used.
@@ -101,7 +101,7 @@ class, ex: `dbx.filesListFolder()`.
 
 #### Promises implementation
 
-The client returns Promises using the [native Promise
+The SDK returns Promises using the [native Promise
 implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 and polyfills with
 [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise)

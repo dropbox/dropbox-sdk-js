@@ -1,7 +1,7 @@
 {
   "name": "dropbox-sdk",
   "version": "0.0.1",
-  "description": "Dropbox API v2 JavaScript client.",
+  "description": "Dropbox JavaScript SDK.",
   "main": "index.js",
   "scripts": {
     "build": "npm run build-cjs && npm run build-umd && npm run compressed-size",

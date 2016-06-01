@@ -1,4 +1,4 @@
-# Dropbox API Client Examples
+# Dropbox JavaScript SDK Examples
 
 To run the examples in your development environment:
 
