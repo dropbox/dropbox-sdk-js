@@ -53,9 +53,9 @@
     if (isAuthenticated()) {
       showPageSection('authed-section');
 
-      // Create an instance of DropboxApi with the access token and use it to
+      // Create an instance of Dropbox with the access token and use it to
       // fetch and render the files in the users root directory.
-      var dbx = new DropboxApi({ accessToken: getAccessTokenFromUrl() });
+      var dbx = new Dropbox({ accessToken: getAccessTokenFromUrl() });
       dbx.filesListFolder({path: ''})
         .then(function(response) {
           renderItems(response.entries);
@@ -67,7 +67,7 @@
       showPageSection('pre-auth-section');
 
       // Set the login anchors href using dbx.getAuthenticationUrl()
-      var dbx = new DropboxApi({ clientId: CLIENT_ID });
+      var dbx = new Dropbox({ clientId: CLIENT_ID });
       var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/auth');
       document.getElementById('authlink').href = authUrl;
     }

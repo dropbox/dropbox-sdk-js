@@ -8,7 +8,7 @@
 <body>
   <script>
     var ACCESS_TOKEN = prompt('Please enter an API V2 access token');
-    var dbx = new DropboxApi({ accessToken: ACCESS_TOKEN });
+    var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
     dbx.filesListFolder({path: '/Screenshots'})
       .then(function(response) {
         console.log(response);

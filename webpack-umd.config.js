@@ -2,7 +2,7 @@ var webpack = require('webpack')
 
 module.exports = {
 
-  entry: __dirname + '/src/dropbox-api.js',
+  entry: __dirname + '/src/index.js',
 
   output: {
     filename: 'dropbox-sdk.min.js',
