@@ -29,7 +29,7 @@ You will need [Node.js](https://nodejs.org/en/) and
 commands to setup a local development environment:
 
 ```console
-$ git clone @TODO dropbox-api && cd dropbox-api
+$ git clone https://github.com/dropbox/dropbox-sdk-js && cd $_
 $ npm install && npm start
 ```
 
