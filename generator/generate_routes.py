@@ -57,11 +57,19 @@ def main():
         print('Dropbox package path: %s' % dropbox_pkg_path)
 
     if verbose:
-        print('Generating JS client routes')
+        print('Generating JS client routes for user routes')
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-b', 'team', '-f', 'style!="upload" and style!="download"'] +
          ['--', 'routes.js', '-a', 'host', '-a', 'style']),
+        cwd=stone_path)
+
+    if verbose:
+        print('Generating JS client routes for team routes')
+    subprocess.check_output(
+        (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
+         specs + ['-w', 'team', '-f', 'style!="upload" and style!="download"'] +
+         ['--', 'routes-team.js', '-a', 'host', '-a', 'style']),
         cwd=stone_path)
 
 if __name__ == '__main__':
