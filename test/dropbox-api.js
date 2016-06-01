@@ -81,7 +81,7 @@ describe('Dropbox', function () {
       var rpcSpy;
       dbx = new Dropbox();
       rpcSpy = sinon.spy(dbx, 'rpcRequest');
-      dbx.request('path', {}, REQUEST_CONSTANTS.RPC);
+      dbx.request('path', {}, 'api', REQUEST_CONSTANTS.RPC);
       assert(rpcSpy.calledOnce);
       assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
       assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
@@ -89,7 +89,7 @@ describe('Dropbox', function () {
     it('throws an error for invalid request types', function () {
       dbx = new Dropbox();
       assert.throws(
-        Dropbox.prototype.request.bind(Dropbox, '', {}, 'BADTYPE'),
+        Dropbox.prototype.request.bind(Dropbox, '', {}, 'api', 'BADTYPE'),
         Error,
         'Invalid request type'
       );
