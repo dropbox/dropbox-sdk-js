@@ -16,7 +16,6 @@
     "dropbox"
   ],
   "author": "Riley Tomasek",
-  "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^2.7.0",
