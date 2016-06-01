@@ -12,8 +12,8 @@ var routes = {};
  * @returns {null}
  */
 routes.authTokenRevoke = function (arg) {
-    return this.request("auth/token/revoke", arg, null, null);
-}
+  return this.request('auth/token/revoke', arg, 'api', 'rpc');
+};
 
 /**
  * Copy a file or folder to a different location in the user's Dropbox. If the
@@ -27,8 +27,8 @@ routes.authTokenRevoke = function (arg) {
  * @returns {Object}
  */
 routes.filesCopy = function (arg) {
-    return this.request("files/copy", arg, null, null);
-}
+  return this.request('files/copy', arg, 'api', 'rpc');
+};
 
 /**
  * Get a copy reference to a file or folder. This reference string can be used
@@ -41,8 +41,8 @@ routes.filesCopy = function (arg) {
  * @returns {Object}
  */
 routes.filesCopyReferenceGet = function (arg) {
-    return this.request("files/copy_reference/get", arg, null, null);
-}
+  return this.request('files/copy_reference/get', arg, 'api', 'rpc');
+};
 
 /**
  * Save a copy reference returned by copy_reference/get to the user's Dropbox.
@@ -54,8 +54,8 @@ routes.filesCopyReferenceGet = function (arg) {
  * @returns {Object}
  */
 routes.filesCopyReferenceSave = function (arg) {
-    return this.request("files/copy_reference/save", arg, null, null);
-}
+  return this.request('files/copy_reference/save', arg, 'api', 'rpc');
+};
 
 /**
  * Create a folder at a given path.
@@ -65,8 +65,8 @@ routes.filesCopyReferenceSave = function (arg) {
  * @returns {Object}
  */
 routes.filesCreateFolder = function (arg) {
-    return this.request("files/create_folder", arg, null, null);
-}
+  return this.request('files/create_folder', arg, 'api', 'rpc');
+};
 
 /**
  * Delete the file or folder at a given path. If the path is a folder, all its
@@ -80,8 +80,8 @@ routes.filesCreateFolder = function (arg) {
  * @returns {Object}
  */
 routes.filesDelete = function (arg) {
-    return this.request("files/delete", arg, null, null);
-}
+  return this.request('files/delete', arg, 'api', 'rpc');
+};
 
 /**
  * Returns the metadata for a file or folder. Note: Metadata for the root folder
@@ -100,8 +100,8 @@ routes.filesDelete = function (arg) {
  * @returns {Object}
  */
 routes.filesGetMetadata = function (arg) {
-    return this.request("files/get_metadata", arg, null, null);
-}
+  return this.request('files/get_metadata', arg, 'api', 'rpc');
+};
 
 /**
  * Get a temporary link to stream content of a file. This link will expire in
@@ -113,8 +113,8 @@ routes.filesGetMetadata = function (arg) {
  * @returns {Object}
  */
 routes.filesGetTemporaryLink = function (arg) {
-    return this.request("files/get_temporary_link", arg, null, null);
-}
+  return this.request('files/get_temporary_link', arg, 'api', 'rpc');
+};
 
 /**
  * Returns the contents of a folder.
@@ -135,8 +135,8 @@ routes.filesGetTemporaryLink = function (arg) {
  * @returns {Object}
  */
 routes.filesListFolder = function (arg) {
-    return this.request("files/list_folder", arg, null, null);
-}
+  return this.request('files/list_folder', arg, 'api', 'rpc');
+};
 
 /**
  * Once a cursor has been retrieved from list_folder, use this to paginate
@@ -148,8 +148,8 @@ routes.filesListFolder = function (arg) {
  * @returns {Object}
  */
 routes.filesListFolderContinue = function (arg) {
-    return this.request("files/list_folder/continue", arg, null, null);
-}
+  return this.request('files/list_folder/continue', arg, 'api', 'rpc');
+};
 
 /**
  * A way to quickly get a cursor for the folder's state. Unlike list_folder,
@@ -173,15 +173,15 @@ routes.filesListFolderContinue = function (arg) {
  * @returns {Object}
  */
 routes.filesListFolderGetLatestCursor = function (arg) {
-    return this.request("files/list_folder/get_latest_cursor", arg, null, null);
-}
+  return this.request('files/list_folder/get_latest_cursor', arg, 'api', 'rpc');
+};
 
 /**
  * A longpoll endpoint to wait for changes on an account. In conjunction with
- * list_folder, this call gives you a low-latency way to monitor an account for
- * file changes. The connection will block until there are changes available or
- * a timeout occurs. This endpoint is useful mostly for client-side apps. If
- * you're looking for server-side notifications, check out our webhooks
+ * list_folder/continue, this call gives you a low-latency way to monitor an
+ * account for file changes. The connection will block until there are changes
+ * available or a timeout occurs. This endpoint is useful mostly for client-side
+ * apps. If you're looking for server-side notifications, check out our webhooks
  * documentation https://www.dropbox.com/developers/reference/webhooks.
  * @function Routes#filesListFolderLongpoll
  * @arg {Object} arg - The request parameters.
@@ -195,8 +195,8 @@ routes.filesListFolderGetLatestCursor = function (arg) {
  * @returns {Object}
  */
 routes.filesListFolderLongpoll = function (arg) {
-    return this.request("files/list_folder/longpoll", arg, "notify", null);
-}
+  return this.request('files/list_folder/longpoll', arg, 'notify', 'rpc');
+};
 
 /**
  * Return revisions of a file
@@ -208,8 +208,8 @@ routes.filesListFolderLongpoll = function (arg) {
  * @returns {Object}
  */
 routes.filesListRevisions = function (arg) {
-    return this.request("files/list_revisions", arg, null, null);
-}
+  return this.request('files/list_revisions', arg, 'api', 'rpc');
+};
 
 /**
  * Move a file or folder to a different location in the user's Dropbox. If the
@@ -223,8 +223,8 @@ routes.filesListRevisions = function (arg) {
  * @returns {Object}
  */
 routes.filesMove = function (arg) {
-    return this.request("files/move", arg, null, null);
-}
+  return this.request('files/move', arg, 'api', 'rpc');
+};
 
 /**
  * Permanently delete the file or folder at a given path (see
@@ -236,8 +236,8 @@ routes.filesMove = function (arg) {
  * @returns {null}
  */
 routes.filesPermanentlyDelete = function (arg) {
-    return this.request("files/permanently_delete", arg, null, null);
-}
+  return this.request('files/permanently_delete', arg, 'api', 'rpc');
+};
 
 /**
  * Restore a file to a specific revision
@@ -248,8 +248,33 @@ routes.filesPermanentlyDelete = function (arg) {
  * @returns {Object}
  */
 routes.filesRestore = function (arg) {
-    return this.request("files/restore", arg, null, null);
-}
+  return this.request('files/restore', arg, 'api', 'rpc');
+};
+
+/**
+ * Save a specified URL into a file in user's Dropbox. If the given path already
+ * exists, the file will be renamed to avoid the conflict (e.g. myfile (1).txt).
+ * @function Routes#filesSaveUrl
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - The path in Dropbox where the URL will be saved to.
+ * @arg {String} arg.url - The URL to be saved.
+ * @returns {Object}
+ */
+routes.filesSaveUrl = function (arg) {
+  return this.request('files/save_url', arg, 'api', 'rpc');
+};
+
+/**
+ * Check the status of a save_url job.
+ * @function Routes#filesSaveUrlCheckJobStatus
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.async_job_id - Id of the asynchronous job. This is the
+ * value of a response returned from the method that launched the job.
+ * @returns {Object}
+ */
+routes.filesSaveUrlCheckJobStatus = function (arg) {
+  return this.request('files/save_url/check_job_status', arg, 'api', 'rpc');
+};
 
 /**
  * Searches for files and folders. Note: Recent changes may not immediately be
@@ -272,8 +297,8 @@ routes.filesRestore = function (arg) {
  * @returns {Object}
  */
 routes.filesSearch = function (arg) {
-    return this.request("files/search", arg, null, null);
-}
+  return this.request('files/search', arg, 'api', 'rpc');
+};
 
 /**
  * Allows an owner or editor (if the ACL update policy allows) of a shared
@@ -292,8 +317,8 @@ routes.filesSearch = function (arg) {
  * @returns {null}
  */
 routes.sharingAddFolderMember = function (arg) {
-    return this.request("sharing/add_folder_member", arg, null, null);
-}
+  return this.request('sharing/add_folder_member', arg, 'api', 'rpc');
+};
 
 /**
  * Returns the status of an asynchronous job. Apps must have full Dropbox access
@@ -305,8 +330,8 @@ routes.sharingAddFolderMember = function (arg) {
  * @returns {Object}
  */
 routes.sharingCheckJobStatus = function (arg) {
-    return this.request("sharing/check_job_status", arg, null, null);
-}
+  return this.request('sharing/check_job_status', arg, 'api', 'rpc');
+};
 
 /**
  * Returns the status of an asynchronous job for sharing a folder. Apps must
@@ -318,8 +343,8 @@ routes.sharingCheckJobStatus = function (arg) {
  * @returns {Object}
  */
 routes.sharingCheckShareJobStatus = function (arg) {
-    return this.request("sharing/check_share_job_status", arg, null, null);
-}
+  return this.request('sharing/check_share_job_status', arg, 'api', 'rpc');
+};
 
 /**
  * Create a shared link. If a shared link already exists for the given path,
@@ -341,8 +366,8 @@ routes.sharingCheckShareJobStatus = function (arg) {
  * @returns {Object}
  */
 routes.sharingCreateSharedLink = function (arg) {
-    return this.request("sharing/create_shared_link", arg, null, null);
-}
+  return this.request('sharing/create_shared_link', arg, 'api', 'rpc');
+};
 
 /**
  * Create a shared link with custom settings. If no settings are given then the
@@ -356,8 +381,8 @@ routes.sharingCreateSharedLink = function (arg) {
  * @returns {Object}
  */
 routes.sharingCreateSharedLinkWithSettings = function (arg) {
-    return this.request("sharing/create_shared_link_with_settings", arg, null, null);
-}
+  return this.request('sharing/create_shared_link_with_settings', arg, 'api', 'rpc');
+};
 
 /**
  * Returns shared folder metadata by its folder ID. Apps must have full Dropbox
@@ -369,8 +394,8 @@ routes.sharingCreateSharedLinkWithSettings = function (arg) {
  * @returns {Object}
  */
 routes.sharingGetFolderMetadata = function (arg) {
-    return this.request("sharing/get_folder_metadata", arg, null, null);
-}
+  return this.request('sharing/get_folder_metadata', arg, 'api', 'rpc');
+};
 
 /**
  * Get the shared link's metadata.
@@ -385,8 +410,8 @@ routes.sharingGetFolderMetadata = function (arg) {
  * @returns {Object}
  */
 routes.sharingGetSharedLinkMetadata = function (arg) {
-    return this.request("sharing/get_shared_link_metadata", arg, null, null);
-}
+  return this.request('sharing/get_shared_link_metadata', arg, 'api', 'rpc');
+};
 
 /**
  * Returns a list of LinkMetadata objects for this user, including collection
@@ -402,8 +427,8 @@ routes.sharingGetSharedLinkMetadata = function (arg) {
  * @returns {Object}
  */
 routes.sharingGetSharedLinks = function (arg) {
-    return this.request("sharing/get_shared_links", arg, null, null);
-}
+  return this.request('sharing/get_shared_links', arg, 'api', 'rpc');
+};
 
 /**
  * Returns shared folder membership by its folder ID. Apps must have full
@@ -417,8 +442,8 @@ routes.sharingGetSharedLinks = function (arg) {
  * @returns {Object}
  */
 routes.sharingListFolderMembers = function (arg) {
-    return this.request("sharing/list_folder_members", arg, null, null);
-}
+  return this.request('sharing/list_folder_members', arg, 'api', 'rpc');
+};
 
 /**
  * Once a cursor has been retrieved from list_folder_members, use this to
@@ -431,8 +456,8 @@ routes.sharingListFolderMembers = function (arg) {
  * @returns {Object}
  */
 routes.sharingListFolderMembersContinue = function (arg) {
-    return this.request("sharing/list_folder_members/continue", arg, null, null);
-}
+  return this.request('sharing/list_folder_members/continue', arg, 'api', 'rpc');
+};
 
 /**
  * Return the list of all shared folders the current user has access to. Apps
@@ -445,8 +470,8 @@ routes.sharingListFolderMembersContinue = function (arg) {
  * @returns {Object}
  */
 routes.sharingListFolders = function (arg) {
-    return this.request("sharing/list_folders", arg, null, null);
-}
+  return this.request('sharing/list_folders', arg, 'api', 'rpc');
+};
 
 /**
  * Once a cursor has been retrieved from list_folders, use this to paginate
@@ -460,8 +485,8 @@ routes.sharingListFolders = function (arg) {
  * @returns {Object}
  */
 routes.sharingListFoldersContinue = function (arg) {
-    return this.request("sharing/list_folders/continue", arg, null, null);
-}
+  return this.request('sharing/list_folders/continue', arg, 'api', 'rpc');
+};
 
 /**
  * Return the list of all shared folders the current user can mount or unmount.
@@ -474,8 +499,8 @@ routes.sharingListFoldersContinue = function (arg) {
  * @returns {Object}
  */
 routes.sharingListMountableFolders = function (arg) {
-    return this.request("sharing/list_mountable_folders", arg, null, null);
-}
+  return this.request('sharing/list_mountable_folders', arg, 'api', 'rpc');
+};
 
 /**
  * Once a cursor has been retrieved from list_mountable_folders, use this to
@@ -489,8 +514,8 @@ routes.sharingListMountableFolders = function (arg) {
  * @returns {Object}
  */
 routes.sharingListMountableFoldersContinue = function (arg) {
-    return this.request("sharing/list_mountable_folders/continue", arg, null, null);
-}
+  return this.request('sharing/list_mountable_folders/continue', arg, 'api', 'rpc');
+};
 
 /**
  * List shared links of this user. If no path is given or the path is empty,
@@ -508,8 +533,8 @@ routes.sharingListMountableFoldersContinue = function (arg) {
  * @returns {Object}
  */
 routes.sharingListSharedLinks = function (arg) {
-    return this.request("sharing/list_shared_links", arg, null, null);
-}
+  return this.request('sharing/list_shared_links', arg, 'api', 'rpc');
+};
 
 /**
  * Modify the shared link's settings. If the requested visibility conflict with
@@ -527,8 +552,8 @@ routes.sharingListSharedLinks = function (arg) {
  * @returns {Object}
  */
 routes.sharingModifySharedLinkSettings = function (arg) {
-    return this.request("sharing/modify_shared_link_settings", arg, null, null);
-}
+  return this.request('sharing/modify_shared_link_settings', arg, 'api', 'rpc');
+};
 
 /**
  * The current user mounts the designated folder. Mount a shared folder for a
@@ -541,22 +566,25 @@ routes.sharingModifySharedLinkSettings = function (arg) {
  * @returns {Object}
  */
 routes.sharingMountFolder = function (arg) {
-    return this.request("sharing/mount_folder", arg, null, null);
-}
+  return this.request('sharing/mount_folder', arg, 'api', 'rpc');
+};
 
 /**
  * The current user relinquishes their membership in the designated shared
  * folder and will no longer have access to the folder.  A folder owner cannot
- * relinquish membership in their own folder. Apps must have full Dropbox access
- * to use this endpoint.
+ * relinquish membership in their own folder. This will run synchronously if
+ * leave_a_copy is false, and asynchronously if leave_a_copy is true. Apps must
+ * have full Dropbox access to use this endpoint.
  * @function Routes#sharingRelinquishFolderMembership
  * @arg {Object} arg - The request parameters.
  * @arg {String} arg.shared_folder_id - The ID for the shared folder.
- * @returns {null}
+ * @arg {Boolean} arg.leave_a_copy - Keep a copy of the folder's contents upon
+ * relinquishing membership.
+ * @returns {Object}
  */
 routes.sharingRelinquishFolderMembership = function (arg) {
-    return this.request("sharing/relinquish_folder_membership", arg, null, null);
-}
+  return this.request('sharing/relinquish_folder_membership', arg, 'api', 'rpc');
+};
 
 /**
  * Allows an owner or editor (if the ACL update policy allows) of a shared
@@ -573,8 +601,8 @@ routes.sharingRelinquishFolderMembership = function (arg) {
  * @returns {Object}
  */
 routes.sharingRemoveFolderMember = function (arg) {
-    return this.request("sharing/remove_folder_member", arg, null, null);
-}
+  return this.request('sharing/remove_folder_member', arg, 'api', 'rpc');
+};
 
 /**
  * Revoke a shared link. Note that even after revoking a shared link to a file,
@@ -588,8 +616,8 @@ routes.sharingRemoveFolderMember = function (arg) {
  * @returns {null}
  */
 routes.sharingRevokeSharedLink = function (arg) {
-    return this.request("sharing/revoke_shared_link", arg, null, null);
-}
+  return this.request('sharing/revoke_shared_link', arg, 'api', 'rpc');
+};
 
 /**
  * Share a folder with collaborators. Most sharing will be completed
@@ -614,8 +642,8 @@ routes.sharingRevokeSharedLink = function (arg) {
  * @returns {Object}
  */
 routes.sharingShareFolder = function (arg) {
-    return this.request("sharing/share_folder", arg, null, null);
-}
+  return this.request('sharing/share_folder', arg, 'api', 'rpc');
+};
 
 /**
  * Transfer ownership of a shared folder to a member of the shared folder. User
@@ -629,8 +657,8 @@ routes.sharingShareFolder = function (arg) {
  * @returns {null}
  */
 routes.sharingTransferFolder = function (arg) {
-    return this.request("sharing/transfer_folder", arg, null, null);
-}
+  return this.request('sharing/transfer_folder', arg, 'api', 'rpc');
+};
 
 /**
  * The current user unmounts the designated folder. They can re-mount the folder
@@ -642,8 +670,8 @@ routes.sharingTransferFolder = function (arg) {
  * @returns {null}
  */
 routes.sharingUnmountFolder = function (arg) {
-    return this.request("sharing/unmount_folder", arg, null, null);
-}
+  return this.request('sharing/unmount_folder', arg, 'api', 'rpc');
+};
 
 /**
  * Allows a shared folder owner to unshare the folder. You'll need to call
@@ -659,8 +687,8 @@ routes.sharingUnmountFolder = function (arg) {
  * @returns {Object}
  */
 routes.sharingUnshareFolder = function (arg) {
-    return this.request("sharing/unshare_folder", arg, null, null);
-}
+  return this.request('sharing/unshare_folder', arg, 'api', 'rpc');
+};
 
 /**
  * Allows an owner or editor of a shared folder to update another member's
@@ -675,8 +703,8 @@ routes.sharingUnshareFolder = function (arg) {
  * @returns {null}
  */
 routes.sharingUpdateFolderMember = function (arg) {
-    return this.request("sharing/update_folder_member", arg, null, null);
-}
+  return this.request('sharing/update_folder_member', arg, 'api', 'rpc');
+};
 
 /**
  * Update the sharing policies for a shared folder. User must have
@@ -695,8 +723,8 @@ routes.sharingUpdateFolderMember = function (arg) {
  * @returns {Object}
  */
 routes.sharingUpdateFolderPolicy = function (arg) {
-    return this.request("sharing/update_folder_policy", arg, null, null);
-}
+  return this.request('sharing/update_folder_policy', arg, 'api', 'rpc');
+};
 
 /**
  * Get information about a user's account.
@@ -706,8 +734,8 @@ routes.sharingUpdateFolderPolicy = function (arg) {
  * @returns {Object}
  */
 routes.usersGetAccount = function (arg) {
-    return this.request("users/get_account", arg, null, null);
-}
+  return this.request('users/get_account', arg, 'api', 'rpc');
+};
 
 /**
  * Get information about multiple user accounts.  At most 300 accounts may be
@@ -719,8 +747,8 @@ routes.usersGetAccount = function (arg) {
  * @returns {Object}
  */
 routes.usersGetAccountBatch = function (arg) {
-    return this.request("users/get_account_batch", arg, null, null);
-}
+  return this.request('users/get_account_batch', arg, 'api', 'rpc');
+};
 
 /**
  * Get information about the current user's account.
@@ -729,8 +757,8 @@ routes.usersGetAccountBatch = function (arg) {
  * @returns {Object}
  */
 routes.usersGetCurrentAccount = function (arg) {
-    return this.request("users/get_current_account", arg, null, null);
-}
+  return this.request('users/get_current_account', arg, 'api', 'rpc');
+};
 
 /**
  * Get the space usage information for the current user's account.
@@ -739,7 +767,7 @@ routes.usersGetCurrentAccount = function (arg) {
  * @returns {Object}
  */
 routes.usersGetSpaceUsage = function (arg) {
-    return this.request("users/get_space_usage", arg, null, null);
-}
+  return this.request('users/get_space_usage', arg, 'api', 'rpc');
+};
 
-module.exports = routes
+module.exports = routes;
