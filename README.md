@@ -22,7 +22,7 @@ Use [npm](https://www.npmjs.com/) for [nodejs](https://nodejs.org/en/),
 [browserify](http://browserify.org/):
 
 ```console
-$ npm install @TODO --save
+$ npm install dropbox --save
 ```
 
 #### `<script>`
@@ -30,7 +30,7 @@ $ npm install @TODO --save
 The UMD build is available on [npmcdn](https://npmcdn.com/):
 
 ```html
-<script src="https://npmcdn.com/dropbox/@TODO.min.js"></script>
+<script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
 ```
 
 You can find the library on `window.DropboxApi`.
@@ -40,7 +40,7 @@ You can find the library on `window.DropboxApi`.
 #### Browser with `<script>`
 
 ```html
-<script src="https://npmcdn.com/dropbox/@TODO.min.js"></script>
+<script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
 <script>
   var dbx = new DropboxApi({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
   dbx.filesListFolder({path: '/'})
@@ -56,7 +56,7 @@ You can find the library on `window.DropboxApi`.
 #### Nodejs, Browserify or Webpack
 
 ```javascript
-var DropboxApi = require('@TODO');
+var DropboxApi = require('dropbox');
 var dbx = new DropboxApi({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 dbx.filesListFolder({path: '/'})
   .then(function(response) {
