@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# Exit on first error
+set -e
+
 if ! [ -e scripts/release.sh ]; then
   echo >&2 "Please run scripts/release.sh from the repo root"
   exit 1
