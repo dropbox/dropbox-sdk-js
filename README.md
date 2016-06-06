@@ -15,7 +15,7 @@ environments.
 
 ## Installation
 
-#### npm
+#### Npm
 
 Use [npm](https://www.npmjs.com/) for [nodejs](https://nodejs.org/en/),
 [webpack](https://github.com/webpack/webpack) or
@@ -25,7 +25,7 @@ Use [npm](https://www.npmjs.com/) for [nodejs](https://nodejs.org/en/),
 $ npm install dropbox --save
 ```
 
-#### `<script>`
+#### Script tag
 
 The UMD build is available on [npmcdn](https://npmcdn.com/):
 
