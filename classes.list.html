@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Dropbox JavaScript SDK Index</title>
+	<title>Dropbox JavaScript SDK Classes</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -63,95 +63,95 @@
 		<div id="main">
 			
 
+	<h1 class="page-title">Classes</h1>
+<section>
+
+<header>
+    
+        <h2>
+        
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+<dl class="details">
+    
+
 	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
 	
 
 
 
-
-
-
-
-
-
-
-
-	
 	
 
+	
+
+	
+
+	
+</dl>
 
 
+        
+    
+    </div>
 
+    
 
-    <section class="readme-section">
-        <article><h1>Dropbox JavaScript SDK</h1><p>The Dropbox JavaScript SDK is lightweight and provides a promise based
-interface to the Dropbox v2 API that works in both nodejs and browser
-environments.</p>
-<h2>Table of Contents</h2><ul>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#usage">Usage</a></li>
-<li><a href="#examples">Examples</a></li>
-<li><a href="#documentation">Documentation</a></li>
-<li><a href="#versioning">Versioning</a></li>
-<li><a href="#contributing">Contributing</a></li>
-</ul>
-<h2>Installation</h2><h4>npm</h4><p>Use <a href="https://www.npmjs.com/">npm</a> for <a href="https://nodejs.org/en/">nodejs</a>,
-<a href="https://github.com/webpack/webpack">webpack</a> or
-<a href="http://browserify.org/">browserify</a>:</p>
-<pre class="prettyprint source lang-console"><code>$ npm install dropbox --save</code></pre><h4><code>&lt;script&gt;</code></h4><p>The UMD build is available on <a href="https://npmcdn.com/">npmcdn</a>:</p>
-<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js&quot;>&lt;/script></code></pre><p>You can find the library on <code>window.Dropbox</code>.</p>
-<h2>Usage</h2><h4>Browser with <code>&lt;script&gt;</code></h4><pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js&quot;>&lt;/script>
-&lt;script>
-  var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
-  dbx.filesListFolder({path: '/'})
-    .then(function(response) {
-      console.log(response);
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-&lt;/script></code></pre><h4>Nodejs, Browserify or Webpack</h4><pre class="prettyprint source lang-javascript"><code>var Dropbox = require('dropbox');
-var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
-dbx.filesListFolder({path: '/'})
-  .then(function(response) {
-    console.log(response);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });</code></pre><h2>Examples</h2><p>See <a href="examples/">examples/</a> for working examples of how the SDK can be used
-in a few different environments.</p>
-<h2>Documentation</h2><h4>Authentication</h4><p>The Dropbox SDK uses <a href="http://oauth.net/">OAuth2</a> for authorizing API
-requests. Dropbox requires an access token to make authenticated requests.
-The access token can be supplied at instantiation or set later using the
-<code>setAccessToken()</code> method.</p>
-<p><code>Dropbox.getAuthenticationUrl()</code> is a method that is very helpful for
-authenticating users. See the <a href="examples/auth/index.html">authentication
-example</a> for a basic example of how it can be
-used.</p>
-<p>For more information on how to obtain an access token using OAuth, please
-see our <a href="https://www.dropbox.com/developers/reference/oauth-guide">OAuth
-Guide</a>.</p>
-<h4>Endpoints</h4><p>For documentation of all of the available endpoints, the parameters they
-receive and the data they return, see <a href="src/routes.js">src/routes.js</a>.
-These methods are all available directly from an instance of the API
-class, ex: <code>dbx.filesListFolder()</code>.</p>
-<p>@TODO: Autogenerate docs from JSDocs in routes.js.</p>
-<h4>Promises implementation</h4><p>The SDK returns Promises using the <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">native Promise
-implementation</a>
-and polyfills with
-<a href="https://github.com/stefanpenner/es6-promise">jakearchibald/es6-promise</a>
-when needed.</p>
-<h2>Versioning</h2><p>We will try to follow <a href="http://semver.org/">semver</a> as close as possible.
-That means bug fixes will be patch releases (1.0.1 -&gt; 1.0.2), additional
-functionality like new endpoints will be minor releases (1.0.1 -&gt; 1.1.0)
-and breaking changes to both the library and the API endpoints it hits,
-will be major releases (1.0.1 -&gt; 2.0.0).</p>
-<h2>Contributing</h2><p>Please see <a href="./CONTRIBUTING.md">CONTRIBUTING.md</a> for information on how to
-contribute, setup the development environment and run tests.</p></article>
-    </section>
+    
 
+    
+        <h3 class="subsection-title">Classes</h3>
 
+        <dl>
+            <dt><a href="Routes.html">Routes</a></dt>
+            <dd></dd>
+        </dl>
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
