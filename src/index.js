@@ -1,35 +1,35 @@
 var routes = require('./routes');
 var rpcRequest = require('./rpc-request');
 var REQUEST_CONSTANTS = require('./request-constants');
-var DropboxApi;
+var Dropbox;
 
 var AUTH_BASE_URL = 'https://www.dropbox.com/oauth2/authorize';
 
 // Polyfill Object.assign() for older browsers
 require('./object-assign-polyfill');
 
-DropboxApi = function (options) {
+Dropbox = function (options) {
   this.accessToken = options && options.accessToken || '';
   this.clientId = options && options.clientId || '';
 };
 
-DropboxApi.prototype.setAccessToken = function (accessToken) {
+Dropbox.prototype.setAccessToken = function (accessToken) {
   this.accessToken = accessToken;
 };
 
-DropboxApi.prototype.getAccessToken = function () {
+Dropbox.prototype.getAccessToken = function () {
   return this.accessToken;
 };
 
-DropboxApi.prototype.setClientId = function (clientId) {
+Dropbox.prototype.setClientId = function (clientId) {
   this.clientId = clientId;
 };
 
-DropboxApi.prototype.getClientId = function () {
+Dropbox.prototype.getClientId = function () {
   return this.clientId;
 };
 
-DropboxApi.prototype.getAuthenticationUrl = function (redirectUri, state) {
+Dropbox.prototype.getAuthenticationUrl = function (redirectUri, state) {
   var clientId = this.getClientId();
   var authUrl;
   if (!clientId) {
@@ -49,7 +49,7 @@ DropboxApi.prototype.getAuthenticationUrl = function (redirectUri, state) {
   return authUrl;
 };
 
-DropboxApi.prototype.request = function (path, body, host, style) {
+Dropbox.prototype.request = function (path, body, host, style) {
   if (style === REQUEST_CONSTANTS.RPC) {
     return this.rpcRequest(path, body, this.getAccessToken());
   } else if (style === REQUEST_CONSTANTS.DOWNLOAD) {
@@ -61,16 +61,16 @@ DropboxApi.prototype.request = function (path, body, host, style) {
   }
 };
 
-DropboxApi.prototype.rpcRequest = rpcRequest;
+Dropbox.prototype.rpcRequest = rpcRequest;
 
-DropboxApi.prototype.setRpcRequest = function (newRpcRequest) {
-  DropboxApi.prototype.rpcRequest = newRpcRequest;
+Dropbox.prototype.setRpcRequest = function (newRpcRequest) {
+  Dropbox.prototype.rpcRequest = newRpcRequest;
 };
 
-DropboxApi.prototype.getRpcRequest = function () {
-  return DropboxApi.prototype.rpcRequest;
+Dropbox.prototype.getRpcRequest = function () {
+  return Dropbox.prototype.rpcRequest;
 };
 
-DropboxApi.prototype = Object.assign(DropboxApi.prototype, routes);
+Dropbox.prototype = Object.assign(Dropbox.prototype, routes);
 
-module.exports = DropboxApi;
+module.exports = Dropbox;
