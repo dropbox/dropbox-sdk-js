@@ -61,7 +61,7 @@ def main():
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-b', 'team', '-f', 'style!="upload" and style!="download"'] +
-         ['--', 'routes.js', '-a', 'host', '-a', 'style']),
+         ['-a', 'host', '-a', 'style'] + ['--', 'routes.js', '-c', 'Dropbox']),
         cwd=stone_path)
 
     if verbose:
@@ -69,7 +69,7 @@ def main():
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-w', 'team', '-f', 'style!="upload" and style!="download"'] +
-         ['--', 'routes-team.js', '-a', 'host', '-a', 'style']),
+         ['-a', 'host', '-a', 'style'] + ['--', 'routes-team.js', '-c', 'DropboxTeam']),
         cwd=stone_path)
 
 if __name__ == '__main__':
