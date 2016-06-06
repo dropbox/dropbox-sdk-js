@@ -4,8 +4,6 @@ The Dropbox JavaScript SDK is lightweight and provides a promise based
 interface to the Dropbox v2 API that works in both nodejs and browser
 environments.
 
-### [Full documentation](http://dropbox.github.io/dropbox-sdk-js)
-
 ## Table of Contents
 
 - [Documentation](#documentation)
