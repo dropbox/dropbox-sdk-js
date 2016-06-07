@@ -8,6 +8,8 @@
     "build-cjs": "webpack",
     "build-umd": "webpack -p --config webpack-umd.config.js",
     "compressed-size": "echo 'dropbox-sdk.min.js gzipped will weigh' $(cat dist/dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
+    "publish-docs": "rm -rf generated-docs && npm run generate-docs && gh-pages -d generated-docs",
+    "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -R docs/README.md -r ./src",
     "lint": "eslint src",
     "start": "node examples/server.js",
     "test": "npm run lint && mocha 'test/*.js'"
@@ -24,6 +26,9 @@
     "eslint-config-airbnb": "^6.2.0",
     "express": "^4.13.4",
     "express-urlrewrite": "^1.2.0",
+    "gh-pages": "^0.11.0",
+    "ink-docstrap": "^1.2.1",
+    "jsdoc": "^3.4.0",
     "mocha": "^2.4.5",
     "pretty-bytes": "^2.0.1",
     "prompt": "^1.0.0",

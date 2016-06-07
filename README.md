@@ -6,55 +6,27 @@ environments.
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Examples](#examples)
 - [Documentation](#documentation)
+- [Quickstart](#quickstart)
+- [Examples](#examples)
 - [Versioning](#versioning)
 - [Contributing](#contributing)
 
-## Installation
+## Documentation
 
-#### npm
+The full documentation for the Dropbox JavaScript SDK can be found here:
+<http://dropbox.github.io/dropbox-sdk-js>
 
-Use [npm](https://www.npmjs.com/) for [nodejs](https://nodejs.org/en/),
+## Quickstart
+
+Install the SDK using npm:
+```console
+$ npm install --save dropbox
+```
+
+Use with a module bundler like
 [webpack](https://github.com/webpack/webpack) or
 [browserify](http://browserify.org/):
-
-```console
-$ npm install dropbox --save
-```
-
-#### `<script>`
-
-The UMD build is available on [npmcdn](https://npmcdn.com/):
-
-```html
-<script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
-```
-
-You can find the library on `window.Dropbox`.
-
-## Usage
-
-#### Browser with `<script>`
-
-```html
-<script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
-<script>
-  var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
-  dbx.filesListFolder({path: '/'})
-    .then(function(response) {
-      console.log(response);
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-</script>
-```
-
-#### Nodejs, Browserify or Webpack
-
 ```javascript
 var Dropbox = require('dropbox');
 var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
@@ -71,41 +43,6 @@ dbx.filesListFolder({path: '/'})
 
 See [examples/](examples/) for working examples of how the SDK can be used
 in a few different environments.
-
-## Documentation
-
-#### Authentication
-
-The Dropbox SDK uses [OAuth2](http://oauth.net/) for authorizing API
-requests. Dropbox requires an access token to make authenticated requests.
-The access token can be supplied at instantiation or set later using the
-`setAccessToken()` method.
-
-`Dropbox.getAuthenticationUrl()` is a method that is very helpful for
-authenticating users. See the [authentication
-example](examples/auth/index.html) for a basic example of how it can be
-used.
-
-For more information on how to obtain an access token using OAuth, please
-see our [OAuth
-Guide](https://www.dropbox.com/developers/reference/oauth-guide).
-
-#### Endpoints
-
-For documentation of all of the available endpoints, the parameters they
-receive and the data they return, see [src/routes.js](src/routes.js).
-These methods are all available directly from an instance of the API
-class, ex: `dbx.filesListFolder()`.
-
-@TODO: Autogenerate docs from JSDocs in routes.js.
-
-#### Promises implementation
-
-The SDK returns Promises using the [native Promise
-implementation](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-and polyfills with
-[jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise)
-when needed.
 
 ## Versioning
 
