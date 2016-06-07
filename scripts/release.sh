@@ -36,6 +36,9 @@ git push origin master
 # Build umd and cjs files
 npm run build
 
+# Build new docs and push to github pages site
+npm run publish-docs
+
 # Update package.json version (this also adds a git tag with the version)
 npm version $next_version
 
