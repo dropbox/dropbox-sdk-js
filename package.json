@@ -1,8 +1,14 @@
 {
-  "name": "dropbox-sdk",
-  "version": "0.0.1",
-  "description": "Dropbox JavaScript SDK.",
+  "name": "dropbox",
+  "version": "1.0.0",
+  "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
   "main": "src/index.js",
+  "files": [
+    "*.md",
+    "docs",
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "npm run build-cjs && npm run build-umd && npm run compressed-size",
     "build-cjs": "webpack",
@@ -15,7 +21,11 @@
     "test": "npm run lint && mocha 'test/*.js'"
   },
   "keywords": [
-    "dropbox"
+    "dropbox",
+    "files",
+    "sync",
+    "sdk",
+    "client"
   ],
   "repository": "dropbox/dropbox-sdk-js/issues",
   "bugs": "https://github.com/dropbox/dropbox-sdk-js/issues",
