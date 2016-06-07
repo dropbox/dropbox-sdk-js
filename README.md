@@ -52,6 +52,12 @@ functionality like new endpoints will be minor releases (1.0.1 -> 1.1.0)
 and breaking changes to both the library and the API endpoints it hits,
 will be major releases (1.0.1 -> 2.0.0).
 
+This SDK will be taking the `dropbox` package name on
+[npm](https://www.npmjs.com/package/dropbox) from the [legacy
+SDK](https://github.com/dropbox/dropbox-js), that uses the old version of
+the Dropbox API. This will bump the version number from `0.10.3` to
+`1.0.0`, which should avoid breaking changes due to semver assumptions.
+
 ## Contributing
 
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for information on how to
