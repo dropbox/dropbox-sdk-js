@@ -14,7 +14,7 @@ environments.
 
 ## Documentation
 
-The full documentation for the Dropbox JavaScript SDK can be found here:
+The full documentation can be found here:
 <http://dropbox.github.io/dropbox-sdk-js>
 
 ## Quickstart
