@@ -1,4 +1,4 @@
-var DropboxApi = require('../index');
+var Dropbox = require('../../src/dropbox');
 var prompt = require('prompt');
 
 prompt.start();
@@ -9,13 +9,13 @@ prompt.get({
       description: 'Please enter an API V2 access token'
     }
   }
-}, function(error, result) {
-  var dbx = new DropboxApi({ accessToken: result.accessToken });
+}, function (error, result) {
+  var dbx = new Dropbox({ accessToken: result.accessToken });
   dbx.filesListFolder({ path: '/Screenshots' })
-    .then(function(response) {
+    .then(function (response) {
       console.log(response);
     })
-    .catch(function(error) {
-      console.log(error);
+    .catch(function (err) {
+      console.log(err);
     });
 });
