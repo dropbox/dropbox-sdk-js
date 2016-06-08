@@ -1,12 +1,17 @@
-var webpack = require('webpack')
+var webpack = require('webpack');
 
 module.exports = {
 
-  entry: __dirname + '/src/index.js',
+  entry: {
+    Dropbox: __dirname + '/src/index.js',
+    DropboxTeam: __dirname + '/src/team/index.js'
+  },
 
+  // Note that this makes filenames with capitals: Dropbox-sdk.min.js
+  // Not sure how to get around this. even webpack examples do this...
   output: {
-    filename: 'dropbox-sdk.min.js',
-    library: 'Dropbox',
+    filename: '[name]-sdk.min.js',
+    library: '[name]',
     libraryTarget: 'umd',
     path: __dirname + '/dist'
   },
@@ -15,4 +20,4 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin()
   ]
 
-}
+};

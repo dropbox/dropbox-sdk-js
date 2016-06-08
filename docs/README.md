@@ -22,7 +22,7 @@ $ npm install dropbox --save
 The UMD build is available on [npmcdn](https://npmcdn.com/):
 
 ```html
-<script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
+<script src="https://npmcdn.com/dropbox/umd/Dropbox-sdk.min.js"></script>
 ```
 
 You can find the library on `window.Dropbox`.
@@ -32,7 +32,7 @@ You can find the library on `window.Dropbox`.
 #### Browser with `<script>`
 
 ```html
-<script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
+<script src="https://npmcdn.com/dropbox/umd/Dropbox-sdk.min.js"></script>
 <script>
   var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
   dbx.filesListFolder({path: '/'})
