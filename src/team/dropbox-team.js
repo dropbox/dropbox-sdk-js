@@ -10,7 +10,7 @@ var DropboxTeam;
  * @arg {Object} options
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
- * @arg {String} [options.clientId] - The client id fo ryour app. Used to create
+ * @arg {String} [options.clientId] - The client id for your app. Used to create
  * authentication url.
  */
 DropboxTeam = function (options) {
@@ -25,7 +25,7 @@ DropboxTeam.prototype.constructor = DropboxTeam;
  * Returns an instance of Dropbox that can make calls to user api endpoints on
  * behalf of the passed user id, using the team access token.
  * @arg {String} userId - The user id to use the Dropbox class as
- * @returns {String} An instance of Dropbox used to make calls to user api
+ * @returns {Dropbox} An instance of Dropbox used to make calls to user api
  * endpoints
  */
 DropboxTeam.prototype.actAsUser = function (userId) {

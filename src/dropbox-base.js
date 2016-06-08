@@ -6,9 +6,11 @@ var DropboxBase;
 require('./object-assign-polyfill');
 
 /**
+ * @private
  * @class DropboxBase
  * @classdesc The main Dropbox SDK class. This contains the methods that are
- * shared between Dropbox and DropboxTeam classes
+ * shared between Dropbox and DropboxTeam classes. It is marked as private so
+ * that it doesn't show up in the docs because it is never used directly.
  * @arg {Object} options
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
