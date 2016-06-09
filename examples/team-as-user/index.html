@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+  <title>Dropbox JavaScript SDK</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/__build__/DropboxTeam-sdk.min.js"></script>
+</head>
+<body>
+  <script>
+    var ACCESS_TOKEN = prompt('Please enter an API V2 team access token');
+    var USER_ID = prompt('Please enter the id of the user you would like to act as');
+    var dbxTeam = new DropboxTeam({ accessToken: ACCESS_TOKEN });
+    var dbx = dbxTeam.actAsUser(USER_ID);
+    dbx.filesListFolder({ path: '' })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  </script>
+</body>
+</html>

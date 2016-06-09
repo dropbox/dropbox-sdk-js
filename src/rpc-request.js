@@ -12,8 +12,10 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var rpcRequest = function (path, body, accessToken) {
+var rpcRequest = function (path, body, accessToken, selectUser) {
   var promiseFunction = function (resolve, reject) {
+    var apiRequest;
+
     function success(data) {
       if (resolve) {
         resolve(data);
@@ -34,10 +36,15 @@ var rpcRequest = function (path, body, accessToken) {
       }
     }
 
-    request.post(BASE_URL + path)
+    apiRequest = request.post(BASE_URL + path)
       .type('application/json')
-      .set('Authorization', 'Bearer ' + accessToken)
-      .send(body)
+      .set('Authorization', 'Bearer ' + accessToken);
+
+    if (selectUser) {
+      apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
+    }
+
+    apiRequest.send(body)
       .end(responseHandler);
   };
 

@@ -22,7 +22,7 @@ $ npm install dropbox --save
 The UMD build is available on [npmcdn](https://npmcdn.com/):
 
 ```html
-<script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
+<script src="https://npmcdn.com/dropbox/umd/Dropbox-sdk.min.js"></script>
 ```
 
 You can find the library on `window.Dropbox`.
@@ -32,7 +32,7 @@ You can find the library on `window.Dropbox`.
 #### Browser with `<script>`
 
 ```html
-<script src="https://npmcdn.com/dropbox/umd/dropbox-sdk.min.js"></script>
+<script src="https://npmcdn.com/dropbox/umd/Dropbox-sdk.min.js"></script>
 <script>
   var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
   dbx.filesListFolder({path: '/'})
@@ -67,6 +67,14 @@ For documentation of all of the available endpoints, the parameters they
 receive and the data they return, see the [Dropbox class
 definition](Dropbox.html). These methods are all available directly from
 an instance of the API class, ex: `dbx.filesListFolder()`.
+
+#### Teams
+
+The Dropbox API has a series of actions that can be completed on a team
+wide level. These endpoint methods are available by using the DropboxTeam
+class. It can be loaded like this: `var DropboxTeam
+= require('dropbox/team');`. For more information , see the [DropboxTeam
+class definition](DropboxTeam.html).
 
 #### Authentication
 
