@@ -6,6 +6,10 @@
   <script src="/__build__/Dropbox-sdk.min.js"></script>
 </head>
 <body>
+  <h1>Dropbox JavaScript SDK Example App</h1>
+  <p>This example shows how to use the .filesListFolder() method to fetch the contents of the users '/Screenshots' folder.</p>
+  <p>Open your console to see the results.</p>
+  <p><a href="https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder">Click here</a> to get an access token to try this out.</p>
   <script>
     var ACCESS_TOKEN = prompt('Please enter an API V2 access token');
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
