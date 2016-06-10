@@ -55,7 +55,7 @@ This SDK will be taking the `dropbox` package name on
 [npm](https://www.npmjs.com/package/dropbox) from the [legacy
 SDK](https://github.com/dropbox/dropbox-js), that uses the old version of
 the Dropbox API. This will bump the version number from `0.10.3` to
-`1.0.0`, which should avoid breaking changes due to semver assumptions.
+`2.0.0`, which should avoid breaking changes due to semver assumptions.
 
 ## Contributing
 
