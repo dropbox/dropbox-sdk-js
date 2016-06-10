@@ -100,6 +100,12 @@ and polyfills with
 [jakearchibald/es6-promise](https://github.com/stefanpenner/es6-promise)
 when needed.
 
+#### Unsupported API Endpoints
+
+The SDK doesn't current have support for the [Content-upload or
+Content-download
+endpoints](https://www.dropbox.com/developers/documentation/http/documentation). We are actively developing these and expect them to be released soon.
+
 ## Examples
 
 See [examples/](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples) for working examples of how the SDK can be used
