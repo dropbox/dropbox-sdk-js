@@ -36,6 +36,12 @@ var rpcRequest = function (path, body, accessToken, selectUser) {
       }
     }
 
+    // The API expects null to be passed for endpoints that dont accept any
+    // parameters
+    if (!body) {
+      body = null;
+    }
+
     apiRequest = request.post(BASE_URL + path)
       .type('application/json')
       .set('Authorization', 'Bearer ' + accessToken);
