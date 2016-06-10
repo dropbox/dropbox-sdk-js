@@ -35,7 +35,7 @@ You can find the library on `window.Dropbox`.
 <script src="https://npmcdn.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 <script>
   var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
-  dbx.filesListFolder({path: '/'})
+  dbx.filesListFolder({path: ''})
     .then(function(response) {
       console.log(response);
     })
@@ -50,7 +50,7 @@ You can find the library on `window.Dropbox`.
 ```javascript
 var Dropbox = require('dropbox');
 var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
-dbx.filesListFolder({path: '/'})
+dbx.filesListFolder({path: ''})
   .then(function(response) {
     console.log(response);
   })
