@@ -78,7 +78,7 @@ class definition](DropboxTeam.html).
 
 #### Authentication
 
-The Dropbox SDK uses [OAuth2](http://oauth.net/) for authorizing API
+The Dropbox SDK uses [OAuth 2](http://oauth.net/) for authorizing API
 requests. Dropbox requires an access token to make authenticated requests.
 The access token can be supplied at instantiation or set later using the
 `setAccessToken()` method.
