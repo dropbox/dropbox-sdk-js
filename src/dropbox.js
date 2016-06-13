@@ -11,7 +11,7 @@ var Dropbox;
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
  * @arg {String} [options.clientId] - The client id for your app. Used to create
- * authentication url.
+ * authentication URL.
  * @arg {String} [options.selectUser] - Select user is only used by DropboxTeam.
  * It specifies which user the team access token should be acting as.
  */

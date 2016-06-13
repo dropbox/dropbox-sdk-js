@@ -15,7 +15,7 @@ require('./object-assign-polyfill');
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
  * @arg {String} [options.clientId] - The client id fo ryour app. Used to create
- * authentication url.
+ * authentication URL.
  * @arg {Number} [options.selectUser] - User is the team access token would like
  * to act as.
  */
@@ -61,10 +61,10 @@ DropboxBase.prototype.getClientId = function () {
 };
 
 /**
- * Get a url that can be used to authenticate users for the Dropbox API.
- * @arg {String} redirectUri - A url to redirect the user to after
+ * Get a URL that can be used to authenticate users for the Dropbox API.
+ * @arg {String} redirectUri - A URL to redirect the user to after
  * authenticating. This must be added to your app through the admin interface.
- * @arg {String} [state] - State that will be returned in the redirect url to help
+ * @arg {String} [state] - State that will be returned in the redirect URL to help
  * prevent cross site scripting attacks.
  * @returns {String} Url to send user to for Dropbox API authentication
  */
