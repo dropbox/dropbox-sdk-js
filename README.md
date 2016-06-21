@@ -1,4 +1,4 @@
-# Dropbox JavaScript SDK [![Build Status](https://travis-ci.org/dropbox/dropbox-sdk-js.svg?branch=master)](https://travis-ci.org/dropbox/dropbox-sdk-js)[![npm version](https://badge.fury.io/js/dropbox.svg)](https://badge.fury.io/js/dropbox)
+# Dropbox JavaScript SDK [![Build Status](https://travis-ci.org/dropbox/dropbox-sdk-js.svg?branch=master)](https://travis-ci.org/dropbox/dropbox-sdk-js) [![npm version](https://badge.fury.io/js/dropbox.svg)](https://badge.fury.io/js/dropbox)
 
 The Dropbox JavaScript SDK is a lightweight, promise based interface to
 the Dropbox v2 API that works in both nodejs and browser environments.
