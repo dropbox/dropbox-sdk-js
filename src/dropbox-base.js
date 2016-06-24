@@ -2,6 +2,7 @@ var REQUEST_CONSTANTS = require('./request-constants');
 var downloadRequest = require('./download-request');
 var rpcRequest = require('./rpc-request');
 var uploadRequest = require('./upload-request');
+var downloadRequest = require('./download-request');
 var DropboxBase;
 
 // Polyfill Object.assign() for older browsers
@@ -104,6 +105,7 @@ DropboxBase.prototype.request = function (path, args, host, style) {
 };
 
 DropboxBase.prototype.rpcRequest = rpcRequest;
+DropboxBase.prototype.downloadRequest = downloadRequest;
 
 DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
   DropboxBase.prototype.rpcRequest = newRpcRequest;
