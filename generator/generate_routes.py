@@ -60,8 +60,9 @@ def main():
         print('Generating JS client routes for user routes')
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
-         specs + ['-b', 'team', '-f', 'style!="upload" and style!="download"'] +
-         ['-a', 'host', '-a', 'style'] + ['--', 'routes.js', '-c', 'Dropbox']),
+         specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
+         ['--', 'routes.js', '-c', 'Dropbox',
+          '-e', 'style="upload":contents:Object']),
         cwd=stone_path)
 
     if verbose:
