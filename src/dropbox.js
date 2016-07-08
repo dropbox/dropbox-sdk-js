@@ -26,4 +26,8 @@ Dropbox.prototype.constructor = Dropbox;
 // Add the user endpoint methods to the prototype
 Dropbox.prototype = Object.assign(Dropbox.prototype, routes);
 
+Dropbox.prototype.filesUpload = function (arg) {
+  return this.request('files/upload', arg, 'api', 'upload');
+};
+
 module.exports = Dropbox;

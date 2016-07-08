@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+  <title>Dropbox JavaScript SDK</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/__build__/Dropbox-sdk.min.js"></script>
+</head>
+<body>
+  <h1>Dropbox JavaScript SDK Example App</h1>
+  <p>This example shows how to use the .filesUpload() method to upload a file.</p>
+  <p>Open your console to see the results.</p>
+  <p><a href="https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder">Click here</a> to get an access token to try this out.</p>
+  <input type="file" id="file-upload" />
+  <button id="upload-button">Upload</button>
+  <script>
+    var ACCESS_TOKEN = prompt('Please enter an API V2 access token');
+    var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
+    var uploadButton = document.getElementById('upload-button');
+    var fileInput = document.getElementById('file-upload');
+    uploadButton.addEventListener('click', function (e) {
+      var file = fileInput.files[0];
+      dbx.filesUpload({path: '/foobar.png', body: file})
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }, false);
+  </script>
+</body>
+</html>
