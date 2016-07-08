@@ -3,6 +3,11 @@ var Promise = require('es6-promise').Promise;
 
 var BASE_URL = 'https://content.dropboxapi.com/2/';
 
+// Register a handler that will instruct superagent how to parse the response
+request.parse['application/octect-stream'] = function (obj) {
+  return obj;
+};
+
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
   return {
@@ -30,20 +35,21 @@ var downloadRequest = function (path, args, accessToken, selectUser) {
 
     function responseHandler(error, response) {
       var responseData;
-      var toDownload;
       if (error) {
         failure(buildCustomError(error, response));
       } else {
         responseData = JSON.parse(response.headers['dropbox-api-result']);
-        toDownload = new Blob([response.xhr.response], { type: 'application/octet-stream' });
-        responseData.objectDownloadUrl = URL.createObjectURL(toDownload);
+        responseData.blob = response.xhr.response;
         success(responseData);
       }
     }
 
     apiRequest = request.post(BASE_URL + path)
       .set('Authorization', 'Bearer ' + accessToken)
-      .set('Dropbox-API-Arg', JSON.stringify(args));
+      .set('Dropbox-API-Arg', JSON.stringify(args))
+      .on('request', function () {
+        this.xhr.responseType = 'blob';
+      });
 
     if (selectUser) {
       apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
