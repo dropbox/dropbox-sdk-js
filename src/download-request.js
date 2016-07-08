@@ -1,6 +1,8 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
 
+var buildCustomError;
+var downloadRequest;
 var BASE_URL = 'https://content.dropboxapi.com/2/';
 
 // Register a handler that will instruct superagent how to parse the response
@@ -9,7 +11,7 @@ request.parse['application/octect-stream'] = function (obj) {
 };
 
 // This doesn't match what was spec'd in paper doc yet
-var buildCustomError = function (error, response) {
+buildCustomError = function (error, response) {
   return {
     status: error.status,
     error: response.text,
@@ -17,7 +19,7 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var downloadRequest = function (path, args, accessToken, selectUser) {
+downloadRequest = function (path, args, accessToken, selectUser) {
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
 
