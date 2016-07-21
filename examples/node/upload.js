@@ -20,7 +20,7 @@ prompt.get({
     }
 
     // This uploads basic.js to the root of your dropbox
-    dbx.filesUpload({ path: '/basic.js', body: contents })
+    dbx.filesUpload({ path: '/basic.js', contents: contents })
       .then(function (response) {
         console.log(response);
       })

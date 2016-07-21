@@ -77,17 +77,17 @@ describe('uploadRequest', function () {
     assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
   });
 
-  it('doesn\'t include args.body in the Dropbox-API-Arg header', function () {
-    uploadRequest('files/upload', { foo: 'bar', body: 'fakebody' }, 'atoken');
+  it('doesn\'t include args.contents in the Dropbox-API-Arg header', function () {
+    uploadRequest('files/upload', { foo: 'bar', contents: 'fakecontents' }, 'atoken');
     assert(setStub.calledTwice);
     assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
     assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
   });
 
-  it('sends the body arg as the body of the request', function () {
-    uploadRequest('files/upload', { foo: 'bar', body: 'fakebody' }, 'atoken');
+  it('sends the contents arg as the body of the request', function () {
+    uploadRequest('files/upload', { foo: 'bar', contents: 'fakecontents' }, 'atoken');
     assert(sendStub.calledOnce);
-    assert.equal('fakebody', sendStub.firstCall.args[0]);
+    assert.equal('fakecontents', sendStub.firstCall.args[0]);
     // assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
   });
 

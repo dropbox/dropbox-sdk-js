@@ -16,12 +16,10 @@ var uploadRequest = function (path, args, accessToken, selectUser) {
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
 
-    // !! This is a hack !!
-    // Since the function only takes one object for body/args right now, im
-    // doing this to make it work. I'd like to merge a branch that changes the
-    // function signature to include both body and args before landing this.
-    var body = args.body;
-    delete args.body;
+    // Since args.contents is sent as the body of the request and not added to
+    // the url, it needs to be remove it from args.
+    var contents = args.contents;
+    delete args.contents;
 
     function success(data) {
       if (resolve) {
@@ -52,9 +50,8 @@ var uploadRequest = function (path, args, accessToken, selectUser) {
       apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
     }
 
-    // apiRequest.send(body)
     apiRequest
-      .send(body)
+      .send(contents)
       .end(responseHandler);
   };
 
