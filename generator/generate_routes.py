@@ -3,6 +3,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import argparse
 import glob
+import json
 import os
 import subprocess
 import sys
@@ -58,11 +59,18 @@ def main():
 
     if verbose:
         print('Generating JS client routes for user routes')
+
+    upload_arg = {
+        "match": ["style", "upload"],
+        "arg_name": "contents",
+        "arg_type": "Object",
+        "arg_docstring": "The file contents to be uploaded."
+    }
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
          ['--', 'routes.js', '-c', 'Dropbox',
-          '-e', 'style="upload":contents:Object']),
+          '-e', json.dumps(upload_arg)]),
         cwd=stone_path)
 
     if verbose:

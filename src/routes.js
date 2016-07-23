@@ -41,7 +41,7 @@ routes.filesAlphaGetMetadata = function (arg) {
  * an upload session with upload_session/start.
  * @function Dropbox#filesAlphaUpload
  * @arg {Object} arg - The request parameters.
- * @arg {Object} arg.contents
+ * @arg {Object} arg.contents - The file contents to be uploaded.
  * @arg {String} arg.path - Path in the user's Dropbox to save the file.
  * @arg {Object} arg.mode - Selects what to do if the file already exists.
  * @arg {Boolean} arg.autorename - If there's a conflict, as determined by mode,
@@ -480,7 +480,7 @@ routes.filesSearch = function (arg) {
  * upload_session/start.
  * @function Dropbox#filesUpload
  * @arg {Object} arg - The request parameters.
- * @arg {Object} arg.contents
+ * @arg {Object} arg.contents - The file contents to be uploaded.
  * @arg {String} arg.path - Path in the user's Dropbox to save the file.
  * @arg {Object} arg.mode - Selects what to do if the file already exists.
  * @arg {Boolean} arg.autorename - If there's a conflict, as determined by mode,
@@ -506,7 +506,7 @@ routes.filesUpload = function (arg) {
  * @function Dropbox#filesUploadSessionAppend
  * @deprecated
  * @arg {Object} arg - The request parameters.
- * @arg {Object} arg.contents
+ * @arg {Object} arg.contents - The file contents to be uploaded.
  * @arg {String} arg.session_id - The upload session ID (returned by
  * upload_session/start).
  * @arg {Number} arg.offset - The amount of data that has been uploaded so far.
@@ -524,7 +524,7 @@ routes.filesUploadSessionAppend = function (arg) {
  * MB of file contents.
  * @function Dropbox#filesUploadSessionAppendV2
  * @arg {Object} arg - The request parameters.
- * @arg {Object} arg.contents
+ * @arg {Object} arg.contents - The file contents to be uploaded.
  * @arg {Object} arg.cursor - Contains the upload session ID and the offset.
  * @arg {Boolean} arg.close - If true, the current session will be closed, at
  * which point you won't be able to call upload_session/append_v2 anymore with
@@ -540,7 +540,7 @@ routes.filesUploadSessionAppendV2 = function (arg) {
  * single request should not upload more than 150 MB of file contents.
  * @function Dropbox#filesUploadSessionFinish
  * @arg {Object} arg - The request parameters.
- * @arg {Object} arg.contents
+ * @arg {Object} arg.contents - The file contents to be uploaded.
  * @arg {Object} arg.cursor - Contains the upload session ID and the offset.
  * @arg {Object} arg.commit - Contains the path and other optional modifiers for
  * the commit.
@@ -558,7 +558,7 @@ routes.filesUploadSessionFinish = function (arg) {
  * than 150 MB of file contents.
  * @function Dropbox#filesUploadSessionStart
  * @arg {Object} arg - The request parameters.
- * @arg {Object} arg.contents
+ * @arg {Object} arg.contents - The file contents to be uploaded.
  * @arg {Boolean} arg.close - If true, the current session will be closed, at
  * which point you won't be able to call upload_session/append_v2 anymore with
  * the current session.
