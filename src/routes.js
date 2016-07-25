@@ -12,6 +12,58 @@ routes.authTokenRevoke = function (arg) {
 };
 
 /**
+ * Returns the metadata for a file or folder. This is an alpha endpoint
+ * compatible with the properties API. Note: Metadata for the root folder is
+ * unsupported.
+ * @function Dropbox#filesAlphaGetMetadata
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - The path of a file or folder on Dropbox.
+ * @arg {Boolean} arg.include_media_info - If true, FileMetadata.media_info is
+ * set for photo and video.
+ * @arg {Boolean} arg.include_deleted - If true, DeletedMetadata will be
+ * returned for deleted file or folder, otherwise LookupError.not_found will be
+ * returned.
+ * @arg {Boolean} arg.include_has_explicit_shared_members - If true, the results
+ * will include a flag for each file indicating whether or not  that file has
+ * any explicit members.
+ * @arg {Array|null} arg.include_property_templates - If true,
+ * FileMetadata.property_groups is set for files with custom properties.
+ * @returns {Object}
+ */
+routes.filesAlphaGetMetadata = function (arg) {
+  return this.request('files/alpha/get_metadata', arg, 'api', 'rpc');
+};
+
+/**
+ * Create a new file with the contents provided in the request. Note that this
+ * endpoint is part of the properties API alpha and is slightly different from
+ * upload. Do not use this to upload a file larger than 150 MB. Instead, create
+ * an upload session with upload_session/start.
+ * @function Dropbox#filesAlphaUpload
+ * @arg {Object} arg - The request parameters.
+ * @arg {Object} arg.contents - The file contents to be uploaded.
+ * @arg {String} arg.path - Path in the user's Dropbox to save the file.
+ * @arg {Object} arg.mode - Selects what to do if the file already exists.
+ * @arg {Boolean} arg.autorename - If there's a conflict, as determined by mode,
+ * have the Dropbox server try to autorename the file to avoid conflict.
+ * @arg {Object|null} arg.client_modified - The value to store as the
+ * client_modified timestamp. Dropbox automatically records the time at which
+ * the file was written to the Dropbox servers. It can also record an additional
+ * timestamp, provided by Dropbox desktop clients, mobile clients, and API apps
+ * of when the file was actually created or modified.
+ * @arg {Boolean} arg.mute - Normally, users are made aware of any file
+ * modifications in their Dropbox account via notifications in the client
+ * software. If true, this tells the clients that this modification shouldn't
+ * result in a user notification.
+ * @arg {Array|null} arg.property_groups - List of custom properties to add to
+ * file.
+ * @returns {Object}
+ */
+routes.filesAlphaUpload = function (arg) {
+  return this.request('files/alpha/upload', arg, 'content', 'upload');
+};
+
+/**
  * Copy a file or folder to a different location in the user's Dropbox. If the
  * source path is a folder all its contents will be copied.
  * @function Dropbox#filesCopy
@@ -80,6 +132,19 @@ routes.filesDelete = function (arg) {
 };
 
 /**
+ * Download a file from a user's Dropbox.
+ * @function Dropbox#filesDownload
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - The path of the file to download.
+ * @arg {String|null} arg.rev - Deprecated. Please specify revision in path
+ * instead
+ * @returns {Object}
+ */
+routes.filesDownload = function (arg) {
+  return this.request('files/download', arg, 'content', 'download');
+};
+
+/**
  * Returns the metadata for a file or folder. Note: Metadata for the root folder
  * is unsupported.
  * @function Dropbox#filesGetMetadata
@@ -100,6 +165,21 @@ routes.filesGetMetadata = function (arg) {
 };
 
 /**
+ * Get a preview for a file. Currently previews are only generated for the files
+ * with  the following extensions: .doc, .docx, .docm, .ppt, .pps, .ppsx, .ppsm,
+ * .pptx, .pptm,  .xls, .xlsx, .xlsm, .rtf
+ * @function Dropbox#filesGetPreview
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - The path of the file to preview.
+ * @arg {String|null} arg.rev - Deprecated. Please specify revision in path
+ * instead
+ * @returns {Object}
+ */
+routes.filesGetPreview = function (arg) {
+  return this.request('files/get_preview', arg, 'content', 'download');
+};
+
+/**
  * Get a temporary link to stream content of a file. This link will expire in
  * four hours and afterwards you will get 410 Gone. Content-Type of the link is
  * determined automatically by the file's mime type.
@@ -110,6 +190,23 @@ routes.filesGetMetadata = function (arg) {
  */
 routes.filesGetTemporaryLink = function (arg) {
   return this.request('files/get_temporary_link', arg, 'api', 'rpc');
+};
+
+/**
+ * Get a thumbnail for an image. This method currently supports files with the
+ * following file extensions: jpg, jpeg, png, tiff, tif, gif and bmp. Photos
+ * that are larger than 20MB in size won't be converted to a thumbnail.
+ * @function Dropbox#filesGetThumbnail
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - The path to the image file you want to thumbnail.
+ * @arg {Object} arg.format - The format for the thumbnail image, jpeg (default)
+ * or png. For  images that are photos, jpeg should be preferred, while png is
+ * better for screenshots and digital arts.
+ * @arg {Object} arg.size - The size for the thumbnail image.
+ * @returns {Object}
+ */
+routes.filesGetThumbnail = function (arg) {
+  return this.request('files/get_thumbnail', arg, 'content', 'download');
 };
 
 /**
@@ -236,6 +333,87 @@ routes.filesPermanentlyDelete = function (arg) {
 };
 
 /**
+ * Add custom properties to a file using a filled property template. See
+ * properties/template/add to create new property templates.
+ * @function Dropbox#filesPropertiesAdd
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - A unique identifier for the file.
+ * @arg {Array} arg.property_groups - Filled custom property templates
+ * associated with a file.
+ * @returns {null}
+ */
+routes.filesPropertiesAdd = function (arg) {
+  return this.request('files/properties/add', arg, 'api', 'rpc');
+};
+
+/**
+ * Overwrite custom properties from a specified template associated with a file.
+ * @function Dropbox#filesPropertiesOverwrite
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - A unique identifier for the file.
+ * @arg {Array} arg.property_groups - Filled custom property templates
+ * associated with a file.
+ * @returns {null}
+ */
+routes.filesPropertiesOverwrite = function (arg) {
+  return this.request('files/properties/overwrite', arg, 'api', 'rpc');
+};
+
+/**
+ * Remove all custom properties from a specified template associated with a
+ * file. To remove specific property key value pairs, see properties/update. To
+ * update a property template, see properties/template/update. Property
+ * templates can't be removed once created.
+ * @function Dropbox#filesPropertiesRemove
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - A unique identifier for the file.
+ * @arg {Array} arg.property_template_ids - A list of identifiers for a property
+ * template created by route properties/template/add.
+ * @returns {null}
+ */
+routes.filesPropertiesRemove = function (arg) {
+  return this.request('files/properties/remove', arg, 'api', 'rpc');
+};
+
+/**
+ * Get the schema for a specified template.
+ * @function Dropbox#filesPropertiesTemplateGet
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.template_id - An identifier for property template added by
+ * route properties/template/add.
+ * @returns {Object}
+ */
+routes.filesPropertiesTemplateGet = function (arg) {
+  return this.request('files/properties/template/get', arg, 'api', 'rpc');
+};
+
+/**
+ * Get the property template identifiers for a user. To get the schema of each
+ * template use properties/template/get.
+ * @function Dropbox#filesPropertiesTemplateList
+ * @arg {null} arg - The request parameters.
+ * @returns {Object}
+ */
+routes.filesPropertiesTemplateList = function (arg) {
+  return this.request('files/properties/template/list', arg, 'api', 'rpc');
+};
+
+/**
+ * Add, update or remove custom properties from a specified template associated
+ * with a file. Fields that already exist and not described in the request will
+ * not be modified.
+ * @function Dropbox#filesPropertiesUpdate
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.path - A unique identifier for the file.
+ * @arg {Array} arg.update_property_groups - Filled custom property templates
+ * associated with a file.
+ * @returns {null}
+ */
+routes.filesPropertiesUpdate = function (arg) {
+  return this.request('files/properties/update', arg, 'api', 'rpc');
+};
+
+/**
  * Restore a file to a specific revision
  * @function Dropbox#filesRestore
  * @arg {Object} arg - The request parameters.
@@ -297,6 +475,122 @@ routes.filesSearch = function (arg) {
 };
 
 /**
+ * Create a new file with the contents provided in the request. Do not use this
+ * to upload a file larger than 150 MB. Instead, create an upload session with
+ * upload_session/start.
+ * @function Dropbox#filesUpload
+ * @arg {Object} arg - The request parameters.
+ * @arg {Object} arg.contents - The file contents to be uploaded.
+ * @arg {String} arg.path - Path in the user's Dropbox to save the file.
+ * @arg {Object} arg.mode - Selects what to do if the file already exists.
+ * @arg {Boolean} arg.autorename - If there's a conflict, as determined by mode,
+ * have the Dropbox server try to autorename the file to avoid conflict.
+ * @arg {Object|null} arg.client_modified - The value to store as the
+ * client_modified timestamp. Dropbox automatically records the time at which
+ * the file was written to the Dropbox servers. It can also record an additional
+ * timestamp, provided by Dropbox desktop clients, mobile clients, and API apps
+ * of when the file was actually created or modified.
+ * @arg {Boolean} arg.mute - Normally, users are made aware of any file
+ * modifications in their Dropbox account via notifications in the client
+ * software. If true, this tells the clients that this modification shouldn't
+ * result in a user notification.
+ * @returns {Object}
+ */
+routes.filesUpload = function (arg) {
+  return this.request('files/upload', arg, 'content', 'upload');
+};
+
+/**
+ * Append more data to an upload session. A single request should not upload
+ * more than 150 MB of file contents.
+ * @function Dropbox#filesUploadSessionAppend
+ * @deprecated
+ * @arg {Object} arg - The request parameters.
+ * @arg {Object} arg.contents - The file contents to be uploaded.
+ * @arg {String} arg.session_id - The upload session ID (returned by
+ * upload_session/start).
+ * @arg {Number} arg.offset - The amount of data that has been uploaded so far.
+ * We use this to make sure upload data isn't lost or duplicated in the event of
+ * a network error.
+ * @returns {null}
+ */
+routes.filesUploadSessionAppend = function (arg) {
+  return this.request('files/upload_session/append', arg, 'content', 'upload');
+};
+
+/**
+ * Append more data to an upload session. When the parameter close is set, this
+ * call will close the session. A single request should not upload more than 150
+ * MB of file contents.
+ * @function Dropbox#filesUploadSessionAppendV2
+ * @arg {Object} arg - The request parameters.
+ * @arg {Object} arg.contents - The file contents to be uploaded.
+ * @arg {Object} arg.cursor - Contains the upload session ID and the offset.
+ * @arg {Boolean} arg.close - If true, the current session will be closed, at
+ * which point you won't be able to call upload_session/append_v2 anymore with
+ * the current session.
+ * @returns {null}
+ */
+routes.filesUploadSessionAppendV2 = function (arg) {
+  return this.request('files/upload_session/append_v2', arg, 'content', 'upload');
+};
+
+/**
+ * Finish an upload session and save the uploaded data to the given file path. A
+ * single request should not upload more than 150 MB of file contents.
+ * @function Dropbox#filesUploadSessionFinish
+ * @arg {Object} arg - The request parameters.
+ * @arg {Object} arg.contents - The file contents to be uploaded.
+ * @arg {Object} arg.cursor - Contains the upload session ID and the offset.
+ * @arg {Object} arg.commit - Contains the path and other optional modifiers for
+ * the commit.
+ * @returns {Object}
+ */
+routes.filesUploadSessionFinish = function (arg) {
+  return this.request('files/upload_session/finish', arg, 'content', 'upload');
+};
+
+/**
+ * Upload sessions allow you to upload a single file using multiple requests.
+ * This call starts a new upload session with the given data.  You can then use
+ * upload_session/append_v2 to add more data and upload_session/finish to save
+ * all the data to a file in Dropbox. A single request should not upload more
+ * than 150 MB of file contents.
+ * @function Dropbox#filesUploadSessionStart
+ * @arg {Object} arg - The request parameters.
+ * @arg {Object} arg.contents - The file contents to be uploaded.
+ * @arg {Boolean} arg.close - If true, the current session will be closed, at
+ * which point you won't be able to call upload_session/append_v2 anymore with
+ * the current session.
+ * @returns {Object}
+ */
+routes.filesUploadSessionStart = function (arg) {
+  return this.request('files/upload_session/start', arg, 'content', 'upload');
+};
+
+/**
+ * Adds specified members to a file.
+ * @function Dropbox#sharingAddFileMember
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.file - File to which to add members.
+ * @arg {Array} arg.members - Members to add. Note that even an email address is
+ * given, this may result in a user being directy added to the membership if
+ * that email is the user's main account email.
+ * @arg {String|null} arg.custom_message - Message to send to added members in
+ * their invitation.
+ * @arg {Boolean} arg.quiet - Whether added members should be notified via
+ * device notifications of their invitation.
+ * @arg {Object} arg.access_level - AccessLevel union object, describing what
+ * access level we want to give new members.
+ * @arg {Boolean} arg.add_message_as_comment - If the custom message should be
+ * added as a comment on the file.
+ * @returns {Array}
+ */
+routes.sharingAddFileMember = function (arg) {
+  return this.request('sharing/add_file_member', arg, 'api', 'rpc');
+};
+
+/**
  * Allows an owner or editor (if the ACL update policy allows) of a shared
  * folder to add another member. For the new member to get access to all the
  * functionality for this folder, you will need to call mount_folder on their
@@ -327,6 +621,19 @@ routes.sharingAddFolderMember = function (arg) {
  */
 routes.sharingCheckJobStatus = function (arg) {
   return this.request('sharing/check_job_status', arg, 'api', 'rpc');
+};
+
+/**
+ * Returns the status of an asynchronous job for sharing a folder. Apps must
+ * have full Dropbox access to use this endpoint.
+ * @function Dropbox#sharingCheckRemoveMemberJobStatus
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.async_job_id - Id of the asynchronous job. This is the
+ * value of a response returned from the method that launched the job.
+ * @returns {Object}
+ */
+routes.sharingCheckRemoveMemberJobStatus = function (arg) {
+  return this.request('sharing/check_remove_member_job_status', arg, 'api', 'rpc');
 };
 
 /**
@@ -381,16 +688,53 @@ routes.sharingCreateSharedLinkWithSettings = function (arg) {
 };
 
 /**
+ * Returns shared file metadata.
+ * @function Dropbox#sharingGetFileMetadata
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.file - The file to query.
+ * @arg {Array|null} arg.actions - File actions to query.
+ * @returns {Object}
+ */
+routes.sharingGetFileMetadata = function (arg) {
+  return this.request('sharing/get_file_metadata', arg, 'api', 'rpc');
+};
+
+/**
+ * Returns shared file metadata.
+ * @function Dropbox#sharingGetFileMetadataBatch
+ * @arg {Object} arg - The request parameters.
+ * @arg {Array} arg.files - The files to query.
+ * @arg {Array|null} arg.actions - File actions to query.
+ * @returns {Array}
+ */
+routes.sharingGetFileMetadataBatch = function (arg) {
+  return this.request('sharing/get_file_metadata/batch', arg, 'api', 'rpc');
+};
+
+/**
  * Returns shared folder metadata by its folder ID. Apps must have full Dropbox
  * access to use this endpoint.
  * @function Dropbox#sharingGetFolderMetadata
  * @arg {Object} arg - The request parameters.
  * @arg {String} arg.shared_folder_id - The ID for the shared folder.
- * @arg {Array|null} arg.actions - Folder actions to query.
+ * @arg {Array|null} arg.actions - This is a list indicating whether the
+ * returned folder data will include a boolean value  FolderPermission.allow
+ * that describes whether the current user can perform the  FolderAction on the
+ * folder.
  * @returns {Object}
  */
 routes.sharingGetFolderMetadata = function (arg) {
   return this.request('sharing/get_folder_metadata', arg, 'api', 'rpc');
+};
+
+/**
+ * Download the shared link's file from a user's Dropbox.
+ * @function Dropbox#sharingGetSharedLinkFile
+ * @arg {Object} arg - The request parameters.
+ * @returns {Object}
+ */
+routes.sharingGetSharedLinkFile = function (arg) {
+  return this.request('sharing/get_shared_link_file', arg, 'content', 'download');
 };
 
 /**
@@ -427,12 +771,64 @@ routes.sharingGetSharedLinks = function (arg) {
 };
 
 /**
+ * Use to obtain the members who have been invited to a file, both inherited and
+ * uninherited members.
+ * @function Dropbox#sharingListFileMembers
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.file - The file for which you want to see members.
+ * @arg {Array|null} arg.actions - The actions for which to return permissions
+ * on a member
+ * @arg {Boolean} arg.include_inherited - Whether to include members who only
+ * have access from a parent shared folder.
+ * @arg {Number} arg.limit - Number of members to return max per query. Defaults
+ * to 100 if no limit is specified.
+ * @returns {Object}
+ */
+routes.sharingListFileMembers = function (arg) {
+  return this.request('sharing/list_file_members', arg, 'api', 'rpc');
+};
+
+/**
+ * Get members of multiple files at once. The arguments to this route are more
+ * limited, and the limit on query result size per file is more strict. To
+ * customize the results more, use the individual file endpoint. Inherited users
+ * are not included in the result, and permissions are not returned for this
+ * endpoint.
+ * @function Dropbox#sharingListFileMembersBatch
+ * @arg {Object} arg - The request parameters.
+ * @arg {Array} arg.files - Files for which to return members.
+ * @arg {Number} arg.limit - Number of members to return max per query. Defaults
+ * to 10 if no limit is specified.
+ * @returns {Array}
+ */
+routes.sharingListFileMembersBatch = function (arg) {
+  return this.request('sharing/list_file_members/batch', arg, 'api', 'rpc');
+};
+
+/**
+ * Once a cursor has been retrieved from list_file_members or
+ * list_file_members/batch, use this to paginate through all shared file
+ * members.
+ * @function Dropbox#sharingListFileMembersContinue
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.cursor - The cursor returned by your last call to
+ * list_file_members, list_file_members/continue, or list_file_members/batch.
+ * @returns {Object}
+ */
+routes.sharingListFileMembersContinue = function (arg) {
+  return this.request('sharing/list_file_members/continue', arg, 'api', 'rpc');
+};
+
+/**
  * Returns shared folder membership by its folder ID. Apps must have full
  * Dropbox access to use this endpoint.
  * @function Dropbox#sharingListFolderMembers
  * @arg {Object} arg - The request parameters.
  * @arg {String} arg.shared_folder_id - The ID for the shared folder.
- * @arg {Array|null} arg.actions - Member actions to query.
+ * @arg {Array|null} arg.actions - This is a list indicating whether each
+ * returned member will include a boolean value MemberPermission.allow that
+ * describes whether the current user can perform the MemberAction on the
+ * member.
  * @arg {Number} arg.limit - The maximum number of results that include members,
  * groups and invitees to return per request.
  * @returns {Object}
@@ -462,7 +858,10 @@ routes.sharingListFolderMembersContinue = function (arg) {
  * @arg {Object} arg - The request parameters.
  * @arg {Number} arg.limit - The maximum number of results to return per
  * request.
- * @arg {Array|null} arg.actions - Folder actions to query.
+ * @arg {Array|null} arg.actions - This is a list indicating whether each
+ * returned folder data entry will include a boolean field
+ * FolderPermission.allow that describes whether the current user can perform
+ * the `FolderAction` on the folder.
  * @returns {Object}
  */
 routes.sharingListFolders = function (arg) {
@@ -491,7 +890,10 @@ routes.sharingListFoldersContinue = function (arg) {
  * @arg {Object} arg - The request parameters.
  * @arg {Number} arg.limit - The maximum number of results to return per
  * request.
- * @arg {Array|null} arg.actions - Folder actions to query.
+ * @arg {Array|null} arg.actions - This is a list indicating whether each
+ * returned folder data entry will include a boolean field
+ * FolderPermission.allow that describes whether the current user can perform
+ * the `FolderAction` on the folder.
  * @returns {Object}
  */
 routes.sharingListMountableFolders = function (arg) {
@@ -511,6 +913,32 @@ routes.sharingListMountableFolders = function (arg) {
  */
 routes.sharingListMountableFoldersContinue = function (arg) {
   return this.request('sharing/list_mountable_folders/continue', arg, 'api', 'rpc');
+};
+
+/**
+ * Returns a list of all files shared with current user.  Does not include files
+ * the user has received via shared folders, and does  not include unclaimed
+ * invitations.
+ * @function Dropbox#sharingListReceivedFiles
+ * @arg {Object} arg - The request parameters.
+ * @arg {Number} arg.limit - Number of files to return max per query. Defaults
+ * to 100 if no limit is specified.
+ * @arg {Array|null} arg.actions - File actions to query.
+ * @returns {Object}
+ */
+routes.sharingListReceivedFiles = function (arg) {
+  return this.request('sharing/list_received_files', arg, 'api', 'rpc');
+};
+
+/**
+ * Get more results with a cursor from list_received_files.
+ * @function Dropbox#sharingListReceivedFilesContinue
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.cursor - Cursor in ListFilesResult.cursor
+ * @returns {Object}
+ */
+routes.sharingListReceivedFilesContinue = function (arg) {
+  return this.request('sharing/list_received_files/continue', arg, 'api', 'rpc');
 };
 
 /**
@@ -566,6 +994,19 @@ routes.sharingMountFolder = function (arg) {
 };
 
 /**
+ * The current user relinquishes their membership in the designated file. Note
+ * that the current user may still have inherited access to this file through
+ * the parent folder. Apps must have full Dropbox access to use this endpoint.
+ * @function Dropbox#sharingRelinquishFileMembership
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.file - The path or id for the file.
+ * @returns {null}
+ */
+routes.sharingRelinquishFileMembership = function (arg) {
+  return this.request('sharing/relinquish_file_membership', arg, 'api', 'rpc');
+};
+
+/**
  * The current user relinquishes their membership in the designated shared
  * folder and will no longer have access to the folder.  A folder owner cannot
  * relinquish membership in their own folder. This will run synchronously if
@@ -580,6 +1021,35 @@ routes.sharingMountFolder = function (arg) {
  */
 routes.sharingRelinquishFolderMembership = function (arg) {
   return this.request('sharing/relinquish_folder_membership', arg, 'api', 'rpc');
+};
+
+/**
+ * Identical to remove_file_member_2 but with less information returned.
+ * @function Dropbox#sharingRemoveFileMember
+ * @deprecated
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.file - File from which to remove members.
+ * @arg {Object} arg.member - Member to remove from this file. Note that even if
+ * an email is specified, it may result in the removal of a user (not an
+ * invitee) if the user's main account corresponds to that email address.
+ * @returns {Object}
+ */
+routes.sharingRemoveFileMember = function (arg) {
+  return this.request('sharing/remove_file_member', arg, 'api', 'rpc');
+};
+
+/**
+ * Removes a specified member from the file.
+ * @function Dropbox#sharingRemoveFileMember2
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.file - File from which to remove members.
+ * @arg {Object} arg.member - Member to remove from this file. Note that even if
+ * an email is specified, it may result in the removal of a user (not an
+ * invitee) if the user's main account corresponds to that email address.
+ * @returns {Object}
+ */
+routes.sharingRemoveFileMember2 = function (arg) {
+  return this.request('sharing/remove_file_member_2', arg, 'api', 'rpc');
 };
 
 /**
@@ -670,6 +1140,17 @@ routes.sharingUnmountFolder = function (arg) {
 };
 
 /**
+ * Remove all members from this file. Does not remove inherited members.
+ * @function Dropbox#sharingUnshareFile
+ * @arg {Object} arg - The request parameters.
+ * @arg {String} arg.file - The file to unshare.
+ * @returns {null}
+ */
+routes.sharingUnshareFile = function (arg) {
+  return this.request('sharing/unshare_file', arg, 'api', 'rpc');
+};
+
+/**
  * Allows a shared folder owner to unshare the folder. You'll need to call
  * check_job_status to determine if the action has completed successfully. Apps
  * must have full Dropbox access to use this endpoint.
@@ -696,7 +1177,7 @@ routes.sharingUnshareFolder = function (arg) {
  * the MemberSelector.dropbox_id may be set at this time.
  * @arg {Object} arg.access_level - The new access level for member.
  * AccessLevel.owner is disallowed.
- * @returns {null}
+ * @returns {Object}
  */
 routes.sharingUpdateFolderMember = function (arg) {
   return this.request('sharing/update_folder_member', arg, 'api', 'rpc');
