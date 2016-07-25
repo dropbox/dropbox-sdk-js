@@ -103,7 +103,6 @@ DropboxBase.prototype.request = function (path, args, host, style) {
 };
 
 DropboxBase.prototype.rpcRequest = rpcRequest;
-DropboxBase.prototype.downloadRequest = downloadRequest;
 
 DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
   DropboxBase.prototype.rpcRequest = newRpcRequest;
@@ -111,6 +110,16 @@ DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
 
 DropboxBase.prototype.getRpcRequest = function () {
   return DropboxBase.prototype.rpcRequest;
+};
+
+DropboxBase.prototype.downloadRequest = downloadRequest;
+
+DropboxBase.prototype.setDownloadRequest = function (newDownloadRequest) {
+  DropboxBase.prototype.downloadRequest = newDownloadRequest;
+};
+
+DropboxBase.prototype.getDownloadRequest = function () {
+  return DropboxBase.prototype.downloadRequest;
 };
 
 module.exports = DropboxBase;
