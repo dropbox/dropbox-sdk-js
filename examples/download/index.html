@@ -7,14 +7,14 @@
 </head>
 <body>
   <h1>Dropbox JavaScript SDK Example App</h1>
-  <p>This example shows how to use the .filesGetSharedLinkFile() method to download the file for the given shared link.</p>
+  <p>This example shows how to use the .sharingGetSharedLinkFile() method to download the file for the given shared link.</p>
   <p>Open your console to see the results.</p>
   <p><a href="https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder">Click here</a> to get an access token to try this out.</p>
   <div id="results"></div>
   <script>
     var ACCESS_TOKEN = prompt('Please enter an API V2 access token');
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
-    dbx.filesGetSharedLinkFile({url: 'https://www.dropbox.com/s/ohhwimn4a1vxgxp/Screenshot%202016-06-23%2017.58.05.png?dl=0'})
+    dbx.sharingGetSharedLinkFile({url: 'https://www.dropbox.com/s/ohhwimn4a1vxgxp/Screenshot%202016-06-23%2017.58.05.png?dl=0'})
       .then(function(response) {
         var downloadUrl = URL.createObjectURL(response.blob);
         var downloadButton = document.createElement('a');
