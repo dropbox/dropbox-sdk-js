@@ -26,8 +26,4 @@ Dropbox.prototype.constructor = Dropbox;
 // Add the user endpoint methods to the prototype
 Dropbox.prototype = Object.assign(Dropbox.prototype, routes);
 
-Dropbox.prototype.filesGetSharedLinkFile = function (arg) {
-  return this.request('sharing/get_shared_link_file', arg, 'api', 'download');
-};
-
 module.exports = Dropbox;
