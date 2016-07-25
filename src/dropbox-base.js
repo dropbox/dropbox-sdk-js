@@ -1,5 +1,4 @@
 var REQUEST_CONSTANTS = require('./request-constants');
-var rpcRequest = require('./rpc-request');
 var DropboxBase;
 
 // Polyfill Object.assign() for older browsers
@@ -91,7 +90,7 @@ DropboxBase.prototype.getAuthenticationUrl = function (redirectUri, state) {
 
 DropboxBase.prototype.request = function (path, body, host, style) {
   if (style === REQUEST_CONSTANTS.RPC) {
-    return this.rpcRequest(path, body, this.getAccessToken(), this.selectUser);
+    return this.getRpcRequest()(path, body, this.getAccessToken(), this.selectUser);
   } else if (style === REQUEST_CONSTANTS.DOWNLOAD) {
     throw new Error('Download endpoints are not yet implemented');
   } else if (style === REQUEST_CONSTANTS.UPLOAD) {
@@ -101,13 +100,15 @@ DropboxBase.prototype.request = function (path, body, host, style) {
   }
 };
 
-DropboxBase.prototype.rpcRequest = rpcRequest;
-
 DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
   DropboxBase.prototype.rpcRequest = newRpcRequest;
 };
 
 DropboxBase.prototype.getRpcRequest = function () {
+  if (DropboxBase.prototype.rpcRequest === undefined) {
+    DropboxBase.prototype.rpcRequest = require('./rpc-request');
+  }
+
   return DropboxBase.prototype.rpcRequest;
 };
 

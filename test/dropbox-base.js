@@ -111,7 +111,8 @@ describe('DropboxBase', function () {
     it('calls the correct request method', function () {
       var rpcSpy;
       dbx = new DropboxBase();
-      rpcSpy = sinon.spy(dbx, 'rpcRequest');
+      rpcSpy = sinon.spy(dbx.getRpcRequest());
+      dbx.setRpcRequest(rpcSpy);
       dbx.request('path', {}, 'api', REQUEST_CONSTANTS.RPC);
       assert(rpcSpy.calledOnce);
       assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
