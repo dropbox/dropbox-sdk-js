@@ -19,7 +19,7 @@
     var fileInput = document.getElementById('file-upload');
     uploadButton.addEventListener('click', function (e) {
       var file = fileInput.files[0];
-      dbx.filesUpload({path: '/foobar.png', contents: file})
+      dbx.filesUpload({path: '/' + file.name, contents: file})
         .then(function(response) {
           console.log(response);
         })
