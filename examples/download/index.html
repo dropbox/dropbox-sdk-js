@@ -13,13 +13,16 @@
   <div id="results"></div>
   <script>
     var ACCESS_TOKEN = prompt('Please enter an API V2 access token');
+    var sharedLink = prompt('Please enter the shared link to download');
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
-    dbx.sharingGetSharedLinkFile({url: 'https://www.dropbox.com/s/ohhwimn4a1vxgxp/Screenshot%202016-06-23%2017.58.05.png?dl=0'})
+    dbx.sharingGetSharedLinkFile({url: sharedLink})
       .then(function(response) {
-        var downloadUrl = URL.createObjectURL(response.blob);
+        var blob = response.xhr.response;
+        var metadata = JSON.parse(response.headers['dropbox-api-result']);
+        var downloadUrl = URL.createObjectURL(blob);
         var downloadButton = document.createElement('a');
         downloadButton.setAttribute('href', downloadUrl);
-        downloadButton.setAttribute('download', response.name);
+        downloadButton.setAttribute('download', metadata.name);
         downloadButton.innerText = 'download';
         document.getElementById('results').appendChild(downloadButton);
       })

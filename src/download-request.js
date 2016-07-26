@@ -36,13 +36,14 @@ downloadRequest = function (path, args, accessToken, selectUser) {
     }
 
     function responseHandler(error, response) {
-      var responseData;
       if (error) {
         failure(buildCustomError(error, response));
       } else {
-        responseData = JSON.parse(response.headers['dropbox-api-result']);
-        responseData.blob = response.xhr.response;
-        success(responseData);
+        // This varies between node and the browser. For the browser, you can
+        // get the blob from response.xhr.response and in node, you have to
+        // handle the response yourself. See the examples directory for sample
+        // code on how to do this.
+        success(response);
       }
     }
 
@@ -50,14 +51,15 @@ downloadRequest = function (path, args, accessToken, selectUser) {
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Dropbox-API-Arg', JSON.stringify(args))
       .on('request', function () {
-        this.xhr.responseType = 'blob';
+        if (this.xhr) {
+          this.xhr.responseType = 'blob';
+        }
       });
 
     if (selectUser) {
       apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
     }
 
-    // apiRequest.send(body)
     apiRequest.end(responseHandler);
   };
 
