@@ -28,5 +28,3 @@ prompt.get({
       console.log(err);
     });
 });
-
-
