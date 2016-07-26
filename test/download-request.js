@@ -11,18 +11,20 @@ describe('downloadRequest', function () {
   var stubRequest;
   var postStub;
   var endStub;
+  var onStub;
   var setStub;
   var typeStub;
 
   beforeEach(function () {
     stubRequest = {
       end: function () {},
-      send: function () {},
+      on: function () {},
       set: function () {},
       type: function () {}
     };
     postStub = sinon.stub(request, 'post').returns(stubRequest);
     endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
+    onStub = sinon.stub(stubRequest, 'on').returns(stubRequest);
     setStub = sinon.stub(stubRequest, 'set').returns(stubRequest);
     typeStub = sinon.stub(stubRequest, 'type').returns(stubRequest);
   });

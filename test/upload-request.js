@@ -20,8 +20,7 @@ describe('uploadRequest', function () {
       end: function () {},
       send: function () {},
       set: function () {},
-      type: function () {},
-      send: function () {}
+      type: function () {}
     };
     postStub = sinon.stub(request, 'post').returns(stubRequest);
     endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
