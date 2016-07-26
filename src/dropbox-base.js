@@ -98,9 +98,8 @@ DropboxBase.prototype.request = function (path, args, host, style) {
     return this.downloadRequest(path, args, this.getAccessToken(), this.selectUser);
   } else if (style === REQUEST_CONSTANTS.UPLOAD) {
     return this.uploadRequest(path, args, this.getAccessToken(), this.selectUser);
-  } else {
-    throw new Error('Invalid request type');
   }
+  throw new Error('Invalid request type');
 };
 
 DropboxBase.prototype.rpcRequest = rpcRequest;
