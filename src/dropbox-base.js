@@ -132,14 +132,4 @@ DropboxBase.prototype.getUploadRequest = function () {
   return DropboxBase.prototype.uploadRequest;
 };
 
-DropboxBase.prototype.downloadRequest = downloadRequest;
-
-DropboxBase.prototype.setDownloadRequest = function (newDownloadRequest) {
-  DropboxBase.prototype.downloadRequest = newDownloadRequest;
-};
-
-DropboxBase.prototype.getDownloadRequest = function () {
-  return DropboxBase.prototype.downloadRequest;
-};
-
 module.exports = DropboxBase;
