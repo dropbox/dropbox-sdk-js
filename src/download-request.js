@@ -3,6 +3,7 @@ var Promise = require('es6-promise').Promise;
 
 var buildCustomError;
 var downloadRequest;
+var nodeBinaryParser;
 var BASE_URL = 'https://content.dropboxapi.com/2/';
 
 // Register a handler that will instruct superagent how to parse the response
@@ -17,6 +18,15 @@ buildCustomError = function (error, response) {
     error: response.text,
     response: response
   };
+};
+
+nodeBinaryParser = function (res, done) {
+  res.text = '';
+  res.setEncoding('binary');
+  res.on('data', function (chunk) { res.text += chunk; });
+  res.on('end', function () {
+    done();
+  });
 };
 
 downloadRequest = function (path, args, accessToken, selectUser) {
@@ -40,9 +50,9 @@ downloadRequest = function (path, args, accessToken, selectUser) {
         failure(buildCustomError(error, response));
       } else {
         // This varies between node and the browser. For the browser, you can
-        // get the blob from response.xhr.response and in node, you have to
-        // handle the response yourself. See the examples directory for sample
-        // code on how to do this.
+        // get the blob from response.xhr.response and in node you can get the
+        // binary data from response.res.text.
+        // See the examples directory for sample usage in node and browser
         success(response);
       }
     }
@@ -60,7 +70,15 @@ downloadRequest = function (path, args, accessToken, selectUser) {
       apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
     }
 
-    apiRequest.end(responseHandler);
+    // Apply the node binary parser to the response if executing in node
+    if (typeof window === 'undefined') {
+      apiRequest
+        .buffer(true)
+        .parse(nodeBinaryParser)
+        .end(responseHandler);
+    } else {
+      apiRequest.end(responseHandler);
+    }
   };
 
   return new Promise(promiseFunction);

@@ -10,21 +10,20 @@ prompt.get({
       description: 'Please enter an API V2 access token'
     },
     sharedLink: {
-      description: 'Please enter a shared link to a png'
+      description: 'Please enter a shared link to a file'
     }
   }
 }, function (error, result) {
   var dbx = new Dropbox({ accessToken: result.accessToken });
   dbx.sharingGetSharedLinkFile({ url: result.sharedLink })
     .then(function (response) {
-      var file = fs.createWriteStream('foo.png');
-      response.on('data', function (chunk) {
-        file.write(chunk);
-      }).on('close', function () {
-        file.end();
+      var metadata = JSON.parse(response.headers['dropbox-api-result']);
+      fs.writeFile(metadata.name, response.res.text, 'binary', function (err) {
+        if (err) { throw err; }
+        console.log('File: ' + metadata.name + ' saved.');
       });
     })
     .catch(function (err) {
-      console.log(err);
+      throw err;
     });
 });
