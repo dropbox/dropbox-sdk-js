@@ -1,6 +1,7 @@
-var REQUEST_CONSTANTS = require('./request-constants');
+var downloadRequest = require('./download-request');
 var rpcRequest = require('./rpc-request');
 var uploadRequest = require('./upload-request');
+var REQUEST_CONSTANTS = require('./request-constants');
 var DropboxBase;
 
 // Polyfill Object.assign() for older browsers
@@ -94,12 +95,11 @@ DropboxBase.prototype.request = function (path, args, host, style) {
   if (style === REQUEST_CONSTANTS.RPC) {
     return this.rpcRequest(path, args, this.getAccessToken(), this.selectUser);
   } else if (style === REQUEST_CONSTANTS.DOWNLOAD) {
-    throw new Error('Download endpoints are not yet implemented');
+    return this.downloadRequest(path, args, this.getAccessToken(), this.selectUser);
   } else if (style === REQUEST_CONSTANTS.UPLOAD) {
     return this.uploadRequest(path, args, this.getAccessToken(), this.selectUser);
-  } else {
-    throw new Error('Invalid request type');
   }
+  throw new Error('Invalid request type');
 };
 
 DropboxBase.prototype.rpcRequest = rpcRequest;
@@ -110,6 +110,16 @@ DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
 
 DropboxBase.prototype.getRpcRequest = function () {
   return DropboxBase.prototype.rpcRequest;
+};
+
+DropboxBase.prototype.downloadRequest = downloadRequest;
+
+DropboxBase.prototype.setDownloadRequest = function (newDownloadRequest) {
+  DropboxBase.prototype.downloadRequest = newDownloadRequest;
+};
+
+DropboxBase.prototype.getDownloadRequest = function () {
+  return DropboxBase.prototype.downloadRequest;
 };
 
 DropboxBase.prototype.uploadRequest = uploadRequest;
