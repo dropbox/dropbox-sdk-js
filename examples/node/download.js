@@ -16,11 +16,10 @@ prompt.get({
 }, function (error, result) {
   var dbx = new Dropbox({ accessToken: result.accessToken });
   dbx.sharingGetSharedLinkFile({ url: result.sharedLink })
-    .then(function (response) {
-      var metadata = JSON.parse(response.headers['dropbox-api-result']);
-      fs.writeFile(metadata.name, response.res.text, 'binary', function (err) {
+    .then(function (data) {
+      fs.writeFile(data.name, data.fileBinary, 'binary', function (err) {
         if (err) { throw err; }
-        console.log('File: ' + metadata.name + ' saved.');
+        console.log('File: ' + data.name + ' saved.');
       });
     })
     .catch(function (err) {

@@ -46,14 +46,19 @@ downloadRequest = function (path, args, accessToken, selectUser) {
     }
 
     function responseHandler(error, response) {
+      var data;
       if (error) {
         failure(buildCustomError(error, response));
       } else {
-        // This varies between node and the browser. For the browser, you can
-        // get the blob from response.xhr.response and in node you can get the
-        // binary data from response.res.text.
-        // See the examples directory for sample usage in node and browser
-        success(response);
+        // In the browser, the file is passed as a blob and in node the file is
+        // passed as a string of binary data.
+        data = JSON.parse(response.headers['dropbox-api-result']);
+        if (response.xhr) {
+          data.fileBlob = response.xhr.response;
+        } else {
+          data.fileBinary = response.res.text;
+        }
+        success(data);
       }
     }
 

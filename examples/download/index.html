@@ -16,13 +16,11 @@
     var sharedLink = prompt('Please enter the shared link to download');
     var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
     dbx.sharingGetSharedLinkFile({url: sharedLink})
-      .then(function(response) {
-        var blob = response.xhr.response;
-        var metadata = JSON.parse(response.headers['dropbox-api-result']);
-        var downloadUrl = URL.createObjectURL(blob);
+      .then(function(data) {
+        var downloadUrl = URL.createObjectURL(data.fileBlob);
         var downloadButton = document.createElement('a');
         downloadButton.setAttribute('href', downloadUrl);
-        downloadButton.setAttribute('download', metadata.name);
+        downloadButton.setAttribute('download', data.name);
         downloadButton.innerText = 'download';
         document.getElementById('results').appendChild(downloadButton);
       })
