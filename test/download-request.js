@@ -14,19 +14,25 @@ describe('downloadRequest', function () {
   var onStub;
   var setStub;
   var typeStub;
+  var bufferStub;
+  var parseStub;
 
   beforeEach(function () {
     stubRequest = {
       end: function () {},
       on: function () {},
       set: function () {},
-      type: function () {}
+      type: function () {},
+      buffer: function () {},
+      parse: function () {}
     };
     postStub = sinon.stub(request, 'post').returns(stubRequest);
     endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
     onStub = sinon.stub(stubRequest, 'on').returns(stubRequest);
     setStub = sinon.stub(stubRequest, 'set').returns(stubRequest);
     typeStub = sinon.stub(stubRequest, 'type').returns(stubRequest);
+    bufferStub = sinon.stub(stubRequest, 'buffer').returns(stubRequest);
+    parseStub = sinon.stub(stubRequest, 'parse').returns(stubRequest);
   });
 
   afterEach(function () {
