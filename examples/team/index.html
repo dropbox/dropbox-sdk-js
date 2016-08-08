@@ -46,8 +46,8 @@
         .then(function (response) {
           displayDevices(response.devices)
         })
-        .catch(function (err) {
-          console.log(err);
+        .catch(function (error) {
+          console.error(error);
         });
       return false;
     }
