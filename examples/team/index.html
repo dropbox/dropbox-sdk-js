@@ -6,19 +6,61 @@
   <script src="/__build__/DropboxTeam-sdk.min.js"></script>
 </head>
 <body>
-  <h1>Dropbox JavaScript Team SDK Example App</h1>
-  <p>This example shows how to use the DropboxTeam class and the .teamDevicesListTeamDevices() method.</p>
-  <p>Open your console to see the results.</p>
+  <!-- Example layout boilerplate -->
+  <header class="page-header">
+    <div class="container">
+      <nav>
+        <a href="/">
+          <h1>
+            <img src="https://cfl.dropboxstatic.com/static/images/brand/logotype_white-vflRG5Zd8.svg" class="logo" />
+            JavaScript SDK Examples
+          </h1>
+        </a>
+        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples" class="view-source">View Source</a>
+      </nav>
+      <h2 class="code">
+        <a href="/">examples</a> / team
+      </h2>
+    </div>
+  </header>
+
+  <!-- Example description and UI -->
+  <section class="container main">
+    <p>This example shows how to use the DropboxTeam class and the <code>DropboxTeam.teamDevicesListTeamDevices()</code> method [<a href="http://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html#teamDevicesListTeamDevices">docs</a>].</p>
+
+    <form onSubmit="return listDevices()">
+      <input type="text" id="access-token" placeholder="Access token" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- The files returned from the SDK will be added here -->
+    <ul id="devices"></ul>
+
+    <p class="info">This endpoint requires a Dropbox Business API app key, <a href="https://www.dropbox.com/developers/documentation/http/teams">see here for more details</a>.</p>
+  </section>
   <script>
-    var ACCESS_TOKEN = prompt('Please enter an API V2 team access token');
-    var dbx = new DropboxTeam({ accessToken: ACCESS_TOKEN });
-    dbx.teamDevicesListTeamDevices({})
-      .then(function (response) {
-        console.log('Devices', response);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
+    function listDevices() {
+      var ACCESS_TOKEN = document.getElementById('access-token').value;
+      var dbx = new DropboxTeam({ accessToken: ACCESS_TOKEN });
+      dbx.teamDevicesListTeamDevices({})
+        .then(function (response) {
+          displayDevices(response.devices)
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+      return false;
+    }
+
+    function displayDevices(devices) {
+      var deviceList = document.getElementById('devices');
+      var li;
+      for (var i = 0; i < files.length; i++) {
+        li = document.createElement('li');
+        li.appendChild(document.createTextNode(devices[i].name));
+        deviceList.appendChild(li);
+      }
+    }
   </script>
 </body>
 </html>

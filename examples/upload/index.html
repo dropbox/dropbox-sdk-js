@@ -6,27 +6,57 @@
   <script src="/__build__/Dropbox-sdk.min.js"></script>
 </head>
 <body>
-  <h1>Dropbox JavaScript SDK Example App</h1>
-  <p>This example shows how to use the .filesUpload() method to upload a file.</p>
-  <p>Open your console to see the results.</p>
-  <p><a href="https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder">Click here</a> to get an access token to try this out.</p>
-  <input type="file" id="file-upload" />
-  <button id="upload-button">Upload</button>
+  <!-- Example layout boilerplate -->
+  <header class="page-header">
+    <div class="container">
+      <nav>
+        <a href="/">
+          <h1>
+            <img src="https://cfl.dropboxstatic.com/static/images/brand/logotype_white-vflRG5Zd8.svg" class="logo" />
+            JavaScript SDK Examples
+          </h1>
+        </a>
+        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples" class="view-source">View Source</a>
+      </nav>
+      <h2 class="code">
+        <a href="/">examples</a> / upload file
+      </h2>
+    </div>
+  </header>
+
+  <!-- Example description and UI -->
+  <section class="container main">
+    <p>This example shows how to use the <code>Dropbox.filesUpload()</code> [<a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#filesUpload">docs</a>] method to upload a file.</p>
+
+    <form onSubmit="return uploadFile()">
+      <input type="text" id="access-token" placeholder="Access token" />
+      <input type="file" id="file-upload" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- A place to show the status of the upload -->
+    <h2 id="results"></h2>
+
+    <p class="info">To obtain an access token for quick testing, you can go to <a href="https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder" target="_blank">API Explorer</a> click the "Get Token" button on the top right, copy the token it creates and then paste it here.</p>
+  </section>
+
   <script>
-    var ACCESS_TOKEN = prompt('Please enter an API V2 access token');
-    var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
-    var uploadButton = document.getElementById('upload-button');
-    var fileInput = document.getElementById('file-upload');
-    uploadButton.addEventListener('click', function (e) {
+    function uploadFile() {
+      var ACCESS_TOKEN = document.getElementById('access-token').value;
+      var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
+      var fileInput = document.getElementById('file-upload');
       var file = fileInput.files[0];
       dbx.filesUpload({path: '/' + file.name, contents: file})
         .then(function(response) {
+          var results = document.getElementById('results');
+          results.appendChild(document.createTextNode('File uploaded!'));
           console.log(response);
         })
         .catch(function(error) {
-          console.log(error);
+          console.error(error);
         });
-    }, false);
+      return false;
+    }
   </script>
 </body>
 </html>
