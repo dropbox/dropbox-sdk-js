@@ -1,6 +1,3 @@
-var downloadRequest = require('./download-request');
-var rpcRequest = require('./rpc-request');
-var uploadRequest = require('./upload-request');
 var REQUEST_CONSTANTS = require('./request-constants');
 var DropboxBase;
 
@@ -93,42 +90,48 @@ DropboxBase.prototype.getAuthenticationUrl = function (redirectUri, state) {
 
 DropboxBase.prototype.request = function (path, args, host, style) {
   if (style === REQUEST_CONSTANTS.RPC) {
-    return this.rpcRequest(path, args, this.getAccessToken(), this.selectUser);
+    return this.getRpcRequest()(path, args, this.getAccessToken(), this.selectUser);
   } else if (style === REQUEST_CONSTANTS.DOWNLOAD) {
-    return this.downloadRequest(path, args, this.getAccessToken(), this.selectUser);
+    return this.getDownloadRequest()(path, args, this.getAccessToken(), this.selectUser);
   } else if (style === REQUEST_CONSTANTS.UPLOAD) {
-    return this.uploadRequest(path, args, this.getAccessToken(), this.selectUser);
+    return this.getUploadRequest()(path, args, this.getAccessToken(), this.selectUser);
   }
   throw new Error('Invalid request type');
 };
-
-DropboxBase.prototype.rpcRequest = rpcRequest;
 
 DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
   DropboxBase.prototype.rpcRequest = newRpcRequest;
 };
 
 DropboxBase.prototype.getRpcRequest = function () {
+  if (DropboxBase.prototype.rpcRequest === undefined) {
+    DropboxBase.prototype.rpcRequest = require('./rpc-request');
+  }
+
   return DropboxBase.prototype.rpcRequest;
 };
-
-DropboxBase.prototype.downloadRequest = downloadRequest;
 
 DropboxBase.prototype.setDownloadRequest = function (newDownloadRequest) {
   DropboxBase.prototype.downloadRequest = newDownloadRequest;
 };
 
 DropboxBase.prototype.getDownloadRequest = function () {
+  if (DropboxBase.prototype.downloadRequest === undefined) {
+    DropboxBase.prototype.downloadRequest = require('./download-request');
+  }
+
   return DropboxBase.prototype.downloadRequest;
 };
-
-DropboxBase.prototype.uploadRequest = uploadRequest;
 
 DropboxBase.prototype.setUploadRequest = function (newUploadRequest) {
   DropboxBase.prototype.uploadRequest = newUploadRequest;
 };
 
 DropboxBase.prototype.getUploadRequest = function () {
+  if (DropboxBase.prototype.uploadRequest === undefined) {
+    DropboxBase.prototype.uploadRequest = require('./upload-request');
+  }
+
   return DropboxBase.prototype.uploadRequest;
 };
 
