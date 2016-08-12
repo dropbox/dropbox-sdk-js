@@ -1,3 +1,5 @@
+// @flow
+
 var REQUEST_CONSTANTS = require('./request-constants');
 var DropboxBase;
 
