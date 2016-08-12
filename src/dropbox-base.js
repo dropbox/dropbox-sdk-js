@@ -20,7 +20,7 @@ require('./object-assign-polyfill');
  * @arg {Number} [options.selectUser] - User is the team access token would like
  * to act as.
  */
-DropboxBase = function (options) {
+DropboxBase = function (options: Object) {
   options = options || {};
   this.accessToken = options.accessToken;
   this.clientId = options.clientId;

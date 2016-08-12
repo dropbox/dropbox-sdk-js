@@ -25,6 +25,7 @@ module.exports = {
         exclude: [path.resolve(__dirname, 'node_modules')],
         query: {
           presets: ['es2015'],
+          plugins: ['transform-flow-strip-types']
         },
       }
     ]
