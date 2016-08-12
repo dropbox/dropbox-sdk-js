@@ -32,6 +32,9 @@
   "bugs": "https://github.com/dropbox/dropbox-sdk-js/issues",
   "author": "Riley Tomasek",
   "devDependencies": {
+    "babel-core": "^6.13.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.13.2",
     "chai": "^3.5.0",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
