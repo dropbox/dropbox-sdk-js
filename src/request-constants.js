@@ -1,4 +1,6 @@
-var REQUEST_CONSTANTS = {
+// @flow
+
+var REQUEST_CONSTANTS: Object = {
   RPC: 'rpc',
   DOWNLOAD: 'download',
   UPLOAD: 'upload'
