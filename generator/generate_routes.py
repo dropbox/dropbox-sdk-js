@@ -67,10 +67,16 @@ def main():
         "arg_docstring": "The file contents to be uploaded."
     }
     subprocess.check_output(
+        (['python', '-m', 'stone.cli', 'js_types', dropbox_pkg_path] +
+         specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
+         ['--', 'types.js', '-e', json.dumps(upload_arg)]),
+        cwd=stone_path)
+
+    subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
-         ['--', 'routes.js', '-c', 'Dropbox',
-          '-e', json.dumps(upload_arg)]),
+         ['--', 'routes.js', '-c', 'Dropbox']),
+#          '-e', json.dumps(upload_arg)]),
         cwd=stone_path)
 
     if verbose:
