@@ -13,7 +13,7 @@
     "build": "npm run build-cjs && npm run build-umd && npm run compressed-size",
     "build-cjs": "webpack",
     "build-umd": "webpack -p --config webpack-umd.config.js",
-    "compressed-size": "echo 'dropbox-sdk.min.js gzipped will weigh' $(cat dist/dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
+    "compressed-size": "echo 'Dropbox-sdk.min.js gzipped will weigh' $(cat dist/Dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
     "publish-docs": "rm -rf generated-docs && npm run generate-docs && gh-pages -d generated-docs",
     "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -R docs/README.md -r ./src",
     "lint": "eslint src --ignore-path src/types.js",
