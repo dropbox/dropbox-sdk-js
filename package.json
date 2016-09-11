@@ -3,14 +3,16 @@
   "version": "2.5.2",
   "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
   "main": "src/index.js",
+  "typings": "src/index",
   "files": [
     "*.md",
     "docs",
     "dist",
+    "generator",
     "src"
   ],
   "scripts": {
-    "build": "npm run build-cjs && npm run build-umd && npm run compressed-size",
+    "build": "npm run build-cjs && npm run build-umd && npm run generate-tsds && npm run compressed-size",
     "build-cjs": "webpack",
     "build-umd": "webpack -p --config webpack-umd.config.js",
     "compressed-size": "echo 'Dropbox-sdk.min.js gzipped will weigh' $(cat dist/Dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
@@ -18,7 +20,8 @@
     "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -R docs/README.md -r ./src",
     "lint": "eslint src --ignore-path src/types.js",
     "start": "node examples/server.js",
-    "test": "npm run lint && mocha 'test/*.js'"
+    "test": "npm run lint && mocha 'test/*.js'",
+    "generate-tsds": "node generator/typescript/typescript-copy.js dist"
   },
   "keywords": [
     "dropbox",
