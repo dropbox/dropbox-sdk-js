@@ -1,4 +1,4 @@
-var webpack = require('webpack')
+var webpack = require('webpack');
 
 module.exports = {
 
@@ -13,4 +13,4 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin()
   ]
 
-}
+};
