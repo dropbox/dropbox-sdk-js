@@ -15,7 +15,7 @@ request.parse['application/octect-stream'] = function (obj) {
 buildCustomError = function (error, response) {
   return {
     status: error.status,
-    error: response && response.text,
+    error: (response ? response.text : null) || error.toString(),
     response: response
   };
 };
