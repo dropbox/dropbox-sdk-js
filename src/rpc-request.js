@@ -5,11 +5,22 @@ var BASE_URL = 'https://api.dropboxapi.com/2/';
 
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
-  return {
-    status: error.status,
-    error: response.text,
-    response: response
-  };
+  
+  if (typeof response != 'undefined') {
+    return {
+      status: error.status,
+      error: response.text,
+      response: response
+    };
+  } else {
+    return {
+      status: error.status,
+      error: 'No response',
+      response: {}
+    }
+  }
+  
+  
 };
 
 var rpcRequest = function (path, body, accessToken, selectUser) {
