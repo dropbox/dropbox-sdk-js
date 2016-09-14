@@ -7,7 +7,7 @@ var BASE_URL = 'https://content.dropboxapi.com/2/';
 var buildCustomError = function (error, response) {
   return {
     status: error.status,
-    error: response.text,
+    error: (response ? response.text : null) || error.toString(),
     response: response
   };
 };
