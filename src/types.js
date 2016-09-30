@@ -74,7 +74,7 @@
 /**
  * Errors occurred during authentication.
  * @typedef {Object} AuthAuthError
- * @property {('invalid_access_token'|'invalid_select_user'|'invalid_select_admin'|'other')} .tag - Tag identifying the union variant.
+ * @property {('invalid_access_token'|'invalid_select_user'|'invalid_select_admin'|'user_suspended'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -166,6 +166,8 @@
 /**
  * @typedef {Object} FilesCreateFolderArg
  * @property {string} path - Path in the user's Dropbox to create.
+ * @property {boolean} autorename - If there's a conflict, have the Dropbox
+ * server try to autorename the folder to avoid the conflict.
  */
 
 /**
@@ -180,11 +182,48 @@
  */
 
 /**
+ * @typedef {Object} FilesDeleteBatchArg
+ * @property {Array.<FilesDeleteArg>} entries
+ */
+
+/**
+ * @typedef {Object} FilesDeleteBatchError
+ * @property {('too_many_write_operations'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesDeleteBatchJobStatus
+ * @property {FilesDeleteBatchResult} [complete] - Available if .tag is
+ * complete. The batch delete has finished.
+ * @property {FilesDeleteBatchError} [failed] - Available if .tag is failed. The
+ * batch delete has failed.
+ * @property {('in_progress'|'complete'|'failed'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesDeleteBatchResult
+ * @property {Array.<FilesDeleteBatchResultEntry>} entries
+ */
+
+/**
+ * @typedef {Object} FilesDeleteBatchResultEntry
+ * @property {FilesDeleteResult} [success] - Available if .tag is success.
+ * @property {FilesDeleteError} [failure] - Available if .tag is failure.
+ * @property {('success'|'failure')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} FilesDeleteError
  * @property {FilesLookupError} [path_lookup] - Available if .tag is
  * path_lookup.
  * @property {FilesWriteError} [path_write] - Available if .tag is path_write.
  * @property {('path_lookup'|'path_write'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesDeleteResult
+ * @property {(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata)}
+ * metadata
  */
 
 /**
@@ -220,7 +259,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilesDownloadArg
  * @property {string} path - The path of the file to download.
  * @property {string} [rev] - Deprecated. Please specify revision in path
- * instead
+ * instead.
  */
 
 /**
@@ -328,7 +367,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * folder because they don't have read access to this folder. They do, however,
  * have access to some sub folder.
  * @property {boolean} no_access - Specifies that the folder cannot be accessed
- * by the user
+ * by the user.
  */
 
 /**
@@ -508,7 +547,9 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} FilesLookupError
  * @property {string} [malformed_path] - Available if .tag is malformed_path.
- * @property {('malformed_path'|'not_found'|'not_file'|'not_folder'|'restricted_content'|'other')} .tag - Tag identifying the union variant.
+ * @property {FilesPathRootError} [invalid_path_root] - Available if .tag is
+ * invalid_path_root. The path root parameter provided is invalid.
+ * @property {('malformed_path'|'not_found'|'not_file'|'not_folder'|'restricted_content'|'invalid_path_root'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -551,6 +592,12 @@ variant.
  */
 
 /**
+ * @typedef {Object} FilesPathRootError
+ * @property {string} [path_root] - The user's latest path root value. None if
+ * the user no longer has a path root.
+ */
+
+/**
  * Metadata for a photo.
  * @typedef {Object} FilesPhotoMetadata
 @property {'photo'} [.tag] - Tag identifying this subtype variant. This field is
@@ -566,7 +613,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilesPreviewArg
  * @property {string} path - The path of the file to preview.
  * @property {string} [rev] - Deprecated. Please specify revision in path
- * instead
+ * instead.
  */
 
 /**
@@ -607,6 +654,47 @@ only present when needed to discriminate between multiple possible subtypes.
  * moved.
  * @property {string} to_path - Path in the user's Dropbox that is the
  * destination.
+ * @property {boolean} allow_shared_folder - If true, copy will copy contents in
+ * shared folder, otherwise RelocationError.cant_copy_shared_folder will be
+ * returned if from_path contains shared folder. This field is always true for
+ * move.
+ * @property {boolean} autorename - If there's a conflict, have the Dropbox
+ * server try to autorename the file to avoid the conflict.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationBatchArg
+ * @property {Array.<FilesRelocationPath>} entries - List of entries to be moved
+ * or copied. Each entry is RelocationPath.
+ * @property {boolean} allow_shared_folder - If true, copy_batch will copy
+ * contents in shared folder, otherwise RelocationError.cant_copy_shared_folder
+ * will be returned if RelocationPath.from_path contains shared folder.  This
+ * field is always true for move_batch.
+ * @property {boolean} autorename - If there's a conflict with any file, have
+ * the Dropbox server try to autorename that file to avoid the conflict.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationBatchError
+ * @property {FilesLookupError} [from_lookup] - Available if .tag is
+ * from_lookup.
+ * @property {FilesWriteError} [from_write] - Available if .tag is from_write.
+ * @property {FilesWriteError} [to] - Available if .tag is to.
+ * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'other'|'duplicated_or_nested_paths'|'too_many_write_operations')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationBatchJobStatus
+ * @property {FilesRelocationBatchResult} [complete] - Available if .tag is
+ * complete. The copy or move batch job has finished.
+ * @property {FilesRelocationBatchError} [failed] - Available if .tag is failed.
+ * The copy or move batch job has failed with exception.
+ * @property {('in_progress'|'complete'|'failed')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationBatchResult
+ * @property {Array.<FilesRelocationResult>} entries
  */
 
 /**
@@ -616,6 +704,20 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {FilesWriteError} [from_write] - Available if .tag is from_write.
  * @property {FilesWriteError} [to] - Available if .tag is to.
  * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationPath
+ * @property {string} from_path - Path in the user's Dropbox to be copied or
+ * moved.
+ * @property {string} to_path - Path in the user's Dropbox that is the
+ * destination.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationResult
+ * @property {(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata)}
+ * metadata
  */
 
 /**
@@ -887,9 +989,9 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilesUploadSessionLookupError
  * @property {FilesUploadSessionOffsetError} [incorrect_offset] - Available if
  * .tag is incorrect_offset. The specified offset was incorrect. See the value
- * for the correct offset. (This error may occur when a previous request was
+ * for the correct offset. This error may occur when a previous request was
  * received and processed successfully but the client did not receive the
- * response, e.g. due to a network error.)
+ * response, e.g. due to a network error.
  * @property {('not_found'|'incorrect_offset'|'closed'|'not_closed'|'other')} .tag - Tag identifying the union variant.
  */
 
@@ -1753,8 +1855,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * that have not been returned yet. Pass the cursor into list_shared_links to
  * retrieve them.
  * @property {string} [cursor] - Pass the cursor into list_shared_links to
- * obtain the additional links. Cursor is returned only if no path is given or
- * the path is empty.
+ * obtain the additional links. Cursor is returned only if no path is given.
  */
 
 /**
@@ -2043,7 +2144,9 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {SharingSharedFolderMetadata} [already_shared] - Available if .tag
  * is already_shared. Folder is already shared. Contains metadata about the
  * existing shared folder.
- * @property {('is_file'|'inside_shared_folder'|'contains_shared_folder'|'is_app_folder'|'inside_app_folder'|'is_public_folder'|'inside_public_folder'|'already_shared'|'invalid_path'|'is_osx_package'|'inside_osx_package'|'other')} .tag - Tag identifying the union variant.
+ * @property {FilesPathRootError} [invalid_path_root] - Available if .tag is
+ * invalid_path_root. The path root parameter provided is invalid.
+ * @property {('is_file'|'inside_shared_folder'|'contains_shared_folder'|'contains_app_folder'|'contains_team_folder'|'is_app_folder'|'inside_app_folder'|'is_public_folder'|'inside_public_folder'|'already_shared'|'invalid_path'|'is_osx_package'|'inside_osx_package'|'invalid_path_root'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3244,7 +3347,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamMembersRecoverError
- * @property {('user_not_found'|'user_unrecoverable'|'user_not_in_team'|'other')} .tag - Tag identifying the union variant.
+ * @property {('user_not_found'|'user_unrecoverable'|'user_not_in_team'|'team_license_limit'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**

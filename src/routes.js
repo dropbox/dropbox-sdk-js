@@ -48,6 +48,33 @@ routes.filesCopy = function (arg) {
 };
 
 /**
+ * Copy multiple files or folders to different locations at once in the user's
+ * Dropbox. If RelocationBatchArg.allow_shared_folder is false, this route is
+ * atomic. If on entry failes, the whole transaction will abort. If
+ * RelocationBatchArg.allow_shared_folder is true, not atomicity is guaranteed,
+ * but you will be able to copy the contents of shared folders to new locations.
+ * This route will return job ID immediately and do the async copy job in
+ * background. Please use copy_batch/check to check the job status.
+ * @function Dropbox#filesCopyBatch
+ * @arg {FilesRelocationBatchArg} arg - The request parameters.
+ * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
+ */
+routes.filesCopyBatch = function (arg) {
+  return this.request('files/copy_batch', arg, 'api', 'rpc');
+};
+
+/**
+ * Returns the status of an asynchronous job for copy_batch. If success, it
+ * returns list of results for each entry.
+ * @function Dropbox#filesCopyBatchCheck
+ * @arg {AsyncPollArg} arg - The request parameters.
+ * @returns {Promise.<FilesRelocationBatchJobStatus, Error.<AsyncPollError>>}
+ */
+routes.filesCopyBatchCheck = function (arg) {
+  return this.request('files/copy_batch/check', arg, 'api', 'rpc');
+};
+
+/**
  * Get a copy reference to a file or folder. This reference string can be used
  * to save that file or folder to another user's Dropbox by passing it to
  * copy_reference/save.
@@ -94,6 +121,29 @@ routes.filesDelete = function (arg) {
 };
 
 /**
+ * Delete multiple files/folders at once. This route is asynchronous, which
+ * returns a job ID immediately and runs the delete batch asynchronously. Use
+ * delete_batch/check to check the job status.
+ * @function Dropbox#filesDeleteBatch
+ * @arg {FilesDeleteBatchArg} arg - The request parameters.
+ * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
+ */
+routes.filesDeleteBatch = function (arg) {
+  return this.request('files/delete_batch', arg, 'api', 'rpc');
+};
+
+/**
+ * Returns the status of an asynchronous job for delete_batch. If success, it
+ * returns list of result for each entry.
+ * @function Dropbox#filesDeleteBatchCheck
+ * @arg {AsyncPollArg} arg - The request parameters.
+ * @returns {Promise.<FilesDeleteBatchJobStatus, Error.<AsyncPollError>>}
+ */
+routes.filesDeleteBatchCheck = function (arg) {
+  return this.request('files/delete_batch/check', arg, 'api', 'rpc');
+};
+
+/**
  * Download a file from a user's Dropbox.
  * @function Dropbox#filesDownload
  * @arg {FilesDownloadArg} arg - The request parameters.
@@ -117,7 +167,7 @@ routes.filesGetMetadata = function (arg) {
 /**
  * Get a preview for a file. Currently previews are only generated for the files
  * with  the following extensions: .doc, .docx, .docm, .ppt, .pps, .ppsx, .ppsm,
- * .pptx, .pptm,  .xls, .xlsx, .xlsm, .rtf
+ * .pptx, .pptm,  .xls, .xlsx, .xlsm, .rtf.
  * @function Dropbox#filesGetPreview
  * @arg {FilesPreviewArg} arg - The request parameters.
  * @returns {Promise.<FilesFileMetadata, Error.<FilesPreviewError>>}
@@ -151,7 +201,22 @@ routes.filesGetThumbnail = function (arg) {
 };
 
 /**
- * Returns the contents of a folder.
+ * Starts returning the contents of a folder. If the result's
+ * ListFolderResult.has_more field is true, call list_folder/continue with the
+ * returned ListFolderResult.cursor to retrieve more entries. If you're using
+ * ListFolderArg.recursive set to true to keep a local cache of the contents of
+ * a Dropbox account, iterate through each entry in order and process them as
+ * follows to keep your local state in sync: For each FileMetadata, store the
+ * new entry at the given path in your local state. If the required parent
+ * folders don't exist yet, create them. If there's already something else at
+ * the given path, replace it and remove all its children. For each
+ * FolderMetadata, store the new entry at the given path in your local state. If
+ * the required parent folders don't exist yet, create them. If there's already
+ * something else at the given path, replace it but leave the children as they
+ * are. Check the new entry's FolderSharingInfo.read_only and set all its
+ * children's read-only statuses to match. For each DeletedMetadata, if your
+ * local state has something at the given path, remove it and all its children.
+ * If there's nothing at the given path, ignore this entry.
  * @function Dropbox#filesListFolder
  * @arg {FilesListFolderArg} arg - The request parameters.
  * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
@@ -162,7 +227,8 @@ routes.filesListFolder = function (arg) {
 
 /**
  * Once a cursor has been retrieved from list_folder, use this to paginate
- * through all files and retrieve updates to the folder.
+ * through all files and retrieve updates to the folder, following the same
+ * rules as documented for list_folder.
  * @function Dropbox#filesListFolderContinue
  * @arg {FilesListFolderContinueArg} arg - The request parameters.
  * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderContinueError>>}
@@ -200,7 +266,7 @@ routes.filesListFolderLongpoll = function (arg) {
 };
 
 /**
- * Return revisions of a file
+ * Return revisions of a file.
  * @function Dropbox#filesListRevisions
  * @arg {FilesListRevisionsArg} arg - The request parameters.
  * @returns {Promise.<FilesListRevisionsResult, Error.<FilesListRevisionsError>>}
@@ -218,6 +284,31 @@ routes.filesListRevisions = function (arg) {
  */
 routes.filesMove = function (arg) {
   return this.request('files/move', arg, 'api', 'rpc');
+};
+
+/**
+ * Move multiple files or folders to different locations at once in the user's
+ * Dropbox. This route is 'all or nothing', which means if one entry fails, the
+ * whole transaction will abort. This route will return job ID immediately and
+ * do the async moving job in background. Please use move_batch/check to check
+ * the job status.
+ * @function Dropbox#filesMoveBatch
+ * @arg {FilesRelocationBatchArg} arg - The request parameters.
+ * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
+ */
+routes.filesMoveBatch = function (arg) {
+  return this.request('files/move_batch', arg, 'api', 'rpc');
+};
+
+/**
+ * Returns the status of an asynchronous job for move_batch. If success, it
+ * returns list of results for each entry.
+ * @function Dropbox#filesMoveBatchCheck
+ * @arg {AsyncPollArg} arg - The request parameters.
+ * @returns {Promise.<FilesRelocationBatchJobStatus, Error.<AsyncPollError>>}
+ */
+routes.filesMoveBatchCheck = function (arg) {
+  return this.request('files/move_batch/check', arg, 'api', 'rpc');
 };
 
 /**
@@ -300,7 +391,7 @@ routes.filesPropertiesUpdate = function (arg) {
 };
 
 /**
- * Restore a file to a specific revision
+ * Restore a file to a specific revision.
  * @function Dropbox#filesRestore
  * @arg {FilesRestoreArg} arg - The request parameters.
  * @returns {Promise.<FilesFileMetadata, Error.<FilesRestoreError>>}
@@ -395,12 +486,12 @@ routes.filesUploadSessionFinish = function (arg) {
  * file contents have been uploaded, rather than calling upload_session/finish,
  * use this route to finish all your upload sessions in a single request.
  * UploadSessionStartArg.close or UploadSessionAppendArg.close needs to be true
- * for last upload_session/start or upload_session/append_v2 call. This route
- * will return job_id immediately and do the async commit job in background. We
- * have another route upload_session/finish_batch/check to check the job status.
+ * for the last upload_session/start or upload_session/append_v2 call. This
+ * route will return a job_id immediately and do the async commit job in
+ * background. Use upload_session/finish_batch/check to check the job status.
  * For the same account, this route should be executed serially. That means you
- * should not start next job before current job finishes. Also we only allow up
- * to 1000 entries in a single request
+ * should not start the next job before current job finishes. We allow up to
+ * 1000 entries in a single request.
  * @function Dropbox#filesUploadSessionFinishBatch
  * @arg {FilesUploadSessionFinishBatchArg} arg - The request parameters.
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
@@ -411,7 +502,7 @@ routes.filesUploadSessionFinishBatch = function (arg) {
 
 /**
  * Returns the status of an asynchronous job for upload_session/finish_batch. If
- * success, it returns list of result for each entry
+ * success, it returns list of result for each entry.
  * @function Dropbox#filesUploadSessionFinishBatchCheck
  * @arg {AsyncPollArg} arg - The request parameters.
  * @returns {Promise.<FilesUploadSessionFinishBatchJobStatus, Error.<AsyncPollError>>}
@@ -421,8 +512,9 @@ routes.filesUploadSessionFinishBatchCheck = function (arg) {
 };
 
 /**
- * Upload sessions allow you to upload a single file using multiple requests.
- * This call starts a new upload session with the given data.  You can then use
+ * Upload sessions allow you to upload a single file in one or more requests,
+ * for example where the size of the file is greater than 150 MB.  This call
+ * starts a new upload session with the given data. You can then use
  * upload_session/append_v2 to add more data and upload_session/finish to save
  * all the data to a file in Dropbox. A single request should not upload more
  * than 150 MB of file contents.
@@ -583,11 +675,11 @@ routes.sharingGetSharedLinkMetadata = function (arg) {
 
 /**
  * Returns a list of LinkMetadata objects for this user, including collection
- * links. If no path is given or the path is empty, returns a list of all shared
- * links for the current user, including collection links. If a non-empty path
- * is given, returns a list of all shared links that allow access to the given
- * path.  Collection links are never returned in this case. Note that the url
- * field in the response is never the shortened URL.
+ * links. If no path is given, returns a list of all shared links for the
+ * current user, including collection links. If a non-empty path is given,
+ * returns a list of all shared links that allow access to the given path.
+ * Collection links are never returned in this case. Note that the url field in
+ * the response is never the shortened URL.
  * @function Dropbox#sharingGetSharedLinks
  * @deprecated
  * @arg {SharingGetSharedLinksArg} arg - The request parameters.
@@ -728,12 +820,11 @@ routes.sharingListReceivedFilesContinue = function (arg) {
 };
 
 /**
- * List shared links of this user. If no path is given or the path is empty,
- * returns a list of all shared links for the current user. If a non-empty path
- * is given, returns a list of all shared links that allow access to the given
- * path - direct links to the given path and links to parent folders of the
- * given path. Links to parent folders can be suppressed by setting direct_only
- * to true.
+ * List shared links of this user. If no path is given, returns a list of all
+ * shared links for the current user. If a non-empty path is given, returns a
+ * list of all shared links that allow access to the given path - direct links
+ * to the given path and links to parent folders of the given path. Links to
+ * parent folders can be suppressed by setting direct_only to true.
  * @function Dropbox#sharingListSharedLinks
  * @arg {SharingListSharedLinksArg} arg - The request parameters.
  * @returns {Promise.<SharingListSharedLinksResult, Error.<SharingListSharedLinksError>>}
