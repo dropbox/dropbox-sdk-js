@@ -17,8 +17,9 @@ describe('Dropbox', function () {
       assert(requestSpy.calledOnce);
       assert.equal('files/list_folder', dbx.request.getCall(0).args[0]);
       assert.deepEqual({}, dbx.request.getCall(0).args[1]);
-      assert.equal('api', dbx.request.getCall(0).args[2]);
-      assert.equal(REQUEST_CONSTANTS.RPC, dbx.request.getCall(0).args[3]);
+      assert.equal('user', dbx.request.getCall(0).args[2]);
+      assert.equal('api', dbx.request.getCall(0).args[3]);
+      assert.equal(REQUEST_CONSTANTS.RPC, dbx.request.getCall(0).args[4]);
     });
   });
 });

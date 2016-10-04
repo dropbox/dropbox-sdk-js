@@ -1,7 +1,6 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
-
-var BASE_URL = 'https://content.dropboxapi.com/2/';
+var getBaseURL = require('./get-base-url');
 
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
@@ -12,7 +11,11 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var uploadRequest = function (path, args, accessToken, selectUser) {
+var uploadRequest = function (path, args, auth, host, accessToken, selectUser) {
+  if (auth !== 'user') {
+    throw new Error('Unexpected auth type: ' + auth);
+  }
+
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
 
@@ -41,7 +44,7 @@ var uploadRequest = function (path, args, accessToken, selectUser) {
       }
     }
 
-    apiRequest = request.post(BASE_URL + path)
+    apiRequest = request.post(getBaseURL(host) + path)
       .type('application/octet-stream')
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Dropbox-API-Arg', JSON.stringify(args));

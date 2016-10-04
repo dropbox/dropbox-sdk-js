@@ -1,7 +1,6 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
-
-var BASE_URL = 'https://api.dropboxapi.com/2/';
+var getBaseURL = require('./get-base-url');
 
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
@@ -12,7 +11,7 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var rpcRequest = function (path, body, accessToken, selectUser) {
+var rpcRequest = function (path, body, auth, host, accessToken, selectUser) {
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
 
@@ -42,9 +41,19 @@ var rpcRequest = function (path, body, accessToken, selectUser) {
       body = null;
     }
 
-    apiRequest = request.post(BASE_URL + path)
-      .type('application/json')
-      .set('Authorization', 'Bearer ' + accessToken);
+    apiRequest = request.post(getBaseURL(host) + path)
+      .type('application/json');
+
+    switch (auth) {
+      case 'team':
+      case 'user':
+        apiRequest.set('Authorization', 'Bearer ' + accessToken);
+        break;
+      case 'noauth':
+        break;
+      default:
+        throw new Error('Unhandled auth type: ' + auth);
+    }
 
     if (selectUser) {
       apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);

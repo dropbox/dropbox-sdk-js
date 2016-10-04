@@ -68,13 +68,13 @@ def main():
     }
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_types', dropbox_pkg_path] +
-         specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
+         specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style', '-a', 'auth'] +
          ['--', 'types.js', '-e', json.dumps(upload_arg)]),
         cwd=stone_path)
 
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
-         specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
+         specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style', '-a', 'auth'] +
          ['--', 'routes.js', '-c', 'Dropbox']),
 #          '-e', json.dumps(upload_arg)]),
         cwd=stone_path)
@@ -84,7 +84,7 @@ def main():
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-w', 'team', '-f', 'style!="upload" and style!="download"'] +
-         ['-a', 'host', '-a', 'style'] + ['--', 'routes-team.js', '-c', 'DropboxTeam']),
+         ['-a', 'host', '-a', 'style', '-a', 'auth'] + ['--', 'routes-team.js', '-c', 'DropboxTeam']),
         cwd=stone_path)
 
 if __name__ == '__main__':

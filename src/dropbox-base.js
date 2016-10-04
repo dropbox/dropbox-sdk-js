@@ -88,15 +88,23 @@ DropboxBase.prototype.getAuthenticationUrl = function (redirectUri, state) {
   return authUrl;
 };
 
-DropboxBase.prototype.request = function (path, args, host, style) {
-  if (style === REQUEST_CONSTANTS.RPC) {
-    return this.getRpcRequest()(path, args, this.getAccessToken(), this.selectUser);
-  } else if (style === REQUEST_CONSTANTS.DOWNLOAD) {
-    return this.getDownloadRequest()(path, args, this.getAccessToken(), this.selectUser);
-  } else if (style === REQUEST_CONSTANTS.UPLOAD) {
-    return this.getUploadRequest()(path, args, this.getAccessToken(), this.selectUser);
+DropboxBase.prototype.request = function (path, args, auth, host, style) {
+  var request = null;
+  switch (style) {
+    case REQUEST_CONSTANTS.RPC:
+      request = this.getRpcRequest();
+      break;
+    case REQUEST_CONSTANTS.DOWNLOAD:
+      request = this.getDownloadRequest();
+      break;
+    case REQUEST_CONSTANTS.UPLOAD:
+      request = this.getUploadRequest();
+      break;
+    default:
+      throw new Error('Invalid request style: ' + style);
   }
-  throw new Error('Invalid request type');
+
+  return request(path, args, auth, host, this.getAccessToken(), this.selectUser);
 };
 
 DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
