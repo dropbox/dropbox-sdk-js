@@ -9,7 +9,7 @@ var routes = {};
  * @returns {Promise.<TeamGroupFullInfo, Error.<TeamGroupCreateError>>}
  */
 routes.teamAlphaGroupsCreate = function (arg) {
-  return this.request('team/alpha/groups/create', arg, 'api', 'rpc');
+  return this.request('team/alpha/groups/create', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -19,7 +19,7 @@ routes.teamAlphaGroupsCreate = function (arg) {
  * @returns {Promise.<Object, Error.<TeamGroupsGetInfoError>>}
  */
 routes.teamAlphaGroupsGetInfo = function (arg) {
-  return this.request('team/alpha/groups/get_info', arg, 'api', 'rpc');
+  return this.request('team/alpha/groups/get_info', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -29,7 +29,7 @@ routes.teamAlphaGroupsGetInfo = function (arg) {
  * @returns {Promise.<TeamGroupsListResult, Error.<void>>}
  */
 routes.teamAlphaGroupsList = function (arg) {
-  return this.request('team/alpha/groups/list', arg, 'api', 'rpc');
+  return this.request('team/alpha/groups/list', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -40,7 +40,7 @@ routes.teamAlphaGroupsList = function (arg) {
  * @returns {Promise.<TeamGroupsListResult, Error.<TeamGroupsListContinueError>>}
  */
 routes.teamAlphaGroupsListContinue = function (arg) {
-  return this.request('team/alpha/groups/list/continue', arg, 'api', 'rpc');
+  return this.request('team/alpha/groups/list/continue', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -51,7 +51,7 @@ routes.teamAlphaGroupsListContinue = function (arg) {
  * @returns {Promise.<TeamGroupFullInfo, Error.<TeamGroupUpdateError>>}
  */
 routes.teamAlphaGroupsUpdate = function (arg) {
-  return this.request('team/alpha/groups/update', arg, 'api', 'rpc');
+  return this.request('team/alpha/groups/update', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -61,7 +61,7 @@ routes.teamAlphaGroupsUpdate = function (arg) {
  * @returns {Promise.<TeamListMemberDevicesResult, Error.<TeamListMemberDevicesError>>}
  */
 routes.teamDevicesListMemberDevices = function (arg) {
-  return this.request('team/devices/list_member_devices', arg, 'api', 'rpc');
+  return this.request('team/devices/list_member_devices', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -71,7 +71,7 @@ routes.teamDevicesListMemberDevices = function (arg) {
  * @returns {Promise.<TeamListMembersDevicesResult, Error.<TeamListMembersDevicesError>>}
  */
 routes.teamDevicesListMembersDevices = function (arg) {
-  return this.request('team/devices/list_members_devices', arg, 'api', 'rpc');
+  return this.request('team/devices/list_members_devices', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -82,7 +82,7 @@ routes.teamDevicesListMembersDevices = function (arg) {
  * @returns {Promise.<TeamListTeamDevicesResult, Error.<TeamListTeamDevicesError>>}
  */
 routes.teamDevicesListTeamDevices = function (arg) {
-  return this.request('team/devices/list_team_devices', arg, 'api', 'rpc');
+  return this.request('team/devices/list_team_devices', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -92,7 +92,7 @@ routes.teamDevicesListTeamDevices = function (arg) {
  * @returns {Promise.<void, Error.<TeamRevokeDeviceSessionError>>}
  */
 routes.teamDevicesRevokeDeviceSession = function (arg) {
-  return this.request('team/devices/revoke_device_session', arg, 'api', 'rpc');
+  return this.request('team/devices/revoke_device_session', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -102,7 +102,7 @@ routes.teamDevicesRevokeDeviceSession = function (arg) {
  * @returns {Promise.<TeamRevokeDeviceSessionBatchResult, Error.<TeamRevokeDeviceSessionBatchError>>}
  */
 routes.teamDevicesRevokeDeviceSessionBatch = function (arg) {
-  return this.request('team/devices/revoke_device_session_batch', arg, 'api', 'rpc');
+  return this.request('team/devices/revoke_device_session_batch', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -112,7 +112,7 @@ routes.teamDevicesRevokeDeviceSessionBatch = function (arg) {
  * @returns {Promise.<TeamTeamGetInfoResult, Error.<void>>}
  */
 routes.teamGetInfo = function (arg) {
-  return this.request('team/get_info', arg, 'api', 'rpc');
+  return this.request('team/get_info', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -123,7 +123,7 @@ routes.teamGetInfo = function (arg) {
  * @returns {Promise.<TeamGroupFullInfo, Error.<TeamGroupCreateError>>}
  */
 routes.teamGroupsCreate = function (arg) {
-  return this.request('team/groups/create', arg, 'api', 'rpc');
+  return this.request('team/groups/create', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -136,7 +136,7 @@ routes.teamGroupsCreate = function (arg) {
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<TeamGroupDeleteError>>}
  */
 routes.teamGroupsDelete = function (arg) {
-  return this.request('team/groups/delete', arg, 'api', 'rpc');
+  return this.request('team/groups/delete', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -146,7 +146,7 @@ routes.teamGroupsDelete = function (arg) {
  * @returns {Promise.<Object, Error.<TeamGroupsGetInfoError>>}
  */
 routes.teamGroupsGetInfo = function (arg) {
-  return this.request('team/groups/get_info', arg, 'api', 'rpc');
+  return this.request('team/groups/get_info', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -159,7 +159,7 @@ routes.teamGroupsGetInfo = function (arg) {
  * @returns {Promise.<AsyncPollEmptyResult, Error.<TeamGroupsPollError>>}
  */
 routes.teamGroupsJobStatusGet = function (arg) {
-  return this.request('team/groups/job_status/get', arg, 'api', 'rpc');
+  return this.request('team/groups/job_status/get', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -169,7 +169,7 @@ routes.teamGroupsJobStatusGet = function (arg) {
  * @returns {Promise.<TeamGroupsListResult, Error.<void>>}
  */
 routes.teamGroupsList = function (arg) {
-  return this.request('team/groups/list', arg, 'api', 'rpc');
+  return this.request('team/groups/list', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -180,7 +180,7 @@ routes.teamGroupsList = function (arg) {
  * @returns {Promise.<TeamGroupsListResult, Error.<TeamGroupsListContinueError>>}
  */
 routes.teamGroupsListContinue = function (arg) {
-  return this.request('team/groups/list/continue', arg, 'api', 'rpc');
+  return this.request('team/groups/list/continue', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -193,7 +193,7 @@ routes.teamGroupsListContinue = function (arg) {
  * @returns {Promise.<TeamGroupMembersChangeResult, Error.<TeamGroupMembersAddError>>}
  */
 routes.teamGroupsMembersAdd = function (arg) {
-  return this.request('team/groups/members/add', arg, 'api', 'rpc');
+  return this.request('team/groups/members/add', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -203,7 +203,7 @@ routes.teamGroupsMembersAdd = function (arg) {
  * @returns {Promise.<TeamGroupsMembersListResult, Error.<TeamGroupSelectorError>>}
  */
 routes.teamGroupsMembersList = function (arg) {
-  return this.request('team/groups/members/list', arg, 'api', 'rpc');
+  return this.request('team/groups/members/list', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -214,7 +214,7 @@ routes.teamGroupsMembersList = function (arg) {
  * @returns {Promise.<TeamGroupsMembersListResult, Error.<TeamGroupsMembersListContinueError>>}
  */
 routes.teamGroupsMembersListContinue = function (arg) {
-  return this.request('team/groups/members/list/continue', arg, 'api', 'rpc');
+  return this.request('team/groups/members/list/continue', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -228,7 +228,7 @@ routes.teamGroupsMembersListContinue = function (arg) {
  * @returns {Promise.<TeamGroupMembersChangeResult, Error.<TeamGroupMembersRemoveError>>}
  */
 routes.teamGroupsMembersRemove = function (arg) {
-  return this.request('team/groups/members/remove', arg, 'api', 'rpc');
+  return this.request('team/groups/members/remove', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -238,7 +238,7 @@ routes.teamGroupsMembersRemove = function (arg) {
  * @returns {Promise.<Object, Error.<TeamGroupMemberSetAccessTypeError>>}
  */
 routes.teamGroupsMembersSetAccessType = function (arg) {
-  return this.request('team/groups/members/set_access_type', arg, 'api', 'rpc');
+  return this.request('team/groups/members/set_access_type', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -249,7 +249,7 @@ routes.teamGroupsMembersSetAccessType = function (arg) {
  * @returns {Promise.<TeamGroupFullInfo, Error.<TeamGroupUpdateError>>}
  */
 routes.teamGroupsUpdate = function (arg) {
-  return this.request('team/groups/update', arg, 'api', 'rpc');
+  return this.request('team/groups/update', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -260,7 +260,7 @@ routes.teamGroupsUpdate = function (arg) {
  * @returns {Promise.<TeamListMemberAppsResult, Error.<TeamListMemberAppsError>>}
  */
 routes.teamLinkedAppsListMemberLinkedApps = function (arg) {
-  return this.request('team/linked_apps/list_member_linked_apps', arg, 'api', 'rpc');
+  return this.request('team/linked_apps/list_member_linked_apps', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -271,7 +271,7 @@ routes.teamLinkedAppsListMemberLinkedApps = function (arg) {
  * @returns {Promise.<TeamListMembersAppsResult, Error.<TeamListMembersAppsError>>}
  */
 routes.teamLinkedAppsListMembersLinkedApps = function (arg) {
-  return this.request('team/linked_apps/list_members_linked_apps', arg, 'api', 'rpc');
+  return this.request('team/linked_apps/list_members_linked_apps', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -283,7 +283,7 @@ routes.teamLinkedAppsListMembersLinkedApps = function (arg) {
  * @returns {Promise.<TeamListTeamAppsResult, Error.<TeamListTeamAppsError>>}
  */
 routes.teamLinkedAppsListTeamLinkedApps = function (arg) {
-  return this.request('team/linked_apps/list_team_linked_apps', arg, 'api', 'rpc');
+  return this.request('team/linked_apps/list_team_linked_apps', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -293,7 +293,7 @@ routes.teamLinkedAppsListTeamLinkedApps = function (arg) {
  * @returns {Promise.<void, Error.<TeamRevokeLinkedAppError>>}
  */
 routes.teamLinkedAppsRevokeLinkedApp = function (arg) {
-  return this.request('team/linked_apps/revoke_linked_app', arg, 'api', 'rpc');
+  return this.request('team/linked_apps/revoke_linked_app', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -303,7 +303,7 @@ routes.teamLinkedAppsRevokeLinkedApp = function (arg) {
  * @returns {Promise.<TeamRevokeLinkedAppBatchResult, Error.<TeamRevokeLinkedAppBatchError>>}
  */
 routes.teamLinkedAppsRevokeLinkedAppBatch = function (arg) {
-  return this.request('team/linked_apps/revoke_linked_app_batch', arg, 'api', 'rpc');
+  return this.request('team/linked_apps/revoke_linked_app_batch', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -323,7 +323,7 @@ routes.teamLinkedAppsRevokeLinkedAppBatch = function (arg) {
  * @returns {Promise.<TeamMembersAddLaunch, Error.<void>>}
  */
 routes.teamMembersAdd = function (arg) {
-  return this.request('team/members/add', arg, 'api', 'rpc');
+  return this.request('team/members/add', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -334,7 +334,7 @@ routes.teamMembersAdd = function (arg) {
  * @returns {Promise.<TeamMembersAddJobStatus, Error.<AsyncPollError>>}
  */
 routes.teamMembersAddJobStatusGet = function (arg) {
-  return this.request('team/members/add/job_status/get', arg, 'api', 'rpc');
+  return this.request('team/members/add/job_status/get', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -346,7 +346,7 @@ routes.teamMembersAddJobStatusGet = function (arg) {
  * @returns {Promise.<Object, Error.<TeamMembersGetInfoError>>}
  */
 routes.teamMembersGetInfo = function (arg) {
-  return this.request('team/members/get_info', arg, 'api', 'rpc');
+  return this.request('team/members/get_info', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -356,7 +356,7 @@ routes.teamMembersGetInfo = function (arg) {
  * @returns {Promise.<TeamMembersListResult, Error.<TeamMembersListError>>}
  */
 routes.teamMembersList = function (arg) {
-  return this.request('team/members/list', arg, 'api', 'rpc');
+  return this.request('team/members/list', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -367,7 +367,7 @@ routes.teamMembersList = function (arg) {
  * @returns {Promise.<TeamMembersListResult, Error.<TeamMembersListContinueError>>}
  */
 routes.teamMembersListContinue = function (arg) {
-  return this.request('team/members/list/continue', arg, 'api', 'rpc');
+  return this.request('team/members/list/continue', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -379,7 +379,7 @@ routes.teamMembersListContinue = function (arg) {
  * @returns {Promise.<void, Error.<TeamMembersRecoverError>>}
  */
 routes.teamMembersRecover = function (arg) {
-  return this.request('team/members/recover', arg, 'api', 'rpc');
+  return this.request('team/members/recover', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -396,7 +396,7 @@ routes.teamMembersRecover = function (arg) {
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<TeamMembersRemoveError>>}
  */
 routes.teamMembersRemove = function (arg) {
-  return this.request('team/members/remove', arg, 'api', 'rpc');
+  return this.request('team/members/remove', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -407,7 +407,7 @@ routes.teamMembersRemove = function (arg) {
  * @returns {Promise.<AsyncPollEmptyResult, Error.<AsyncPollError>>}
  */
 routes.teamMembersRemoveJobStatusGet = function (arg) {
-  return this.request('team/members/remove/job_status/get', arg, 'api', 'rpc');
+  return this.request('team/members/remove/job_status/get', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -419,7 +419,7 @@ routes.teamMembersRemoveJobStatusGet = function (arg) {
  * @returns {Promise.<void, Error.<TeamMembersSendWelcomeError>>}
  */
 routes.teamMembersSendWelcomeEmail = function (arg) {
-  return this.request('team/members/send_welcome_email', arg, 'api', 'rpc');
+  return this.request('team/members/send_welcome_email', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -429,7 +429,7 @@ routes.teamMembersSendWelcomeEmail = function (arg) {
  * @returns {Promise.<TeamMembersSetPermissionsResult, Error.<TeamMembersSetPermissionsError>>}
  */
 routes.teamMembersSetAdminPermissions = function (arg) {
-  return this.request('team/members/set_admin_permissions', arg, 'api', 'rpc');
+  return this.request('team/members/set_admin_permissions', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -439,7 +439,7 @@ routes.teamMembersSetAdminPermissions = function (arg) {
  * @returns {Promise.<TeamTeamMemberInfo, Error.<TeamMembersSetProfileError>>}
  */
 routes.teamMembersSetProfile = function (arg) {
-  return this.request('team/members/set_profile', arg, 'api', 'rpc');
+  return this.request('team/members/set_profile', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -451,7 +451,7 @@ routes.teamMembersSetProfile = function (arg) {
  * @returns {Promise.<void, Error.<TeamMembersSuspendError>>}
  */
 routes.teamMembersSuspend = function (arg) {
-  return this.request('team/members/suspend', arg, 'api', 'rpc');
+  return this.request('team/members/suspend', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -463,7 +463,7 @@ routes.teamMembersSuspend = function (arg) {
  * @returns {Promise.<void, Error.<TeamMembersUnsuspendError>>}
  */
 routes.teamMembersUnsuspend = function (arg) {
-  return this.request('team/members/unsuspend', arg, 'api', 'rpc');
+  return this.request('team/members/unsuspend', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -474,7 +474,7 @@ routes.teamMembersUnsuspend = function (arg) {
  * @returns {Promise.<TeamAddPropertyTemplateResult, Error.<PropertiesModifyPropertyTemplateError>>}
  */
 routes.teamPropertiesTemplateAdd = function (arg) {
-  return this.request('team/properties/template/add', arg, 'api', 'rpc');
+  return this.request('team/properties/template/add', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -484,7 +484,7 @@ routes.teamPropertiesTemplateAdd = function (arg) {
  * @returns {Promise.<PropertiesGetPropertyTemplateResult, Error.<PropertiesPropertyTemplateError>>}
  */
 routes.teamPropertiesTemplateGet = function (arg) {
-  return this.request('team/properties/template/get', arg, 'api', 'rpc');
+  return this.request('team/properties/template/get', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -495,7 +495,7 @@ routes.teamPropertiesTemplateGet = function (arg) {
  * @returns {Promise.<PropertiesListPropertyTemplateIds, Error.<PropertiesPropertyTemplateError>>}
  */
 routes.teamPropertiesTemplateList = function (arg) {
-  return this.request('team/properties/template/list', arg, 'api', 'rpc');
+  return this.request('team/properties/template/list', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -506,7 +506,7 @@ routes.teamPropertiesTemplateList = function (arg) {
  * @returns {Promise.<TeamUpdatePropertyTemplateResult, Error.<PropertiesModifyPropertyTemplateError>>}
  */
 routes.teamPropertiesTemplateUpdate = function (arg) {
-  return this.request('team/properties/template/update', arg, 'api', 'rpc');
+  return this.request('team/properties/template/update', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -516,7 +516,7 @@ routes.teamPropertiesTemplateUpdate = function (arg) {
  * @returns {Promise.<TeamGetActivityReport, Error.<TeamDateRangeError>>}
  */
 routes.teamReportsGetActivity = function (arg) {
-  return this.request('team/reports/get_activity', arg, 'api', 'rpc');
+  return this.request('team/reports/get_activity', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -526,7 +526,7 @@ routes.teamReportsGetActivity = function (arg) {
  * @returns {Promise.<TeamGetDevicesReport, Error.<TeamDateRangeError>>}
  */
 routes.teamReportsGetDevices = function (arg) {
-  return this.request('team/reports/get_devices', arg, 'api', 'rpc');
+  return this.request('team/reports/get_devices', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -536,7 +536,7 @@ routes.teamReportsGetDevices = function (arg) {
  * @returns {Promise.<TeamGetMembershipReport, Error.<TeamDateRangeError>>}
  */
 routes.teamReportsGetMembership = function (arg) {
-  return this.request('team/reports/get_membership', arg, 'api', 'rpc');
+  return this.request('team/reports/get_membership', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -546,7 +546,7 @@ routes.teamReportsGetMembership = function (arg) {
  * @returns {Promise.<TeamGetStorageReport, Error.<TeamDateRangeError>>}
  */
 routes.teamReportsGetStorage = function (arg) {
-  return this.request('team/reports/get_storage', arg, 'api', 'rpc');
+  return this.request('team/reports/get_storage', arg, 'team', 'api', 'rpc');
 };
 
 module.exports = routes;

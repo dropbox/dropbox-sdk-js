@@ -1,10 +1,10 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
+var getBaseURL = require('./get-base-url');
 
 var buildCustomError;
 var downloadRequest;
 var nodeBinaryParser;
-var BASE_URL = 'https://content.dropboxapi.com/2/';
 
 // Register a handler that will instruct superagent how to parse the response
 request.parse['application/octect-stream'] = function (obj) {
@@ -29,7 +29,11 @@ nodeBinaryParser = function (res, done) {
   });
 };
 
-downloadRequest = function (path, args, accessToken, selectUser) {
+downloadRequest = function (path, args, auth, host, accessToken, selectUser) {
+  if (auth !== 'user') {
+    throw new Error('Unexpected auth type: ' + auth);
+  }
+
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
 
@@ -62,7 +66,7 @@ downloadRequest = function (path, args, accessToken, selectUser) {
       }
     }
 
-    apiRequest = request.post(BASE_URL + path)
+    apiRequest = request.post(getBaseURL(host) + path)
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Dropbox-API-Arg', JSON.stringify(args))
       .on('request', function () {

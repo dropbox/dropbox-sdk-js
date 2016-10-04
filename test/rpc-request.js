@@ -42,26 +42,26 @@ describe('rpcRequest', function () {
   });
 
   it('posts to the correct url', function () {
-    rpcRequest('files/list', { foo: 'bar' }, 'atoken');
+    rpcRequest('files/list', { foo: 'bar' }, 'user', 'api', 'atoken');
     assert(postStub.calledOnce);
     assert.equal('https://api.dropboxapi.com/2/files/list', postStub.firstCall.args[0]);
   });
 
   it('sets the request type to application/json', function () {
-    rpcRequest('files/list', { foo: 'bar' }, 'atoken');
+    rpcRequest('files/list', { foo: 'bar' }, 'user', 'api', 'atoken');
     assert(typeStub.calledOnce);
     assert.equal('application/json', typeStub.firstCall.args[0]);
   });
 
   it('sets the authorization header', function () {
-    rpcRequest('files/list', { foo: 'bar' }, 'atoken');
+    rpcRequest('files/list', { foo: 'bar' }, 'user', 'api', 'atoken');
     assert(setStub.calledOnce);
     assert.equal('Authorization', setStub.firstCall.args[0]);
     assert.equal('Bearer atoken', setStub.firstCall.args[1]);
   });
 
   it('sets the authorization and select user headers if selectUser set', function () {
-    rpcRequest('files/list', { foo: 'bar' }, 'atoken', 'selectedUserId');
+    rpcRequest('files/list', { foo: 'bar' }, 'user', 'api', 'atoken', 'selectedUserId');
     assert(setStub.calledTwice);
     assert.equal('Authorization', setStub.firstCall.args[0]);
     assert.equal('Bearer atoken', setStub.firstCall.args[1]);
@@ -70,19 +70,19 @@ describe('rpcRequest', function () {
   });
 
   it('sets the request body', function () {
-    rpcRequest('files/list', { foo: 'bar' }, 'atoken');
+    rpcRequest('files/list', { foo: 'bar' }, 'user', 'api', 'atoken');
     assert(sendStub.calledOnce);
     assert.deepEqual({ foo: 'bar' }, sendStub.firstCall.args[0]);
   });
 
   it('sets the request body to null if body isn\'t passed', function () {
-    rpcRequest('files/list');
+    rpcRequest('files/list', undefined, 'user', 'api', 'atoken');
     assert(sendStub.calledOnce);
     assert.deepEqual(null, sendStub.firstCall.args[0]);
   });
 
   it('sets the response handler function', function () {
-    rpcRequest('files/list', { foo: 'bar' }, 'atoken');
+    rpcRequest('files/list', { foo: 'bar' }, 'user', 'api', 'atoken');
     assert(endStub.calledOnce);
     assert.isFunction(endStub.firstCall.args[0]);
   });

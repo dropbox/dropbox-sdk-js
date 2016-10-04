@@ -113,17 +113,17 @@ describe('DropboxBase', function () {
       dbx = new DropboxBase();
       rpcSpy = sinon.spy(dbx.getRpcRequest());
       dbx.setRpcRequest(rpcSpy);
-      dbx.request('path', {}, 'api', REQUEST_CONSTANTS.RPC);
+      dbx.request('path', {}, 'user', 'api', REQUEST_CONSTANTS.RPC);
       assert(rpcSpy.calledOnce);
       assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
       assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
     });
-    it('throws an error for invalid request types', function () {
+    it('throws an error for invalid request styles', function () {
       dbx = new DropboxBase();
       assert.throws(
-        DropboxBase.prototype.request.bind(DropboxBase, '', {}, 'api', 'BADTYPE'),
+        DropboxBase.prototype.request.bind(DropboxBase, '', {}, 'user', 'api', 'BADTYPE'),
         Error,
-        'Invalid request type'
+        'Invalid request style'
       );
     });
   });

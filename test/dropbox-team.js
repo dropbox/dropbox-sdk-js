@@ -27,8 +27,9 @@ describe('DropboxTeam', function () {
       assert(requestSpy.calledOnce);
       assert.equal('team/alpha/groups/list', dbx.request.getCall(0).args[0]);
       assert.deepEqual({ limit: 10 }, dbx.request.getCall(0).args[1]);
-      assert.equal('api', dbx.request.getCall(0).args[2]);
-      assert.equal(REQUEST_CONSTANTS.RPC, dbx.request.getCall(0).args[3]);
+      assert.equal('team', dbx.request.getCall(0).args[2]);
+      assert.equal('api', dbx.request.getCall(0).args[3]);
+      assert.equal(REQUEST_CONSTANTS.RPC, dbx.request.getCall(0).args[4]);
     });
   });
 });

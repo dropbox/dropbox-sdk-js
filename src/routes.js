@@ -8,7 +8,7 @@ var routes = {};
  * @returns {Promise.<void, Error.<void>>}
  */
 routes.authTokenRevoke = function (arg) {
-  return this.request('auth/token/revoke', arg, 'api', 'rpc');
+  return this.request('auth/token/revoke', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -20,7 +20,7 @@ routes.authTokenRevoke = function (arg) {
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesAlphaGetMetadataError>>}
  */
 routes.filesAlphaGetMetadata = function (arg) {
-  return this.request('files/alpha/get_metadata', arg, 'api', 'rpc');
+  return this.request('files/alpha/get_metadata', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -33,7 +33,7 @@ routes.filesAlphaGetMetadata = function (arg) {
  * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadErrorWithProperties>>}
  */
 routes.filesAlphaUpload = function (arg) {
-  return this.request('files/alpha/upload', arg, 'content', 'upload');
+  return this.request('files/alpha/upload', arg, 'user', 'content', 'upload');
 };
 
 /**
@@ -44,7 +44,7 @@ routes.filesAlphaUpload = function (arg) {
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesRelocationError>>}
  */
 routes.filesCopy = function (arg) {
-  return this.request('files/copy', arg, 'api', 'rpc');
+  return this.request('files/copy', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -60,7 +60,7 @@ routes.filesCopy = function (arg) {
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
  */
 routes.filesCopyBatch = function (arg) {
-  return this.request('files/copy_batch', arg, 'api', 'rpc');
+  return this.request('files/copy_batch', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -71,7 +71,7 @@ routes.filesCopyBatch = function (arg) {
  * @returns {Promise.<FilesRelocationBatchJobStatus, Error.<AsyncPollError>>}
  */
 routes.filesCopyBatchCheck = function (arg) {
-  return this.request('files/copy_batch/check', arg, 'api', 'rpc');
+  return this.request('files/copy_batch/check', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -83,7 +83,7 @@ routes.filesCopyBatchCheck = function (arg) {
  * @returns {Promise.<FilesGetCopyReferenceResult, Error.<FilesGetCopyReferenceError>>}
  */
 routes.filesCopyReferenceGet = function (arg) {
-  return this.request('files/copy_reference/get', arg, 'api', 'rpc');
+  return this.request('files/copy_reference/get', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -93,7 +93,7 @@ routes.filesCopyReferenceGet = function (arg) {
  * @returns {Promise.<FilesSaveCopyReferenceResult, Error.<FilesSaveCopyReferenceError>>}
  */
 routes.filesCopyReferenceSave = function (arg) {
-  return this.request('files/copy_reference/save', arg, 'api', 'rpc');
+  return this.request('files/copy_reference/save', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -103,7 +103,7 @@ routes.filesCopyReferenceSave = function (arg) {
  * @returns {Promise.<FilesFolderMetadata, Error.<FilesCreateFolderError>>}
  */
 routes.filesCreateFolder = function (arg) {
-  return this.request('files/create_folder', arg, 'api', 'rpc');
+  return this.request('files/create_folder', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -117,7 +117,7 @@ routes.filesCreateFolder = function (arg) {
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesDeleteError>>}
  */
 routes.filesDelete = function (arg) {
-  return this.request('files/delete', arg, 'api', 'rpc');
+  return this.request('files/delete', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -129,7 +129,7 @@ routes.filesDelete = function (arg) {
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
  */
 routes.filesDeleteBatch = function (arg) {
-  return this.request('files/delete_batch', arg, 'api', 'rpc');
+  return this.request('files/delete_batch', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -140,7 +140,7 @@ routes.filesDeleteBatch = function (arg) {
  * @returns {Promise.<FilesDeleteBatchJobStatus, Error.<AsyncPollError>>}
  */
 routes.filesDeleteBatchCheck = function (arg) {
-  return this.request('files/delete_batch/check', arg, 'api', 'rpc');
+  return this.request('files/delete_batch/check', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -150,7 +150,7 @@ routes.filesDeleteBatchCheck = function (arg) {
  * @returns {Promise.<FilesFileMetadata, Error.<FilesDownloadError>>}
  */
 routes.filesDownload = function (arg) {
-  return this.request('files/download', arg, 'content', 'download');
+  return this.request('files/download', arg, 'user', 'content', 'download');
 };
 
 /**
@@ -161,7 +161,7 @@ routes.filesDownload = function (arg) {
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesGetMetadataError>>}
  */
 routes.filesGetMetadata = function (arg) {
-  return this.request('files/get_metadata', arg, 'api', 'rpc');
+  return this.request('files/get_metadata', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -173,7 +173,7 @@ routes.filesGetMetadata = function (arg) {
  * @returns {Promise.<FilesFileMetadata, Error.<FilesPreviewError>>}
  */
 routes.filesGetPreview = function (arg) {
-  return this.request('files/get_preview', arg, 'content', 'download');
+  return this.request('files/get_preview', arg, 'user', 'content', 'download');
 };
 
 /**
@@ -185,7 +185,7 @@ routes.filesGetPreview = function (arg) {
  * @returns {Promise.<FilesGetTemporaryLinkResult, Error.<FilesGetTemporaryLinkError>>}
  */
 routes.filesGetTemporaryLink = function (arg) {
-  return this.request('files/get_temporary_link', arg, 'api', 'rpc');
+  return this.request('files/get_temporary_link', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -197,7 +197,7 @@ routes.filesGetTemporaryLink = function (arg) {
  * @returns {Promise.<FilesFileMetadata, Error.<FilesThumbnailError>>}
  */
 routes.filesGetThumbnail = function (arg) {
-  return this.request('files/get_thumbnail', arg, 'content', 'download');
+  return this.request('files/get_thumbnail', arg, 'user', 'content', 'download');
 };
 
 /**
@@ -222,7 +222,7 @@ routes.filesGetThumbnail = function (arg) {
  * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
  */
 routes.filesListFolder = function (arg) {
-  return this.request('files/list_folder', arg, 'api', 'rpc');
+  return this.request('files/list_folder', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -234,7 +234,7 @@ routes.filesListFolder = function (arg) {
  * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderContinueError>>}
  */
 routes.filesListFolderContinue = function (arg) {
-  return this.request('files/list_folder/continue', arg, 'api', 'rpc');
+  return this.request('files/list_folder/continue', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -247,7 +247,7 @@ routes.filesListFolderContinue = function (arg) {
  * @returns {Promise.<FilesListFolderGetLatestCursorResult, Error.<FilesListFolderError>>}
  */
 routes.filesListFolderGetLatestCursor = function (arg) {
-  return this.request('files/list_folder/get_latest_cursor', arg, 'api', 'rpc');
+  return this.request('files/list_folder/get_latest_cursor', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -262,7 +262,7 @@ routes.filesListFolderGetLatestCursor = function (arg) {
  * @returns {Promise.<FilesListFolderLongpollResult, Error.<FilesListFolderLongpollError>>}
  */
 routes.filesListFolderLongpoll = function (arg) {
-  return this.request('files/list_folder/longpoll', arg, 'notify', 'rpc');
+  return this.request('files/list_folder/longpoll', arg, 'noauth', 'notify', 'rpc');
 };
 
 /**
@@ -272,7 +272,7 @@ routes.filesListFolderLongpoll = function (arg) {
  * @returns {Promise.<FilesListRevisionsResult, Error.<FilesListRevisionsError>>}
  */
 routes.filesListRevisions = function (arg) {
-  return this.request('files/list_revisions', arg, 'api', 'rpc');
+  return this.request('files/list_revisions', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -283,7 +283,7 @@ routes.filesListRevisions = function (arg) {
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesRelocationError>>}
  */
 routes.filesMove = function (arg) {
-  return this.request('files/move', arg, 'api', 'rpc');
+  return this.request('files/move', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -297,7 +297,7 @@ routes.filesMove = function (arg) {
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
  */
 routes.filesMoveBatch = function (arg) {
-  return this.request('files/move_batch', arg, 'api', 'rpc');
+  return this.request('files/move_batch', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -308,7 +308,7 @@ routes.filesMoveBatch = function (arg) {
  * @returns {Promise.<FilesRelocationBatchJobStatus, Error.<AsyncPollError>>}
  */
 routes.filesMoveBatchCheck = function (arg) {
-  return this.request('files/move_batch/check', arg, 'api', 'rpc');
+  return this.request('files/move_batch/check', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -320,7 +320,7 @@ routes.filesMoveBatchCheck = function (arg) {
  * @returns {Promise.<void, Error.<FilesDeleteError>>}
  */
 routes.filesPermanentlyDelete = function (arg) {
-  return this.request('files/permanently_delete', arg, 'api', 'rpc');
+  return this.request('files/permanently_delete', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -331,7 +331,7 @@ routes.filesPermanentlyDelete = function (arg) {
  * @returns {Promise.<void, Error.<FilesAddPropertiesError>>}
  */
 routes.filesPropertiesAdd = function (arg) {
-  return this.request('files/properties/add', arg, 'api', 'rpc');
+  return this.request('files/properties/add', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -341,7 +341,7 @@ routes.filesPropertiesAdd = function (arg) {
  * @returns {Promise.<void, Error.<FilesInvalidPropertyGroupError>>}
  */
 routes.filesPropertiesOverwrite = function (arg) {
-  return this.request('files/properties/overwrite', arg, 'api', 'rpc');
+  return this.request('files/properties/overwrite', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -354,7 +354,7 @@ routes.filesPropertiesOverwrite = function (arg) {
  * @returns {Promise.<void, Error.<FilesRemovePropertiesError>>}
  */
 routes.filesPropertiesRemove = function (arg) {
-  return this.request('files/properties/remove', arg, 'api', 'rpc');
+  return this.request('files/properties/remove', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -364,7 +364,7 @@ routes.filesPropertiesRemove = function (arg) {
  * @returns {Promise.<PropertiesGetPropertyTemplateResult, Error.<PropertiesPropertyTemplateError>>}
  */
 routes.filesPropertiesTemplateGet = function (arg) {
-  return this.request('files/properties/template/get', arg, 'api', 'rpc');
+  return this.request('files/properties/template/get', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -375,7 +375,7 @@ routes.filesPropertiesTemplateGet = function (arg) {
  * @returns {Promise.<PropertiesListPropertyTemplateIds, Error.<PropertiesPropertyTemplateError>>}
  */
 routes.filesPropertiesTemplateList = function (arg) {
-  return this.request('files/properties/template/list', arg, 'api', 'rpc');
+  return this.request('files/properties/template/list', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -387,7 +387,7 @@ routes.filesPropertiesTemplateList = function (arg) {
  * @returns {Promise.<void, Error.<FilesUpdatePropertiesError>>}
  */
 routes.filesPropertiesUpdate = function (arg) {
-  return this.request('files/properties/update', arg, 'api', 'rpc');
+  return this.request('files/properties/update', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -397,7 +397,7 @@ routes.filesPropertiesUpdate = function (arg) {
  * @returns {Promise.<FilesFileMetadata, Error.<FilesRestoreError>>}
  */
 routes.filesRestore = function (arg) {
-  return this.request('files/restore', arg, 'api', 'rpc');
+  return this.request('files/restore', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -408,7 +408,7 @@ routes.filesRestore = function (arg) {
  * @returns {Promise.<FilesSaveUrlResult, Error.<FilesSaveUrlError>>}
  */
 routes.filesSaveUrl = function (arg) {
-  return this.request('files/save_url', arg, 'api', 'rpc');
+  return this.request('files/save_url', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -418,7 +418,7 @@ routes.filesSaveUrl = function (arg) {
  * @returns {Promise.<FilesSaveUrlJobStatus, Error.<AsyncPollError>>}
  */
 routes.filesSaveUrlCheckJobStatus = function (arg) {
-  return this.request('files/save_url/check_job_status', arg, 'api', 'rpc');
+  return this.request('files/save_url/check_job_status', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -429,7 +429,7 @@ routes.filesSaveUrlCheckJobStatus = function (arg) {
  * @returns {Promise.<FilesSearchResult, Error.<FilesSearchError>>}
  */
 routes.filesSearch = function (arg) {
-  return this.request('files/search', arg, 'api', 'rpc');
+  return this.request('files/search', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -441,7 +441,7 @@ routes.filesSearch = function (arg) {
  * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadError>>}
  */
 routes.filesUpload = function (arg) {
-  return this.request('files/upload', arg, 'content', 'upload');
+  return this.request('files/upload', arg, 'user', 'content', 'upload');
 };
 
 /**
@@ -453,7 +453,7 @@ routes.filesUpload = function (arg) {
  * @returns {Promise.<void, Error.<FilesUploadSessionLookupError>>}
  */
 routes.filesUploadSessionAppend = function (arg) {
-  return this.request('files/upload_session/append', arg, 'content', 'upload');
+  return this.request('files/upload_session/append', arg, 'user', 'content', 'upload');
 };
 
 /**
@@ -465,7 +465,7 @@ routes.filesUploadSessionAppend = function (arg) {
  * @returns {Promise.<void, Error.<FilesUploadSessionLookupError>>}
  */
 routes.filesUploadSessionAppendV2 = function (arg) {
-  return this.request('files/upload_session/append_v2', arg, 'content', 'upload');
+  return this.request('files/upload_session/append_v2', arg, 'user', 'content', 'upload');
 };
 
 /**
@@ -476,7 +476,7 @@ routes.filesUploadSessionAppendV2 = function (arg) {
  * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadSessionFinishError>>}
  */
 routes.filesUploadSessionFinish = function (arg) {
-  return this.request('files/upload_session/finish', arg, 'content', 'upload');
+  return this.request('files/upload_session/finish', arg, 'user', 'content', 'upload');
 };
 
 /**
@@ -497,7 +497,7 @@ routes.filesUploadSessionFinish = function (arg) {
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
  */
 routes.filesUploadSessionFinishBatch = function (arg) {
-  return this.request('files/upload_session/finish_batch', arg, 'api', 'rpc');
+  return this.request('files/upload_session/finish_batch', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -508,7 +508,7 @@ routes.filesUploadSessionFinishBatch = function (arg) {
  * @returns {Promise.<FilesUploadSessionFinishBatchJobStatus, Error.<AsyncPollError>>}
  */
 routes.filesUploadSessionFinishBatchCheck = function (arg) {
-  return this.request('files/upload_session/finish_batch/check', arg, 'api', 'rpc');
+  return this.request('files/upload_session/finish_batch/check', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -523,7 +523,7 @@ routes.filesUploadSessionFinishBatchCheck = function (arg) {
  * @returns {Promise.<FilesUploadSessionStartResult, Error.<void>>}
  */
 routes.filesUploadSessionStart = function (arg) {
-  return this.request('files/upload_session/start', arg, 'content', 'upload');
+  return this.request('files/upload_session/start', arg, 'user', 'content', 'upload');
 };
 
 /**
@@ -533,7 +533,7 @@ routes.filesUploadSessionStart = function (arg) {
  * @returns {Promise.<Array.<SharingFileMemberActionResult>, Error.<SharingAddFileMemberError>>}
  */
 routes.sharingAddFileMember = function (arg) {
-  return this.request('sharing/add_file_member', arg, 'api', 'rpc');
+  return this.request('sharing/add_file_member', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -546,7 +546,7 @@ routes.sharingAddFileMember = function (arg) {
  * @returns {Promise.<void, Error.<SharingAddFolderMemberError>>}
  */
 routes.sharingAddFolderMember = function (arg) {
-  return this.request('sharing/add_folder_member', arg, 'api', 'rpc');
+  return this.request('sharing/add_folder_member', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -556,7 +556,7 @@ routes.sharingAddFolderMember = function (arg) {
  * @returns {Promise.<SharingFileMemberActionResult, Error.<SharingFileMemberActionError>>}
  */
 routes.sharingChangeFileMemberAccess = function (arg) {
-  return this.request('sharing/change_file_member_access', arg, 'api', 'rpc');
+  return this.request('sharing/change_file_member_access', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -567,7 +567,7 @@ routes.sharingChangeFileMemberAccess = function (arg) {
  * @returns {Promise.<SharingJobStatus, Error.<AsyncPollError>>}
  */
 routes.sharingCheckJobStatus = function (arg) {
-  return this.request('sharing/check_job_status', arg, 'api', 'rpc');
+  return this.request('sharing/check_job_status', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -578,7 +578,7 @@ routes.sharingCheckJobStatus = function (arg) {
  * @returns {Promise.<SharingRemoveMemberJobStatus, Error.<AsyncPollError>>}
  */
 routes.sharingCheckRemoveMemberJobStatus = function (arg) {
-  return this.request('sharing/check_remove_member_job_status', arg, 'api', 'rpc');
+  return this.request('sharing/check_remove_member_job_status', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -589,7 +589,7 @@ routes.sharingCheckRemoveMemberJobStatus = function (arg) {
  * @returns {Promise.<SharingShareFolderJobStatus, Error.<AsyncPollError>>}
  */
 routes.sharingCheckShareJobStatus = function (arg) {
-  return this.request('sharing/check_share_job_status', arg, 'api', 'rpc');
+  return this.request('sharing/check_share_job_status', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -607,7 +607,7 @@ routes.sharingCheckShareJobStatus = function (arg) {
  * @returns {Promise.<SharingPathLinkMetadata, Error.<SharingCreateSharedLinkError>>}
  */
 routes.sharingCreateSharedLink = function (arg) {
-  return this.request('sharing/create_shared_link', arg, 'api', 'rpc');
+  return this.request('sharing/create_shared_link', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -619,7 +619,7 @@ routes.sharingCreateSharedLink = function (arg) {
  * @returns {Promise.<(SharingFileLinkMetadata|SharingFolderLinkMetadata|SharingSharedLinkMetadata), Error.<SharingCreateSharedLinkWithSettingsError>>}
  */
 routes.sharingCreateSharedLinkWithSettings = function (arg) {
-  return this.request('sharing/create_shared_link_with_settings', arg, 'api', 'rpc');
+  return this.request('sharing/create_shared_link_with_settings', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -629,7 +629,7 @@ routes.sharingCreateSharedLinkWithSettings = function (arg) {
  * @returns {Promise.<SharingSharedFileMetadata, Error.<SharingGetFileMetadataError>>}
  */
 routes.sharingGetFileMetadata = function (arg) {
-  return this.request('sharing/get_file_metadata', arg, 'api', 'rpc');
+  return this.request('sharing/get_file_metadata', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -639,7 +639,7 @@ routes.sharingGetFileMetadata = function (arg) {
  * @returns {Promise.<Array.<SharingGetFileMetadataBatchResult>, Error.<SharingSharingUserError>>}
  */
 routes.sharingGetFileMetadataBatch = function (arg) {
-  return this.request('sharing/get_file_metadata/batch', arg, 'api', 'rpc');
+  return this.request('sharing/get_file_metadata/batch', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -650,7 +650,7 @@ routes.sharingGetFileMetadataBatch = function (arg) {
  * @returns {Promise.<SharingSharedFolderMetadata, Error.<SharingSharedFolderAccessError>>}
  */
 routes.sharingGetFolderMetadata = function (arg) {
-  return this.request('sharing/get_folder_metadata', arg, 'api', 'rpc');
+  return this.request('sharing/get_folder_metadata', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -660,7 +660,7 @@ routes.sharingGetFolderMetadata = function (arg) {
  * @returns {Promise.<(SharingFileLinkMetadata|SharingFolderLinkMetadata|SharingSharedLinkMetadata), Error.<SharingGetSharedLinkFileError>>}
  */
 routes.sharingGetSharedLinkFile = function (arg) {
-  return this.request('sharing/get_shared_link_file', arg, 'content', 'download');
+  return this.request('sharing/get_shared_link_file', arg, 'user', 'content', 'download');
 };
 
 /**
@@ -670,7 +670,7 @@ routes.sharingGetSharedLinkFile = function (arg) {
  * @returns {Promise.<(SharingFileLinkMetadata|SharingFolderLinkMetadata|SharingSharedLinkMetadata), Error.<SharingSharedLinkError>>}
  */
 routes.sharingGetSharedLinkMetadata = function (arg) {
-  return this.request('sharing/get_shared_link_metadata', arg, 'api', 'rpc');
+  return this.request('sharing/get_shared_link_metadata', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -686,7 +686,7 @@ routes.sharingGetSharedLinkMetadata = function (arg) {
  * @returns {Promise.<SharingGetSharedLinksResult, Error.<SharingGetSharedLinksError>>}
  */
 routes.sharingGetSharedLinks = function (arg) {
-  return this.request('sharing/get_shared_links', arg, 'api', 'rpc');
+  return this.request('sharing/get_shared_links', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -697,7 +697,7 @@ routes.sharingGetSharedLinks = function (arg) {
  * @returns {Promise.<SharingSharedFileMembers, Error.<SharingListFileMembersError>>}
  */
 routes.sharingListFileMembers = function (arg) {
-  return this.request('sharing/list_file_members', arg, 'api', 'rpc');
+  return this.request('sharing/list_file_members', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -711,7 +711,7 @@ routes.sharingListFileMembers = function (arg) {
  * @returns {Promise.<Array.<SharingListFileMembersBatchResult>, Error.<SharingSharingUserError>>}
  */
 routes.sharingListFileMembersBatch = function (arg) {
-  return this.request('sharing/list_file_members/batch', arg, 'api', 'rpc');
+  return this.request('sharing/list_file_members/batch', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -723,7 +723,7 @@ routes.sharingListFileMembersBatch = function (arg) {
  * @returns {Promise.<SharingSharedFileMembers, Error.<SharingListFileMembersContinueError>>}
  */
 routes.sharingListFileMembersContinue = function (arg) {
-  return this.request('sharing/list_file_members/continue', arg, 'api', 'rpc');
+  return this.request('sharing/list_file_members/continue', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -734,7 +734,7 @@ routes.sharingListFileMembersContinue = function (arg) {
  * @returns {Promise.<SharingSharedFolderMembers, Error.<SharingSharedFolderAccessError>>}
  */
 routes.sharingListFolderMembers = function (arg) {
-  return this.request('sharing/list_folder_members', arg, 'api', 'rpc');
+  return this.request('sharing/list_folder_members', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -746,7 +746,7 @@ routes.sharingListFolderMembers = function (arg) {
  * @returns {Promise.<SharingSharedFolderMembers, Error.<SharingListFolderMembersContinueError>>}
  */
 routes.sharingListFolderMembersContinue = function (arg) {
-  return this.request('sharing/list_folder_members/continue', arg, 'api', 'rpc');
+  return this.request('sharing/list_folder_members/continue', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -757,7 +757,7 @@ routes.sharingListFolderMembersContinue = function (arg) {
  * @returns {Promise.<SharingListFoldersResult, Error.<void>>}
  */
 routes.sharingListFolders = function (arg) {
-  return this.request('sharing/list_folders', arg, 'api', 'rpc');
+  return this.request('sharing/list_folders', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -770,7 +770,7 @@ routes.sharingListFolders = function (arg) {
  * @returns {Promise.<SharingListFoldersResult, Error.<SharingListFoldersContinueError>>}
  */
 routes.sharingListFoldersContinue = function (arg) {
-  return this.request('sharing/list_folders/continue', arg, 'api', 'rpc');
+  return this.request('sharing/list_folders/continue', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -781,7 +781,7 @@ routes.sharingListFoldersContinue = function (arg) {
  * @returns {Promise.<SharingListFoldersResult, Error.<void>>}
  */
 routes.sharingListMountableFolders = function (arg) {
-  return this.request('sharing/list_mountable_folders', arg, 'api', 'rpc');
+  return this.request('sharing/list_mountable_folders', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -794,7 +794,7 @@ routes.sharingListMountableFolders = function (arg) {
  * @returns {Promise.<SharingListFoldersResult, Error.<SharingListFoldersContinueError>>}
  */
 routes.sharingListMountableFoldersContinue = function (arg) {
-  return this.request('sharing/list_mountable_folders/continue', arg, 'api', 'rpc');
+  return this.request('sharing/list_mountable_folders/continue', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -806,7 +806,7 @@ routes.sharingListMountableFoldersContinue = function (arg) {
  * @returns {Promise.<SharingListFilesResult, Error.<SharingSharingUserError>>}
  */
 routes.sharingListReceivedFiles = function (arg) {
-  return this.request('sharing/list_received_files', arg, 'api', 'rpc');
+  return this.request('sharing/list_received_files', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -816,7 +816,7 @@ routes.sharingListReceivedFiles = function (arg) {
  * @returns {Promise.<SharingListFilesResult, Error.<SharingListFilesContinueError>>}
  */
 routes.sharingListReceivedFilesContinue = function (arg) {
-  return this.request('sharing/list_received_files/continue', arg, 'api', 'rpc');
+  return this.request('sharing/list_received_files/continue', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -830,7 +830,7 @@ routes.sharingListReceivedFilesContinue = function (arg) {
  * @returns {Promise.<SharingListSharedLinksResult, Error.<SharingListSharedLinksError>>}
  */
 routes.sharingListSharedLinks = function (arg) {
-  return this.request('sharing/list_shared_links', arg, 'api', 'rpc');
+  return this.request('sharing/list_shared_links', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -845,7 +845,7 @@ routes.sharingListSharedLinks = function (arg) {
  * @returns {Promise.<(SharingFileLinkMetadata|SharingFolderLinkMetadata|SharingSharedLinkMetadata), Error.<SharingModifySharedLinkSettingsError>>}
  */
 routes.sharingModifySharedLinkSettings = function (arg) {
-  return this.request('sharing/modify_shared_link_settings', arg, 'api', 'rpc');
+  return this.request('sharing/modify_shared_link_settings', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -858,7 +858,7 @@ routes.sharingModifySharedLinkSettings = function (arg) {
  * @returns {Promise.<SharingSharedFolderMetadata, Error.<SharingMountFolderError>>}
  */
 routes.sharingMountFolder = function (arg) {
-  return this.request('sharing/mount_folder', arg, 'api', 'rpc');
+  return this.request('sharing/mount_folder', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -870,7 +870,7 @@ routes.sharingMountFolder = function (arg) {
  * @returns {Promise.<void, Error.<SharingRelinquishFileMembershipError>>}
  */
 routes.sharingRelinquishFileMembership = function (arg) {
-  return this.request('sharing/relinquish_file_membership', arg, 'api', 'rpc');
+  return this.request('sharing/relinquish_file_membership', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -884,7 +884,7 @@ routes.sharingRelinquishFileMembership = function (arg) {
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<SharingRelinquishFolderMembershipError>>}
  */
 routes.sharingRelinquishFolderMembership = function (arg) {
-  return this.request('sharing/relinquish_folder_membership', arg, 'api', 'rpc');
+  return this.request('sharing/relinquish_folder_membership', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -895,7 +895,7 @@ routes.sharingRelinquishFolderMembership = function (arg) {
  * @returns {Promise.<SharingFileMemberActionIndividualResult, Error.<SharingRemoveFileMemberError>>}
  */
 routes.sharingRemoveFileMember = function (arg) {
-  return this.request('sharing/remove_file_member', arg, 'api', 'rpc');
+  return this.request('sharing/remove_file_member', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -905,7 +905,7 @@ routes.sharingRemoveFileMember = function (arg) {
  * @returns {Promise.<SharingFileMemberRemoveActionResult, Error.<SharingRemoveFileMemberError>>}
  */
 routes.sharingRemoveFileMember2 = function (arg) {
-  return this.request('sharing/remove_file_member_2', arg, 'api', 'rpc');
+  return this.request('sharing/remove_file_member_2', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -917,7 +917,7 @@ routes.sharingRemoveFileMember2 = function (arg) {
  * @returns {Promise.<AsyncLaunchResultBase, Error.<SharingRemoveFolderMemberError>>}
  */
 routes.sharingRemoveFolderMember = function (arg) {
-  return this.request('sharing/remove_folder_member', arg, 'api', 'rpc');
+  return this.request('sharing/remove_folder_member', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -931,7 +931,7 @@ routes.sharingRemoveFolderMember = function (arg) {
  * @returns {Promise.<void, Error.<SharingRevokeSharedLinkError>>}
  */
 routes.sharingRevokeSharedLink = function (arg) {
-  return this.request('sharing/revoke_shared_link', arg, 'api', 'rpc');
+  return this.request('sharing/revoke_shared_link', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -946,7 +946,7 @@ routes.sharingRevokeSharedLink = function (arg) {
  * @returns {Promise.<SharingShareFolderLaunch, Error.<SharingShareFolderError>>}
  */
 routes.sharingShareFolder = function (arg) {
-  return this.request('sharing/share_folder', arg, 'api', 'rpc');
+  return this.request('sharing/share_folder', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -958,7 +958,7 @@ routes.sharingShareFolder = function (arg) {
  * @returns {Promise.<void, Error.<SharingTransferFolderError>>}
  */
 routes.sharingTransferFolder = function (arg) {
-  return this.request('sharing/transfer_folder', arg, 'api', 'rpc');
+  return this.request('sharing/transfer_folder', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -970,7 +970,7 @@ routes.sharingTransferFolder = function (arg) {
  * @returns {Promise.<void, Error.<SharingUnmountFolderError>>}
  */
 routes.sharingUnmountFolder = function (arg) {
-  return this.request('sharing/unmount_folder', arg, 'api', 'rpc');
+  return this.request('sharing/unmount_folder', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -980,7 +980,7 @@ routes.sharingUnmountFolder = function (arg) {
  * @returns {Promise.<void, Error.<SharingUnshareFileError>>}
  */
 routes.sharingUnshareFile = function (arg) {
-  return this.request('sharing/unshare_file', arg, 'api', 'rpc');
+  return this.request('sharing/unshare_file', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -992,7 +992,7 @@ routes.sharingUnshareFile = function (arg) {
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<SharingUnshareFolderError>>}
  */
 routes.sharingUnshareFolder = function (arg) {
-  return this.request('sharing/unshare_folder', arg, 'api', 'rpc');
+  return this.request('sharing/unshare_folder', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1003,7 +1003,7 @@ routes.sharingUnshareFolder = function (arg) {
  * @returns {Promise.<SharingMemberAccessLevelResult, Error.<SharingUpdateFolderMemberError>>}
  */
 routes.sharingUpdateFolderMember = function (arg) {
-  return this.request('sharing/update_folder_member', arg, 'api', 'rpc');
+  return this.request('sharing/update_folder_member', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1015,7 +1015,7 @@ routes.sharingUpdateFolderMember = function (arg) {
  * @returns {Promise.<SharingSharedFolderMetadata, Error.<SharingUpdateFolderPolicyError>>}
  */
 routes.sharingUpdateFolderPolicy = function (arg) {
-  return this.request('sharing/update_folder_policy', arg, 'api', 'rpc');
+  return this.request('sharing/update_folder_policy', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1025,7 +1025,7 @@ routes.sharingUpdateFolderPolicy = function (arg) {
  * @returns {Promise.<UsersBasicAccount, Error.<UsersGetAccountError>>}
  */
 routes.usersGetAccount = function (arg) {
-  return this.request('users/get_account', arg, 'api', 'rpc');
+  return this.request('users/get_account', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1036,7 +1036,7 @@ routes.usersGetAccount = function (arg) {
  * @returns {Promise.<Object, Error.<UsersGetAccountBatchError>>}
  */
 routes.usersGetAccountBatch = function (arg) {
-  return this.request('users/get_account_batch', arg, 'api', 'rpc');
+  return this.request('users/get_account_batch', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1046,7 +1046,7 @@ routes.usersGetAccountBatch = function (arg) {
  * @returns {Promise.<UsersFullAccount, Error.<void>>}
  */
 routes.usersGetCurrentAccount = function (arg) {
-  return this.request('users/get_current_account', arg, 'api', 'rpc');
+  return this.request('users/get_current_account', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1056,7 +1056,7 @@ routes.usersGetCurrentAccount = function (arg) {
  * @returns {Promise.<UsersSpaceUsage, Error.<void>>}
  */
 routes.usersGetSpaceUsage = function (arg) {
-  return this.request('users/get_space_usage', arg, 'api', 'rpc');
+  return this.request('users/get_space_usage', arg, 'user', 'api', 'rpc');
 };
 
 module.exports = routes;

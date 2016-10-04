@@ -41,32 +41,32 @@ describe('downloadRequest', function () {
 
   it('returns a promise', function () {
     assert.instanceOf(
-      downloadRequest(),
+      downloadRequest('path', {}, 'user', 'content', 'atoken'),
       Promise
     );
   });
 
   it('posts to the correct url', function () {
-    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'atoken');
+    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'user', 'content', 'atoken');
     assert(postStub.calledOnce);
     assert.equal('https://content.dropboxapi.com/2/sharing/get_shared_link_file', postStub.firstCall.args[0]);
   });
 
   // This is just what the API wants...
   it('the request type is not set', function () {
-    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'atoken');
+    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'user', 'content', 'atoken');
     assert(!typeStub.called);
   });
 
   it('sets the authorization header', function () {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'atoken');
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken');
     assert(setStub.calledTwice);
     assert.equal('Authorization', setStub.firstCall.args[0]);
     assert.equal('Bearer atoken', setStub.firstCall.args[1]);
   });
 
   it('sets the authorization and select user headers if selectUser set', function () {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'atoken', 'selectedUserId');
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId');
     assert(setStub.calledThrice);
     assert.equal('Authorization', setStub.firstCall.args[0]);
     assert.equal('Bearer atoken', setStub.firstCall.args[1]);
@@ -75,14 +75,14 @@ describe('downloadRequest', function () {
   });
 
   it('sets the Dropbox-API-Arg header', function () {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'atoken');
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken');
     assert(setStub.calledTwice);
     assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
     assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
   });
 
   it('sets the response handler function', function () {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'atoken');
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken');
     assert(endStub.calledOnce);
     assert.isFunction(endStub.firstCall.args[0]);
   });
