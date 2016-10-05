@@ -55,9 +55,9 @@
     function displayDevices(devices) {
       var deviceList = document.getElementById('devices');
       var li;
-      for (var i = 0; i < files.length; i++) {
+      for (var i = 0; i < devices.length; i++) {
         li = document.createElement('li');
-        li.appendChild(document.createTextNode(devices[i].name));
+        li.appendChild(document.createTextNode(JSON.stringify(devices[i])));
         deviceList.appendChild(li);
       }
     }
