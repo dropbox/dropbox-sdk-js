@@ -72,9 +72,31 @@
  */
 
 /**
+ * Error occurred because the account doesn't have permission to access the
+ * resource.
+ * @typedef {Object} AuthAccessError
+ * @property {AuthInvalidAccountTypeError} [invalid_account_type] - Available if
+ * .tag is invalid_account_type. Current account type cannot access the
+ * resource.
+ * @property {AuthPaperAccessError} [paper_access_denied] - Available if .tag is
+ * paper_access_denied. Current account cannot access Paper.
+ * @property {('invalid_account_type'|'paper_access_denied'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * Errors occurred during authentication.
  * @typedef {Object} AuthAuthError
  * @property {('invalid_access_token'|'invalid_select_user'|'invalid_select_admin'|'user_suspended'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} AuthInvalidAccountTypeError
+ * @property {('endpoint'|'feature'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} AuthPaperAccessError
+ * @property {('paper_disabled'|'not_paper_user'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -89,6 +111,24 @@
 /**
  * @typedef {Object} AuthRateLimitReason
  * @property {('too_many_requests'|'too_many_write_operations'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} AuthTokenFromOAuth1Arg
+ * @property {string} oauth1_token - The supplied OAuth 1.0 access token.
+ * @property {string} oauth1_token_secret - The token secret associated with the
+ * supplied access token.
+ */
+
+/**
+ * @typedef {Object} AuthTokenFromOAuth1Error
+ * @property {('invalid_oauth1_token_info'|'app_id_mismatch'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} AuthTokenFromOAuth1Result
+ * @property {string} oauth2_token - The OAuth 2.0 token generated from the
+ * supplied OAuth 1.0 token.
  */
 
 /**
@@ -201,6 +241,18 @@
  */
 
 /**
+ * Result returned by delete_batch that may either launch an asynchronous job or
+ * complete synchronously.
+ * @typedef {Object} FilesDeleteBatchLaunch
+ * @property {string} [async_job_id] - Available if .tag is async_job_id. This
+ * response indicates that the processing is asynchronous. The string is an id
+ * that can be used to obtain the status of the asynchronous job.
+ * @property {FilesDeleteBatchResult} [complete] - Available if .tag is
+ * complete.
+ * @property {('async_job_id'|'complete'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} FilesDeleteBatchResult
  * @property {Array.<FilesDeleteBatchResultEntry>} entries
  */
@@ -240,7 +292,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [path_display] - The cased path to be used for display
  * purposes only. In rare instances the casing will not correctly match the
  * user's filesystem, but this behavior will match the path provided in the Core
- * API v1. Changes to the casing of paths won't be returned by
+ * API v1, and at least the last path component will have the correct casing.
+ * Changes to only the casing of paths won't be returned by
  * list_folder/continue. This field will be null if the file or folder is not
  * mounted.
  * @property {string} [parent_shared_folder_id] - Deprecated. Please use
@@ -292,7 +345,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [path_display] - The cased path to be used for display
  * purposes only. In rare instances the casing will not correctly match the
  * user's filesystem, but this behavior will match the path provided in the Core
- * API v1. Changes to the casing of paths won't be returned by
+ * API v1, and at least the last path component will have the correct casing.
+ * Changes to only the casing of paths won't be returned by
  * list_folder/continue. This field will be null if the file or folder is not
  * mounted.
  * @property {string} [parent_shared_folder_id] - Deprecated. Please use
@@ -337,7 +391,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [path_display] - The cased path to be used for display
  * purposes only. In rare instances the casing will not correctly match the
  * user's filesystem, but this behavior will match the path provided in the Core
- * API v1. Changes to the casing of paths won't be returned by
+ * API v1, and at least the last path component will have the correct casing.
+ * Changes to only the casing of paths won't be returned by
  * list_folder/continue. This field will be null if the file or folder is not
  * mounted.
  * @property {string} [parent_shared_folder_id] - Deprecated. Please use
@@ -583,7 +638,8 @@ variant.
  * @property {string} [path_display] - The cased path to be used for display
  * purposes only. In rare instances the casing will not correctly match the
  * user's filesystem, but this behavior will match the path provided in the Core
- * API v1. Changes to the casing of paths won't be returned by
+ * API v1, and at least the last path component will have the correct casing.
+ * Changes to only the casing of paths won't be returned by
  * list_folder/continue. This field will be null if the file or folder is not
  * mounted.
  * @property {string} [parent_shared_folder_id] - Deprecated. Please use
@@ -690,6 +746,18 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {FilesRelocationBatchError} [failed] - Available if .tag is failed.
  * The copy or move batch job has failed with exception.
  * @property {('in_progress'|'complete'|'failed')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Result returned by copy_batch or move_batch that may either launch an
+ * asynchronous job or complete synchronously.
+ * @typedef {Object} FilesRelocationBatchLaunch
+ * @property {string} [async_job_id] - Available if .tag is async_job_id. This
+ * response indicates that the processing is asynchronous. The string is an id
+ * that can be used to obtain the status of the asynchronous job.
+ * @property {FilesRelocationBatchResult} [complete] - Available if .tag is
+ * complete.
+ * @property {('async_job_id'|'complete'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -959,6 +1027,18 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {FilesUploadSessionFinishBatchResult} [complete] - Available if
  * .tag is complete. The :route:`upload_session/finish_batch` has finished.
  * @property {('in_progress'|'complete')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Result returned by upload_session/finish_batch that may either launch an
+ * asynchronous job or complete synchronously.
+ * @typedef {Object} FilesUploadSessionFinishBatchLaunch
+ * @property {string} [async_job_id] - Available if .tag is async_job_id. This
+ * response indicates that the processing is asynchronous. The string is an id
+ * that can be used to obtain the status of the asynchronous job.
+ * @property {FilesUploadSessionFinishBatchResult} [complete] - Available if
+ * .tag is complete.
+ * @property {('async_job_id'|'complete'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1511,7 +1591,7 @@ is only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} SharingGetSharedLinkFileError
- * @property {('shared_link_not_found'|'shared_link_access_denied'|'other'|'shared_link_is_directory')} .tag - Tag identifying the union variant.
+ * @property {('shared_link_not_found'|'shared_link_access_denied'|'unsupported_link_type'|'other'|'shared_link_is_directory')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1551,6 +1631,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamCommonGroupManagementType} group_management_type - Who is
  * allowed to manage the group.
  * @property {TeamCommonGroupType} group_type - The type of group.
+ * @property {boolean} is_member - If the current user is a member of the group.
  * @property {boolean} is_owner - If the current user is an owner of the group.
  * @property {boolean} same_team - If the group is owned by the current user's
  * team.
@@ -1929,7 +2010,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} SharingModifySharedLinkSettingsError
  * @property {SharingSharedLinkSettingsError} [settings_error] - Available if
  * .tag is settings_error. There is an error with the given settings
- * @property {('shared_link_not_found'|'shared_link_access_denied'|'other'|'settings_error'|'email_not_verified')} .tag - Tag identifying the union variant.
+ * @property {('shared_link_not_found'|'shared_link_access_denied'|'unsupported_link_type'|'other'|'settings_error'|'email_not_verified')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2005,7 +2086,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} SharingRelinquishFolderMembershipError
  * @property {SharingSharedFolderAccessError} [access_error] - Available if .tag
  * is access_error.
- * @property {('access_error'|'folder_owner'|'mounted'|'group_access'|'team_folder'|'no_permission'|'other')} .tag - Tag identifying the union variant.
+ * @property {('access_error'|'folder_owner'|'mounted'|'group_access'|'team_folder'|'no_permission'|'no_explicit_access'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2088,7 +2169,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} SharingRevokeSharedLinkError
- * @property {('shared_link_not_found'|'shared_link_access_denied'|'other'|'shared_link_malformed')} .tag - Tag identifying the union variant.
+ * @property {('shared_link_not_found'|'shared_link_access_denied'|'unsupported_link_type'|'other'|'shared_link_malformed')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2272,7 +2353,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} SharingSharedLinkError
- * @property {('shared_link_not_found'|'shared_link_access_denied'|'other')} .tag - Tag identifying the union variant.
+ * @property {('shared_link_not_found'|'shared_link_access_denied'|'unsupported_link_type'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2397,7 +2478,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} SharingUnshareFolderError
  * @property {SharingSharedFolderAccessError} [access_error] - Available if .tag
  * is access_error.
- * @property {('access_error'|'team_folder'|'no_permission'|'other')} .tag - Tag identifying the union variant.
+ * @property {('access_error'|'team_folder'|'no_permission'|'too_many_files'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2888,7 +2969,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamGroupUpdateError
- * @property {('group_not_found'|'other'|'external_id_already_in_use')} .tag - Tag identifying the union variant.
+ * @property {('group_not_found'|'other'|'group_name_already_used'|'group_name_invalid'|'external_id_already_in_use')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3363,7 +3444,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * as well.
  * @property {boolean} keep_account - Downgrade the member to a Basic account.
  * The user will retain the email address associated with their Dropbox  account
- * and data in their account that is not restricted to team members.
+ * and data in their account that is not restricted to team members. In order to
+ * keep the account the argument wipe_data should be set to False.
  */
 
 /**
@@ -3555,6 +3637,145 @@ only present when needed to discriminate between multiple possible subtypes.
  * is a bucket of users with storage size up to 1 Giga.
  * @property {number} users - The number of people whose storage is in the range
  * of this storage bucket.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderAccessError
+ * @property {('invalid_team_folder_id'|'no_access'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderActivateError
+ * @property {TeamTeamFolderAccessError} [access_error] - Available if .tag is
+ * access_error.
+ * @property {TeamTeamFolderInvalidStatusError} [status_error] - Available if
+ * .tag is status_error.
+ * @property {('access_error'|'status_error'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderArchiveArg
+ * @property {string} team_folder_id - The ID of the team folder.
+ * @property {boolean} force_async_off - Whether to force the archive to happen
+ * synchronously.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderArchiveError
+ * @property {TeamTeamFolderAccessError} [access_error] - Available if .tag is
+ * access_error.
+ * @property {TeamTeamFolderInvalidStatusError} [status_error] - Available if
+ * .tag is status_error.
+ * @property {('access_error'|'status_error'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderArchiveJobStatus
+ * @property {TeamTeamFolderMetadata} [complete] - Available if .tag is
+ * complete. The archive job has finished. The value is the metadata for the
+ * resulting team folder.
+ * @property {TeamTeamFolderArchiveError} [failed] - Available if .tag is
+ * failed. Error occurred while performing an asynchronous job from
+ * :route:`team_folder/archive`.
+ * @property {('in_progress'|'complete'|'failed')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderArchiveLaunch
+ * @property {string} [async_job_id] - Available if .tag is async_job_id. This
+ * response indicates that the processing is asynchronous. The string is an id
+ * that can be used to obtain the status of the asynchronous job.
+ * @property {TeamTeamFolderMetadata} [complete] - Available if .tag is
+ * complete.
+ * @property {('async_job_id'|'complete')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderCreateArg
+ * @property {string} name - Name for the new team folder.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderCreateError
+ * @property {('invalid_folder_name'|'folder_name_already_used'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderGetInfoItem
+ * @property {string} [id_not_found] - Available if .tag is id_not_found. An ID
+ * that was provided as a parameter to :route:`team_folder/get_info` did not
+ * match any of the team's team folders.
+ * @property {TeamTeamFolderMetadata} [team_folder_metadata] - Available if .tag
+ * is team_folder_metadata. Properties of a team folder.
+ * @property {('id_not_found'|'team_folder_metadata')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderIdArg
+ * @property {string} team_folder_id - The ID of the team folder.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderIdListArg
+ * @property {Array.<Object>} team_folder_ids - The list of team folder IDs.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderInvalidStatusError
+ * @property {('active'|'archived'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderListArg
+ * @property {number} limit - The maximum number of results to return per
+ * request.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderListError
+ * @property {TeamTeamFolderAccessError} access_error
+ */
+
+/**
+ * Result for team_folder/list.
+ * @typedef {Object} TeamTeamFolderListResult
+ * @property {Array.<TeamTeamFolderMetadata>} team_folders - List of all team
+ * folders in the authenticated team.
+ */
+
+/**
+ * Properties of a team folder.
+ * @typedef {Object} TeamTeamFolderMetadata
+ * @property {string} team_folder_id - The ID of the team folder.
+ * @property {string} name - The name of the team folder.
+ * @property {TeamTeamFolderStatus} status - The status of the team folder.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderPermanentlyDeleteError
+ * @property {TeamTeamFolderAccessError} [access_error] - Available if .tag is
+ * access_error.
+ * @property {TeamTeamFolderInvalidStatusError} [status_error] - Available if
+ * .tag is status_error.
+ * @property {('access_error'|'status_error'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderRenameArg
+ * @property {string} team_folder_id - The ID of the team folder.
+ * @property {string} name - New team folder name.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderRenameError
+ * @property {TeamTeamFolderAccessError} [access_error] - Available if .tag is
+ * access_error.
+ * @property {('access_error'|'invalid_folder_name'|'folder_name_already_used'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamFolderStatus
+ * @property {('active'|'archived'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**

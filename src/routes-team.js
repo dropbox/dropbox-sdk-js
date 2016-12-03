@@ -549,4 +549,97 @@ routes.teamReportsGetStorage = function (arg) {
   return this.request('team/reports/get_storage', arg, 'team', 'api', 'rpc');
 };
 
+/**
+ * Sets an archived team folder's status to active. This endpoint is only
+ * available to teams with improved team folders /help/986. Permission : Team
+ * member file access.
+ * @function DropboxTeam#teamTeamFolderActivate
+ * @arg {TeamTeamFolderIdArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamFolderMetadata, Error.<TeamTeamFolderActivateError>>}
+ */
+routes.teamTeamFolderActivate = function (arg) {
+  return this.request('team/team_folder/activate', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Sets an active team folder's status to archived and removes all folder and
+ * file members. This endpoint is only available to teams with improved team
+ * folders /help/986. Permission : Team member file access.
+ * @function DropboxTeam#teamTeamFolderArchive
+ * @arg {TeamTeamFolderArchiveArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamFolderArchiveLaunch, Error.<TeamTeamFolderArchiveError>>}
+ */
+routes.teamTeamFolderArchive = function (arg) {
+  return this.request('team/team_folder/archive', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Returns the status of an asynchronous job for archiving a team folder. This
+ * endpoint is only available to teams with improved team folders /help/986.
+ * Permission : Team member file access.
+ * @function DropboxTeam#teamTeamFolderArchiveCheck
+ * @arg {AsyncPollArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamFolderArchiveJobStatus, Error.<AsyncPollError>>}
+ */
+routes.teamTeamFolderArchiveCheck = function (arg) {
+  return this.request('team/team_folder/archive/check', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Creates a new, active, team folder. This endpoint is only available to teams
+ * with improved team folders /help/986. Permission : Team member file access.
+ * @function DropboxTeam#teamTeamFolderCreate
+ * @arg {TeamTeamFolderCreateArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamFolderMetadata, Error.<TeamTeamFolderCreateError>>}
+ */
+routes.teamTeamFolderCreate = function (arg) {
+  return this.request('team/team_folder/create', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Retrieves metadata for team folders. This endpoint is only available to teams
+ * with improved team folders /help/986. Permission : Team member file access.
+ * @function DropboxTeam#teamTeamFolderGetInfo
+ * @arg {TeamTeamFolderIdListArg} arg - The request parameters.
+ * @returns {Promise.<Array.<TeamTeamFolderGetInfoItem>, Error.<void>>}
+ */
+routes.teamTeamFolderGetInfo = function (arg) {
+  return this.request('team/team_folder/get_info', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Lists all team folders. This endpoint is only available to teams with
+ * improved team folders /help/986. Permission : Team member file access.
+ * @function DropboxTeam#teamTeamFolderList
+ * @arg {TeamTeamFolderListArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamFolderListResult, Error.<TeamTeamFolderListError>>}
+ */
+routes.teamTeamFolderList = function (arg) {
+  return this.request('team/team_folder/list', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Permanently deletes an archived team folder. This endpoint is only available
+ * to teams with improved team folders /help/986. Permission : Team member file
+ * access.
+ * @function DropboxTeam#teamTeamFolderPermanentlyDelete
+ * @arg {TeamTeamFolderIdArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<TeamTeamFolderPermanentlyDeleteError>>}
+ */
+routes.teamTeamFolderPermanentlyDelete = function (arg) {
+  return this.request('team/team_folder/permanently_delete', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Changes an active team folder's name. This endpoint is only available to
+ * teams with improved team folders /help/986. Permission : Team member file
+ * access.
+ * @function DropboxTeam#teamTeamFolderRename
+ * @arg {TeamTeamFolderRenameArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamFolderMetadata, Error.<TeamTeamFolderRenameError>>}
+ */
+routes.teamTeamFolderRename = function (arg) {
+  return this.request('team/team_folder/rename', arg, 'team', 'api', 'rpc');
+};
+
 module.exports = routes;

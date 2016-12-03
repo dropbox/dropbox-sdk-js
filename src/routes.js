@@ -2,6 +2,16 @@
 var routes = {};
 
 /**
+ * Creates an OAuth 2.0 access token from the supplied OAuth 1.0 access token.
+ * @function Dropbox#authTokenFromOauth1
+ * @arg {AuthTokenFromOAuth1Arg} arg - The request parameters.
+ * @returns {Promise.<AuthTokenFromOAuth1Result, Error.<AuthTokenFromOAuth1Error>>}
+ */
+routes.authTokenFromOauth1 = function (arg) {
+  return this.request('auth/token/from_oauth1', arg, 'app', 'api', 'rpc');
+};
+
+/**
  * Disables the access token used to authenticate the call.
  * @function Dropbox#authTokenRevoke
  * @arg {void} arg - The request parameters.
@@ -57,7 +67,7 @@ routes.filesCopy = function (arg) {
  * background. Please use copy_batch/check to check the job status.
  * @function Dropbox#filesCopyBatch
  * @arg {FilesRelocationBatchArg} arg - The request parameters.
- * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
+ * @returns {Promise.<FilesRelocationBatchLaunch, Error.<void>>}
  */
 routes.filesCopyBatch = function (arg) {
   return this.request('files/copy_batch', arg, 'user', 'api', 'rpc');
@@ -126,7 +136,7 @@ routes.filesDelete = function (arg) {
  * delete_batch/check to check the job status.
  * @function Dropbox#filesDeleteBatch
  * @arg {FilesDeleteBatchArg} arg - The request parameters.
- * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
+ * @returns {Promise.<FilesDeleteBatchLaunch, Error.<void>>}
  */
 routes.filesDeleteBatch = function (arg) {
   return this.request('files/delete_batch', arg, 'user', 'api', 'rpc');
@@ -294,7 +304,7 @@ routes.filesMove = function (arg) {
  * the job status.
  * @function Dropbox#filesMoveBatch
  * @arg {FilesRelocationBatchArg} arg - The request parameters.
- * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
+ * @returns {Promise.<FilesRelocationBatchLaunch, Error.<void>>}
  */
 routes.filesMoveBatch = function (arg) {
   return this.request('files/move_batch', arg, 'user', 'api', 'rpc');
@@ -494,7 +504,7 @@ routes.filesUploadSessionFinish = function (arg) {
  * 1000 entries in a single request.
  * @function Dropbox#filesUploadSessionFinishBatch
  * @arg {FilesUploadSessionFinishBatchArg} arg - The request parameters.
- * @returns {Promise.<AsyncLaunchEmptyResult, Error.<void>>}
+ * @returns {Promise.<FilesUploadSessionFinishBatchLaunch, Error.<void>>}
  */
 routes.filesUploadSessionFinishBatch = function (arg) {
   return this.request('files/upload_session/finish_batch', arg, 'user', 'api', 'rpc');
@@ -704,8 +714,8 @@ routes.sharingListFileMembers = function (arg) {
  * Get members of multiple files at once. The arguments to this route are more
  * limited, and the limit on query result size per file is more strict. To
  * customize the results more, use the individual file endpoint. Inherited users
- * are not included in the result, and permissions are not returned for this
- * endpoint.
+ * and groups are not included in the result, and permissions are not returned
+ * for this endpoint.
  * @function Dropbox#sharingListFileMembersBatch
  * @arg {SharingListFileMembersBatchArg} arg - The request parameters.
  * @returns {Promise.<Array.<SharingListFileMembersBatchResult>, Error.<SharingSharingUserError>>}
