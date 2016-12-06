@@ -1,6 +1,7 @@
 var request = require('superagent');
 var Promise = require('es6-promise').Promise;
 var getBaseURL = require('./get-base-url');
+var httpHeaderSafeJson = require('./http-header-safe-json');
 
 var buildCustomError;
 var downloadRequest;
@@ -68,7 +69,7 @@ downloadRequest = function (path, args, auth, host, accessToken, selectUser) {
 
     apiRequest = request.post(getBaseURL(host) + path)
       .set('Authorization', 'Bearer ' + accessToken)
-      .set('Dropbox-API-Arg', JSON.stringify(args))
+      .set('Dropbox-API-Arg', httpHeaderSafeJson(args))
       .on('request', function () {
         if (this.xhr) {
           this.xhr.responseType = 'blob';

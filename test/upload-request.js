@@ -76,6 +76,13 @@ describe('uploadRequest', function () {
     assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
   });
 
+  it('escapes special characters in the Dropbox-API-Arg header', function () {
+    uploadRequest('files/upload', { foo: 'bar单bazá' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
+    assert.equal('{"foo":"bar\\u5355baz\\u00e1"}', setStub.secondCall.args[1]);
+  });
+
   it('doesn\'t include args.contents in the Dropbox-API-Arg header', function () {
     uploadRequest('files/upload', { foo: 'bar', contents: 'fakecontents' }, 'user', 'content', 'atoken');
     assert(setStub.calledTwice);

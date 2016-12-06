@@ -81,6 +81,13 @@ describe('downloadRequest', function () {
     assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
   });
 
+  it('escapes special characters in the Dropbox-API-Arg header', function () {
+    downloadRequest('sharing/create_shared_link', { foo: 'bar单bazá' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
+    assert.equal('{"foo":"bar\\u5355baz\\u00e1"}', setStub.secondCall.args[1]);
+  });
+
   it('sets the response handler function', function () {
     downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken');
     assert(endStub.calledOnce);
