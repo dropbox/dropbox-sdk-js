@@ -65,7 +65,7 @@ dbx.filesListFolder({path: ''})
 
 For documentation of all of the available endpoints, the parameters they
 receive and the data they return, see the [Dropbox class
-definition](Dropbox.html). These methods are all available directly from
+definition](http://dropbox.github.io/dropbox-sdk-js/Dropbox.html). These methods are all available directly from
 an instance of the API class, ex: `dbx.filesListFolder()`.
 
 #### Teams
