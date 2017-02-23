@@ -74,7 +74,7 @@ The Dropbox API has a series of actions that can be completed on a team
 wide level. These endpoint methods are available by using the DropboxTeam
 class. It can be loaded like this: `var DropboxTeam
 = require('dropbox/team');`. For more information , see the [DropboxTeam
-class definition](DropboxTeam.html).
+class definition](http://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html).
 
 #### Authentication
 
