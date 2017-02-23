@@ -365,6 +365,9 @@ only present when needed to discriminate between multiple possible subtypes.
  * explicit shared  members. This is different from sharing_info in that this
  * could be true  in the case where a file has explicit members but is not
  * contained within  a shared folder.
+ * @property {string} [content_hash] - A hash of the file content. This field
+ * can be used to verify data integrity. For more information see our Content
+ * hash /developers/reference/content-hash page.
  */
 
 /**
@@ -736,7 +739,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * from_lookup.
  * @property {FilesWriteError} [from_write] - Available if .tag is from_write.
  * @property {FilesWriteError} [to] - Available if .tag is to.
- * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'other'|'duplicated_or_nested_paths'|'too_many_write_operations')} .tag - Tag identifying the union variant.
+ * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'duplicated_or_nested_paths'|'other'|'too_many_write_operations')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -771,7 +774,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * from_lookup.
  * @property {FilesWriteError} [from_write] - Available if .tag is from_write.
  * @property {FilesWriteError} [to] - Available if .tag is to.
- * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'other')} .tag - Tag identifying the union variant.
+ * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'duplicated_or_nested_paths'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1149,6 +1152,320 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} PaperAddMember
+ * @property {SharingMemberSelector} member - User which should be added to the
+ * Paper doc. Specify only email or Dropbox account id.
+ * @property {PaperPaperDocPermissionLevel} permission_level - Permission for
+ * the user.
+ */
+
+/**
+ * @typedef {Object} PaperAddPaperDocUser
+ * @property {string} doc_id
+ * @property {Array.<PaperAddMember>} members - User which should be added to
+ * the Paper doc. Specify only email or Dropbox account id.
+ * @property {string} [custom_message] - A personal message that will be emailed
+ * to each successfully added member.
+ * @property {boolean} quiet - Clients should set this to true if no email shall
+ * be sent to added users.
+ */
+
+/**
+ * Per-member result for docs/users/add.
+ * @typedef {Object} PaperAddPaperDocUserMemberResult
+ * @property {SharingMemberSelector} member - One of specified input members.
+ * @property {PaperAddPaperDocUserResult} result - The outcome of the action on
+ * this member.
+ */
+
+/**
+ * @typedef {Object} PaperAddPaperDocUserResult
+ * @property {('success'|'unknown_error'|'sharing_outside_team_disabled'|'daily_limit_reached'|'user_is_owner'|'failed_user_data_retrieval'|'permission_already_granted'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperCursor
+ * @property {string} value - The actual cursor value.
+ * @property {Timestamp} [expiration] - Expiration time of value. Some cursors
+ * might have expiration time assigned. This is a UTC value after which the
+ * cursor is no longer valid and the API starts returning an error. If cursor
+ * expires a new one needs to be obtained and pagination needs to be restarted.
+ * Some cursors might be short-lived some cursors might be long-lived. This
+ * really depends on the sorting type and order, e.g.: 1. on one hand, listing
+ * docs created by the user, sorted by the created time ascending will have
+ * undefinite expiration because the results cannot change while the iteration
+ * is happening. This cursor would be suitable for long term polling. 2. on the
+ * other hand, listing docs sorted by the last modified time will have a very
+ * short expiration as docs do get modified very often and the modified time can
+ * be changed while the iteration is happening thus altering the results.
+ */
+
+/**
+ * @typedef {Object} PaperDocLookupError
+ * @property {('insufficient_permissions'|'other'|'doc_not_found')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * The subscription level of a Paper doc.
+ * @typedef {Object} PaperDocSubscriptionLevel
+ * @property {('default'|'ignore'|'every'|'no_email')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * The desired export format of the Paper doc.
+ * @typedef {Object} PaperExportFormat
+ * @property {('html'|'markdown'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Data structure representing a Paper folder.
+ * @typedef {Object} PaperFolder
+ * @property {string} id - Paper folder id. This id uniquely identifies the
+ * folder.
+ * @property {string} name - Paper folder name.
+ */
+
+/**
+ * The sharing policy of a Paper folder.  Note: The sharing policy of subfolders
+ * is inherited from the root folder.
+ * @typedef {Object} PaperFolderSharingPolicyType
+ * @property {('team'|'invite_only')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * The subscription level of a Paper folder.
+ * @typedef {Object} PaperFolderSubscriptionLevel
+ * @property {('none'|'activity_only'|'daily_emails'|'weekly_emails')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Metadata about Paper folders containing the specififed Paper doc.
+ * @typedef {Object} PaperFoldersContainingPaperDoc
+ * @property {PaperFolderSharingPolicyType} [folder_sharing_policy_type] - The
+ * sharing policy of the folder containing the Paper doc.
+ * @property {Array.<PaperFolder>} [folders] - The folder path. If present the
+ * first folder is the root folder.
+ */
+
+/**
+ * @typedef {Object} PaperInviteeInfoWithPermissionLevel
+ * @property {SharingInviteeInfo} invitee - Email invited to the Paper doc.
+ * @property {PaperPaperDocPermissionLevel} permission_level - Permission level
+ * for the invitee.
+ */
+
+/**
+ * @typedef {Object} PaperListDocsCursorError
+ * @property {PaperPaperApiCursorError} [cursor_error] - Available if .tag is
+ * cursor_error.
+ * @property {('cursor_error'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperListPaperDocsArgs
+ * @property {PaperListPaperDocsFilterBy} filter_by - Allows user to specify how
+ * the Paper docs should be filtered.
+ * @property {PaperListPaperDocsSortBy} sort_by - Allows user to specify how the
+ * Paper docs should be sorted.
+ * @property {PaperListPaperDocsSortOrder} sort_order - Allows user to specify
+ * the sort order of the result.
+ * @property {number} limit - Size limit per batch. The maximum number of docs
+ * that can be retrieved per batch is 1000. Higher value results in invalid
+ * arguments error.
+ */
+
+/**
+ * @typedef {Object} PaperListPaperDocsContinueArgs
+ * @property {string} cursor - The cursor obtained from docs/list or
+ * docs/list/continue. Allows for pagination.
+ */
+
+/**
+ * @typedef {Object} PaperListPaperDocsFilterBy
+ * @property {('docs_accessed'|'docs_created'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperListPaperDocsResponse
+ * @property {Array.<string>} doc_ids - The list of Paper doc ids that can be
+ * used to access the given Paper docs or supplied to other API methods. The
+ * list is sorted in the order specified by the initial call to docs/list.
+ * @property {PaperCursor} cursor - Pass the cursor into docs/list/continue to
+ * paginate through all files. The cursor preserves all properties as specified
+ * in the original call to docs/list.
+ * @property {boolean} has_more - Will be set to True if a subsequent call with
+ * the provided cursor to docs/list/continue returns immediately with some
+ * results. If set to False please allow some delay before making another call
+ * to docs/list/continue.
+ */
+
+/**
+ * @typedef {Object} PaperListPaperDocsSortBy
+ * @property {('accessed'|'modified'|'created'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperListPaperDocsSortOrder
+ * @property {('ascending'|'descending'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperListUsersCursorError
+ * @property {PaperPaperApiCursorError} [cursor_error] - Available if .tag is
+ * cursor_error.
+ * @property {('insufficient_permissions'|'other'|'doc_not_found'|'cursor_error')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperListUsersOnFolderArgs
+ * @property {string} doc_id
+ * @property {number} limit - Size limit per batch. The maximum number of users
+ * that can be retrieved per batch is 1000. Higher value results in invalid
+ * arguments error.
+ */
+
+/**
+ * @typedef {Object} PaperListUsersOnFolderContinueArgs
+ * @property {string} doc_id
+ * @property {string} cursor - The cursor obtained from docs/folder_users/list
+ * or docs/folder_users/list/continue. Allows for pagination.
+ */
+
+/**
+ * @typedef {Object} PaperListUsersOnFolderResponse
+ * @property {Array.<SharingInviteeInfo>} invitees - List of email addresses
+ * that are invited on the Paper folder.
+ * @property {Array.<SharingUserInfo>} users - List of users that are invited on
+ * the Paper folder.
+ * @property {PaperCursor} cursor - Pass the cursor into
+ * docs/folder_users/list/continue to paginate through all users. The cursor
+ * preserves all properties as specified in the original call to
+ * docs/folder_users/list.
+ * @property {boolean} has_more - Will be set to True if a subsequent call with
+ * the provided cursor to docs/folder_users/list/continue returns immediately
+ * with some results. If set to False please allow some delay before making
+ * another call to docs/folder_users/list/continue.
+ */
+
+/**
+ * @typedef {Object} PaperListUsersOnPaperDocArgs
+ * @property {string} doc_id
+ * @property {number} limit - Size limit per batch. The maximum number of users
+ * that can be retrieved per batch is 1000. Higher value results in invalid
+ * arguments error.
+ * @property {PaperUserOnPaperDocFilter} filter_by - Specify this attribute if
+ * you want to obtain users that have already accessed the Paper doc.
+ */
+
+/**
+ * @typedef {Object} PaperListUsersOnPaperDocContinueArgs
+ * @property {string} doc_id
+ * @property {string} cursor - The cursor obtained from docs/users/list or
+ * docs/users/list/continue. Allows for pagination.
+ */
+
+/**
+ * @typedef {Object} PaperListUsersOnPaperDocResponse
+ * @property {Array.<PaperInviteeInfoWithPermissionLevel>} invitees - List of
+ * email addresses with their respective permission levels that are invited on
+ * the Paper doc.
+ * @property {Array.<PaperUserInfoWithPermissionLevel>} users - List of users
+ * with their respective permission levels that are invited on the Paper folder.
+ * @property {SharingUserInfo} doc_owner - The Paper doc owner. This field is
+ * populated on every single response.
+ * @property {PaperCursor} cursor - Pass the cursor into
+ * docs/users/list/continue to paginate through all users. The cursor preserves
+ * all properties as specified in the original call to docs/users/list.
+ * @property {boolean} has_more - Will be set to True if a subsequent call with
+ * the provided cursor to docs/users/list/continue returns immediately with some
+ * results. If set to False please allow some delay before making another call
+ * to docs/users/list/continue.
+ */
+
+/**
+ * @typedef {Object} PaperPaperApiBaseError
+ * @property {('insufficient_permissions'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperPaperApiCursorError
+ * @property {('expired_cursor'|'invalid_cursor'|'wrong_user_in_cursor'|'reset'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperPaperDocExport
+ * @property {string} doc_id
+ * @property {PaperExportFormat} export_format
+ */
+
+/**
+ * @typedef {Object} PaperPaperDocExportResult
+ * @property {string} owner - The Paper doc owner's email.
+ * @property {string} title - The Paper doc title.
+ * @property {number} revision - The Paper doc revision. Simply an ever
+ * increasing number.
+ * @property {string} mime_type - MIME type of the export. This corresponds to
+ * ExportFormat specified in the request.
+ */
+
+/**
+ * @typedef {Object} PaperPaperDocPermissionLevel
+ * @property {('edit'|'view_and_comment'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperPaperDocSharingPolicy
+ * @property {string} doc_id
+ * @property {PaperSharingPolicy} sharing_policy - The default sharing policy to
+ * be set for the Paper doc.
+ */
+
+/**
+ * @typedef {Object} PaperRefPaperDoc
+ * @property {string} doc_id
+ */
+
+/**
+ * @typedef {Object} PaperRemovePaperDocUser
+ * @property {string} doc_id
+ * @property {SharingMemberSelector} member - User which should be removed from
+ * the Paper doc. Specify only email or Dropbox account id.
+ */
+
+/**
+ * Sharing policy of Paper doc.
+ * @typedef {Object} PaperSharingPolicy
+ * @property {PaperSharingPublicPolicyType} [public_sharing_policy] - This value
+ * applies to the non-team members.
+ * @property {PaperSharingTeamPolicyType} [team_sharing_policy] - This value
+ * applies to the team members only. The value is null for all personal
+ * accounts.
+ */
+
+/**
+ * @typedef {Object} PaperSharingPublicPolicyType
+ * @property {('people_with_link_can_edit'|'people_with_link_can_view_and_comment'|'invite_only'|'disabled')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * The sharing policy type of the Paper doc.
+ * @typedef {Object} PaperSharingTeamPolicyType
+ * @property {('people_with_link_can_edit'|'people_with_link_can_view_and_comment'|'invite_only')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperUserInfoWithPermissionLevel
+ * @property {SharingUserInfo} user - User shared on the Paper doc.
+ * @property {PaperPaperDocPermissionLevel} permission_level - Permission level
+ * for the user.
+ */
+
+/**
+ * @typedef {Object} PaperUserOnPaperDocFilter
+ * @property {('visited'|'shared'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} PropertiesGetPropertyTemplateArg
  * @property {string} template_id - An identifier for property template added by
  * route properties/template/add.
@@ -1244,8 +1561,8 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * Policy governing who can change a shared folder's access control list (ACL).
- * In other words, who can add, remove, or change the privileges of members.
+ * Who can change a shared folder's access control list (ACL). In other words,
+ * who can add, remove, or change the privileges of members.
  * @typedef {Object} SharingAclUpdatePolicy
  * @property {('owner'|'editors'|'other')} .tag - Tag identifying the union variant.
  */
@@ -1381,7 +1698,7 @@ subtypes.
 /**
  * Sharing actions that may be taken on files.
  * @typedef {Object} SharingFileAction
- * @property {('edit_contents'|'invite_viewer'|'invite_viewer_no_comment'|'unshare'|'relinquish_membership'|'share_link'|'create_link'|'other')} .tag - Tag identifying the union variant.
+ * @property {('disable_viewer_info'|'edit_contents'|'enable_viewer_info'|'invite_viewer'|'invite_viewer_no_comment'|'unshare'|'relinquish_membership'|'share_link'|'create_link'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1437,7 +1754,11 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} SharingFileMemberActionError
  * @property {SharingSharingFileAccessError} [access_error] - Available if .tag
  * is access_error. Specified file was invalid or user does not have access.
- * @property {('invalid_member'|'no_permission'|'access_error'|'other')} .tag - Tag identifying the union variant.
+ * @property {SharingMemberAccessLevelResult} [no_explicit_access] - Available
+ * if .tag is no_explicit_access. The action cannot be completed because the
+ * target member does not have explicit access to the file. The return value is
+ * the access that the member has to the file from a parent folder.
+ * @property {('invalid_member'|'no_permission'|'access_error'|'no_explicit_access'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1451,8 +1772,7 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * Per-member result for remove_file_member_2 or add_file_member or
- * change_file_member_access.
+ * Per-member result for add_file_member or change_file_member_access.
  * @typedef {Object} SharingFileMemberActionResult
  * @property {SharingMemberSelector} member - One of specified input members.
  * @property {SharingFileMemberActionIndividualResult} result - The outcome of
@@ -1475,13 +1795,13 @@ only present when needed to discriminate between multiple possible subtypes.
  * take on the file.
  * @property {boolean} allow - True if the user is allowed to take the action.
  * @property {SharingPermissionDeniedReason} [reason] - The reason why the user
- * is denied the permission. Not present if the action is allowed
+ * is denied the permission. Not present if the action is allowed.
  */
 
 /**
  * Actions that may be taken on shared folders.
  * @typedef {Object} SharingFolderAction
- * @property {('change_options'|'edit_contents'|'invite_editor'|'invite_viewer'|'invite_viewer_no_comment'|'relinquish_membership'|'unmount'|'unshare'|'leave_a_copy'|'share_link'|'create_link'|'other')} .tag - Tag identifying the union variant.
+ * @property {('change_options'|'disable_viewer_info'|'edit_contents'|'enable_viewer_info'|'invite_editor'|'invite_viewer'|'invite_viewer_no_comment'|'relinquish_membership'|'unmount'|'unshare'|'leave_a_copy'|'share_link'|'create_link'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1536,29 +1856,31 @@ is only present when needed to discriminate between multiple possible subtypes.
  * team-wide policy. This value may differ from that of member_policy if the
  * team-wide policy is more restrictive than the folder policy. Present only if
  * the folder is owned by a team.
+ * @property {SharingViewerInfoPolicy} [viewer_info_policy] - Who can
+ * enable/disable viewer info for this shared folder.
  */
 
 /**
- * Arguments of get_file_metadata
+ * Arguments of get_file_metadata.
  * @typedef {Object} SharingGetFileMetadataArg
  * @property {string} file - The file to query.
  * @property {Array.<SharingFileAction>} [actions] - File actions to query.
  */
 
 /**
- * Arguments of get_file_metadata/batch
+ * Arguments of get_file_metadata/batch.
  * @typedef {Object} SharingGetFileMetadataBatchArg
  * @property {Array.<Object>} files - The files to query.
  * @property {Array.<SharingFileAction>} [actions] - File actions to query.
  */
 
 /**
- * Per file results of get_file_metadata/batch
+ * Per file results of get_file_metadata/batch.
  * @typedef {Object} SharingGetFileMetadataBatchResult
  * @property {string} file - This is the input file identifier corresponding to
  * one of GetFileMetadataBatchArg.files.
  * @property {SharingGetFileMetadataIndividualResult} result - The result for
- * this particular file
+ * this particular file.
  */
 
 /**
@@ -1712,6 +2034,24 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Actions that can be performed on a link.
+ * @typedef {Object} SharingLinkAction
+ * @property {('change_audience'|'remove_expiry'|'remove_password'|'set_expiry'|'set_password'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} SharingLinkAudience
+ * @property {('public'|'team'|'members'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} SharingLinkExpiry
+ * @property {Timestamp} [set_expiry] - Available if .tag is set_expiry. Set a
+ * new expiry or change an existing expiry.
+ * @property {('remove_expiry'|'set_expiry'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * Metadata for a shared link. This can be either a PathLinkMetadata or
  * CollectionLinkMetadata.
  * @typedef {Object} SharingLinkMetadata
@@ -1720,6 +2060,21 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {SharingVisibility} visibility - Who can access the link.
  * @property {Timestamp} [expires] - Expiration time, if set. By default the
  * link won't expire.
+ */
+
+/**
+ * @typedef {Object} SharingLinkPassword
+ * @property {string} [set_password] - Available if .tag is set_password. Set a
+ * new password or change an existing password.
+ * @property {('remove_password'|'set_password'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Permissions for actions that can be performed on a link.
+ * @typedef {Object} SharingLinkPermission
+ * @property {SharingLinkAction} action
+ * @property {boolean} allow
+ * @property {SharingPermissionDeniedReason} [reason]
  */
 
 /**
@@ -1743,11 +2098,21 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Settings that apply to a link.
+ * @typedef {Object} SharingLinkSettings
+ * @property {SharingLinkAudience} [audience] - The type of audience on the link
+ * for this file.
+ * @property {SharingLinkExpiry} [expiry] - An expiry timestamp to set on a
+ * link.
+ * @property {SharingLinkPassword} [password] - The password for the link.
+ */
+
+/**
  * Arguments for list_file_members.
  * @typedef {Object} SharingListFileMembersArg
  * @property {string} file - The file for which you want to see members.
  * @property {Array.<SharingMemberAction>} [actions] - The actions for which to
- * return permissions on a member
+ * return permissions on a member.
  * @property {boolean} include_inherited - Whether to include members who only
  * have access from a parent shared folder.
  * @property {number} limit - Number of members to return max per query.
@@ -1768,7 +2133,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {string} file - This is the input file identifier, whether an ID or
  * a path.
  * @property {SharingListFileMembersIndividualResult} result - The result for
- * this particular file
+ * this particular file.
  */
 
 /**
@@ -1793,7 +2158,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {SharingSharedFileMembers} members - A list of members on this
  * file.
  * @property {number} member_count - The number of members on this file. This
- * does not include inherited members
+ * does not include inherited members.
  */
 
 /**
@@ -1809,7 +2174,7 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} SharingListFileMembersIndividualResult
  * @property {SharingListFileMembersCountResult} [result] - Available if .tag is
- * result. The results of the query for this file if it was successful
+ * result. The results of the query for this file if it was successful.
  * @property {SharingSharingFileAccessError} [access_error] - Available if .tag
  * is access_error. The result of the query for this file if it was an error.
  * @property {('result'|'access_error'|'other')} .tag - Tag identifying the union variant.
@@ -1826,7 +2191,7 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * Arguments for list_received_files/continue.
  * @typedef {Object} SharingListFilesContinueArg
- * @property {string} cursor - Cursor in ListFilesResult.cursor
+ * @property {string} cursor - Cursor in ListFilesResult.cursor.
  */
 
 /**
@@ -1965,7 +2330,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * take on the member.
  * @property {boolean} allow - True if the user is allowed to take the action.
  * @property {SharingPermissionDeniedReason} [reason] - The reason why the user
- * is denied the permission. Not present if the action is allowed
+ * is denied the permission. Not present if the action is allowed.
  */
 
 /**
@@ -2060,7 +2425,7 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * Possible reasons the user is denied a permission.
  * @typedef {Object} SharingPermissionDeniedReason
- * @property {('user_not_same_team_as_owner'|'user_not_allowed_by_owner'|'target_is_indirect_member'|'target_is_owner'|'target_is_self'|'target_not_active'|'folder_is_limited_team_folder'|'other')} .tag - Tag identifying the union variant.
+ * @property {('user_not_same_team_as_owner'|'user_not_allowed_by_owner'|'target_is_indirect_member'|'target_is_owner'|'target_is_self'|'target_not_active'|'folder_is_limited_team_folder'|'owner_not_on_team'|'permission_denied'|'restricted_by_team'|'user_account_type'|'user_not_on_team'|'folder_is_inside_shared_folder'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2176,15 +2541,24 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} SharingShareFolderArg
  * @property {string} path - The path to the folder to share. If it does not
  * exist, then a new one is created.
- * @property {SharingMemberPolicy} member_policy - Who can be a member of this
+ * @property {SharingMemberPolicy} [member_policy] - Who can be a member of this
  * shared folder. Only applicable if the current user is on a team.
- * @property {SharingAclUpdatePolicy} acl_update_policy - Who can add and remove
- * members of this shared folder.
- * @property {SharingSharedLinkPolicy} shared_link_policy - The policy to apply
- * to shared links created for content inside this shared folder.  The current
- * user must be on a team to set this policy to SharedLinkPolicy.members.
+ * @property {SharingAclUpdatePolicy} [acl_update_policy] - Who can add and
+ * remove members of this shared folder.
+ * @property {SharingSharedLinkPolicy} [shared_link_policy] - The policy to
+ * apply to shared links created for content inside this shared folder.  The
+ * current user must be on a team to set this policy to
+ * SharedLinkPolicy.members.
  * @property {boolean} force_async - Whether to force the share to happen
  * asynchronously.
+ * @property {Array.<SharingFolderAction>} [actions] - This is a list indicating
+ * whether each returned folder data entry will include a boolean field
+ * FolderPermission.allow that describes whether the current user can perform
+ * the `FolderAction` on the folder.
+ * @property {SharingLinkSettings} [link_settings] - Settings on the link for
+ * this folder.
+ * @property {SharingViewerInfoPolicy} [viewer_info_policy] - Who can
+ * enable/disable viewer info for this shared folder.
  */
 
 /**
@@ -2231,6 +2605,44 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Metadata of a shared link for a file or folder.
+ * @typedef {Object} SharingSharedContentLinkMetadata
+ * @property {Array.<SharingLinkAudience>} audience_options - The audience
+ * options that are available for the content. Some audience options may be
+ * unavailable. For example, team_only may be unavailable if the content is not
+ * owned by a user on a team. The 'default' audience option is always available
+ * if the user can modify link settings.
+ * @property {SharingLinkAudience} current_audience - The current audience of
+ * the link.
+ * @property {Array.<SharingLinkPermission>} link_permissions - A list of
+ * permissions for actions you can perform on the link.
+ * @property {boolean} password_protected - Whether the link is protected by a
+ * password.
+ * @property {string} url - The URL of the link.
+ * @property {Timestamp} [expiry] - Whether the link has an expiry set on it. A
+ * link with an expiry will have its  audience changed to members when the
+ * expiry is reached.
+ */
+
+/**
+ * @typedef {Object} SharingSharedContentLinkMetadataBase
+ * @property {Array.<SharingLinkAudience>} audience_options - The audience
+ * options that are available for the content. Some audience options may be
+ * unavailable. For example, team_only may be unavailable if the content is not
+ * owned by a user on a team. The 'default' audience option is always available
+ * if the user can modify link settings.
+ * @property {SharingLinkAudience} current_audience - The current audience of
+ * the link.
+ * @property {Array.<SharingLinkPermission>} link_permissions - A list of
+ * permissions for actions you can perform on the link.
+ * @property {boolean} password_protected - Whether the link is protected by a
+ * password.
+ * @property {Timestamp} [expiry] - Whether the link has an expiry set on it. A
+ * link with an expiry will have its  audience changed to members when the
+ * expiry is reached.
+ */
+
+/**
  * Shared file user, group, and invitee membership. Used for the results of
  * list_file_members and list_file_members/continue, and used as part of the
  * results for list_file_members/batch.
@@ -2254,6 +2666,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * shared file.
  * @property {string} name - The name of this file.
  * @property {string} id - The ID of the file.
+ * @property {SharingSharedContentLinkMetadata} [link_metadata] - The metadata
+ * of the link associated for the file.
  * @property {Array.<SharingFilePermission>} [permissions] - The sharing
  * permissions that requesting user has on this file. This corresponds to the
  * entries given in GetFileMetadataBatchArg.actions or
@@ -2308,16 +2722,18 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} SharingSharedFolderMetadata
  * @property {SharingAccessLevel} access_type - The current user's access level
  * for this shared folder.
+ * @property {boolean} is_inside_team_folder - Whether this folder is inside of
+ * a team folder.
  * @property {boolean} is_team_folder - Whether this folder is a team folder
  * https://www.dropbox.com/en/help/986.
+ * @property {string} name - The name of the this shared folder.
  * @property {SharingFolderPolicy} policy - Policies governing this shared
  * folder.
- * @property {string} name - The name of the this shared folder.
+ * @property {string} preview_url - URL for displaying a web preview of the
+ * shared folder.
  * @property {string} shared_folder_id - The ID of the shared folder.
  * @property {Timestamp} time_invited - Timestamp indicating when the current
  * user was invited to this shared folder.
- * @property {string} preview_url - URL for displaying a web preview of the
- * shared folder.
  * @property {UsersTeam} [owner_team] - The team that owns the folder. This
  * field is not present if the folder is not owned by a team.
  * @property {string} [parent_shared_folder_id] - The ID of the parent shared
@@ -2325,6 +2741,9 @@ only present when needed to discriminate between multiple possible subtypes.
  * shared folder.
  * @property {string} [path_lower] - The lower-cased full path of this shared
  * folder. Absent for unmounted folders.
+ * @property {SharingSharedContentLinkMetadata} [link_metadata] - The metadata
+ * of the shared content link to this shared folder. Absent if there is no link
+ * on the folder.
  * @property {Array.<SharingFolderPermission>} [permissions] - Actions the
  * current user may perform on the folder and its contents. The set of
  * permissions corresponds to the FolderActions in the request.
@@ -2335,15 +2754,17 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} SharingSharedFolderMetadataBase
  * @property {SharingAccessLevel} access_type - The current user's access level
  * for this shared folder.
+ * @property {boolean} is_inside_team_folder - Whether this folder is inside of
+ * a team folder.
  * @property {boolean} is_team_folder - Whether this folder is a team folder
  * https://www.dropbox.com/en/help/986.
- * @property {SharingFolderPolicy} policy - Policies governing this shared
- * folder.
  * @property {UsersTeam} [owner_team] - The team that owns the folder. This
  * field is not present if the folder is not owned by a team.
  * @property {string} [parent_shared_folder_id] - The ID of the parent shared
  * folder. This field is present only if the folder is contained within another
  * shared folder.
+ * @property {string} [path_lower] - The lower-cased full path of this shared
+ * folder. Absent for unmounted folders.
  */
 
 /**
@@ -2381,9 +2802,9 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * Policy governing who can view shared links.
+ * Who can view shared links in this folder.
  * @typedef {Object} SharingSharedLinkPolicy
- * @property {('anyone'|'members'|'other')} .tag - Tag identifying the union variant.
+ * @property {('anyone'|'team'|'members'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2482,6 +2903,16 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Arguments for update_file_member.
+ * @typedef {Object} SharingUpdateFileMemberArgs
+ * @property {string} file - File for which we are changing a member's access.
+ * @property {SharingMemberSelector} member - The member whose access we are
+ * changing.
+ * @property {SharingAccessLevel} access_level - The new access level for the
+ * member.
+ */
+
+/**
  * @typedef {Object} SharingUpdateFolderMemberArg
  * @property {string} shared_folder_id - The ID for the shared folder.
  * @property {SharingMemberSelector} member - The member of the shared folder to
@@ -2504,17 +2935,21 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * If any of the policy's are unset, then they retain their current setting.
+ * If any of the policies are unset, then they retain their current setting.
  * @typedef {Object} SharingUpdateFolderPolicyArg
  * @property {string} shared_folder_id - The ID for the shared folder.
  * @property {SharingMemberPolicy} [member_policy] - Who can be a member of this
  * shared folder. Only applicable if the current user is on a team.
  * @property {SharingAclUpdatePolicy} [acl_update_policy] - Who can add and
  * remove members of this shared folder.
+ * @property {SharingViewerInfoPolicy} [viewer_info_policy] - Who can
+ * enable/disable viewer info for this shared folder.
  * @property {SharingSharedLinkPolicy} [shared_link_policy] - The policy to
  * apply to shared links created for content inside this shared folder. The
  * current user must be on a team to set this policy to
  * SharedLinkPolicy.members.
+ * @property {SharingLinkSettings} [link_settings] - Settings on the link for
+ * this folder.
  */
 
 /**
@@ -2547,6 +2982,11 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [initials] - Suggested name initials for a member.
  * @property {boolean} is_inherited - True if the member has access from a
  * parent folder.
+ */
+
+/**
+ * @typedef {Object} SharingViewerInfoPolicy
+ * @property {('enabled'|'disabled'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2615,6 +3055,16 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} TeamBaseDfbReport
  * @property {string} start_date - First date present in the results as
  * 'YYYY-MM-DD' or None.
+ */
+
+/**
+ * Base error that all errors for existing team folders should extend.
+ * @typedef {Object} TeamBaseTeamFolderError
+ * @property {TeamTeamFolderAccessError} [access_error] - Available if .tag is
+ * access_error.
+ * @property {TeamTeamFolderInvalidStatusError} [status_error] - Available if
+ * .tag is status_error.
+ * @property {('access_error'|'status_error'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2803,17 +3253,17 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [group_external_id] - The creator of a team can associate
  * an arbitrary external ID to the group.
  * @property {TeamCommonGroupManagementType} [group_management_type] - Whether
- * the team can be managed by selected users, or only by team admins
+ * the team can be managed by selected users, or only by team admins.
  */
 
 /**
  * @typedef {Object} TeamGroupCreateError
- * @property {('group_name_already_used'|'group_name_invalid'|'external_id_already_in_use'|'other')} .tag - Tag identifying the union variant.
+ * @property {('group_name_already_used'|'group_name_invalid'|'external_id_already_in_use'|'system_managed_group_disallowed'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
  * @typedef {Object} TeamGroupDeleteError
- * @property {('group_not_found'|'other'|'group_already_deleted')} .tag - Tag identifying the union variant.
+ * @property {('group_not_found'|'other'|'system_managed_group_disallowed'|'group_already_deleted')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2851,12 +3301,12 @@ only present when needed to discriminate between multiple possible subtypes.
  * Error that can be raised when GroupMemberSelector is used, and the user is
  * required to be a member of the specified group.
  * @typedef {Object} TeamGroupMemberSelectorError
- * @property {('group_not_found'|'other'|'member_not_in_group')} .tag - Tag identifying the union variant.
+ * @property {('group_not_found'|'other'|'system_managed_group_disallowed'|'member_not_in_group')} .tag - Tag identifying the union variant.
  */
 
 /**
  * @typedef {Object} TeamGroupMemberSetAccessTypeError
- * @property {('group_not_found'|'other'|'member_not_in_group'|'user_cannot_be_manager_of_company_managed_group')} .tag - Tag identifying the union variant.
+ * @property {('group_not_found'|'other'|'system_managed_group_disallowed'|'member_not_in_group'|'user_cannot_be_manager_of_company_managed_group')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2881,7 +3331,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {Array.<string>} [user_cannot_be_manager_of_company_managed_group]
  * - Available if .tag is user_cannot_be_manager_of_company_managed_group. A
  * company-managed group cannot be managed by a user.
- * @property {('group_not_found'|'other'|'duplicate_user'|'group_not_in_team'|'members_not_in_team'|'users_not_found'|'user_must_be_active_to_be_owner'|'user_cannot_be_manager_of_company_managed_group')} .tag - Tag identifying the union variant.
+ * @property {('group_not_found'|'other'|'system_managed_group_disallowed'|'duplicate_user'|'group_not_in_team'|'members_not_in_team'|'users_not_found'|'user_must_be_active_to_be_owner'|'user_cannot_be_manager_of_company_managed_group')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2905,7 +3355,11 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamGroupMembersRemoveError
- * @property {('group_not_found'|'other'|'member_not_in_group'|'group_not_in_team')} .tag - Tag identifying the union variant.
+ * @property {Array.<string>} [members_not_in_team] - Available if .tag is
+ * members_not_in_team. These members are not part of your team.
+ * @property {Array.<string>} [users_not_found] - Available if .tag is
+ * users_not_found. These users were not found in Dropbox.
+ * @property {('group_not_found'|'other'|'system_managed_group_disallowed'|'member_not_in_group'|'group_not_in_team'|'members_not_in_team'|'users_not_found')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2920,7 +3374,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * Error that can be raised when GroupMembersSelector is used, and the users are
  * required to be members of the specified group.
  * @typedef {Object} TeamGroupMembersSelectorError
- * @property {('group_not_found'|'other'|'member_not_in_group')} .tag - Tag identifying the union variant.
+ * @property {('group_not_found'|'other'|'system_managed_group_disallowed'|'member_not_in_group')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -2952,6 +3406,13 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Error that can be raised when GroupSelector is used and team groups are
+ * disallowed from being used.
+ * @typedef {Object} TeamGroupSelectorWithTeamGroupError
+ * @property {('group_not_found'|'other'|'system_managed_group_disallowed')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} TeamGroupUpdateArgs
  * @property {TeamGroupSelector} group - Specify a group.
  * @property {boolean} return_members - Whether to return the list of members in
@@ -2969,7 +3430,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamGroupUpdateError
- * @property {('group_not_found'|'other'|'group_name_already_used'|'group_name_invalid'|'external_id_already_in_use')} .tag - Tag identifying the union variant.
+ * @property {('group_not_found'|'other'|'system_managed_group_disallowed'|'group_name_already_used'|'group_name_invalid'|'external_id_already_in_use')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3236,6 +3697,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} member_given_name - Member's first name.
  * @property {string} member_surname - Member's last name.
  * @property {string} [member_external_id] - External ID for member.
+ * @property {string} [member_persistent_id] - Persistent ID for member. This
+ * field is only available to teams using persistent ID SAML configuration.
  * @property {boolean} send_welcome_email - Whether to send a welcome email to
  * the member. If send_welcome_email is false, no email invitation will be sent
  * to the user. This may be useful for apps using single sign-on (SSO) flows for
@@ -3272,9 +3735,16 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [duplicate_external_member_id] - Available if .tag is
  * duplicate_external_member_id. A user with the given external member ID
  * already exists on the team (including in recoverable state).
+ * @property {string} [duplicate_member_persistent_id] - Available if .tag is
+ * duplicate_member_persistent_id. A user with the given persistent ID already
+ * exists on the team (including in recoverable state).
+ * @property {string} [persistent_id_disabled] - Available if .tag is
+ * persistent_id_disabled. Persistent ID is only available to teams with
+ * persistent ID SAML configuration. Please contact Dropbox for more
+ * information.
  * @property {string} [user_creation_failed] - Available if .tag is
  * user_creation_failed. User creation has failed.
- * @property {('success'|'team_license_limit'|'free_team_member_limit_reached'|'user_already_on_team'|'user_on_another_team'|'user_already_paired'|'user_migration_failed'|'duplicate_external_member_id'|'user_creation_failed')} .tag - Tag identifying the union variant.
+ * @property {('success'|'team_license_limit'|'free_team_member_limit_reached'|'user_already_on_team'|'user_on_another_team'|'user_already_paired'|'user_migration_failed'|'duplicate_external_member_id'|'duplicate_member_persistent_id'|'persistent_id_disabled'|'user_creation_failed')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3314,6 +3784,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * user. An application using the API may find it easier to use their own IDs
  * instead of Dropbox IDs like account_id or team_member_id.
  * @property {string} [account_id] - A user's account identifier.
+ * @property {Timestamp} [joined_on] - The date and time the user joined as a
+ * member of a specific team.
+ * @property {string} [persistent_id] - Persistent ID that a team can attach to
+ * the user. The persistent ID is unique ID to be used for SAML authentication.
  */
 
 /**
@@ -3490,11 +3964,13 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [new_external_id] - New external ID for member.
  * @property {string} [new_given_name] - New given name for member.
  * @property {string} [new_surname] - New surname for member.
+ * @property {string} [new_persistent_id] - New persistent ID. This field only
+ * available to teams using persistent ID SAML configuration.
  */
 
 /**
  * @typedef {Object} TeamMembersSetProfileError
- * @property {('user_not_found'|'user_not_in_team'|'external_id_and_new_external_id_unsafe'|'no_new_data_specified'|'email_reserved_for_other_user'|'external_id_used_by_other_user'|'set_profile_disallowed'|'param_cannot_be_empty'|'other')} .tag - Tag identifying the union variant.
+ * @property {('user_not_found'|'user_not_in_team'|'external_id_and_new_external_id_unsafe'|'no_new_data_specified'|'email_reserved_for_other_user'|'external_id_used_by_other_user'|'set_profile_disallowed'|'param_cannot_be_empty'|'persistent_id_disabled'|'persistent_id_used_by_other_user'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3697,7 +4173,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamTeamFolderCreateError
- * @property {('invalid_folder_name'|'folder_name_already_used'|'other')} .tag - Tag identifying the union variant.
+ * @property {('invalid_folder_name'|'folder_name_already_used'|'folder_name_reserved'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3722,7 +4198,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamTeamFolderInvalidStatusError
- * @property {('active'|'archived'|'other')} .tag - Tag identifying the union variant.
+ * @property {('active'|'archived'|'archive_in_progress'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3770,12 +4246,14 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} TeamTeamFolderRenameError
  * @property {TeamTeamFolderAccessError} [access_error] - Available if .tag is
  * access_error.
- * @property {('access_error'|'invalid_folder_name'|'folder_name_already_used'|'other')} .tag - Tag identifying the union variant.
+ * @property {TeamTeamFolderInvalidStatusError} [status_error] - Available if
+ * .tag is status_error.
+ * @property {('access_error'|'status_error'|'other'|'invalid_folder_name'|'folder_name_already_used'|'folder_name_reserved')} .tag - Tag identifying the union variant.
  */
 
 /**
  * @typedef {Object} TeamTeamFolderStatus
- * @property {('active'|'archived'|'other')} .tag - Tag identifying the union variant.
+ * @property {('active'|'archived'|'archive_in_progress'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3816,6 +4294,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * user. An application using the API may find it easier to use their own IDs
  * instead of Dropbox IDs like account_id or team_member_id.
  * @property {string} [account_id] - A user's account identifier.
+ * @property {Timestamp} [joined_on] - The date and time the user joined as a
+ * member of a specific team.
+ * @property {string} [persistent_id] - Persistent ID that a team can attach to
+ * the user. The persistent ID is unique ID to be used for SAML authentication.
  */
 
 /**
@@ -3884,7 +4366,7 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * The group type determines how a group is managed.
  * @typedef {Object} TeamCommonGroupManagementType
- * @property {('company_managed'|'user_managed'|'other')} .tag - Tag identifying the union variant.
+ * @property {('user_managed'|'company_managed'|'system_managed'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -3906,6 +4388,13 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Time range.
+ * @typedef {Object} TeamCommonTimeRange
+ * @property {Timestamp} [start_time] - Optional starting time (inclusive).
+ * @property {Timestamp} [end_time] - Optional ending time (exclusive).
+ */
+
+/**
  * @typedef {Object} TeamPoliciesEmmState
  * @property {('disabled'|'optional'|'required'|'other')} .tag - Tag identifying the union variant.
  */
@@ -3923,7 +4412,8 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * Policy governing the visibility of newly created shared links.
+ * Policy governing the visibility of shared links. This policy can apply to
+ * newly created shared links, or all shared links.
  * @typedef {Object} TeamPoliciesSharedLinkCreatePolicy
  * @property {('default_public'|'default_team_only'|'team_only'|'other')} .tag - Tag identifying the union variant.
  */
@@ -3949,7 +4439,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamPoliciesSharedFolderJoinPolicy} shared_folder_join_policy -
  * Which shared folders team members can join.
  * @property {TeamPoliciesSharedLinkCreatePolicy} shared_link_create_policy -
- * What is the visibility of newly created shared links.
+ * Who can view shared links owned by team members.
  */
 
 /**

@@ -2,59 +2,6 @@
 var routes = {};
 
 /**
- * Creates a new, empty group, with a requested name. Permission : Team member
- * management
- * @function DropboxTeam#teamAlphaGroupsCreate
- * @arg {TeamGroupCreateArg} arg - The request parameters.
- * @returns {Promise.<TeamGroupFullInfo, Error.<TeamGroupCreateError>>}
- */
-routes.teamAlphaGroupsCreate = function (arg) {
-  return this.request('team/alpha/groups/create', arg, 'team', 'api', 'rpc');
-};
-
-/**
- * Retrieves information about one or more groups. Permission : Team Information
- * @function DropboxTeam#teamAlphaGroupsGetInfo
- * @arg {TeamGroupsSelector} arg - The request parameters.
- * @returns {Promise.<Object, Error.<TeamGroupsGetInfoError>>}
- */
-routes.teamAlphaGroupsGetInfo = function (arg) {
-  return this.request('team/alpha/groups/get_info', arg, 'team', 'api', 'rpc');
-};
-
-/**
- * Lists groups on a team. Permission : Team Information
- * @function DropboxTeam#teamAlphaGroupsList
- * @arg {TeamGroupsListArg} arg - The request parameters.
- * @returns {Promise.<TeamGroupsListResult, Error.<void>>}
- */
-routes.teamAlphaGroupsList = function (arg) {
-  return this.request('team/alpha/groups/list', arg, 'team', 'api', 'rpc');
-};
-
-/**
- * Once a cursor has been retrieved from alpha/groups/list, use this to paginate
- * through all groups. Permission : Team information
- * @function DropboxTeam#teamAlphaGroupsListContinue
- * @arg {TeamGroupsListContinueArg} arg - The request parameters.
- * @returns {Promise.<TeamGroupsListResult, Error.<TeamGroupsListContinueError>>}
- */
-routes.teamAlphaGroupsListContinue = function (arg) {
-  return this.request('team/alpha/groups/list/continue', arg, 'team', 'api', 'rpc');
-};
-
-/**
- * Updates a group's name, external ID or management type. Permission : Team
- * member management
- * @function DropboxTeam#teamAlphaGroupsUpdate
- * @arg {TeamGroupUpdateArgs} arg - The request parameters.
- * @returns {Promise.<TeamGroupFullInfo, Error.<TeamGroupUpdateError>>}
- */
-routes.teamAlphaGroupsUpdate = function (arg) {
-  return this.request('team/alpha/groups/update', arg, 'team', 'api', 'rpc');
-};
-
-/**
  * List all device sessions of a team's member.
  * @function DropboxTeam#teamDevicesListMemberDevices
  * @arg {TeamListMemberDevicesArg} arg - The request parameters.
@@ -117,7 +64,7 @@ routes.teamGetInfo = function (arg) {
 
 /**
  * Creates a new, empty group, with a requested name. Permission : Team member
- * management
+ * management.
  * @function DropboxTeam#teamGroupsCreate
  * @arg {TeamGroupCreateArg} arg - The request parameters.
  * @returns {Promise.<TeamGroupFullInfo, Error.<TeamGroupCreateError>>}
@@ -130,7 +77,7 @@ routes.teamGroupsCreate = function (arg) {
  * Deletes a group. The group is deleted immediately. However the revoking of
  * group-owned resources may take additional time. Use the groups/job_status/get
  * to determine whether this process has completed. Permission : Team member
- * management
+ * management.
  * @function DropboxTeam#teamGroupsDelete
  * @arg {TeamGroupSelector} arg - The request parameters.
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<TeamGroupDeleteError>>}
@@ -140,7 +87,9 @@ routes.teamGroupsDelete = function (arg) {
 };
 
 /**
- * Retrieves information about one or more groups. Permission : Team Information
+ * Retrieves information about one or more groups. Note that the optional field
+ * GroupFullInfo.members is not returned for system-managed groups. Permission :
+ * Team Information.
  * @function DropboxTeam#teamGroupsGetInfo
  * @arg {TeamGroupsSelector} arg - The request parameters.
  * @returns {Promise.<Object, Error.<TeamGroupsGetInfoError>>}
@@ -153,7 +102,7 @@ routes.teamGroupsGetInfo = function (arg) {
  * Once an async_job_id is returned from groups/delete, groups/members/add , or
  * groups/members/remove use this method to poll the status of granting/revoking
  * group members' access to group-owned resources. Permission : Team member
- * management
+ * management.
  * @function DropboxTeam#teamGroupsJobStatusGet
  * @arg {AsyncPollArg} arg - The request parameters.
  * @returns {Promise.<AsyncPollEmptyResult, Error.<TeamGroupsPollError>>}
@@ -163,7 +112,7 @@ routes.teamGroupsJobStatusGet = function (arg) {
 };
 
 /**
- * Lists groups on a team. Permission : Team Information
+ * Lists groups on a team. Permission : Team Information.
  * @function DropboxTeam#teamGroupsList
  * @arg {TeamGroupsListArg} arg - The request parameters.
  * @returns {Promise.<TeamGroupsListResult, Error.<void>>}
@@ -174,7 +123,7 @@ routes.teamGroupsList = function (arg) {
 
 /**
  * Once a cursor has been retrieved from groups/list, use this to paginate
- * through all groups. Permission : Team information
+ * through all groups. Permission : Team Information.
  * @function DropboxTeam#teamGroupsListContinue
  * @arg {TeamGroupsListContinueArg} arg - The request parameters.
  * @returns {Promise.<TeamGroupsListResult, Error.<TeamGroupsListContinueError>>}
@@ -187,7 +136,7 @@ routes.teamGroupsListContinue = function (arg) {
  * Adds members to a group. The members are added immediately. However the
  * granting of group-owned resources may take additional time. Use the
  * groups/job_status/get to determine whether this process has completed.
- * Permission : Team member management
+ * Permission : Team member management.
  * @function DropboxTeam#teamGroupsMembersAdd
  * @arg {TeamGroupMembersAddArg} arg - The request parameters.
  * @returns {Promise.<TeamGroupMembersChangeResult, Error.<TeamGroupMembersAddError>>}
@@ -197,7 +146,7 @@ routes.teamGroupsMembersAdd = function (arg) {
 };
 
 /**
- * Lists members of a group. Permission : Team Information
+ * Lists members of a group. Permission : Team Information.
  * @function DropboxTeam#teamGroupsMembersList
  * @arg {TeamGroupsMembersListArg} arg - The request parameters.
  * @returns {Promise.<TeamGroupsMembersListResult, Error.<TeamGroupSelectorError>>}
@@ -208,7 +157,7 @@ routes.teamGroupsMembersList = function (arg) {
 
 /**
  * Once a cursor has been retrieved from groups/members/list, use this to
- * paginate through all members of the group. Permission : Team information
+ * paginate through all members of the group. Permission : Team information.
  * @function DropboxTeam#teamGroupsMembersListContinue
  * @arg {TeamGroupsMembersListContinueArg} arg - The request parameters.
  * @returns {Promise.<TeamGroupsMembersListResult, Error.<TeamGroupsMembersListContinueError>>}
@@ -222,7 +171,7 @@ routes.teamGroupsMembersListContinue = function (arg) {
  * the revoking of group-owned resources may take additional time. Use the
  * groups/job_status/get to determine whether this process has completed. This
  * method permits removing the only owner of a group, even in cases where this
- * is not possible via the web client. Permission : Team member management
+ * is not possible via the web client. Permission : Team member management.
  * @function DropboxTeam#teamGroupsMembersRemove
  * @arg {TeamGroupMembersRemoveArg} arg - The request parameters.
  * @returns {Promise.<TeamGroupMembersChangeResult, Error.<TeamGroupMembersRemoveError>>}
@@ -232,7 +181,7 @@ routes.teamGroupsMembersRemove = function (arg) {
 };
 
 /**
- * Sets a member's access type in a group. Permission : Team member management
+ * Sets a member's access type in a group. Permission : Team member management.
  * @function DropboxTeam#teamGroupsMembersSetAccessType
  * @arg {TeamGroupMembersSetAccessTypeArg} arg - The request parameters.
  * @returns {Promise.<Object, Error.<TeamGroupMemberSetAccessTypeError>>}
@@ -243,7 +192,7 @@ routes.teamGroupsMembersSetAccessType = function (arg) {
 
 /**
  * Updates a group's name and/or external ID. Permission : Team member
- * management
+ * management.
  * @function DropboxTeam#teamGroupsUpdate
  * @arg {TeamGroupUpdateArgs} arg - The request parameters.
  * @returns {Promise.<TeamGroupFullInfo, Error.<TeamGroupUpdateError>>}
@@ -385,12 +334,13 @@ routes.teamMembersRecover = function (arg) {
 /**
  * Removes a member from a team. Permission : Team member management Exactly one
  * of team_member_id, email, or external_id must be provided to identify the
- * user account. This is not a deactivation where the account can be
- * re-activated again. Calling members/add with the removed user's email address
- * will create a new account with a new team_member_id that will not have access
- * to any content that was shared with the initial account. This endpoint may
- * initiate an asynchronous job. To obtain the final result of the job, the
- * client should periodically poll members/remove/job_status/get.
+ * user account. Accounts can be recovered via members/recover for a 7 day
+ * period or until the account has been permanently deleted or transferred to
+ * another account (whichever comes first). Calling members/add while a user is
+ * still recoverable on your team will return with
+ * MemberAddResult.user_already_on_team. This endpoint may initiate an
+ * asynchronous job. To obtain the final result of the job, the client should
+ * periodically poll members/remove/job_status/get.
  * @function DropboxTeam#teamMembersRemove
  * @arg {TeamMembersRemoveArg} arg - The request parameters.
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<TeamMembersRemoveError>>}
@@ -550,9 +500,8 @@ routes.teamReportsGetStorage = function (arg) {
 };
 
 /**
- * Sets an archived team folder's status to active. This endpoint is only
- * available to teams with improved team folders /help/986. Permission : Team
- * member file access.
+ * Sets an archived team folder's status to active. Permission : Team member
+ * file access.
  * @function DropboxTeam#teamTeamFolderActivate
  * @arg {TeamTeamFolderIdArg} arg - The request parameters.
  * @returns {Promise.<TeamTeamFolderMetadata, Error.<TeamTeamFolderActivateError>>}
@@ -563,8 +512,7 @@ routes.teamTeamFolderActivate = function (arg) {
 
 /**
  * Sets an active team folder's status to archived and removes all folder and
- * file members. This endpoint is only available to teams with improved team
- * folders /help/986. Permission : Team member file access.
+ * file members. Permission : Team member file access.
  * @function DropboxTeam#teamTeamFolderArchive
  * @arg {TeamTeamFolderArchiveArg} arg - The request parameters.
  * @returns {Promise.<TeamTeamFolderArchiveLaunch, Error.<TeamTeamFolderArchiveError>>}
@@ -574,8 +522,7 @@ routes.teamTeamFolderArchive = function (arg) {
 };
 
 /**
- * Returns the status of an asynchronous job for archiving a team folder. This
- * endpoint is only available to teams with improved team folders /help/986.
+ * Returns the status of an asynchronous job for archiving a team folder.
  * Permission : Team member file access.
  * @function DropboxTeam#teamTeamFolderArchiveCheck
  * @arg {AsyncPollArg} arg - The request parameters.
@@ -586,8 +533,7 @@ routes.teamTeamFolderArchiveCheck = function (arg) {
 };
 
 /**
- * Creates a new, active, team folder. This endpoint is only available to teams
- * with improved team folders /help/986. Permission : Team member file access.
+ * Creates a new, active, team folder. Permission : Team member file access.
  * @function DropboxTeam#teamTeamFolderCreate
  * @arg {TeamTeamFolderCreateArg} arg - The request parameters.
  * @returns {Promise.<TeamTeamFolderMetadata, Error.<TeamTeamFolderCreateError>>}
@@ -597,8 +543,7 @@ routes.teamTeamFolderCreate = function (arg) {
 };
 
 /**
- * Retrieves metadata for team folders. This endpoint is only available to teams
- * with improved team folders /help/986. Permission : Team member file access.
+ * Retrieves metadata for team folders. Permission : Team member file access.
  * @function DropboxTeam#teamTeamFolderGetInfo
  * @arg {TeamTeamFolderIdListArg} arg - The request parameters.
  * @returns {Promise.<Array.<TeamTeamFolderGetInfoItem>, Error.<void>>}
@@ -608,8 +553,7 @@ routes.teamTeamFolderGetInfo = function (arg) {
 };
 
 /**
- * Lists all team folders. This endpoint is only available to teams with
- * improved team folders /help/986. Permission : Team member file access.
+ * Lists all team folders. Permission : Team member file access.
  * @function DropboxTeam#teamTeamFolderList
  * @arg {TeamTeamFolderListArg} arg - The request parameters.
  * @returns {Promise.<TeamTeamFolderListResult, Error.<TeamTeamFolderListError>>}
@@ -619,8 +563,7 @@ routes.teamTeamFolderList = function (arg) {
 };
 
 /**
- * Permanently deletes an archived team folder. This endpoint is only available
- * to teams with improved team folders /help/986. Permission : Team member file
+ * Permanently deletes an archived team folder. Permission : Team member file
  * access.
  * @function DropboxTeam#teamTeamFolderPermanentlyDelete
  * @arg {TeamTeamFolderIdArg} arg - The request parameters.
@@ -631,9 +574,7 @@ routes.teamTeamFolderPermanentlyDelete = function (arg) {
 };
 
 /**
- * Changes an active team folder's name. This endpoint is only available to
- * teams with improved team folders /help/986. Permission : Team member file
- * access.
+ * Changes an active team folder's name. Permission : Team member file access.
  * @function DropboxTeam#teamTeamFolderRename
  * @arg {TeamTeamFolderRenameArg} arg - The request parameters.
  * @returns {Promise.<TeamTeamFolderMetadata, Error.<TeamTeamFolderRenameError>>}

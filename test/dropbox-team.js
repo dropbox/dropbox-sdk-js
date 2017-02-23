@@ -19,13 +19,13 @@ describe('DropboxTeam', function () {
   });
 
   describe('api method', function () {
-    it('teamAlphaGroupsList calls DropboxTeam.request', function () {
+    it('teamGroupsList calls DropboxTeam.request', function () {
       var requestSpy;
       dbx = new DropboxTeam();
       requestSpy = sinon.spy(dbx, 'request');
-      dbx.teamAlphaGroupsList({ limit: 10 });
+      dbx.teamGroupsList({ limit: 10 });
       assert(requestSpy.calledOnce);
-      assert.equal('team/alpha/groups/list', dbx.request.getCall(0).args[0]);
+      assert.equal('team/groups/list', dbx.request.getCall(0).args[0]);
       assert.deepEqual({ limit: 10 }, dbx.request.getCall(0).args[1]);
       assert.equal('team', dbx.request.getCall(0).args[2]);
       assert.equal('api', dbx.request.getCall(0).args[3]);
