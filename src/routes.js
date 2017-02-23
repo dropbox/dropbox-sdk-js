@@ -537,6 +537,173 @@ routes.filesUploadSessionStart = function (arg) {
 };
 
 /**
+ * Marks the given Paper doc as deleted. This operation is non-destructive and
+ * the doc can be revived by the owner.  Note: This action can be performed only
+ * by the doc owner.
+ * @function Dropbox#paperDocsArchive
+ * @arg {PaperRefPaperDoc} arg - The request parameters.
+ * @returns {Promise.<void, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsArchive = function (arg) {
+  return this.request('paper/docs/archive', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Exports and downloads Paper doc either as HTML or markdown.
+ * @function Dropbox#paperDocsDownload
+ * @arg {PaperPaperDocExport} arg - The request parameters.
+ * @returns {Promise.<PaperPaperDocExportResult, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsDownload = function (arg) {
+  return this.request('paper/docs/download', arg, 'user', 'api', 'download');
+};
+
+/**
+ * Lists the users who are explicitly invited to the Paper folder in which the
+ * Paper doc is contained. For private folders all users (including owner)
+ * shared on the folder are listed and for team folders all non-team users
+ * shared on the folder are returned.
+ * @function Dropbox#paperDocsFolderUsersList
+ * @arg {PaperListUsersOnFolderArgs} arg - The request parameters.
+ * @returns {Promise.<PaperListUsersOnFolderResponse, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsFolderUsersList = function (arg) {
+  return this.request('paper/docs/folder_users/list', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Once a cursor has been retrieved from docs/folder_users/list, use this to
+ * paginate through all users on the Paper folder.
+ * @function Dropbox#paperDocsFolderUsersListContinue
+ * @arg {PaperListUsersOnFolderContinueArgs} arg - The request parameters.
+ * @returns {Promise.<PaperListUsersOnFolderResponse, Error.<PaperListUsersCursorError>>}
+ */
+routes.paperDocsFolderUsersListContinue = function (arg) {
+  return this.request('paper/docs/folder_users/list/continue', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Retrieves folder information for the given Paper doc. This includes:   -
+ * folder sharing policy; permissions for subfolders are set by the top-level
+ * folder.   - full 'filepath', i.e. the list of folders (both folderId and
+ * folderName) from the root folder to the folder directly containing the Paper
+ * doc.  Note: If the Paper doc is not in any folder (aka unfiled) the response
+ * will be empty.
+ * @function Dropbox#paperDocsGetFolderInfo
+ * @arg {PaperRefPaperDoc} arg - The request parameters.
+ * @returns {Promise.<PaperFoldersContainingPaperDoc, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsGetFolderInfo = function (arg) {
+  return this.request('paper/docs/get_folder_info', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Return the list of all Paper docs according to the argument specifications.
+ * To iterate over through the full pagination, pass the cursor to
+ * docs/list/continue.
+ * @function Dropbox#paperDocsList
+ * @arg {PaperListPaperDocsArgs} arg - The request parameters.
+ * @returns {Promise.<PaperListPaperDocsResponse, Error.<void>>}
+ */
+routes.paperDocsList = function (arg) {
+  return this.request('paper/docs/list', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Once a cursor has been retrieved from docs/list, use this to paginate through
+ * all Paper doc.
+ * @function Dropbox#paperDocsListContinue
+ * @arg {PaperListPaperDocsContinueArgs} arg - The request parameters.
+ * @returns {Promise.<PaperListPaperDocsResponse, Error.<PaperListDocsCursorError>>}
+ */
+routes.paperDocsListContinue = function (arg) {
+  return this.request('paper/docs/list/continue', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Permanently deletes the given Paper doc. This operation is final as the doc
+ * cannot be recovered.  Note: This action can be performed only by the doc
+ * owner.
+ * @function Dropbox#paperDocsPermanentlyDelete
+ * @arg {PaperRefPaperDoc} arg - The request parameters.
+ * @returns {Promise.<void, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsPermanentlyDelete = function (arg) {
+  return this.request('paper/docs/permanently_delete', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Gets the default sharing policy for the given Paper doc.
+ * @function Dropbox#paperDocsSharingPolicyGet
+ * @arg {PaperRefPaperDoc} arg - The request parameters.
+ * @returns {Promise.<PaperSharingPolicy, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsSharingPolicyGet = function (arg) {
+  return this.request('paper/docs/sharing_policy/get', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Sets the default sharing policy for the given Paper doc. The default
+ * 'team_sharing_policy' can be changed only by teams, omit this field for
+ * personal accounts.  Note: 'public_sharing_policy' cannot be set to the value
+ * 'disabled' because this setting can be changed only via the team admin
+ * console.
+ * @function Dropbox#paperDocsSharingPolicySet
+ * @arg {PaperPaperDocSharingPolicy} arg - The request parameters.
+ * @returns {Promise.<void, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsSharingPolicySet = function (arg) {
+  return this.request('paper/docs/sharing_policy/set', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Allows an owner or editor to add users to a Paper doc or change their
+ * permissions using their email or Dropbox account id.  Note: The Doc owner's
+ * permissions cannot be changed.
+ * @function Dropbox#paperDocsUsersAdd
+ * @arg {PaperAddPaperDocUser} arg - The request parameters.
+ * @returns {Promise.<Array.<PaperAddPaperDocUserMemberResult>, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsUsersAdd = function (arg) {
+  return this.request('paper/docs/users/add', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Lists all users who visited the Paper doc or users with explicit access. This
+ * call excludes users who have been removed. The list is sorted by the date of
+ * the visit or the share date. The list will include both users, the explicitly
+ * shared ones as well as those who came in using the Paper url link.
+ * @function Dropbox#paperDocsUsersList
+ * @arg {PaperListUsersOnPaperDocArgs} arg - The request parameters.
+ * @returns {Promise.<PaperListUsersOnPaperDocResponse, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsUsersList = function (arg) {
+  return this.request('paper/docs/users/list', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Once a cursor has been retrieved from docs/users/list, use this to paginate
+ * through all users on the Paper doc.
+ * @function Dropbox#paperDocsUsersListContinue
+ * @arg {PaperListUsersOnPaperDocContinueArgs} arg - The request parameters.
+ * @returns {Promise.<PaperListUsersOnPaperDocResponse, Error.<PaperListUsersCursorError>>}
+ */
+routes.paperDocsUsersListContinue = function (arg) {
+  return this.request('paper/docs/users/list/continue', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Allows an owner or editor to remove users from a Paper doc using their email
+ * or Dropbox account id.  Note: Doc owner cannot be removed.
+ * @function Dropbox#paperDocsUsersRemove
+ * @arg {PaperRemovePaperDocUser} arg - The request parameters.
+ * @returns {Promise.<void, Error.<PaperDocLookupError>>}
+ */
+routes.paperDocsUsersRemove = function (arg) {
+  return this.request('paper/docs/users/remove', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Adds specified members to a file.
  * @function Dropbox#sharingAddFileMember
  * @arg {SharingAddFileMemberArgs} arg - The request parameters.
@@ -560,8 +727,9 @@ routes.sharingAddFolderMember = function (arg) {
 };
 
 /**
- * Changes a member's access on a shared file.
+ * Identical to update_file_member but with less information returned.
  * @function Dropbox#sharingChangeFileMemberAccess
+ * @deprecated
  * @arg {SharingChangeFileMemberAccessArgs} arg - The request parameters.
  * @returns {Promise.<SharingFileMemberActionResult, Error.<SharingFileMemberActionError>>}
  */
@@ -1003,6 +1171,16 @@ routes.sharingUnshareFile = function (arg) {
  */
 routes.sharingUnshareFolder = function (arg) {
   return this.request('sharing/unshare_folder', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Changes a member's access on a shared file.
+ * @function Dropbox#sharingUpdateFileMember
+ * @arg {SharingUpdateFileMemberArgs} arg - The request parameters.
+ * @returns {Promise.<SharingMemberAccessLevelResult, Error.<SharingFileMemberActionError>>}
+ */
+routes.sharingUpdateFileMember = function (arg) {
+  return this.request('sharing/update_file_member', arg, 'user', 'api', 'rpc');
 };
 
 /**
