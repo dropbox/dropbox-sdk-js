@@ -6689,6 +6689,40 @@ contained within  a shared folder.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>content_hash</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A hash of the file content. This field
+can be used to verify data integrity. For more information see our Content
+hash /developers/reference/content-hash page.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -13840,10 +13874,10 @@ from_lookup.</td>
 <span class="param-type">'too_many_files'</span>
 |
 
-<span class="param-type">'other'</span>
+<span class="param-type">'duplicated_or_nested_paths'</span>
 |
 
-<span class="param-type">'duplicated_or_nested_paths'</span>
+<span class="param-type">'other'</span>
 |
 
 <span class="param-type">'too_many_write_operations'</span>
@@ -14616,6 +14650,9 @@ from_lookup.</td>
 |
 
 <span class="param-type">'too_many_files'</span>
+|
+
+<span class="param-type">'duplicated_or_nested_paths'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -22304,6 +22341,6016 @@ append the string "conflicted copy" to the file name. For example,
             
                 
 <hr>
+<dt class="name" id="PaperAddMember">
+    <h4 id="PaperAddMember">PaperAddMember</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>member</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingMemberSelector">SharingMemberSelector</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">User which should be added to the
+Paper doc. Specify only email or Dropbox account id.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>permission_level</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperDocPermissionLevel">PaperPaperDocPermissionLevel</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Permission for
+the user.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperAddPaperDocUser">
+    <h4 id="PaperAddPaperDocUser">PaperAddPaperDocUser</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>members</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#PaperAddMember">PaperAddMember</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">User which should be added to
+the Paper doc. Specify only email or Dropbox account id.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>custom_message</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A personal message that will be emailed
+to each successfully added member.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>quiet</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Clients should set this to true if no email shall
+be sent to added users.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperAddPaperDocUserMemberResult">
+    <h4 id="PaperAddPaperDocUserMemberResult">PaperAddPaperDocUserMemberResult</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Per-member result for docs/users/add.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>member</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingMemberSelector">SharingMemberSelector</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">One of specified input members.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>result</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperAddPaperDocUserResult">PaperAddPaperDocUserResult</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The outcome of the action on
+this member.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperAddPaperDocUserResult">
+    <h4 id="PaperAddPaperDocUserResult">PaperAddPaperDocUserResult</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'success'</span>
+|
+
+<span class="param-type">'unknown_error'</span>
+|
+
+<span class="param-type">'sharing_outside_team_disabled'</span>
+|
+
+<span class="param-type">'daily_limit_reached'</span>
+|
+
+<span class="param-type">'user_is_owner'</span>
+|
+
+<span class="param-type">'failed_user_data_retrieval'</span>
+|
+
+<span class="param-type">'permission_already_granted'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperCursor">
+    <h4 id="PaperCursor">PaperCursor</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The actual cursor value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>expiration</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Expiration time of value. Some cursors
+might have expiration time assigned. This is a UTC value after which the
+cursor is no longer valid and the API starts returning an error. If cursor
+expires a new one needs to be obtained and pagination needs to be restarted.
+Some cursors might be short-lived some cursors might be long-lived. This
+really depends on the sorting type and order, e.g.: 1. on one hand, listing
+docs created by the user, sorted by the created time ascending will have
+undefinite expiration because the results cannot change while the iteration
+is happening. This cursor would be suitable for long term polling. 2. on the
+other hand, listing docs sorted by the last modified time will have a very
+short expiration as docs do get modified very often and the modified time can
+be changed while the iteration is happening thus altering the results.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperDocLookupError">
+    <h4 id="PaperDocLookupError">PaperDocLookupError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'insufficient_permissions'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
+<span class="param-type">'doc_not_found'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperDocSubscriptionLevel">
+    <h4 id="PaperDocSubscriptionLevel">PaperDocSubscriptionLevel</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The subscription level of a Paper doc.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'default'</span>
+|
+
+<span class="param-type">'ignore'</span>
+|
+
+<span class="param-type">'every'</span>
+|
+
+<span class="param-type">'no_email'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperExportFormat">
+    <h4 id="PaperExportFormat">PaperExportFormat</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The desired export format of the Paper doc.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'html'</span>
+|
+
+<span class="param-type">'markdown'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperFolder">
+    <h4 id="PaperFolder">PaperFolder</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Data structure representing a Paper folder.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Paper folder id. This id uniquely identifies the
+folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Paper folder name.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperFoldersContainingPaperDoc">
+    <h4 id="PaperFoldersContainingPaperDoc">PaperFoldersContainingPaperDoc</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Metadata about Paper folders containing the specififed Paper doc.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>folder_sharing_policy_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperFolderSharingPolicyType">PaperFolderSharingPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The
+sharing policy of the folder containing the Paper doc.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>folders</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#PaperFolder">PaperFolder</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The folder path. If present the
+first folder is the root folder.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperFolderSharingPolicyType">
+    <h4 id="PaperFolderSharingPolicyType">PaperFolderSharingPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The sharing policy of a Paper folder.  Note: The sharing policy of subfolders
+is inherited from the root folder.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'team'</span>
+|
+
+<span class="param-type">'invite_only'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperFolderSubscriptionLevel">
+    <h4 id="PaperFolderSubscriptionLevel">PaperFolderSubscriptionLevel</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The subscription level of a Paper folder.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'none'</span>
+|
+
+<span class="param-type">'activity_only'</span>
+|
+
+<span class="param-type">'daily_emails'</span>
+|
+
+<span class="param-type">'weekly_emails'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperInviteeInfoWithPermissionLevel">
+    <h4 id="PaperInviteeInfoWithPermissionLevel">PaperInviteeInfoWithPermissionLevel</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>invitee</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingInviteeInfo">SharingInviteeInfo</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Email invited to the Paper doc.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>permission_level</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperDocPermissionLevel">PaperPaperDocPermissionLevel</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Permission level
+for the invitee.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListDocsCursorError">
+    <h4 id="PaperListDocsCursorError">PaperListDocsCursorError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperApiCursorError">PaperPaperApiCursorError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+cursor_error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'cursor_error'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListPaperDocsArgs">
+    <h4 id="PaperListPaperDocsArgs">PaperListPaperDocsArgs</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>filter_by</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListPaperDocsFilterBy">PaperListPaperDocsFilterBy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Allows user to specify how
+the Paper docs should be filtered.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sort_by</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListPaperDocsSortBy">PaperListPaperDocsSortBy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Allows user to specify how the
+Paper docs should be sorted.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sort_order</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListPaperDocsSortOrder">PaperListPaperDocsSortOrder</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Allows user to specify
+the sort order of the result.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>limit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Size limit per batch. The maximum number of docs
+that can be retrieved per batch is 1000. Higher value results in invalid
+arguments error.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListPaperDocsContinueArgs">
+    <h4 id="PaperListPaperDocsContinueArgs">PaperListPaperDocsContinueArgs</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The cursor obtained from docs/list or
+docs/list/continue. Allows for pagination.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListPaperDocsFilterBy">
+    <h4 id="PaperListPaperDocsFilterBy">PaperListPaperDocsFilterBy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'docs_accessed'</span>
+|
+
+<span class="param-type">'docs_created'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListPaperDocsResponse">
+    <h4 id="PaperListPaperDocsResponse">PaperListPaperDocsResponse</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_ids</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The list of Paper doc ids that can be
+used to access the given Paper docs or supplied to other API methods. The
+list is sorted in the order specified by the initial call to docs/list.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperCursor">PaperCursor</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pass the cursor into docs/list/continue to
+paginate through all files. The cursor preserves all properties as specified
+in the original call to docs/list.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>has_more</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Will be set to True if a subsequent call with
+the provided cursor to docs/list/continue returns immediately with some
+results. If set to False please allow some delay before making another call
+to docs/list/continue.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListPaperDocsSortBy">
+    <h4 id="PaperListPaperDocsSortBy">PaperListPaperDocsSortBy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'accessed'</span>
+|
+
+<span class="param-type">'modified'</span>
+|
+
+<span class="param-type">'created'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListPaperDocsSortOrder">
+    <h4 id="PaperListPaperDocsSortOrder">PaperListPaperDocsSortOrder</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'ascending'</span>
+|
+
+<span class="param-type">'descending'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListUsersCursorError">
+    <h4 id="PaperListUsersCursorError">PaperListUsersCursorError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperApiCursorError">PaperPaperApiCursorError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+cursor_error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'insufficient_permissions'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
+<span class="param-type">'doc_not_found'</span>
+|
+
+<span class="param-type">'cursor_error'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListUsersOnFolderArgs">
+    <h4 id="PaperListUsersOnFolderArgs">PaperListUsersOnFolderArgs</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>limit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Size limit per batch. The maximum number of users
+that can be retrieved per batch is 1000. Higher value results in invalid
+arguments error.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListUsersOnFolderContinueArgs">
+    <h4 id="PaperListUsersOnFolderContinueArgs">PaperListUsersOnFolderContinueArgs</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The cursor obtained from docs/folder_users/list
+or docs/folder_users/list/continue. Allows for pagination.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListUsersOnFolderResponse">
+    <h4 id="PaperListUsersOnFolderResponse">PaperListUsersOnFolderResponse</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>invitees</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#SharingInviteeInfo">SharingInviteeInfo</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of email addresses
+that are invited on the Paper folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>users</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#SharingUserInfo">SharingUserInfo</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of users that are invited on
+the Paper folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperCursor">PaperCursor</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pass the cursor into
+docs/folder_users/list/continue to paginate through all users. The cursor
+preserves all properties as specified in the original call to
+docs/folder_users/list.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>has_more</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Will be set to True if a subsequent call with
+the provided cursor to docs/folder_users/list/continue returns immediately
+with some results. If set to False please allow some delay before making
+another call to docs/folder_users/list/continue.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListUsersOnPaperDocArgs">
+    <h4 id="PaperListUsersOnPaperDocArgs">PaperListUsersOnPaperDocArgs</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>limit</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Size limit per batch. The maximum number of users
+that can be retrieved per batch is 1000. Higher value results in invalid
+arguments error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>filter_by</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperUserOnPaperDocFilter">PaperUserOnPaperDocFilter</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Specify this attribute if
+you want to obtain users that have already accessed the Paper doc.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListUsersOnPaperDocContinueArgs">
+    <h4 id="PaperListUsersOnPaperDocContinueArgs">PaperListUsersOnPaperDocContinueArgs</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The cursor obtained from docs/users/list or
+docs/users/list/continue. Allows for pagination.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperListUsersOnPaperDocResponse">
+    <h4 id="PaperListUsersOnPaperDocResponse">PaperListUsersOnPaperDocResponse</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>invitees</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#PaperInviteeInfoWithPermissionLevel">PaperInviteeInfoWithPermissionLevel</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of
+email addresses with their respective permission levels that are invited on
+the Paper doc.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>users</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#PaperUserInfoWithPermissionLevel">PaperUserInfoWithPermissionLevel</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of users
+with their respective permission levels that are invited on the Paper folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_owner</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingUserInfo">SharingUserInfo</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The Paper doc owner. This field is
+populated on every single response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>cursor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperCursor">PaperCursor</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Pass the cursor into
+docs/users/list/continue to paginate through all users. The cursor preserves
+all properties as specified in the original call to docs/users/list.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>has_more</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Will be set to True if a subsequent call with
+the provided cursor to docs/users/list/continue returns immediately with some
+results. If set to False please allow some delay before making another call
+to docs/users/list/continue.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperPaperApiBaseError">
+    <h4 id="PaperPaperApiBaseError">PaperPaperApiBaseError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'insufficient_permissions'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperPaperApiCursorError">
+    <h4 id="PaperPaperApiCursorError">PaperPaperApiCursorError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'expired_cursor'</span>
+|
+
+<span class="param-type">'invalid_cursor'</span>
+|
+
+<span class="param-type">'wrong_user_in_cursor'</span>
+|
+
+<span class="param-type">'reset'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperPaperDocExport">
+    <h4 id="PaperPaperDocExport">PaperPaperDocExport</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>export_format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperExportFormat">PaperExportFormat</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperPaperDocExportResult">
+    <h4 id="PaperPaperDocExportResult">PaperPaperDocExportResult</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>owner</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The Paper doc owner's email.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>title</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The Paper doc title.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>revision</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The Paper doc revision. Simply an ever
+increasing number.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>mime_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">MIME type of the export. This corresponds to
+ExportFormat specified in the request.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperPaperDocPermissionLevel">
+    <h4 id="PaperPaperDocPermissionLevel">PaperPaperDocPermissionLevel</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'edit'</span>
+|
+
+<span class="param-type">'view_and_comment'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperPaperDocSharingPolicy">
+    <h4 id="PaperPaperDocSharingPolicy">PaperPaperDocSharingPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sharing_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperSharingPolicy">PaperSharingPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The default sharing policy to
+be set for the Paper doc.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperRefPaperDoc">
+    <h4 id="PaperRefPaperDoc">PaperRefPaperDoc</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperRemovePaperDocUser">
+    <h4 id="PaperRemovePaperDocUser">PaperRemovePaperDocUser</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>member</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingMemberSelector">SharingMemberSelector</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">User which should be removed from
+the Paper doc. Specify only email or Dropbox account id.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperSharingPolicy">
+    <h4 id="PaperSharingPolicy">PaperSharingPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Sharing policy of Paper doc.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>public_sharing_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperSharingPublicPolicyType">PaperSharingPublicPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">This value
+applies to the non-team members.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>team_sharing_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperSharingTeamPolicyType">PaperSharingTeamPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">This value
+applies to the team members only. The value is null for all personal
+accounts.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperSharingPublicPolicyType">
+    <h4 id="PaperSharingPublicPolicyType">PaperSharingPublicPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'people_with_link_can_edit'</span>
+|
+
+<span class="param-type">'people_with_link_can_view_and_comment'</span>
+|
+
+<span class="param-type">'invite_only'</span>
+|
+
+<span class="param-type">'disabled'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperSharingTeamPolicyType">
+    <h4 id="PaperSharingTeamPolicyType">PaperSharingTeamPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The sharing policy type of the Paper doc.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'people_with_link_can_edit'</span>
+|
+
+<span class="param-type">'people_with_link_can_view_and_comment'</span>
+|
+
+<span class="param-type">'invite_only'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperUserInfoWithPermissionLevel">
+    <h4 id="PaperUserInfoWithPermissionLevel">PaperUserInfoWithPermissionLevel</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>user</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingUserInfo">SharingUserInfo</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">User shared on the Paper doc.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>permission_level</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperDocPermissionLevel">PaperPaperDocPermissionLevel</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Permission level
+for the user.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="PaperUserOnPaperDocFilter">
+    <h4 id="PaperUserOnPaperDocFilter">PaperUserOnPaperDocFilter</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'visited'</span>
+|
+
+<span class="param-type">'shared'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="PropertiesGetPropertyTemplateArg">
     <h4 id="PropertiesGetPropertyTemplateArg">PropertiesGetPropertyTemplateArg</h4>
 
@@ -23991,8 +30038,8 @@ properties of type strings is supported.
 <dd>
     
     <div class="description">
-        Policy governing who can change a shared folder's access control list (ACL).
-In other words, who can add, remove, or change the privileges of members.
+        Who can change a shared folder's access control list (ACL). In other words,
+who can add, remove, or change the privileges of members.
     </div>
     
 
@@ -26715,7 +32762,13 @@ the newly created shared link</td>
             <td class="type">
             
                 
+<span class="param-type">'disable_viewer_info'</span>
+|
+
 <span class="param-type">'edit_contents'</span>
+|
+
+<span class="param-type">'enable_viewer_info'</span>
 |
 
 <span class="param-type">'invite_viewer'</span>
@@ -27645,6 +33698,41 @@ is access_error. Specified file was invalid or user does not have access.</td>
 
         <tr>
             
+                <td class="name"><code>no_explicit_access</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingMemberAccessLevelResult">SharingMemberAccessLevelResult</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available
+if .tag is no_explicit_access. The action cannot be completed because the
+target member does not have explicit access to the file. The return value is
+the access that the member has to the file from a parent folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>.tag</code></td>
             
 
@@ -27658,6 +33746,9 @@ is access_error. Specified file was invalid or user does not have access.</td>
 |
 
 <span class="param-type">'access_error'</span>
+|
+
+<span class="param-type">'no_explicit_access'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -27935,8 +34026,7 @@ is member_error. User was not able to perform this action.</td>
 <dd>
     
     <div class="description">
-        Per-member result for remove_file_member_2 or add_file_member or
-change_file_member_access.
+        Per-member result for add_file_member or change_file_member_access.
     </div>
     
 
@@ -28421,7 +34511,7 @@ take on the file.</td>
             
 
             <td class="description last">The reason why the user
-is denied the permission. Not present if the action is allowed</td>
+is denied the permission. Not present if the action is allowed.</td>
         </tr>
 
     
@@ -28537,7 +34627,13 @@ is denied the permission. Not present if the action is allowed</td>
 <span class="param-type">'change_options'</span>
 |
 
+<span class="param-type">'disable_viewer_info'</span>
+|
+
 <span class="param-type">'edit_contents'</span>
+|
+
+<span class="param-type">'enable_viewer_info'</span>
 |
 
 <span class="param-type">'invite_editor'</span>
@@ -29409,6 +35505,39 @@ the folder is owned by a team.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>viewer_info_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingViewerInfoPolicy">SharingViewerInfoPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Who can
+enable/disable viewer info for this shared folder.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -29465,7 +35594,7 @@ the folder is owned by a team.</td>
 <dd>
     
     <div class="description">
-        Arguments of get_file_metadata
+        Arguments of get_file_metadata.
     </div>
     
 
@@ -29629,7 +35758,7 @@ the folder is owned by a team.</td>
 <dd>
     
     <div class="description">
-        Arguments of get_file_metadata/batch
+        Arguments of get_file_metadata/batch.
     </div>
     
 
@@ -29793,7 +35922,7 @@ the folder is owned by a team.</td>
 <dd>
     
     <div class="description">
-        Per file results of get_file_metadata/batch
+        Per file results of get_file_metadata/batch.
     </div>
     
 
@@ -29883,7 +36012,7 @@ one of GetFileMetadataBatchArg.files.</td>
             
 
             <td class="description last">The result for
-this particular file</td>
+this particular file.</td>
         </tr>
 
     
@@ -32923,6 +39052,441 @@ asynchronous job returned an error.</td>
             
                 
 <hr>
+<dt class="name" id="SharingLinkAction">
+    <h4 id="SharingLinkAction">SharingLinkAction</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Actions that can be performed on a link.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'change_audience'</span>
+|
+
+<span class="param-type">'remove_expiry'</span>
+|
+
+<span class="param-type">'remove_password'</span>
+|
+
+<span class="param-type">'set_expiry'</span>
+|
+
+<span class="param-type">'set_password'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="SharingLinkAudience">
+    <h4 id="SharingLinkAudience">SharingLinkAudience</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'public'</span>
+|
+
+<span class="param-type">'team'</span>
+|
+
+<span class="param-type">'members'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="SharingLinkExpiry">
+    <h4 id="SharingLinkExpiry">SharingLinkExpiry</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>set_expiry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is set_expiry. Set a
+new expiry or change an existing expiry.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'remove_expiry'</span>
+|
+
+<span class="param-type">'set_expiry'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="SharingLinkMetadata">
     <h4 id="SharingLinkMetadata">SharingLinkMetadata</h4>
 
@@ -33101,6 +39665,367 @@ CollectionLinkMetadata.
 
             <td class="description last">Expiration time, if set. By default the
 link won't expire.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="SharingLinkPassword">
+    <h4 id="SharingLinkPassword">SharingLinkPassword</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>set_password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is set_password. Set a
+new password or change an existing password.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'remove_password'</span>
+|
+
+<span class="param-type">'set_password'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="SharingLinkPermission">
+    <h4 id="SharingLinkPermission">SharingLinkPermission</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Permissions for actions that can be performed on a link.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>action</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingLinkAction">SharingLinkAction</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>allow</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reason</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingPermissionDeniedReason">SharingPermissionDeniedReason</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -33387,6 +40312,206 @@ the can_revoke is false.</td>
             
                 
 <hr>
+<dt class="name" id="SharingLinkSettings">
+    <h4 id="SharingLinkSettings">SharingLinkSettings</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Settings that apply to a link.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>audience</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingLinkAudience">SharingLinkAudience</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The type of audience on the link
+for this file.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>expiry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingLinkExpiry">SharingLinkExpiry</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">An expiry timestamp to set on a
+link.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingLinkPassword">SharingLinkPassword</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The password for the link.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="SharingListFileMembersArg">
     <h4 id="SharingListFileMembersArg">SharingListFileMembersArg</h4>
 
@@ -33500,7 +40625,7 @@ the can_revoke is false.</td>
             
 
             <td class="description last">The actions for which to
-return permissions on a member</td>
+return permissions on a member.</td>
         </tr>
 
     
@@ -33861,7 +40986,7 @@ a path.</td>
             
 
             <td class="description last">The result for
-this particular file</td>
+this particular file.</td>
         </tr>
 
     
@@ -34339,7 +41464,7 @@ file.</td>
             
 
             <td class="description last">The number of members on this file. This
-does not include inherited members</td>
+does not include inherited members.</td>
         </tr>
 
     
@@ -34674,7 +41799,7 @@ is access_error.</td>
             
 
             <td class="description last">Available if .tag is
-result. The results of the query for this file if it was successful</td>
+result. The results of the query for this file if it was successful.</td>
         </tr>
 
     
@@ -35032,7 +42157,7 @@ to 100 if no limit is specified.</td>
 
             
 
-            <td class="description last">Cursor in ListFilesResult.cursor</td>
+            <td class="description last">Cursor in ListFilesResult.cursor.</td>
         </tr>
 
     
@@ -37687,7 +44812,7 @@ take on the member.</td>
             
 
             <td class="description last">The reason why the user
-is denied the permission. Not present if the action is allowed</td>
+is denied the permission. Not present if the action is allowed.</td>
         </tr>
 
     
@@ -39622,6 +46747,24 @@ paths).
 |
 
 <span class="param-type">'folder_is_limited_team_folder'</span>
+|
+
+<span class="param-type">'owner_not_on_team'</span>
+|
+
+<span class="param-type">'permission_denied'</span>
+|
+
+<span class="param-type">'restricted_by_team'</span>
+|
+
+<span class="param-type">'user_account_type'</span>
+|
+
+<span class="param-type">'user_not_on_team'</span>
+|
+
+<span class="param-type">'folder_is_inside_shared_folder'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -41810,6 +48953,558 @@ be set by the shared link's owner.
             
                 
 <hr>
+<dt class="name" id="SharingSharedContentLinkMetadata">
+    <h4 id="SharingSharedContentLinkMetadata">SharingSharedContentLinkMetadata</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Metadata of a shared link for a file or folder.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>audience_options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#SharingLinkAudience">SharingLinkAudience</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The audience
+options that are available for the content. Some audience options may be
+unavailable. For example, team_only may be unavailable if the content is not
+owned by a user on a team. The 'default' audience option is always available
+if the user can modify link settings.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>current_audience</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingLinkAudience">SharingLinkAudience</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The current audience of
+the link.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>link_permissions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#SharingLinkPermission">SharingLinkPermission</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A list of
+permissions for actions you can perform on the link.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password_protected</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether the link is protected by a
+password.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The URL of the link.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>expiry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether the link has an expiry set on it. A
+link with an expiry will have its  audience changed to members when the
+expiry is reached.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="SharingSharedContentLinkMetadataBase">
+    <h4 id="SharingSharedContentLinkMetadataBase">SharingSharedContentLinkMetadataBase</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>audience_options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#SharingLinkAudience">SharingLinkAudience</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The audience
+options that are available for the content. Some audience options may be
+unavailable. For example, team_only may be unavailable if the content is not
+owned by a user on a team. The 'default' audience option is always available
+if the user can modify link settings.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>current_audience</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingLinkAudience">SharingLinkAudience</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The current audience of
+the link.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>link_permissions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#SharingLinkPermission">SharingLinkPermission</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A list of
+permissions for actions you can perform on the link.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password_protected</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether the link is protected by a
+password.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>expiry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether the link has an expiry set on it. A
+link with an expiry will have its  audience changed to members when the
+expiry is reached.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="SharingSharedFileMembers">
     <h4 id="SharingSharedFileMembers">SharingSharedFileMembers</h4>
 
@@ -42213,6 +49908,39 @@ shared file.</td>
             
 
             <td class="description last">The ID of the file.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>link_metadata</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingSharedContentLinkMetadata">SharingSharedContentLinkMetadata</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The metadata
+of the link associated for the file.</td>
         </tr>
 
     
@@ -43093,6 +50821,37 @@ for this shared folder.</td>
 
         <tr>
             
+                <td class="name"><code>is_inside_team_folder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether this folder is inside of
+a team folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>is_team_folder</code></td>
             
 
@@ -43118,6 +50877,36 @@ for this shared folder.</td>
 
             <td class="description last">Whether this folder is a team folder
 https://www.dropbox.com/en/help/986.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The name of the this shared folder.</td>
         </tr>
 
     
@@ -43155,7 +50944,7 @@ folder.</td>
 
         <tr>
             
-                <td class="name"><code>name</code></td>
+                <td class="name"><code>preview_url</code></td>
             
 
             <td class="type">
@@ -43178,7 +50967,8 @@ folder.</td>
 
             
 
-            <td class="description last">The name of the this shared folder.</td>
+            <td class="description last">URL for displaying a web preview of the
+shared folder.</td>
         </tr>
 
     
@@ -43240,37 +51030,6 @@ folder.</td>
 
             <td class="description last">Timestamp indicating when the current
 user was invited to this shared folder.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>preview_url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">URL for displaying a web preview of the
-shared folder.</td>
         </tr>
 
     
@@ -43371,6 +51130,40 @@ shared folder.</td>
 
             <td class="description last">The lower-cased full path of this shared
 folder. Absent for unmounted folders.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>link_metadata</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingSharedContentLinkMetadata">SharingSharedContentLinkMetadata</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The metadata
+of the shared content link to this shared folder. Absent if there is no link
+on the folder.</td>
         </tr>
 
     
@@ -43544,6 +51337,37 @@ for this shared folder.</td>
 
         <tr>
             
+                <td class="name"><code>is_inside_team_folder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether this folder is inside of
+a team folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>is_team_folder</code></td>
             
 
@@ -43569,37 +51393,6 @@ for this shared folder.</td>
 
             <td class="description last">Whether this folder is a team folder
 https://www.dropbox.com/en/help/986.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>policy</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#SharingFolderPolicy">SharingFolderPolicy</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Policies governing this shared
-folder.</td>
         </tr>
 
     
@@ -43667,6 +51460,39 @@ field is not present if the folder is not owned by a team.</td>
             <td class="description last">The ID of the parent shared
 folder. This field is present only if the folder is contained within another
 shared folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>path_lower</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The lower-cased full path of this shared
+folder. Absent for unmounted folders.</td>
         </tr>
 
     
@@ -44385,7 +52211,7 @@ team.</td>
 <dd>
     
     <div class="description">
-        Policy governing who can view shared links.
+        Who can view shared links in this folder.
     </div>
     
 
@@ -44439,6 +52265,9 @@ team.</td>
             
                 
 <span class="param-type">'anyone'</span>
+|
+
+<span class="param-type">'team'</span>
 |
 
 <span class="param-type">'members'</span>
@@ -44867,6 +52696,8 @@ default the link won't expire.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -44893,6 +52724,12 @@ default the link won't expire.</td>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
@@ -44917,6 +52754,14 @@ exist, then a new one is created.</td>
             
             </td>
 
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
             
 
             
@@ -44943,11 +52788,19 @@ shared folder. Only applicable if the current user is on a team.</td>
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">Who can add and remove
-members of this shared folder.</td>
+            <td class="description last">Who can add and
+remove members of this shared folder.</td>
         </tr>
 
     
@@ -44968,12 +52821,21 @@ members of this shared folder.</td>
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">The policy to apply
-to shared links created for content inside this shared folder.  The current
-user must be on a team to set this policy to SharedLinkPolicy.members.</td>
+            <td class="description last">The policy to
+apply to shared links created for content inside this shared folder.  The
+current user must be on a team to set this policy to
+SharedLinkPolicy.members.</td>
         </tr>
 
     
@@ -44994,11 +52856,118 @@ user must be on a team to set this policy to SharedLinkPolicy.members.</td>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last">Whether to force the share to happen
 asynchronously.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>actions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#SharingFolderAction">SharingFolderAction</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">This is a list indicating
+whether each returned folder data entry will include a boolean field
+FolderPermission.allow that describes whether the current user can perform
+the `FolderAction` on the folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>link_settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingLinkSettings">SharingLinkSettings</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Settings on the link for
+this folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewer_info_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingViewerInfoPolicy">SharingViewerInfoPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Who can
+enable/disable viewer info for this shared folder.</td>
         </tr>
 
     
@@ -47760,6 +55729,180 @@ is access_error.</td>
             
                 
 <hr>
+<dt class="name" id="SharingUpdateFileMemberArgs">
+    <h4 id="SharingUpdateFileMemberArgs">SharingUpdateFileMemberArgs</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Arguments for update_file_member.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">File for which we are changing a member's access.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>member</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingMemberSelector">SharingMemberSelector</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The member whose access we are
+changing.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>access_level</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingAccessLevel">SharingAccessLevel</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The new access level for the
+member.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="SharingUpdateFolderMemberArg">
     <h4 id="SharingUpdateFolderMemberArg">SharingUpdateFolderMemberArg</h4>
 
@@ -48182,7 +56325,7 @@ member.</td>
 <dd>
     
     <div class="description">
-        If any of the policy's are unset, then they retain their current setting.
+        If any of the policies are unset, then they retain their current setting.
     </div>
     
 
@@ -48327,6 +56470,39 @@ remove members of this shared folder.</td>
 
         <tr>
             
+                <td class="name"><code>viewer_info_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingViewerInfoPolicy">SharingViewerInfoPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Who can
+enable/disable viewer info for this shared folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>shared_link_policy</code></td>
             
 
@@ -48356,6 +56532,39 @@ remove members of this shared folder.</td>
 apply to shared links created for content inside this shared folder. The
 current user must be on a team to set this policy to
 SharedLinkPolicy.members.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>link_settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingLinkSettings">SharingLinkSettings</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Settings on the link for
+this folder.</td>
         </tr>
 
     
@@ -48989,6 +57198,132 @@ to the MemberActions in the request.</td>
 
             <td class="description last">True if the member has access from a
 parent folder.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="SharingViewerInfoPolicy">
+    <h4 id="SharingViewerInfoPolicy">SharingViewerInfoPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -50379,6 +58714,210 @@ dedicated folder</td>
             
                 
 <hr>
+<dt class="name" id="TeamBaseTeamFolderError">
+    <h4 id="TeamBaseTeamFolderError">TeamBaseTeamFolderError</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Base error that all errors for existing team folders should extend.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>access_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamTeamFolderAccessError">TeamTeamFolderAccessError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+access_error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>status_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamTeamFolderInvalidStatusError">TeamTeamFolderInvalidStatusError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is status_error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'access_error'</span>
+|
+
+<span class="param-type">'status_error'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamCommonGroupManagementType">
     <h4 id="TeamCommonGroupManagementType">TeamCommonGroupManagementType</h4>
 
@@ -50440,10 +58979,13 @@ dedicated folder</td>
             <td class="type">
             
                 
+<span class="param-type">'user_managed'</span>
+|
+
 <span class="param-type">'company_managed'</span>
 |
 
-<span class="param-type">'user_managed'</span>
+<span class="param-type">'system_managed'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -50846,6 +59388,172 @@ arbitrary ID that an admin can attach to a group.</td>
             
 
             <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamCommonTimeRange">
+    <h4 id="TeamCommonTimeRange">TeamCommonTimeRange</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Time range.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>start_time</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Optional starting time (inclusive).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>end_time</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Optional ending time (exclusive).</td>
         </tr>
 
     
@@ -53870,7 +62578,7 @@ an arbitrary external ID to the group.</td>
             
 
             <td class="description last">Whether
-the team can be managed by selected users, or only by team admins</td>
+the team can be managed by selected users, or only by team admins.</td>
         </tr>
 
     
@@ -53986,6 +62694,9 @@ the team can be managed by selected users, or only by team admins</td>
 |
 
 <span class="param-type">'external_id_already_in_use'</span>
+|
+
+<span class="param-type">'system_managed_group_disallowed'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -54112,6 +62823,9 @@ the team can be managed by selected users, or only by team admins</td>
 |
 
 <span class="param-type">'other'</span>
+|
+
+<span class="param-type">'system_managed_group_disallowed'</span>
 |
 
 <span class="param-type">'group_already_deleted'</span>
@@ -54985,6 +63699,9 @@ company-managed group cannot be managed by a user.</td>
 <span class="param-type">'other'</span>
 |
 
+<span class="param-type">'system_managed_group_disallowed'</span>
+|
+
 <span class="param-type">'duplicate_user'</span>
 |
 
@@ -55436,6 +64153,9 @@ required to be a member of the specified group.
 <span class="param-type">'other'</span>
 |
 
+<span class="param-type">'system_managed_group_disallowed'</span>
+|
+
 <span class="param-type">'member_not_in_group'</span>
 
 
@@ -55560,6 +64280,9 @@ required to be a member of the specified group.
 |
 
 <span class="param-type">'other'</span>
+|
+
+<span class="param-type">'system_managed_group_disallowed'</span>
 |
 
 <span class="param-type">'member_not_in_group'</span>
@@ -55838,6 +64561,8 @@ be returned in the response. This may take a long time for large groups.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -55846,6 +64571,72 @@ be returned in the response. This may take a long time for large groups.</td>
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>members_not_in_team</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+members_not_in_team. These members are not part of your team.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>users_not_found</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+users_not_found. These users were not found in Dropbox.</td>
+        </tr>
+
     
 
         <tr>
@@ -55862,16 +64653,31 @@ be returned in the response. This may take a long time for large groups.</td>
 <span class="param-type">'other'</span>
 |
 
+<span class="param-type">'system_managed_group_disallowed'</span>
+|
+
 <span class="param-type">'member_not_in_group'</span>
 |
 
 <span class="param-type">'group_not_in_team'</span>
+|
+
+<span class="param-type">'members_not_in_team'</span>
+|
+
+<span class="param-type">'users_not_found'</span>
 
 
 
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -56143,6 +64949,9 @@ required to be members of the specified group.
 |
 
 <span class="param-type">'other'</span>
+|
+
+<span class="param-type">'system_managed_group_disallowed'</span>
 |
 
 <span class="param-type">'member_not_in_group'</span>
@@ -56670,6 +65479,137 @@ group_external_id. External ID of the group.</td>
 |
 
 <span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamGroupSelectorWithTeamGroupError">
+    <h4 id="TeamGroupSelectorWithTeamGroupError">TeamGroupSelectorWithTeamGroupError</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Error that can be raised when GroupSelector is used and team groups are
+disallowed from being used.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'group_not_found'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
+<span class="param-type">'system_managed_group_disallowed'</span>
 
 
 
@@ -58802,6 +67742,9 @@ new group management type, if provided.</td>
 |
 
 <span class="param-type">'other'</span>
+|
+
+<span class="param-type">'system_managed_group_disallowed'</span>
 |
 
 <span class="param-type">'group_name_already_used'</span>
@@ -62212,6 +71155,39 @@ to receive the next sub list of team's devices.</td>
 
         <tr>
             
+                <td class="name"><code>member_persistent_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Persistent ID for member. This
+field is only available to teams using persistent ID SAML configuration.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>send_welcome_email</code></td>
             
 
@@ -62651,6 +71627,75 @@ already exists on the team (including in recoverable state).</td>
 
         <tr>
             
+                <td class="name"><code>duplicate_member_persistent_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+duplicate_member_persistent_id. A user with the given persistent ID already
+exists on the team (including in recoverable state).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>persistent_id_disabled</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+persistent_id_disabled. Persistent ID is only available to teams with
+persistent ID SAML configuration. Please contact Dropbox for more
+information.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>user_creation_failed</code></td>
             
 
@@ -62712,6 +71757,12 @@ user_creation_failed. User creation has failed.</td>
 |
 
 <span class="param-type">'duplicate_external_member_id'</span>
+|
+
+<span class="param-type">'duplicate_member_persistent_id'</span>
+|
+
+<span class="param-type">'persistent_id_disabled'</span>
 |
 
 <span class="param-type">'user_creation_failed'</span>
@@ -63464,6 +72515,72 @@ instead of Dropbox IDs like account_id or team_member_id.</td>
             
 
             <td class="description last">A user's account identifier.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>joined_on</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The date and time the user joined as a
+member of a specific team.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>persistent_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Persistent ID that a team can attach to
+the user. The persistent ID is unique ID to be used for SAML authentication.</td>
         </tr>
 
     
@@ -67033,6 +76150,39 @@ set.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>new_persistent_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">New persistent ID. This field only
+available to teams using persistent ID SAML configuration.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -67160,6 +76310,12 @@ set.</td>
 |
 
 <span class="param-type">'param_cannot_be_empty'</span>
+|
+
+<span class="param-type">'persistent_id_disabled'</span>
+|
+
+<span class="param-type">'persistent_id_used_by_other_user'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -68569,7 +77725,8 @@ session</td>
 <dd>
     
     <div class="description">
-        Policy governing the visibility of newly created shared links.
+        Policy governing the visibility of shared links. This policy can apply to
+newly created shared links, or all shared links.
     </div>
     
 
@@ -68968,7 +78125,7 @@ new fields and additional documentation.</td>
 
             
 
-            <td class="description last">What is the visibility of newly created shared links.</td>
+            <td class="description last">Who can view shared links owned by team members.</td>
         </tr>
 
     
@@ -72421,6 +81578,9 @@ complete.</td>
 <span class="param-type">'folder_name_already_used'</span>
 |
 
+<span class="param-type">'folder_name_reserved'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -72983,6 +82143,9 @@ is team_folder_metadata. Properties of a team folder.</td>
 |
 
 <span class="param-type">'archived'</span>
+|
+
+<span class="param-type">'archive_in_progress'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -74016,6 +83179,39 @@ access_error.</td>
 
         <tr>
             
+                <td class="name"><code>status_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamTeamFolderInvalidStatusError">TeamTeamFolderInvalidStatusError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is status_error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>.tag</code></td>
             
 
@@ -74025,13 +83221,19 @@ access_error.</td>
 <span class="param-type">'access_error'</span>
 |
 
+<span class="param-type">'status_error'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
 <span class="param-type">'invalid_folder_name'</span>
 |
 
 <span class="param-type">'folder_name_already_used'</span>
 |
 
-<span class="param-type">'other'</span>
+<span class="param-type">'folder_name_reserved'</span>
 
 
 
@@ -74161,6 +83363,9 @@ access_error.</td>
 |
 
 <span class="param-type">'archived'</span>
+|
+
+<span class="param-type">'archive_in_progress'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -74925,6 +84130,72 @@ instead of Dropbox IDs like account_id or team_member_id.</td>
             
 
             <td class="description last">A user's account identifier.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>joined_on</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The date and time the user joined as a
+member of a specific team.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>persistent_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Persistent ID that a team can attach to
+the user. The persistent ID is unique ID to be used for SAML authentication.</td>
         </tr>
 
     
@@ -79462,7 +88733,7 @@ user shares space with other members of their team.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-01-31T14:48:46-08:00
+		on 2017-02-27T14:29:47-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

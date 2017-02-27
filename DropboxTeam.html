@@ -1241,749 +1241,6 @@ prevent cross site scripting attacks.</td>
             
 <hr>
 <dt>
-    <h4 class="name" id="teamAlphaGroupsCreate"><span class="type-signature"></span>teamAlphaGroupsCreate(arg)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Creates a new, empty group, with a requested name. Permission : Team member
-management
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamGroupCreateArg">TeamGroupCreateArg</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;<a href="global.html#TeamGroupFullInfo">TeamGroupFullInfo</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamGroupCreateError">TeamGroupCreateError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamAlphaGroupsGetInfo"><span class="type-signature"></span>teamAlphaGroupsGetInfo(arg)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Retrieves information about one or more groups. Permission : Team Information
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamGroupsSelector">TeamGroupsSelector</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;Object, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamGroupsGetInfoError">TeamGroupsGetInfoError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamAlphaGroupsList"><span class="type-signature"></span>teamAlphaGroupsList(arg)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Lists groups on a team. Permission : Team Information
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamGroupsListArg">TeamGroupsListArg</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;<a href="global.html#TeamGroupsListResult">TeamGroupsListResult</a>, <a href="global.html#Error">Error</a>.&lt;void>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamAlphaGroupsListContinue"><span class="type-signature"></span>teamAlphaGroupsListContinue(arg)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Once a cursor has been retrieved from alpha/groups/list, use this to paginate
-through all groups. Permission : Team information
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamGroupsListContinueArg">TeamGroupsListContinueArg</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;<a href="global.html#TeamGroupsListResult">TeamGroupsListResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamGroupsListContinueError">TeamGroupsListContinueError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamAlphaGroupsUpdate"><span class="type-signature"></span>teamAlphaGroupsUpdate(arg)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Updates a group's name, external ID or management type. Permission : Team
-member management
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamGroupUpdateArgs">TeamGroupUpdateArgs</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;<a href="global.html#TeamGroupFullInfo">TeamGroupFullInfo</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamGroupUpdateError">TeamGroupUpdateError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
     <h4 class="name" id="teamDevicesListMemberDevices"><span class="type-signature"></span>teamDevicesListMemberDevices(arg)</h4>
     
     
@@ -2890,7 +2147,7 @@ member management
     
     <div class="description">
         Creates a new, empty group, with a requested name. Permission : Team member
-management
+management.
     </div>
     
 
@@ -3041,7 +2298,7 @@ management
         Deletes a group. The group is deleted immediately. However the revoking of
 group-owned resources may take additional time. Use the groups/job_status/get
 to determine whether this process has completed. Permission : Team member
-management
+management.
     </div>
     
 
@@ -3189,7 +2446,9 @@ management
 
     
     <div class="description">
-        Retrieves information about one or more groups. Permission : Team Information
+        Retrieves information about one or more groups. Note that the optional field
+GroupFullInfo.members is not returned for system-managed groups. Permission :
+Team Information.
     </div>
     
 
@@ -3340,7 +2599,7 @@ management
         Once an async_job_id is returned from groups/delete, groups/members/add , or
 groups/members/remove use this method to poll the status of granting/revoking
 group members' access to group-owned resources. Permission : Team member
-management
+management.
     </div>
     
 
@@ -3488,7 +2747,7 @@ management
 
     
     <div class="description">
-        Lists groups on a team. Permission : Team Information
+        Lists groups on a team. Permission : Team Information.
     </div>
     
 
@@ -3637,7 +2896,7 @@ management
     
     <div class="description">
         Once a cursor has been retrieved from groups/list, use this to paginate
-through all groups. Permission : Team information
+through all groups. Permission : Team Information.
     </div>
     
 
@@ -3788,7 +3047,7 @@ through all groups. Permission : Team information
         Adds members to a group. The members are added immediately. However the
 granting of group-owned resources may take additional time. Use the
 groups/job_status/get to determine whether this process has completed.
-Permission : Team member management
+Permission : Team member management.
     </div>
     
 
@@ -3936,7 +3195,7 @@ Permission : Team member management
 
     
     <div class="description">
-        Lists members of a group. Permission : Team Information
+        Lists members of a group. Permission : Team Information.
     </div>
     
 
@@ -4085,7 +3344,7 @@ Permission : Team member management
     
     <div class="description">
         Once a cursor has been retrieved from groups/members/list, use this to
-paginate through all members of the group. Permission : Team information
+paginate through all members of the group. Permission : Team information.
     </div>
     
 
@@ -4237,7 +3496,7 @@ paginate through all members of the group. Permission : Team information
 the revoking of group-owned resources may take additional time. Use the
 groups/job_status/get to determine whether this process has completed. This
 method permits removing the only owner of a group, even in cases where this
-is not possible via the web client. Permission : Team member management
+is not possible via the web client. Permission : Team member management.
     </div>
     
 
@@ -4385,7 +3644,7 @@ is not possible via the web client. Permission : Team member management
 
     
     <div class="description">
-        Sets a member's access type in a group. Permission : Team member management
+        Sets a member's access type in a group. Permission : Team member management.
     </div>
     
 
@@ -4534,7 +3793,7 @@ is not possible via the web client. Permission : Team member management
     
     <div class="description">
         Updates a group's name and/or external ID. Permission : Team member
-management
+management.
     </div>
     
 
@@ -6340,12 +5599,13 @@ account.
     <div class="description">
         Removes a member from a team. Permission : Team member management Exactly one
 of team_member_id, email, or external_id must be provided to identify the
-user account. This is not a deactivation where the account can be
-re-activated again. Calling members/add with the removed user's email address
-will create a new account with a new team_member_id that will not have access
-to any content that was shared with the initial account. This endpoint may
-initiate an asynchronous job. To obtain the final result of the job, the
-client should periodically poll members/remove/job_status/get.
+user account. Accounts can be recovered via members/recover for a 7 day
+period or until the account has been permanently deleted or transferred to
+another account (whichever comes first). Calling members/add while a user is
+still recoverable on your team will return with
+MemberAddResult.user_already_on_team. This endpoint may initiate an
+asynchronous job. To obtain the final result of the job, the client should
+periodically poll members/remove/job_status/get.
     </div>
     
 
@@ -8575,9 +7835,8 @@ template description and add optional properties to templates.
 
     
     <div class="description">
-        Sets an archived team folder's status to active. This endpoint is only
-available to teams with improved team folders /help/986. Permission : Team
-member file access.
+        Sets an archived team folder's status to active. Permission : Team member
+file access.
     </div>
     
 
@@ -8726,8 +7985,7 @@ member file access.
     
     <div class="description">
         Sets an active team folder's status to archived and removes all folder and
-file members. This endpoint is only available to teams with improved team
-folders /help/986. Permission : Team member file access.
+file members. Permission : Team member file access.
     </div>
     
 
@@ -8875,8 +8133,7 @@ folders /help/986. Permission : Team member file access.
 
     
     <div class="description">
-        Returns the status of an asynchronous job for archiving a team folder. This
-endpoint is only available to teams with improved team folders /help/986.
+        Returns the status of an asynchronous job for archiving a team folder.
 Permission : Team member file access.
     </div>
     
@@ -9025,8 +8282,7 @@ Permission : Team member file access.
 
     
     <div class="description">
-        Creates a new, active, team folder. This endpoint is only available to teams
-with improved team folders /help/986. Permission : Team member file access.
+        Creates a new, active, team folder. Permission : Team member file access.
     </div>
     
 
@@ -9174,8 +8430,7 @@ with improved team folders /help/986. Permission : Team member file access.
 
     
     <div class="description">
-        Retrieves metadata for team folders. This endpoint is only available to teams
-with improved team folders /help/986. Permission : Team member file access.
+        Retrieves metadata for team folders. Permission : Team member file access.
     </div>
     
 
@@ -9323,8 +8578,7 @@ with improved team folders /help/986. Permission : Team member file access.
 
     
     <div class="description">
-        Lists all team folders. This endpoint is only available to teams with
-improved team folders /help/986. Permission : Team member file access.
+        Lists all team folders. Permission : Team member file access.
     </div>
     
 
@@ -9472,8 +8726,7 @@ improved team folders /help/986. Permission : Team member file access.
 
     
     <div class="description">
-        Permanently deletes an archived team folder. This endpoint is only available
-to teams with improved team folders /help/986. Permission : Team member file
+        Permanently deletes an archived team folder. Permission : Team member file
 access.
     </div>
     
@@ -9622,9 +8875,7 @@ access.
 
     
     <div class="description">
-        Changes an active team folder's name. This endpoint is only available to
-teams with improved team folders /help/986. Permission : Team member file
-access.
+        Changes an active team folder's name. Permission : Team member file access.
     </div>
     
 
@@ -9810,7 +9061,7 @@ access.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-01-31T14:48:47-08:00
+		on 2017-02-27T14:29:47-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

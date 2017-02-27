@@ -7424,6 +7424,2105 @@ prevent cross site scripting attacks.</td>
             
 <hr>
 <dt>
+    <h4 class="name" id="paperDocsArchive"><span class="type-signature"></span>paperDocsArchive(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Marks the given Paper doc as deleted. This operation is non-destructive and
+the doc can be revived by the owner.  Note: This action can be performed only
+by the doc owner.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperRefPaperDoc">PaperRefPaperDoc</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsDownload"><span class="type-signature"></span>paperDocsDownload(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Exports and downloads Paper doc either as HTML or markdown.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperDocExport">PaperPaperDocExport</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperPaperDocExportResult">PaperPaperDocExportResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsFolderUsersList"><span class="type-signature"></span>paperDocsFolderUsersList(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Lists the users who are explicitly invited to the Paper folder in which the
+Paper doc is contained. For private folders all users (including owner)
+shared on the folder are listed and for team folders all non-team users
+shared on the folder are returned.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListUsersOnFolderArgs">PaperListUsersOnFolderArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperListUsersOnFolderResponse">PaperListUsersOnFolderResponse</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsFolderUsersListContinue"><span class="type-signature"></span>paperDocsFolderUsersListContinue(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Once a cursor has been retrieved from docs/folder_users/list, use this to
+paginate through all users on the Paper folder.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListUsersOnFolderContinueArgs">PaperListUsersOnFolderContinueArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperListUsersOnFolderResponse">PaperListUsersOnFolderResponse</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperListUsersCursorError">PaperListUsersCursorError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsGetFolderInfo"><span class="type-signature"></span>paperDocsGetFolderInfo(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Retrieves folder information for the given Paper doc. This includes:   -
+folder sharing policy; permissions for subfolders are set by the top-level
+folder.   - full 'filepath', i.e. the list of folders (both folderId and
+folderName) from the root folder to the folder directly containing the Paper
+doc.  Note: If the Paper doc is not in any folder (aka unfiled) the response
+will be empty.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperRefPaperDoc">PaperRefPaperDoc</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperFoldersContainingPaperDoc">PaperFoldersContainingPaperDoc</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsList"><span class="type-signature"></span>paperDocsList(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Return the list of all Paper docs according to the argument specifications.
+To iterate over through the full pagination, pass the cursor to
+docs/list/continue.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListPaperDocsArgs">PaperListPaperDocsArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperListPaperDocsResponse">PaperListPaperDocsResponse</a>, <a href="global.html#Error">Error</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsListContinue"><span class="type-signature"></span>paperDocsListContinue(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Once a cursor has been retrieved from docs/list, use this to paginate through
+all Paper doc.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListPaperDocsContinueArgs">PaperListPaperDocsContinueArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperListPaperDocsResponse">PaperListPaperDocsResponse</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperListDocsCursorError">PaperListDocsCursorError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsPermanentlyDelete"><span class="type-signature"></span>paperDocsPermanentlyDelete(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Permanently deletes the given Paper doc. This operation is final as the doc
+cannot be recovered.  Note: This action can be performed only by the doc
+owner.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperRefPaperDoc">PaperRefPaperDoc</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsSharingPolicyGet"><span class="type-signature"></span>paperDocsSharingPolicyGet(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Gets the default sharing policy for the given Paper doc.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperRefPaperDoc">PaperRefPaperDoc</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperSharingPolicy">PaperSharingPolicy</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsSharingPolicySet"><span class="type-signature"></span>paperDocsSharingPolicySet(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sets the default sharing policy for the given Paper doc. The default
+'team_sharing_policy' can be changed only by teams, omit this field for
+personal accounts.  Note: 'public_sharing_policy' cannot be set to the value
+'disabled' because this setting can be changed only via the team admin
+console.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperDocSharingPolicy">PaperPaperDocSharingPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsUsersAdd"><span class="type-signature"></span>paperDocsUsersAdd(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Allows an owner or editor to add users to a Paper doc or change their
+permissions using their email or Dropbox account id.  Note: The Doc owner's
+permissions cannot be changed.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperAddPaperDocUser">PaperAddPaperDocUser</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Array.&lt;<a href="global.html#PaperAddPaperDocUserMemberResult">PaperAddPaperDocUserMemberResult</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsUsersList"><span class="type-signature"></span>paperDocsUsersList(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Lists all users who visited the Paper doc or users with explicit access. This
+call excludes users who have been removed. The list is sorted by the date of
+the visit or the share date. The list will include both users, the explicitly
+shared ones as well as those who came in using the Paper url link.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListUsersOnPaperDocArgs">PaperListUsersOnPaperDocArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperListUsersOnPaperDocResponse">PaperListUsersOnPaperDocResponse</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsUsersListContinue"><span class="type-signature"></span>paperDocsUsersListContinue(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Once a cursor has been retrieved from docs/users/list, use this to paginate
+through all users on the Paper doc.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperListUsersOnPaperDocContinueArgs">PaperListUsersOnPaperDocContinueArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperListUsersOnPaperDocResponse">PaperListUsersOnPaperDocResponse</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperListUsersCursorError">PaperListUsersCursorError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsUsersRemove"><span class="type-signature"></span>paperDocsUsersRemove(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Allows an owner or editor to remove users from a Paper doc using their email
+or Dropbox account id.  Note: Doc owner cannot be removed.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperRemovePaperDocUser">PaperRemovePaperDocUser</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="setAccessToken"><span class="type-signature"></span>setAccessToken(accessToken)</h4>
     
     
@@ -8045,7 +10144,7 @@ behalf. Apps must have full Dropbox access to use this endpoint.
 
     
     <div class="description">
-        Changes a member's access on a shared file.
+        Identical to update_file_member but with less information returned.
     </div>
     
 
@@ -8125,6 +10224,15 @@ behalf. Apps must have full Dropbox access to use this endpoint.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -13613,6 +15721,154 @@ must have full Dropbox access to use this endpoint.
             
 <hr>
 <dt>
+    <h4 class="name" id="sharingUpdateFileMember"><span class="type-signature"></span>sharingUpdateFileMember(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Changes a member's access on a shared file.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingUpdateFileMemberArgs">SharingUpdateFileMemberArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#SharingMemberAccessLevelResult">SharingMemberAccessLevelResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#SharingFileMemberActionError">SharingFileMemberActionError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="sharingUpdateFolderMember"><span class="type-signature"></span>sharingUpdateFolderMember(arg)</h4>
     
     
@@ -14551,7 +16807,7 @@ queried per request.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-01-31T14:48:47-08:00
+		on 2017-02-27T14:29:47-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
