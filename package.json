@@ -27,7 +27,7 @@
     "sdk",
     "client"
   ],
-  "repository": "dropbox/dropbox-sdk-js/issues",
+  "repository": "https://github.com/dropbox/dropbox-sdk-js",
   "bugs": "https://github.com/dropbox/dropbox-sdk-js/issues",
   "author": "Riley Tomasek",
   "devDependencies": {
