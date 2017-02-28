@@ -3,7 +3,7 @@ var rewrite = require('express-urlrewrite');
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
-var webpackConfig = require('../webpack-umd.config');
+var webpackConfig = require('../../webpack-umd.config');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 
 var app = express();

@@ -16,50 +16,53 @@
             JavaScript SDK Examples
           </h1>
         </a>
-        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples" class="view-source">View Source</a>
+        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript" class="view-source">View Source</a>
       </nav>
       <h2 class="code">
-        <a href="/">examples</a> / download file
+        <a href="/">examples</a> / basic
       </h2>
     </div>
   </header>
 
   <!-- Example description and UI -->
   <section class="container main">
-    <p>This example shows how to use the <code>Dropbox.sharingGetSharedLinkFile()</code> [<a href="http://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html#sharingGetSharedLinkFile">docs</a>] method to download the file for the given shared link.</p>
+    <p>This example fetches the contents of your root Dropbox directory. It uses the <code>Dropbox.filesListFolder()</code> method [<a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#filesListFolder">docs</a>].</p>
 
-    <form onSubmit="return downloadFile()">
+    <form onSubmit="return listFiles()">
       <input type="text" id="access-token" placeholder="Access token" />
-      <input type="text" id="shared-link" placeholder="Dropbox shared link to a file" />
       <button type="submit">Submit</button>
     </form>
 
-    <!-- The download button is added here -->
-    <div id="results" style="margin-top: 30px"></div>
+    <!-- The files returned from the SDK will be added here -->
+    <ul id="files"></ul>
 
     <p class="info">To obtain an access token for quick testing, you can go to <a href="https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder" target="_blank">API Explorer</a> click the "Get Token" button on the top right, copy the token it creates and then paste it here.</p>
   </section>
 
   <!-- Scripts to run example -->
   <script>
-    function downloadFile() {
+    function listFiles() {
       var ACCESS_TOKEN = document.getElementById('access-token').value;
-      var SHARED_LINK = document.getElementById('shared-link').value;
       var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
-      dbx.sharingGetSharedLinkFile({url: SHARED_LINK})
-        .then(function(data) {
-          var downloadUrl = URL.createObjectURL(data.fileBlob);
-          var downloadButton = document.createElement('a');
-          downloadButton.setAttribute('href', downloadUrl);
-          downloadButton.setAttribute('download', data.name);
-          downloadButton.setAttribute('class', 'button');
-          downloadButton.innerText = 'Download: ' + data.name;
-          document.getElementById('results').appendChild(downloadButton);
+      dbx.filesListFolder({path: ''})
+        .then(function(response) {
+          displayFiles(response.entries);
+          console.log(response);
         })
         .catch(function(error) {
           console.error(error);
         });
       return false;
+    }
+
+    function displayFiles(files) {
+      var filesList = document.getElementById('files');
+      var li;
+      for (var i = 0; i < files.length; i++) {
+        li = document.createElement('li');
+        li.appendChild(document.createTextNode(files[i].name));
+        filesList.appendChild(li);
+      }
     }
   </script>
 </body>

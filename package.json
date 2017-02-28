@@ -17,7 +17,7 @@
     "publish-docs": "rm -rf generated-docs && npm run generate-docs && gh-pages -d generated-docs",
     "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -R docs/README.md -r ./src",
     "lint": "eslint src --ignore-path src/types.js",
-    "start": "node examples/server.js",
+    "start": "node examples/javascript/server.js",
     "test": "npm run lint && mocha 'test/*.js'"
   },
   "keywords": [
