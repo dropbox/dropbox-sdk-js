@@ -512,6 +512,160 @@ declare module DropboxTypes {
     public filesUploadSessionStart(arg: files.UploadSessionStartArg): Promise<files.UploadSessionStartResult>;
 
     /**
+     * Marks the given Paper doc as deleted. This operation is non-destructive
+     * and the doc can be revived by the owner.  Note: This action can be
+     * performed only by the doc owner.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsArchive(arg: paper.RefPaperDoc): Promise<void>;
+
+    /**
+     * Exports and downloads Paper doc either as HTML or markdown.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsDownload(arg: paper.PaperDocExport): Promise<paper.PaperDocExportResult>;
+
+    /**
+     * Lists the users who are explicitly invited to the Paper folder in which
+     * the Paper doc is contained. For private folders all users (including
+     * owner) shared on the folder are listed and for team folders all non-team
+     * users shared on the folder are returned.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsFolderUsersList(arg: paper.ListUsersOnFolderArgs): Promise<paper.ListUsersOnFolderResponse>;
+
+    /**
+     * Once a cursor has been retrieved from docsFolderUsersList(), use this to
+     * paginate through all users on the Paper folder.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.ListUsersCursorError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsFolderUsersListContinue(arg: paper.ListUsersOnFolderContinueArgs): Promise<paper.ListUsersOnFolderResponse>;
+
+    /**
+     * Retrieves folder information for the given Paper doc. This includes:   -
+     * folder sharing policy; permissions for subfolders are set by the
+     * top-level folder.   - full 'filepath', i.e. the list of folders (both
+     * folderId and folderName) from the root folder to the folder directly
+     * containing the Paper doc.  Note: If the Paper doc is not in any folder
+     * (aka unfiled) the response will be empty.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsGetFolderInfo(arg: paper.RefPaperDoc): Promise<paper.FoldersContainingPaperDoc>;
+
+    /**
+     * Return the list of all Paper docs according to the argument
+     * specifications. To iterate over through the full pagination, pass the
+     * cursor to docsListContinue().
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public paperDocsList(arg: paper.ListPaperDocsArgs): Promise<paper.ListPaperDocsResponse>;
+
+    /**
+     * Once a cursor has been retrieved from docsList(), use this to paginate
+     * through all Paper doc.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.ListDocsCursorError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsListContinue(arg: paper.ListPaperDocsContinueArgs): Promise<paper.ListPaperDocsResponse>;
+
+    /**
+     * Permanently deletes the given Paper doc. This operation is final as the
+     * doc cannot be recovered.  Note: This action can be performed only by the
+     * doc owner.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsPermanentlyDelete(arg: paper.RefPaperDoc): Promise<void>;
+
+    /**
+     * Gets the default sharing policy for the given Paper doc.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsSharingPolicyGet(arg: paper.RefPaperDoc): Promise<paper.SharingPolicy>;
+
+    /**
+     * Sets the default sharing policy for the given Paper doc. The default
+     * 'team_sharing_policy' can be changed only by teams, omit this field for
+     * personal accounts.  Note: 'public_sharing_policy' cannot be set to the
+     * value 'disabled' because this setting can be changed only via the team
+     * admin console.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsSharingPolicySet(arg: paper.PaperDocSharingPolicy): Promise<void>;
+
+    /**
+     * Allows an owner or editor to add users to a Paper doc or change their
+     * permissions using their email or Dropbox account id.  Note: The Doc
+     * owner's permissions cannot be changed.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsUsersAdd(arg: paper.AddPaperDocUser): Promise<Array<paper.AddPaperDocUserMemberResult>>;
+
+    /**
+     * Lists all users who visited the Paper doc or users with explicit access.
+     * This call excludes users who have been removed. The list is sorted by the
+     * date of the visit or the share date. The list will include both users,
+     * the explicitly shared ones as well as those who came in using the Paper
+     * url link.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsUsersList(arg: paper.ListUsersOnPaperDocArgs): Promise<paper.ListUsersOnPaperDocResponse>;
+
+    /**
+     * Once a cursor has been retrieved from docsUsersList(), use this to
+     * paginate through all users on the Paper doc.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.ListUsersCursorError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsUsersListContinue(arg: paper.ListUsersOnPaperDocContinueArgs): Promise<paper.ListUsersOnPaperDocResponse>;
+
+    /**
+     * Allows an owner or editor to remove users from a Paper doc using their
+     * email or Dropbox account id.  Note: Doc owner cannot be removed.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.DocLookupError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsUsersRemove(arg: paper.RemovePaperDocUser): Promise<void>;
+
+    /**
      * Adds specified members to a file.
      * 
      * When an error occurs, the route rejects the promise with type
@@ -533,10 +687,11 @@ declare module DropboxTypes {
     public sharingAddFolderMember(arg: sharing.AddFolderMemberArg): Promise<void>;
 
     /**
-     * Changes a member's access on a shared file.
+     * Identical to update_file_member but with less information returned.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.FileMemberActionError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public sharingChangeFileMemberAccess(arg: sharing.ChangeFileMemberAccessArgs): Promise<sharing.FileMemberActionResult>;
@@ -946,6 +1101,15 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public sharingUnshareFolder(arg: sharing.UnshareFolderArg): Promise<async.LaunchEmptyResult>;
+
+    /**
+     * Changes a member's access on a shared file.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<sharing.FileMemberActionError>.
+     * @param arg The request parameters.
+     */
+    public sharingUpdateFileMember(arg: sharing.UpdateFileMemberArgs): Promise<sharing.MemberAccessLevelResult>;
 
     /**
      * Allows an owner or editor of a shared folder to update another member's

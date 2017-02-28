@@ -17,55 +17,6 @@ declare module DropboxTypes {
 
 
     /**
-     * Creates a new, empty group, with a requested name. Permission : Team
-     * member management
-     * 
-     * When an error occurs, the route rejects the promise with type
-     * Error<team.GroupCreateError>.
-     * @param arg The request parameters.
-     */
-    public teamAlphaGroupsCreate(arg: team.GroupCreateArg): Promise<team.GroupFullInfo>;
-
-    /**
-     * Retrieves information about one or more groups. Permission : Team
-     * Information
-     * 
-     * When an error occurs, the route rejects the promise with type
-     * Error<team.GroupsGetInfoError>.
-     * @param arg The request parameters.
-     */
-    public teamAlphaGroupsGetInfo(arg: team.GroupsSelector): Promise<team.GroupsGetInfoResult>;
-
-    /**
-     * Lists groups on a team. Permission : Team Information
-     * 
-     * When an error occurs, the route rejects the promise with type
-     * Error<void>.
-     * @param arg The request parameters.
-     */
-    public teamAlphaGroupsList(arg: team.GroupsListArg): Promise<team.GroupsListResult>;
-
-    /**
-     * Once a cursor has been retrieved from alphaGroupsList(), use this to
-     * paginate through all groups. Permission : Team information
-     * 
-     * When an error occurs, the route rejects the promise with type
-     * Error<team.GroupsListContinueError>.
-     * @param arg The request parameters.
-     */
-    public teamAlphaGroupsListContinue(arg: team.GroupsListContinueArg): Promise<team.GroupsListResult>;
-
-    /**
-     * Updates a group's name, external ID or management type. Permission : Team
-     * member management
-     * 
-     * When an error occurs, the route rejects the promise with type
-     * Error<team.GroupUpdateError>.
-     * @param arg The request parameters.
-     */
-    public teamAlphaGroupsUpdate(arg: team.GroupUpdateArgs): Promise<team.GroupFullInfo>;
-
-    /**
      * List all device sessions of a team's member.
      * 
      * When an error occurs, the route rejects the promise with type
@@ -122,7 +73,7 @@ declare module DropboxTypes {
 
     /**
      * Creates a new, empty group, with a requested name. Permission : Team
-     * member management
+     * member management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupCreateError>.
@@ -134,7 +85,7 @@ declare module DropboxTypes {
      * Deletes a group. The group is deleted immediately. However the revoking
      * of group-owned resources may take additional time. Use the
      * groupsJobStatusGet() to determine whether this process has completed.
-     * Permission : Team member management
+     * Permission : Team member management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupDeleteError>.
@@ -143,8 +94,9 @@ declare module DropboxTypes {
     public teamGroupsDelete(arg: team.GroupSelector): Promise<async.LaunchEmptyResult>;
 
     /**
-     * Retrieves information about one or more groups. Permission : Team
-     * Information
+     * Retrieves information about one or more groups. Note that the optional
+     * field  GroupFullInfo.members is not returned for system-managed groups.
+     * Permission : Team Information.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupsGetInfoError>.
@@ -156,7 +108,7 @@ declare module DropboxTypes {
      * Once an async_job_id is returned from groupsDelete(), groupsMembersAdd()
      * , or groupsMembersRemove() use this method to poll the status of
      * granting/revoking group members' access to group-owned resources.
-     * Permission : Team member management
+     * Permission : Team member management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupsPollError>.
@@ -165,7 +117,7 @@ declare module DropboxTypes {
     public teamGroupsJobStatusGet(arg: async.PollArg): Promise<async.PollEmptyResult>;
 
     /**
-     * Lists groups on a team. Permission : Team Information
+     * Lists groups on a team. Permission : Team Information.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
@@ -175,7 +127,7 @@ declare module DropboxTypes {
 
     /**
      * Once a cursor has been retrieved from groupsList(), use this to paginate
-     * through all groups. Permission : Team information
+     * through all groups. Permission : Team Information.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupsListContinueError>.
@@ -187,7 +139,7 @@ declare module DropboxTypes {
      * Adds members to a group. The members are added immediately. However the
      * granting of group-owned resources may take additional time. Use the
      * groupsJobStatusGet() to determine whether this process has completed.
-     * Permission : Team member management
+     * Permission : Team member management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupMembersAddError>.
@@ -196,7 +148,7 @@ declare module DropboxTypes {
     public teamGroupsMembersAdd(arg: team.GroupMembersAddArg): Promise<team.GroupMembersChangeResult>;
 
     /**
-     * Lists members of a group. Permission : Team Information
+     * Lists members of a group. Permission : Team Information.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupSelectorError>.
@@ -206,7 +158,7 @@ declare module DropboxTypes {
 
     /**
      * Once a cursor has been retrieved from groupsMembersList(), use this to
-     * paginate through all members of the group. Permission : Team information
+     * paginate through all members of the group. Permission : Team information.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupsMembersListContinueError>.
@@ -220,7 +172,7 @@ declare module DropboxTypes {
      * Use the groupsJobStatusGet() to determine whether this process has
      * completed. This method permits removing the only owner of a group, even
      * in cases where this is not possible via the web client. Permission : Team
-     * member management
+     * member management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupMembersRemoveError>.
@@ -230,7 +182,7 @@ declare module DropboxTypes {
 
     /**
      * Sets a member's access type in a group. Permission : Team member
-     * management
+     * management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupMemberSetAccessTypeError>.
@@ -240,7 +192,7 @@ declare module DropboxTypes {
 
     /**
      * Updates a group's name and/or external ID. Permission : Team member
-     * management
+     * management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupUpdateError>.
@@ -370,12 +322,13 @@ declare module DropboxTypes {
     /**
      * Removes a member from a team. Permission : Team member management Exactly
      * one of team_member_id, email, or external_id must be provided to identify
-     * the user account. This is not a deactivation where the account can be
-     * re-activated again. Calling membersAdd() with the removed user's email
-     * address will create a new account with a new team_member_id that will not
-     * have access to any content that was shared with the initial account. This
-     * endpoint may initiate an asynchronous job. To obtain the final result of
-     * the job, the client should periodically poll membersRemoveJobStatusGet().
+     * the user account. Accounts can be recovered via membersRecover() for a 7
+     * day period or until the account has been permanently deleted or
+     * transferred to another account (whichever comes first). Calling
+     * membersAdd() while a user is still recoverable on your team will return
+     * with MemberAddResult.user_already_on_team. This endpoint may initiate an
+     * asynchronous job. To obtain the final result of the job, the client
+     * should periodically poll membersRemoveJobStatusGet().
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersRemoveError>.
@@ -522,9 +475,8 @@ declare module DropboxTypes {
     public teamReportsGetStorage(arg: team.DateRange): Promise<team.GetStorageReport>;
 
     /**
-     * Sets an archived team folder's status to active. This endpoint is only
-     * available to teams with [improved team folders]{@link /help/986}.
-     * Permission : Team member file access.
+     * Sets an archived team folder's status to active. Permission : Team member
+     * file access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderActivateError>.
@@ -534,8 +486,7 @@ declare module DropboxTypes {
 
     /**
      * Sets an active team folder's status to archived and removes all folder
-     * and file members. This endpoint is only available to teams with [improved
-     * team folders]{@link /help/986}. Permission : Team member file access.
+     * and file members. Permission : Team member file access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderArchiveError>.
@@ -545,8 +496,7 @@ declare module DropboxTypes {
 
     /**
      * Returns the status of an asynchronous job for archiving a team folder.
-     * This endpoint is only available to teams with [improved team
-     * folders]{@link /help/986}. Permission : Team member file access.
+     * Permission : Team member file access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
@@ -555,9 +505,7 @@ declare module DropboxTypes {
     public teamTeamFolderArchiveCheck(arg: async.PollArg): Promise<team.TeamFolderArchiveJobStatus>;
 
     /**
-     * Creates a new, active, team folder. This endpoint is only available to
-     * teams with [improved team folders]{@link /help/986}. Permission : Team
-     * member file access.
+     * Creates a new, active, team folder. Permission : Team member file access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderCreateError>.
@@ -566,9 +514,8 @@ declare module DropboxTypes {
     public teamTeamFolderCreate(arg: team.TeamFolderCreateArg): Promise<team.TeamFolderMetadata>;
 
     /**
-     * Retrieves metadata for team folders. This endpoint is only available to
-     * teams with [improved team folders]{@link /help/986}. Permission : Team
-     * member file access.
+     * Retrieves metadata for team folders. Permission : Team member file
+     * access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
@@ -577,9 +524,7 @@ declare module DropboxTypes {
     public teamTeamFolderGetInfo(arg: team.TeamFolderIdListArg): Promise<Array<team.TeamFolderGetInfoItem>>;
 
     /**
-     * Lists all team folders. This endpoint is only available to teams with
-     * [improved team folders]{@link /help/986}. Permission : Team member file
-     * access.
+     * Lists all team folders. Permission : Team member file access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderListError>.
@@ -588,9 +533,8 @@ declare module DropboxTypes {
     public teamTeamFolderList(arg: team.TeamFolderListArg): Promise<team.TeamFolderListResult>;
 
     /**
-     * Permanently deletes an archived team folder. This endpoint is only
-     * available to teams with [improved team folders]{@link /help/986}.
-     * Permission : Team member file access.
+     * Permanently deletes an archived team folder. Permission : Team member
+     * file access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderPermanentlyDeleteError>.
@@ -599,9 +543,8 @@ declare module DropboxTypes {
     public teamTeamFolderPermanentlyDelete(arg: team.TeamFolderIdArg): Promise<void>;
 
     /**
-     * Changes an active team folder's name. This endpoint is only available to
-     * teams with [improved team folders]{@link /help/986}. Permission : Team
-     * member file access.
+     * Changes an active team folder's name. Permission : Team member file
+     * access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderRenameError>.
