@@ -20,8 +20,9 @@
     "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -R docs/README.md -r ./src",
     "lint": "eslint src --ignore-path src/types.js",
     "start": "node examples/javascript/server.js",
+    "start-ts": "node examples/typescript/server.js",
     "test": "npm run lint && mocha 'test/*.js'",
-    "generate-tsds": "node generator/typescript/typescript-copy.js dist"
+    "generate-tsds": "node generator/typescript/typescript-copy.js examples/typescript/dist"
   },
   "keywords": [
     "dropbox",
@@ -46,6 +47,8 @@
     "pretty-bytes": "^2.0.1",
     "prompt": "^1.0.0",
     "sinon": "^1.17.3",
+    "@types/node": "^6.0.38",
+    "typescript": "^2.0.2",
     "webpack": "^1.13.0",
     "webpack-dev-middleware": "^1.6.1"
   },

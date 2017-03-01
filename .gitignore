@@ -2,3 +2,7 @@ dist/
 generated-docs/
 node_modules/
 npm-debug.log
+examples/typescript/*.d.ts
+examples/typescript/node/*.js
+examples/typescript/node/*.js.*
+examples/typescript/*/*.d.ts
