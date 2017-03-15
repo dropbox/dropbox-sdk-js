@@ -16,55 +16,49 @@
             JavaScript SDK Examples
           </h1>
         </a>
-        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples" class="view-source">View Source</a>
+        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript" class="view-source">View Source</a>
       </nav>
       <h2 class="code">
-        <a href="/">examples</a> / team as user
+        <a href="/">examples</a> / team
       </h2>
     </div>
   </header>
 
   <!-- Example description and UI -->
   <section class="container main">
-    <p>This example shows how to use the DropboxTeam class and the <code>DropboxTeam.actAsUser()</code> [<a href="http://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html#actAsUser">docs</a>] method, to retreive a Dropbox class that is acting as a specific user on the team.</p>
+    <p>This example shows how to use the DropboxTeam class and the <code>DropboxTeam.teamDevicesListTeamDevices()</code> method [<a href="http://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html#teamDevicesListTeamDevices">docs</a>].</p>
 
-    <form onSubmit="return listFiles()">
+    <form onSubmit="return listDevices()">
       <input type="text" id="access-token" placeholder="Access token" />
-      <input type="text" id="user-id" placeholder="User id" />
       <button type="submit">Submit</button>
     </form>
 
     <!-- The files returned from the SDK will be added here -->
-    <ul id="files"></ul>
+    <ul id="devices"></ul>
 
     <p class="info">This endpoint requires a Dropbox Business API app key, <a href="https://www.dropbox.com/developers/documentation/http/teams">see here for more details</a>.</p>
   </section>
-
-  <!-- Scripts to run example -->
   <script>
-    function listFiles() {
+    function listDevices() {
       var ACCESS_TOKEN = document.getElementById('access-token').value;
-      var USER_ID = document.getElementById('user-id').value;
-      var dbxTeam = new DropboxTeam({ accessToken: ACCESS_TOKEN });
-      var dbx = dbxTeam.actAsUser(USER_ID);
-      dbx.filesListFolder({path: ''})
-        .then(function(response) {
-          displayFiles(response.entries);
-          console.log(response);
+      var dbx = new DropboxTeam({ accessToken: ACCESS_TOKEN });
+      dbx.teamDevicesListTeamDevices({})
+        .then(function (response) {
+          displayDevices(response.devices)
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.error(error);
         });
       return false;
     }
 
-    function displayFiles(files) {
-      var filesList = document.getElementById('files');
+    function displayDevices(devices) {
+      var deviceList = document.getElementById('devices');
       var li;
-      for (var i = 0; i < files.length; i++) {
+      for (var i = 0; i < devices.length; i++) {
         li = document.createElement('li');
-        li.appendChild(document.createTextNode(files[i].name));
-        filesList.appendChild(li);
+        li.appendChild(document.createTextNode(JSON.stringify(devices[i])));
+        deviceList.appendChild(li);
       }
     }
   </script>
