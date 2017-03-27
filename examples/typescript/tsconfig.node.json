@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2015",
+    "lib": ["dom", "es2015", "es2016", "es2017"],
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitUseStrict": true,
+    "noUnusedLocals": true
+  },
+  "include": [
+    "server.ts",
+    "node/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
