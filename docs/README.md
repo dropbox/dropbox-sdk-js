@@ -88,6 +88,19 @@ authenticating users. See the [authentication
 example](https://github.com/dropbox/dropbox-sdk-js/blob/master/examples/auth/index.html) for a basic example of how it can be
 used.
 
+`Dropbox.authenticateWithCordova()` is a method that simplifies authentication from
+a Cordova / PhoneGap application.
+
+```javascript
+dbx.authenticateWithCordova(
+  function(accessToken) {        
+      console.log(accessToken);
+  },
+  function() {        
+      console.log("failed");
+  });
+```
+
 For more information on how to obtain an access token using OAuth, please
 see our [OAuth
 Guide](https://www.dropbox.com/developers/reference/oauth-guide).
