@@ -108,25 +108,47 @@ describe('DropboxBase', function () {
   });
 
   describe('#authenticateWithCordova()', function () {
-    it('calls the success callback with the access token as a parameter', function () {
+    it('opens authentication page', function () {
       dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
       var redirect_url = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
       var url = dbx.getAuthenticationUrl(redirect_url);
       var browser = {
         addEventListener: sinon.spy(),
         removeEventListener: sinon.spy(),
-        close: sinon.spy()
       };
       global.window = { 
         open: function(url, target) {},
-        setTimeout: function(callback, timeout) {},
       };
 
       var windowMock = sinon.mock(global.window);
       windowMock.expects('open')
         .withArgs(url, '_blank')
         .returns(browser);
-      var set_timeout_expectation = windowMock.expects('setTimeout');
+
+      var successCallback = sinon.spy();
+      var errorCallback = sinon.spy();
+
+      dbx.authenticateWithCordova(
+        successCallback, 
+        errorCallback);
+
+      sinon.assert.neverCalledWith(successCallback);
+      sinon.assert.neverCalledWith(errorCallback);
+
+      windowMock.verify();
+    });
+    it('registers and unregisters events', function () {
+      dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
+      var browser = {
+        addEventListener: sinon.spy(),
+        removeEventListener: sinon.spy()
+      };
+      global.window = { 
+        open: sinon.stub()
+      };
+      global.window.open
+        .returns(browser);
+
       var successCallback = sinon.spy();
       var errorCallback = sinon.spy();
 
@@ -139,24 +161,52 @@ describe('DropboxBase', function () {
       sinon.assert.calledWith(browser.addEventListener, 'loadstop');
       sinon.assert.calledWith(browser.addEventListener, 'exit');
 
-      var event_callback = browser.addEventListener.getCall(0).args[1];
-
-      var ACCESS_TOKEN = 'ACCESS_TOKEN';
-
-      event_callback({ type: 'loadstop', url: redirect_url + '#access_token=' + ACCESS_TOKEN + '&token_type=TOKEN_TYPE' });
-
-      var timeout_callback = set_timeout_expectation.getCall(0).args[0];
-      timeout_callback();
-      sinon.assert.called(browser.close);
-
-      event_callback({ type: 'exit' });
+      var onExit = browser.addEventListener.getCall(2).args[1];
+      onExit({ });
+      
       sinon.assert.calledWith(browser.removeEventListener, 'loaderror');
       sinon.assert.calledWith(browser.removeEventListener, 'loadstop');
       sinon.assert.calledWith(browser.removeEventListener, 'exit');
       
+      sinon.assert.neverCalledWith(successCallback);
+      sinon.assert.neverCalledWith(errorCallback);
+    });
+    it('calls the success callback with the access token as a parameter', function () {
+      dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
+      var redirect_url = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
+      var url = dbx.getAuthenticationUrl(redirect_url);
+      var browser = {
+        addEventListener: sinon.spy(),
+        removeEventListener: sinon.spy(),
+        close: sinon.spy()
+      };
+      global.window = { 
+        open: sinon.stub(),
+        setTimeout: sinon.spy()
+      };
+      global.window.open
+        .returns(browser);
+
+      var successCallback = sinon.spy();
+      var errorCallback = sinon.spy();
+
+      dbx.authenticateWithCordova(
+        successCallback,
+        errorCallback
+      );
+
+      var onLoadStop = browser.addEventListener.getCall(1).args[1];
+
+      var ACCESS_TOKEN = 'ACCESS_TOKEN';
+
+      onLoadStop({ url: redirect_url + '#access_token=' + ACCESS_TOKEN + '&token_type=TOKEN_TYPE' });
+
+      var timeOut = global.window.setTimeout.getCall(0).args[0];
+      timeOut();
+      sinon.assert.called(browser.close);
+      
       sinon.assert.calledWithExactly(successCallback, ACCESS_TOKEN);
       sinon.assert.neverCalledWith(errorCallback);
-      windowMock.verify();
     });
   });
 
