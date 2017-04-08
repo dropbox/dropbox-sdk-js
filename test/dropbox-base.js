@@ -171,10 +171,75 @@ describe('DropboxBase', function () {
       sinon.assert.neverCalledWith(successCallback);
       sinon.assert.neverCalledWith(errorCallback);
     });
+    it('calls error callback when loading the autentication page failed', function () {
+      dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
+      var browser = {
+        addEventListener: sinon.spy(),
+        removeEventListener: sinon.spy(),
+        close: sinon.spy()
+      };
+      global.window = { 
+        open: sinon.stub(),
+        setTimeout: sinon.spy()
+      };
+      global.window.open
+        .returns(browser);
+
+      var successCallback = sinon.spy();
+      var errorCallback = sinon.spy();
+
+      dbx.authenticateWithCordova(
+        successCallback,
+        errorCallback
+      );
+
+      var onLoadError = browser.addEventListener.getCall(0).args[1];
+      onLoadError({});
+
+      var timeOut = global.window.setTimeout.getCall(0).args[0];
+      timeOut();
+      sinon.assert.called(browser.close);
+      
+      sinon.assert.neverCalledWith(successCallback);
+      sinon.assert.calledWith(errorCallback);
+    });
+    it('calls the error callback when authentication failed', function () {
+      dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
+      var redirect_url = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
+      var browser = {
+        addEventListener: sinon.spy(),
+        removeEventListener: sinon.spy(),
+        close: sinon.spy()
+      };
+      global.window = { 
+        open: sinon.stub(),
+        setTimeout: sinon.spy()
+      };
+      global.window.open
+        .returns(browser);
+
+      var successCallback = sinon.spy();
+      var errorCallback = sinon.spy();
+
+      dbx.authenticateWithCordova(
+        successCallback,
+        errorCallback
+      );
+
+      var onLoadStop = browser.addEventListener.getCall(1).args[1];
+
+      onLoadStop({ url: redirect_url + '#error_description=ERROR_DESCRIPTION&error=ERROR_TYPE' });
+
+      var timeOut = global.window.setTimeout.getCall(0).args[0];
+      timeOut();
+      sinon.assert.called(browser.close);
+      
+      sinon.assert.neverCalledWith(successCallback);
+      sinon.assert.calledWith(errorCallback);
+    });
     it('calls the success callback with the access token as a parameter', function () {
       dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
       var redirect_url = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
-      var url = dbx.getAuthenticationUrl(redirect_url);
       var browser = {
         addEventListener: sinon.spy(),
         removeEventListener: sinon.spy(),

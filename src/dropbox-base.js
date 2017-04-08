@@ -112,26 +112,24 @@ DropboxBase.prototype.authenticateWithCordova = function (successCallback, error
   var removed = false;
 
   var onLoadError = function(event) {
-
+    // Try to avoid a browser crash on browser.close().
+    window.setTimeout(function() { browser.close() }, 10);
+    errorCallback();
   }
 
   var onLoadStop = function(event) {
     var error_label = '&error=';
     var error_index = event.url.indexOf(error_label);
 
-    if (error_index > -1)
-    {
+    if (error_index > -1) {
       // Try to avoid a browser crash on browser.close().
       window.setTimeout(function() { browser.close() }, 10);
       errorCallback();
-    }
-    else
-    { 
+    } else { 
       var access_token_label = '#access_token=';
       var access_token_index = event.url.indexOf(access_token_label);
       var token_type_index = event.url.indexOf('&token_type=');
-      if (access_token_index > -1)
-      {
+      if (access_token_index > -1) {
         access_token_index += access_token_label.length;
         // Try to avoid a browser crash on browser.close().
         window.setTimeout(function() { browser.close() }, 10);
@@ -141,10 +139,9 @@ DropboxBase.prototype.authenticateWithCordova = function (successCallback, error
       }
     }
   };
-  
+
   var onExit = function(event) {
-    if(removed)
-    {
+    if(removed) {
       return 
     }
     browser.removeEventListener('loaderror', onLoadError);
