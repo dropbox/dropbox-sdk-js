@@ -106,15 +106,15 @@ DropboxBase.prototype.getAuthenticationUrl = function (redirectUri, state) {
  */
 DropboxBase.prototype.authenticateWithCordova = function (successCallback, errorCallback)
 {
-  var redirect_url = "https://www.dropbox.com/1/oauth2/redirect_receiver";
+  var redirect_url = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
   var url = this.getAuthenticationUrl(redirect_url);
-  var browser = window.open(url, "_blank");
+  var browser = window.open(url, '_blank');
   var removed = false;
 
   var onEvent = function(event) {
     if (event.type == 'loadstop')
     {
-      var error_label = "&error=";
+      var error_label = '&error=';
       var error_index = event.url.indexOf(error_label);
 
       if (error_index > -1)
@@ -125,9 +125,9 @@ DropboxBase.prototype.authenticateWithCordova = function (successCallback, error
       }
       else
       { 
-        var access_token_label = "#access_token=";
+        var access_token_label = '#access_token=';
         var access_token_index = event.url.indexOf(access_token_label);
-        var token_type_index = event.url.indexOf("&token_type=");
+        var token_type_index = event.url.indexOf('&token_type=');
         if (access_token_index > -1)
         {
           access_token_index += access_token_label.length;
@@ -145,7 +145,6 @@ DropboxBase.prototype.authenticateWithCordova = function (successCallback, error
       {
         return 
       }
-      browser.removeEventListener('loadstart', onEvent);
       browser.removeEventListener('loaderror', onEvent);
       browser.removeEventListener('loadstop', onEvent);
       browser.removeEventListener('exit', onEvent);
@@ -153,7 +152,6 @@ DropboxBase.prototype.authenticateWithCordova = function (successCallback, error
     }
   }
   
-  browser.addEventListener('loadstart', onEvent);
   browser.addEventListener('loaderror', onEvent);
   browser.addEventListener('loadstop', onEvent);
   browser.addEventListener('exit', onEvent)
