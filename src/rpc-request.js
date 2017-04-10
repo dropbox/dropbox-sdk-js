@@ -6,7 +6,7 @@ var getBaseURL = require('./get-base-url');
 var buildCustomError = function (error, response) {
   return {
     status: error.status,
-    error: (response ? response.text : null) || error.toString(),
+    error: (response ? JSON.parse(response.text): null) || error,
     response: response
   };
 };
