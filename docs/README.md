@@ -85,7 +85,7 @@ The access token can be supplied at instantiation or set later using the
 
 `Dropbox.getAuthenticationUrl()` is a method that is very helpful for
 authenticating users. See the [authentication
-example](https://github.com/dropbox/dropbox-sdk-js/blob/master/examples/auth/index.html) for a basic example of how it can be
+example](https://github.com/dropbox/dropbox-sdk-js/blob/master/examples/javascript/auth/index.html) for a basic example of how it can be
 used.
 
 For more information on how to obtain an access token using OAuth, please
