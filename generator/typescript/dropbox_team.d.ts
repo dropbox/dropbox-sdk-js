@@ -63,6 +63,17 @@ declare module DropboxTypes {
     public teamDevicesRevokeDeviceSessionBatch(arg: team.RevokeDeviceSessionBatchArg): Promise<team.RevokeDeviceSessionBatchResult>;
 
     /**
+     * Get the values for one or more featues. This route allows you to check
+     * your account's capability for what feature you can access or what value
+     * you have for certain features. Permission : Team information.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.FeaturesGetValuesBatchError>.
+     * @param arg The request parameters.
+     */
+    public teamFeaturesGetValues(arg: team.FeaturesGetValuesBatchArg): Promise<team.FeaturesGetValuesBatchResult>;
+
+    /**
      * Retrieves information about a team.
      * 
      * When an error occurs, the route rejects the promise with type
@@ -533,6 +544,16 @@ declare module DropboxTypes {
     public teamTeamFolderList(arg: team.TeamFolderListArg): Promise<team.TeamFolderListResult>;
 
     /**
+     * Once a cursor has been retrieved from teamFolderList(), use this to
+     * paginate through all team folders. Permission : Team member file access.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.TeamFolderListContinueError>.
+     * @param arg The request parameters.
+     */
+    public teamTeamFolderListContinue(arg: team.TeamFolderListContinueArg): Promise<team.TeamFolderListResult>;
+
+    /**
      * Permanently deletes an archived team folder. Permission : Team member
      * file access.
      * 
@@ -551,5 +572,15 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public teamTeamFolderRename(arg: team.TeamFolderRenameArg): Promise<team.TeamFolderMetadata>;
+
+    /**
+     * Returns the member profile of the admin who generated the team access
+     * token used to make the call.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.TokenGetAuthenticatedAdminError>.
+     * @param arg The request parameters.
+     */
+    public teamTokenGetAuthenticatedAdmin(arg: void): Promise<team.TokenGetAuthenticatedAdminResult>;
   }
 }

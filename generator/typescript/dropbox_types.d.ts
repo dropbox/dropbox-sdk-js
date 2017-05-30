@@ -351,6 +351,87 @@ declare module DropboxTypes {
   }
 
   namespace common {
+    interface InvalidPathRootError {
+      /**
+       * The latest path root id for user's team if the user is still in a team.
+       */
+      path_root?: PathRootId;
+    }
+
+    /**
+     * Paths are relative to the authenticating user's home directory, whether
+     * or not that user belongs to a team.
+     */
+    interface PathRootHome {
+      '.tag': 'home';
+    }
+
+    /**
+     * Paths are relative to the authenticating team member's home directory.
+     * (This results in :field:`PathRootError.invalid' if the user does not
+     * belong to a team.)
+     */
+    interface PathRootMemberHome {
+      '.tag': 'member_home';
+    }
+
+    /**
+     * Paths are relative to the given team directory. (This results in
+     * PathRootError.invalid if the user is not a member of the team associated
+     * with that path root id.)
+     */
+    interface PathRootTeam {
+      '.tag': 'team';
+      team: PathRootId;
+    }
+
+    /**
+     * Paths are relative to the user's home directory. (This results in
+     * PathRootError.invalid if the belongs to a team.)
+     */
+    interface PathRootUserHome {
+      '.tag': 'user_home';
+    }
+
+    /**
+     * Paths are relative to given shared folder id (This results in
+     * PathRootError.no_permission if you don't have access to  this shared
+     * folder.)
+     */
+    interface PathRootSharedFolder {
+      '.tag': 'shared_folder';
+      shared_folder: PathRootId;
+    }
+
+    interface PathRootOther {
+      '.tag': 'other';
+    }
+
+    type PathRoot = PathRootHome | PathRootMemberHome | PathRootTeam | PathRootUserHome | PathRootSharedFolder | PathRootOther;
+
+    /**
+     * The path root id value in Dropbox-API-Path-Root header is no longer
+     * valid.
+     */
+    interface PathRootErrorInvalid {
+      '.tag': 'invalid';
+      invalid: InvalidPathRootError;
+    }
+
+    /**
+     * You don't have permission to access the path root id in
+     * Dropbox-API-Path-Root  header.
+     */
+    interface PathRootErrorNoPermission {
+      '.tag': 'no_permission';
+    }
+
+    interface PathRootErrorOther {
+      '.tag': 'other';
+    }
+
+    type PathRootError = PathRootErrorInvalid | PathRootErrorNoPermission | PathRootErrorOther;
+
     type Date = Timestamp;
 
     type DisplayName = string;
@@ -362,6 +443,10 @@ declare module DropboxTypes {
     type NamePart = string;
 
     type NamespaceId = string;
+
+    type PathRootId = NamespaceId;
+
+    type SessionId = string;
 
     type SharedFolderId = NamespaceId;
 
@@ -691,7 +776,7 @@ declare module DropboxTypes {
        * The last user who modified the file. This field will be null if the
        * user's account has been deleted.
        */
-      modified_by?: users.AccountId;
+      modified_by?: users_common.AccountId;
     }
 
     interface FolderMetadata extends Metadata {
@@ -1076,19 +1161,11 @@ declare module DropboxTypes {
       '.tag': 'restricted_content';
     }
 
-    /**
-     * The path root parameter provided is invalid.
-     */
-    interface LookupErrorInvalidPathRoot {
-      '.tag': 'invalid_path_root';
-      invalid_path_root: PathRootError;
-    }
-
     interface LookupErrorOther {
       '.tag': 'other';
     }
 
-    type LookupError = LookupErrorMalformedPath | LookupErrorNotFound | LookupErrorNotFile | LookupErrorNotFolder | LookupErrorRestrictedContent | LookupErrorInvalidPathRoot | LookupErrorOther;
+    type LookupError = LookupErrorMalformedPath | LookupErrorNotFound | LookupErrorNotFile | LookupErrorNotFolder | LookupErrorRestrictedContent | LookupErrorOther;
 
     /**
      * Indicate the photo/video is still under processing and metadata is not
@@ -1176,14 +1253,6 @@ declare module DropboxTypes {
        * Tag identifying the subtype variant.
        */
       '.tag': "file"|"folder"|"deleted";
-    }
-
-    interface PathRootError {
-      /**
-       * The user's latest path root value. None if the user no longer has a
-       * path root.
-       */
-      path_root?: string;
     }
 
     /**
@@ -1999,14 +2068,23 @@ declare module DropboxTypes {
       '.tag': 'too_many_shared_folder_targets';
     }
 
+    /**
+     * There are too many write operations happening in the user's Dropbox. You
+     * should retry uploading this file.
+     */
+    interface UploadSessionFinishErrorTooManyWriteOperations {
+      '.tag': 'too_many_write_operations';
+    }
+
     interface UploadSessionFinishErrorOther {
       '.tag': 'other';
     }
 
-    type UploadSessionFinishError = UploadSessionFinishErrorLookupFailed | UploadSessionFinishErrorPath | UploadSessionFinishErrorTooManySharedFolderTargets | UploadSessionFinishErrorOther;
+    type UploadSessionFinishError = UploadSessionFinishErrorLookupFailed | UploadSessionFinishErrorPath | UploadSessionFinishErrorTooManySharedFolderTargets | UploadSessionFinishErrorTooManyWriteOperations | UploadSessionFinishErrorOther;
 
     /**
-     * The upload session id was not found.
+     * The upload session ID was not found or has expired. Upload sessions are
+     * valid for 48 hours.
      */
     interface UploadSessionLookupErrorNotFound {
       '.tag': 'not_found';
@@ -2165,11 +2243,18 @@ declare module DropboxTypes {
       '.tag': 'disallowed_name';
     }
 
+    /**
+     * This endpoint cannot modify or delete team folders.
+     */
+    interface WriteErrorTeamFolder {
+      '.tag': 'team_folder';
+    }
+
     interface WriteErrorOther {
       '.tag': 'other';
     }
 
-    type WriteError = WriteErrorMalformedPath | WriteErrorConflict | WriteErrorNoWritePermission | WriteErrorInsufficientSpace | WriteErrorDisallowedName | WriteErrorOther;
+    type WriteError = WriteErrorMalformedPath | WriteErrorConflict | WriteErrorNoWritePermission | WriteErrorInsufficientSpace | WriteErrorDisallowedName | WriteErrorTeamFolder | WriteErrorOther;
 
     /**
      * Do not overwrite an existing file if there is a conflict. The autorename
@@ -2247,16 +2332,16 @@ declare module DropboxTypes {
        */
       permission_level?: PaperDocPermissionLevel;
       /**
-       * User which should be added to the Paper doc. Specify only email or
-       * Dropbox account id.
+       * User which should be added to the Paper doc. Specify only email address
+       * or Dropbox account ID.
        */
       member: sharing.MemberSelector;
     }
 
     interface AddPaperDocUser extends RefPaperDoc {
       /**
-       * User which should be added to the Paper doc. Specify only email or
-       * Dropbox account id.
+       * User which should be added to the Paper doc. Specify only email address
+       * or Dropbox account ID.
        */
       members: Array<AddMember>;
       /**
@@ -2374,29 +2459,30 @@ declare module DropboxTypes {
     type DocLookupError = PaperApiBaseError | DocLookupErrorDocNotFound;
 
     /**
-     * No change e-mails unless you're the creator.
+     * No change email messages unless you're the creator.
      */
     interface DocSubscriptionLevelDefault {
       '.tag': 'default';
     }
 
     /**
-     * Ignored: Not shown in pad lists or activity and no email is sent.
+     * Ignored: Not shown in pad lists or activity and no email message is sent.
      */
     interface DocSubscriptionLevelIgnore {
       '.tag': 'ignore';
     }
 
     /**
-     * Subscribed: Shown in pad lists and activity and change e-mails are sent.
+     * Subscribed: Shown in pad lists and activity and change email messages are
+     * sent.
      */
     interface DocSubscriptionLevelEvery {
       '.tag': 'every';
     }
 
     /**
-     * Unsubscribed: Shown in pad lists, but not in activity and no change
-     * e-mails are sent.
+     * Unsubscribed: Shown in pad lists, but not in activity and no change email
+     * messages are sent.
      */
     interface DocSubscriptionLevelNoEmail {
       '.tag': 'no_email';
@@ -2435,7 +2521,7 @@ declare module DropboxTypes {
      */
     interface Folder {
       /**
-       * Paper folder id. This id uniquely identifies the folder.
+       * Paper folder ID. This ID uniquely identifies the folder.
        */
       id: string;
       /**
@@ -2465,28 +2551,28 @@ declare module DropboxTypes {
     type FolderSharingPolicyType = FolderSharingPolicyTypeTeam | FolderSharingPolicyTypeInviteOnly;
 
     /**
-     * Not shown in activity, no e-mails.
+     * Not shown in activity, no email messages.
      */
     interface FolderSubscriptionLevelNone {
       '.tag': 'none';
     }
 
     /**
-     * Shown in activity, no e-mails.
+     * Shown in activity, no email messages.
      */
     interface FolderSubscriptionLevelActivityOnly {
       '.tag': 'activity_only';
     }
 
     /**
-     * Shown in activity, daily e-mails.
+     * Shown in activity, daily email messages.
      */
     interface FolderSubscriptionLevelDailyEmails {
       '.tag': 'daily_emails';
     }
 
     /**
-     * Shown in activity, weekly e-mails.
+     * Shown in activity, weekly email messages.
      */
     interface FolderSubscriptionLevelWeeklyEmails {
       '.tag': 'weekly_emails';
@@ -2513,7 +2599,7 @@ declare module DropboxTypes {
 
     interface InviteeInfoWithPermissionLevel {
       /**
-       * Email invited to the Paper doc.
+       * Email address invited to the Paper doc.
        */
       invitee: sharing.InviteeInfo;
       /**
@@ -2568,14 +2654,14 @@ declare module DropboxTypes {
     }
 
     /**
-     * Fetches all Paper doc ids that the user has ever accessed.
+     * Fetches all Paper doc IDs that the user has ever accessed.
      */
     interface ListPaperDocsFilterByDocsAccessed {
       '.tag': 'docs_accessed';
     }
 
     /**
-     * Fetches only the Paper doc ids that the user has created.
+     * Fetches only the Paper doc IDs that the user has created.
      */
     interface ListPaperDocsFilterByDocsCreated {
       '.tag': 'docs_created';
@@ -2589,7 +2675,7 @@ declare module DropboxTypes {
 
     interface ListPaperDocsResponse {
       /**
-       * The list of Paper doc ids that can be used to access the given Paper
+       * The list of Paper doc IDs that can be used to access the given Paper
        * docs or supplied to other API methods. The list is sorted in the order
        * specified by the initial call to docsList().
        */
@@ -2814,7 +2900,7 @@ declare module DropboxTypes {
 
     interface PaperDocExportResult {
       /**
-       * The Paper doc owner's email.
+       * The Paper doc owner's email address.
        */
       owner: string;
       /**
@@ -2860,13 +2946,16 @@ declare module DropboxTypes {
     }
 
     interface RefPaperDoc {
+      /**
+       * The Paper doc ID.
+       */
       doc_id: PaperDocId;
     }
 
     interface RemovePaperDocUser extends RefPaperDoc {
       /**
-       * User which should be removed from the Paper doc. Specify only email or
-       * Dropbox account id.
+       * User which should be removed from the Paper doc. Specify only email
+       * address or Dropbox account ID.
        */
       member: sharing.MemberSelector;
     }
@@ -3451,6 +3540,25 @@ declare module DropboxTypes {
     type AddMemberSelectorError = AddMemberSelectorErrorAutomaticGroup | AddMemberSelectorErrorInvalidDropboxId | AddMemberSelectorErrorInvalidEmail | AddMemberSelectorErrorUnverifiedDropboxId | AddMemberSelectorErrorGroupDeleted | AddMemberSelectorErrorGroupNotOnTeam | AddMemberSelectorErrorOther;
 
     /**
+     * Information about the shared folder that prevents the link audience for
+     * this link from being more restrictive.
+     */
+    interface AudienceRestrictingSharedFolder {
+      /**
+       * The ID of the shared folder.
+       */
+      shared_folder_id: common.SharedFolderId;
+      /**
+       * The name of the shared folder.
+       */
+      name: string;
+      /**
+       * The link audience of the shared folder.
+       */
+      audience: LinkAudience;
+    }
+
+    /**
      * Arguments for changeFileMemberAccess().
      */
     interface ChangeFileMemberAccessArgs {
@@ -3560,6 +3668,13 @@ declare module DropboxTypes {
     }
 
     type CreateSharedLinkWithSettingsError = CreateSharedLinkWithSettingsErrorPath | CreateSharedLinkWithSettingsErrorEmailNotVerified | CreateSharedLinkWithSettingsErrorSharedLinkAlreadyExists | CreateSharedLinkWithSettingsErrorSettingsError | CreateSharedLinkWithSettingsErrorAccessDenied;
+
+    /**
+     * The expected metadata of a shared link for a file or folder when a link
+     * is first created for  the content. Absent if the link already exists.
+     */
+    interface ExpectedSharedContentLinkMetadata extends SharedContentLinkMetadataBase {
+    }
 
     /**
      * Disable viewer information on the file.
@@ -3994,7 +4109,9 @@ declare module DropboxTypes {
        */
       file: PathOrId;
       /**
-       * File actions to query.
+       * A list of `FileAction`s corresponding to `FilePermission`s that should
+       * appear in the  response's SharedFileMetadata.permissions field
+       * describing the actions the  authenticated user can perform on the file.
        */
       actions?: Array<FileAction>;
     }
@@ -4008,7 +4125,9 @@ declare module DropboxTypes {
        */
       files: Array<PathOrId>;
       /**
-       * File actions to query.
+       * A list of `FileAction`s corresponding to `FilePermission`s that should
+       * appear in the  response's SharedFileMetadata.permissions field
+       * describing the actions the  authenticated user can perform on the file.
        */
       actions?: Array<FileAction>;
     }
@@ -4075,9 +4194,10 @@ declare module DropboxTypes {
        */
       shared_folder_id: common.SharedFolderId;
       /**
-       * This is a list indicating whether the returned folder data will include
-       * a boolean value  FolderPermission.allow that describes whether the
-       * current user can perform the  FolderAction on the folder.
+       * A list of `FolderAction`s corresponding to `FolderPermission`s that
+       * should appear in the  response's SharedFolderMetadata.permissions field
+       * describing the actions the  authenticated user can perform on the
+       * folder.
        */
       actions?: Array<FolderAction>;
     }
@@ -4264,6 +4384,13 @@ declare module DropboxTypes {
     type JobStatus = async.PollResultBase | JobStatusComplete | JobStatusFailed;
 
     /**
+     * Change the access level of the link.
+     */
+    interface LinkActionChangeAccessLevel {
+      '.tag': 'change_access_level';
+    }
+
+    /**
      * Change the audience of the link.
      */
     interface LinkActionChangeAudience {
@@ -4305,7 +4432,7 @@ declare module DropboxTypes {
     /**
      * Actions that can be performed on a link.
      */
-    type LinkAction = LinkActionChangeAudience | LinkActionRemoveExpiry | LinkActionRemovePassword | LinkActionSetExpiry | LinkActionSetPassword | LinkActionOther;
+    type LinkAction = LinkActionChangeAccessLevel | LinkActionChangeAudience | LinkActionRemoveExpiry | LinkActionRemovePassword | LinkActionSetExpiry | LinkActionSetPassword | LinkActionOther;
 
     /**
      * Link is accessible by anyone.
@@ -4446,6 +4573,11 @@ declare module DropboxTypes {
      * Settings that apply to a link.
      */
     interface LinkSettings {
+      /**
+       * The access level on the link for this file. Currently, it only accepts
+       * 'viewer' and 'viewer_no_comment'.
+       */
+      access_level?: AccessLevel;
       /**
        * The type of audience on the link for this file.
        */
@@ -4609,7 +4741,9 @@ declare module DropboxTypes {
        */
       limit?: number;
       /**
-       * File actions to query.
+       * A list of `FileAction`s corresponding to `FilePermission`s that should
+       * appear in the  response's SharedFileMetadata.permissions field
+       * describing the actions the  authenticated user can perform on the file.
        */
       actions?: Array<FileAction>;
     }
@@ -4714,9 +4848,10 @@ declare module DropboxTypes {
        */
       limit?: number;
       /**
-       * This is a list indicating whether each returned folder data entry will
-       * include a boolean field FolderPermission.allow that describes whether
-       * the current user can perform the `FolderAction` on the folder.
+       * A list of `FolderAction`s corresponding to `FolderPermission`s that
+       * should appear in the  response's SharedFolderMetadata.permissions field
+       * describing the actions the  authenticated user can perform on the
+       * folder.
        */
       actions?: Array<FolderAction>;
     }
@@ -5082,6 +5217,11 @@ declare module DropboxTypes {
        * The user's permissions for the parent shared folder.
        */
       permissions: Array<MemberPermission>;
+      /**
+       * The full path to the parent shared folder relative to the acting user's
+       * root.
+       */
+      path: string;
     }
 
     /**
@@ -5553,9 +5693,10 @@ declare module DropboxTypes {
        */
       force_async?: boolean;
       /**
-       * This is a list indicating whether each returned folder data entry will
-       * include a boolean field FolderPermission.allow that describes whether
-       * the current user can perform the `FolderAction` on the folder.
+       * A list of `FolderAction`s corresponding to `FolderPermission`s that
+       * should appear in the  response's SharedFolderMetadata.permissions field
+       * describing the actions the  authenticated user can perform on the
+       * folder.
        */
       actions?: Array<FolderAction>;
       /**
@@ -5729,19 +5870,11 @@ declare module DropboxTypes {
       '.tag': 'inside_osx_package';
     }
 
-    /**
-     * The path root parameter provided is invalid.
-     */
-    interface SharePathErrorInvalidPathRoot {
-      '.tag': 'invalid_path_root';
-      invalid_path_root: files.PathRootError;
-    }
-
     interface SharePathErrorOther {
       '.tag': 'other';
     }
 
-    type SharePathError = SharePathErrorIsFile | SharePathErrorInsideSharedFolder | SharePathErrorContainsSharedFolder | SharePathErrorContainsAppFolder | SharePathErrorContainsTeamFolder | SharePathErrorIsAppFolder | SharePathErrorInsideAppFolder | SharePathErrorIsPublicFolder | SharePathErrorInsidePublicFolder | SharePathErrorAlreadyShared | SharePathErrorInvalidPath | SharePathErrorIsOsxPackage | SharePathErrorInsideOsxPackage | SharePathErrorInvalidPathRoot | SharePathErrorOther;
+    type SharePathError = SharePathErrorIsFile | SharePathErrorInsideSharedFolder | SharePathErrorContainsSharedFolder | SharePathErrorContainsAppFolder | SharePathErrorContainsTeamFolder | SharePathErrorIsAppFolder | SharePathErrorInsideAppFolder | SharePathErrorIsPublicFolder | SharePathErrorInsidePublicFolder | SharePathErrorAlreadyShared | SharePathErrorInvalidPath | SharePathErrorIsOsxPackage | SharePathErrorInsideOsxPackage | SharePathErrorOther;
 
     /**
      * Metadata of a shared link for a file or folder.
@@ -5755,12 +5888,21 @@ declare module DropboxTypes {
 
     interface SharedContentLinkMetadataBase {
       /**
+       * The access level on the link for this file.
+       */
+      access_level?: AccessLevel;
+      /**
        * The audience options that are available for the content. Some audience
        * options may be unavailable. For example, team_only may be unavailable
        * if the content is not owned by a user on a team. The 'default' audience
        * option is always available if the user can modify link settings.
        */
       audience_options: Array<LinkAudience>;
+      /**
+       * The shared folder that prevents the link audience for this link from
+       * being more restrictive.
+       */
+      audience_restricting_shared_folder?: AudienceRestrictingSharedFolder;
       /**
        * The current audience of the link.
        */
@@ -5812,19 +5954,28 @@ declare module DropboxTypes {
      */
     interface SharedFileMetadata {
       /**
-       * The metadata of the link associated for the file.
+       * The current user's access level for this shared file.
+       */
+      access_type?: AccessLevel;
+      /**
+       * The ID of the file.
+       */
+      id: FileId;
+      /**
+       * The expected metadata of the link associated for the file when it is
+       * first shared. Absent if the link already exists. This is for an
+       * unreleased feature so it may not be returned yet.
+       */
+      expected_link_metadata?: ExpectedSharedContentLinkMetadata;
+      /**
+       * The metadata of the link associated for the file. This is for an
+       * unreleased feature so it may not be returned yet.
        */
       link_metadata?: SharedContentLinkMetadata;
       /**
-       * Policies governing this shared file.
+       * The name of this file.
        */
-      policy: FolderPolicy;
-      /**
-       * The sharing permissions that requesting user has on this file. This
-       * corresponds to the entries given in GetFileMetadataBatchArg.actions or
-       * GetFileMetadataArg.actions.
-       */
-      permissions?: Array<FilePermission>;
+      name: string;
       /**
        * The team that owns the file. This field is not present if the file is
        * not owned by a team.
@@ -5836,14 +5987,6 @@ declare module DropboxTypes {
        */
       parent_shared_folder_id?: common.SharedFolderId;
       /**
-       * URL for displaying a web preview of the shared file.
-       */
-      preview_url: string;
-      /**
-       * The lower-case full path of this file. Absent for unmounted files.
-       */
-      path_lower?: string;
-      /**
        * The cased path to be used for display purposes only. In rare instances
        * the casing will not correctly match the user's filesystem, but this
        * behavior will match the path provided in the Core API v1. Absent for
@@ -5851,13 +5994,23 @@ declare module DropboxTypes {
        */
       path_display?: string;
       /**
-       * The name of this file.
+       * The lower-case full path of this file. Absent for unmounted files.
        */
-      name: string;
+      path_lower?: string;
       /**
-       * The ID of the file.
+       * The sharing permissions that requesting user has on this file. This
+       * corresponds to the entries given in GetFileMetadataBatchArg.actions or
+       * GetFileMetadataArg.actions.
        */
-      id: FileId;
+      permissions?: Array<FilePermission>;
+      /**
+       * Policies governing this shared file.
+       */
+      policy: FolderPolicy;
+      /**
+       * URL for displaying a web preview of the shared file.
+       */
+      preview_url: string;
       /**
        * Timestamp indicating when the current user was invited to this shared
        * file. If the user was not invited to the shared file, the timestamp
@@ -5962,7 +6115,8 @@ declare module DropboxTypes {
     interface SharedFolderMetadata extends SharedFolderMetadataBase {
       /**
        * The metadata of the shared content link to this shared folder. Absent
-       * if there is no link on the folder.
+       * if there is no link on the folder. This is for an unreleased feature so
+       * it may not be returned yet.
        */
       link_metadata?: SharedContentLinkMetadata;
       /**
@@ -6565,6 +6719,13 @@ declare module DropboxTypes {
        * Settings on the link for this folder.
        */
       link_settings?: LinkSettings;
+      /**
+       * A list of `FolderAction`s corresponding to `FolderPermission`s that
+       * should appear in the  response's SharedFolderMetadata.permissions field
+       * describing the actions the  authenticated user can perform on the
+       * folder.
+       */
+      actions?: Array<FolderAction>;
     }
 
     interface UpdateFolderPolicyErrorAccessError {
@@ -6602,11 +6763,18 @@ declare module DropboxTypes {
       '.tag': 'no_permission';
     }
 
+    /**
+     * This action cannot be performed on a team shared folder.
+     */
+    interface UpdateFolderPolicyErrorTeamFolder {
+      '.tag': 'team_folder';
+    }
+
     interface UpdateFolderPolicyErrorOther {
       '.tag': 'other';
     }
 
-    type UpdateFolderPolicyError = UpdateFolderPolicyErrorAccessError | UpdateFolderPolicyErrorNotOnTeam | UpdateFolderPolicyErrorTeamPolicyDisallowsMemberPolicy | UpdateFolderPolicyErrorDisallowedSharedLinkPolicy | UpdateFolderPolicyErrorNoPermission | UpdateFolderPolicyErrorOther;
+    type UpdateFolderPolicyError = UpdateFolderPolicyErrorAccessError | UpdateFolderPolicyErrorNotOnTeam | UpdateFolderPolicyErrorTeamPolicyDisallowsMemberPolicy | UpdateFolderPolicyErrorDisallowedSharedLinkPolicy | UpdateFolderPolicyErrorNoPermission | UpdateFolderPolicyErrorTeamFolder | UpdateFolderPolicyErrorOther;
 
     /**
      * Basic information about a user. Use usersAccount() and
@@ -6616,7 +6784,7 @@ declare module DropboxTypes {
       /**
        * The account ID of the user.
        */
-      account_id: users.AccountId;
+      account_id: users_common.AccountId;
       /**
        * If the user is in the same team as current user.
        */
@@ -6744,6 +6912,10 @@ declare module DropboxTypes {
        * Information on the browser used for this web session
        */
       browser: string;
+      /**
+       * The time this session expires
+       */
+      expires?: common.DropboxTimestamp;
     }
 
     /**
@@ -6996,6 +7168,63 @@ declare module DropboxTypes {
        * Array of total number of linked clients with activity.
        */
       total: NumberPerDay;
+    }
+
+    /**
+     * The number of upload API calls allowed per month.
+     */
+    interface FeatureUploadApiRateLimit {
+      '.tag': 'upload_api_rate_limit';
+    }
+
+    interface FeatureOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * A set of features that Dropbox for Business account support.
+     */
+    type Feature = FeatureUploadApiRateLimit | FeatureOther;
+
+    interface FeatureValueUploadApiRateLimit {
+      '.tag': 'upload_api_rate_limit';
+      upload_api_rate_limit: UploadApiRateLimitValue;
+    }
+
+    interface FeatureValueOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The values correspond to entries in team.Feature. You may get different
+     * value according to your Dropbox for Business plan.
+     */
+    type FeatureValue = FeatureValueUploadApiRateLimit | FeatureValueOther;
+
+    interface FeaturesGetValuesBatchArg {
+      /**
+       * A list of features in team.Feature. If the list is empty, this route
+       * will return team.FeaturesGetValuesBatchError.
+       */
+      features: Array<Feature>;
+    }
+
+    /**
+     * At least one team.Feature must be included in the
+     * team.FeaturesGetValuesBatchArg.features list.
+     */
+    interface FeaturesGetValuesBatchErrorEmptyFeaturesList {
+      '.tag': 'empty_features_list';
+    }
+
+    interface FeaturesGetValuesBatchErrorOther {
+      '.tag': 'other';
+    }
+
+    type FeaturesGetValuesBatchError = FeaturesGetValuesBatchErrorEmptyFeaturesList | FeaturesGetValuesBatchErrorOther;
+
+    interface FeaturesGetValuesBatchResult {
+      values: Array<FeatureValue>;
     }
 
     /**
@@ -8010,11 +8239,11 @@ declare module DropboxTypes {
       /**
        * Member's first name.
        */
-      member_given_name: common.NamePart;
+      member_given_name?: common.NamePart;
       /**
        * Member's last name.
        */
-      member_surname: common.NamePart;
+      member_surname?: common.NamePart;
       /**
        * External ID for member.
        */
@@ -8192,7 +8421,7 @@ declare module DropboxTypes {
       /**
        * A user's account identifier.
        */
-      account_id?: users.AccountId;
+      account_id?: users_common.AccountId;
       /**
        * Email address of user.
        */
@@ -8820,7 +9049,7 @@ declare module DropboxTypes {
 
     interface RemovedStatus {
       /**
-       * True if the removed team member is recoverable
+       * True if the removed team member is recoverable.
        */
       is_recoverable: boolean;
     }
@@ -9145,18 +9374,49 @@ declare module DropboxTypes {
       limit?: number;
     }
 
+    interface TeamFolderListContinueArg {
+      /**
+       * Indicates from what point to get the next set of team folders.
+       */
+      cursor: string;
+    }
+
+    /**
+     * The cursor is invalid.
+     */
+    interface TeamFolderListContinueErrorInvalidCursor {
+      '.tag': 'invalid_cursor';
+    }
+
+    interface TeamFolderListContinueErrorOther {
+      '.tag': 'other';
+    }
+
+    type TeamFolderListContinueError = TeamFolderListContinueErrorInvalidCursor | TeamFolderListContinueErrorOther;
+
     interface TeamFolderListError {
       access_error: TeamFolderAccessError;
     }
 
     /**
-     * Result for teamFolderList().
+     * Result for teamFolderList() and teamFolderListContinue().
      */
     interface TeamFolderListResult {
       /**
        * List of all team folders in the authenticated team.
        */
       team_folders: Array<TeamFolderMetadata>;
+      /**
+       * Pass the cursor into teamFolderListContinue() to obtain additional team
+       * folders.
+       */
+      cursor: string;
+      /**
+       * Is true if there are additional team folders that have not been
+       * returned yet. An additional call to teamFolderListContinue() can
+       * retrieve them.
+       */
+      has_more: boolean;
     }
 
     /**
@@ -9335,6 +9595,42 @@ declare module DropboxTypes {
 
     type TeamMembershipType = TeamMembershipTypeFull | TeamMembershipTypeLimited;
 
+    /**
+     * The current token is not associated with a team admin, because mappings
+     * were not recorded when the token was created. Consider re-authorizing a
+     * new access token to record its authenticating admin.
+     */
+    interface TokenGetAuthenticatedAdminErrorMappingNotFound {
+      '.tag': 'mapping_not_found';
+    }
+
+    /**
+     * Either the team admin that authorized this token is no longer an active
+     * member of the team or no longer a team admin.
+     */
+    interface TokenGetAuthenticatedAdminErrorAdminNotActive {
+      '.tag': 'admin_not_active';
+    }
+
+    interface TokenGetAuthenticatedAdminErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Error returned by tokenGetAuthenticatedAdmin().
+     */
+    type TokenGetAuthenticatedAdminError = TokenGetAuthenticatedAdminErrorMappingNotFound | TokenGetAuthenticatedAdminErrorAdminNotActive | TokenGetAuthenticatedAdminErrorOther;
+
+    /**
+     * Results for tokenGetAuthenticatedAdmin().
+     */
+    interface TokenGetAuthenticatedAdminResult {
+      /**
+       * The admin who authorized the token.
+       */
+      admin_profile: TeamMemberProfile;
+    }
+
     interface UpdatePropertyTemplateArg {
       /**
        * An identifier for property template added by propertiesTemplateAdd().
@@ -9363,6 +9659,31 @@ declare module DropboxTypes {
        */
       template_id: properties.TemplateId;
     }
+
+    /**
+     * This team has unlimited upload API quota. So far both server version
+     * account and legacy  account type have unlimited monthly upload api quota.
+     */
+    interface UploadApiRateLimitValueUnlimited {
+      '.tag': 'unlimited';
+    }
+
+    /**
+     * The number of upload API calls allowed per month.
+     */
+    interface UploadApiRateLimitValueLimit {
+      '.tag': 'limit';
+      limit: number;
+    }
+
+    interface UploadApiRateLimitValueOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The value for Feature.upload_api_rate_limit.
+     */
+    type UploadApiRateLimitValue = UploadApiRateLimitValueUnlimited | UploadApiRateLimitValueLimit | UploadApiRateLimitValueOther;
 
     interface UserSelectorArgTeamMemberId {
       '.tag': 'team_member_id';
@@ -9539,6 +9860,8813 @@ declare module DropboxTypes {
 
   }
 
+  namespace team_log {
+    /**
+     * End user session details.
+     */
+    interface AccessMethodLogInfoEndUser {
+      '.tag': 'end_user';
+      end_user: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
+    }
+
+    /**
+     * Sign in as session details.
+     */
+    interface AccessMethodLogInfoSignInAs {
+      '.tag': 'sign_in_as';
+      sign_in_as: WebSessionLogInfo;
+    }
+
+    /**
+     * Content manager session details.
+     */
+    interface AccessMethodLogInfoContentManager {
+      '.tag': 'content_manager';
+      content_manager: WebSessionLogInfo;
+    }
+
+    /**
+     * Admin console session details.
+     */
+    interface AccessMethodLogInfoAdminConsole {
+      '.tag': 'admin_console';
+      admin_console: WebSessionLogInfo;
+    }
+
+    /**
+     * Api session details.
+     */
+    interface AccessMethodLogInfoApi {
+      '.tag': 'api';
+      api: ApiSessionLogInfo;
+    }
+
+    interface AccessMethodLogInfoOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Indicates the method in which the action was performed.
+     */
+    type AccessMethodLogInfo = AccessMethodLogInfoEndUser | AccessMethodLogInfoSignInAs | AccessMethodLogInfoContentManager | AccessMethodLogInfoAdminConsole | AccessMethodLogInfoApi | AccessMethodLogInfoOther;
+
+    /**
+     * Granted or revoked the option to enable account capture on domains
+     * belonging to the team.
+     */
+    interface AccountCaptureChangeAvailabilityDetails {
+    }
+
+    /**
+     * Changed the account capture policy on a domain belonging to the team.
+     */
+    interface AccountCaptureChangePolicyDetails {
+      /**
+       * New account capture policy.
+       */
+      new_value: AccountCapturePolicy;
+      /**
+       * Previous account capture policy. Might be missing due to historical
+       * data gap.
+       */
+      previous_value?: AccountCapturePolicy;
+    }
+
+    /**
+     * Account captured user migrated their account to the team.
+     */
+    interface AccountCaptureMigrateAccountDetails {
+      /**
+       * Domain names.
+       */
+      domain_name: Array<string>;
+    }
+
+    interface AccountCapturePolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface AccountCapturePolicyInvitedUsers {
+      '.tag': 'invited_users';
+    }
+
+    interface AccountCapturePolicyAllUsers {
+      '.tag': 'all_users';
+    }
+
+    interface AccountCapturePolicyOther {
+      '.tag': 'other';
+    }
+
+    type AccountCapturePolicy = AccountCapturePolicyDisabled | AccountCapturePolicyInvitedUsers | AccountCapturePolicyAllUsers | AccountCapturePolicyOther;
+
+    /**
+     * Account captured user relinquished their account by changing the email
+     * address associated with it.
+     */
+    interface AccountCaptureRelinquishAccountDetails {
+      /**
+       * Domain names.
+       */
+      domain_name: Array<string>;
+    }
+
+    /**
+     * The user who did the action.
+     */
+    interface ActorLogInfoUser {
+      '.tag': 'user';
+      user: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+    }
+
+    /**
+     * The admin who did the action.
+     */
+    interface ActorLogInfoAdmin {
+      '.tag': 'admin';
+      admin: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+    }
+
+    /**
+     * The application who did the action.
+     */
+    interface ActorLogInfoApp {
+      '.tag': 'app';
+      app: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+    }
+
+    /**
+     * Action done by reseller.
+     */
+    interface ActorLogInfoReseller {
+      '.tag': 'reseller';
+      reseller: ResellerLogInfo;
+    }
+
+    /**
+     * Action done by Dropbox.
+     */
+    interface ActorLogInfoDropbox {
+      '.tag': 'dropbox';
+    }
+
+    interface ActorLogInfoOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The entity who performed the action.
+     */
+    type ActorLogInfo = ActorLogInfoUser | ActorLogInfoAdmin | ActorLogInfoApp | ActorLogInfoReseller | ActorLogInfoDropbox | ActorLogInfoOther;
+
+    /**
+     * Disabled allow downloads.
+     */
+    interface AllowDownloadDisabledDetails {
+    }
+
+    /**
+     * Enabled allow downloads.
+     */
+    interface AllowDownloadEnabledDetails {
+    }
+
+    /**
+     * Api session.
+     */
+    interface ApiSessionLogInfo {
+      /**
+       * Api request ID.
+       */
+      request_id: RequestId;
+    }
+
+    /**
+     * Linked an app for team.
+     */
+    interface AppLinkTeamDetails {
+      /**
+       * Relevant application details.
+       */
+      app_info: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+    }
+
+    /**
+     * Linked an app for team member.
+     */
+    interface AppLinkUserDetails {
+      /**
+       * Relevant application details.
+       */
+      app_info: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+    }
+
+    /**
+     * App's logged information.
+     */
+    interface AppLogInfo {
+      /**
+       * App unique ID. Might be missing due to historical data gap.
+       */
+      app_id?: AppId;
+      /**
+       * App display name. Might be missing due to historical data gap.
+       */
+      display_name?: string;
+    }
+
+    /**
+     * Reference to the AppLogInfo polymorphic type. Contains a .tag property to
+     * let you discriminate between possible subtypes.
+     */
+    interface AppLogInfoReference extends AppLogInfo {
+      /**
+       * Tag identifying the subtype variant.
+       */
+      '.tag': "user_or_team_linked_app"|"user_linked_app"|"team_linked_app";
+    }
+
+    /**
+     * Unlinked an app for team.
+     */
+    interface AppUnlinkTeamDetails {
+      /**
+       * Relevant application details.
+       */
+      app_info: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+    }
+
+    /**
+     * Unlinked an app for team member.
+     */
+    interface AppUnlinkUserDetails {
+      /**
+       * Relevant application details.
+       */
+      app_info: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+    }
+
+    /**
+     * File's details.
+     */
+    interface AssetLogInfoFile {
+      '.tag': 'file';
+      file: FileLogInfo;
+    }
+
+    /**
+     * Folder's details.
+     */
+    interface AssetLogInfoFolder {
+      '.tag': 'folder';
+      folder: FolderLogInfo;
+    }
+
+    /**
+     * Paper docuement's details.
+     */
+    interface AssetLogInfoPaperDocument {
+      '.tag': 'paper_document';
+      paper_document: PaperDocumentLogInfo;
+    }
+
+    /**
+     * Paper folder's details.
+     */
+    interface AssetLogInfoPaperFolder {
+      '.tag': 'paper_folder';
+      paper_folder: PaperFolderLogInfo;
+    }
+
+    interface AssetLogInfoOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Asset details.
+     */
+    type AssetLogInfo = AssetLogInfoFile | AssetLogInfoFolder | AssetLogInfoPaperDocument | AssetLogInfoPaperFolder | AssetLogInfoOther;
+
+    /**
+     * Shared an album.
+     */
+    interface CollectionShareDetails {
+      /**
+       * Album name.
+       */
+      album_name: string;
+    }
+
+    interface ConfidentialityConfidential {
+      '.tag': 'confidential';
+    }
+
+    interface ConfidentialityNonConfidential {
+      '.tag': 'non_confidential';
+    }
+
+    interface ConfidentialityOther {
+      '.tag': 'other';
+    }
+
+    type Confidentiality = ConfidentialityConfidential | ConfidentialityNonConfidential | ConfidentialityOther;
+
+    /**
+     * Action was done on behalf of a team member.
+     */
+    interface ContextLogInfoTeamMember {
+      '.tag': 'team_member';
+      team_member: TeamMemberLogInfo;
+    }
+
+    /**
+     * Action was done on behalf of a non team member.
+     */
+    interface ContextLogInfoNonTeamMember {
+      '.tag': 'non_team_member';
+      non_team_member: NonTeamMemberLogInfo;
+    }
+
+    /**
+     * Action was done on behalf of the team.
+     */
+    interface ContextLogInfoTeam {
+      '.tag': 'team';
+    }
+
+    interface ContextLogInfoOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The primary entity on which the action was done.
+     */
+    type ContextLogInfo = ContextLogInfoTeamMember | ContextLogInfoNonTeamMember | ContextLogInfoTeam | ContextLogInfoOther;
+
+    /**
+     * Created folders.
+     */
+    interface CreateFolderDetails {
+    }
+
+    /**
+     * Set a restriction policy regarding the location of data centers where
+     * team data resides.
+     */
+    interface DataPlacementRestrictionChangePolicyDetails {
+      /**
+       * Previous placement restriction.
+       */
+      previous_value: PlacementRestriction;
+      /**
+       * New placement restriction.
+       */
+      new_value: PlacementRestriction;
+    }
+
+    /**
+     * Satisfied a previously set restriction policy regarding the location of
+     * data centers where team data resides (i.e. all data have been migrated
+     * according to the restriction placed).
+     */
+    interface DataPlacementRestrictionSatisfyPolicyDetails {
+      /**
+       * Placement restriction.
+       */
+      placement_restriction: PlacementRestriction;
+    }
+
+    /**
+     * Desktop session.
+     */
+    interface DesktopSessionLogInfo extends SessionLogInfo {
+    }
+
+    /**
+     * Reference to the DesktopSessionLogInfo type, identified by the value of
+     * the .tag property.
+     */
+    interface DesktopSessionLogInfoReference extends DesktopSessionLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'desktop';
+    }
+
+    /**
+     * Set or removed a limit on the number of computers each team member can
+     * link to their work Dropbox account.
+     */
+    interface DeviceApprovalsChangeDesktopPolicyDetails {
+      /**
+       * New desktop device approvals policy. Might be missing due to historical
+       * data gap.
+       */
+      new_value?: DeviceApprovalsPolicy;
+      /**
+       * Previous desktop device approvals policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: DeviceApprovalsPolicy;
+    }
+
+    /**
+     * Set or removed a limit on the number of mobiles devices each team member
+     * can link to their work Dropbox account.
+     */
+    interface DeviceApprovalsChangeMobilePolicyDetails {
+      /**
+       * New mobile device approvals policy. Might be missing due to historical
+       * data gap.
+       */
+      new_value?: DeviceApprovalsPolicy;
+      /**
+       * Previous mobile device approvals policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: DeviceApprovalsPolicy;
+    }
+
+    /**
+     * Changed the action taken when a team member is already over the limits
+     * (e.g when they join the team, an admin lowers limits, etc.).
+     */
+    interface DeviceApprovalsChangeOverageActionDetails {
+      /**
+       * New over the limits policy. Might be missing due to historical data
+       * gap.
+       */
+      new_value?: DeviceApprovalsRolloutPolicy;
+      /**
+       * Previous over the limit policy. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: DeviceApprovalsRolloutPolicy;
+    }
+
+    /**
+     * Changed the action taken with respect to approval limits when a team
+     * member unlinks an approved device.
+     */
+    interface DeviceApprovalsChangeUnlinkActionDetails {
+      /**
+       * New device unlink policy. Might be missing due to historical data gap.
+       */
+      new_value?: DeviceUnlinkPolicy;
+      /**
+       * Previous device unlink policy. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: DeviceUnlinkPolicy;
+    }
+
+    interface DeviceApprovalsPolicyUnlimited {
+      '.tag': 'unlimited';
+    }
+
+    interface DeviceApprovalsPolicyZero {
+      '.tag': 'zero';
+    }
+
+    interface DeviceApprovalsPolicyOne {
+      '.tag': 'one';
+    }
+
+    interface DeviceApprovalsPolicyTwo {
+      '.tag': 'two';
+    }
+
+    interface DeviceApprovalsPolicyThree {
+      '.tag': 'three';
+    }
+
+    interface DeviceApprovalsPolicyFour {
+      '.tag': 'four';
+    }
+
+    interface DeviceApprovalsPolicyFive {
+      '.tag': 'five';
+    }
+
+    interface DeviceApprovalsPolicyOther {
+      '.tag': 'other';
+    }
+
+    type DeviceApprovalsPolicy = DeviceApprovalsPolicyUnlimited | DeviceApprovalsPolicyZero | DeviceApprovalsPolicyOne | DeviceApprovalsPolicyTwo | DeviceApprovalsPolicyThree | DeviceApprovalsPolicyFour | DeviceApprovalsPolicyFive | DeviceApprovalsPolicyOther;
+
+    interface DeviceApprovalsRolloutPolicyRemoveOldest {
+      '.tag': 'remove_oldest';
+    }
+
+    interface DeviceApprovalsRolloutPolicyRemoveAll {
+      '.tag': 'remove_all';
+    }
+
+    interface DeviceApprovalsRolloutPolicyAddException {
+      '.tag': 'add_exception';
+    }
+
+    interface DeviceApprovalsRolloutPolicyOther {
+      '.tag': 'other';
+    }
+
+    type DeviceApprovalsRolloutPolicy = DeviceApprovalsRolloutPolicyRemoveOldest | DeviceApprovalsRolloutPolicyRemoveAll | DeviceApprovalsRolloutPolicyAddException | DeviceApprovalsRolloutPolicyOther;
+
+    /**
+     * IP address associated with active desktop session changed.
+     */
+    interface DeviceChangeIpDesktopDetails {
+      /**
+       * Device information.
+       */
+      device_info: DeviceLogInfo;
+    }
+
+    /**
+     * IP address associated with active mobile session changed.
+     */
+    interface DeviceChangeIpMobileDetails {
+      /**
+       * Device information.
+       */
+      device_info: DeviceLogInfo;
+    }
+
+    /**
+     * IP address associated with active Web session changed.
+     */
+    interface DeviceChangeIpWebDetails {
+      /**
+       * Web browser name.
+       */
+      user_agent: string;
+    }
+
+    /**
+     * Failed to delete all files from an unlinked device.
+     */
+    interface DeviceDeleteOnUnlinkFailDetails {
+      /**
+       * Device information.
+       */
+      device_info: DeviceLogInfo;
+      /**
+       * The number of times that remote file deletion failed.
+       */
+      num_failures: number;
+    }
+
+    /**
+     * Deleted all files from an unlinked device.
+     */
+    interface DeviceDeleteOnUnlinkSuccessDetails {
+      /**
+       * Device information.
+       */
+      device_info: DeviceLogInfo;
+    }
+
+    /**
+     * Failed to link a device.
+     */
+    interface DeviceLinkFailDetails {
+      /**
+       * A description of the device used while user approval blocked.
+       */
+      device_type: DeviceType;
+    }
+
+    /**
+     * Linked a device.
+     */
+    interface DeviceLinkSuccessDetails {
+      /**
+       * Device information.
+       */
+      device_info: DeviceLogInfo;
+      /**
+       * Linking app version. Might be missing due to historical data gap.
+       */
+      app_version?: string;
+    }
+
+    /**
+     * Device's logged information.
+     */
+    interface DeviceLogInfo {
+      /**
+       * Device unique id. Might be missing due to historical data gap.
+       */
+      device_id?: string;
+      /**
+       * Device display name. Might be missing due to historical data gap.
+       */
+      display_name?: string;
+      /**
+       * True if this device is emm managed, false otherwise. Might be missing
+       * due to historical data gap.
+       */
+      is_emm_managed?: boolean;
+      /**
+       * Device platform name. Might be missing due to historical data gap.
+       */
+      platform?: string;
+      /**
+       * Device mac address. Might be missing due to historical data gap.
+       */
+      mac_address?: string;
+      /**
+       * Device OS version. Might be missing due to historical data gap.
+       */
+      os_version?: string;
+      /**
+       * Device type. Might be missing due to historical data gap.
+       */
+      device_type?: string;
+      /**
+       * IP address. Might be missing due to historical data gap.
+       */
+      ip_address?: IpAddress;
+      /**
+       * Last activity. Might be missing due to historical data gap.
+       */
+      last_activity?: string;
+    }
+
+    /**
+     * Disable Device Management.
+     */
+    interface DeviceManagementDisabledDetails {
+    }
+
+    /**
+     * Enable Device Management.
+     */
+    interface DeviceManagementEnabledDetails {
+    }
+
+    interface DeviceTypeMobile {
+      '.tag': 'mobile';
+    }
+
+    interface DeviceTypeDesktop {
+      '.tag': 'desktop';
+    }
+
+    interface DeviceTypeOther {
+      '.tag': 'other';
+    }
+
+    type DeviceType = DeviceTypeMobile | DeviceTypeDesktop | DeviceTypeOther;
+
+    /**
+     * Disconnected a device.
+     */
+    interface DeviceUnlinkDetails {
+      /**
+       * Device information.
+       */
+      device_info: DeviceLogInfo;
+      /**
+       * True if the user requested to delete data after device unlink, false
+       * otherwise.
+       */
+      delete_data: boolean;
+    }
+
+    interface DeviceUnlinkPolicyRemove {
+      '.tag': 'remove';
+    }
+
+    interface DeviceUnlinkPolicyKeep {
+      '.tag': 'keep';
+    }
+
+    interface DeviceUnlinkPolicyOther {
+      '.tag': 'other';
+    }
+
+    type DeviceUnlinkPolicy = DeviceUnlinkPolicyRemove | DeviceUnlinkPolicyKeep | DeviceUnlinkPolicyOther;
+
+    /**
+     * Disabled domain invites.
+     */
+    interface DisabledDomainInvitesDetails {
+    }
+
+    /**
+     * Approved a member's request to join the team.
+     */
+    interface DomainInvitesApproveRequestToJoinTeamDetails {
+    }
+
+    /**
+     * Declined a user's request to join the team.
+     */
+    interface DomainInvitesDeclineRequestToJoinTeamDetails {
+    }
+
+    /**
+     * Sent domain invites to existing domain accounts.
+     */
+    interface DomainInvitesEmailExistingUsersDetails {
+      /**
+       * Domain names.
+       */
+      domain_name: Array<string>;
+      /**
+       * Number of recipients.
+       */
+      num_recipients: number;
+    }
+
+    /**
+     * Asked to join the team.
+     */
+    interface DomainInvitesRequestToJoinTeamDetails {
+    }
+
+    /**
+     * Turned off u201cAutomatically invite new usersu201d.
+     */
+    interface DomainInvitesSetInviteNewUserPrefToNoDetails {
+    }
+
+    /**
+     * Turned on u201cAutomatically invite new usersu201d.
+     */
+    interface DomainInvitesSetInviteNewUserPrefToYesDetails {
+    }
+
+    /**
+     * Failed to verify a domain belonging to the team.
+     */
+    interface DomainVerificationAddDomainFailDetails {
+      /**
+       * Domain names.
+       */
+      domain_names: Array<string>;
+      /**
+       * Domain name verification method.
+       */
+      verification_method?: string;
+    }
+
+    /**
+     * Verified a domain belonging to the team.
+     */
+    interface DomainVerificationAddDomainSuccessDetails {
+      /**
+       * Domain names.
+       */
+      domain_names: Array<string>;
+      /**
+       * Domain name verification method.
+       */
+      verification_method?: string;
+    }
+
+    /**
+     * Removed a domain from the list of verified domains belonging to the team.
+     */
+    interface DomainVerificationRemoveDomainDetails {
+      /**
+       * Domain names.
+       */
+      domain_names: Array<string>;
+    }
+
+    /**
+     * Added an exception for one or more team members to optionally use the
+     * regular Dropbox app when EMM is enabled.
+     */
+    interface EmmAddExceptionDetails {
+    }
+
+    /**
+     * Enabled or disabled enterprise mobility management for team members.
+     */
+    interface EmmChangePolicyDetails {
+      /**
+       * New enterprise mobility management policy.
+       */
+      new_value: OptionalChangePolicy;
+      /**
+       * Previous enterprise mobility management policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: OptionalChangePolicy;
+    }
+
+    /**
+     * EMM excluded users report created.
+     */
+    interface EmmCreateExceptionsReportDetails {
+    }
+
+    /**
+     * EMM mobile app usage report created.
+     */
+    interface EmmCreateUsageReportDetails {
+    }
+
+    /**
+     * Signed in using the Dropbox EMM app.
+     */
+    interface EmmLoginSuccessDetails {
+    }
+
+    /**
+     * Refreshed the auth token used for setting up enterprise mobility
+     * management.
+     */
+    interface EmmRefreshAuthTokenDetails {
+    }
+
+    /**
+     * Removed an exception for one or more team members to optionally use the
+     * regular Dropbox app when EMM is enabled.
+     */
+    interface EmmRemoveExceptionDetails {
+    }
+
+    interface EnableDisableChangePolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface EnableDisableChangePolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface EnableDisableChangePolicyOther {
+      '.tag': 'other';
+    }
+
+    type EnableDisableChangePolicy = EnableDisableChangePolicyDisabled | EnableDisableChangePolicyEnabled | EnableDisableChangePolicyOther;
+
+    /**
+     * Enabled domain invites.
+     */
+    interface EnabledDomainInvitesDetails {
+    }
+
+    /**
+     * Events that have to do with account capture and invite enforcement on
+     * team-owned domains.
+     */
+    interface EventCategoryAccountCapture {
+      '.tag': 'account_capture';
+    }
+
+    /**
+     * Events that relate to team and team member account administration or team
+     * administration. Note that these actions are not necessarily performed by
+     * team admins. They might also be performed by Dropbox Support or System or
+     * by team members on their own accounts.
+     */
+    interface EventCategoryAdministration {
+      '.tag': 'administration';
+    }
+
+    /**
+     * Events that apply to management of linked apps.
+     */
+    interface EventCategoryApps {
+      '.tag': 'apps';
+    }
+
+    /**
+     * Events that apply to user authentication in some way.
+     */
+    interface EventCategoryAuthentication {
+      '.tag': 'authentication';
+    }
+
+    /**
+     * Events that have to do with comments on files and Paper documents.
+     */
+    interface EventCategoryComments {
+      '.tag': 'comments';
+    }
+
+    /**
+     * Events that apply to changes how people can access content on Dropbox as
+     * well as actions that represent actually accessing content.
+     */
+    interface EventCategoryContentAccess {
+      '.tag': 'content_access';
+    }
+
+    /**
+     * Events that apply to linked devices on mobile, desktop and Web platforms.
+     */
+    interface EventCategoryDevices {
+      '.tag': 'devices';
+    }
+
+    /**
+     * Events that concern device approvals and device management.
+     */
+    interface EventCategoryDeviceApprovals {
+      '.tag': 'device_approvals';
+    }
+
+    /**
+     * Events that involve domain management feature: domain verification,
+     * invite enforcement and account capture.
+     */
+    interface EventCategoryDomains {
+      '.tag': 'domains';
+    }
+
+    /**
+     * Events that involve enterprise mobility management and the Dropbox EMM
+     * app.
+     */
+    interface EventCategoryEmm {
+      '.tag': 'emm';
+    }
+
+    /**
+     * Events that mark some type of unexpected outcome.
+     */
+    interface EventCategoryErrors {
+      '.tag': 'errors';
+    }
+
+    /**
+     * Events that mark a user's interaction with files and folders on Dropbox.
+     */
+    interface EventCategoryFiles {
+      '.tag': 'files';
+    }
+
+    /**
+     * Events that have to do with filesystem operations on files and folders:
+     * copy, move, delete, etc.
+     */
+    interface EventCategoryFileOperations {
+      '.tag': 'file_operations';
+    }
+
+    /**
+     * Events that apply to the file requests feature.
+     */
+    interface EventCategoryFileRequests {
+      '.tag': 'file_requests';
+    }
+
+    /**
+     * Events that involve group management.
+     */
+    interface EventCategoryGroups {
+      '.tag': 'groups';
+    }
+
+    /**
+     * Events that involve users signing in to or out of Dropbox.
+     */
+    interface EventCategoryLogins {
+      '.tag': 'logins';
+    }
+
+    /**
+     * Events that involve team member management.
+     */
+    interface EventCategoryMembers {
+      '.tag': 'members';
+    }
+
+    /**
+     * Events that apply to Dropbox Paper.
+     */
+    interface EventCategoryPaper {
+      '.tag': 'paper';
+    }
+
+    /**
+     * Events that involve using, changing or resetting passwords.
+     */
+    interface EventCategoryPasswords {
+      '.tag': 'passwords';
+    }
+
+    /**
+     * Events that concern generation of admin reports, including team activity
+     * and device usage.
+     */
+    interface EventCategoryReports {
+      '.tag': 'reports';
+    }
+
+    /**
+     * Events that mark the beginning or end of sessions as well as those that
+     * apply to an ongoing session.
+     */
+    interface EventCategorySessions {
+      '.tag': 'sessions';
+    }
+
+    /**
+     * Events that specifically apply to shared files.
+     */
+    interface EventCategorySharedFiles {
+      '.tag': 'shared_files';
+    }
+
+    /**
+     * Events that specifically apply to shared folders.
+     */
+    interface EventCategorySharedFolders {
+      '.tag': 'shared_folders';
+    }
+
+    /**
+     * Events that specifically apply to link sharing.
+     */
+    interface EventCategorySharedLinks {
+      '.tag': 'shared_links';
+    }
+
+    /**
+     * Events that apply to all types of sharing and collaboration.
+     */
+    interface EventCategorySharing {
+      '.tag': 'sharing';
+    }
+
+    /**
+     * Events that concern policies that affect sharing - both at the team level
+     * and at the folder level.
+     */
+    interface EventCategorySharingPolicies {
+      '.tag': 'sharing_policies';
+    }
+
+    /**
+     * Events that involve using or configuring single sign-on as well as
+     * administrative policies concerning single sign-on.
+     */
+    interface EventCategorySso {
+      '.tag': 'sso';
+    }
+
+    /**
+     * Events that involve team folder management.
+     */
+    interface EventCategoryTeamFolders {
+      '.tag': 'team_folders';
+    }
+
+    /**
+     * Events that involve a change in team-wide policies.
+     */
+    interface EventCategoryTeamPolicies {
+      '.tag': 'team_policies';
+    }
+
+    /**
+     * Events that involve a change in the team profile.
+     */
+    interface EventCategoryTeamProfile {
+      '.tag': 'team_profile';
+    }
+
+    /**
+     * Events that involve using or configuring two factor authentication as
+     * well as administrative policies concerning two factor authentication.
+     */
+    interface EventCategoryTfa {
+      '.tag': 'tfa';
+    }
+
+    interface EventCategoryOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Category of events in event audit log.
+     */
+    type EventCategory = EventCategoryAccountCapture | EventCategoryAdministration | EventCategoryApps | EventCategoryAuthentication | EventCategoryComments | EventCategoryContentAccess | EventCategoryDevices | EventCategoryDeviceApprovals | EventCategoryDomains | EventCategoryEmm | EventCategoryErrors | EventCategoryFiles | EventCategoryFileOperations | EventCategoryFileRequests | EventCategoryGroups | EventCategoryLogins | EventCategoryMembers | EventCategoryPaper | EventCategoryPasswords | EventCategoryReports | EventCategorySessions | EventCategorySharedFiles | EventCategorySharedFolders | EventCategorySharedLinks | EventCategorySharing | EventCategorySharingPolicies | EventCategorySso | EventCategoryTeamFolders | EventCategoryTeamPolicies | EventCategoryTeamProfile | EventCategoryTfa | EventCategoryOther;
+
+    /**
+     * Changed the membership type (limited vs full) for team member.
+     */
+    interface EventDetailsMemberChangeMembershipTypeDetails {
+      '.tag': 'member_change_membership_type_details';
+      member_change_membership_type_details: MemberChangeMembershipTypeDetails;
+    }
+
+    /**
+     * Permanently deleted contents of a removed team member account.
+     */
+    interface EventDetailsMemberPermanentlyDeleteAccountContentsDetails {
+      '.tag': 'member_permanently_delete_account_contents_details';
+      member_permanently_delete_account_contents_details: MemberPermanentlyDeleteAccountContentsDetails;
+    }
+
+    /**
+     * Changed the status with respect to whether the team member is under or
+     * over storage quota specified by policy.
+     */
+    interface EventDetailsMemberSpaceLimitsChangeStatusDetails {
+      '.tag': 'member_space_limits_change_status_details';
+      member_space_limits_change_status_details: MemberSpaceLimitsChangeStatusDetails;
+    }
+
+    /**
+     * Transferred contents of a removed team member account to another member.
+     */
+    interface EventDetailsMemberTransferAccountContentsDetails {
+      '.tag': 'member_transfer_account_contents_details';
+      member_transfer_account_contents_details: MemberTransferAccountContentsDetails;
+    }
+
+    /**
+     * Users added to Paper enabled users list.
+     */
+    interface EventDetailsPaperEnabledUsersGroupAdditionDetails {
+      '.tag': 'paper_enabled_users_group_addition_details';
+      paper_enabled_users_group_addition_details: PaperEnabledUsersGroupAdditionDetails;
+    }
+
+    /**
+     * Users removed from Paper enabled users list.
+     */
+    interface EventDetailsPaperEnabledUsersGroupRemovalDetails {
+      '.tag': 'paper_enabled_users_group_removal_details';
+      paper_enabled_users_group_removal_details: PaperEnabledUsersGroupRemovalDetails;
+    }
+
+    /**
+     * Paper external sharing policy changed: anyone.
+     */
+    interface EventDetailsPaperExternalViewAllowDetails {
+      '.tag': 'paper_external_view_allow_details';
+      paper_external_view_allow_details: PaperExternalViewAllowDetails;
+    }
+
+    /**
+     * Paper external sharing policy changed: default team.
+     */
+    interface EventDetailsPaperExternalViewDefaultTeamDetails {
+      '.tag': 'paper_external_view_default_team_details';
+      paper_external_view_default_team_details: PaperExternalViewDefaultTeamDetails;
+    }
+
+    /**
+     * Paper external sharing policy changed: team-only.
+     */
+    interface EventDetailsPaperExternalViewForbidDetails {
+      '.tag': 'paper_external_view_forbid_details';
+      paper_external_view_forbid_details: PaperExternalViewForbidDetails;
+    }
+
+    /**
+     * Admin settings: team members see a warning before sharing folders outside
+     * the team (DEPRECATED FEATURE).
+     */
+    interface EventDetailsSfExternalInviteWarnDetails {
+      '.tag': 'sf_external_invite_warn_details';
+      sf_external_invite_warn_details: SfExternalInviteWarnDetails;
+    }
+
+    /**
+     * Merged the team into another team.
+     */
+    interface EventDetailsTeamMergeDetails {
+      '.tag': 'team_merge_details';
+      team_merge_details: TeamMergeDetails;
+    }
+
+    /**
+     * Linked an app for team.
+     */
+    interface EventDetailsAppLinkTeamDetails {
+      '.tag': 'app_link_team_details';
+      app_link_team_details: AppLinkTeamDetails;
+    }
+
+    /**
+     * Linked an app for team member.
+     */
+    interface EventDetailsAppLinkUserDetails {
+      '.tag': 'app_link_user_details';
+      app_link_user_details: AppLinkUserDetails;
+    }
+
+    /**
+     * Unlinked an app for team.
+     */
+    interface EventDetailsAppUnlinkTeamDetails {
+      '.tag': 'app_unlink_team_details';
+      app_unlink_team_details: AppUnlinkTeamDetails;
+    }
+
+    /**
+     * Unlinked an app for team member.
+     */
+    interface EventDetailsAppUnlinkUserDetails {
+      '.tag': 'app_unlink_user_details';
+      app_unlink_user_details: AppUnlinkUserDetails;
+    }
+
+    /**
+     * IP address associated with active desktop session changed.
+     */
+    interface EventDetailsDeviceChangeIpDesktopDetails {
+      '.tag': 'device_change_ip_desktop_details';
+      device_change_ip_desktop_details: DeviceChangeIpDesktopDetails;
+    }
+
+    /**
+     * IP address associated with active mobile session changed.
+     */
+    interface EventDetailsDeviceChangeIpMobileDetails {
+      '.tag': 'device_change_ip_mobile_details';
+      device_change_ip_mobile_details: DeviceChangeIpMobileDetails;
+    }
+
+    /**
+     * IP address associated with active Web session changed.
+     */
+    interface EventDetailsDeviceChangeIpWebDetails {
+      '.tag': 'device_change_ip_web_details';
+      device_change_ip_web_details: DeviceChangeIpWebDetails;
+    }
+
+    /**
+     * Failed to delete all files from an unlinked device.
+     */
+    interface EventDetailsDeviceDeleteOnUnlinkFailDetails {
+      '.tag': 'device_delete_on_unlink_fail_details';
+      device_delete_on_unlink_fail_details: DeviceDeleteOnUnlinkFailDetails;
+    }
+
+    /**
+     * Deleted all files from an unlinked device.
+     */
+    interface EventDetailsDeviceDeleteOnUnlinkSuccessDetails {
+      '.tag': 'device_delete_on_unlink_success_details';
+      device_delete_on_unlink_success_details: DeviceDeleteOnUnlinkSuccessDetails;
+    }
+
+    /**
+     * Failed to link a device.
+     */
+    interface EventDetailsDeviceLinkFailDetails {
+      '.tag': 'device_link_fail_details';
+      device_link_fail_details: DeviceLinkFailDetails;
+    }
+
+    /**
+     * Linked a device.
+     */
+    interface EventDetailsDeviceLinkSuccessDetails {
+      '.tag': 'device_link_success_details';
+      device_link_success_details: DeviceLinkSuccessDetails;
+    }
+
+    /**
+     * Disable Device Management.
+     */
+    interface EventDetailsDeviceManagementDisabledDetails {
+      '.tag': 'device_management_disabled_details';
+      device_management_disabled_details: DeviceManagementDisabledDetails;
+    }
+
+    /**
+     * Enable Device Management.
+     */
+    interface EventDetailsDeviceManagementEnabledDetails {
+      '.tag': 'device_management_enabled_details';
+      device_management_enabled_details: DeviceManagementEnabledDetails;
+    }
+
+    /**
+     * Disconnected a device.
+     */
+    interface EventDetailsDeviceUnlinkDetails {
+      '.tag': 'device_unlink_details';
+      device_unlink_details: DeviceUnlinkDetails;
+    }
+
+    /**
+     * Refreshed the auth token used for setting up enterprise mobility
+     * management.
+     */
+    interface EventDetailsEmmRefreshAuthTokenDetails {
+      '.tag': 'emm_refresh_auth_token_details';
+      emm_refresh_auth_token_details: EmmRefreshAuthTokenDetails;
+    }
+
+    /**
+     * Granted or revoked the option to enable account capture on domains
+     * belonging to the team.
+     */
+    interface EventDetailsAccountCaptureChangeAvailabilityDetails {
+      '.tag': 'account_capture_change_availability_details';
+      account_capture_change_availability_details: AccountCaptureChangeAvailabilityDetails;
+    }
+
+    /**
+     * Account captured user migrated their account to the team.
+     */
+    interface EventDetailsAccountCaptureMigrateAccountDetails {
+      '.tag': 'account_capture_migrate_account_details';
+      account_capture_migrate_account_details: AccountCaptureMigrateAccountDetails;
+    }
+
+    /**
+     * Account captured user relinquished their account by changing the email
+     * address associated with it.
+     */
+    interface EventDetailsAccountCaptureRelinquishAccountDetails {
+      '.tag': 'account_capture_relinquish_account_details';
+      account_capture_relinquish_account_details: AccountCaptureRelinquishAccountDetails;
+    }
+
+    /**
+     * Disabled domain invites.
+     */
+    interface EventDetailsDisabledDomainInvitesDetails {
+      '.tag': 'disabled_domain_invites_details';
+      disabled_domain_invites_details: DisabledDomainInvitesDetails;
+    }
+
+    /**
+     * Approved a member's request to join the team.
+     */
+    interface EventDetailsDomainInvitesApproveRequestToJoinTeamDetails {
+      '.tag': 'domain_invites_approve_request_to_join_team_details';
+      domain_invites_approve_request_to_join_team_details: DomainInvitesApproveRequestToJoinTeamDetails;
+    }
+
+    /**
+     * Declined a user's request to join the team.
+     */
+    interface EventDetailsDomainInvitesDeclineRequestToJoinTeamDetails {
+      '.tag': 'domain_invites_decline_request_to_join_team_details';
+      domain_invites_decline_request_to_join_team_details: DomainInvitesDeclineRequestToJoinTeamDetails;
+    }
+
+    /**
+     * Sent domain invites to existing domain accounts.
+     */
+    interface EventDetailsDomainInvitesEmailExistingUsersDetails {
+      '.tag': 'domain_invites_email_existing_users_details';
+      domain_invites_email_existing_users_details: DomainInvitesEmailExistingUsersDetails;
+    }
+
+    /**
+     * Asked to join the team.
+     */
+    interface EventDetailsDomainInvitesRequestToJoinTeamDetails {
+      '.tag': 'domain_invites_request_to_join_team_details';
+      domain_invites_request_to_join_team_details: DomainInvitesRequestToJoinTeamDetails;
+    }
+
+    /**
+     * Turned off u201cAutomatically invite new usersu201d.
+     */
+    interface EventDetailsDomainInvitesSetInviteNewUserPrefToNoDetails {
+      '.tag': 'domain_invites_set_invite_new_user_pref_to_no_details';
+      domain_invites_set_invite_new_user_pref_to_no_details: DomainInvitesSetInviteNewUserPrefToNoDetails;
+    }
+
+    /**
+     * Turned on u201cAutomatically invite new usersu201d.
+     */
+    interface EventDetailsDomainInvitesSetInviteNewUserPrefToYesDetails {
+      '.tag': 'domain_invites_set_invite_new_user_pref_to_yes_details';
+      domain_invites_set_invite_new_user_pref_to_yes_details: DomainInvitesSetInviteNewUserPrefToYesDetails;
+    }
+
+    /**
+     * Failed to verify a domain belonging to the team.
+     */
+    interface EventDetailsDomainVerificationAddDomainFailDetails {
+      '.tag': 'domain_verification_add_domain_fail_details';
+      domain_verification_add_domain_fail_details: DomainVerificationAddDomainFailDetails;
+    }
+
+    /**
+     * Verified a domain belonging to the team.
+     */
+    interface EventDetailsDomainVerificationAddDomainSuccessDetails {
+      '.tag': 'domain_verification_add_domain_success_details';
+      domain_verification_add_domain_success_details: DomainVerificationAddDomainSuccessDetails;
+    }
+
+    /**
+     * Removed a domain from the list of verified domains belonging to the team.
+     */
+    interface EventDetailsDomainVerificationRemoveDomainDetails {
+      '.tag': 'domain_verification_remove_domain_details';
+      domain_verification_remove_domain_details: DomainVerificationRemoveDomainDetails;
+    }
+
+    /**
+     * Enabled domain invites.
+     */
+    interface EventDetailsEnabledDomainInvitesDetails {
+      '.tag': 'enabled_domain_invites_details';
+      enabled_domain_invites_details: EnabledDomainInvitesDetails;
+    }
+
+    /**
+     * Created folders.
+     */
+    interface EventDetailsCreateFolderDetails {
+      '.tag': 'create_folder_details';
+      create_folder_details: CreateFolderDetails;
+    }
+
+    /**
+     * Added files and/or folders.
+     */
+    interface EventDetailsFileAddDetails {
+      '.tag': 'file_add_details';
+      file_add_details: FileAddDetails;
+    }
+
+    /**
+     * Copied files and/or folders.
+     */
+    interface EventDetailsFileCopyDetails {
+      '.tag': 'file_copy_details';
+      file_copy_details: FileCopyDetails;
+    }
+
+    /**
+     * Deleted files and/or folders.
+     */
+    interface EventDetailsFileDeleteDetails {
+      '.tag': 'file_delete_details';
+      file_delete_details: FileDeleteDetails;
+    }
+
+    /**
+     * Downloaded files and/or folders.
+     */
+    interface EventDetailsFileDownloadDetails {
+      '.tag': 'file_download_details';
+      file_download_details: FileDownloadDetails;
+    }
+
+    /**
+     * Edited files.
+     */
+    interface EventDetailsFileEditDetails {
+      '.tag': 'file_edit_details';
+      file_edit_details: FileEditDetails;
+    }
+
+    /**
+     * Create a copy reference to a file or folder.
+     */
+    interface EventDetailsFileGetCopyReferenceDetails {
+      '.tag': 'file_get_copy_reference_details';
+      file_get_copy_reference_details: FileGetCopyReferenceDetails;
+    }
+
+    /**
+     * Moved files and/or folders.
+     */
+    interface EventDetailsFileMoveDetails {
+      '.tag': 'file_move_details';
+      file_move_details: FileMoveDetails;
+    }
+
+    /**
+     * Permanently deleted files and/or folders.
+     */
+    interface EventDetailsFilePermanentlyDeleteDetails {
+      '.tag': 'file_permanently_delete_details';
+      file_permanently_delete_details: FilePermanentlyDeleteDetails;
+    }
+
+    /**
+     * Previewed files and/or folders.
+     */
+    interface EventDetailsFilePreviewDetails {
+      '.tag': 'file_preview_details';
+      file_preview_details: FilePreviewDetails;
+    }
+
+    /**
+     * Renamed files and/or folders.
+     */
+    interface EventDetailsFileRenameDetails {
+      '.tag': 'file_rename_details';
+      file_rename_details: FileRenameDetails;
+    }
+
+    /**
+     * Restored deleted files and/or folders.
+     */
+    interface EventDetailsFileRestoreDetails {
+      '.tag': 'file_restore_details';
+      file_restore_details: FileRestoreDetails;
+    }
+
+    /**
+     * Reverted files to a previous version.
+     */
+    interface EventDetailsFileRevertDetails {
+      '.tag': 'file_revert_details';
+      file_revert_details: FileRevertDetails;
+    }
+
+    /**
+     * Rolled back file change location changes.
+     */
+    interface EventDetailsFileRollbackChangesDetails {
+      '.tag': 'file_rollback_changes_details';
+      file_rollback_changes_details: FileRollbackChangesDetails;
+    }
+
+    /**
+     * Save a file or folder using a copy reference.
+     */
+    interface EventDetailsFileSaveCopyReferenceDetails {
+      '.tag': 'file_save_copy_reference_details';
+      file_save_copy_reference_details: FileSaveCopyReferenceDetails;
+    }
+
+    /**
+     * Added a deadline to a file request.
+     */
+    interface EventDetailsFileRequestAddDeadlineDetails {
+      '.tag': 'file_request_add_deadline_details';
+      file_request_add_deadline_details: FileRequestAddDeadlineDetails;
+    }
+
+    /**
+     * Changed the file request folder.
+     */
+    interface EventDetailsFileRequestChangeFolderDetails {
+      '.tag': 'file_request_change_folder_details';
+      file_request_change_folder_details: FileRequestChangeFolderDetails;
+    }
+
+    /**
+     * Change the file request title.
+     */
+    interface EventDetailsFileRequestChangeTitleDetails {
+      '.tag': 'file_request_change_title_details';
+      file_request_change_title_details: FileRequestChangeTitleDetails;
+    }
+
+    /**
+     * Closed a file request.
+     */
+    interface EventDetailsFileRequestCloseDetails {
+      '.tag': 'file_request_close_details';
+      file_request_close_details: FileRequestCloseDetails;
+    }
+
+    /**
+     * Created a file request.
+     */
+    interface EventDetailsFileRequestCreateDetails {
+      '.tag': 'file_request_create_details';
+      file_request_create_details: FileRequestCreateDetails;
+    }
+
+    /**
+     * Received files for a file request.
+     */
+    interface EventDetailsFileRequestReceiveFileDetails {
+      '.tag': 'file_request_receive_file_details';
+      file_request_receive_file_details: FileRequestReceiveFileDetails;
+    }
+
+    /**
+     * Removed the file request deadline.
+     */
+    interface EventDetailsFileRequestRemoveDeadlineDetails {
+      '.tag': 'file_request_remove_deadline_details';
+      file_request_remove_deadline_details: FileRequestRemoveDeadlineDetails;
+    }
+
+    /**
+     * Sent file request to users via email.
+     */
+    interface EventDetailsFileRequestSendDetails {
+      '.tag': 'file_request_send_details';
+      file_request_send_details: FileRequestSendDetails;
+    }
+
+    /**
+     * Added an external ID for group.
+     */
+    interface EventDetailsGroupAddExternalIdDetails {
+      '.tag': 'group_add_external_id_details';
+      group_add_external_id_details: GroupAddExternalIdDetails;
+    }
+
+    /**
+     * Added team members to a group.
+     */
+    interface EventDetailsGroupAddMemberDetails {
+      '.tag': 'group_add_member_details';
+      group_add_member_details: GroupAddMemberDetails;
+    }
+
+    /**
+     * Changed the external ID for group.
+     */
+    interface EventDetailsGroupChangeExternalIdDetails {
+      '.tag': 'group_change_external_id_details';
+      group_change_external_id_details: GroupChangeExternalIdDetails;
+    }
+
+    /**
+     * Changed group management type.
+     */
+    interface EventDetailsGroupChangeManagementTypeDetails {
+      '.tag': 'group_change_management_type_details';
+      group_change_management_type_details: GroupChangeManagementTypeDetails;
+    }
+
+    /**
+     * Changed the manager permissions belonging to a group member.
+     */
+    interface EventDetailsGroupChangeMemberRoleDetails {
+      '.tag': 'group_change_member_role_details';
+      group_change_member_role_details: GroupChangeMemberRoleDetails;
+    }
+
+    /**
+     * Created a group.
+     */
+    interface EventDetailsGroupCreateDetails {
+      '.tag': 'group_create_details';
+      group_create_details: GroupCreateDetails;
+    }
+
+    /**
+     * Deleted a group.
+     */
+    interface EventDetailsGroupDeleteDetails {
+      '.tag': 'group_delete_details';
+      group_delete_details: GroupDeleteDetails;
+    }
+
+    /**
+     * Updated a group.
+     */
+    interface EventDetailsGroupDescriptionUpdatedDetails {
+      '.tag': 'group_description_updated_details';
+      group_description_updated_details: GroupDescriptionUpdatedDetails;
+    }
+
+    /**
+     * Updated a group join policy.
+     */
+    interface EventDetailsGroupJoinPolicyUpdatedDetails {
+      '.tag': 'group_join_policy_updated_details';
+      group_join_policy_updated_details: GroupJoinPolicyUpdatedDetails;
+    }
+
+    /**
+     * Moved a group.
+     */
+    interface EventDetailsGroupMovedDetails {
+      '.tag': 'group_moved_details';
+      group_moved_details: GroupMovedDetails;
+    }
+
+    /**
+     * Removed the external ID for group.
+     */
+    interface EventDetailsGroupRemoveExternalIdDetails {
+      '.tag': 'group_remove_external_id_details';
+      group_remove_external_id_details: GroupRemoveExternalIdDetails;
+    }
+
+    /**
+     * Removed team members from a group.
+     */
+    interface EventDetailsGroupRemoveMemberDetails {
+      '.tag': 'group_remove_member_details';
+      group_remove_member_details: GroupRemoveMemberDetails;
+    }
+
+    /**
+     * Renamed a group.
+     */
+    interface EventDetailsGroupRenameDetails {
+      '.tag': 'group_rename_details';
+      group_rename_details: GroupRenameDetails;
+    }
+
+    /**
+     * Signed in using the Dropbox EMM app.
+     */
+    interface EventDetailsEmmLoginSuccessDetails {
+      '.tag': 'emm_login_success_details';
+      emm_login_success_details: EmmLoginSuccessDetails;
+    }
+
+    /**
+     * Signed out.
+     */
+    interface EventDetailsLogoutDetails {
+      '.tag': 'logout_details';
+      logout_details: LogoutDetails;
+    }
+
+    /**
+     * Failed to sign in using a password.
+     */
+    interface EventDetailsPasswordLoginFailDetails {
+      '.tag': 'password_login_fail_details';
+      password_login_fail_details: PasswordLoginFailDetails;
+    }
+
+    /**
+     * Signed in using a password.
+     */
+    interface EventDetailsPasswordLoginSuccessDetails {
+      '.tag': 'password_login_success_details';
+      password_login_success_details: PasswordLoginSuccessDetails;
+    }
+
+    /**
+     * Ended reseller support session.
+     */
+    interface EventDetailsResellerSupportSessionEndDetails {
+      '.tag': 'reseller_support_session_end_details';
+      reseller_support_session_end_details: ResellerSupportSessionEndDetails;
+    }
+
+    /**
+     * Started reseller support session.
+     */
+    interface EventDetailsResellerSupportSessionStartDetails {
+      '.tag': 'reseller_support_session_start_details';
+      reseller_support_session_start_details: ResellerSupportSessionStartDetails;
+    }
+
+    /**
+     * Ended admin sign-in-as session.
+     */
+    interface EventDetailsSignInAsSessionEndDetails {
+      '.tag': 'sign_in_as_session_end_details';
+      sign_in_as_session_end_details: SignInAsSessionEndDetails;
+    }
+
+    /**
+     * Started admin sign-in-as session.
+     */
+    interface EventDetailsSignInAsSessionStartDetails {
+      '.tag': 'sign_in_as_session_start_details';
+      sign_in_as_session_start_details: SignInAsSessionStartDetails;
+    }
+
+    /**
+     * Failed to sign in using SSO.
+     */
+    interface EventDetailsSsoLoginFailDetails {
+      '.tag': 'sso_login_fail_details';
+      sso_login_fail_details: SsoLoginFailDetails;
+    }
+
+    /**
+     * Set team member name when joining team.
+     */
+    interface EventDetailsMemberAddNameDetails {
+      '.tag': 'member_add_name_details';
+      member_add_name_details: MemberAddNameDetails;
+    }
+
+    /**
+     * Changed team member email address.
+     */
+    interface EventDetailsMemberChangeEmailDetails {
+      '.tag': 'member_change_email_details';
+      member_change_email_details: MemberChangeEmailDetails;
+    }
+
+    /**
+     * Changed team member name.
+     */
+    interface EventDetailsMemberChangeNameDetails {
+      '.tag': 'member_change_name_details';
+      member_change_name_details: MemberChangeNameDetails;
+    }
+
+    /**
+     * Change the admin permissions belonging to team member.
+     */
+    interface EventDetailsMemberChangeRoleDetails {
+      '.tag': 'member_change_role_details';
+      member_change_role_details: MemberChangeRoleDetails;
+    }
+
+    /**
+     * Invited a user to join the team.
+     */
+    interface EventDetailsMemberInviteDetails {
+      '.tag': 'member_invite_details';
+      member_invite_details: MemberInviteDetails;
+    }
+
+    /**
+     * Joined the team.
+     */
+    interface EventDetailsMemberJoinDetails {
+      '.tag': 'member_join_details';
+      member_join_details: MemberJoinDetails;
+    }
+
+    /**
+     * Removed a team member.
+     */
+    interface EventDetailsMemberLeaveDetails {
+      '.tag': 'member_leave_details';
+      member_leave_details: MemberLeaveDetails;
+    }
+
+    /**
+     * Recovered a removed member.
+     */
+    interface EventDetailsMemberRecoverDetails {
+      '.tag': 'member_recover_details';
+      member_recover_details: MemberRecoverDetails;
+    }
+
+    /**
+     * Suggested a new team member to be added to the team.
+     */
+    interface EventDetailsMemberSuggestDetails {
+      '.tag': 'member_suggest_details';
+      member_suggest_details: MemberSuggestDetails;
+    }
+
+    /**
+     * Suspended a team member.
+     */
+    interface EventDetailsMemberSuspendDetails {
+      '.tag': 'member_suspend_details';
+      member_suspend_details: MemberSuspendDetails;
+    }
+
+    /**
+     * Unsuspended a team member.
+     */
+    interface EventDetailsMemberUnsuspendDetails {
+      '.tag': 'member_unsuspend_details';
+      member_unsuspend_details: MemberUnsuspendDetails;
+    }
+
+    /**
+     * Added users to the membership of a Paper doc or folder.
+     */
+    interface EventDetailsPaperContentAddMemberDetails {
+      '.tag': 'paper_content_add_member_details';
+      paper_content_add_member_details: PaperContentAddMemberDetails;
+    }
+
+    /**
+     * Added Paper doc or folder to a folder.
+     */
+    interface EventDetailsPaperContentAddToFolderDetails {
+      '.tag': 'paper_content_add_to_folder_details';
+      paper_content_add_to_folder_details: PaperContentAddToFolderDetails;
+    }
+
+    /**
+     * Archived Paper doc or folder.
+     */
+    interface EventDetailsPaperContentArchiveDetails {
+      '.tag': 'paper_content_archive_details';
+      paper_content_archive_details: PaperContentArchiveDetails;
+    }
+
+    /**
+     * Followed or unfollowed a Paper doc or folder.
+     */
+    interface EventDetailsPaperContentChangeSubscriptionDetails {
+      '.tag': 'paper_content_change_subscription_details';
+      paper_content_change_subscription_details: PaperContentChangeSubscriptionDetails;
+    }
+
+    /**
+     * Created a Paper doc or folder.
+     */
+    interface EventDetailsPaperContentCreateDetails {
+      '.tag': 'paper_content_create_details';
+      paper_content_create_details: PaperContentCreateDetails;
+    }
+
+    /**
+     * Permanently deleted a Paper doc or folder.
+     */
+    interface EventDetailsPaperContentPermanentlyDeleteDetails {
+      '.tag': 'paper_content_permanently_delete_details';
+      paper_content_permanently_delete_details: PaperContentPermanentlyDeleteDetails;
+    }
+
+    /**
+     * Removed Paper doc or folder from a folder.
+     */
+    interface EventDetailsPaperContentRemoveFromFolderDetails {
+      '.tag': 'paper_content_remove_from_folder_details';
+      paper_content_remove_from_folder_details: PaperContentRemoveFromFolderDetails;
+    }
+
+    /**
+     * Removed a user from the membership of a Paper doc or folder.
+     */
+    interface EventDetailsPaperContentRemoveMemberDetails {
+      '.tag': 'paper_content_remove_member_details';
+      paper_content_remove_member_details: PaperContentRemoveMemberDetails;
+    }
+
+    /**
+     * Renamed Paper doc or folder.
+     */
+    interface EventDetailsPaperContentRenameDetails {
+      '.tag': 'paper_content_rename_details';
+      paper_content_rename_details: PaperContentRenameDetails;
+    }
+
+    /**
+     * Restored an archived Paper doc or folder.
+     */
+    interface EventDetailsPaperContentRestoreDetails {
+      '.tag': 'paper_content_restore_details';
+      paper_content_restore_details: PaperContentRestoreDetails;
+    }
+
+    /**
+     * Added a Paper doc comment.
+     */
+    interface EventDetailsPaperDocAddCommentDetails {
+      '.tag': 'paper_doc_add_comment_details';
+      paper_doc_add_comment_details: PaperDocAddCommentDetails;
+    }
+
+    /**
+     * Changed the access type of a Paper doc member.
+     */
+    interface EventDetailsPaperDocChangeMemberRoleDetails {
+      '.tag': 'paper_doc_change_member_role_details';
+      paper_doc_change_member_role_details: PaperDocChangeMemberRoleDetails;
+    }
+
+    /**
+     * Changed the sharing policy for Paper doc.
+     */
+    interface EventDetailsPaperDocChangeSharingPolicyDetails {
+      '.tag': 'paper_doc_change_sharing_policy_details';
+      paper_doc_change_sharing_policy_details: PaperDocChangeSharingPolicyDetails;
+    }
+
+    /**
+     * Paper doc archived.
+     */
+    interface EventDetailsPaperDocDeletedDetails {
+      '.tag': 'paper_doc_deleted_details';
+      paper_doc_deleted_details: PaperDocDeletedDetails;
+    }
+
+    /**
+     * Deleted a Paper doc comment.
+     */
+    interface EventDetailsPaperDocDeleteCommentDetails {
+      '.tag': 'paper_doc_delete_comment_details';
+      paper_doc_delete_comment_details: PaperDocDeleteCommentDetails;
+    }
+
+    /**
+     * Downloaded a Paper doc in a particular output format.
+     */
+    interface EventDetailsPaperDocDownloadDetails {
+      '.tag': 'paper_doc_download_details';
+      paper_doc_download_details: PaperDocDownloadDetails;
+    }
+
+    /**
+     * Edited a Paper doc.
+     */
+    interface EventDetailsPaperDocEditDetails {
+      '.tag': 'paper_doc_edit_details';
+      paper_doc_edit_details: PaperDocEditDetails;
+    }
+
+    /**
+     * Edited a Paper doc comment.
+     */
+    interface EventDetailsPaperDocEditCommentDetails {
+      '.tag': 'paper_doc_edit_comment_details';
+      paper_doc_edit_comment_details: PaperDocEditCommentDetails;
+    }
+
+    /**
+     * Followed a Paper doc.
+     */
+    interface EventDetailsPaperDocFollowedDetails {
+      '.tag': 'paper_doc_followed_details';
+      paper_doc_followed_details: PaperDocFollowedDetails;
+    }
+
+    /**
+     * Mentioned a member in a Paper doc.
+     */
+    interface EventDetailsPaperDocMentionDetails {
+      '.tag': 'paper_doc_mention_details';
+      paper_doc_mention_details: PaperDocMentionDetails;
+    }
+
+    /**
+     * Requested to be a member on a Paper doc.
+     */
+    interface EventDetailsPaperDocRequestAccessDetails {
+      '.tag': 'paper_doc_request_access_details';
+      paper_doc_request_access_details: PaperDocRequestAccessDetails;
+    }
+
+    /**
+     * Paper doc comment resolved.
+     */
+    interface EventDetailsPaperDocResolveCommentDetails {
+      '.tag': 'paper_doc_resolve_comment_details';
+      paper_doc_resolve_comment_details: PaperDocResolveCommentDetails;
+    }
+
+    /**
+     * Restored a Paper doc to previous revision.
+     */
+    interface EventDetailsPaperDocRevertDetails {
+      '.tag': 'paper_doc_revert_details';
+      paper_doc_revert_details: PaperDocRevertDetails;
+    }
+
+    /**
+     * Paper doc link shared via slack.
+     */
+    interface EventDetailsPaperDocSlackShareDetails {
+      '.tag': 'paper_doc_slack_share_details';
+      paper_doc_slack_share_details: PaperDocSlackShareDetails;
+    }
+
+    /**
+     * Paper doc shared with team member.
+     */
+    interface EventDetailsPaperDocTeamInviteDetails {
+      '.tag': 'paper_doc_team_invite_details';
+      paper_doc_team_invite_details: PaperDocTeamInviteDetails;
+    }
+
+    /**
+     * Unresolved a Paper doc comment.
+     */
+    interface EventDetailsPaperDocUnresolveCommentDetails {
+      '.tag': 'paper_doc_unresolve_comment_details';
+      paper_doc_unresolve_comment_details: PaperDocUnresolveCommentDetails;
+    }
+
+    /**
+     * Viewed Paper doc.
+     */
+    interface EventDetailsPaperDocViewDetails {
+      '.tag': 'paper_doc_view_details';
+      paper_doc_view_details: PaperDocViewDetails;
+    }
+
+    /**
+     * Paper folder archived.
+     */
+    interface EventDetailsPaperFolderDeletedDetails {
+      '.tag': 'paper_folder_deleted_details';
+      paper_folder_deleted_details: PaperFolderDeletedDetails;
+    }
+
+    /**
+     * Followed a Paper folder.
+     */
+    interface EventDetailsPaperFolderFollowedDetails {
+      '.tag': 'paper_folder_followed_details';
+      paper_folder_followed_details: PaperFolderFollowedDetails;
+    }
+
+    /**
+     * Paper folder shared with team member.
+     */
+    interface EventDetailsPaperFolderTeamInviteDetails {
+      '.tag': 'paper_folder_team_invite_details';
+      paper_folder_team_invite_details: PaperFolderTeamInviteDetails;
+    }
+
+    /**
+     * Changed password.
+     */
+    interface EventDetailsPasswordChangeDetails {
+      '.tag': 'password_change_details';
+      password_change_details: PasswordChangeDetails;
+    }
+
+    /**
+     * Reset password.
+     */
+    interface EventDetailsPasswordResetDetails {
+      '.tag': 'password_reset_details';
+      password_reset_details: PasswordResetDetails;
+    }
+
+    /**
+     * Reset all team member passwords.
+     */
+    interface EventDetailsPasswordResetAllDetails {
+      '.tag': 'password_reset_all_details';
+      password_reset_all_details: PasswordResetAllDetails;
+    }
+
+    /**
+     * EMM excluded users report created.
+     */
+    interface EventDetailsEmmCreateExceptionsReportDetails {
+      '.tag': 'emm_create_exceptions_report_details';
+      emm_create_exceptions_report_details: EmmCreateExceptionsReportDetails;
+    }
+
+    /**
+     * EMM mobile app usage report created.
+     */
+    interface EventDetailsEmmCreateUsageReportDetails {
+      '.tag': 'emm_create_usage_report_details';
+      emm_create_usage_report_details: EmmCreateUsageReportDetails;
+    }
+
+    /**
+     * Smart Sync non-admin devices report created.
+     */
+    interface EventDetailsSmartSyncCreateAdminPrivilegeReportDetails {
+      '.tag': 'smart_sync_create_admin_privilege_report_details';
+      smart_sync_create_admin_privilege_report_details: SmartSyncCreateAdminPrivilegeReportDetails;
+    }
+
+    /**
+     * Created a team activity report.
+     */
+    interface EventDetailsTeamActivityCreateReportDetails {
+      '.tag': 'team_activity_create_report_details';
+      team_activity_create_report_details: TeamActivityCreateReportDetails;
+    }
+
+    /**
+     * Shared an album.
+     */
+    interface EventDetailsCollectionShareDetails {
+      '.tag': 'collection_share_details';
+      collection_share_details: CollectionShareDetails;
+    }
+
+    /**
+     * Added a file comment.
+     */
+    interface EventDetailsFileAddCommentDetails {
+      '.tag': 'file_add_comment_details';
+      file_add_comment_details: FileAddCommentDetails;
+    }
+
+    /**
+     * Liked a file comment.
+     */
+    interface EventDetailsFileLikeCommentDetails {
+      '.tag': 'file_like_comment_details';
+      file_like_comment_details: FileLikeCommentDetails;
+    }
+
+    /**
+     * Unliked a file comment.
+     */
+    interface EventDetailsFileUnlikeCommentDetails {
+      '.tag': 'file_unlike_comment_details';
+      file_unlike_comment_details: FileUnlikeCommentDetails;
+    }
+
+    /**
+     * Changed a Paper document to be invite-only.
+     */
+    interface EventDetailsNoteAclInviteOnlyDetails {
+      '.tag': 'note_acl_invite_only_details';
+      note_acl_invite_only_details: NoteAclInviteOnlyDetails;
+    }
+
+    /**
+     * Changed a Paper document to be link accessible.
+     */
+    interface EventDetailsNoteAclLinkDetails {
+      '.tag': 'note_acl_link_details';
+      note_acl_link_details: NoteAclLinkDetails;
+    }
+
+    /**
+     * Changed a Paper document to be link accessible for the team.
+     */
+    interface EventDetailsNoteAclTeamLinkDetails {
+      '.tag': 'note_acl_team_link_details';
+      note_acl_team_link_details: NoteAclTeamLinkDetails;
+    }
+
+    /**
+     * Shared a Paper doc.
+     */
+    interface EventDetailsNoteSharedDetails {
+      '.tag': 'note_shared_details';
+      note_shared_details: NoteSharedDetails;
+    }
+
+    /**
+     * Shared Paper document received.
+     */
+    interface EventDetailsNoteShareReceiveDetails {
+      '.tag': 'note_share_receive_details';
+      note_share_receive_details: NoteShareReceiveDetails;
+    }
+
+    /**
+     * Opened a shared Paper doc.
+     */
+    interface EventDetailsOpenNoteSharedDetails {
+      '.tag': 'open_note_shared_details';
+      open_note_shared_details: OpenNoteSharedDetails;
+    }
+
+    /**
+     * Added the team to a shared folder.
+     */
+    interface EventDetailsSfAddGroupDetails {
+      '.tag': 'sf_add_group_details';
+      sf_add_group_details: SfAddGroupDetails;
+    }
+
+    /**
+     * Allowed non collaborators to view links to files in a shared folder.
+     */
+    interface EventDetailsSfAllowNonMembersToViewSharedLinksDetails {
+      '.tag': 'sf_allow_non_members_to_view_shared_links_details';
+      sf_allow_non_members_to_view_shared_links_details: SfAllowNonMembersToViewSharedLinksDetails;
+    }
+
+    /**
+     * Invited a group to a shared folder.
+     */
+    interface EventDetailsSfInviteGroupDetails {
+      '.tag': 'sf_invite_group_details';
+      sf_invite_group_details: SfInviteGroupDetails;
+    }
+
+    /**
+     * Changed parent of shared folder.
+     */
+    interface EventDetailsSfNestDetails {
+      '.tag': 'sf_nest_details';
+      sf_nest_details: SfNestDetails;
+    }
+
+    /**
+     * Declined a team member's invitation to a shared folder.
+     */
+    interface EventDetailsSfTeamDeclineDetails {
+      '.tag': 'sf_team_decline_details';
+      sf_team_decline_details: SfTeamDeclineDetails;
+    }
+
+    /**
+     * Granted access to a shared folder.
+     */
+    interface EventDetailsSfTeamGrantAccessDetails {
+      '.tag': 'sf_team_grant_access_details';
+      sf_team_grant_access_details: SfTeamGrantAccessDetails;
+    }
+
+    /**
+     * Invited team members to a shared folder.
+     */
+    interface EventDetailsSfTeamInviteDetails {
+      '.tag': 'sf_team_invite_details';
+      sf_team_invite_details: SfTeamInviteDetails;
+    }
+
+    /**
+     * Changed a team member's role in a shared folder.
+     */
+    interface EventDetailsSfTeamInviteChangeRoleDetails {
+      '.tag': 'sf_team_invite_change_role_details';
+      sf_team_invite_change_role_details: SfTeamInviteChangeRoleDetails;
+    }
+
+    /**
+     * Joined a team member's shared folder.
+     */
+    interface EventDetailsSfTeamJoinDetails {
+      '.tag': 'sf_team_join_details';
+      sf_team_join_details: SfTeamJoinDetails;
+    }
+
+    /**
+     * Joined a team member's shared folder from a link.
+     */
+    interface EventDetailsSfTeamJoinFromOobLinkDetails {
+      '.tag': 'sf_team_join_from_oob_link_details';
+      sf_team_join_from_oob_link_details: SfTeamJoinFromOobLinkDetails;
+    }
+
+    /**
+     * Unshared a folder with a team member.
+     */
+    interface EventDetailsSfTeamUninviteDetails {
+      '.tag': 'sf_team_uninvite_details';
+      sf_team_uninvite_details: SfTeamUninviteDetails;
+    }
+
+    /**
+     * Sent an email invitation to the membership of a shared file or folder.
+     */
+    interface EventDetailsSharedContentAddInviteesDetails {
+      '.tag': 'shared_content_add_invitees_details';
+      shared_content_add_invitees_details: SharedContentAddInviteesDetails;
+    }
+
+    /**
+     * Added an expiry to the link for the shared file or folder.
+     */
+    interface EventDetailsSharedContentAddLinkExpiryDetails {
+      '.tag': 'shared_content_add_link_expiry_details';
+      shared_content_add_link_expiry_details: SharedContentAddLinkExpiryDetails;
+    }
+
+    /**
+     * Added a password to the link for the shared file or folder.
+     */
+    interface EventDetailsSharedContentAddLinkPasswordDetails {
+      '.tag': 'shared_content_add_link_password_details';
+      shared_content_add_link_password_details: SharedContentAddLinkPasswordDetails;
+    }
+
+    /**
+     * Added users and/or groups to the membership of a shared file or folder.
+     */
+    interface EventDetailsSharedContentAddMemberDetails {
+      '.tag': 'shared_content_add_member_details';
+      shared_content_add_member_details: SharedContentAddMemberDetails;
+    }
+
+    /**
+     * Changed whether members can download the shared file or folder.
+     */
+    interface EventDetailsSharedContentChangeDownloadsPolicyDetails {
+      '.tag': 'shared_content_change_downloads_policy_details';
+      shared_content_change_downloads_policy_details: SharedContentChangeDownloadsPolicyDetails;
+    }
+
+    /**
+     * Changed the access type of an invitee to a shared file or folder before
+     * the invitation was claimed.
+     */
+    interface EventDetailsSharedContentChangeInviteeRoleDetails {
+      '.tag': 'shared_content_change_invitee_role_details';
+      shared_content_change_invitee_role_details: SharedContentChangeInviteeRoleDetails;
+    }
+
+    /**
+     * Changed the audience of the link for a shared file or folder.
+     */
+    interface EventDetailsSharedContentChangeLinkAudienceDetails {
+      '.tag': 'shared_content_change_link_audience_details';
+      shared_content_change_link_audience_details: SharedContentChangeLinkAudienceDetails;
+    }
+
+    /**
+     * Changed the expiry of the link for the shared file or folder.
+     */
+    interface EventDetailsSharedContentChangeLinkExpiryDetails {
+      '.tag': 'shared_content_change_link_expiry_details';
+      shared_content_change_link_expiry_details: SharedContentChangeLinkExpiryDetails;
+    }
+
+    /**
+     * Changed the password on the link for the shared file or folder.
+     */
+    interface EventDetailsSharedContentChangeLinkPasswordDetails {
+      '.tag': 'shared_content_change_link_password_details';
+      shared_content_change_link_password_details: SharedContentChangeLinkPasswordDetails;
+    }
+
+    /**
+     * Changed the access type of a shared file or folder member.
+     */
+    interface EventDetailsSharedContentChangeMemberRoleDetails {
+      '.tag': 'shared_content_change_member_role_details';
+      shared_content_change_member_role_details: SharedContentChangeMemberRoleDetails;
+    }
+
+    /**
+     * Changed whether members can see who viewed the shared file or folder.
+     */
+    interface EventDetailsSharedContentChangeViewerInfoPolicyDetails {
+      '.tag': 'shared_content_change_viewer_info_policy_details';
+      shared_content_change_viewer_info_policy_details: SharedContentChangeViewerInfoPolicyDetails;
+    }
+
+    /**
+     * Claimed membership to a team member's shared folder.
+     */
+    interface EventDetailsSharedContentClaimInvitationDetails {
+      '.tag': 'shared_content_claim_invitation_details';
+      shared_content_claim_invitation_details: SharedContentClaimInvitationDetails;
+    }
+
+    /**
+     * Copied the shared file or folder to own Dropbox.
+     */
+    interface EventDetailsSharedContentCopyDetails {
+      '.tag': 'shared_content_copy_details';
+      shared_content_copy_details: SharedContentCopyDetails;
+    }
+
+    /**
+     * Downloaded the shared file or folder.
+     */
+    interface EventDetailsSharedContentDownloadDetails {
+      '.tag': 'shared_content_download_details';
+      shared_content_download_details: SharedContentDownloadDetails;
+    }
+
+    /**
+     * Left the membership of a shared file or folder.
+     */
+    interface EventDetailsSharedContentRelinquishMembershipDetails {
+      '.tag': 'shared_content_relinquish_membership_details';
+      shared_content_relinquish_membership_details: SharedContentRelinquishMembershipDetails;
+    }
+
+    /**
+     * Removed an invitee from the membership of a shared file or folder before
+     * it was claimed.
+     */
+    interface EventDetailsSharedContentRemoveInviteeDetails {
+      '.tag': 'shared_content_remove_invitee_details';
+      shared_content_remove_invitee_details: SharedContentRemoveInviteeDetails;
+    }
+
+    /**
+     * Removed the expiry of the link for the shared file or folder.
+     */
+    interface EventDetailsSharedContentRemoveLinkExpiryDetails {
+      '.tag': 'shared_content_remove_link_expiry_details';
+      shared_content_remove_link_expiry_details: SharedContentRemoveLinkExpiryDetails;
+    }
+
+    /**
+     * Removed the password on the link for the shared file or folder.
+     */
+    interface EventDetailsSharedContentRemoveLinkPasswordDetails {
+      '.tag': 'shared_content_remove_link_password_details';
+      shared_content_remove_link_password_details: SharedContentRemoveLinkPasswordDetails;
+    }
+
+    /**
+     * Removed a user or a group from the membership of a shared file or folder.
+     */
+    interface EventDetailsSharedContentRemoveMemberDetails {
+      '.tag': 'shared_content_remove_member_details';
+      shared_content_remove_member_details: SharedContentRemoveMemberDetails;
+    }
+
+    /**
+     * Requested to be on the membership of a shared file or folder.
+     */
+    interface EventDetailsSharedContentRequestAccessDetails {
+      '.tag': 'shared_content_request_access_details';
+      shared_content_request_access_details: SharedContentRequestAccessDetails;
+    }
+
+    /**
+     * Unshared a shared file or folder by clearing its membership and turning
+     * off its link.
+     */
+    interface EventDetailsSharedContentUnshareDetails {
+      '.tag': 'shared_content_unshare_details';
+      shared_content_unshare_details: SharedContentUnshareDetails;
+    }
+
+    /**
+     * Previewed the shared file or folder.
+     */
+    interface EventDetailsSharedContentViewDetails {
+      '.tag': 'shared_content_view_details';
+      shared_content_view_details: SharedContentViewDetails;
+    }
+
+    /**
+     * Set or unset the confidential flag on a shared folder.
+     */
+    interface EventDetailsSharedFolderChangeConfidentialityDetails {
+      '.tag': 'shared_folder_change_confidentiality_details';
+      shared_folder_change_confidentiality_details: SharedFolderChangeConfidentialityDetails;
+    }
+
+    /**
+     * Changed who can access the shared folder via a link.
+     */
+    interface EventDetailsSharedFolderChangeLinkPolicyDetails {
+      '.tag': 'shared_folder_change_link_policy_details';
+      shared_folder_change_link_policy_details: SharedFolderChangeLinkPolicyDetails;
+    }
+
+    /**
+     * Changed who can manage the membership of a shared folder.
+     */
+    interface EventDetailsSharedFolderChangeMemberManagementPolicyDetails {
+      '.tag': 'shared_folder_change_member_management_policy_details';
+      shared_folder_change_member_management_policy_details: SharedFolderChangeMemberManagementPolicyDetails;
+    }
+
+    /**
+     * Changed who can become a member of the shared folder.
+     */
+    interface EventDetailsSharedFolderChangeMemberPolicyDetails {
+      '.tag': 'shared_folder_change_member_policy_details';
+      shared_folder_change_member_policy_details: SharedFolderChangeMemberPolicyDetails;
+    }
+
+    /**
+     * Created a shared folder.
+     */
+    interface EventDetailsSharedFolderCreateDetails {
+      '.tag': 'shared_folder_create_details';
+      shared_folder_create_details: SharedFolderCreateDetails;
+    }
+
+    /**
+     * Added a shared folder to own Dropbox.
+     */
+    interface EventDetailsSharedFolderMountDetails {
+      '.tag': 'shared_folder_mount_details';
+      shared_folder_mount_details: SharedFolderMountDetails;
+    }
+
+    /**
+     * Transferred the ownership of a shared folder to another member.
+     */
+    interface EventDetailsSharedFolderTransferOwnershipDetails {
+      '.tag': 'shared_folder_transfer_ownership_details';
+      shared_folder_transfer_ownership_details: SharedFolderTransferOwnershipDetails;
+    }
+
+    /**
+     * Deleted a shared folder from Dropbox.
+     */
+    interface EventDetailsSharedFolderUnmountDetails {
+      '.tag': 'shared_folder_unmount_details';
+      shared_folder_unmount_details: SharedFolderUnmountDetails;
+    }
+
+    /**
+     * Shared Paper document was opened.
+     */
+    interface EventDetailsSharedNoteOpenedDetails {
+      '.tag': 'shared_note_opened_details';
+      shared_note_opened_details: SharedNoteOpenedDetails;
+    }
+
+    /**
+     * Created a link to a file using an app.
+     */
+    interface EventDetailsShmodelAppCreateDetails {
+      '.tag': 'shmodel_app_create_details';
+      shmodel_app_create_details: ShmodelAppCreateDetails;
+    }
+
+    /**
+     * Created a new link.
+     */
+    interface EventDetailsShmodelCreateDetails {
+      '.tag': 'shmodel_create_details';
+      shmodel_create_details: ShmodelCreateDetails;
+    }
+
+    /**
+     * Removed a link.
+     */
+    interface EventDetailsShmodelDisableDetails {
+      '.tag': 'shmodel_disable_details';
+      shmodel_disable_details: ShmodelDisableDetails;
+    }
+
+    /**
+     * Shared a link with Facebook users.
+     */
+    interface EventDetailsShmodelFbShareDetails {
+      '.tag': 'shmodel_fb_share_details';
+      shmodel_fb_share_details: ShmodelFbShareDetails;
+    }
+
+    /**
+     * Shared a link with a group.
+     */
+    interface EventDetailsShmodelGroupShareDetails {
+      '.tag': 'shmodel_group_share_details';
+      shmodel_group_share_details: ShmodelGroupShareDetails;
+    }
+
+    /**
+     * Removed the expiration date from a link.
+     */
+    interface EventDetailsShmodelRemoveExpirationDetails {
+      '.tag': 'shmodel_remove_expiration_details';
+      shmodel_remove_expiration_details: ShmodelRemoveExpirationDetails;
+    }
+
+    /**
+     * Added an expiration date to a link.
+     */
+    interface EventDetailsShmodelSetExpirationDetails {
+      '.tag': 'shmodel_set_expiration_details';
+      shmodel_set_expiration_details: ShmodelSetExpirationDetails;
+    }
+
+    /**
+     * Added a team member's file/folder to their Dropbox from a link.
+     */
+    interface EventDetailsShmodelTeamCopyDetails {
+      '.tag': 'shmodel_team_copy_details';
+      shmodel_team_copy_details: ShmodelTeamCopyDetails;
+    }
+
+    /**
+     * Downloaded a team member's file/folder from a link.
+     */
+    interface EventDetailsShmodelTeamDownloadDetails {
+      '.tag': 'shmodel_team_download_details';
+      shmodel_team_download_details: ShmodelTeamDownloadDetails;
+    }
+
+    /**
+     * Shared a link with team members.
+     */
+    interface EventDetailsShmodelTeamShareDetails {
+      '.tag': 'shmodel_team_share_details';
+      shmodel_team_share_details: ShmodelTeamShareDetails;
+    }
+
+    /**
+     * Opened a team member's link.
+     */
+    interface EventDetailsShmodelTeamViewDetails {
+      '.tag': 'shmodel_team_view_details';
+      shmodel_team_view_details: ShmodelTeamViewDetails;
+    }
+
+    /**
+     * Password-protected a link.
+     */
+    interface EventDetailsShmodelVisibilityPasswordDetails {
+      '.tag': 'shmodel_visibility_password_details';
+      shmodel_visibility_password_details: ShmodelVisibilityPasswordDetails;
+    }
+
+    /**
+     * Made a file/folder visible to anyone with the link.
+     */
+    interface EventDetailsShmodelVisibilityPublicDetails {
+      '.tag': 'shmodel_visibility_public_details';
+      shmodel_visibility_public_details: ShmodelVisibilityPublicDetails;
+    }
+
+    /**
+     * Made a file/folder visible only to team members with the link.
+     */
+    interface EventDetailsShmodelVisibilityTeamOnlyDetails {
+      '.tag': 'shmodel_visibility_team_only_details';
+      shmodel_visibility_team_only_details: ShmodelVisibilityTeamOnlyDetails;
+    }
+
+    /**
+     * Removed single sign-on logout URL.
+     */
+    interface EventDetailsRemoveLogoutUrlDetails {
+      '.tag': 'remove_logout_url_details';
+      remove_logout_url_details: RemoveLogoutUrlDetails;
+    }
+
+    /**
+     * Changed the sign-out URL for SSO.
+     */
+    interface EventDetailsRemoveSsoUrlDetails {
+      '.tag': 'remove_sso_url_details';
+      remove_sso_url_details: RemoveSsoUrlDetails;
+    }
+
+    /**
+     * Changed the X.509 certificate for SSO.
+     */
+    interface EventDetailsSsoChangeCertDetails {
+      '.tag': 'sso_change_cert_details';
+      sso_change_cert_details: SsoChangeCertDetails;
+    }
+
+    /**
+     * Changed the sign-in URL for SSO.
+     */
+    interface EventDetailsSsoChangeLoginUrlDetails {
+      '.tag': 'sso_change_login_url_details';
+      sso_change_login_url_details: SsoChangeLoginUrlDetails;
+    }
+
+    /**
+     * Changed the sign-out URL for SSO.
+     */
+    interface EventDetailsSsoChangeLogoutUrlDetails {
+      '.tag': 'sso_change_logout_url_details';
+      sso_change_logout_url_details: SsoChangeLogoutUrlDetails;
+    }
+
+    /**
+     * Changed the SAML identity mode for SSO.
+     */
+    interface EventDetailsSsoChangeSamlIdentityModeDetails {
+      '.tag': 'sso_change_saml_identity_mode_details';
+      sso_change_saml_identity_mode_details: SsoChangeSamlIdentityModeDetails;
+    }
+
+    /**
+     * Changed the archival status of a team folder.
+     */
+    interface EventDetailsTeamFolderChangeStatusDetails {
+      '.tag': 'team_folder_change_status_details';
+      team_folder_change_status_details: TeamFolderChangeStatusDetails;
+    }
+
+    /**
+     * Created a new team folder in active status.
+     */
+    interface EventDetailsTeamFolderCreateDetails {
+      '.tag': 'team_folder_create_details';
+      team_folder_create_details: TeamFolderCreateDetails;
+    }
+
+    /**
+     * Downgraded a team folder to a regular shared folder.
+     */
+    interface EventDetailsTeamFolderDowngradeDetails {
+      '.tag': 'team_folder_downgrade_details';
+      team_folder_downgrade_details: TeamFolderDowngradeDetails;
+    }
+
+    /**
+     * Permanently deleted an archived team folder.
+     */
+    interface EventDetailsTeamFolderPermanentlyDeleteDetails {
+      '.tag': 'team_folder_permanently_delete_details';
+      team_folder_permanently_delete_details: TeamFolderPermanentlyDeleteDetails;
+    }
+
+    /**
+     * Renamed an active or archived team folder.
+     */
+    interface EventDetailsTeamFolderRenameDetails {
+      '.tag': 'team_folder_rename_details';
+      team_folder_rename_details: TeamFolderRenameDetails;
+    }
+
+    /**
+     * Changed the account capture policy on a domain belonging to the team.
+     */
+    interface EventDetailsAccountCaptureChangePolicyDetails {
+      '.tag': 'account_capture_change_policy_details';
+      account_capture_change_policy_details: AccountCaptureChangePolicyDetails;
+    }
+
+    /**
+     * Disabled allow downloads.
+     */
+    interface EventDetailsAllowDownloadDisabledDetails {
+      '.tag': 'allow_download_disabled_details';
+      allow_download_disabled_details: AllowDownloadDisabledDetails;
+    }
+
+    /**
+     * Enabled allow downloads.
+     */
+    interface EventDetailsAllowDownloadEnabledDetails {
+      '.tag': 'allow_download_enabled_details';
+      allow_download_enabled_details: AllowDownloadEnabledDetails;
+    }
+
+    /**
+     * Set a restriction policy regarding the location of data centers where
+     * team data resides.
+     */
+    interface EventDetailsDataPlacementRestrictionChangePolicyDetails {
+      '.tag': 'data_placement_restriction_change_policy_details';
+      data_placement_restriction_change_policy_details: DataPlacementRestrictionChangePolicyDetails;
+    }
+
+    /**
+     * Satisfied a previously set restriction policy regarding the location of
+     * data centers where team data resides (i.e. all data have been migrated
+     * according to the restriction placed).
+     */
+    interface EventDetailsDataPlacementRestrictionSatisfyPolicyDetails {
+      '.tag': 'data_placement_restriction_satisfy_policy_details';
+      data_placement_restriction_satisfy_policy_details: DataPlacementRestrictionSatisfyPolicyDetails;
+    }
+
+    /**
+     * Set or removed a limit on the number of computers each team member can
+     * link to their work Dropbox account.
+     */
+    interface EventDetailsDeviceApprovalsChangeDesktopPolicyDetails {
+      '.tag': 'device_approvals_change_desktop_policy_details';
+      device_approvals_change_desktop_policy_details: DeviceApprovalsChangeDesktopPolicyDetails;
+    }
+
+    /**
+     * Set or removed a limit on the number of mobiles devices each team member
+     * can link to their work Dropbox account.
+     */
+    interface EventDetailsDeviceApprovalsChangeMobilePolicyDetails {
+      '.tag': 'device_approvals_change_mobile_policy_details';
+      device_approvals_change_mobile_policy_details: DeviceApprovalsChangeMobilePolicyDetails;
+    }
+
+    /**
+     * Changed the action taken when a team member is already over the limits
+     * (e.g when they join the team, an admin lowers limits, etc.).
+     */
+    interface EventDetailsDeviceApprovalsChangeOverageActionDetails {
+      '.tag': 'device_approvals_change_overage_action_details';
+      device_approvals_change_overage_action_details: DeviceApprovalsChangeOverageActionDetails;
+    }
+
+    /**
+     * Changed the action taken with respect to approval limits when a team
+     * member unlinks an approved device.
+     */
+    interface EventDetailsDeviceApprovalsChangeUnlinkActionDetails {
+      '.tag': 'device_approvals_change_unlink_action_details';
+      device_approvals_change_unlink_action_details: DeviceApprovalsChangeUnlinkActionDetails;
+    }
+
+    /**
+     * Added an exception for one or more team members to optionally use the
+     * regular Dropbox app when EMM is enabled.
+     */
+    interface EventDetailsEmmAddExceptionDetails {
+      '.tag': 'emm_add_exception_details';
+      emm_add_exception_details: EmmAddExceptionDetails;
+    }
+
+    /**
+     * Enabled or disabled enterprise mobility management for team members.
+     */
+    interface EventDetailsEmmChangePolicyDetails {
+      '.tag': 'emm_change_policy_details';
+      emm_change_policy_details: EmmChangePolicyDetails;
+    }
+
+    /**
+     * Removed an exception for one or more team members to optionally use the
+     * regular Dropbox app when EMM is enabled.
+     */
+    interface EventDetailsEmmRemoveExceptionDetails {
+      '.tag': 'emm_remove_exception_details';
+      emm_remove_exception_details: EmmRemoveExceptionDetails;
+    }
+
+    /**
+     * Accepted or opted out of extended version history.
+     */
+    interface EventDetailsExtendedVersionHistoryChangePolicyDetails {
+      '.tag': 'extended_version_history_change_policy_details';
+      extended_version_history_change_policy_details: ExtendedVersionHistoryChangePolicyDetails;
+    }
+
+    /**
+     * Enabled or disabled commenting on team files.
+     */
+    interface EventDetailsFileCommentsChangePolicyDetails {
+      '.tag': 'file_comments_change_policy_details';
+      file_comments_change_policy_details: FileCommentsChangePolicyDetails;
+    }
+
+    /**
+     * Enabled or disabled file requests.
+     */
+    interface EventDetailsFileRequestsChangePolicyDetails {
+      '.tag': 'file_requests_change_policy_details';
+      file_requests_change_policy_details: FileRequestsChangePolicyDetails;
+    }
+
+    /**
+     * Enabled file request emails for everyone.
+     */
+    interface EventDetailsFileRequestsEmailsEnabledDetails {
+      '.tag': 'file_requests_emails_enabled_details';
+      file_requests_emails_enabled_details: FileRequestsEmailsEnabledDetails;
+    }
+
+    /**
+     * Allowed file request emails for the team.
+     */
+    interface EventDetailsFileRequestsEmailsRestrictedToTeamOnlyDetails {
+      '.tag': 'file_requests_emails_restricted_to_team_only_details';
+      file_requests_emails_restricted_to_team_only_details: FileRequestsEmailsRestrictedToTeamOnlyDetails;
+    }
+
+    /**
+     * Enabled or disabled Google single sign-on for the team.
+     */
+    interface EventDetailsGoogleSsoChangePolicyDetails {
+      '.tag': 'google_sso_change_policy_details';
+      google_sso_change_policy_details: GoogleSsoChangePolicyDetails;
+    }
+
+    /**
+     * Changed who can create groups.
+     */
+    interface EventDetailsGroupUserManagementChangePolicyDetails {
+      '.tag': 'group_user_management_change_policy_details';
+      group_user_management_change_policy_details: GroupUserManagementChangePolicyDetails;
+    }
+
+    /**
+     * Changed whether users can find the team when not invited.
+     */
+    interface EventDetailsMemberRequestsChangePolicyDetails {
+      '.tag': 'member_requests_change_policy_details';
+      member_requests_change_policy_details: MemberRequestsChangePolicyDetails;
+    }
+
+    /**
+     * Added an exception for one or more team members to bypass space limits
+     * imposed by policy.
+     */
+    interface EventDetailsMemberSpaceLimitsAddExceptionDetails {
+      '.tag': 'member_space_limits_add_exception_details';
+      member_space_limits_add_exception_details: MemberSpaceLimitsAddExceptionDetails;
+    }
+
+    /**
+     * Changed the storage limits applied to team members by policy.
+     */
+    interface EventDetailsMemberSpaceLimitsChangePolicyDetails {
+      '.tag': 'member_space_limits_change_policy_details';
+      member_space_limits_change_policy_details: MemberSpaceLimitsChangePolicyDetails;
+    }
+
+    /**
+     * Removed an exception for one or more team members to bypass space limits
+     * imposed by policy.
+     */
+    interface EventDetailsMemberSpaceLimitsRemoveExceptionDetails {
+      '.tag': 'member_space_limits_remove_exception_details';
+      member_space_limits_remove_exception_details: MemberSpaceLimitsRemoveExceptionDetails;
+    }
+
+    /**
+     * Enabled or disabled the option for team members to suggest new members to
+     * add to the team.
+     */
+    interface EventDetailsMemberSuggestionsChangePolicyDetails {
+      '.tag': 'member_suggestions_change_policy_details';
+      member_suggestions_change_policy_details: MemberSuggestionsChangePolicyDetails;
+    }
+
+    /**
+     * Enabled or disabled the Microsoft Office add-in, which lets team members
+     * save files to Dropbox directly from Microsoft Office.
+     */
+    interface EventDetailsMicrosoftOfficeAddinChangePolicyDetails {
+      '.tag': 'microsoft_office_addin_change_policy_details';
+      microsoft_office_addin_change_policy_details: MicrosoftOfficeAddinChangePolicyDetails;
+    }
+
+    /**
+     * Enabled or disabled network control.
+     */
+    interface EventDetailsNetworkControlChangePolicyDetails {
+      '.tag': 'network_control_change_policy_details';
+      network_control_change_policy_details: NetworkControlChangePolicyDetails;
+    }
+
+    /**
+     * Changed whether Dropbox Paper, when enabled, is deployed to all teams or
+     * to specific members of the team.
+     */
+    interface EventDetailsPaperChangeDeploymentPolicyDetails {
+      '.tag': 'paper_change_deployment_policy_details';
+      paper_change_deployment_policy_details: PaperChangeDeploymentPolicyDetails;
+    }
+
+    /**
+     * Changed whether team members can share Paper documents externally (i.e.
+     * outside the team), and if so, whether they should be accessible only by
+     * team members or anyone by default.
+     */
+    interface EventDetailsPaperChangeMemberPolicyDetails {
+      '.tag': 'paper_change_member_policy_details';
+      paper_change_member_policy_details: PaperChangeMemberPolicyDetails;
+    }
+
+    /**
+     * Enabled or disabled Dropbox Paper for the team.
+     */
+    interface EventDetailsPaperChangePolicyDetails {
+      '.tag': 'paper_change_policy_details';
+      paper_change_policy_details: PaperChangePolicyDetails;
+    }
+
+    /**
+     * Enabled or disabled the ability of team members to permanently delete
+     * content.
+     */
+    interface EventDetailsPermanentDeleteChangePolicyDetails {
+      '.tag': 'permanent_delete_change_policy_details';
+      permanent_delete_change_policy_details: PermanentDeleteChangePolicyDetails;
+    }
+
+    /**
+     * Changed whether team members can join shared folders owned externally
+     * (i.e. outside the team).
+     */
+    interface EventDetailsSharingChangeFolderJoinPolicyDetails {
+      '.tag': 'sharing_change_folder_join_policy_details';
+      sharing_change_folder_join_policy_details: SharingChangeFolderJoinPolicyDetails;
+    }
+
+    /**
+     * Changed whether team members can share links externally (i.e. outside the
+     * team), and if so, whether links should be accessible only by team members
+     * or anyone by default.
+     */
+    interface EventDetailsSharingChangeLinkPolicyDetails {
+      '.tag': 'sharing_change_link_policy_details';
+      sharing_change_link_policy_details: SharingChangeLinkPolicyDetails;
+    }
+
+    /**
+     * Changed whether team members can share files and folders externally (i.e.
+     * outside the team).
+     */
+    interface EventDetailsSharingChangeMemberPolicyDetails {
+      '.tag': 'sharing_change_member_policy_details';
+      sharing_change_member_policy_details: SharingChangeMemberPolicyDetails;
+    }
+
+    /**
+     * Changed the default Smart Sync policy for team members.
+     */
+    interface EventDetailsSmartSyncChangePolicyDetails {
+      '.tag': 'smart_sync_change_policy_details';
+      smart_sync_change_policy_details: SmartSyncChangePolicyDetails;
+    }
+
+    /**
+     * Change the single sign-on policy for the team.
+     */
+    interface EventDetailsSsoChangePolicyDetails {
+      '.tag': 'sso_change_policy_details';
+      sso_change_policy_details: SsoChangePolicyDetails;
+    }
+
+    /**
+     * Change two-step verification policy for the team.
+     */
+    interface EventDetailsTfaChangePolicyDetails {
+      '.tag': 'tfa_change_policy_details';
+      tfa_change_policy_details: TfaChangePolicyDetails;
+    }
+
+    /**
+     * Enabled or disabled the option for team members to link a personal
+     * Dropbox account in addition to their work account to the same computer.
+     */
+    interface EventDetailsTwoAccountChangePolicyDetails {
+      '.tag': 'two_account_change_policy_details';
+      two_account_change_policy_details: TwoAccountChangePolicyDetails;
+    }
+
+    /**
+     * Changed how long team members can stay signed in to Dropbox on the web.
+     */
+    interface EventDetailsWebSessionsChangeFixedLengthPolicyDetails {
+      '.tag': 'web_sessions_change_fixed_length_policy_details';
+      web_sessions_change_fixed_length_policy_details: WebSessionsChangeFixedLengthPolicyDetails;
+    }
+
+    /**
+     * Changed how long team members can be idle while signed in to Dropbox on
+     * the web.
+     */
+    interface EventDetailsWebSessionsChangeIdleLengthPolicyDetails {
+      '.tag': 'web_sessions_change_idle_length_policy_details';
+      web_sessions_change_idle_length_policy_details: WebSessionsChangeIdleLengthPolicyDetails;
+    }
+
+    /**
+     * Added a team logo to be displayed on shared link headers.
+     */
+    interface EventDetailsTeamProfileAddLogoDetails {
+      '.tag': 'team_profile_add_logo_details';
+      team_profile_add_logo_details: TeamProfileAddLogoDetails;
+    }
+
+    /**
+     * Changed the team logo to be displayed on shared link headers.
+     */
+    interface EventDetailsTeamProfileChangeLogoDetails {
+      '.tag': 'team_profile_change_logo_details';
+      team_profile_change_logo_details: TeamProfileChangeLogoDetails;
+    }
+
+    /**
+     * Changed the team name.
+     */
+    interface EventDetailsTeamProfileChangeNameDetails {
+      '.tag': 'team_profile_change_name_details';
+      team_profile_change_name_details: TeamProfileChangeNameDetails;
+    }
+
+    /**
+     * Removed the team logo to be displayed on shared link headers.
+     */
+    interface EventDetailsTeamProfileRemoveLogoDetails {
+      '.tag': 'team_profile_remove_logo_details';
+      team_profile_remove_logo_details: TeamProfileRemoveLogoDetails;
+    }
+
+    /**
+     * Added a backup phone for two-step verification.
+     */
+    interface EventDetailsTfaAddBackupPhoneDetails {
+      '.tag': 'tfa_add_backup_phone_details';
+      tfa_add_backup_phone_details: TfaAddBackupPhoneDetails;
+    }
+
+    /**
+     * Added a security key for two-step verification.
+     */
+    interface EventDetailsTfaAddSecurityKeyDetails {
+      '.tag': 'tfa_add_security_key_details';
+      tfa_add_security_key_details: TfaAddSecurityKeyDetails;
+    }
+
+    /**
+     * Changed the backup phone for two-step verification.
+     */
+    interface EventDetailsTfaChangeBackupPhoneDetails {
+      '.tag': 'tfa_change_backup_phone_details';
+      tfa_change_backup_phone_details: TfaChangeBackupPhoneDetails;
+    }
+
+    /**
+     * Enabled, disabled or changed the configuration for two-step verification.
+     */
+    interface EventDetailsTfaChangeStatusDetails {
+      '.tag': 'tfa_change_status_details';
+      tfa_change_status_details: TfaChangeStatusDetails;
+    }
+
+    /**
+     * Removed the backup phone for two-step verification.
+     */
+    interface EventDetailsTfaRemoveBackupPhoneDetails {
+      '.tag': 'tfa_remove_backup_phone_details';
+      tfa_remove_backup_phone_details: TfaRemoveBackupPhoneDetails;
+    }
+
+    /**
+     * Removed a security key for two-step verification.
+     */
+    interface EventDetailsTfaRemoveSecurityKeyDetails {
+      '.tag': 'tfa_remove_security_key_details';
+      tfa_remove_security_key_details: TfaRemoveSecurityKeyDetails;
+    }
+
+    /**
+     * Reset two-step verification for team member.
+     */
+    interface EventDetailsTfaResetDetails {
+      '.tag': 'tfa_reset_details';
+      tfa_reset_details: TfaResetDetails;
+    }
+
+    /**
+     * Hints that this event was returned with missing details due to an
+     * internal error.
+     */
+    interface EventDetailsMissingDetails {
+      '.tag': 'missing_details';
+      missing_details: MissingDetails;
+    }
+
+    interface EventDetailsOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Additional fields depending on the event type.
+     */
+    type EventDetails = EventDetailsMemberChangeMembershipTypeDetails | EventDetailsMemberPermanentlyDeleteAccountContentsDetails | EventDetailsMemberSpaceLimitsChangeStatusDetails | EventDetailsMemberTransferAccountContentsDetails | EventDetailsPaperEnabledUsersGroupAdditionDetails | EventDetailsPaperEnabledUsersGroupRemovalDetails | EventDetailsPaperExternalViewAllowDetails | EventDetailsPaperExternalViewDefaultTeamDetails | EventDetailsPaperExternalViewForbidDetails | EventDetailsSfExternalInviteWarnDetails | EventDetailsTeamMergeDetails | EventDetailsAppLinkTeamDetails | EventDetailsAppLinkUserDetails | EventDetailsAppUnlinkTeamDetails | EventDetailsAppUnlinkUserDetails | EventDetailsDeviceChangeIpDesktopDetails | EventDetailsDeviceChangeIpMobileDetails | EventDetailsDeviceChangeIpWebDetails | EventDetailsDeviceDeleteOnUnlinkFailDetails | EventDetailsDeviceDeleteOnUnlinkSuccessDetails | EventDetailsDeviceLinkFailDetails | EventDetailsDeviceLinkSuccessDetails | EventDetailsDeviceManagementDisabledDetails | EventDetailsDeviceManagementEnabledDetails | EventDetailsDeviceUnlinkDetails | EventDetailsEmmRefreshAuthTokenDetails | EventDetailsAccountCaptureChangeAvailabilityDetails | EventDetailsAccountCaptureMigrateAccountDetails | EventDetailsAccountCaptureRelinquishAccountDetails | EventDetailsDisabledDomainInvitesDetails | EventDetailsDomainInvitesApproveRequestToJoinTeamDetails | EventDetailsDomainInvitesDeclineRequestToJoinTeamDetails | EventDetailsDomainInvitesEmailExistingUsersDetails | EventDetailsDomainInvitesRequestToJoinTeamDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToNoDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToYesDetails | EventDetailsDomainVerificationAddDomainFailDetails | EventDetailsDomainVerificationAddDomainSuccessDetails | EventDetailsDomainVerificationRemoveDomainDetails | EventDetailsEnabledDomainInvitesDetails | EventDetailsCreateFolderDetails | EventDetailsFileAddDetails | EventDetailsFileCopyDetails | EventDetailsFileDeleteDetails | EventDetailsFileDownloadDetails | EventDetailsFileEditDetails | EventDetailsFileGetCopyReferenceDetails | EventDetailsFileMoveDetails | EventDetailsFilePermanentlyDeleteDetails | EventDetailsFilePreviewDetails | EventDetailsFileRenameDetails | EventDetailsFileRestoreDetails | EventDetailsFileRevertDetails | EventDetailsFileRollbackChangesDetails | EventDetailsFileSaveCopyReferenceDetails | EventDetailsFileRequestAddDeadlineDetails | EventDetailsFileRequestChangeFolderDetails | EventDetailsFileRequestChangeTitleDetails | EventDetailsFileRequestCloseDetails | EventDetailsFileRequestCreateDetails | EventDetailsFileRequestReceiveFileDetails | EventDetailsFileRequestRemoveDeadlineDetails | EventDetailsFileRequestSendDetails | EventDetailsGroupAddExternalIdDetails | EventDetailsGroupAddMemberDetails | EventDetailsGroupChangeExternalIdDetails | EventDetailsGroupChangeManagementTypeDetails | EventDetailsGroupChangeMemberRoleDetails | EventDetailsGroupCreateDetails | EventDetailsGroupDeleteDetails | EventDetailsGroupDescriptionUpdatedDetails | EventDetailsGroupJoinPolicyUpdatedDetails | EventDetailsGroupMovedDetails | EventDetailsGroupRemoveExternalIdDetails | EventDetailsGroupRemoveMemberDetails | EventDetailsGroupRenameDetails | EventDetailsEmmLoginSuccessDetails | EventDetailsLogoutDetails | EventDetailsPasswordLoginFailDetails | EventDetailsPasswordLoginSuccessDetails | EventDetailsResellerSupportSessionEndDetails | EventDetailsResellerSupportSessionStartDetails | EventDetailsSignInAsSessionEndDetails | EventDetailsSignInAsSessionStartDetails | EventDetailsSsoLoginFailDetails | EventDetailsMemberAddNameDetails | EventDetailsMemberChangeEmailDetails | EventDetailsMemberChangeNameDetails | EventDetailsMemberChangeRoleDetails | EventDetailsMemberInviteDetails | EventDetailsMemberJoinDetails | EventDetailsMemberLeaveDetails | EventDetailsMemberRecoverDetails | EventDetailsMemberSuggestDetails | EventDetailsMemberSuspendDetails | EventDetailsMemberUnsuspendDetails | EventDetailsPaperContentAddMemberDetails | EventDetailsPaperContentAddToFolderDetails | EventDetailsPaperContentArchiveDetails | EventDetailsPaperContentChangeSubscriptionDetails | EventDetailsPaperContentCreateDetails | EventDetailsPaperContentPermanentlyDeleteDetails | EventDetailsPaperContentRemoveFromFolderDetails | EventDetailsPaperContentRemoveMemberDetails | EventDetailsPaperContentRenameDetails | EventDetailsPaperContentRestoreDetails | EventDetailsPaperDocAddCommentDetails | EventDetailsPaperDocChangeMemberRoleDetails | EventDetailsPaperDocChangeSharingPolicyDetails | EventDetailsPaperDocDeletedDetails | EventDetailsPaperDocDeleteCommentDetails | EventDetailsPaperDocDownloadDetails | EventDetailsPaperDocEditDetails | EventDetailsPaperDocEditCommentDetails | EventDetailsPaperDocFollowedDetails | EventDetailsPaperDocMentionDetails | EventDetailsPaperDocRequestAccessDetails | EventDetailsPaperDocResolveCommentDetails | EventDetailsPaperDocRevertDetails | EventDetailsPaperDocSlackShareDetails | EventDetailsPaperDocTeamInviteDetails | EventDetailsPaperDocUnresolveCommentDetails | EventDetailsPaperDocViewDetails | EventDetailsPaperFolderDeletedDetails | EventDetailsPaperFolderFollowedDetails | EventDetailsPaperFolderTeamInviteDetails | EventDetailsPasswordChangeDetails | EventDetailsPasswordResetDetails | EventDetailsPasswordResetAllDetails | EventDetailsEmmCreateExceptionsReportDetails | EventDetailsEmmCreateUsageReportDetails | EventDetailsSmartSyncCreateAdminPrivilegeReportDetails | EventDetailsTeamActivityCreateReportDetails | EventDetailsCollectionShareDetails | EventDetailsFileAddCommentDetails | EventDetailsFileLikeCommentDetails | EventDetailsFileUnlikeCommentDetails | EventDetailsNoteAclInviteOnlyDetails | EventDetailsNoteAclLinkDetails | EventDetailsNoteAclTeamLinkDetails | EventDetailsNoteSharedDetails | EventDetailsNoteShareReceiveDetails | EventDetailsOpenNoteSharedDetails | EventDetailsSfAddGroupDetails | EventDetailsSfAllowNonMembersToViewSharedLinksDetails | EventDetailsSfInviteGroupDetails | EventDetailsSfNestDetails | EventDetailsSfTeamDeclineDetails | EventDetailsSfTeamGrantAccessDetails | EventDetailsSfTeamInviteDetails | EventDetailsSfTeamInviteChangeRoleDetails | EventDetailsSfTeamJoinDetails | EventDetailsSfTeamJoinFromOobLinkDetails | EventDetailsSfTeamUninviteDetails | EventDetailsSharedContentAddInviteesDetails | EventDetailsSharedContentAddLinkExpiryDetails | EventDetailsSharedContentAddLinkPasswordDetails | EventDetailsSharedContentAddMemberDetails | EventDetailsSharedContentChangeDownloadsPolicyDetails | EventDetailsSharedContentChangeInviteeRoleDetails | EventDetailsSharedContentChangeLinkAudienceDetails | EventDetailsSharedContentChangeLinkExpiryDetails | EventDetailsSharedContentChangeLinkPasswordDetails | EventDetailsSharedContentChangeMemberRoleDetails | EventDetailsSharedContentChangeViewerInfoPolicyDetails | EventDetailsSharedContentClaimInvitationDetails | EventDetailsSharedContentCopyDetails | EventDetailsSharedContentDownloadDetails | EventDetailsSharedContentRelinquishMembershipDetails | EventDetailsSharedContentRemoveInviteeDetails | EventDetailsSharedContentRemoveLinkExpiryDetails | EventDetailsSharedContentRemoveLinkPasswordDetails | EventDetailsSharedContentRemoveMemberDetails | EventDetailsSharedContentRequestAccessDetails | EventDetailsSharedContentUnshareDetails | EventDetailsSharedContentViewDetails | EventDetailsSharedFolderChangeConfidentialityDetails | EventDetailsSharedFolderChangeLinkPolicyDetails | EventDetailsSharedFolderChangeMemberManagementPolicyDetails | EventDetailsSharedFolderChangeMemberPolicyDetails | EventDetailsSharedFolderCreateDetails | EventDetailsSharedFolderMountDetails | EventDetailsSharedFolderTransferOwnershipDetails | EventDetailsSharedFolderUnmountDetails | EventDetailsSharedNoteOpenedDetails | EventDetailsShmodelAppCreateDetails | EventDetailsShmodelCreateDetails | EventDetailsShmodelDisableDetails | EventDetailsShmodelFbShareDetails | EventDetailsShmodelGroupShareDetails | EventDetailsShmodelRemoveExpirationDetails | EventDetailsShmodelSetExpirationDetails | EventDetailsShmodelTeamCopyDetails | EventDetailsShmodelTeamDownloadDetails | EventDetailsShmodelTeamShareDetails | EventDetailsShmodelTeamViewDetails | EventDetailsShmodelVisibilityPasswordDetails | EventDetailsShmodelVisibilityPublicDetails | EventDetailsShmodelVisibilityTeamOnlyDetails | EventDetailsRemoveLogoutUrlDetails | EventDetailsRemoveSsoUrlDetails | EventDetailsSsoChangeCertDetails | EventDetailsSsoChangeLoginUrlDetails | EventDetailsSsoChangeLogoutUrlDetails | EventDetailsSsoChangeSamlIdentityModeDetails | EventDetailsTeamFolderChangeStatusDetails | EventDetailsTeamFolderCreateDetails | EventDetailsTeamFolderDowngradeDetails | EventDetailsTeamFolderPermanentlyDeleteDetails | EventDetailsTeamFolderRenameDetails | EventDetailsAccountCaptureChangePolicyDetails | EventDetailsAllowDownloadDisabledDetails | EventDetailsAllowDownloadEnabledDetails | EventDetailsDataPlacementRestrictionChangePolicyDetails | EventDetailsDataPlacementRestrictionSatisfyPolicyDetails | EventDetailsDeviceApprovalsChangeDesktopPolicyDetails | EventDetailsDeviceApprovalsChangeMobilePolicyDetails | EventDetailsDeviceApprovalsChangeOverageActionDetails | EventDetailsDeviceApprovalsChangeUnlinkActionDetails | EventDetailsEmmAddExceptionDetails | EventDetailsEmmChangePolicyDetails | EventDetailsEmmRemoveExceptionDetails | EventDetailsExtendedVersionHistoryChangePolicyDetails | EventDetailsFileCommentsChangePolicyDetails | EventDetailsFileRequestsChangePolicyDetails | EventDetailsFileRequestsEmailsEnabledDetails | EventDetailsFileRequestsEmailsRestrictedToTeamOnlyDetails | EventDetailsGoogleSsoChangePolicyDetails | EventDetailsGroupUserManagementChangePolicyDetails | EventDetailsMemberRequestsChangePolicyDetails | EventDetailsMemberSpaceLimitsAddExceptionDetails | EventDetailsMemberSpaceLimitsChangePolicyDetails | EventDetailsMemberSpaceLimitsRemoveExceptionDetails | EventDetailsMemberSuggestionsChangePolicyDetails | EventDetailsMicrosoftOfficeAddinChangePolicyDetails | EventDetailsNetworkControlChangePolicyDetails | EventDetailsPaperChangeDeploymentPolicyDetails | EventDetailsPaperChangeMemberPolicyDetails | EventDetailsPaperChangePolicyDetails | EventDetailsPermanentDeleteChangePolicyDetails | EventDetailsSharingChangeFolderJoinPolicyDetails | EventDetailsSharingChangeLinkPolicyDetails | EventDetailsSharingChangeMemberPolicyDetails | EventDetailsSmartSyncChangePolicyDetails | EventDetailsSsoChangePolicyDetails | EventDetailsTfaChangePolicyDetails | EventDetailsTwoAccountChangePolicyDetails | EventDetailsWebSessionsChangeFixedLengthPolicyDetails | EventDetailsWebSessionsChangeIdleLengthPolicyDetails | EventDetailsTeamProfileAddLogoDetails | EventDetailsTeamProfileChangeLogoDetails | EventDetailsTeamProfileChangeNameDetails | EventDetailsTeamProfileRemoveLogoDetails | EventDetailsTfaAddBackupPhoneDetails | EventDetailsTfaAddSecurityKeyDetails | EventDetailsTfaChangeBackupPhoneDetails | EventDetailsTfaChangeStatusDetails | EventDetailsTfaRemoveBackupPhoneDetails | EventDetailsTfaRemoveSecurityKeyDetails | EventDetailsTfaResetDetails | EventDetailsMissingDetails | EventDetailsOther;
+
+    /**
+     * Changed the membership type (limited vs full) for team member.
+     */
+    interface EventTypeMemberChangeMembershipType {
+      '.tag': 'member_change_membership_type';
+    }
+
+    /**
+     * Permanently deleted contents of a removed team member account.
+     */
+    interface EventTypeMemberPermanentlyDeleteAccountContents {
+      '.tag': 'member_permanently_delete_account_contents';
+    }
+
+    /**
+     * Changed the status with respect to whether the team member is under or
+     * over storage quota specified by policy.
+     */
+    interface EventTypeMemberSpaceLimitsChangeStatus {
+      '.tag': 'member_space_limits_change_status';
+    }
+
+    /**
+     * Transferred contents of a removed team member account to another member.
+     */
+    interface EventTypeMemberTransferAccountContents {
+      '.tag': 'member_transfer_account_contents';
+    }
+
+    /**
+     * Users added to Paper enabled users list.
+     */
+    interface EventTypePaperEnabledUsersGroupAddition {
+      '.tag': 'paper_enabled_users_group_addition';
+    }
+
+    /**
+     * Users removed from Paper enabled users list.
+     */
+    interface EventTypePaperEnabledUsersGroupRemoval {
+      '.tag': 'paper_enabled_users_group_removal';
+    }
+
+    /**
+     * Paper external sharing policy changed: anyone. This event is deprecated
+     * and will not be logged going forward as the associated product
+     * functionality no longer exists.
+     */
+    interface EventTypePaperExternalViewAllow {
+      '.tag': 'paper_external_view_allow';
+    }
+
+    /**
+     * Paper external sharing policy changed: default team. This event is
+     * deprecated and will not be logged going forward as the associated product
+     * functionality no longer exists.
+     */
+    interface EventTypePaperExternalViewDefaultTeam {
+      '.tag': 'paper_external_view_default_team';
+    }
+
+    /**
+     * Paper external sharing policy changed: team-only. This event is
+     * deprecated and will not be logged going forward as the associated product
+     * functionality no longer exists.
+     */
+    interface EventTypePaperExternalViewForbid {
+      '.tag': 'paper_external_view_forbid';
+    }
+
+    /**
+     * Admin settings: team members see a warning before sharing folders outside
+     * the team (DEPRECATED FEATURE). This event is deprecated and will not be
+     * logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeSfExternalInviteWarn {
+      '.tag': 'sf_external_invite_warn';
+    }
+
+    /**
+     * Merged the team into another team.
+     */
+    interface EventTypeTeamMerge {
+      '.tag': 'team_merge';
+    }
+
+    /**
+     * Linked an app for team.
+     */
+    interface EventTypeAppLinkTeam {
+      '.tag': 'app_link_team';
+    }
+
+    /**
+     * Linked an app for team member.
+     */
+    interface EventTypeAppLinkUser {
+      '.tag': 'app_link_user';
+    }
+
+    /**
+     * Unlinked an app for team.
+     */
+    interface EventTypeAppUnlinkTeam {
+      '.tag': 'app_unlink_team';
+    }
+
+    /**
+     * Unlinked an app for team member.
+     */
+    interface EventTypeAppUnlinkUser {
+      '.tag': 'app_unlink_user';
+    }
+
+    /**
+     * IP address associated with active desktop session changed.
+     */
+    interface EventTypeDeviceChangeIpDesktop {
+      '.tag': 'device_change_ip_desktop';
+    }
+
+    /**
+     * IP address associated with active mobile session changed.
+     */
+    interface EventTypeDeviceChangeIpMobile {
+      '.tag': 'device_change_ip_mobile';
+    }
+
+    /**
+     * IP address associated with active Web session changed.
+     */
+    interface EventTypeDeviceChangeIpWeb {
+      '.tag': 'device_change_ip_web';
+    }
+
+    /**
+     * Failed to delete all files from an unlinked device.
+     */
+    interface EventTypeDeviceDeleteOnUnlinkFail {
+      '.tag': 'device_delete_on_unlink_fail';
+    }
+
+    /**
+     * Deleted all files from an unlinked device.
+     */
+    interface EventTypeDeviceDeleteOnUnlinkSuccess {
+      '.tag': 'device_delete_on_unlink_success';
+    }
+
+    /**
+     * Failed to link a device.
+     */
+    interface EventTypeDeviceLinkFail {
+      '.tag': 'device_link_fail';
+    }
+
+    /**
+     * Linked a device.
+     */
+    interface EventTypeDeviceLinkSuccess {
+      '.tag': 'device_link_success';
+    }
+
+    /**
+     * Disable Device Management. This event is deprecated and will not be
+     * logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeDeviceManagementDisabled {
+      '.tag': 'device_management_disabled';
+    }
+
+    /**
+     * Enable Device Management. This event is deprecated and will not be logged
+     * going forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeDeviceManagementEnabled {
+      '.tag': 'device_management_enabled';
+    }
+
+    /**
+     * Disconnected a device.
+     */
+    interface EventTypeDeviceUnlink {
+      '.tag': 'device_unlink';
+    }
+
+    /**
+     * Refreshed the auth token used for setting up enterprise mobility
+     * management.
+     */
+    interface EventTypeEmmRefreshAuthToken {
+      '.tag': 'emm_refresh_auth_token';
+    }
+
+    /**
+     * Granted or revoked the option to enable account capture on domains
+     * belonging to the team.
+     */
+    interface EventTypeAccountCaptureChangeAvailability {
+      '.tag': 'account_capture_change_availability';
+    }
+
+    /**
+     * Account captured user migrated their account to the team.
+     */
+    interface EventTypeAccountCaptureMigrateAccount {
+      '.tag': 'account_capture_migrate_account';
+    }
+
+    /**
+     * Account captured user relinquished their account by changing the email
+     * address associated with it.
+     */
+    interface EventTypeAccountCaptureRelinquishAccount {
+      '.tag': 'account_capture_relinquish_account';
+    }
+
+    /**
+     * Disabled domain invites. This event is deprecated and will not be logged
+     * going forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeDisabledDomainInvites {
+      '.tag': 'disabled_domain_invites';
+    }
+
+    /**
+     * Approved a member's request to join the team.
+     */
+    interface EventTypeDomainInvitesApproveRequestToJoinTeam {
+      '.tag': 'domain_invites_approve_request_to_join_team';
+    }
+
+    /**
+     * Declined a user's request to join the team.
+     */
+    interface EventTypeDomainInvitesDeclineRequestToJoinTeam {
+      '.tag': 'domain_invites_decline_request_to_join_team';
+    }
+
+    /**
+     * Sent domain invites to existing domain accounts.
+     */
+    interface EventTypeDomainInvitesEmailExistingUsers {
+      '.tag': 'domain_invites_email_existing_users';
+    }
+
+    /**
+     * Asked to join the team.
+     */
+    interface EventTypeDomainInvitesRequestToJoinTeam {
+      '.tag': 'domain_invites_request_to_join_team';
+    }
+
+    /**
+     * Turned off u201cAutomatically invite new usersu201d. This event is
+     * deprecated and will not be logged going forward as the associated product
+     * functionality no longer exists.
+     */
+    interface EventTypeDomainInvitesSetInviteNewUserPrefToNo {
+      '.tag': 'domain_invites_set_invite_new_user_pref_to_no';
+    }
+
+    /**
+     * Turned on u201cAutomatically invite new usersu201d. This event is
+     * deprecated and will not be logged going forward as the associated product
+     * functionality no longer exists.
+     */
+    interface EventTypeDomainInvitesSetInviteNewUserPrefToYes {
+      '.tag': 'domain_invites_set_invite_new_user_pref_to_yes';
+    }
+
+    /**
+     * Failed to verify a domain belonging to the team.
+     */
+    interface EventTypeDomainVerificationAddDomainFail {
+      '.tag': 'domain_verification_add_domain_fail';
+    }
+
+    /**
+     * Verified a domain belonging to the team.
+     */
+    interface EventTypeDomainVerificationAddDomainSuccess {
+      '.tag': 'domain_verification_add_domain_success';
+    }
+
+    /**
+     * Removed a domain from the list of verified domains belonging to the team.
+     */
+    interface EventTypeDomainVerificationRemoveDomain {
+      '.tag': 'domain_verification_remove_domain';
+    }
+
+    /**
+     * Enabled domain invites. This event is deprecated and will not be logged
+     * going forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeEnabledDomainInvites {
+      '.tag': 'enabled_domain_invites';
+    }
+
+    /**
+     * Created folders. This event is deprecated and will not be logged going
+     * forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeCreateFolder {
+      '.tag': 'create_folder';
+    }
+
+    /**
+     * Added files and/or folders.
+     */
+    interface EventTypeFileAdd {
+      '.tag': 'file_add';
+    }
+
+    /**
+     * Copied files and/or folders.
+     */
+    interface EventTypeFileCopy {
+      '.tag': 'file_copy';
+    }
+
+    /**
+     * Deleted files and/or folders.
+     */
+    interface EventTypeFileDelete {
+      '.tag': 'file_delete';
+    }
+
+    /**
+     * Downloaded files and/or folders.
+     */
+    interface EventTypeFileDownload {
+      '.tag': 'file_download';
+    }
+
+    /**
+     * Edited files.
+     */
+    interface EventTypeFileEdit {
+      '.tag': 'file_edit';
+    }
+
+    /**
+     * Create a copy reference to a file or folder.
+     */
+    interface EventTypeFileGetCopyReference {
+      '.tag': 'file_get_copy_reference';
+    }
+
+    /**
+     * Moved files and/or folders.
+     */
+    interface EventTypeFileMove {
+      '.tag': 'file_move';
+    }
+
+    /**
+     * Permanently deleted files and/or folders.
+     */
+    interface EventTypeFilePermanentlyDelete {
+      '.tag': 'file_permanently_delete';
+    }
+
+    /**
+     * Previewed files and/or folders.
+     */
+    interface EventTypeFilePreview {
+      '.tag': 'file_preview';
+    }
+
+    /**
+     * Renamed files and/or folders.
+     */
+    interface EventTypeFileRename {
+      '.tag': 'file_rename';
+    }
+
+    /**
+     * Restored deleted files and/or folders.
+     */
+    interface EventTypeFileRestore {
+      '.tag': 'file_restore';
+    }
+
+    /**
+     * Reverted files to a previous version.
+     */
+    interface EventTypeFileRevert {
+      '.tag': 'file_revert';
+    }
+
+    /**
+     * Rolled back file change location changes.
+     */
+    interface EventTypeFileRollbackChanges {
+      '.tag': 'file_rollback_changes';
+    }
+
+    /**
+     * Save a file or folder using a copy reference.
+     */
+    interface EventTypeFileSaveCopyReference {
+      '.tag': 'file_save_copy_reference';
+    }
+
+    /**
+     * Added a deadline to a file request.
+     */
+    interface EventTypeFileRequestAddDeadline {
+      '.tag': 'file_request_add_deadline';
+    }
+
+    /**
+     * Changed the file request folder.
+     */
+    interface EventTypeFileRequestChangeFolder {
+      '.tag': 'file_request_change_folder';
+    }
+
+    /**
+     * Change the file request title.
+     */
+    interface EventTypeFileRequestChangeTitle {
+      '.tag': 'file_request_change_title';
+    }
+
+    /**
+     * Closed a file request.
+     */
+    interface EventTypeFileRequestClose {
+      '.tag': 'file_request_close';
+    }
+
+    /**
+     * Created a file request.
+     */
+    interface EventTypeFileRequestCreate {
+      '.tag': 'file_request_create';
+    }
+
+    /**
+     * Received files for a file request.
+     */
+    interface EventTypeFileRequestReceiveFile {
+      '.tag': 'file_request_receive_file';
+    }
+
+    /**
+     * Removed the file request deadline.
+     */
+    interface EventTypeFileRequestRemoveDeadline {
+      '.tag': 'file_request_remove_deadline';
+    }
+
+    /**
+     * Sent file request to users via email.
+     */
+    interface EventTypeFileRequestSend {
+      '.tag': 'file_request_send';
+    }
+
+    /**
+     * Added an external ID for group.
+     */
+    interface EventTypeGroupAddExternalId {
+      '.tag': 'group_add_external_id';
+    }
+
+    /**
+     * Added team members to a group.
+     */
+    interface EventTypeGroupAddMember {
+      '.tag': 'group_add_member';
+    }
+
+    /**
+     * Changed the external ID for group.
+     */
+    interface EventTypeGroupChangeExternalId {
+      '.tag': 'group_change_external_id';
+    }
+
+    /**
+     * Changed group management type.
+     */
+    interface EventTypeGroupChangeManagementType {
+      '.tag': 'group_change_management_type';
+    }
+
+    /**
+     * Changed the manager permissions belonging to a group member.
+     */
+    interface EventTypeGroupChangeMemberRole {
+      '.tag': 'group_change_member_role';
+    }
+
+    /**
+     * Created a group.
+     */
+    interface EventTypeGroupCreate {
+      '.tag': 'group_create';
+    }
+
+    /**
+     * Deleted a group.
+     */
+    interface EventTypeGroupDelete {
+      '.tag': 'group_delete';
+    }
+
+    /**
+     * Updated a group.
+     */
+    interface EventTypeGroupDescriptionUpdated {
+      '.tag': 'group_description_updated';
+    }
+
+    /**
+     * Updated a group join policy.
+     */
+    interface EventTypeGroupJoinPolicyUpdated {
+      '.tag': 'group_join_policy_updated';
+    }
+
+    /**
+     * Moved a group. This event is deprecated and will not be logged going
+     * forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeGroupMoved {
+      '.tag': 'group_moved';
+    }
+
+    /**
+     * Removed the external ID for group.
+     */
+    interface EventTypeGroupRemoveExternalId {
+      '.tag': 'group_remove_external_id';
+    }
+
+    /**
+     * Removed team members from a group.
+     */
+    interface EventTypeGroupRemoveMember {
+      '.tag': 'group_remove_member';
+    }
+
+    /**
+     * Renamed a group.
+     */
+    interface EventTypeGroupRename {
+      '.tag': 'group_rename';
+    }
+
+    /**
+     * Signed in using the Dropbox EMM app.
+     */
+    interface EventTypeEmmLoginSuccess {
+      '.tag': 'emm_login_success';
+    }
+
+    /**
+     * Signed out.
+     */
+    interface EventTypeLogout {
+      '.tag': 'logout';
+    }
+
+    /**
+     * Failed to sign in using a password.
+     */
+    interface EventTypePasswordLoginFail {
+      '.tag': 'password_login_fail';
+    }
+
+    /**
+     * Signed in using a password.
+     */
+    interface EventTypePasswordLoginSuccess {
+      '.tag': 'password_login_success';
+    }
+
+    /**
+     * Ended reseller support session.
+     */
+    interface EventTypeResellerSupportSessionEnd {
+      '.tag': 'reseller_support_session_end';
+    }
+
+    /**
+     * Started reseller support session.
+     */
+    interface EventTypeResellerSupportSessionStart {
+      '.tag': 'reseller_support_session_start';
+    }
+
+    /**
+     * Ended admin sign-in-as session.
+     */
+    interface EventTypeSignInAsSessionEnd {
+      '.tag': 'sign_in_as_session_end';
+    }
+
+    /**
+     * Started admin sign-in-as session.
+     */
+    interface EventTypeSignInAsSessionStart {
+      '.tag': 'sign_in_as_session_start';
+    }
+
+    /**
+     * Failed to sign in using SSO.
+     */
+    interface EventTypeSsoLoginFail {
+      '.tag': 'sso_login_fail';
+    }
+
+    /**
+     * Set team member name when joining team.
+     */
+    interface EventTypeMemberAddName {
+      '.tag': 'member_add_name';
+    }
+
+    /**
+     * Changed team member email address.
+     */
+    interface EventTypeMemberChangeEmail {
+      '.tag': 'member_change_email';
+    }
+
+    /**
+     * Changed team member name.
+     */
+    interface EventTypeMemberChangeName {
+      '.tag': 'member_change_name';
+    }
+
+    /**
+     * Change the admin permissions belonging to team member.
+     */
+    interface EventTypeMemberChangeRole {
+      '.tag': 'member_change_role';
+    }
+
+    /**
+     * Invited a user to join the team.
+     */
+    interface EventTypeMemberInvite {
+      '.tag': 'member_invite';
+    }
+
+    /**
+     * Joined the team.
+     */
+    interface EventTypeMemberJoin {
+      '.tag': 'member_join';
+    }
+
+    /**
+     * Removed a team member.
+     */
+    interface EventTypeMemberLeave {
+      '.tag': 'member_leave';
+    }
+
+    /**
+     * Recovered a removed member.
+     */
+    interface EventTypeMemberRecover {
+      '.tag': 'member_recover';
+    }
+
+    /**
+     * Suggested a new team member to be added to the team.
+     */
+    interface EventTypeMemberSuggest {
+      '.tag': 'member_suggest';
+    }
+
+    /**
+     * Suspended a team member.
+     */
+    interface EventTypeMemberSuspend {
+      '.tag': 'member_suspend';
+    }
+
+    /**
+     * Unsuspended a team member.
+     */
+    interface EventTypeMemberUnsuspend {
+      '.tag': 'member_unsuspend';
+    }
+
+    /**
+     * Added users to the membership of a Paper doc or folder.
+     */
+    interface EventTypePaperContentAddMember {
+      '.tag': 'paper_content_add_member';
+    }
+
+    /**
+     * Added Paper doc or folder to a folder.
+     */
+    interface EventTypePaperContentAddToFolder {
+      '.tag': 'paper_content_add_to_folder';
+    }
+
+    /**
+     * Archived Paper doc or folder.
+     */
+    interface EventTypePaperContentArchive {
+      '.tag': 'paper_content_archive';
+    }
+
+    /**
+     * Followed or unfollowed a Paper doc or folder.
+     */
+    interface EventTypePaperContentChangeSubscription {
+      '.tag': 'paper_content_change_subscription';
+    }
+
+    /**
+     * Created a Paper doc or folder.
+     */
+    interface EventTypePaperContentCreate {
+      '.tag': 'paper_content_create';
+    }
+
+    /**
+     * Permanently deleted a Paper doc or folder.
+     */
+    interface EventTypePaperContentPermanentlyDelete {
+      '.tag': 'paper_content_permanently_delete';
+    }
+
+    /**
+     * Removed Paper doc or folder from a folder.
+     */
+    interface EventTypePaperContentRemoveFromFolder {
+      '.tag': 'paper_content_remove_from_folder';
+    }
+
+    /**
+     * Removed a user from the membership of a Paper doc or folder.
+     */
+    interface EventTypePaperContentRemoveMember {
+      '.tag': 'paper_content_remove_member';
+    }
+
+    /**
+     * Renamed Paper doc or folder.
+     */
+    interface EventTypePaperContentRename {
+      '.tag': 'paper_content_rename';
+    }
+
+    /**
+     * Restored an archived Paper doc or folder.
+     */
+    interface EventTypePaperContentRestore {
+      '.tag': 'paper_content_restore';
+    }
+
+    /**
+     * Added a Paper doc comment.
+     */
+    interface EventTypePaperDocAddComment {
+      '.tag': 'paper_doc_add_comment';
+    }
+
+    /**
+     * Changed the access type of a Paper doc member.
+     */
+    interface EventTypePaperDocChangeMemberRole {
+      '.tag': 'paper_doc_change_member_role';
+    }
+
+    /**
+     * Changed the sharing policy for Paper doc.
+     */
+    interface EventTypePaperDocChangeSharingPolicy {
+      '.tag': 'paper_doc_change_sharing_policy';
+    }
+
+    /**
+     * Paper doc archived. This event is deprecated and will not be logged going
+     * forward as the associated product functionality no longer exists.
+     */
+    interface EventTypePaperDocDeleted {
+      '.tag': 'paper_doc_deleted';
+    }
+
+    /**
+     * Deleted a Paper doc comment.
+     */
+    interface EventTypePaperDocDeleteComment {
+      '.tag': 'paper_doc_delete_comment';
+    }
+
+    /**
+     * Downloaded a Paper doc in a particular output format.
+     */
+    interface EventTypePaperDocDownload {
+      '.tag': 'paper_doc_download';
+    }
+
+    /**
+     * Edited a Paper doc.
+     */
+    interface EventTypePaperDocEdit {
+      '.tag': 'paper_doc_edit';
+    }
+
+    /**
+     * Edited a Paper doc comment.
+     */
+    interface EventTypePaperDocEditComment {
+      '.tag': 'paper_doc_edit_comment';
+    }
+
+    /**
+     * Followed a Paper doc. This event is replaced by
+     * paper_content_change_subscription and will not be logged going forward.
+     */
+    interface EventTypePaperDocFollowed {
+      '.tag': 'paper_doc_followed';
+    }
+
+    /**
+     * Mentioned a member in a Paper doc.
+     */
+    interface EventTypePaperDocMention {
+      '.tag': 'paper_doc_mention';
+    }
+
+    /**
+     * Requested to be a member on a Paper doc.
+     */
+    interface EventTypePaperDocRequestAccess {
+      '.tag': 'paper_doc_request_access';
+    }
+
+    /**
+     * Paper doc comment resolved.
+     */
+    interface EventTypePaperDocResolveComment {
+      '.tag': 'paper_doc_resolve_comment';
+    }
+
+    /**
+     * Restored a Paper doc to previous revision.
+     */
+    interface EventTypePaperDocRevert {
+      '.tag': 'paper_doc_revert';
+    }
+
+    /**
+     * Paper doc link shared via slack.
+     */
+    interface EventTypePaperDocSlackShare {
+      '.tag': 'paper_doc_slack_share';
+    }
+
+    /**
+     * Paper doc shared with team member. This event is deprecated and will not
+     * be logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypePaperDocTeamInvite {
+      '.tag': 'paper_doc_team_invite';
+    }
+
+    /**
+     * Unresolved a Paper doc comment.
+     */
+    interface EventTypePaperDocUnresolveComment {
+      '.tag': 'paper_doc_unresolve_comment';
+    }
+
+    /**
+     * Viewed Paper doc.
+     */
+    interface EventTypePaperDocView {
+      '.tag': 'paper_doc_view';
+    }
+
+    /**
+     * Paper folder archived. This event is deprecated and will not be logged
+     * going forward as the associated product functionality no longer exists.
+     */
+    interface EventTypePaperFolderDeleted {
+      '.tag': 'paper_folder_deleted';
+    }
+
+    /**
+     * Followed a Paper folder. This event is replaced by
+     * paper_content_change_subscription and will not be logged going forward.
+     */
+    interface EventTypePaperFolderFollowed {
+      '.tag': 'paper_folder_followed';
+    }
+
+    /**
+     * Paper folder shared with team member. This event is deprecated and will
+     * not be logged going forward as the associated product functionality no
+     * longer exists.
+     */
+    interface EventTypePaperFolderTeamInvite {
+      '.tag': 'paper_folder_team_invite';
+    }
+
+    /**
+     * Changed password.
+     */
+    interface EventTypePasswordChange {
+      '.tag': 'password_change';
+    }
+
+    /**
+     * Reset password.
+     */
+    interface EventTypePasswordReset {
+      '.tag': 'password_reset';
+    }
+
+    /**
+     * Reset all team member passwords.
+     */
+    interface EventTypePasswordResetAll {
+      '.tag': 'password_reset_all';
+    }
+
+    /**
+     * EMM excluded users report created.
+     */
+    interface EventTypeEmmCreateExceptionsReport {
+      '.tag': 'emm_create_exceptions_report';
+    }
+
+    /**
+     * EMM mobile app usage report created.
+     */
+    interface EventTypeEmmCreateUsageReport {
+      '.tag': 'emm_create_usage_report';
+    }
+
+    /**
+     * Smart Sync non-admin devices report created.
+     */
+    interface EventTypeSmartSyncCreateAdminPrivilegeReport {
+      '.tag': 'smart_sync_create_admin_privilege_report';
+    }
+
+    /**
+     * Created a team activity report.
+     */
+    interface EventTypeTeamActivityCreateReport {
+      '.tag': 'team_activity_create_report';
+    }
+
+    /**
+     * Shared an album.
+     */
+    interface EventTypeCollectionShare {
+      '.tag': 'collection_share';
+    }
+
+    /**
+     * Added a file comment.
+     */
+    interface EventTypeFileAddComment {
+      '.tag': 'file_add_comment';
+    }
+
+    /**
+     * Liked a file comment. This event is deprecated and will not be logged
+     * going forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeFileLikeComment {
+      '.tag': 'file_like_comment';
+    }
+
+    /**
+     * Unliked a file comment. This event is deprecated and will not be logged
+     * going forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeFileUnlikeComment {
+      '.tag': 'file_unlike_comment';
+    }
+
+    /**
+     * Changed a Paper document to be invite-only. This event is deprecated and
+     * will not be logged going forward as the associated product functionality
+     * no longer exists.
+     */
+    interface EventTypeNoteAclInviteOnly {
+      '.tag': 'note_acl_invite_only';
+    }
+
+    /**
+     * Changed a Paper document to be link accessible. This event is deprecated
+     * and will not be logged going forward as the associated product
+     * functionality no longer exists.
+     */
+    interface EventTypeNoteAclLink {
+      '.tag': 'note_acl_link';
+    }
+
+    /**
+     * Changed a Paper document to be link accessible for the team. This event
+     * is deprecated and will not be logged going forward as the associated
+     * product functionality no longer exists.
+     */
+    interface EventTypeNoteAclTeamLink {
+      '.tag': 'note_acl_team_link';
+    }
+
+    /**
+     * Shared a Paper doc. This event is deprecated and will not be logged going
+     * forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeNoteShared {
+      '.tag': 'note_shared';
+    }
+
+    /**
+     * Shared Paper document received. This event is deprecated and will not be
+     * logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeNoteShareReceive {
+      '.tag': 'note_share_receive';
+    }
+
+    /**
+     * Opened a shared Paper doc. This event is deprecated and will not be
+     * logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeOpenNoteShared {
+      '.tag': 'open_note_shared';
+    }
+
+    /**
+     * Added the team to a shared folder.
+     */
+    interface EventTypeSfAddGroup {
+      '.tag': 'sf_add_group';
+    }
+
+    /**
+     * Allowed non collaborators to view links to files in a shared folder. This
+     * event is deprecated and will not be logged going forward as the
+     * associated product functionality no longer exists.
+     */
+    interface EventTypeSfAllowNonMembersToViewSharedLinks {
+      '.tag': 'sf_allow_non_members_to_view_shared_links';
+    }
+
+    /**
+     * Invited a group to a shared folder. This event is deprecated and will not
+     * be logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeSfInviteGroup {
+      '.tag': 'sf_invite_group';
+    }
+
+    /**
+     * Changed parent of shared folder.
+     */
+    interface EventTypeSfNest {
+      '.tag': 'sf_nest';
+    }
+
+    /**
+     * Declined a team member's invitation to a shared folder.
+     */
+    interface EventTypeSfTeamDecline {
+      '.tag': 'sf_team_decline';
+    }
+
+    /**
+     * Granted access to a shared folder. This event is deprecated and will not
+     * be logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeSfTeamGrantAccess {
+      '.tag': 'sf_team_grant_access';
+    }
+
+    /**
+     * Invited team members to a shared folder. This event is deprecated and
+     * will not be logged going forward as the associated product functionality
+     * no longer exists.
+     */
+    interface EventTypeSfTeamInvite {
+      '.tag': 'sf_team_invite';
+    }
+
+    /**
+     * Changed a team member's role in a shared folder. This event is deprecated
+     * and will not be logged going forward as the associated product
+     * functionality no longer exists.
+     */
+    interface EventTypeSfTeamInviteChangeRole {
+      '.tag': 'sf_team_invite_change_role';
+    }
+
+    /**
+     * Joined a team member's shared folder. This event is deprecated and will
+     * not be logged going forward as the associated product functionality no
+     * longer exists.
+     */
+    interface EventTypeSfTeamJoin {
+      '.tag': 'sf_team_join';
+    }
+
+    /**
+     * Joined a team member's shared folder from a link. This event is
+     * deprecated and will not be logged going forward as the associated product
+     * functionality no longer exists.
+     */
+    interface EventTypeSfTeamJoinFromOobLink {
+      '.tag': 'sf_team_join_from_oob_link';
+    }
+
+    /**
+     * Unshared a folder with a team member. This event is deprecated and will
+     * not be logged going forward as the associated product functionality no
+     * longer exists.
+     */
+    interface EventTypeSfTeamUninvite {
+      '.tag': 'sf_team_uninvite';
+    }
+
+    /**
+     * Sent an email invitation to the membership of a shared file or folder.
+     */
+    interface EventTypeSharedContentAddInvitees {
+      '.tag': 'shared_content_add_invitees';
+    }
+
+    /**
+     * Added an expiry to the link for the shared file or folder.
+     */
+    interface EventTypeSharedContentAddLinkExpiry {
+      '.tag': 'shared_content_add_link_expiry';
+    }
+
+    /**
+     * Added a password to the link for the shared file or folder.
+     */
+    interface EventTypeSharedContentAddLinkPassword {
+      '.tag': 'shared_content_add_link_password';
+    }
+
+    /**
+     * Added users and/or groups to the membership of a shared file or folder.
+     */
+    interface EventTypeSharedContentAddMember {
+      '.tag': 'shared_content_add_member';
+    }
+
+    /**
+     * Changed whether members can download the shared file or folder.
+     */
+    interface EventTypeSharedContentChangeDownloadsPolicy {
+      '.tag': 'shared_content_change_downloads_policy';
+    }
+
+    /**
+     * Changed the access type of an invitee to a shared file or folder before
+     * the invitation was claimed.
+     */
+    interface EventTypeSharedContentChangeInviteeRole {
+      '.tag': 'shared_content_change_invitee_role';
+    }
+
+    /**
+     * Changed the audience of the link for a shared file or folder.
+     */
+    interface EventTypeSharedContentChangeLinkAudience {
+      '.tag': 'shared_content_change_link_audience';
+    }
+
+    /**
+     * Changed the expiry of the link for the shared file or folder.
+     */
+    interface EventTypeSharedContentChangeLinkExpiry {
+      '.tag': 'shared_content_change_link_expiry';
+    }
+
+    /**
+     * Changed the password on the link for the shared file or folder.
+     */
+    interface EventTypeSharedContentChangeLinkPassword {
+      '.tag': 'shared_content_change_link_password';
+    }
+
+    /**
+     * Changed the access type of a shared file or folder member.
+     */
+    interface EventTypeSharedContentChangeMemberRole {
+      '.tag': 'shared_content_change_member_role';
+    }
+
+    /**
+     * Changed whether members can see who viewed the shared file or folder.
+     */
+    interface EventTypeSharedContentChangeViewerInfoPolicy {
+      '.tag': 'shared_content_change_viewer_info_policy';
+    }
+
+    /**
+     * Claimed membership to a team member's shared folder.
+     */
+    interface EventTypeSharedContentClaimInvitation {
+      '.tag': 'shared_content_claim_invitation';
+    }
+
+    /**
+     * Copied the shared file or folder to own Dropbox.
+     */
+    interface EventTypeSharedContentCopy {
+      '.tag': 'shared_content_copy';
+    }
+
+    /**
+     * Downloaded the shared file or folder.
+     */
+    interface EventTypeSharedContentDownload {
+      '.tag': 'shared_content_download';
+    }
+
+    /**
+     * Left the membership of a shared file or folder.
+     */
+    interface EventTypeSharedContentRelinquishMembership {
+      '.tag': 'shared_content_relinquish_membership';
+    }
+
+    /**
+     * Removed an invitee from the membership of a shared file or folder before
+     * it was claimed.
+     */
+    interface EventTypeSharedContentRemoveInvitee {
+      '.tag': 'shared_content_remove_invitee';
+    }
+
+    /**
+     * Removed the expiry of the link for the shared file or folder.
+     */
+    interface EventTypeSharedContentRemoveLinkExpiry {
+      '.tag': 'shared_content_remove_link_expiry';
+    }
+
+    /**
+     * Removed the password on the link for the shared file or folder.
+     */
+    interface EventTypeSharedContentRemoveLinkPassword {
+      '.tag': 'shared_content_remove_link_password';
+    }
+
+    /**
+     * Removed a user or a group from the membership of a shared file or folder.
+     */
+    interface EventTypeSharedContentRemoveMember {
+      '.tag': 'shared_content_remove_member';
+    }
+
+    /**
+     * Requested to be on the membership of a shared file or folder.
+     */
+    interface EventTypeSharedContentRequestAccess {
+      '.tag': 'shared_content_request_access';
+    }
+
+    /**
+     * Unshared a shared file or folder by clearing its membership and turning
+     * off its link.
+     */
+    interface EventTypeSharedContentUnshare {
+      '.tag': 'shared_content_unshare';
+    }
+
+    /**
+     * Previewed the shared file or folder.
+     */
+    interface EventTypeSharedContentView {
+      '.tag': 'shared_content_view';
+    }
+
+    /**
+     * Set or unset the confidential flag on a shared folder.
+     */
+    interface EventTypeSharedFolderChangeConfidentiality {
+      '.tag': 'shared_folder_change_confidentiality';
+    }
+
+    /**
+     * Changed who can access the shared folder via a link.
+     */
+    interface EventTypeSharedFolderChangeLinkPolicy {
+      '.tag': 'shared_folder_change_link_policy';
+    }
+
+    /**
+     * Changed who can manage the membership of a shared folder.
+     */
+    interface EventTypeSharedFolderChangeMemberManagementPolicy {
+      '.tag': 'shared_folder_change_member_management_policy';
+    }
+
+    /**
+     * Changed who can become a member of the shared folder.
+     */
+    interface EventTypeSharedFolderChangeMemberPolicy {
+      '.tag': 'shared_folder_change_member_policy';
+    }
+
+    /**
+     * Created a shared folder.
+     */
+    interface EventTypeSharedFolderCreate {
+      '.tag': 'shared_folder_create';
+    }
+
+    /**
+     * Added a shared folder to own Dropbox.
+     */
+    interface EventTypeSharedFolderMount {
+      '.tag': 'shared_folder_mount';
+    }
+
+    /**
+     * Transferred the ownership of a shared folder to another member.
+     */
+    interface EventTypeSharedFolderTransferOwnership {
+      '.tag': 'shared_folder_transfer_ownership';
+    }
+
+    /**
+     * Deleted a shared folder from Dropbox.
+     */
+    interface EventTypeSharedFolderUnmount {
+      '.tag': 'shared_folder_unmount';
+    }
+
+    /**
+     * Shared Paper document was opened. This event is deprecated and will not
+     * be logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeSharedNoteOpened {
+      '.tag': 'shared_note_opened';
+    }
+
+    /**
+     * Created a link to a file using an app.
+     */
+    interface EventTypeShmodelAppCreate {
+      '.tag': 'shmodel_app_create';
+    }
+
+    /**
+     * Created a new link.
+     */
+    interface EventTypeShmodelCreate {
+      '.tag': 'shmodel_create';
+    }
+
+    /**
+     * Removed a link.
+     */
+    interface EventTypeShmodelDisable {
+      '.tag': 'shmodel_disable';
+    }
+
+    /**
+     * Shared a link with Facebook users.
+     */
+    interface EventTypeShmodelFbShare {
+      '.tag': 'shmodel_fb_share';
+    }
+
+    /**
+     * Shared a link with a group. This event is deprecated and will not be
+     * logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeShmodelGroupShare {
+      '.tag': 'shmodel_group_share';
+    }
+
+    /**
+     * Removed the expiration date from a link.
+     */
+    interface EventTypeShmodelRemoveExpiration {
+      '.tag': 'shmodel_remove_expiration';
+    }
+
+    /**
+     * Added an expiration date to a link.
+     */
+    interface EventTypeShmodelSetExpiration {
+      '.tag': 'shmodel_set_expiration';
+    }
+
+    /**
+     * Added a team member's file/folder to their Dropbox from a link.
+     */
+    interface EventTypeShmodelTeamCopy {
+      '.tag': 'shmodel_team_copy';
+    }
+
+    /**
+     * Downloaded a team member's file/folder from a link.
+     */
+    interface EventTypeShmodelTeamDownload {
+      '.tag': 'shmodel_team_download';
+    }
+
+    /**
+     * Shared a link with team members.
+     */
+    interface EventTypeShmodelTeamShare {
+      '.tag': 'shmodel_team_share';
+    }
+
+    /**
+     * Opened a team member's link.
+     */
+    interface EventTypeShmodelTeamView {
+      '.tag': 'shmodel_team_view';
+    }
+
+    /**
+     * Password-protected a link.
+     */
+    interface EventTypeShmodelVisibilityPassword {
+      '.tag': 'shmodel_visibility_password';
+    }
+
+    /**
+     * Made a file/folder visible to anyone with the link.
+     */
+    interface EventTypeShmodelVisibilityPublic {
+      '.tag': 'shmodel_visibility_public';
+    }
+
+    /**
+     * Made a file/folder visible only to team members with the link.
+     */
+    interface EventTypeShmodelVisibilityTeamOnly {
+      '.tag': 'shmodel_visibility_team_only';
+    }
+
+    /**
+     * Removed single sign-on logout URL. This event is deprecated and will not
+     * be logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeRemoveLogoutUrl {
+      '.tag': 'remove_logout_url';
+    }
+
+    /**
+     * Changed the sign-out URL for SSO. This event is deprecated and will not
+     * be logged going forward as the associated product functionality no longer
+     * exists.
+     */
+    interface EventTypeRemoveSsoUrl {
+      '.tag': 'remove_sso_url';
+    }
+
+    /**
+     * Changed the X.509 certificate for SSO.
+     */
+    interface EventTypeSsoChangeCert {
+      '.tag': 'sso_change_cert';
+    }
+
+    /**
+     * Changed the sign-in URL for SSO.
+     */
+    interface EventTypeSsoChangeLoginUrl {
+      '.tag': 'sso_change_login_url';
+    }
+
+    /**
+     * Changed the sign-out URL for SSO.
+     */
+    interface EventTypeSsoChangeLogoutUrl {
+      '.tag': 'sso_change_logout_url';
+    }
+
+    /**
+     * Changed the SAML identity mode for SSO.
+     */
+    interface EventTypeSsoChangeSamlIdentityMode {
+      '.tag': 'sso_change_saml_identity_mode';
+    }
+
+    /**
+     * Changed the archival status of a team folder.
+     */
+    interface EventTypeTeamFolderChangeStatus {
+      '.tag': 'team_folder_change_status';
+    }
+
+    /**
+     * Created a new team folder in active status.
+     */
+    interface EventTypeTeamFolderCreate {
+      '.tag': 'team_folder_create';
+    }
+
+    /**
+     * Downgraded a team folder to a regular shared folder.
+     */
+    interface EventTypeTeamFolderDowngrade {
+      '.tag': 'team_folder_downgrade';
+    }
+
+    /**
+     * Permanently deleted an archived team folder.
+     */
+    interface EventTypeTeamFolderPermanentlyDelete {
+      '.tag': 'team_folder_permanently_delete';
+    }
+
+    /**
+     * Renamed an active or archived team folder.
+     */
+    interface EventTypeTeamFolderRename {
+      '.tag': 'team_folder_rename';
+    }
+
+    /**
+     * Changed the account capture policy on a domain belonging to the team.
+     */
+    interface EventTypeAccountCaptureChangePolicy {
+      '.tag': 'account_capture_change_policy';
+    }
+
+    /**
+     * Disabled allow downloads. This event is deprecated and will not be logged
+     * going forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeAllowDownloadDisabled {
+      '.tag': 'allow_download_disabled';
+    }
+
+    /**
+     * Enabled allow downloads. This event is deprecated and will not be logged
+     * going forward as the associated product functionality no longer exists.
+     */
+    interface EventTypeAllowDownloadEnabled {
+      '.tag': 'allow_download_enabled';
+    }
+
+    /**
+     * Set a restriction policy regarding the location of data centers where
+     * team data resides.
+     */
+    interface EventTypeDataPlacementRestrictionChangePolicy {
+      '.tag': 'data_placement_restriction_change_policy';
+    }
+
+    /**
+     * Satisfied a previously set restriction policy regarding the location of
+     * data centers where team data resides (i.e. all data have been migrated
+     * according to the restriction placed).
+     */
+    interface EventTypeDataPlacementRestrictionSatisfyPolicy {
+      '.tag': 'data_placement_restriction_satisfy_policy';
+    }
+
+    /**
+     * Set or removed a limit on the number of computers each team member can
+     * link to their work Dropbox account.
+     */
+    interface EventTypeDeviceApprovalsChangeDesktopPolicy {
+      '.tag': 'device_approvals_change_desktop_policy';
+    }
+
+    /**
+     * Set or removed a limit on the number of mobiles devices each team member
+     * can link to their work Dropbox account.
+     */
+    interface EventTypeDeviceApprovalsChangeMobilePolicy {
+      '.tag': 'device_approvals_change_mobile_policy';
+    }
+
+    /**
+     * Changed the action taken when a team member is already over the limits
+     * (e.g when they join the team, an admin lowers limits, etc.).
+     */
+    interface EventTypeDeviceApprovalsChangeOverageAction {
+      '.tag': 'device_approvals_change_overage_action';
+    }
+
+    /**
+     * Changed the action taken with respect to approval limits when a team
+     * member unlinks an approved device.
+     */
+    interface EventTypeDeviceApprovalsChangeUnlinkAction {
+      '.tag': 'device_approvals_change_unlink_action';
+    }
+
+    /**
+     * Added an exception for one or more team members to optionally use the
+     * regular Dropbox app when EMM is enabled.
+     */
+    interface EventTypeEmmAddException {
+      '.tag': 'emm_add_exception';
+    }
+
+    /**
+     * Enabled or disabled enterprise mobility management for team members.
+     */
+    interface EventTypeEmmChangePolicy {
+      '.tag': 'emm_change_policy';
+    }
+
+    /**
+     * Removed an exception for one or more team members to optionally use the
+     * regular Dropbox app when EMM is enabled.
+     */
+    interface EventTypeEmmRemoveException {
+      '.tag': 'emm_remove_exception';
+    }
+
+    /**
+     * Accepted or opted out of extended version history.
+     */
+    interface EventTypeExtendedVersionHistoryChangePolicy {
+      '.tag': 'extended_version_history_change_policy';
+    }
+
+    /**
+     * Enabled or disabled commenting on team files.
+     */
+    interface EventTypeFileCommentsChangePolicy {
+      '.tag': 'file_comments_change_policy';
+    }
+
+    /**
+     * Enabled or disabled file requests.
+     */
+    interface EventTypeFileRequestsChangePolicy {
+      '.tag': 'file_requests_change_policy';
+    }
+
+    /**
+     * Enabled file request emails for everyone. This event is deprecated and
+     * will not be logged going forward as the associated product functionality
+     * no longer exists.
+     */
+    interface EventTypeFileRequestsEmailsEnabled {
+      '.tag': 'file_requests_emails_enabled';
+    }
+
+    /**
+     * Allowed file request emails for the team. This event is deprecated and
+     * will not be logged going forward as the associated product functionality
+     * no longer exists.
+     */
+    interface EventTypeFileRequestsEmailsRestrictedToTeamOnly {
+      '.tag': 'file_requests_emails_restricted_to_team_only';
+    }
+
+    /**
+     * Enabled or disabled Google single sign-on for the team.
+     */
+    interface EventTypeGoogleSsoChangePolicy {
+      '.tag': 'google_sso_change_policy';
+    }
+
+    /**
+     * Changed who can create groups.
+     */
+    interface EventTypeGroupUserManagementChangePolicy {
+      '.tag': 'group_user_management_change_policy';
+    }
+
+    /**
+     * Changed whether users can find the team when not invited.
+     */
+    interface EventTypeMemberRequestsChangePolicy {
+      '.tag': 'member_requests_change_policy';
+    }
+
+    /**
+     * Added an exception for one or more team members to bypass space limits
+     * imposed by policy.
+     */
+    interface EventTypeMemberSpaceLimitsAddException {
+      '.tag': 'member_space_limits_add_exception';
+    }
+
+    /**
+     * Changed the storage limits applied to team members by policy.
+     */
+    interface EventTypeMemberSpaceLimitsChangePolicy {
+      '.tag': 'member_space_limits_change_policy';
+    }
+
+    /**
+     * Removed an exception for one or more team members to bypass space limits
+     * imposed by policy.
+     */
+    interface EventTypeMemberSpaceLimitsRemoveException {
+      '.tag': 'member_space_limits_remove_exception';
+    }
+
+    /**
+     * Enabled or disabled the option for team members to suggest new members to
+     * add to the team.
+     */
+    interface EventTypeMemberSuggestionsChangePolicy {
+      '.tag': 'member_suggestions_change_policy';
+    }
+
+    /**
+     * Enabled or disabled the Microsoft Office add-in, which lets team members
+     * save files to Dropbox directly from Microsoft Office.
+     */
+    interface EventTypeMicrosoftOfficeAddinChangePolicy {
+      '.tag': 'microsoft_office_addin_change_policy';
+    }
+
+    /**
+     * Enabled or disabled network control.
+     */
+    interface EventTypeNetworkControlChangePolicy {
+      '.tag': 'network_control_change_policy';
+    }
+
+    /**
+     * Changed whether Dropbox Paper, when enabled, is deployed to all teams or
+     * to specific members of the team.
+     */
+    interface EventTypePaperChangeDeploymentPolicy {
+      '.tag': 'paper_change_deployment_policy';
+    }
+
+    /**
+     * Changed whether team members can share Paper documents externally (i.e.
+     * outside the team), and if so, whether they should be accessible only by
+     * team members or anyone by default.
+     */
+    interface EventTypePaperChangeMemberPolicy {
+      '.tag': 'paper_change_member_policy';
+    }
+
+    /**
+     * Enabled or disabled Dropbox Paper for the team.
+     */
+    interface EventTypePaperChangePolicy {
+      '.tag': 'paper_change_policy';
+    }
+
+    /**
+     * Enabled or disabled the ability of team members to permanently delete
+     * content.
+     */
+    interface EventTypePermanentDeleteChangePolicy {
+      '.tag': 'permanent_delete_change_policy';
+    }
+
+    /**
+     * Changed whether team members can join shared folders owned externally
+     * (i.e. outside the team).
+     */
+    interface EventTypeSharingChangeFolderJoinPolicy {
+      '.tag': 'sharing_change_folder_join_policy';
+    }
+
+    /**
+     * Changed whether team members can share links externally (i.e. outside the
+     * team), and if so, whether links should be accessible only by team members
+     * or anyone by default.
+     */
+    interface EventTypeSharingChangeLinkPolicy {
+      '.tag': 'sharing_change_link_policy';
+    }
+
+    /**
+     * Changed whether team members can share files and folders externally (i.e.
+     * outside the team).
+     */
+    interface EventTypeSharingChangeMemberPolicy {
+      '.tag': 'sharing_change_member_policy';
+    }
+
+    /**
+     * Changed the default Smart Sync policy for team members.
+     */
+    interface EventTypeSmartSyncChangePolicy {
+      '.tag': 'smart_sync_change_policy';
+    }
+
+    /**
+     * Change the single sign-on policy for the team.
+     */
+    interface EventTypeSsoChangePolicy {
+      '.tag': 'sso_change_policy';
+    }
+
+    /**
+     * Change two-step verification policy for the team.
+     */
+    interface EventTypeTfaChangePolicy {
+      '.tag': 'tfa_change_policy';
+    }
+
+    /**
+     * Enabled or disabled the option for team members to link a personal
+     * Dropbox account in addition to their work account to the same computer.
+     */
+    interface EventTypeTwoAccountChangePolicy {
+      '.tag': 'two_account_change_policy';
+    }
+
+    /**
+     * Changed how long team members can stay signed in to Dropbox on the web.
+     */
+    interface EventTypeWebSessionsChangeFixedLengthPolicy {
+      '.tag': 'web_sessions_change_fixed_length_policy';
+    }
+
+    /**
+     * Changed how long team members can be idle while signed in to Dropbox on
+     * the web.
+     */
+    interface EventTypeWebSessionsChangeIdleLengthPolicy {
+      '.tag': 'web_sessions_change_idle_length_policy';
+    }
+
+    /**
+     * Added a team logo to be displayed on shared link headers.
+     */
+    interface EventTypeTeamProfileAddLogo {
+      '.tag': 'team_profile_add_logo';
+    }
+
+    /**
+     * Changed the team logo to be displayed on shared link headers.
+     */
+    interface EventTypeTeamProfileChangeLogo {
+      '.tag': 'team_profile_change_logo';
+    }
+
+    /**
+     * Changed the team name.
+     */
+    interface EventTypeTeamProfileChangeName {
+      '.tag': 'team_profile_change_name';
+    }
+
+    /**
+     * Removed the team logo to be displayed on shared link headers.
+     */
+    interface EventTypeTeamProfileRemoveLogo {
+      '.tag': 'team_profile_remove_logo';
+    }
+
+    /**
+     * Added a backup phone for two-step verification.
+     */
+    interface EventTypeTfaAddBackupPhone {
+      '.tag': 'tfa_add_backup_phone';
+    }
+
+    /**
+     * Added a security key for two-step verification.
+     */
+    interface EventTypeTfaAddSecurityKey {
+      '.tag': 'tfa_add_security_key';
+    }
+
+    /**
+     * Changed the backup phone for two-step verification.
+     */
+    interface EventTypeTfaChangeBackupPhone {
+      '.tag': 'tfa_change_backup_phone';
+    }
+
+    /**
+     * Enabled, disabled or changed the configuration for two-step verification.
+     */
+    interface EventTypeTfaChangeStatus {
+      '.tag': 'tfa_change_status';
+    }
+
+    /**
+     * Removed the backup phone for two-step verification.
+     */
+    interface EventTypeTfaRemoveBackupPhone {
+      '.tag': 'tfa_remove_backup_phone';
+    }
+
+    /**
+     * Removed a security key for two-step verification.
+     */
+    interface EventTypeTfaRemoveSecurityKey {
+      '.tag': 'tfa_remove_security_key';
+    }
+
+    /**
+     * Reset two-step verification for team member.
+     */
+    interface EventTypeTfaReset {
+      '.tag': 'tfa_reset';
+    }
+
+    interface EventTypeOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The type of the event.
+     */
+    type EventType = EventTypeMemberChangeMembershipType | EventTypeMemberPermanentlyDeleteAccountContents | EventTypeMemberSpaceLimitsChangeStatus | EventTypeMemberTransferAccountContents | EventTypePaperEnabledUsersGroupAddition | EventTypePaperEnabledUsersGroupRemoval | EventTypePaperExternalViewAllow | EventTypePaperExternalViewDefaultTeam | EventTypePaperExternalViewForbid | EventTypeSfExternalInviteWarn | EventTypeTeamMerge | EventTypeAppLinkTeam | EventTypeAppLinkUser | EventTypeAppUnlinkTeam | EventTypeAppUnlinkUser | EventTypeDeviceChangeIpDesktop | EventTypeDeviceChangeIpMobile | EventTypeDeviceChangeIpWeb | EventTypeDeviceDeleteOnUnlinkFail | EventTypeDeviceDeleteOnUnlinkSuccess | EventTypeDeviceLinkFail | EventTypeDeviceLinkSuccess | EventTypeDeviceManagementDisabled | EventTypeDeviceManagementEnabled | EventTypeDeviceUnlink | EventTypeEmmRefreshAuthToken | EventTypeAccountCaptureChangeAvailability | EventTypeAccountCaptureMigrateAccount | EventTypeAccountCaptureRelinquishAccount | EventTypeDisabledDomainInvites | EventTypeDomainInvitesApproveRequestToJoinTeam | EventTypeDomainInvitesDeclineRequestToJoinTeam | EventTypeDomainInvitesEmailExistingUsers | EventTypeDomainInvitesRequestToJoinTeam | EventTypeDomainInvitesSetInviteNewUserPrefToNo | EventTypeDomainInvitesSetInviteNewUserPrefToYes | EventTypeDomainVerificationAddDomainFail | EventTypeDomainVerificationAddDomainSuccess | EventTypeDomainVerificationRemoveDomain | EventTypeEnabledDomainInvites | EventTypeCreateFolder | EventTypeFileAdd | EventTypeFileCopy | EventTypeFileDelete | EventTypeFileDownload | EventTypeFileEdit | EventTypeFileGetCopyReference | EventTypeFileMove | EventTypeFilePermanentlyDelete | EventTypeFilePreview | EventTypeFileRename | EventTypeFileRestore | EventTypeFileRevert | EventTypeFileRollbackChanges | EventTypeFileSaveCopyReference | EventTypeFileRequestAddDeadline | EventTypeFileRequestChangeFolder | EventTypeFileRequestChangeTitle | EventTypeFileRequestClose | EventTypeFileRequestCreate | EventTypeFileRequestReceiveFile | EventTypeFileRequestRemoveDeadline | EventTypeFileRequestSend | EventTypeGroupAddExternalId | EventTypeGroupAddMember | EventTypeGroupChangeExternalId | EventTypeGroupChangeManagementType | EventTypeGroupChangeMemberRole | EventTypeGroupCreate | EventTypeGroupDelete | EventTypeGroupDescriptionUpdated | EventTypeGroupJoinPolicyUpdated | EventTypeGroupMoved | EventTypeGroupRemoveExternalId | EventTypeGroupRemoveMember | EventTypeGroupRename | EventTypeEmmLoginSuccess | EventTypeLogout | EventTypePasswordLoginFail | EventTypePasswordLoginSuccess | EventTypeResellerSupportSessionEnd | EventTypeResellerSupportSessionStart | EventTypeSignInAsSessionEnd | EventTypeSignInAsSessionStart | EventTypeSsoLoginFail | EventTypeMemberAddName | EventTypeMemberChangeEmail | EventTypeMemberChangeName | EventTypeMemberChangeRole | EventTypeMemberInvite | EventTypeMemberJoin | EventTypeMemberLeave | EventTypeMemberRecover | EventTypeMemberSuggest | EventTypeMemberSuspend | EventTypeMemberUnsuspend | EventTypePaperContentAddMember | EventTypePaperContentAddToFolder | EventTypePaperContentArchive | EventTypePaperContentChangeSubscription | EventTypePaperContentCreate | EventTypePaperContentPermanentlyDelete | EventTypePaperContentRemoveFromFolder | EventTypePaperContentRemoveMember | EventTypePaperContentRename | EventTypePaperContentRestore | EventTypePaperDocAddComment | EventTypePaperDocChangeMemberRole | EventTypePaperDocChangeSharingPolicy | EventTypePaperDocDeleted | EventTypePaperDocDeleteComment | EventTypePaperDocDownload | EventTypePaperDocEdit | EventTypePaperDocEditComment | EventTypePaperDocFollowed | EventTypePaperDocMention | EventTypePaperDocRequestAccess | EventTypePaperDocResolveComment | EventTypePaperDocRevert | EventTypePaperDocSlackShare | EventTypePaperDocTeamInvite | EventTypePaperDocUnresolveComment | EventTypePaperDocView | EventTypePaperFolderDeleted | EventTypePaperFolderFollowed | EventTypePaperFolderTeamInvite | EventTypePasswordChange | EventTypePasswordReset | EventTypePasswordResetAll | EventTypeEmmCreateExceptionsReport | EventTypeEmmCreateUsageReport | EventTypeSmartSyncCreateAdminPrivilegeReport | EventTypeTeamActivityCreateReport | EventTypeCollectionShare | EventTypeFileAddComment | EventTypeFileLikeComment | EventTypeFileUnlikeComment | EventTypeNoteAclInviteOnly | EventTypeNoteAclLink | EventTypeNoteAclTeamLink | EventTypeNoteShared | EventTypeNoteShareReceive | EventTypeOpenNoteShared | EventTypeSfAddGroup | EventTypeSfAllowNonMembersToViewSharedLinks | EventTypeSfInviteGroup | EventTypeSfNest | EventTypeSfTeamDecline | EventTypeSfTeamGrantAccess | EventTypeSfTeamInvite | EventTypeSfTeamInviteChangeRole | EventTypeSfTeamJoin | EventTypeSfTeamJoinFromOobLink | EventTypeSfTeamUninvite | EventTypeSharedContentAddInvitees | EventTypeSharedContentAddLinkExpiry | EventTypeSharedContentAddLinkPassword | EventTypeSharedContentAddMember | EventTypeSharedContentChangeDownloadsPolicy | EventTypeSharedContentChangeInviteeRole | EventTypeSharedContentChangeLinkAudience | EventTypeSharedContentChangeLinkExpiry | EventTypeSharedContentChangeLinkPassword | EventTypeSharedContentChangeMemberRole | EventTypeSharedContentChangeViewerInfoPolicy | EventTypeSharedContentClaimInvitation | EventTypeSharedContentCopy | EventTypeSharedContentDownload | EventTypeSharedContentRelinquishMembership | EventTypeSharedContentRemoveInvitee | EventTypeSharedContentRemoveLinkExpiry | EventTypeSharedContentRemoveLinkPassword | EventTypeSharedContentRemoveMember | EventTypeSharedContentRequestAccess | EventTypeSharedContentUnshare | EventTypeSharedContentView | EventTypeSharedFolderChangeConfidentiality | EventTypeSharedFolderChangeLinkPolicy | EventTypeSharedFolderChangeMemberManagementPolicy | EventTypeSharedFolderChangeMemberPolicy | EventTypeSharedFolderCreate | EventTypeSharedFolderMount | EventTypeSharedFolderTransferOwnership | EventTypeSharedFolderUnmount | EventTypeSharedNoteOpened | EventTypeShmodelAppCreate | EventTypeShmodelCreate | EventTypeShmodelDisable | EventTypeShmodelFbShare | EventTypeShmodelGroupShare | EventTypeShmodelRemoveExpiration | EventTypeShmodelSetExpiration | EventTypeShmodelTeamCopy | EventTypeShmodelTeamDownload | EventTypeShmodelTeamShare | EventTypeShmodelTeamView | EventTypeShmodelVisibilityPassword | EventTypeShmodelVisibilityPublic | EventTypeShmodelVisibilityTeamOnly | EventTypeRemoveLogoutUrl | EventTypeRemoveSsoUrl | EventTypeSsoChangeCert | EventTypeSsoChangeLoginUrl | EventTypeSsoChangeLogoutUrl | EventTypeSsoChangeSamlIdentityMode | EventTypeTeamFolderChangeStatus | EventTypeTeamFolderCreate | EventTypeTeamFolderDowngrade | EventTypeTeamFolderPermanentlyDelete | EventTypeTeamFolderRename | EventTypeAccountCaptureChangePolicy | EventTypeAllowDownloadDisabled | EventTypeAllowDownloadEnabled | EventTypeDataPlacementRestrictionChangePolicy | EventTypeDataPlacementRestrictionSatisfyPolicy | EventTypeDeviceApprovalsChangeDesktopPolicy | EventTypeDeviceApprovalsChangeMobilePolicy | EventTypeDeviceApprovalsChangeOverageAction | EventTypeDeviceApprovalsChangeUnlinkAction | EventTypeEmmAddException | EventTypeEmmChangePolicy | EventTypeEmmRemoveException | EventTypeExtendedVersionHistoryChangePolicy | EventTypeFileCommentsChangePolicy | EventTypeFileRequestsChangePolicy | EventTypeFileRequestsEmailsEnabled | EventTypeFileRequestsEmailsRestrictedToTeamOnly | EventTypeGoogleSsoChangePolicy | EventTypeGroupUserManagementChangePolicy | EventTypeMemberRequestsChangePolicy | EventTypeMemberSpaceLimitsAddException | EventTypeMemberSpaceLimitsChangePolicy | EventTypeMemberSpaceLimitsRemoveException | EventTypeMemberSuggestionsChangePolicy | EventTypeMicrosoftOfficeAddinChangePolicy | EventTypeNetworkControlChangePolicy | EventTypePaperChangeDeploymentPolicy | EventTypePaperChangeMemberPolicy | EventTypePaperChangePolicy | EventTypePermanentDeleteChangePolicy | EventTypeSharingChangeFolderJoinPolicy | EventTypeSharingChangeLinkPolicy | EventTypeSharingChangeMemberPolicy | EventTypeSmartSyncChangePolicy | EventTypeSsoChangePolicy | EventTypeTfaChangePolicy | EventTypeTwoAccountChangePolicy | EventTypeWebSessionsChangeFixedLengthPolicy | EventTypeWebSessionsChangeIdleLengthPolicy | EventTypeTeamProfileAddLogo | EventTypeTeamProfileChangeLogo | EventTypeTeamProfileChangeName | EventTypeTeamProfileRemoveLogo | EventTypeTfaAddBackupPhone | EventTypeTfaAddSecurityKey | EventTypeTfaChangeBackupPhone | EventTypeTfaChangeStatus | EventTypeTfaRemoveBackupPhone | EventTypeTfaRemoveSecurityKey | EventTypeTfaReset | EventTypeOther;
+
+    /**
+     * Accepted or opted out of extended version history.
+     */
+    interface ExtendedVersionHistoryChangePolicyDetails {
+      /**
+       * New extended version history policy.
+       */
+      new_value: ExtendedVersionHistoryPolicy;
+      /**
+       * Previous extended version history policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: ExtendedVersionHistoryPolicy;
+    }
+
+    interface ExtendedVersionHistoryPolicyLimited {
+      '.tag': 'limited';
+    }
+
+    interface ExtendedVersionHistoryPolicyUnlimited {
+      '.tag': 'unlimited';
+    }
+
+    interface ExtendedVersionHistoryPolicyOther {
+      '.tag': 'other';
+    }
+
+    type ExtendedVersionHistoryPolicy = ExtendedVersionHistoryPolicyLimited | ExtendedVersionHistoryPolicyUnlimited | ExtendedVersionHistoryPolicyOther;
+
+    interface ExternalSharingAccessibilityPolicyTeamOnly {
+      '.tag': 'team_only';
+    }
+
+    interface ExternalSharingAccessibilityPolicyDefaultTeamOnly {
+      '.tag': 'default_team_only';
+    }
+
+    interface ExternalSharingAccessibilityPolicyDefaultAnyone {
+      '.tag': 'default_anyone';
+    }
+
+    interface ExternalSharingAccessibilityPolicyOther {
+      '.tag': 'other';
+    }
+
+    type ExternalSharingAccessibilityPolicy = ExternalSharingAccessibilityPolicyTeamOnly | ExternalSharingAccessibilityPolicyDefaultTeamOnly | ExternalSharingAccessibilityPolicyDefaultAnyone | ExternalSharingAccessibilityPolicyOther;
+
+    interface ExternalSharingPolicyTeamOnly {
+      '.tag': 'team_only';
+    }
+
+    interface ExternalSharingPolicyAnyone {
+      '.tag': 'anyone';
+    }
+
+    interface ExternalSharingPolicyOther {
+      '.tag': 'other';
+    }
+
+    type ExternalSharingPolicy = ExternalSharingPolicyTeamOnly | ExternalSharingPolicyAnyone | ExternalSharingPolicyOther;
+
+    /**
+     * Added a file comment.
+     */
+    interface FileAddCommentDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+    }
+
+    /**
+     * Added files and/or folders.
+     */
+    interface FileAddDetails {
+    }
+
+    /**
+     * Enabled or disabled commenting on team files.
+     */
+    interface FileCommentsChangePolicyDetails {
+      /**
+       * New commenting on team files policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous commenting on team files policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * Copied files and/or folders.
+     */
+    interface FileCopyDetails {
+      /**
+       * Source asset index.
+       */
+      src_index: number;
+      /**
+       * Destination asset index.
+       */
+      dest_index: number;
+    }
+
+    /**
+     * Deleted files and/or folders.
+     */
+    interface FileDeleteDetails {
+    }
+
+    /**
+     * Downloaded files and/or folders.
+     */
+    interface FileDownloadDetails {
+    }
+
+    /**
+     * Edited files.
+     */
+    interface FileEditDetails {
+    }
+
+    /**
+     * Create a copy reference to a file or folder.
+     */
+    interface FileGetCopyReferenceDetails {
+    }
+
+    /**
+     * Liked a file comment.
+     */
+    interface FileLikeCommentDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+    }
+
+    /**
+     * File's logged information.
+     */
+    interface FileLogInfo extends FileOrFolderLogInfo {
+    }
+
+    /**
+     * Moved files and/or folders.
+     */
+    interface FileMoveDetails {
+      /**
+       * Source asset index.
+       */
+      src_index: number;
+      /**
+       * Destination asset index.
+       */
+      dest_index: number;
+    }
+
+    /**
+     * Generic information relevant both for files and folders
+     */
+    interface FileOrFolderLogInfo {
+      /**
+       * Path relative to event context.
+       */
+      path: PathLogInfo;
+      /**
+       * Display name. Might be missing due to historical data gap.
+       */
+      display_name?: string;
+      /**
+       * Unique ID. Might be missing due to historical data gap.
+       */
+      file_id?: string;
+    }
+
+    /**
+     * Permanently deleted files and/or folders.
+     */
+    interface FilePermanentlyDeleteDetails {
+    }
+
+    /**
+     * Previewed files and/or folders.
+     */
+    interface FilePreviewDetails {
+    }
+
+    /**
+     * Renamed files and/or folders.
+     */
+    interface FileRenameDetails {
+      /**
+       * Source asset index.
+       */
+      src_index: number;
+      /**
+       * Destination asset index.
+       */
+      dest_index: number;
+    }
+
+    /**
+     * Added a deadline to a file request.
+     */
+    interface FileRequestAddDeadlineDetails {
+      /**
+       * File request title.
+       */
+      request_title: string;
+    }
+
+    /**
+     * Changed the file request folder.
+     */
+    interface FileRequestChangeFolderDetails {
+      /**
+       * File request title.
+       */
+      request_title: string;
+    }
+
+    /**
+     * Change the file request title.
+     */
+    interface FileRequestChangeTitleDetails {
+      /**
+       * File request title.
+       */
+      request_title: string;
+    }
+
+    /**
+     * Closed a file request.
+     */
+    interface FileRequestCloseDetails {
+      /**
+       * File request title.
+       */
+      request_title: string;
+    }
+
+    /**
+     * Created a file request.
+     */
+    interface FileRequestCreateDetails {
+      /**
+       * File request title.
+       */
+      request_title: string;
+    }
+
+    /**
+     * Received files for a file request.
+     */
+    interface FileRequestReceiveFileDetails {
+      /**
+       * File request title.
+       */
+      request_title: string;
+      /**
+       * Submitted file names.
+       */
+      submitted_file_names: Array<string>;
+    }
+
+    /**
+     * Removed the file request deadline.
+     */
+    interface FileRequestRemoveDeadlineDetails {
+      /**
+       * File request title.
+       */
+      request_title: string;
+    }
+
+    /**
+     * Sent file request to users via email.
+     */
+    interface FileRequestSendDetails {
+      /**
+       * File request title.
+       */
+      request_title: string;
+    }
+
+    /**
+     * Enabled or disabled file requests.
+     */
+    interface FileRequestsChangePolicyDetails {
+      /**
+       * New file requests policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous file requests policy. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * Enabled file request emails for everyone.
+     */
+    interface FileRequestsEmailsEnabledDetails {
+    }
+
+    /**
+     * Allowed file request emails for the team.
+     */
+    interface FileRequestsEmailsRestrictedToTeamOnlyDetails {
+    }
+
+    /**
+     * Restored deleted files and/or folders.
+     */
+    interface FileRestoreDetails {
+    }
+
+    /**
+     * Reverted files to a previous version.
+     */
+    interface FileRevertDetails {
+    }
+
+    /**
+     * Rolled back file change location changes.
+     */
+    interface FileRollbackChangesDetails {
+    }
+
+    /**
+     * Save a file or folder using a copy reference.
+     */
+    interface FileSaveCopyReferenceDetails {
+      /**
+       * Source asset index.
+       */
+      src_index: number;
+      /**
+       * Destination asset index.
+       */
+      dest_index: number;
+    }
+
+    /**
+     * Unliked a file comment.
+     */
+    interface FileUnlikeCommentDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+    }
+
+    /**
+     * Folder's logged information.
+     */
+    interface FolderLogInfo extends FileOrFolderLogInfo {
+    }
+
+    /**
+     * Geographic location details.
+     */
+    interface GeoLocationLogInfo {
+      /**
+       * City name.
+       */
+      city?: string;
+      /**
+       * Region name.
+       */
+      region?: string;
+      /**
+       * Country code.
+       */
+      country?: string;
+      /**
+       * IP address.
+       */
+      ip_address: IpAddress;
+    }
+
+    interface GetTeamEventsArg {
+      /**
+       * Defaults to 1000.
+       */
+      limit?: number;
+      /**
+       * Filter the events by account ID. Return ony events with this account_id
+       * as either Actor, Context, or Participants.
+       */
+      account_id?: users_common.AccountId;
+      /**
+       * Filter by time range.
+       */
+      time?: team_common.TimeRange;
+    }
+
+    interface GetTeamEventsContinueArg {
+      /**
+       * Indicates from what point to get the next set of events.
+       */
+      cursor: string;
+    }
+
+    /**
+     * Bad cursor.
+     */
+    interface GetTeamEventsContinueErrorBadCursor {
+      '.tag': 'bad_cursor';
+    }
+
+    interface GetTeamEventsContinueErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Errors that can be raised when calling getEventsContinue().
+     */
+    type GetTeamEventsContinueError = GetTeamEventsContinueErrorBadCursor | GetTeamEventsContinueErrorOther;
+
+    /**
+     * No user found matching the provided account_id.
+     */
+    interface GetTeamEventsErrorAccountIdNotFound {
+      '.tag': 'account_id_not_found';
+    }
+
+    /**
+     * Invalid time range.
+     */
+    interface GetTeamEventsErrorInvalidTimeRange {
+      '.tag': 'invalid_time_range';
+    }
+
+    interface GetTeamEventsErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Errors that can be raised when calling getEvents().
+     */
+    type GetTeamEventsError = GetTeamEventsErrorAccountIdNotFound | GetTeamEventsErrorInvalidTimeRange | GetTeamEventsErrorOther;
+
+    interface GetTeamEventsResult {
+      /**
+       * List of events.
+       */
+      events: Array<TeamEvent>;
+      /**
+       * Pass the cursor into getEventsContinue() to obtain additional events.
+       */
+      cursor: string;
+      /**
+       * Is true if there are additional events that have not been returned yet.
+       * An additional call to getEventsContinue() can retrieve them.
+       */
+      has_more: boolean;
+    }
+
+    /**
+     * Enabled or disabled Google single sign-on for the team.
+     */
+    interface GoogleSsoChangePolicyDetails {
+      /**
+       * New Google single sign-on policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous Google single sign-on policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * Added an external ID for group.
+     */
+    interface GroupAddExternalIdDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Current external id.
+       */
+      new_value: team_common.GroupExternalId;
+    }
+
+    /**
+     * Added team members to a group.
+     */
+    interface GroupAddMemberDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Is group owner.
+       */
+      is_group_owner: boolean;
+    }
+
+    /**
+     * Changed the external ID for group.
+     */
+    interface GroupChangeExternalIdDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Current external id.
+       */
+      new_value: team_common.GroupExternalId;
+      /**
+       * Old external id.
+       */
+      previous_value: team_common.GroupExternalId;
+    }
+
+    /**
+     * Changed group management type.
+     */
+    interface GroupChangeManagementTypeDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * New group management type.
+       */
+      new_value: GroupManagementType;
+      /**
+       * Previous group management type. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: GroupManagementType;
+    }
+
+    /**
+     * Changed the manager permissions belonging to a group member.
+     */
+    interface GroupChangeMemberRoleDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Is group owner.
+       */
+      is_group_owner: boolean;
+    }
+
+    /**
+     * Created a group.
+     */
+    interface GroupCreateDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Is admin managed group. Might be missing due to historical data gap.
+       */
+      is_admin_managed?: boolean;
+      /**
+       * Group join policy.
+       */
+      join_policy: GroupJoinPolicy;
+    }
+
+    /**
+     * Deleted a group.
+     */
+    interface GroupDeleteDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Is admin managed group. Might be missing due to historical data gap.
+       */
+      is_admin_managed?: boolean;
+    }
+
+    /**
+     * Updated a group.
+     */
+    interface GroupDescriptionUpdatedDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+    }
+
+    interface GroupJoinPolicyOpen {
+      '.tag': 'open';
+    }
+
+    interface GroupJoinPolicyRequestToJoin {
+      '.tag': 'request_to_join';
+    }
+
+    interface GroupJoinPolicyOther {
+      '.tag': 'other';
+    }
+
+    type GroupJoinPolicy = GroupJoinPolicyOpen | GroupJoinPolicyRequestToJoin | GroupJoinPolicyOther;
+
+    /**
+     * Updated a group join policy.
+     */
+    interface GroupJoinPolicyUpdatedDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Is admin managed group. Might be missing due to historical data gap.
+       */
+      is_admin_managed?: boolean;
+      /**
+       * Group join policy.
+       */
+      join_policy: GroupJoinPolicy;
+    }
+
+    /**
+     * Group's logged information.
+     */
+    interface GroupLogInfo {
+      /**
+       * The unique id of this group. Might be missing due to historical data
+       * gap.
+       */
+      group_id?: team_common.GroupId;
+      /**
+       * The name of this group.
+       */
+      display_name: string;
+      /**
+       * External group ID. Might be missing due to historical data gap.
+       */
+      external_id?: team_common.GroupExternalId;
+    }
+
+    interface GroupManagementTypeAdminManagementGroup {
+      '.tag': 'admin_management_group';
+    }
+
+    interface GroupManagementTypeMemberManagementGroup {
+      '.tag': 'member_management_group';
+    }
+
+    interface GroupManagementTypeOther {
+      '.tag': 'other';
+    }
+
+    type GroupManagementType = GroupManagementTypeAdminManagementGroup | GroupManagementTypeMemberManagementGroup | GroupManagementTypeOther;
+
+    /**
+     * Moved a group.
+     */
+    interface GroupMovedDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+    }
+
+    /**
+     * Removed the external ID for group.
+     */
+    interface GroupRemoveExternalIdDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Old external id.
+       */
+      previous_value: team_common.GroupExternalId;
+    }
+
+    /**
+     * Removed team members from a group.
+     */
+    interface GroupRemoveMemberDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+    }
+
+    /**
+     * Renamed a group.
+     */
+    interface GroupRenameDetails {
+      /**
+       * Group details.
+       */
+      group_info: GroupLogInfo;
+      /**
+       * Previous display name.
+       */
+      previous_value: string;
+    }
+
+    /**
+     * Changed who can create groups.
+     */
+    interface GroupUserManagementChangePolicyDetails {
+      /**
+       * New group users management policy.
+       */
+      new_value: GroupsUserManagementPolicy;
+      /**
+       * Previous group users management policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: GroupsUserManagementPolicy;
+    }
+
+    interface GroupsUserManagementPolicyAllUsers {
+      '.tag': 'all_users';
+    }
+
+    interface GroupsUserManagementPolicyOnlyAdmins {
+      '.tag': 'only_admins';
+    }
+
+    interface GroupsUserManagementPolicyOther {
+      '.tag': 'other';
+    }
+
+    type GroupsUserManagementPolicy = GroupsUserManagementPolicyAllUsers | GroupsUserManagementPolicyOnlyAdmins | GroupsUserManagementPolicyOther;
+
+    /**
+     * Host details.
+     */
+    interface HostLogInfo {
+      /**
+       * Host ID. Might be missing due to historical data gap.
+       */
+      host_id?: number;
+      /**
+       * Host name. Might be missing due to historical data gap.
+       */
+      host_name?: string;
+    }
+
+    interface LinkAudiencePublic {
+      '.tag': 'public';
+    }
+
+    interface LinkAudienceTeam {
+      '.tag': 'team';
+    }
+
+    interface LinkAudienceMembers {
+      '.tag': 'members';
+    }
+
+    interface LinkAudienceOther {
+      '.tag': 'other';
+    }
+
+    type LinkAudience = LinkAudiencePublic | LinkAudienceTeam | LinkAudienceMembers | LinkAudienceOther;
+
+    /**
+     * Signed out.
+     */
+    interface LogoutDetails {
+    }
+
+    /**
+     * Set team member name when joining team.
+     */
+    interface MemberAddNameDetails {
+      /**
+       * User's name.
+       */
+      new_value: UserNameLogInfo;
+    }
+
+    /**
+     * Changed team member email address.
+     */
+    interface MemberChangeEmailDetails {
+      /**
+       * New email.
+       */
+      new_value: common.EmailAddress;
+      /**
+       * Previous email. Might be missing due to historical data gap.
+       */
+      previous_value?: common.EmailAddress;
+    }
+
+    /**
+     * Changed the membership type (limited vs full) for team member.
+     */
+    interface MemberChangeMembershipTypeDetails {
+      /**
+       * Previous membership type.
+       */
+      prev_membership_type: number;
+      /**
+       * New membership type.
+       */
+      new_membership_type: number;
+    }
+
+    /**
+     * Changed team member name.
+     */
+    interface MemberChangeNameDetails {
+      /**
+       * New user's name.
+       */
+      new_value: UserNameLogInfo;
+      /**
+       * Previous user's name.
+       */
+      previous_value: UserNameLogInfo;
+    }
+
+    /**
+     * Change the admin permissions belonging to team member.
+     */
+    interface MemberChangeRoleDetails {
+      /**
+       * New admin role. Might be missing due to historical data gap.
+       */
+      new_value?: string;
+      /**
+       * Previous admin role. Might be missing due to historical data gap.
+       */
+      previous_value?: string;
+    }
+
+    /**
+     * Invited a user to join the team.
+     */
+    interface MemberInviteDetails {
+    }
+
+    /**
+     * Joined the team.
+     */
+    interface MemberJoinDetails {
+      /**
+       * Linked Applications.
+       */
+      linked_apps: Array<UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference>;
+      /**
+       * Shared folders.
+       */
+      initial_shared_folders: Array<SharedFolderLogInfo>;
+      /**
+       * Linked devices.
+       */
+      linked_devices: Array<DeviceLogInfo>;
+    }
+
+    /**
+     * Removed a team member.
+     */
+    interface MemberLeaveDetails {
+      /**
+       * True if the member had joined the team before leaving, False otherwise.
+       */
+      member_was_on_team: boolean;
+    }
+
+    /**
+     * Permanently deleted contents of a removed team member account.
+     */
+    interface MemberPermanentlyDeleteAccountContentsDetails {
+    }
+
+    /**
+     * Recovered a removed member.
+     */
+    interface MemberRecoverDetails {
+    }
+
+    interface MemberRequestsChangePolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface MemberRequestsChangePolicyRequireApproval {
+      '.tag': 'require_approval';
+    }
+
+    interface MemberRequestsChangePolicyAutoApproval {
+      '.tag': 'auto_approval';
+    }
+
+    interface MemberRequestsChangePolicyOther {
+      '.tag': 'other';
+    }
+
+    type MemberRequestsChangePolicy = MemberRequestsChangePolicyDisabled | MemberRequestsChangePolicyRequireApproval | MemberRequestsChangePolicyAutoApproval | MemberRequestsChangePolicyOther;
+
+    /**
+     * Changed whether users can find the team when not invited.
+     */
+    interface MemberRequestsChangePolicyDetails {
+      /**
+       * New member change requests policy.
+       */
+      new_value: MemberRequestsChangePolicy;
+      /**
+       * Previous member change requests policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: MemberRequestsChangePolicy;
+    }
+
+    /**
+     * Added an exception for one or more team members to bypass space limits
+     * imposed by policy.
+     */
+    interface MemberSpaceLimitsAddExceptionDetails {
+    }
+
+    /**
+     * Changed the storage limits applied to team members by policy.
+     */
+    interface MemberSpaceLimitsChangePolicyDetails {
+      /**
+       * Previous storage limits policy.
+       */
+      previous_value: SpaceLimitsLevel;
+      /**
+       * New storage limits policy.
+       */
+      new_value: SpaceLimitsLevel;
+    }
+
+    /**
+     * Changed the status with respect to whether the team member is under or
+     * over storage quota specified by policy.
+     */
+    interface MemberSpaceLimitsChangeStatusDetails {
+      /**
+       * Previous storage quota status.
+       */
+      previous_status: SpaceLimitsStatus;
+      /**
+       * New storage quota status.
+       */
+      new_status: SpaceLimitsStatus;
+    }
+
+    /**
+     * Removed an exception for one or more team members to bypass space limits
+     * imposed by policy.
+     */
+    interface MemberSpaceLimitsRemoveExceptionDetails {
+    }
+
+    /**
+     * Suggested a new team member to be added to the team.
+     */
+    interface MemberSuggestDetails {
+    }
+
+    /**
+     * Enabled or disabled the option for team members to suggest new members to
+     * add to the team.
+     */
+    interface MemberSuggestionsChangePolicyDetails {
+      /**
+       * New team member suggestions policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous team member suggestions policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * Suspended a team member.
+     */
+    interface MemberSuspendDetails {
+    }
+
+    /**
+     * Transferred contents of a removed team member account to another member.
+     */
+    interface MemberTransferAccountContentsDetails {
+      /**
+       * Source asset index.
+       */
+      src_index: number;
+      /**
+       * Destination asset index.
+       */
+      dest_index: number;
+    }
+
+    /**
+     * Unsuspended a team member.
+     */
+    interface MemberUnsuspendDetails {
+    }
+
+    /**
+     * Enabled or disabled the Microsoft Office add-in, which lets team members
+     * save files to Dropbox directly from Microsoft Office.
+     */
+    interface MicrosoftOfficeAddinChangePolicyDetails {
+      /**
+       * New Microsoft Office addin policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous Microsoft Office addin policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * An indication that an event was returned with missing details
+     */
+    interface MissingDetails {
+    }
+
+    /**
+     * Mobile session.
+     */
+    interface MobileSessionLogInfo extends SessionLogInfo {
+    }
+
+    /**
+     * Reference to the MobileSessionLogInfo type, identified by the value of
+     * the .tag property.
+     */
+    interface MobileSessionLogInfoReference extends MobileSessionLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'mobile';
+    }
+
+    /**
+     * Namespace relative path details.
+     */
+    interface NamespaceRelativePathLogInfo {
+      /**
+       * Namespace ID. Might be missing due to historical data gap.
+       */
+      ns_id?: common.NamespaceId;
+      /**
+       * A path relative to the specified namespace ID. Might be missing due to
+       * historical data gap.
+       */
+      relative_path?: files.Path;
+    }
+
+    /**
+     * Enabled or disabled network control.
+     */
+    interface NetworkControlChangePolicyDetails {
+      /**
+       * New network control policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous network control policy. Might be missing due to historical
+       * data gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * Non team member's logged information.
+     */
+    interface NonTeamMemberLogInfo extends UserLogInfo {
+    }
+
+    /**
+     * Reference to the NonTeamMemberLogInfo type, identified by the value of
+     * the .tag property.
+     */
+    interface NonTeamMemberLogInfoReference extends NonTeamMemberLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'non_team_member';
+    }
+
+    /**
+     * Changed a Paper document to be invite-only.
+     */
+    interface NoteAclInviteOnlyDetails {
+    }
+
+    /**
+     * Changed a Paper document to be link accessible.
+     */
+    interface NoteAclLinkDetails {
+    }
+
+    /**
+     * Changed a Paper document to be link accessible for the team.
+     */
+    interface NoteAclTeamLinkDetails {
+    }
+
+    /**
+     * Shared Paper document received.
+     */
+    interface NoteShareReceiveDetails {
+    }
+
+    /**
+     * Shared a Paper doc.
+     */
+    interface NoteSharedDetails {
+    }
+
+    /**
+     * Opened a shared Paper doc.
+     */
+    interface OpenNoteSharedDetails {
+    }
+
+    interface OptionalChangePolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface OptionalChangePolicyOptional {
+      '.tag': 'optional';
+    }
+
+    interface OptionalChangePolicyRequired {
+      '.tag': 'required';
+    }
+
+    interface OptionalChangePolicyOther {
+      '.tag': 'other';
+    }
+
+    type OptionalChangePolicy = OptionalChangePolicyDisabled | OptionalChangePolicyOptional | OptionalChangePolicyRequired | OptionalChangePolicyOther;
+
+    /**
+     * The origin from which the actor performed the action.
+     */
+    interface OriginLogInfo {
+      /**
+       * Geographic location details.
+       */
+      geo_location?: GeoLocationLogInfo;
+      /**
+       * Host details.
+       */
+      host?: HostLogInfo;
+      /**
+       * The method that was used to perform the action.
+       */
+      access_method: AccessMethodLogInfo;
+    }
+
+    interface PaperAccessTypeViewer {
+      '.tag': 'viewer';
+    }
+
+    interface PaperAccessTypeCommenter {
+      '.tag': 'commenter';
+    }
+
+    interface PaperAccessTypeEditor {
+      '.tag': 'editor';
+    }
+
+    interface PaperAccessTypeOther {
+      '.tag': 'other';
+    }
+
+    type PaperAccessType = PaperAccessTypeViewer | PaperAccessTypeCommenter | PaperAccessTypeEditor | PaperAccessTypeOther;
+
+    /**
+     * Changed whether Dropbox Paper, when enabled, is deployed to all teams or
+     * to specific members of the team.
+     */
+    interface PaperChangeDeploymentPolicyDetails {
+      /**
+       * New Dropbox Paper deployment policy.
+       */
+      new_value: PaperDeploymentPolicy;
+      /**
+       * Previous Dropbox Paper deployment policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: PaperDeploymentPolicy;
+    }
+
+    /**
+     * Changed whether team members can share Paper documents externally (i.e.
+     * outside the team), and if so, whether they should be accessible only by
+     * team members or anyone by default.
+     */
+    interface PaperChangeMemberPolicyDetails {
+      /**
+       * New paper external accessibility policy.
+       */
+      new_value: ExternalSharingAccessibilityPolicy;
+      /**
+       * Previous paper external accessibility policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: ExternalSharingAccessibilityPolicy;
+    }
+
+    /**
+     * Enabled or disabled Dropbox Paper for the team.
+     */
+    interface PaperChangePolicyDetails {
+      /**
+       * New Dropbox Paper policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous Dropbox Paper policy. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * Added users to the membership of a Paper doc or folder.
+     */
+    interface PaperContentAddMemberDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Added Paper doc or folder to a folder.
+     */
+    interface PaperContentAddToFolderDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Parent asset index.
+       */
+      parent_index: number;
+    }
+
+    /**
+     * Archived Paper doc or folder.
+     */
+    interface PaperContentArchiveDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Followed or unfollowed a Paper doc or folder.
+     */
+    interface PaperContentChangeSubscriptionDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * New subscription level.
+       */
+      new_subscription_level: PaperTaggedValue;
+      /**
+       * Previous subscription level. Might be missing due to historical data
+       * gap.
+       */
+      previous_subscription_level?: PaperTaggedValue;
+    }
+
+    /**
+     * Created a Paper doc or folder.
+     */
+    interface PaperContentCreateDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Permanently deleted a Paper doc or folder.
+     */
+    interface PaperContentPermanentlyDeleteDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Removed Paper doc or folder from a folder.
+     */
+    interface PaperContentRemoveFromFolderDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Removed a user from the membership of a Paper doc or folder.
+     */
+    interface PaperContentRemoveMemberDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Renamed Paper doc or folder.
+     */
+    interface PaperContentRenameDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Restored an archived Paper doc or folder.
+     */
+    interface PaperContentRestoreDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    interface PaperDeploymentPolicyPartial {
+      '.tag': 'partial';
+    }
+
+    interface PaperDeploymentPolicyFull {
+      '.tag': 'full';
+    }
+
+    interface PaperDeploymentPolicyOther {
+      '.tag': 'other';
+    }
+
+    type PaperDeploymentPolicy = PaperDeploymentPolicyPartial | PaperDeploymentPolicyFull | PaperDeploymentPolicyOther;
+
+    /**
+     * Added a Paper doc comment.
+     */
+    interface PaperDocAddCommentDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+    }
+
+    /**
+     * Changed the access type of a Paper doc member.
+     */
+    interface PaperDocChangeMemberRoleDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Paper doc access type.
+       */
+      access_type: PaperAccessType;
+    }
+
+    /**
+     * Changed the sharing policy for Paper doc.
+     */
+    interface PaperDocChangeSharingPolicyDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Sharing policy with external users. Might be missing due to historical
+       * data gap.
+       */
+      public_sharing_policy?: string;
+      /**
+       * Sharing policy with team. Might be missing due to historical data gap.
+       */
+      team_sharing_policy?: string;
+    }
+
+    /**
+     * Deleted a Paper doc comment.
+     */
+    interface PaperDocDeleteCommentDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+    }
+
+    /**
+     * Paper doc archived.
+     */
+    interface PaperDocDeletedDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Downloaded a Paper doc in a particular output format.
+     */
+    interface PaperDocDownloadDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Export file format.
+       */
+      export_file_format: PaperDownloadFormat;
+    }
+
+    /**
+     * Edited a Paper doc comment.
+     */
+    interface PaperDocEditCommentDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+    }
+
+    /**
+     * Edited a Paper doc.
+     */
+    interface PaperDocEditDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Followed a Paper doc.
+     */
+    interface PaperDocFollowedDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Mentioned a member in a Paper doc.
+     */
+    interface PaperDocMentionDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Requested to be a member on a Paper doc.
+     */
+    interface PaperDocRequestAccessDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Paper doc comment resolved.
+     */
+    interface PaperDocResolveCommentDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+    }
+
+    /**
+     * Restored a Paper doc to previous revision.
+     */
+    interface PaperDocRevertDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Paper doc link shared via slack.
+     */
+    interface PaperDocSlackShareDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Paper doc shared with team member.
+     */
+    interface PaperDocTeamInviteDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Unresolved a Paper doc comment.
+     */
+    interface PaperDocUnresolveCommentDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+    }
+
+    /**
+     * Viewed Paper doc.
+     */
+    interface PaperDocViewDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Paper document's logged information.
+     */
+    interface PaperDocumentLogInfo {
+      /**
+       * Papers document Id.
+       */
+      doc_id: string;
+      /**
+       * Paper document title.
+       */
+      doc_title: string;
+    }
+
+    interface PaperDownloadFormatDocx {
+      '.tag': 'docx';
+    }
+
+    interface PaperDownloadFormatHtml {
+      '.tag': 'html';
+    }
+
+    interface PaperDownloadFormatMarkdown {
+      '.tag': 'markdown';
+    }
+
+    interface PaperDownloadFormatOther {
+      '.tag': 'other';
+    }
+
+    type PaperDownloadFormat = PaperDownloadFormatDocx | PaperDownloadFormatHtml | PaperDownloadFormatMarkdown | PaperDownloadFormatOther;
+
+    /**
+     * Users added to Paper enabled users list.
+     */
+    interface PaperEnabledUsersGroupAdditionDetails {
+    }
+
+    /**
+     * Users removed from Paper enabled users list.
+     */
+    interface PaperEnabledUsersGroupRemovalDetails {
+    }
+
+    /**
+     * Paper external sharing policy changed: anyone.
+     */
+    interface PaperExternalViewAllowDetails {
+    }
+
+    /**
+     * Paper external sharing policy changed: default team.
+     */
+    interface PaperExternalViewDefaultTeamDetails {
+    }
+
+    /**
+     * Paper external sharing policy changed: team-only.
+     */
+    interface PaperExternalViewForbidDetails {
+    }
+
+    /**
+     * Paper folder archived.
+     */
+    interface PaperFolderDeletedDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Followed a Paper folder.
+     */
+    interface PaperFolderFollowedDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Paper folder's logged information.
+     */
+    interface PaperFolderLogInfo {
+      /**
+       * Papers folder Id.
+       */
+      folder_id: string;
+      /**
+       * Paper folder name.
+       */
+      folder_name: string;
+    }
+
+    /**
+     * Paper folder shared with team member.
+     */
+    interface PaperFolderTeamInviteDetails {
+      /**
+       * Event unique identifier.
+       */
+      event_uuid: string;
+    }
+
+    /**
+     * Paper tagged value.
+     */
+    interface PaperTaggedValue {
+      /**
+       * Tag.
+       */
+      tag: string;
+    }
+
+    /**
+     * User details.
+     */
+    interface ParticipantLogInfoUser {
+      '.tag': 'user';
+      user: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+    }
+
+    /**
+     * Group details.
+     */
+    interface ParticipantLogInfoGroup {
+      '.tag': 'group';
+      group: GroupLogInfo;
+    }
+
+    interface ParticipantLogInfoOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * A user or group
+     */
+    type ParticipantLogInfo = ParticipantLogInfoUser | ParticipantLogInfoGroup | ParticipantLogInfoOther;
+
+    /**
+     * Changed password.
+     */
+    interface PasswordChangeDetails {
+    }
+
+    /**
+     * Failed to sign in using a password.
+     */
+    interface PasswordLoginFailDetails {
+      /**
+       * Login failure reason. Might be missing due to historical data gap.
+       */
+      failure_reason?: string;
+    }
+
+    /**
+     * Signed in using a password.
+     */
+    interface PasswordLoginSuccessDetails {
+      /**
+       * Tells if the user signed in from an EMM managed device.
+       */
+      is_emm_managed: boolean;
+    }
+
+    /**
+     * Reset all team member passwords.
+     */
+    interface PasswordResetAllDetails {
+    }
+
+    /**
+     * Reset password.
+     */
+    interface PasswordResetDetails {
+    }
+
+    /**
+     * Path's details.
+     */
+    interface PathLogInfo {
+      /**
+       * Fully qualified path relative to event's context. Might be missing due
+       * to historical data gap.
+       */
+      contextual?: files.Path;
+      /**
+       * Path relative to the namespace containing the content.
+       */
+      namespace_relative: NamespaceRelativePathLogInfo;
+    }
+
+    /**
+     * Enabled or disabled the ability of team members to permanently delete
+     * content.
+     */
+    interface PermanentDeleteChangePolicyDetails {
+      /**
+       * New permanent delete content policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous permanent delete content policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    interface PlacementRestrictionEuropeOnly {
+      '.tag': 'europe_only';
+    }
+
+    interface PlacementRestrictionNone {
+      '.tag': 'none';
+    }
+
+    interface PlacementRestrictionOther {
+      '.tag': 'other';
+    }
+
+    type PlacementRestriction = PlacementRestrictionEuropeOnly | PlacementRestrictionNone | PlacementRestrictionOther;
+
+    /**
+     * Removed single sign-on logout URL.
+     */
+    interface RemoveLogoutUrlDetails {
+      /**
+       * Previous single sign-on logout URL.
+       */
+      previous_sso_logout_url: string;
+      /**
+       * New single sign-on logout URL. Might be missing due to historical data
+       * gap.
+       */
+      new_sso_logout_url?: string;
+    }
+
+    /**
+     * Changed the sign-out URL for SSO.
+     */
+    interface RemoveSsoUrlDetails {
+      /**
+       * Previous SSO Url.
+       */
+      previous_sso_url: string;
+    }
+
+    /**
+     * Reseller information.
+     */
+    interface ResellerLogInfo {
+      /**
+       * Reseller name.
+       */
+      reseller_name: string;
+      /**
+       * Reseller ID.
+       */
+      reseller_id: team_common.ResellerId;
+    }
+
+    /**
+     * Ended reseller support session.
+     */
+    interface ResellerSupportSessionEndDetails {
+    }
+
+    /**
+     * Started reseller support session.
+     */
+    interface ResellerSupportSessionStartDetails {
+    }
+
+    /**
+     * Session's logged information.
+     */
+    interface SessionLogInfo {
+      /**
+       * Session ID. Might be missing due to historical data gap.
+       */
+      session_id?: common.SessionId;
+    }
+
+    /**
+     * Reference to the SessionLogInfo polymorphic type. Contains a .tag
+     * property to let you discriminate between possible subtypes.
+     */
+    interface SessionLogInfoReference extends SessionLogInfo {
+      /**
+       * Tag identifying the subtype variant.
+       */
+      '.tag': "web"|"desktop"|"mobile";
+    }
+
+    interface SessionsManagementIdleLengthPolicyNone {
+      '.tag': 'none';
+    }
+
+    interface SessionsManagementIdleLengthPolicyMinute10 {
+      '.tag': 'minute_10';
+    }
+
+    interface SessionsManagementIdleLengthPolicyMinute30 {
+      '.tag': 'minute_30';
+    }
+
+    interface SessionsManagementIdleLengthPolicyHour1 {
+      '.tag': 'hour_1';
+    }
+
+    interface SessionsManagementIdleLengthPolicyHour8 {
+      '.tag': 'hour_8';
+    }
+
+    interface SessionsManagementIdleLengthPolicyHour24 {
+      '.tag': 'hour_24';
+    }
+
+    interface SessionsManagementIdleLengthPolicyHour48 {
+      '.tag': 'hour_48';
+    }
+
+    interface SessionsManagementIdleLengthPolicyOther {
+      '.tag': 'other';
+    }
+
+    type SessionsManagementIdleLengthPolicy = SessionsManagementIdleLengthPolicyNone | SessionsManagementIdleLengthPolicyMinute10 | SessionsManagementIdleLengthPolicyMinute30 | SessionsManagementIdleLengthPolicyHour1 | SessionsManagementIdleLengthPolicyHour8 | SessionsManagementIdleLengthPolicyHour24 | SessionsManagementIdleLengthPolicyHour48 | SessionsManagementIdleLengthPolicyOther;
+
+    interface SessionsManagementSessionLengthPolicyDay1 {
+      '.tag': 'day_1';
+    }
+
+    interface SessionsManagementSessionLengthPolicyDay7 {
+      '.tag': 'day_7';
+    }
+
+    interface SessionsManagementSessionLengthPolicyDay14 {
+      '.tag': 'day_14';
+    }
+
+    interface SessionsManagementSessionLengthPolicyMonth1 {
+      '.tag': 'month_1';
+    }
+
+    interface SessionsManagementSessionLengthPolicyMonth3 {
+      '.tag': 'month_3';
+    }
+
+    interface SessionsManagementSessionLengthPolicyMonth6 {
+      '.tag': 'month_6';
+    }
+
+    interface SessionsManagementSessionLengthPolicyYear1 {
+      '.tag': 'year_1';
+    }
+
+    interface SessionsManagementSessionLengthPolicyOther {
+      '.tag': 'other';
+    }
+
+    type SessionsManagementSessionLengthPolicy = SessionsManagementSessionLengthPolicyDay1 | SessionsManagementSessionLengthPolicyDay7 | SessionsManagementSessionLengthPolicyDay14 | SessionsManagementSessionLengthPolicyMonth1 | SessionsManagementSessionLengthPolicyMonth3 | SessionsManagementSessionLengthPolicyMonth6 | SessionsManagementSessionLengthPolicyYear1 | SessionsManagementSessionLengthPolicyOther;
+
+    /**
+     * Added the team to a shared folder.
+     */
+    interface SfAddGroupDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Team name.
+       */
+      team_name: string;
+    }
+
+    /**
+     * Allowed non collaborators to view links to files in a shared folder.
+     */
+    interface SfAllowNonMembersToViewSharedLinksDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+    }
+
+    /**
+     * Admin settings: team members see a warning before sharing folders outside
+     * the team (DEPRECATED FEATURE).
+     */
+    interface SfExternalInviteWarnDetails {
+    }
+
+    /**
+     * Invited a group to a shared folder.
+     */
+    interface SfInviteGroupDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+    }
+
+    /**
+     * Changed parent of shared folder.
+     */
+    interface SfNestDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Previous parent namespace ID. Might be missing due to historical data
+       * gap.
+       */
+      prev_parent_ns_id?: common.NamespaceId;
+      /**
+       * New parent namespace ID. Might be missing due to historical data gap.
+       */
+      new_parent_ns_id?: common.NamespaceId;
+    }
+
+    /**
+     * Declined a team member's invitation to a shared folder.
+     */
+    interface SfTeamDeclineDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Granted access to a shared folder.
+     */
+    interface SfTeamGrantAccessDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Changed a team member's role in a shared folder.
+     */
+    interface SfTeamInviteChangeRoleDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Previous sharing permission. Might be missing due to historical data
+       * gap.
+       */
+      previous_sharing_permission?: string;
+    }
+
+    /**
+     * Invited team members to a shared folder.
+     */
+    interface SfTeamInviteDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+    }
+
+    /**
+     * Joined a team member's shared folder.
+     */
+    interface SfTeamJoinDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Joined a team member's shared folder from a link.
+     */
+    interface SfTeamJoinFromOobLinkDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Shared link token key.
+       */
+      token_key?: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+    }
+
+    /**
+     * Unshared a folder with a team member.
+     */
+    interface SfTeamUninviteDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Sent an email invitation to the membership of a shared file or folder.
+     */
+    interface SharedContentAddInviteesDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+    }
+
+    /**
+     * Added an expiry to the link for the shared file or folder.
+     */
+    interface SharedContentAddLinkExpiryDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * Expiration starting date.
+       */
+      expiration_start_date: string;
+      /**
+       * The number of days from the starting expiration date after which the
+       * link will expire.
+       */
+      expiration_days: number;
+    }
+
+    /**
+     * Added a password to the link for the shared file or folder.
+     */
+    interface SharedContentAddLinkPasswordDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+    }
+
+    /**
+     * Added users and/or groups to the membership of a shared file or folder.
+     */
+    interface SharedContentAddMemberDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+    }
+
+    /**
+     * Changed whether members can download the shared file or folder.
+     */
+    interface SharedContentChangeDownloadsPolicyDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * New downlaod policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous downlaod policy. Might be missing due to historical data gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * Changed the access type of an invitee to a shared file or folder before
+     * the invitation was claimed.
+     */
+    interface SharedContentChangeInviteeRoleDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Previous sharing permission. Might be missing due to historical data
+       * gap.
+       */
+      previous_sharing_permission?: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+    }
+
+    /**
+     * Changed the audience of the link for a shared file or folder.
+     */
+    interface SharedContentChangeLinkAudienceDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * New link audience value.
+       */
+      new_value: LinkAudience;
+      /**
+       * Previous link audience value. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: LinkAudience;
+    }
+
+    /**
+     * Changed the expiry of the link for the shared file or folder.
+     */
+    interface SharedContentChangeLinkExpiryDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * Expiration starting date.
+       */
+      expiration_start_date: string;
+      /**
+       * The number of days from the starting expiration date after which the
+       * link will expire.
+       */
+      expiration_days: number;
+    }
+
+    /**
+     * Changed the password on the link for the shared file or folder.
+     */
+    interface SharedContentChangeLinkPasswordDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+    }
+
+    /**
+     * Changed the access type of a shared file or folder member.
+     */
+    interface SharedContentChangeMemberRoleDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * Previous sharing permission. Might be missing due to historical data
+       * gap.
+       */
+      previous_sharing_permission?: string;
+    }
+
+    /**
+     * Changed whether members can see who viewed the shared file or folder.
+     */
+    interface SharedContentChangeViewerInfoPolicyDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * New viewer info policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous view info policy. Might be missing due to historical data gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * Claimed membership to a team member's shared folder.
+     */
+    interface SharedContentClaimInvitationDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared content link.
+       */
+      shared_content_link?: string;
+    }
+
+    /**
+     * Copied the shared file or folder to own Dropbox.
+     */
+    interface SharedContentCopyDetails {
+      /**
+       * Shared content link.
+       */
+      shared_content_link: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Source asset index.
+       */
+      src_index: number;
+      /**
+       * Destination asset index.
+       */
+      dest_index: number;
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+    }
+
+    /**
+     * Downloaded the shared file or folder.
+     */
+    interface SharedContentDownloadDetails {
+      /**
+       * Shared content link.
+       */
+      shared_content_link: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+    }
+
+    /**
+     * Left the membership of a shared file or folder.
+     */
+    interface SharedContentRelinquishMembershipDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Removed an invitee from the membership of a shared file or folder before
+     * it was claimed.
+     */
+    interface SharedContentRemoveInviteeDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Removed the expiry of the link for the shared file or folder.
+     */
+    interface SharedContentRemoveLinkExpiryDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+    }
+
+    /**
+     * Removed the password on the link for the shared file or folder.
+     */
+    interface SharedContentRemoveLinkPasswordDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+    }
+
+    /**
+     * Removed a user or a group from the membership of a shared file or folder.
+     */
+    interface SharedContentRemoveMemberDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+    }
+
+    /**
+     * Requested to be on the membership of a shared file or folder.
+     */
+    interface SharedContentRequestAccessDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+      /**
+       * Shared content link.
+       */
+      shared_content_link?: string;
+    }
+
+    /**
+     * Unshared a shared file or folder by clearing its membership and turning
+     * off its link.
+     */
+    interface SharedContentUnshareDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name?: string;
+    }
+
+    /**
+     * Previewed the shared file or folder.
+     */
+    interface SharedContentViewDetails {
+      /**
+       * Shared content link.
+       */
+      shared_content_link: string;
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+    }
+
+    /**
+     * Set or unset the confidential flag on a shared folder.
+     */
+    interface SharedFolderChangeConfidentialityDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * New confidentiality value.
+       */
+      new_value: Confidentiality;
+      /**
+       * Previous confidentiality value. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: Confidentiality;
+    }
+
+    /**
+     * Changed who can access the shared folder via a link.
+     */
+    interface SharedFolderChangeLinkPolicyDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * New shared folder link policy.
+       */
+      new_value: SharedFolderLinkPolicy;
+      /**
+       * Previous shared folder link policy. Might be missing due to historical
+       * data gap.
+       */
+      previous_value?: SharedFolderLinkPolicy;
+    }
+
+    /**
+     * Changed who can manage the membership of a shared folder.
+     */
+    interface SharedFolderChangeMemberManagementPolicyDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * New membership management policy.
+       */
+      new_value: SharedFolderMembershipManagementPolicy;
+      /**
+       * Previous membership management policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: SharedFolderMembershipManagementPolicy;
+    }
+
+    /**
+     * Changed who can become a member of the shared folder.
+     */
+    interface SharedFolderChangeMemberPolicyDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
+      /**
+       * New external invite policy.
+       */
+      new_value: ExternalSharingPolicy;
+      /**
+       * Previous external invite policy. Might be missing due to historical
+       * data gap.
+       */
+      previous_value?: ExternalSharingPolicy;
+    }
+
+    /**
+     * Created a shared folder.
+     */
+    interface SharedFolderCreateDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Parent namespace ID. Might be missing due to historical data gap.
+       */
+      parent_ns_id?: common.NamespaceId;
+    }
+
+    interface SharedFolderLinkPolicyMembersOnly {
+      '.tag': 'members_only';
+    }
+
+    interface SharedFolderLinkPolicyMembersAndTeam {
+      '.tag': 'members_and_team';
+    }
+
+    interface SharedFolderLinkPolicyAnyone {
+      '.tag': 'anyone';
+    }
+
+    interface SharedFolderLinkPolicyOther {
+      '.tag': 'other';
+    }
+
+    type SharedFolderLinkPolicy = SharedFolderLinkPolicyMembersOnly | SharedFolderLinkPolicyMembersAndTeam | SharedFolderLinkPolicyAnyone | SharedFolderLinkPolicyOther;
+
+    /**
+     * SharedFolder's logged information.
+     */
+    interface SharedFolderLogInfo {
+      /**
+       * Namespace ID. Might be missing due to historical data gap.
+       */
+      ns_id?: common.NamespaceId;
+      /**
+       * Shared folder display name.
+       */
+      display_name: string;
+    }
+
+    interface SharedFolderMembershipManagementPolicyOwner {
+      '.tag': 'owner';
+    }
+
+    interface SharedFolderMembershipManagementPolicyEditors {
+      '.tag': 'editors';
+    }
+
+    interface SharedFolderMembershipManagementPolicyOther {
+      '.tag': 'other';
+    }
+
+    type SharedFolderMembershipManagementPolicy = SharedFolderMembershipManagementPolicyOwner | SharedFolderMembershipManagementPolicyEditors | SharedFolderMembershipManagementPolicyOther;
+
+    /**
+     * Added a shared folder to own Dropbox.
+     */
+    interface SharedFolderMountDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Transferred the ownership of a shared folder to another member.
+     */
+    interface SharedFolderTransferOwnershipDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Deleted a shared folder from Dropbox.
+     */
+    interface SharedFolderUnmountDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+      /**
+       * Original shared folder name.
+       */
+      original_folder_name: string;
+    }
+
+    /**
+     * Shared Paper document was opened.
+     */
+    interface SharedNoteOpenedDetails {
+    }
+
+    /**
+     * Changed whether team members can join shared folders owned externally
+     * (i.e. outside the team).
+     */
+    interface SharingChangeFolderJoinPolicyDetails {
+      /**
+       * New external join policy.
+       */
+      new_value: ExternalSharingPolicy;
+      /**
+       * Previous external join policy. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: ExternalSharingPolicy;
+    }
+
+    /**
+     * Changed whether team members can share links externally (i.e. outside the
+     * team), and if so, whether links should be accessible only by team members
+     * or anyone by default.
+     */
+    interface SharingChangeLinkPolicyDetails {
+      /**
+       * New external link accessibility policy.
+       */
+      new_value: ExternalSharingAccessibilityPolicy;
+      /**
+       * Previous external link accessibility policy. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: ExternalSharingAccessibilityPolicy;
+    }
+
+    /**
+     * Changed whether team members can share files and folders externally (i.e.
+     * outside the team).
+     */
+    interface SharingChangeMemberPolicyDetails {
+      /**
+       * New external invite policy.
+       */
+      new_value: ExternalSharingPolicy;
+      /**
+       * Previous external invite policy. Might be missing due to historical
+       * data gap.
+       */
+      previous_value?: ExternalSharingPolicy;
+    }
+
+    /**
+     * Created a link to a file using an app.
+     */
+    interface ShmodelAppCreateDetails {
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Shared link token key.
+       */
+      token_key?: string;
+    }
+
+    /**
+     * Created a new link.
+     */
+    interface ShmodelCreateDetails {
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Shared link token key.
+       */
+      token_key?: string;
+    }
+
+    /**
+     * Removed a link.
+     */
+    interface ShmodelDisableDetails {
+      /**
+       * Sharing permission. Might be missing due to historical data gap.
+       */
+      sharing_permission?: string;
+      /**
+       * Shared link token key.
+       */
+      token_key?: string;
+    }
+
+    /**
+     * Shared a link with Facebook users.
+     */
+    interface ShmodelFbShareDetails {
+      /**
+       * Sharing non member recipients.
+       */
+      sharing_non_member_recipients: Array<NonTeamMemberLogInfo>;
+    }
+
+    /**
+     * Shared a link with a group.
+     */
+    interface ShmodelGroupShareDetails {
+    }
+
+    /**
+     * Removed the expiration date from a link.
+     */
+    interface ShmodelRemoveExpirationDetails {
+    }
+
+    /**
+     * Added an expiration date to a link.
+     */
+    interface ShmodelSetExpirationDetails {
+      /**
+       * Expiration starting date.
+       */
+      expiration_start_date: string;
+      /**
+       * The number of days from the starting expiration date after which the
+       * link will expire.
+       */
+      expiration_days: number;
+    }
+
+    /**
+     * Added a team member's file/folder to their Dropbox from a link.
+     */
+    interface ShmodelTeamCopyDetails {
+    }
+
+    /**
+     * Downloaded a team member's file/folder from a link.
+     */
+    interface ShmodelTeamDownloadDetails {
+    }
+
+    /**
+     * Shared a link with team members.
+     */
+    interface ShmodelTeamShareDetails {
+    }
+
+    /**
+     * Opened a team member's link.
+     */
+    interface ShmodelTeamViewDetails {
+    }
+
+    /**
+     * Password-protected a link.
+     */
+    interface ShmodelVisibilityPasswordDetails {
+    }
+
+    /**
+     * Made a file/folder visible to anyone with the link.
+     */
+    interface ShmodelVisibilityPublicDetails {
+    }
+
+    /**
+     * Made a file/folder visible only to team members with the link.
+     */
+    interface ShmodelVisibilityTeamOnlyDetails {
+    }
+
+    /**
+     * Ended admin sign-in-as session.
+     */
+    interface SignInAsSessionEndDetails {
+    }
+
+    /**
+     * Started admin sign-in-as session.
+     */
+    interface SignInAsSessionStartDetails {
+    }
+
+    /**
+     * Changed the default Smart Sync policy for team members.
+     */
+    interface SmartSyncChangePolicyDetails {
+      /**
+       * New smart sync policy.
+       */
+      new_value: SmartSyncPolicy;
+      /**
+       * Previous smart sync policy. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: SmartSyncPolicy;
+    }
+
+    /**
+     * Smart Sync non-admin devices report created.
+     */
+    interface SmartSyncCreateAdminPrivilegeReportDetails {
+    }
+
+    interface SmartSyncPolicyLocalOnly {
+      '.tag': 'local_only';
+    }
+
+    interface SmartSyncPolicySynced {
+      '.tag': 'synced';
+    }
+
+    interface SmartSyncPolicyOther {
+      '.tag': 'other';
+    }
+
+    type SmartSyncPolicy = SmartSyncPolicyLocalOnly | SmartSyncPolicySynced | SmartSyncPolicyOther;
+
+    interface SpaceLimitsLevelGenerous {
+      '.tag': 'generous';
+    }
+
+    interface SpaceLimitsLevelModerate {
+      '.tag': 'moderate';
+    }
+
+    interface SpaceLimitsLevelNoLimit {
+      '.tag': 'no_limit';
+    }
+
+    interface SpaceLimitsLevelStrict {
+      '.tag': 'strict';
+    }
+
+    interface SpaceLimitsLevelOther {
+      '.tag': 'other';
+    }
+
+    type SpaceLimitsLevel = SpaceLimitsLevelGenerous | SpaceLimitsLevelModerate | SpaceLimitsLevelNoLimit | SpaceLimitsLevelStrict | SpaceLimitsLevelOther;
+
+    interface SpaceLimitsStatusWithinQuota {
+      '.tag': 'within_quota';
+    }
+
+    interface SpaceLimitsStatusNearQuota {
+      '.tag': 'near_quota';
+    }
+
+    interface SpaceLimitsStatusOverQuota {
+      '.tag': 'over_quota';
+    }
+
+    interface SpaceLimitsStatusOther {
+      '.tag': 'other';
+    }
+
+    type SpaceLimitsStatus = SpaceLimitsStatusWithinQuota | SpaceLimitsStatusNearQuota | SpaceLimitsStatusOverQuota | SpaceLimitsStatusOther;
+
+    /**
+     * Changed the X.509 certificate for SSO.
+     */
+    interface SsoChangeCertDetails {
+      /**
+       * Certificate subject.
+       */
+      subject: string;
+      /**
+       * Certificate issuer.
+       */
+      issuer: string;
+      /**
+       * Certificate issue date.
+       */
+      issue_date: string;
+      /**
+       * Certificate expiration date.
+       */
+      expiration_date: string;
+      /**
+       * Certificate serial number.
+       */
+      serial_number: string;
+      /**
+       * Certificate sha1 fingerprint.
+       */
+      sha1_fingerprint: string;
+      /**
+       * Certificate common name.
+       */
+      common_name: string;
+    }
+
+    /**
+     * Changed the sign-in URL for SSO.
+     */
+    interface SsoChangeLoginUrlDetails {
+      /**
+       * Previous SSO Url.
+       */
+      previous_sso_url: string;
+      /**
+       * New SSO Url.
+       */
+      new_sso_url: string;
+    }
+
+    /**
+     * Changed the sign-out URL for SSO.
+     */
+    interface SsoChangeLogoutUrlDetails {
+      /**
+       * Previous single sign-on logout URL.
+       */
+      previous_sso_logout_url: string;
+      /**
+       * New single sign-on logout URL. Might be missing due to historical data
+       * gap.
+       */
+      new_sso_logout_url?: string;
+    }
+
+    /**
+     * Change the single sign-on policy for the team.
+     */
+    interface SsoChangePolicyDetails {
+      /**
+       * New single sign-on policy.
+       */
+      new_value: OptionalChangePolicy;
+      /**
+       * Previous single sign-on policy. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: OptionalChangePolicy;
+    }
+
+    /**
+     * Changed the SAML identity mode for SSO.
+     */
+    interface SsoChangeSamlIdentityModeDetails {
+      /**
+       * Previous single sign-on identity mode.
+       */
+      previous_saml_identity_mode: number;
+      /**
+       * New single sign-on identity mode.
+       */
+      new_saml_identity_mode: number;
+    }
+
+    /**
+     * Failed to sign in using SSO.
+     */
+    interface SsoLoginFailDetails {
+      /**
+       * A technical description of the error.
+       */
+      system_message: string;
+      /**
+       * A user friendly description of the error.
+       */
+      admin_message: string;
+    }
+
+    /**
+     * Created a team activity report.
+     */
+    interface TeamActivityCreateReportDetails {
+      /**
+       * Report start date.
+       */
+      start_date: string;
+      /**
+       * Report end date.
+       */
+      end_date: string;
+    }
+
+    /**
+     * An audit log event.
+     */
+    interface TeamEvent {
+      /**
+       * The Dropbox timestamp representing when the action was taken.
+       */
+      timestamp: common.DropboxTimestamp;
+      /**
+       * One or more categories that this type of action belongs to.
+       */
+      event_categories: Array<EventCategory>;
+      /**
+       * The entity who actually performed the action.
+       */
+      actor: ActorLogInfo;
+      /**
+       * The origin from which the actor performed the action including
+       * information about host, ip address, location, session, etc. If the
+       * action was performed programmatically via the API the origin represents
+       * the API client.
+       */
+      origin?: OriginLogInfo;
+      /**
+       * Zero or more users and/or groups that are affected by the action. Note
+       * that this list doesn't include any actors or users in context.
+       */
+      participants?: Array<ParticipantLogInfo>;
+      /**
+       * Zero or more content assets involved in the action. Currently these
+       * include Dropbox files and folders but in the future we might add other
+       * asset types such as Paper documents, folders, projects, etc.
+       */
+      assets?: Array<AssetLogInfo>;
+      /**
+       * True if the action involved a non team member either as the actor or as
+       * one of the affected users.
+       */
+      involve_non_team_member: boolean;
+      /**
+       * The user or team on whose behalf the actor performed the action.
+       */
+      context: ContextLogInfo;
+      /**
+       * The particular type of action taken.
+       */
+      event_type: EventType;
+      /**
+       * The variable event schema applicable to this type of action,
+       * instantiated with respect to this particular action.
+       */
+      details: EventDetails;
+    }
+
+    /**
+     * Changed the archival status of a team folder.
+     */
+    interface TeamFolderChangeStatusDetails {
+      /**
+       * New team folder status.
+       */
+      new_status: TeamFolderStatus;
+      /**
+       * Previous team folder status. Might be missing due to historical data
+       * gap.
+       */
+      previous_status?: TeamFolderStatus;
+    }
+
+    /**
+     * Created a new team folder in active status.
+     */
+    interface TeamFolderCreateDetails {
+    }
+
+    /**
+     * Downgraded a team folder to a regular shared folder.
+     */
+    interface TeamFolderDowngradeDetails {
+      /**
+       * Target asset index.
+       */
+      target_index: number;
+    }
+
+    /**
+     * Permanently deleted an archived team folder.
+     */
+    interface TeamFolderPermanentlyDeleteDetails {
+    }
+
+    /**
+     * Renamed an active or archived team folder.
+     */
+    interface TeamFolderRenameDetails {
+      /**
+       * Source asset index.
+       */
+      src_index: number;
+      /**
+       * Destination asset index.
+       */
+      dest_index: number;
+    }
+
+    interface TeamFolderStatusArchive {
+      '.tag': 'archive';
+    }
+
+    interface TeamFolderStatusUnarchive {
+      '.tag': 'unarchive';
+    }
+
+    interface TeamFolderStatusOther {
+      '.tag': 'other';
+    }
+
+    type TeamFolderStatus = TeamFolderStatusArchive | TeamFolderStatusUnarchive | TeamFolderStatusOther;
+
+    /**
+     * Team linked app
+     */
+    interface TeamLinkedAppLogInfo extends AppLogInfo {
+    }
+
+    /**
+     * Reference to the TeamLinkedAppLogInfo type, identified by the value of
+     * the .tag property.
+     */
+    interface TeamLinkedAppLogInfoReference extends TeamLinkedAppLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'team_linked_app';
+    }
+
+    /**
+     * Team member's logged information.
+     */
+    interface TeamMemberLogInfo extends UserLogInfo {
+      /**
+       * Team member ID. Might be missing due to historical data gap.
+       */
+      team_member_id?: team_common.TeamMemberId;
+      /**
+       * Team member external ID.
+       */
+      member_external_id?: team_common.MemberExternalId;
+    }
+
+    /**
+     * Reference to the TeamMemberLogInfo type, identified by the value of the
+     * .tag property.
+     */
+    interface TeamMemberLogInfoReference extends TeamMemberLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'team_member';
+    }
+
+    /**
+     * Merged the team into another team.
+     */
+    interface TeamMergeDetails {
+      /**
+       * Merged from team name. Might be missing due to historical data gap.
+       */
+      merged_from_team_name?: string;
+      /**
+       * Merged to team name. Might be missing due to historical data gap.
+       */
+      merged_to_team_name?: string;
+    }
+
+    /**
+     * Added a team logo to be displayed on shared link headers.
+     */
+    interface TeamProfileAddLogoDetails {
+    }
+
+    /**
+     * Changed the team logo to be displayed on shared link headers.
+     */
+    interface TeamProfileChangeLogoDetails {
+    }
+
+    /**
+     * Changed the team name.
+     */
+    interface TeamProfileChangeNameDetails {
+      /**
+       * Team's display name.
+       */
+      team_display_name: string;
+      /**
+       * Team's legal name.
+       */
+      team_legal_name: string;
+    }
+
+    /**
+     * Removed the team logo to be displayed on shared link headers.
+     */
+    interface TeamProfileRemoveLogoDetails {
+    }
+
+    /**
+     * Added a backup phone for two-step verification.
+     */
+    interface TfaAddBackupPhoneDetails {
+    }
+
+    /**
+     * Added a security key for two-step verification.
+     */
+    interface TfaAddSecurityKeyDetails {
+    }
+
+    /**
+     * Changed the backup phone for two-step verification.
+     */
+    interface TfaChangeBackupPhoneDetails {
+    }
+
+    /**
+     * Change two-step verification policy for the team.
+     */
+    interface TfaChangePolicyDetails {
+      /**
+       * New change policy.
+       */
+      new_value: OptionalChangePolicy;
+      /**
+       * Previous change policy. Might be missing due to historical data gap.
+       */
+      previous_value?: OptionalChangePolicy;
+    }
+
+    /**
+     * Enabled, disabled or changed the configuration for two-step verification.
+     */
+    interface TfaChangeStatusDetails {
+      /**
+       * The new two factor authentication configuration.
+       */
+      new_value: TfaConfiguration;
+      /**
+       * The previous two factor authentication configuration. Might be missing
+       * due to historical data gap.
+       */
+      previous_value?: TfaConfiguration;
+      /**
+       * Used two factor authentication code.
+       */
+      used_rescue_code?: boolean;
+    }
+
+    interface TfaConfigurationDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface TfaConfigurationEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface TfaConfigurationSms {
+      '.tag': 'sms';
+    }
+
+    interface TfaConfigurationAuthenticator {
+      '.tag': 'authenticator';
+    }
+
+    interface TfaConfigurationOther {
+      '.tag': 'other';
+    }
+
+    type TfaConfiguration = TfaConfigurationDisabled | TfaConfigurationEnabled | TfaConfigurationSms | TfaConfigurationAuthenticator | TfaConfigurationOther;
+
+    /**
+     * Removed the backup phone for two-step verification.
+     */
+    interface TfaRemoveBackupPhoneDetails {
+    }
+
+    /**
+     * Removed a security key for two-step verification.
+     */
+    interface TfaRemoveSecurityKeyDetails {
+    }
+
+    /**
+     * Reset two-step verification for team member.
+     */
+    interface TfaResetDetails {
+    }
+
+    /**
+     * Enabled or disabled the option for team members to link a personal
+     * Dropbox account in addition to their work account to the same computer.
+     */
+    interface TwoAccountChangePolicyDetails {
+      /**
+       * New two account policy.
+       */
+      new_value: EnableDisableChangePolicy;
+      /**
+       * Previous two account policy. Might be missing due to historical data
+       * gap.
+       */
+      previous_value?: EnableDisableChangePolicy;
+    }
+
+    /**
+     * User linked app
+     */
+    interface UserLinkedAppLogInfo extends AppLogInfo {
+    }
+
+    /**
+     * Reference to the UserLinkedAppLogInfo type, identified by the value of
+     * the .tag property.
+     */
+    interface UserLinkedAppLogInfoReference extends UserLinkedAppLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'user_linked_app';
+    }
+
+    /**
+     * User's logged information.
+     */
+    interface UserLogInfo {
+      /**
+       * User unique ID. Might be missing due to historical data gap.
+       */
+      account_id?: users_common.AccountId;
+      /**
+       * User display name. Might be missing due to historical data gap.
+       */
+      display_name?: common.DisplayName;
+      /**
+       * User email address. Might be missing due to historical data gap.
+       */
+      email?: common.EmailAddress;
+    }
+
+    /**
+     * Reference to the UserLogInfo polymorphic type. Contains a .tag property
+     * to let you discriminate between possible subtypes.
+     */
+    interface UserLogInfoReference extends UserLogInfo {
+      /**
+       * Tag identifying the subtype variant.
+       */
+      '.tag': "team_member"|"non_team_member";
+    }
+
+    /**
+     * User's name logged information
+     */
+    interface UserNameLogInfo {
+      /**
+       * Given name.
+       */
+      given_name: string;
+      /**
+       * Surname.
+       */
+      surname: string;
+      /**
+       * Locale. Might be missing due to historical data gap.
+       */
+      locale?: string;
+    }
+
+    /**
+     * User or team linked app. Used when linked type is missing due to
+     * historical data gap.
+     */
+    interface UserOrTeamLinkedAppLogInfo extends AppLogInfo {
+    }
+
+    /**
+     * Reference to the UserOrTeamLinkedAppLogInfo type, identified by the value
+     * of the .tag property.
+     */
+    interface UserOrTeamLinkedAppLogInfoReference extends UserOrTeamLinkedAppLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'user_or_team_linked_app';
+    }
+
+    /**
+     * Web session.
+     */
+    interface WebSessionLogInfo extends SessionLogInfo {
+    }
+
+    /**
+     * Reference to the WebSessionLogInfo type, identified by the value of the
+     * .tag property.
+     */
+    interface WebSessionLogInfoReference extends WebSessionLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'web';
+    }
+
+    /**
+     * Changed how long team members can stay signed in to Dropbox on the web.
+     */
+    interface WebSessionsChangeFixedLengthPolicyDetails {
+      /**
+       * New session length policy.
+       */
+      new_value: SessionsManagementSessionLengthPolicy;
+      /**
+       * Previous session length policy.
+       */
+      previous_value: SessionsManagementSessionLengthPolicy;
+    }
+
+    /**
+     * Changed how long team members can be idle while signed in to Dropbox on
+     * the web.
+     */
+    interface WebSessionsChangeIdleLengthPolicyDetails {
+      /**
+       * New idle length policy.
+       */
+      new_value: SessionsManagementIdleLengthPolicy;
+      /**
+       * Previous idle length policy.
+       */
+      previous_value: SessionsManagementIdleLengthPolicy;
+    }
+
+    type AppId = string;
+
+    type IpAddress = string;
+
+    type RequestId = string;
+
+  }
+
   namespace team_policies {
     /**
      * Emm token is disabled
@@ -9700,7 +18828,7 @@ declare module DropboxTypes {
       /**
        * The user's unique Dropbox ID.
        */
-      account_id: AccountId;
+      account_id: users_common.AccountId;
       /**
        * Details of a user's name.
        */
@@ -9724,32 +18852,6 @@ declare module DropboxTypes {
        */
       disabled: boolean;
     }
-
-    /**
-     * The basic account type.
-     */
-    interface AccountTypeBasic {
-      '.tag': 'basic';
-    }
-
-    /**
-     * The Dropbox Pro account type.
-     */
-    interface AccountTypePro {
-      '.tag': 'pro';
-    }
-
-    /**
-     * The Dropbox Business account type.
-     */
-    interface AccountTypeBusiness {
-      '.tag': 'business';
-    }
-
-    /**
-     * What type of account this user has.
-     */
-    type AccountType = AccountTypeBasic | AccountTypePro | AccountTypeBusiness;
 
     /**
      * Basic information about any account.
@@ -9803,7 +18905,7 @@ declare module DropboxTypes {
       /**
        * What type of account this user has.
        */
-      account_type: AccountType;
+      account_type: users_common.AccountType;
     }
 
     /**
@@ -9820,7 +18922,7 @@ declare module DropboxTypes {
       /**
        * A user's account identifier.
        */
-      account_id: AccountId;
+      account_id: users_common.AccountId;
     }
 
     interface GetAccountBatchArg {
@@ -9828,7 +18930,7 @@ declare module DropboxTypes {
        * List of user account identifiers.  Should not contain any duplicate
        * account IDs.
        */
-      account_ids: Array<AccountId>;
+      account_ids: Array<users_common.AccountId>;
     }
 
     /**
@@ -9837,7 +18939,7 @@ declare module DropboxTypes {
      */
     interface GetAccountBatchErrorNoAccount {
       '.tag': 'no_account';
-      no_account: AccountId;
+      no_account: users_common.AccountId;
     }
 
     interface GetAccountBatchErrorOther {
@@ -9960,9 +19062,41 @@ declare module DropboxTypes {
       allocated: number;
     }
 
-    type AccountId = string;
-
     type GetAccountBatchResult = Array<BasicAccount>;
+
+  }
+
+  /**
+   * This namespace contains common data types used within the users namespace
+   */
+  namespace users_common {
+    /**
+     * The basic account type.
+     */
+    interface AccountTypeBasic {
+      '.tag': 'basic';
+    }
+
+    /**
+     * The Dropbox Pro account type.
+     */
+    interface AccountTypePro {
+      '.tag': 'pro';
+    }
+
+    /**
+     * The Dropbox Business account type.
+     */
+    interface AccountTypeBusiness {
+      '.tag': 'business';
+    }
+
+    /**
+     * What type of account this user has.
+     */
+    type AccountType = AccountTypeBasic | AccountTypePro | AccountTypeBusiness;
+
+    type AccountId = string;
 
   }
 
