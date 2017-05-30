@@ -380,6 +380,167 @@ It specifies which user the team access token should be acting as.</td>
             
 <hr>
 <dt>
+    <h4 class="name" id="authenticateWithCordova"><span class="type-signature"></span>authenticateWithCordova(successCallback, errorCallback)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        An authentication process that works with cordova applications.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>successCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#successCallback">successCallback</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>errorCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#errorCallback">errorCallback</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#authenticateWithCordova">DropboxBase#authenticateWithCordova</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="authTokenFromOauth1"><span class="type-signature"></span>authTokenFromOauth1(arg)</h4>
     
     
@@ -2631,9 +2792,11 @@ is unsupported.
 
     
     <div class="description">
-        Get a preview for a file. Currently previews are only generated for the files
-with  the following extensions: .doc, .docx, .docm, .ppt, .pps, .ppsx, .ppsm,
-.pptx, .pptm,  .xls, .xlsx, .xlsm, .rtf.
+        Get a preview for a file. Currently, PDF previews are generated for files
+with the following extensions: .ai, .doc, .docm, .docx, .eps, .odp, .odt,
+.pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML previews are generated for
+files with the following extensions: .csv, .ods, .xls, .xlsm, .xlsx. Other
+formats will return an unsupported extension error.
     </div>
     
 
@@ -3096,7 +3259,11 @@ something else at the given path, replace it but leave the children as they
 are. Check the new entry's FolderSharingInfo.read_only and set all its
 children's read-only statuses to match. For each DeletedMetadata, if your
 local state has something at the given path, remove it and all its children.
-If there's nothing at the given path, ignore this entry.
+If there's nothing at the given path, ignore this entry. Note:
+auth.RateLimitError may be returned if multiple list_folder or
+list_folder/continue calls with same parameters are made simultaneously by
+same API app for same user. If your app implements retry logic, please hold
+off the retry until the previous request finishes.
     </div>
     
 
@@ -6086,7 +6253,7 @@ upload_session/start.
     
     <div class="description">
         Append more data to an upload session. A single request should not upload
-more than 150 MB of file contents.
+more than 150 MB.
     </div>
     
 
@@ -6245,7 +6412,7 @@ more than 150 MB of file contents.
     <div class="description">
         Append more data to an upload session. When the parameter close is set, this
 call will close the session. A single request should not upload more than 150
-MB of file contents.
+MB.
     </div>
     
 
@@ -6394,7 +6561,7 @@ MB of file contents.
     
     <div class="description">
         Finish an upload session and save the uploaded data to the given file path. A
-single request should not upload more than 150 MB of file contents.
+single request should not upload more than 150 MB.
     </div>
     
 
@@ -6855,7 +7022,10 @@ for example where the size of the file is greater than 150 MB.  This call
 starts a new upload session with the given data. You can then use
 upload_session/append_v2 to add more data and upload_session/finish to save
 all the data to a file in Dropbox. A single request should not upload more
-than 150 MB of file contents.
+than 150 MB. An upload session can be used for a maximum of 48 hours.
+Attempting to use an UploadSessionStartResult.session_id with
+upload_session/append_v2 or upload_session/finish more than 48 hours after
+its creation will return a UploadSessionLookupError.not_found.
     </div>
     
 
@@ -7432,9 +7602,8 @@ prevent cross site scripting attacks.</td>
 
     
     <div class="description">
-        Marks the given Paper doc as deleted. This operation is non-destructive and
-the doc can be revived by the owner.  Note: This action can be performed only
-by the doc owner.
+        Marks the given Paper doc as archived. Note: This action can be performed or
+undone by anyone with edit permissions to the doc.
     </div>
     
 
@@ -8933,8 +9102,8 @@ console.
     
     <div class="description">
         Allows an owner or editor to add users to a Paper doc or change their
-permissions using their email or Dropbox account id.  Note: The Doc owner's
-permissions cannot be changed.
+permissions using their email address or Dropbox account ID.  Note: The Doc
+owner's permissions cannot be changed.
     </div>
     
 
@@ -9383,7 +9552,7 @@ through all users on the Paper doc.
     
     <div class="description">
         Allows an owner or editor to remove users from a Paper doc using their email
-or Dropbox account id.  Note: Doc owner cannot be removed.
+address or Dropbox account ID.  Note: Doc owner cannot be removed.
     </div>
     
 
@@ -16168,6 +16337,303 @@ must have full Dropbox access to use this endpoint.
             
 <hr>
 <dt>
+    <h4 class="name" id="teamLogGetEvents"><span class="type-signature"></span>teamLogGetEvents(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Retrieves team events. Permission : Team Auditing.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGetTeamEventsArg">TeamLogGetTeamEventsArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamLogGetTeamEventsResult">TeamLogGetTeamEventsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLogGetTeamEventsError">TeamLogGetTeamEventsError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamLogGetEventsContinue"><span class="type-signature"></span>teamLogGetEventsContinue(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Once a cursor has been retrieved from get_events, use this to paginate
+through all events. Permission : Team Auditing.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGetTeamEventsContinueArg">TeamLogGetTeamEventsContinueArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamLogGetTeamEventsResult">TeamLogGetTeamEventsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLogGetTeamEventsContinueError">TeamLogGetTeamEventsContinueError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="usersGetAccount"><span class="type-signature"></span>usersGetAccount(arg)</h4>
     
     
@@ -16807,7 +17273,7 @@ queried per request.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-04-30T10:18:44-07:00
+		on 2017-05-30T10:26:41-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

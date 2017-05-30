@@ -498,6 +498,167 @@ endpoints
             
 <hr>
 <dt>
+    <h4 class="name" id="authenticateWithCordova"><span class="type-signature"></span>authenticateWithCordova(successCallback, errorCallback)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        An authentication process that works with cordova applications.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>successCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#successCallback">successCallback</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>errorCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#errorCallback">errorCallback</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#authenticateWithCordova">DropboxBase#authenticateWithCordova</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="getAccessToken"><span class="type-signature"></span>getAccessToken()</h4>
     
     
@@ -1974,6 +2135,156 @@ prevent cross site scripting attacks.</td>
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#TeamRevokeDeviceSessionBatchResult">TeamRevokeDeviceSessionBatchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamRevokeDeviceSessionBatchError">TeamRevokeDeviceSessionBatchError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamFeaturesGetValues"><span class="type-signature"></span>teamFeaturesGetValues(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get the values for one or more featues. This route allows you to check your
+account's capability for what feature you can access or what value you have
+for certain features. Permission : Team information.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamFeaturesGetValuesBatchArg">TeamFeaturesGetValuesBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamFeaturesGetValuesBatchResult">TeamFeaturesGetValuesBatchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamFeaturesGetValuesBatchError">TeamFeaturesGetValuesBatchError</a>>></span>
 
 
 
@@ -8718,6 +9029,155 @@ Permission : Team member file access.
             
 <hr>
 <dt>
+    <h4 class="name" id="teamTeamFolderListContinue"><span class="type-signature"></span>teamTeamFolderListContinue(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Once a cursor has been retrieved from team_folder/list, use this to paginate
+through all team folders. Permission : Team member file access.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamTeamFolderListContinueArg">TeamTeamFolderListContinueArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamTeamFolderListResult">TeamTeamFolderListResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamTeamFolderListContinueError">TeamTeamFolderListContinueError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="teamTeamFolderPermanentlyDelete"><span class="type-signature"></span>teamTeamFolderPermanentlyDelete(arg)</h4>
     
     
@@ -9011,6 +9471,155 @@ access.
     
 </dd>
 
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamTokenGetAuthenticatedAdmin"><span class="type-signature"></span>teamTokenGetAuthenticatedAdmin(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the member profile of the admin who generated the team access token
+used to make the call.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">void</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamTokenGetAuthenticatedAdminResult">TeamTokenGetAuthenticatedAdminResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamTokenGetAuthenticatedAdminError">TeamTokenGetAuthenticatedAdminError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
         </dl>
     
 
@@ -9061,7 +9670,7 @@ access.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-04-30T10:18:44-07:00
+		on 2017-05-30T10:26:41-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
