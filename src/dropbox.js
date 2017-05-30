@@ -5,8 +5,7 @@ var Dropbox;
 /**
  * @class Dropbox
  * @extends DropboxBase
- * @classdesc The Dropbox SDK class that provides methods to read, write and
- * create files or folders in a user's Dropbox.
+ * @classdesc The Dropbox SDK class that provides methods to list and create folders in a user's Dropbox, view file metadata, and manipulate files via methods that do not involve content upload or download.
  * @arg {Object} options
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
