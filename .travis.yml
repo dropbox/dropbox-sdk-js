@@ -5,7 +5,5 @@ node_js:
   - '4'
   - '0.12'
   - '0.10'
-before_install:
-  - 'npm install -g npm@latest'
 git:
   submodules: false

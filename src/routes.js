@@ -175,9 +175,11 @@ routes.filesGetMetadata = function (arg) {
 };
 
 /**
- * Get a preview for a file. Currently previews are only generated for the files
- * with  the following extensions: .doc, .docx, .docm, .ppt, .pps, .ppsx, .ppsm,
- * .pptx, .pptm,  .xls, .xlsx, .xlsm, .rtf.
+ * Get a preview for a file. Currently, PDF previews are generated for files
+ * with the following extensions: .ai, .doc, .docm, .docx, .eps, .odp, .odt,
+ * .pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML previews are generated for
+ * files with the following extensions: .csv, .ods, .xls, .xlsm, .xlsx. Other
+ * formats will return an unsupported extension error.
  * @function Dropbox#filesGetPreview
  * @arg {FilesPreviewArg} arg - The request parameters.
  * @returns {Promise.<FilesFileMetadata, Error.<FilesPreviewError>>}
@@ -226,7 +228,11 @@ routes.filesGetThumbnail = function (arg) {
  * are. Check the new entry's FolderSharingInfo.read_only and set all its
  * children's read-only statuses to match. For each DeletedMetadata, if your
  * local state has something at the given path, remove it and all its children.
- * If there's nothing at the given path, ignore this entry.
+ * If there's nothing at the given path, ignore this entry. Note:
+ * auth.RateLimitError may be returned if multiple list_folder or
+ * list_folder/continue calls with same parameters are made simultaneously by
+ * same API app for same user. If your app implements retry logic, please hold
+ * off the retry until the previous request finishes.
  * @function Dropbox#filesListFolder
  * @arg {FilesListFolderArg} arg - The request parameters.
  * @returns {Promise.<FilesListFolderResult, Error.<FilesListFolderError>>}
@@ -456,7 +462,7 @@ routes.filesUpload = function (arg) {
 
 /**
  * Append more data to an upload session. A single request should not upload
- * more than 150 MB of file contents.
+ * more than 150 MB.
  * @function Dropbox#filesUploadSessionAppend
  * @deprecated
  * @arg {FilesUploadSessionCursor} arg - The request parameters.
@@ -469,7 +475,7 @@ routes.filesUploadSessionAppend = function (arg) {
 /**
  * Append more data to an upload session. When the parameter close is set, this
  * call will close the session. A single request should not upload more than 150
- * MB of file contents.
+ * MB.
  * @function Dropbox#filesUploadSessionAppendV2
  * @arg {FilesUploadSessionAppendArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<FilesUploadSessionLookupError>>}
@@ -480,7 +486,7 @@ routes.filesUploadSessionAppendV2 = function (arg) {
 
 /**
  * Finish an upload session and save the uploaded data to the given file path. A
- * single request should not upload more than 150 MB of file contents.
+ * single request should not upload more than 150 MB.
  * @function Dropbox#filesUploadSessionFinish
  * @arg {FilesUploadSessionFinishArg} arg - The request parameters.
  * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadSessionFinishError>>}
@@ -527,7 +533,10 @@ routes.filesUploadSessionFinishBatchCheck = function (arg) {
  * starts a new upload session with the given data. You can then use
  * upload_session/append_v2 to add more data and upload_session/finish to save
  * all the data to a file in Dropbox. A single request should not upload more
- * than 150 MB of file contents.
+ * than 150 MB. An upload session can be used for a maximum of 48 hours.
+ * Attempting to use an UploadSessionStartResult.session_id with
+ * upload_session/append_v2 or upload_session/finish more than 48 hours after
+ * its creation will return a UploadSessionLookupError.not_found.
  * @function Dropbox#filesUploadSessionStart
  * @arg {FilesUploadSessionStartArg} arg - The request parameters.
  * @returns {Promise.<FilesUploadSessionStartResult, Error.<void>>}
@@ -537,9 +546,8 @@ routes.filesUploadSessionStart = function (arg) {
 };
 
 /**
- * Marks the given Paper doc as deleted. This operation is non-destructive and
- * the doc can be revived by the owner.  Note: This action can be performed only
- * by the doc owner.
+ * Marks the given Paper doc as archived. Note: This action can be performed or
+ * undone by anyone with edit permissions to the doc.
  * @function Dropbox#paperDocsArchive
  * @arg {PaperRefPaperDoc} arg - The request parameters.
  * @returns {Promise.<void, Error.<PaperDocLookupError>>}
@@ -658,8 +666,8 @@ routes.paperDocsSharingPolicySet = function (arg) {
 
 /**
  * Allows an owner or editor to add users to a Paper doc or change their
- * permissions using their email or Dropbox account id.  Note: The Doc owner's
- * permissions cannot be changed.
+ * permissions using their email address or Dropbox account ID.  Note: The Doc
+ * owner's permissions cannot be changed.
  * @function Dropbox#paperDocsUsersAdd
  * @arg {PaperAddPaperDocUser} arg - The request parameters.
  * @returns {Promise.<Array.<PaperAddPaperDocUserMemberResult>, Error.<PaperDocLookupError>>}
@@ -694,7 +702,7 @@ routes.paperDocsUsersListContinue = function (arg) {
 
 /**
  * Allows an owner or editor to remove users from a Paper doc using their email
- * or Dropbox account id.  Note: Doc owner cannot be removed.
+ * address or Dropbox account ID.  Note: Doc owner cannot be removed.
  * @function Dropbox#paperDocsUsersRemove
  * @arg {PaperRemovePaperDocUser} arg - The request parameters.
  * @returns {Promise.<void, Error.<PaperDocLookupError>>}
@@ -1204,6 +1212,27 @@ routes.sharingUpdateFolderMember = function (arg) {
  */
 routes.sharingUpdateFolderPolicy = function (arg) {
   return this.request('sharing/update_folder_policy', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Retrieves team events. Permission : Team Auditing.
+ * @function Dropbox#teamLogGetEvents
+ * @arg {TeamLogGetTeamEventsArg} arg - The request parameters.
+ * @returns {Promise.<TeamLogGetTeamEventsResult, Error.<TeamLogGetTeamEventsError>>}
+ */
+routes.teamLogGetEvents = function (arg) {
+  return this.request('team_log/get_events', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Once a cursor has been retrieved from get_events, use this to paginate
+ * through all events. Permission : Team Auditing.
+ * @function Dropbox#teamLogGetEventsContinue
+ * @arg {TeamLogGetTeamEventsContinueArg} arg - The request parameters.
+ * @returns {Promise.<TeamLogGetTeamEventsResult, Error.<TeamLogGetTeamEventsContinueError>>}
+ */
+routes.teamLogGetEventsContinue = function (arg) {
+  return this.request('team_log/get_events/continue', arg, 'team', 'api', 'rpc');
 };
 
 /**

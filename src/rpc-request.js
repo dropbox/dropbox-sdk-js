@@ -4,9 +4,17 @@ var getBaseURL = require('./get-base-url');
 
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
+  var err;
+  if (response) {
+    try {
+      err = JSON.parse(response.text);
+    } catch (e) {
+      err = response.text;
+    }
+  }
   return {
     status: error.status,
-    error: (response ? response.text : null) || error.toString(),
+    error: err || error,
     response: response
   };
 };
