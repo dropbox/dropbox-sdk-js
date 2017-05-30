@@ -53,6 +53,18 @@ routes.teamDevicesRevokeDeviceSessionBatch = function (arg) {
 };
 
 /**
+ * Get the values for one or more featues. This route allows you to check your
+ * account's capability for what feature you can access or what value you have
+ * for certain features. Permission : Team information.
+ * @function DropboxTeam#teamFeaturesGetValues
+ * @arg {TeamFeaturesGetValuesBatchArg} arg - The request parameters.
+ * @returns {Promise.<TeamFeaturesGetValuesBatchResult, Error.<TeamFeaturesGetValuesBatchError>>}
+ */
+routes.teamFeaturesGetValues = function (arg) {
+  return this.request('team/features/get_values', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * Retrieves information about a team.
  * @function DropboxTeam#teamGetInfo
  * @arg {void} arg - The request parameters.
@@ -563,6 +575,17 @@ routes.teamTeamFolderList = function (arg) {
 };
 
 /**
+ * Once a cursor has been retrieved from team_folder/list, use this to paginate
+ * through all team folders. Permission : Team member file access.
+ * @function DropboxTeam#teamTeamFolderListContinue
+ * @arg {TeamTeamFolderListContinueArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamFolderListResult, Error.<TeamTeamFolderListContinueError>>}
+ */
+routes.teamTeamFolderListContinue = function (arg) {
+  return this.request('team/team_folder/list/continue', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * Permanently deletes an archived team folder. Permission : Team member file
  * access.
  * @function DropboxTeam#teamTeamFolderPermanentlyDelete
@@ -581,6 +604,17 @@ routes.teamTeamFolderPermanentlyDelete = function (arg) {
  */
 routes.teamTeamFolderRename = function (arg) {
   return this.request('team/team_folder/rename', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Returns the member profile of the admin who generated the team access token
+ * used to make the call.
+ * @function DropboxTeam#teamTokenGetAuthenticatedAdmin
+ * @arg {void} arg - The request parameters.
+ * @returns {Promise.<TeamTokenGetAuthenticatedAdminResult, Error.<TeamTokenGetAuthenticatedAdminError>>}
+ */
+routes.teamTokenGetAuthenticatedAdmin = function (arg) {
+  return this.request('team/token/get_authenticated_admin', arg, 'team', 'api', 'rpc');
 };
 
 module.exports = routes;

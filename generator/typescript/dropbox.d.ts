@@ -170,9 +170,11 @@ declare module DropboxTypes {
     public filesGetMetadata(arg: files.GetMetadataArg): Promise<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>;
 
     /**
-     * Get a preview for a file. Currently previews are only generated for the
-     * files with  the following extensions: .doc, .docx, .docm, .ppt, .pps,
-     * .ppsx, .ppsm, .pptx, .pptm,  .xls, .xlsx, .xlsm, .rtf.
+     * Get a preview for a file. Currently, PDF previews are generated for files
+     * with the following extensions: .ai, .doc, .docm, .docx, .eps, .odp, .odt,
+     * .pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML previews are generated
+     * for files with the following extensions: .csv, .ods, .xls, .xlsm, .xlsx.
+     * Other formats will return an unsupported extension error.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.PreviewError>.
@@ -220,7 +222,11 @@ declare module DropboxTypes {
      * FolderSharingInfo.read_only and set all its children's read-only statuses
      * to match. For each DeletedMetadata, if your local state has something at
      * the given path, remove it and all its children. If there's nothing at the
-     * given path, ignore this entry.
+     * given path, ignore this entry. Note: auth.RateLimitError may be returned
+     * if multiple listFolder() or listFolderContinue() calls with same
+     * parameters are made simultaneously by same API app for same user. If your
+     * app implements retry logic, please hold off the retry until the previous
+     * request finishes.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.ListFolderError>.
@@ -435,7 +441,7 @@ declare module DropboxTypes {
 
     /**
      * Append more data to an upload session. A single request should not upload
-     * more than 150 MB of file contents.
+     * more than 150 MB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionLookupError>.
@@ -447,7 +453,7 @@ declare module DropboxTypes {
     /**
      * Append more data to an upload session. When the parameter close is set,
      * this call will close the session. A single request should not upload more
-     * than 150 MB of file contents.
+     * than 150 MB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionLookupError>.
@@ -457,8 +463,7 @@ declare module DropboxTypes {
 
     /**
      * Finish an upload session and save the uploaded data to the given file
-     * path. A single request should not upload more than 150 MB of file
-     * contents.
+     * path. A single request should not upload more than 150 MB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionFinishError>.
@@ -503,7 +508,10 @@ declare module DropboxTypes {
      * This call starts a new upload session with the given data. You can then
      * use uploadSessionAppendV2() to add more data and uploadSessionFinish() to
      * save all the data to a file in Dropbox. A single request should not
-     * upload more than 150 MB of file contents.
+     * upload more than 150 MB. An upload session can be used for a maximum of
+     * 48 hours. Attempting to use an UploadSessionStartResult.session_id with
+     * uploadSessionAppendV2() or uploadSessionFinish() more than 48 hours after
+     * its creation will return a UploadSessionLookupError.not_found.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
@@ -512,9 +520,8 @@ declare module DropboxTypes {
     public filesUploadSessionStart(arg: files.UploadSessionStartArg): Promise<files.UploadSessionStartResult>;
 
     /**
-     * Marks the given Paper doc as deleted. This operation is non-destructive
-     * and the doc can be revived by the owner.  Note: This action can be
-     * performed only by the doc owner.
+     * Marks the given Paper doc as archived. Note: This action can be performed
+     * or undone by anyone with edit permissions to the doc.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
@@ -623,8 +630,8 @@ declare module DropboxTypes {
 
     /**
      * Allows an owner or editor to add users to a Paper doc or change their
-     * permissions using their email or Dropbox account id.  Note: The Doc
-     * owner's permissions cannot be changed.
+     * permissions using their email address or Dropbox account ID.  Note: The
+     * Doc owner's permissions cannot be changed.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
@@ -657,7 +664,7 @@ declare module DropboxTypes {
 
     /**
      * Allows an owner or editor to remove users from a Paper doc using their
-     * email or Dropbox account id.  Note: Doc owner cannot be removed.
+     * email address or Dropbox account ID.  Note: Doc owner cannot be removed.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
@@ -1131,6 +1138,25 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public sharingUpdateFolderPolicy(arg: sharing.UpdateFolderPolicyArg): Promise<sharing.SharedFolderMetadata>;
+
+    /**
+     * Retrieves team events. Permission : Team Auditing.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team_log.GetTeamEventsError>.
+     * @param arg The request parameters.
+     */
+    public teamLogGetEvents(arg: team_log.GetTeamEventsArg): Promise<team_log.GetTeamEventsResult>;
+
+    /**
+     * Once a cursor has been retrieved from getEvents(), use this to paginate
+     * through all events. Permission : Team Auditing.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team_log.GetTeamEventsContinueError>.
+     * @param arg The request parameters.
+     */
+    public teamLogGetEventsContinue(arg: team_log.GetTeamEventsContinueArg): Promise<team_log.GetTeamEventsResult>;
 
     /**
      * Get information about a user's account.
