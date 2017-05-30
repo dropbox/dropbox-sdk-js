@@ -88,6 +88,73 @@ DropboxBase.prototype.getAuthenticationUrl = function (redirectUri, state) {
   return authUrl;
 };
 
+/**
+ * Called when the authentication succeed
+ * @callback successCallback
+ * @param {string} access_token The application's access token
+ */
+
+/**
+ * Called when the authentication failed.
+ * @callback errorCallback
+ */
+
+/**
+ * An authentication process that works with cordova applications.
+ * @param {successCallback} successCallback
+ * @param {errorCallback} errorCallback 
+ */
+DropboxBase.prototype.authenticateWithCordova = function (successCallback, errorCallback)
+{
+  var redirect_url = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
+  var url = this.getAuthenticationUrl(redirect_url);
+  var browser = window.open(url, '_blank');
+  var removed = false;
+
+  var onLoadError = function(event) {
+    // Try to avoid a browser crash on browser.close().
+    window.setTimeout(function() { browser.close() }, 10);
+    errorCallback();
+  }
+
+  var onLoadStop = function(event) {
+    var error_label = '&error=';
+    var error_index = event.url.indexOf(error_label);
+
+    if (error_index > -1) {
+      // Try to avoid a browser crash on browser.close().
+      window.setTimeout(function() { browser.close() }, 10);
+      errorCallback();
+    } else { 
+      var access_token_label = '#access_token=';
+      var access_token_index = event.url.indexOf(access_token_label);
+      var token_type_index = event.url.indexOf('&token_type=');
+      if (access_token_index > -1) {
+        access_token_index += access_token_label.length;
+        // Try to avoid a browser crash on browser.close().
+        window.setTimeout(function() { browser.close() }, 10);
+
+        var access_token = event.url.substring(access_token_index, token_type_index);
+        successCallback(access_token);
+      }
+    }
+  };
+
+  var onExit = function(event) {
+    if(removed) {
+      return 
+    }
+    browser.removeEventListener('loaderror', onLoadError);
+    browser.removeEventListener('loadstop', onLoadStop);
+    browser.removeEventListener('exit', onExit);
+    removed = true
+  };
+  
+  browser.addEventListener('loaderror', onLoadError);
+  browser.addEventListener('loadstop', onLoadStop);
+  browser.addEventListener('exit', onExit)
+}
+
 DropboxBase.prototype.request = function (path, args, auth, host, style) {
   var request = null;
   switch (style) {
