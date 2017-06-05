@@ -1,6 +1,5 @@
-var DropboxBase = require('./dropbox-base');
-var routes = require('./routes');
-var Dropbox;
+import routes from './routes';
+import { DropboxBase } from './dropbox-base';
 
 /**
  * @class Dropbox
@@ -15,19 +14,14 @@ var Dropbox;
  * @arg {String} [options.selectUser] - Select user is only used by DropboxTeam.
  * It specifies which user the team access token should be acting as.
  */
-Dropbox = function (options) {
-  DropboxBase.call(this, options);
-};
+export class Dropbox extends DropboxBase {
 
-Dropbox.prototype = Object.create(DropboxBase.prototype);
+  constructor(options) {
+    super(options);
+    Object.assign(this, routes);
+  }
 
-Dropbox.prototype.constructor = Dropbox;
-
-// Add the user endpoint methods to the prototype
-Dropbox.prototype = Object.assign(Dropbox.prototype, routes);
-
-Dropbox.prototype.filesGetSharedLinkFile = function (arg) {
-  return this.request('sharing/get_shared_link_file', arg, 'api', 'download');
-};
-
-module.exports = Dropbox;
+  filesGetSharedLinkFile(arg) {
+    return this.request('sharing/get_shared_link_file', arg, 'api', 'download');
+  }
+}

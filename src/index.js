@@ -1,3 +1,1 @@
-var Dropbox = require('./dropbox');
-
-module.exports = Dropbox;
+module.exports = require('./dropbox').Dropbox;

@@ -678,8 +678,8 @@ declare module DropboxTypes {
       queries: Array<PropertiesSearchQuery>;
       /**
        * Defaults to TagRef(Union(u'TemplateFilter', [UnionField(u'filter_none',
-       * Void, False), UnionField(u'filter_some', List, False),
-       * UnionField(u'other', Void, True)]), u'filter_none').
+       * Void, False, None), UnionField(u'filter_some', List, False, None),
+       * UnionField(u'other', Void, True, None)]), u'filter_none').
        */
       template_filter?: TemplateFilter;
     }
@@ -735,8 +735,8 @@ declare module DropboxTypes {
       mode: PropertiesSearchMode;
       /**
        * Defaults to TagRef(Union(u'LogicalOperator',
-       * [UnionField(u'or_operator', Void, False), UnionField(u'other', Void,
-       * True)]), u'or_operator').
+       * [UnionField(u'or_operator', Void, False, None), UnionField(u'other',
+       * Void, True, None)]), u'or_operator').
        */
       logical_operator?: LogicalOperator;
     }
@@ -1248,8 +1248,9 @@ declare module DropboxTypes {
       destination?: files.Path;
       /**
        * Defaults to TagRef(Union(u'UpdateFileRequestDeadline',
-       * [UnionField(u'no_update', Void, False), UnionField(u'update', Nullable,
-       * False), UnionField(u'other', Void, True)]), u'no_update').
+       * [UnionField(u'no_update', Void, False, None), UnionField(u'update',
+       * Nullable, False, None), UnionField(u'other', Void, True, None)]),
+       * u'no_update').
        */
       deadline?: UpdateFileRequestDeadline;
       /**
@@ -1319,9 +1320,9 @@ declare module DropboxTypes {
        */
       path: WritePathOrId;
       /**
-       * Defaults to TagRef(Union(u'WriteMode', [UnionField(u'add', Void,
-       * False), UnionField(u'overwrite', Void, False), UnionField(u'update',
-       * Alias(u'Rev', String), False)]), u'add').
+       * Defaults to TagRef(Union(u'WriteMode', [UnionField(u'add', Void, False,
+       * None), UnionField(u'overwrite', Void, False, None),
+       * UnionField(u'update', Alias(u'Rev', String), False, None)]), u'add').
        */
       mode?: WriteMode;
       /**
@@ -2008,8 +2009,8 @@ declare module DropboxTypes {
       path: PathOrId;
       /**
        * Defaults to TagRef(Union(u'ListRevisionsMode', [UnionField(u'path',
-       * Void, False), UnionField(u'id', Void, False), UnionField(u'other',
-       * Void, True)]), u'path').
+       * Void, False, None), UnionField(u'id', Void, False, None),
+       * UnionField(u'other', Void, True, None)]), u'path').
        */
       mode?: ListRevisionsMode;
       /**
@@ -2621,8 +2622,8 @@ declare module DropboxTypes {
       max_results?: number;
       /**
        * Defaults to TagRef(Union(u'SearchMode', [UnionField(u'filename', Void,
-       * False), UnionField(u'filename_and_content', Void, False),
-       * UnionField(u'deleted_filename', Void, False)]), u'filename').
+       * False, None), UnionField(u'filename_and_content', Void, False, None),
+       * UnionField(u'deleted_filename', Void, False, None)]), u'filename').
        */
       mode?: SearchMode;
     }
@@ -2743,14 +2744,15 @@ declare module DropboxTypes {
       path: ReadPath;
       /**
        * Defaults to TagRef(Union(u'ThumbnailFormat', [UnionField(u'jpeg', Void,
-       * False), UnionField(u'png', Void, False)]), u'jpeg').
+       * False, None), UnionField(u'png', Void, False, None)]), u'jpeg').
        */
       format?: ThumbnailFormat;
       /**
        * Defaults to TagRef(Union(u'ThumbnailSize', [UnionField(u'w32h32', Void,
-       * False), UnionField(u'w64h64', Void, False), UnionField(u'w128h128',
-       * Void, False), UnionField(u'w640h480', Void, False),
-       * UnionField(u'w1024h768', Void, False)]), u'w64h64').
+       * False, None), UnionField(u'w64h64', Void, False, None),
+       * UnionField(u'w128h128', Void, False, None), UnionField(u'w640h480',
+       * Void, False, None), UnionField(u'w1024h768', Void, False, None)]),
+       * u'w64h64').
        */
       size?: ThumbnailSize;
     }
@@ -3242,8 +3244,9 @@ declare module DropboxTypes {
     interface AddMember {
       /**
        * Defaults to TagRef(Union(u'PaperDocPermissionLevel',
-       * [UnionField(u'edit', Void, False), UnionField(u'view_and_comment',
-       * Void, False), UnionField(u'other', Void, True)]), u'edit').
+       * [UnionField(u'edit', Void, False, None),
+       * UnionField(u'view_and_comment', Void, False, None),
+       * UnionField(u'other', Void, True, None)]), u'edit').
        */
       permission_level?: PaperDocPermissionLevel;
       /**
@@ -3569,21 +3572,23 @@ declare module DropboxTypes {
     interface ListPaperDocsArgs {
       /**
        * Defaults to TagRef(Union(u'ListPaperDocsFilterBy',
-       * [UnionField(u'docs_accessed', Void, False), UnionField(u'docs_created',
-       * Void, False), UnionField(u'other', Void, True)]), u'docs_accessed').
+       * [UnionField(u'docs_accessed', Void, False, None),
+       * UnionField(u'docs_created', Void, False, None), UnionField(u'other',
+       * Void, True, None)]), u'docs_accessed').
        */
       filter_by?: ListPaperDocsFilterBy;
       /**
        * Defaults to TagRef(Union(u'ListPaperDocsSortBy',
-       * [UnionField(u'accessed', Void, False), UnionField(u'modified', Void,
-       * False), UnionField(u'created', Void, False), UnionField(u'other', Void,
-       * True)]), u'accessed').
+       * [UnionField(u'accessed', Void, False, None), UnionField(u'modified',
+       * Void, False, None), UnionField(u'created', Void, False, None),
+       * UnionField(u'other', Void, True, None)]), u'accessed').
        */
       sort_by?: ListPaperDocsSortBy;
       /**
        * Defaults to TagRef(Union(u'ListPaperDocsSortOrder',
-       * [UnionField(u'ascending', Void, False), UnionField(u'descending', Void,
-       * False), UnionField(u'other', Void, True)]), u'ascending').
+       * [UnionField(u'ascending', Void, False, None), UnionField(u'descending',
+       * Void, False, None), UnionField(u'other', Void, True, None)]),
+       * u'ascending').
        */
       sort_order?: ListPaperDocsSortOrder;
       /**
@@ -3749,8 +3754,8 @@ declare module DropboxTypes {
       limit?: number;
       /**
        * Defaults to TagRef(Union(u'UserOnPaperDocFilter',
-       * [UnionField(u'visited', Void, False), UnionField(u'shared', Void,
-       * False), UnionField(u'other', Void, True)]), u'shared').
+       * [UnionField(u'visited', Void, False, None), UnionField(u'shared', Void,
+       * False, None), UnionField(u'other', Void, True, None)]), u'shared').
        */
       filter_by?: UserOnPaperDocFilter;
     }
@@ -4244,9 +4249,10 @@ declare module DropboxTypes {
       quiet?: boolean;
       /**
        * Defaults to TagRef(Union(u'AccessLevel', [UnionField(u'owner', Void,
-       * False), UnionField(u'editor', Void, False), UnionField(u'viewer', Void,
-       * False), UnionField(u'viewer_no_comment', Void, False),
-       * UnionField(u'other', Void, True)]), u'viewer').
+       * False, None), UnionField(u'editor', Void, False, None),
+       * UnionField(u'viewer', Void, False, None),
+       * UnionField(u'viewer_no_comment', Void, False, None),
+       * UnionField(u'other', Void, True, None)]), u'viewer').
        */
       access_level?: AccessLevel;
       /**
@@ -4409,9 +4415,10 @@ declare module DropboxTypes {
       member: MemberSelector;
       /**
        * Defaults to TagRef(Union(u'AccessLevel', [UnionField(u'owner', Void,
-       * False), UnionField(u'editor', Void, False), UnionField(u'viewer', Void,
-       * False), UnionField(u'viewer_no_comment', Void, False),
-       * UnionField(u'other', Void, True)]), u'viewer').
+       * False, None), UnionField(u'editor', Void, False, None),
+       * UnionField(u'viewer', Void, False, None),
+       * UnionField(u'viewer_no_comment', Void, False, None),
+       * UnionField(u'other', Void, True, None)]), u'viewer').
        */
       access_level?: AccessLevel;
     }
@@ -9346,9 +9353,9 @@ declare module DropboxTypes {
       send_welcome_email?: boolean;
       /**
        * Defaults to TagRef(Union(u'AdminTier', [UnionField(u'team_admin', Void,
-       * False), UnionField(u'user_management_admin', Void, False),
-       * UnionField(u'support_admin', Void, False), UnionField(u'member_only',
-       * Void, False)]), u'member_only').
+       * False, None), UnionField(u'user_management_admin', Void, False, None),
+       * UnionField(u'support_admin', Void, False, None),
+       * UnionField(u'member_only', Void, False, None)]), u'member_only').
        */
       role?: AdminTier;
     }
