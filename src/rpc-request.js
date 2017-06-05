@@ -1,77 +1,52 @@
-var request = require('superagent');
-var Promise = require('es6-promise').Promise;
-var getBaseURL = require('./get-base-url');
+import { getBaseURL } from './utils';
 
-// This doesn't match what was spec'd in paper doc yet
-var buildCustomError = function (error, response) {
-  var err;
-  if (response) {
-    try {
-      err = JSON.parse(response.text);
-    } catch (e) {
-      err = response.text;
-    }
+function parseBodyToType(res) {
+  const clone = res.clone();
+  return new Promise((resolve) => {
+    res.json()
+      .then(data => resolve(data))
+      .catch(() => clone.text().then(data => resolve(data)));
+  }).then(data => [res, data]);
+}
+
+export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
+  const options = {
+    method: 'POST',
+    body: (body) ? JSON.stringify(body) : null,
+  };
+
+  const headers = { 'Content-Type': 'application/json' };
+
+  switch (auth) {
+    case 'team':
+    case 'user':
+      headers.Authorization = `Bearer ${accessToken}`;
+      break;
+    case 'noauth':
+      break;
+    default:
+      throw new Error(`Unhandled auth type: ${auth}`);
   }
-  return {
-    status: error.status,
-    error: err || error,
-    response: response
-  };
-};
 
-var rpcRequest = function (path, body, auth, host, accessToken, selectUser) {
-  var promiseFunction = function (resolve, reject) {
-    var apiRequest;
+  if (selectUser) {
+    headers['Dropbox-API-Select-User'] = selectUser;
+  }
 
-    function success(data) {
-      if (resolve) {
-        resolve(data);
+  options.headers = headers;
+
+  return fetch(getBaseURL(host) + path, options)
+    .then(res => parseBodyToType(res))
+    .then(([res, data]) => {
+      // maintaining existing API for error codes not equal to 200 range
+      if (!res.ok) {
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          error: data,
+          response: res,
+          status: res.status,
+        };
       }
-    }
 
-    function failure(error) {
-      if (reject) {
-        reject(error);
-      }
-    }
-
-    function responseHandler(error, response) {
-      if (error) {
-        failure(buildCustomError(error, response));
-      } else {
-        success(response.body);
-      }
-    }
-
-    // The API expects null to be passed for endpoints that dont accept any
-    // parameters
-    if (!body) {
-      body = null;
-    }
-
-    apiRequest = request.post(getBaseURL(host) + path)
-      .type('application/json');
-
-    switch (auth) {
-      case 'team':
-      case 'user':
-        apiRequest.set('Authorization', 'Bearer ' + accessToken);
-        break;
-      case 'noauth':
-        break;
-      default:
-        throw new Error('Unhandled auth type: ' + auth);
-    }
-
-    if (selectUser) {
-      apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
-    }
-
-    apiRequest.send(body)
-      .end(responseHandler);
-  };
-
-  return new Promise(promiseFunction);
-};
-
-module.exports = rpcRequest;
+      return data;
+    });
+}

@@ -715,4 +715,4 @@ routes.teamTokenGetAuthenticatedAdmin = function (arg) {
   return this.request('team/token/get_authenticated_admin', arg, 'team', 'api', 'rpc');
 };
 
-module.exports = routes;
+export { routes };

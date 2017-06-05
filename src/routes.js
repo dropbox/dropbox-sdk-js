@@ -1602,4 +1602,4 @@ routes.usersGetSpaceUsage = function (arg) {
   return this.request('users/get_space_usage', arg, 'user', 'api', 'rpc');
 };
 
-module.exports = routes;
+export { routes };
