@@ -1,19 +1,13 @@
-var request = require('superagent');
-var Promise = require('es6-promise').Promise;
-var getBaseURL = require('./get-base-url');
-var httpHeaderSafeJson = require('./http-header-safe-json');
-
-var buildCustomError;
-var downloadRequest;
-var nodeBinaryParser;
+import superagent from 'superagent';
+import { getBaseURL, httpHeaderSafeJson } from './utils';
 
 // Register a handler that will instruct superagent how to parse the response
-request.parse['application/octect-stream'] = function (obj) {
+superagent.parse['application/octect-stream'] = function (obj) {
   return obj;
 };
 
 // This doesn't match what was spec'd in paper doc yet
-buildCustomError = function (error, response) {
+function buildCustomError(error, response) {
   return {
     status: error.status,
     error: (response ? response.text : null) || error.toString(),
@@ -21,7 +15,7 @@ buildCustomError = function (error, response) {
   };
 };
 
-nodeBinaryParser = function (res, done) {
+function nodeBinaryParser(res, done) {
   res.text = '';
   res.setEncoding('binary');
   res.on('data', function (chunk) { res.text += chunk; });
@@ -30,7 +24,7 @@ nodeBinaryParser = function (res, done) {
   });
 };
 
-downloadRequest = function (path, args, auth, host, accessToken, selectUser) {
+export function downloadRequest(path, args, auth, host, accessToken, selectUser) {
   if (auth !== 'user') {
     throw new Error('Unexpected auth type: ' + auth);
   }
@@ -67,7 +61,7 @@ downloadRequest = function (path, args, auth, host, accessToken, selectUser) {
       }
     }
 
-    apiRequest = request.post(getBaseURL(host) + path)
+    apiRequest = superagent.post(getBaseURL(host) + path)
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Dropbox-API-Arg', httpHeaderSafeJson(args))
       .on('request', function () {
@@ -93,5 +87,3 @@ downloadRequest = function (path, args, auth, host, accessToken, selectUser) {
 
   return new Promise(promiseFunction);
 };
-
-module.exports = downloadRequest;

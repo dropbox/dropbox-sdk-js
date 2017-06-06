@@ -1,8 +1,7 @@
-var REQUEST_CONSTANTS = require('./request-constants');
-var DropboxBase;
-
-// Polyfill Object.assign() for older browsers
-require('./object-assign-polyfill');
+import { UPLOAD, DOWNLOAD, RPC } from './constants';
+import { downloadRequest } from './download-request';
+import { uploadRequest } from './upload-request';
+import { rpcRequest } from './rpc-request';
 
 /**
  * @private
@@ -18,7 +17,7 @@ require('./object-assign-polyfill');
  * @arg {Number} [options.selectUser] - User is the team access token would like
  * to act as.
  */
-DropboxBase = function (options) {
+function DropboxBase(options) {
   options = options || {};
   this.accessToken = options.accessToken;
   this.clientId = options.clientId;
@@ -102,7 +101,7 @@ DropboxBase.prototype.getAuthenticationUrl = function (redirectUri, state) {
 /**
  * An authentication process that works with cordova applications.
  * @param {successCallback} successCallback
- * @param {errorCallback} errorCallback 
+ * @param {errorCallback} errorCallback
  */
 DropboxBase.prototype.authenticateWithCordova = function (successCallback, errorCallback)
 {
@@ -125,7 +124,7 @@ DropboxBase.prototype.authenticateWithCordova = function (successCallback, error
       // Try to avoid a browser crash on browser.close().
       window.setTimeout(function() { browser.close() }, 10);
       errorCallback();
-    } else { 
+    } else {
       var access_token_label = '#access_token=';
       var access_token_index = event.url.indexOf(access_token_label);
       var token_type_index = event.url.indexOf('&token_type=');
@@ -142,14 +141,14 @@ DropboxBase.prototype.authenticateWithCordova = function (successCallback, error
 
   var onExit = function(event) {
     if(removed) {
-      return 
+      return
     }
     browser.removeEventListener('loaderror', onLoadError);
     browser.removeEventListener('loadstop', onLoadStop);
     browser.removeEventListener('exit', onExit);
     removed = true
   };
-  
+
   browser.addEventListener('loaderror', onLoadError);
   browser.addEventListener('loadstop', onLoadStop);
   browser.addEventListener('exit', onExit)
@@ -158,13 +157,13 @@ DropboxBase.prototype.authenticateWithCordova = function (successCallback, error
 DropboxBase.prototype.request = function (path, args, auth, host, style) {
   var request = null;
   switch (style) {
-    case REQUEST_CONSTANTS.RPC:
+    case RPC:
       request = this.getRpcRequest();
       break;
-    case REQUEST_CONSTANTS.DOWNLOAD:
+    case DOWNLOAD:
       request = this.getDownloadRequest();
       break;
-    case REQUEST_CONSTANTS.UPLOAD:
+    case UPLOAD:
       request = this.getUploadRequest();
       break;
     default:
@@ -180,7 +179,7 @@ DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
 
 DropboxBase.prototype.getRpcRequest = function () {
   if (DropboxBase.prototype.rpcRequest === undefined) {
-    DropboxBase.prototype.rpcRequest = require('./rpc-request');
+    DropboxBase.prototype.rpcRequest = rpcRequest;
   }
 
   return DropboxBase.prototype.rpcRequest;
@@ -192,7 +191,7 @@ DropboxBase.prototype.setDownloadRequest = function (newDownloadRequest) {
 
 DropboxBase.prototype.getDownloadRequest = function () {
   if (DropboxBase.prototype.downloadRequest === undefined) {
-    DropboxBase.prototype.downloadRequest = require('./download-request');
+    DropboxBase.prototype.downloadRequest = downloadRequest;
   }
 
   return DropboxBase.prototype.downloadRequest;
@@ -204,10 +203,12 @@ DropboxBase.prototype.setUploadRequest = function (newUploadRequest) {
 
 DropboxBase.prototype.getUploadRequest = function () {
   if (DropboxBase.prototype.uploadRequest === undefined) {
-    DropboxBase.prototype.uploadRequest = require('./upload-request');
+    DropboxBase.prototype.uploadRequest = uploadRequest;
   }
 
   return DropboxBase.prototype.uploadRequest;
 };
 
-module.exports = DropboxBase;
+export {
+  DropboxBase
+}

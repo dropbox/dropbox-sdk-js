@@ -1,3 +1,7 @@
-var Dropbox = require('./dropbox');
+import { Dropbox } from './dropbox';
+import { DropboxTeam } from './team/dropbox-team';
 
-module.exports = Dropbox;
+export {
+  Dropbox,
+  DropboxTeam
+}

@@ -1,12 +1,7 @@
-/* eslint-env mocha */
-var Promise = require('es6-promise').Promise;
-var REQUEST_CONSTANTS = require('../src/request-constants');
-var chai = require('chai');
-var request = require('superagent');
-var rpcRequest = require('../src/rpc-request');
-var sinon = require('sinon');
-
-var assert = chai.assert;
+import sinon from 'sinon';
+import { assert } from 'chai';
+import superagent from 'superagent';
+import { rpcRequest } from '../src/rpc-request';
 
 describe('rpcRequest', function () {
   var stubRequest;
@@ -23,7 +18,7 @@ describe('rpcRequest', function () {
       set: function () {},
       type: function () {}
     };
-    postStub = sinon.stub(request, 'post').returns(stubRequest);
+    postStub = sinon.stub(superagent, 'post').returns(stubRequest);
     endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
     sendStub = sinon.stub(stubRequest, 'send').returns(stubRequest);
     setStub = sinon.stub(stubRequest, 'set').returns(stubRequest);
@@ -35,6 +30,8 @@ describe('rpcRequest', function () {
   });
 
   it('returns a promise', function () {
+    // this is in no way correct. It should validate errors thrown that exist but
+    // have no tests currently. 
     assert.instanceOf(
       rpcRequest(),
       Promise
