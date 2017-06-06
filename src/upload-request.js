@@ -1,10 +1,8 @@
-var request = require('superagent');
-var Promise = require('es6-promise').Promise;
-var getBaseURL = require('./get-base-url');
-var httpHeaderSafeJson = require('./http-header-safe-json');
+import superagent from 'superagent';
+import { getBaseURL, httpHeaderSafeJson } from './utils';
 
 // This doesn't match what was spec'd in paper doc yet
-var buildCustomError = function (error, response) {
+function buildCustomError(error, response) {
   return {
     status: error.status,
     error: (response ? response.text : null) || error.toString(),
@@ -12,7 +10,7 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var uploadRequest = function (path, args, auth, host, accessToken, selectUser) {
+export function uploadRequest(path, args, auth, host, accessToken, selectUser) {
   if (auth !== 'user') {
     throw new Error('Unexpected auth type: ' + auth);
   }
@@ -45,7 +43,7 @@ var uploadRequest = function (path, args, auth, host, accessToken, selectUser) {
       }
     }
 
-    apiRequest = request.post(getBaseURL(host) + path)
+    apiRequest = superagent.post(getBaseURL(host) + path)
       .type('application/octet-stream')
       .set('Authorization', 'Bearer ' + accessToken)
       .set('Dropbox-API-Arg', httpHeaderSafeJson(args));
@@ -61,5 +59,3 @@ var uploadRequest = function (path, args, auth, host, accessToken, selectUser) {
 
   return new Promise(promiseFunction);
 };
-
-module.exports = uploadRequest;

@@ -2,7 +2,10 @@
   "name": "dropbox",
   "version": "2.5.4",
   "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
-  "main": "src/index.js",
+  "browser": "dist/dropbox.js",
+  "main": "lib/index.js",
+  "module": "es/index.es6.js",
+  "jsnext:main": "es/index.es6.js",
   "typings": "src/index",
   "files": [
     "*.md",
@@ -12,16 +15,22 @@
     "src"
   ],
   "scripts": {
-    "build": "npm run build-cjs && npm run build-umd && npm run generate-tsds && npm run compressed-size",
-    "build-cjs": "webpack",
-    "build-umd": "webpack -p --config webpack-umd.config.js",
     "compressed-size": "echo 'Dropbox-sdk.min.js gzipped will weigh' $(cat dist/Dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
     "publish-docs": "rm -rf generated-docs && npm run generate-docs && gh-pages -d generated-docs",
     "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -R docs/README.md -r ./src",
     "lint": "eslint src --ignore-path src/types.js",
     "start": "node examples/javascript/server.js",
-    "test": "npm run lint && mocha 'test/*.js'",
-    "generate-tsds": "node generator/typescript/typescript-copy.js dist"
+    "generate-tsds": "node generator/typescript/typescript-copy.js dist",
+    "test": "cross-env BABEL_ENV=commonjs mocha --require babel-polyfill --compilers js:babel-register 'test/*.js'",
+    "clean": "rimraf dist/ es/ lib/",
+    "build": "npm run build:cjs && npm run build:es && npm run build:umd && npm run build:umd:min",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
+    "build:cjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:umd": "cross-env BABEL_ENV=es NODE_ENV=development rollup -c -i src/index.js -o dist/dropbox.js",
+    "build:umd:min": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c -i src/index.js -o dist/dropbox.min.js",
+    "size": "npm run size:umd && npm run size:umd:min",
+    "size:umd": "echo 'dropbox.js gzipped will weigh' $(cat dist/dropbox.js | gzip -9 | wc -c | pretty-bytes)",
+    "size:umd:min": "echo 'dropbox.min.js gzipped will weigh' $(cat dist/dropbox.min.js | gzip -9 | wc -c | pretty-bytes)"
   },
   "keywords": [
     "dropbox",
@@ -34,7 +43,13 @@
   "bugs": "https://github.com/dropbox/dropbox-sdk-js/issues",
   "author": "Riley Tomasek",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-register": "^6.24.1",
     "chai": "^3.5.0",
+    "cross-env": "^5.0.0",
+    "es6-promise": "^3.1.2",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
     "express": "^4.13.4",
@@ -45,12 +60,17 @@
     "mocha": "^2.4.5",
     "pretty-bytes": "^2.0.1",
     "prompt": "^1.0.0",
-    "sinon": "^1.17.3",
-    "webpack": "^1.13.0",
-    "webpack-dev-middleware": "^1.6.1"
+    "rollup": "^0.42.0",
+    "rollup-plugin-babel": "^2.7.1",
+    "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-ignore": "^1.0.3",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-uglify": "^2.0.1",
+    "sinon": "^1.17.3"
   },
   "dependencies": {
-    "es6-promise": "^3.1.2",
     "superagent": "^1.8.3"
   }
 }

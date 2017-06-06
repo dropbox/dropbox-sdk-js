@@ -1,9 +1,8 @@
-var request = require('superagent');
-var Promise = require('es6-promise').Promise;
-var getBaseURL = require('./get-base-url');
+import superagent from 'superagent';
+import { getBaseURL } from './utils';
 
 // This doesn't match what was spec'd in paper doc yet
-var buildCustomError = function (error, response) {
+function buildCustomError(error, response) {
   var err;
   if (response) {
     try {
@@ -19,7 +18,7 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var rpcRequest = function (path, body, auth, host, accessToken, selectUser) {
+export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
 
@@ -49,7 +48,7 @@ var rpcRequest = function (path, body, auth, host, accessToken, selectUser) {
       body = null;
     }
 
-    apiRequest = request.post(getBaseURL(host) + path)
+    apiRequest = superagent.post(getBaseURL(host) + path)
       .type('application/json');
 
     switch (auth) {
@@ -73,5 +72,3 @@ var rpcRequest = function (path, body, auth, host, accessToken, selectUser) {
 
   return new Promise(promiseFunction);
 };
-
-module.exports = rpcRequest;

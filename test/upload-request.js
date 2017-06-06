@@ -1,11 +1,7 @@
-/* eslint-env mocha */
-var Promise = require('es6-promise').Promise;
-var chai = require('chai');
-var request = require('superagent');
-var uploadRequest = require('../src/upload-request');
-var sinon = require('sinon');
-
-var assert = chai.assert;
+import sinon from 'sinon';
+import { assert } from 'chai';
+import superagent from 'superagent';
+import { uploadRequest } from '../src/upload-request';
 
 describe('uploadRequest', function () {
   var stubRequest;
@@ -22,7 +18,7 @@ describe('uploadRequest', function () {
       set: function () {},
       type: function () {}
     };
-    postStub = sinon.stub(request, 'post').returns(stubRequest);
+    postStub = sinon.stub(superagent, 'post').returns(stubRequest);
     endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
     setStub = sinon.stub(stubRequest, 'set').returns(stubRequest);
     typeStub = sinon.stub(stubRequest, 'type').returns(stubRequest);

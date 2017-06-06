@@ -1,7 +1,6 @@
-var Dropbox = require('../dropbox');
-var DropboxBase = require('../dropbox-base');
-var teamRoutes = require('../routes-team');
-var DropboxTeam;
+import { Dropbox } from '../dropbox';
+import { DropboxBase } from '../dropbox-base';
+import * as teamRoutes from '../routes-team';
 
 /**
  * @class DropboxTeam
@@ -13,7 +12,7 @@ var DropboxTeam;
  * @arg {String} [options.clientId] - The client id for your app. Used to create
  * authentication URL.
  */
-DropboxTeam = function (options) {
+function DropboxTeam(options) {
   DropboxBase.call(this, options);
 };
 
@@ -39,4 +38,6 @@ DropboxTeam.prototype.actAsUser = function (userId) {
 // Add the team endpoint methods to the prototype
 DropboxTeam.prototype = Object.assign(DropboxTeam.prototype, teamRoutes);
 
-module.exports = DropboxTeam;
+export {
+  DropboxTeam
+}

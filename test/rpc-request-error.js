@@ -1,10 +1,8 @@
-/* eslint-env mocha */
-var chai = require('chai');
-var request = require('superagent');
-var rpcRequest = require('../src/rpc-request');
-var sinon = require('sinon');
+import sinon from 'sinon';
+import { assert } from 'chai';
+import superagent from 'superagent';
+import { rpcRequest } from '../src/rpc-request';
 
-var assert = chai.assert;
 
 var exampleErr = {
   error_summary: 'other/...',
@@ -33,7 +31,7 @@ describe('rpcRequest error', function () {
       set: function () {},
       type: function () {}
     };
-    postStub = sinon.stub(request, 'post').returns(stubRequest);
+    postStub = sinon.stub(superagent, 'post').returns(stubRequest);
     sinon.stub(stubRequest, 'send').returns(stubRequest);
     sinon.stub(stubRequest, 'set').returns(stubRequest);
     sinon.stub(stubRequest, 'type').returns(stubRequest);
@@ -63,7 +61,7 @@ describe('rpcRequest error', function () {
       set: function () {},
       type: function () {}
     };
-    postStub = sinon.stub(request, 'post').returns(stubRequest);
+    postStub = sinon.stub(superagent, 'post').returns(stubRequest);
     sinon.stub(stubRequest, 'send').returns(stubRequest);
     sinon.stub(stubRequest, 'set').returns(stubRequest);
     sinon.stub(stubRequest, 'type').returns(stubRequest);

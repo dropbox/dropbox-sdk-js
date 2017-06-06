@@ -1,11 +1,7 @@
-/* eslint-env mocha */
-var Promise = require('es6-promise').Promise;
-var chai = require('chai');
-var request = require('superagent');
-var downloadRequest = require('../src/download-request');
-var sinon = require('sinon');
-
-var assert = chai.assert;
+import sinon from 'sinon';
+import { assert } from 'chai';
+import superagent from 'superagent';
+import { downloadRequest } from '../src/download-request';
 
 describe('downloadRequest', function () {
   var stubRequest;
@@ -26,7 +22,7 @@ describe('downloadRequest', function () {
       buffer: function () {},
       parse: function () {}
     };
-    postStub = sinon.stub(request, 'post').returns(stubRequest);
+    postStub = sinon.stub(superagent, 'post').returns(stubRequest);
     endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
     onStub = sinon.stub(stubRequest, 'on').returns(stubRequest);
     setStub = sinon.stub(stubRequest, 'set').returns(stubRequest);
