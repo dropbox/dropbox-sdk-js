@@ -55,6 +55,7 @@
     "eslint-config-airbnb": "^6.2.0",
     "express": "^4.13.4",
     "express-urlrewrite": "^1.2.0",
+    "fetch-mock": "^5.11.0",
     "gh-pages": "^0.11.0",
     "ink-docstrap": "^1.2.1",
     "jsdoc": "^3.4.0",
@@ -69,9 +70,11 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^2.0.1",
-    "sinon": "^1.17.3"
+    "sinon": "^1.17.3",
+    "whatwg-fetch": "^2.0.3"
   },
   "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
     "superagent": "^1.8.3"
   }
 }
