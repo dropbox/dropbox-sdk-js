@@ -1,5 +1,11 @@
 {
-  "presets": [["es2015", { "modules": false }]],
+  "presets": [
+    ["latest", {
+      "es2015": {
+        "modules": false
+      }
+    }]
+  ],
   "env": {
     "commonjs": {
       "plugins": [
