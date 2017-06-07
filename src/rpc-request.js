@@ -18,7 +18,23 @@ function buildCustomError(error, response) {
   };
 };
 
+function parseBodyToType(res) {
+  let data;
+  let clone = res.clone();
+
+  return new Promise((resolve) => {
+    res.json()
+      .then((data) => resolve(data))
+      .catch(() => { clone.text().then((data) => resolve(data)) });
+  })
+}
+
 export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
+
+  let options = {
+    method: 'POST',
+    body: (body) ? JSON.stringify(body) : null
+  };
 
   let headers = { 'Content-Type': 'application/json' };
 
@@ -37,26 +53,10 @@ export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
     headers['Dropbox-API-Select-User'] = selectUser;
   }
 
-  return fetch(
-    getBaseURL(host) + path,
-    {
-      headers,
-      method: 'POST',
-      body: (body) ? JSON.stringify(body) : null
-    }
-  )
-    .then(async function(res) {
-      let data;
-      let clone = res.clone(); // stops err on reading body twice in text recovery
+  options.headers = headers;
 
-      try {
-        data = await res.json();
-      } catch (err) {
-        data = await clone.text();
-      }
-
-      return [res, data];
-    })
+  return fetch(getBaseURL(host) + path, options)
+    .then((res) => parseBodyToType(res).then((data) => [res, data]))
     .then(([res, data]) => {
       // maintaining existing API - sorry!
       if (!res.ok) {
