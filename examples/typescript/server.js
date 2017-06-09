@@ -4,7 +4,7 @@ const rewrite = require('express-urlrewrite');
 const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
-const webpackConfig = require('../../webpack-umd.config');
+const webpackConfig = require('../webpack-umd.config');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const app = express();
 // Adds built dropbox-api to __build__

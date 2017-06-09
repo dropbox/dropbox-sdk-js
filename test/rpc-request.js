@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import sinon from 'sinon';
 import { assert } from 'chai';
 import fetchMock from 'fetch-mock';
@@ -6,11 +7,21 @@ import { rpcRequest } from '../src/rpc-request';
 describe('rpcRequest', function () {
 
   beforeEach(function () {
-    fetchMock.post('*', { "hello": "world" });
+    fetchMock.mock('*', new Response(
+      '{"test": "test"}',
+      {
+        status : 200 ,
+        statusText : "OK",
+        headers: {
+          'Content-Type': 'application/json',
+          'dropbox-api-result': '{"test":"json"}'
+        }
+      }
+    ));
   });
 
   afterEach(function () {
-    fetchMock.reset();
+    fetchMock.restore();
   });
 
   it('returns an error when no auth given', function () {
@@ -33,7 +44,7 @@ describe('rpcRequest', function () {
         assert.equal(fetchMock.calls().matched.length, 1);
         assert.equal(fetchMock.lastUrl(), 'https://api.dropboxapi.com/2/files/list');
         done();
-      });
+      }, done);
   });
 
   it('sets the request type to application/json', function (done) {

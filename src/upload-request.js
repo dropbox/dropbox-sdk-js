@@ -1,4 +1,3 @@
-import superagent from 'superagent';
 import { getBaseURL, httpHeaderSafeJson } from './utils';
 
 // This doesn't match what was spec'd in paper doc yet
@@ -10,52 +9,52 @@ function buildCustomError(error, response) {
   };
 };
 
+function parseBodyToType(res) {
+  let data;
+  let clone = res.clone();
+
+  return new Promise((resolve) => {
+    res.json()
+      .then((data) => resolve(data))
+      .catch(() => { clone.text().then((data) => resolve(data)) });
+  }).then((data) => [res, data])
+}
+
 export function uploadRequest(path, args, auth, host, accessToken, selectUser) {
+
   if (auth !== 'user') {
     throw new Error('Unexpected auth type: ' + auth);
   }
 
-  var promiseFunction = function (resolve, reject) {
-    var apiRequest;
+  var { contents } = args;
+  delete args.contents;
 
-    // Since args.contents is sent as the body of the request and not added to
-    // the url, it needs to be remove it from args.
-    var contents = args.contents;
-    delete args.contents;
-
-    function success(data) {
-      if (resolve) {
-        resolve(data);
-      }
+  let options = {
+    body: contents,
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/octet-stream',
+      'Authorization': `Bearer ${accessToken}`,
+      'Dropbox-API-Arg': httpHeaderSafeJson(args)
     }
-
-    function failure(error) {
-      if (reject) {
-        reject(error);
-      }
-    }
-
-    function responseHandler(error, response) {
-      if (error) {
-        failure(buildCustomError(error, response));
-      } else {
-        success(response.body);
-      }
-    }
-
-    apiRequest = superagent.post(getBaseURL(host) + path)
-      .type('application/octet-stream')
-      .set('Authorization', 'Bearer ' + accessToken)
-      .set('Dropbox-API-Arg', httpHeaderSafeJson(args));
-
-    if (selectUser) {
-      apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
-    }
-
-    apiRequest
-      .send(contents)
-      .end(responseHandler);
   };
 
-  return new Promise(promiseFunction);
+  if (selectUser) {
+    options.headers['Dropbox-API-Select-User'] = selectUser;
+  }
+
+  return fetch(getBaseURL(host) + path, options)
+    .then((res) => parseBodyToType(res))
+    .then(([res, data]) => {
+      // maintaining existing API for error codes not equal to 200 range
+      if (!res.ok) {
+        throw {
+          error: data,
+          response: res,
+          status: res.status,
+        };
+      }
+
+      return data;
+    });
 };

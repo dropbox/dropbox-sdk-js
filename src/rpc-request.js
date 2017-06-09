@@ -1,4 +1,3 @@
-import 'isomorphic-fetch';
 import { getBaseURL } from './utils';
 
 // This doesn't match what was spec'd in paper doc yet
@@ -26,7 +25,7 @@ function parseBodyToType(res) {
     res.json()
       .then((data) => resolve(data))
       .catch(() => { clone.text().then((data) => resolve(data)) });
-  })
+  }).then((data) => [res, data])
 }
 
 export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
@@ -56,9 +55,9 @@ export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
   options.headers = headers;
 
   return fetch(getBaseURL(host) + path, options)
-    .then((res) => parseBodyToType(res).then((data) => [res, data]))
+    .then((res) => parseBodyToType(res))
     .then(([res, data]) => {
-      // maintaining existing API - sorry!
+      // maintaining existing API for error codes not equal to 200 range
       if (!res.ok) {
         throw {
           error: data,
@@ -67,6 +66,6 @@ export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
         };
       }
 
-      return res;
+      return data;
     });
 };

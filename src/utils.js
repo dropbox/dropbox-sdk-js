@@ -1,3 +1,14 @@
+const isWorker = (
+  typeof WorkerGlobalScope !== 'undefined' &&
+  self instanceof WorkerGlobalScope
+);
+
+const isWindow = (typeof window !== 'undefined');
+
+export function isWindowOrWorker() {
+  return (isWorker || isWindow);
+}
+
 export function getBaseURL(host) {
   return 'https://' + host + '.dropboxapi.com/2/';
 }

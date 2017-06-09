@@ -1,51 +1,47 @@
-import { readFileSync } from 'fs';
-import json from 'rollup-plugin-json';
+import babel from 'rollup-plugin-babel';
+import uglify from 'rollup-plugin-uglify';
+import replace from 'rollup-plugin-replace';
 import commonjs from 'rollup-plugin-commonjs';
 import nodeResolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
-import replace from 'rollup-plugin-replace';
-import uglify from 'rollup-plugin-uglify';
 
 const env = process.env.NODE_ENV;
-const babelEnv = process.env.BABEL_ENV;
-
-const pkg = JSON.parse(readFileSync('./package.json', 'utf8'))
 
 var config = {
   format: 'umd',
-  external: Object.keys(pkg.dependencies),
-  moduleName: 'Dropbox',
+  sourceMap: (env !== 'production'),
   plugins: [
     nodeResolve({
       jsnext: true
     }),
     babel({
-      exclude: 'node_modules/**'
+      babelrc: false,
+      exclude: 'node_modules/**',
+      plugins: ["external-helpers"],
+      presets: [
+        ["latest", {
+          "es2015": {
+            "modules": false
+          },
+          "es2016": false,
+          "es2017": false
+        }]
+      ],
+      env: {
+        "commonjs": {
+          "plugins": [
+            ["transform-es2015-modules-commonjs", { "loose": true }]
+          ]
+        }
+      }
     }),
     replace({
       'process.env.NODE_ENV': JSON.stringify(env)
     }),
     commonjs({
-      namedExports: {
-        // exclude: [ 'node_modules/**' ],
-        // left-hand side can be an absolute path, a path
-        // relative to the current directory, or the name
-        // of a module in node_modules
-        'superagent': [ 'superagent' ]
-      }
-    }),
-    json({
-      // for tree-shaking, properties will be declared as
-      // variables, using either `var` or `const`
-      preferConst: true, // Default: false
+      // if false then skip sourceMap generation for CommonJS modules
+      sourceMap: (env !== 'production')  // Default: true
     })
   ]
-}
-
-if (env === 'es') {
-  config.plugins.push(
-    ignore(['formidable'])
-  );
 }
 
 if (env === 'production') {
