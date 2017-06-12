@@ -1,7 +1,7 @@
 import { Dropbox } from './dropbox';
-import { DropboxTeam } from './dropbox/team/dropbox-team';
+import { DropboxTeam } from './team/dropbox-team';
 
 export default {
   Dropbox,
-  DropboxTeam
+  DropboxTeam,
 };

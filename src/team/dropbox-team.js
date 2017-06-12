@@ -13,7 +13,7 @@ import teamRoutes from '../routes-team';
  * authentication URL.
  */
 export class DropboxTeam extends DropboxBase {
-  
+
   constructor(options) {
     super(options);
     Object.assign(this, teamRoutes);
@@ -30,7 +30,7 @@ export class DropboxTeam extends DropboxBase {
     return new Dropbox({
       accessToken: this.accessToken,
       clientId: this.clientId,
-      selectUser: userId
+      selectUser: userId,
     });
   }
 }

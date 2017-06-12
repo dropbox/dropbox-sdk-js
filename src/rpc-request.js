@@ -1,51 +1,31 @@
 import { getBaseURL } from './utils';
 
-// This doesn't match what was spec'd in paper doc yet
-function buildCustomError(error, response) {
-  var err;
-  if (response) {
-    try {
-      err = JSON.parse(response.text);
-    } catch (e) {
-      err = response.text;
-    }
-  }
-  return {
-    status: error.status,
-    error: err || error,
-    response: response
-  };
-};
-
 function parseBodyToType(res) {
-  let data;
-  let clone = res.clone();
-
+  const clone = res.clone();
   return new Promise((resolve) => {
     res.json()
-      .then((data) => resolve(data))
-      .catch(() => { clone.text().then((data) => resolve(data)) });
-  }).then((data) => [res, data])
+      .then(data => resolve(data))
+      .catch(() => clone.text().then(data => resolve(data)));
+  }).then(data => [res, data]);
 }
 
 export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
-
-  let options = {
+  const options = {
     method: 'POST',
-    body: (body) ? JSON.stringify(body) : null
+    body: (body) ? JSON.stringify(body) : null,
   };
 
-  let headers = { 'Content-Type': 'application/json' };
+  const headers = { 'Content-Type': 'application/json' };
 
   switch (auth) {
     case 'team':
     case 'user':
-      headers.Authorization = 'Bearer ' + accessToken;
+      headers.Authorization = `Bearer ${accessToken}`;
       break;
     case 'noauth':
       break;
     default:
-      throw new Error('Unhandled auth type: ' + auth);
+      throw new Error(`Unhandled auth type: ${auth}`);
   }
 
   if (selectUser) {
@@ -55,10 +35,11 @@ export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
   options.headers = headers;
 
   return fetch(getBaseURL(host) + path, options)
-    .then((res) => parseBodyToType(res))
+    .then(res => parseBodyToType(res))
     .then(([res, data]) => {
       // maintaining existing API for error codes not equal to 200 range
       if (!res.ok) {
+        // eslint-disable-next-line no-throw-literal
         throw {
           error: data,
           response: res,
@@ -68,4 +49,4 @@ export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
 
       return data;
     });
-};
+}

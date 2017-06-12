@@ -38,7 +38,7 @@ export class DropboxBase {
    * Get the access token
    * @returns {String} Access token
    */
-  getAccessToken(accessToken) {
+  getAccessToken() {
     return this.accessToken;
   }
 
@@ -55,7 +55,7 @@ export class DropboxBase {
    * Get the client id
    * @returns {String} Client id
    */
-  getClientId(clientId) {
+  getClientId() {
     return this.clientId;
   }
 
@@ -68,9 +68,9 @@ export class DropboxBase {
    * @returns {String} Url to send user to for Dropbox API authentication
    */
   getAuthenticationUrl(redirectUri, state) {
-    var AUTH_BASE_URL = 'https://www.dropbox.com/oauth2/authorize';
-    var clientId = this.getClientId();
-    var authUrl;
+    const clientId = this.getClientId();
+    const baseUrl = 'https://www.dropbox.com/oauth2/authorize';
+
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
     }
@@ -78,12 +78,13 @@ export class DropboxBase {
       throw new Error('A redirect uri is required.');
     }
 
-    authUrl = AUTH_BASE_URL + '?response_type=token&client_id=' + clientId;
+    let authUrl = `${baseUrl}?response_type=token&client_id=${clientId}`;
+
     if (redirectUri) {
-      authUrl = authUrl + '&redirect_uri=' + redirectUri;
+      authUrl += `&redirect_uri=${redirectUri}`;
     }
     if (state) {
-      authUrl = authUrl + '&state=' + state;
+      authUrl += `&state=${state}`;
     }
     return authUrl;
   }
@@ -106,57 +107,58 @@ export class DropboxBase {
   * @param {errorCallback} errorCallback
   */
   authenticateWithCordova(successCallback, errorCallback) {
-    var redirect_url = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
-    var url = this.getAuthenticationUrl(redirect_url);
-    var browser = window.open(url, '_blank');
-    var removed = false;
+    const redirectUrl = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
+    const url = this.getAuthenticationUrl(redirectUrl);
 
-    var onLoadError = function(event) {
+    let removed = false;
+    const browser = window.open(url, '_blank');
+
+    function onLoadError() {
       // Try to avoid a browser crash on browser.close().
-      window.setTimeout(function() { browser.close() }, 10);
+      window.setTimeout(() => { browser.close(); }, 10);
       errorCallback();
     }
 
-    var onLoadStop = function(event) {
-      var error_label = '&error=';
-      var error_index = event.url.indexOf(error_label);
+    function onLoadStop(event) {
+      const errorLabel = '&error=';
+      const errorIndex = event.url.indexOf(errorLabel);
 
-      if (error_index > -1) {
+      if (errorIndex > -1) {
         // Try to avoid a browser crash on browser.close().
-        window.setTimeout(function() { browser.close() }, 10);
+        window.setTimeout(() => { browser.close(); }, 10);
         errorCallback();
       } else {
-        var access_token_label = '#access_token=';
-        var access_token_index = event.url.indexOf(access_token_label);
-        var token_type_index = event.url.indexOf('&token_type=');
-        if (access_token_index > -1) {
-          access_token_index += access_token_label.length;
+        const tokenLabel = '#access_token=';
+        let tokenIndex = event.url.indexOf(tokenLabel);
+        const tokenTypeIndex = event.url.indexOf('&token_type=');
+        if (tokenIndex > -1) {
+          tokenIndex += tokenLabel.length;
           // Try to avoid a browser crash on browser.close().
-          window.setTimeout(function() { browser.close() }, 10);
+          window.setTimeout(() => { browser.close(); }, 10);
 
-          var access_token = event.url.substring(access_token_index, token_type_index);
-          successCallback(access_token);
+          const accessToken = event.url.substring(tokenIndex, tokenTypeIndex);
+          successCallback(accessToken);
         }
       }
-    };
+    }
 
-    var onExit = function(event) {
-      if(removed) {
-        return
+    function onExit() {
+      if (removed) {
+        return;
       }
       browser.removeEventListener('loaderror', onLoadError);
       browser.removeEventListener('loadstop', onLoadStop);
       browser.removeEventListener('exit', onExit);
-      removed = true
-    };
+      removed = true;
+    }
 
     browser.addEventListener('loaderror', onLoadError);
     browser.addEventListener('loadstop', onLoadStop);
-    browser.addEventListener('exit', onExit)
+    browser.addEventListener('exit', onExit);
   }
 
   request(path, args, auth, host, style) {
-    var request = null;
+    let request = null;
     switch (style) {
       case RPC:
         request = this.getRpcRequest();
@@ -168,7 +170,7 @@ export class DropboxBase {
         request = this.getUploadRequest();
         break;
       default:
-        throw new Error('Invalid request style: ' + style);
+        throw new Error(`Invalid request style: ${style}`);
     }
 
     return request(path, args, auth, host, this.getAccessToken(), this.selectUser);

@@ -1,7 +1,6 @@
 import { getBaseURL, httpHeaderSafeJson, isWindowOrWorker } from './utils';
 
 function getDataFromConsumer(res) {
-
   if (!res.ok) {
     return res.text();
   }
@@ -10,8 +9,8 @@ function getDataFromConsumer(res) {
 }
 
 function responseHandler(res, data) {
-
   if (!res.ok) {
+    // eslint-disable-next-line no-throw-literal
     throw {
       error: data,
       response: res,
@@ -19,7 +18,7 @@ function responseHandler(res, data) {
     };
   }
 
-  let result = JSON.parse(res.headers.get('dropbox-api-result'));
+  const result = JSON.parse(res.headers.get('dropbox-api-result'));
 
   if (isWindowOrWorker()) {
     result.fileBlob = data;
@@ -31,17 +30,16 @@ function responseHandler(res, data) {
 }
 
 export function downloadRequest(path, args, auth, host, accessToken, selectUser) {
-
   if (auth !== 'user') {
-    throw new Error('Unexpected auth type: ' + auth);
+    throw new Error(`Unexpected auth type: ${auth}`);
   }
 
-  let options = {
+  const options = {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
-      'Dropbox-API-Arg': httpHeaderSafeJson(args)
-    }
+      Authorization: `Bearer ${accessToken}`,
+      'Dropbox-API-Arg': httpHeaderSafeJson(args),
+    },
   };
 
   if (selectUser) {
@@ -49,6 +47,6 @@ export function downloadRequest(path, args, auth, host, accessToken, selectUser)
   }
 
   return fetch(getBaseURL(host) + path, options)
-    .then((res) => getDataFromConsumer(res).then((data) => [res, data]))
+    .then(res => getDataFromConsumer(res).then(data => [res, data]))
     .then(([res, data]) => responseHandler(res, data));
-};
+}
