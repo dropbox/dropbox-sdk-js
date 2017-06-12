@@ -1,6 +1,7 @@
 {
   "name": "dropbox",
   "version": "2.5.4",
+  "registry": "npm",
   "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
   "browser": "dist/Dropbox-sdk.min.js",
   "main": "lib/index.js",
@@ -20,7 +21,7 @@
     "publish-docs": "rm -rf generated-docs && npm run generate-docs && gh-pages -d generated-docs",
     "start": "node examples/javascript/server.js",
     "generate-tsds": "node generator/typescript/typescript-copy.js dist",
-    "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -R docs/README.md -r ./src",
+    "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -u docs/tutorials -R docs/README.md -r ./src",
     "clean": "rimraf dist/ es/ lib/",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint src --ignore-path src/types.js",
