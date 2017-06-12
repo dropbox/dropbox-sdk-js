@@ -1,12 +1,12 @@
-const isWorker = (
-  typeof WorkerGlobalScope !== 'undefined' &&
-  self instanceof WorkerGlobalScope
-);
-
-const isWindow = (typeof window !== 'undefined');
-
 export function isWindowOrWorker() {
-  return (isWorker || isWindow);
+  return (
+    (
+      typeof WorkerGlobalScope !== 'undefined' &&
+      self instanceof WorkerGlobalScope
+    ) || (
+      typeof module === 'undefined'
+    )
+  );
 }
 
 export function getBaseURL(host) {

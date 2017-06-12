@@ -1,4 +1,3 @@
-import sinon from 'sinon';
 import { assert } from 'chai';
 import fetchMock from 'fetch-mock';
 import { uploadRequest } from '../src/upload-request';
