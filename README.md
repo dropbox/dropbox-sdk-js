@@ -1,31 +1,23 @@
-# Dropbox JavaScript SDK [![Build Status](https://travis-ci.org/dropbox/dropbox-sdk-js.svg?branch=master)](https://travis-ci.org/dropbox/dropbox-sdk-js) [![npm version](https://badge.fury.io/js/dropbox.svg)](https://badge.fury.io/js/dropbox)
-
-The Dropbox JavaScript SDK is a lightweight, promise based interface to
-the Dropbox v2 API that works in both nodejs and browser environments.
-
-## Table of Contents
-
-- [Documentation](#documentation)
-- [Quickstart](#quickstart)
-- [Examples](#examples)
-- [Versioning](#versioning)
-- [Contributing](#contributing)
+# Dropbox JavaScript SDK
+[![Build Status](https://travis-ci.org/dropbox/dropbox-sdk-js.svg?branch=master)](https://travis-ci.org/dropbox/dropbox-sdk-js) [![npm version](https://badge.fury.io/js/dropbox.svg)](https://badge.fury.io/js/dropbox)
+The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments. It provides common services for making API requests and helper utilities contributed by the community.  
 
 ## Documentation
+Please view our full JavaScript SDK documentation at <http://dropbox.github.io/dropbox-sdk-js>.
 
-The full documentation can be found here:
-<http://dropbox.github.io/dropbox-sdk-js>
+## Prerequisites
+This library depends on the Promise and Fetch globals which require a polyfill ([whatwg-fetch](https://www.npmjs.com/package/whatwg-fetch), [es6-promise](https://www.npmjs.com/package/es6-promise)) for unsupported browsers and a small wrapper around request within Node.js applications ([node-fetch](https://www.npmjs.com/package/node-fetch)). For universal applications we advise using the [isormophic-fetch](https://www.npmjs.com/package/isomorphic-fetch) library which supports fetch within both environments.
 
 ## Quickstart
+For a quick overview the below example will install the package and use it as a CommonJS module. For more alternative loading options please view our [Getting started](http://dropbox.github.io/dropbox-sdk-js/tutorial-Getting%20started.html) tutorial.
 
-Install the SDK using npm:
+Install the SDK with npm
 ```console
 $ npm install --save dropbox
 ```
 
-Use with a module bundler like
-[webpack](https://github.com/webpack/webpack) or
-[browserify](http://browserify.org/):
+Include the Dropbox or DropboxTeam class to start making your API calls.
+
 ```javascript
 var Dropbox = require('dropbox');
 var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
@@ -39,12 +31,14 @@ dbx.filesListFolder({path: ''})
 ```
 
 ## Examples
-
 See [examples/](examples/) for working examples of how the SDK can be used
 in a few different environments.
 
-## Versioning
+## Contributing
+Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for information on how to
+contribute, setup the development environment and run tests.
 
+## Versioning
 We will try to follow [semver](http://semver.org/) as close as possible.
 That means bug fixes will be patch releases (1.0.1 -> 1.0.2), additional
 functionality like new endpoints will be minor releases (1.0.1 -> 1.1.0)
@@ -56,8 +50,3 @@ This SDK will be taking the `dropbox` package name on
 SDK](https://github.com/dropbox/dropbox-js), that uses the old version of
 the Dropbox API. This will bump the version number from `0.10.3` to
 `2.0.0`, which should avoid breaking changes due to semver assumptions.
-
-## Contributing
-
-Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for information on how to
-contribute, setup the development environment and run tests.
