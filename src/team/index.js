@@ -1,3 +1,1 @@
-import { DropboxTeam } from './dropbox-team';
-
-export default DropboxTeam;
+module.exports = require('./dropbox-team').DropboxTeam;

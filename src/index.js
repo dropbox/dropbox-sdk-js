@@ -1,3 +1,1 @@
-import { Dropbox } from './dropbox';
-
-export default Dropbox;
+module.exports = require('./dropbox').Dropbox;
