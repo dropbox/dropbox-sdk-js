@@ -1,10 +1,8 @@
-/* eslint-env mocha */
-var Dropbox = require('../src/dropbox');
-var REQUEST_CONSTANTS = require('../src/request-constants');
-var chai = require('chai');
-var sinon = require('sinon');
+import sinon from 'sinon';
+import { assert } from 'chai';
 
-var assert = chai.assert;
+import { RPC } from '../src/constants';
+import { Dropbox } from '../src/dropbox';
 
 describe('Dropbox', function () {
   var dbx;
@@ -19,7 +17,7 @@ describe('Dropbox', function () {
       assert.deepEqual({}, dbx.request.getCall(0).args[1]);
       assert.equal('user', dbx.request.getCall(0).args[2]);
       assert.equal('api', dbx.request.getCall(0).args[3]);
-      assert.equal(REQUEST_CONSTANTS.RPC, dbx.request.getCall(0).args[4]);
+      assert.equal(RPC, dbx.request.getCall(0).args[4]);
     });
   });
 });
