@@ -50,6 +50,7 @@ routes.filesAlphaUpload = function (arg) {
  * Copy a file or folder to a different location in the user's Dropbox. If the
  * source path is a folder all its contents will be copied.
  * @function Dropbox#filesCopy
+ * @deprecated
  * @arg {FilesRelocationArg} arg - The request parameters.
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesRelocationError>>}
  */
@@ -107,13 +108,35 @@ routes.filesCopyReferenceSave = function (arg) {
 };
 
 /**
+ * Copy a file or folder to a different location in the user's Dropbox. If the
+ * source path is a folder all its contents will be copied.
+ * @function Dropbox#filesCopyV2
+ * @arg {FilesRelocationArg} arg - The request parameters.
+ * @returns {Promise.<FilesRelocationResult, Error.<FilesRelocationError>>}
+ */
+routes.filesCopyV2 = function (arg) {
+  return this.request('files/copy_v2', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Create a folder at a given path.
  * @function Dropbox#filesCreateFolder
+ * @deprecated
  * @arg {FilesCreateFolderArg} arg - The request parameters.
  * @returns {Promise.<FilesFolderMetadata, Error.<FilesCreateFolderError>>}
  */
 routes.filesCreateFolder = function (arg) {
   return this.request('files/create_folder', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Create a folder at a given path.
+ * @function Dropbox#filesCreateFolderV2
+ * @arg {FilesCreateFolderArg} arg - The request parameters.
+ * @returns {Promise.<FilesCreateFolderResult, Error.<FilesCreateFolderError>>}
+ */
+routes.filesCreateFolderV2 = function (arg) {
+  return this.request('files/create_folder_v2', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -123,6 +146,7 @@ routes.filesCreateFolder = function (arg) {
  * FileMetadata or FolderMetadata for the item at time of deletion, and not a
  * DeletedMetadata object.
  * @function Dropbox#filesDelete
+ * @deprecated
  * @arg {FilesDeleteArg} arg - The request parameters.
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesDeleteError>>}
  */
@@ -151,6 +175,20 @@ routes.filesDeleteBatch = function (arg) {
  */
 routes.filesDeleteBatchCheck = function (arg) {
   return this.request('files/delete_batch/check', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Delete the file or folder at a given path. If the path is a folder, all its
+ * contents will be deleted too. A successful response indicates that the file
+ * or folder was deleted. The returned metadata will be the corresponding
+ * FileMetadata or FolderMetadata for the item at time of deletion, and not a
+ * DeletedMetadata object.
+ * @function Dropbox#filesDeleteV2
+ * @arg {FilesDeleteArg} arg - The request parameters.
+ * @returns {Promise.<FilesDeleteResult, Error.<FilesDeleteError>>}
+ */
+routes.filesDeleteV2 = function (arg) {
+  return this.request('files/delete_v2', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -259,7 +297,7 @@ routes.filesListFolderContinue = function (arg) {
  * for app which only needs to know about new files and modifications and
  * doesn't need to know about files that already exist in Dropbox.
  * @function Dropbox#filesListFolderGetLatestCursor
- * @arg {FilesListFolderArg} arg - The request parameters.
+ * @arg {FilesListFolderGetCursorArg} arg - The request parameters.
  * @returns {Promise.<FilesListFolderGetLatestCursorResult, Error.<FilesListFolderError>>}
  */
 routes.filesListFolderGetLatestCursor = function (arg) {
@@ -295,6 +333,7 @@ routes.filesListRevisions = function (arg) {
  * Move a file or folder to a different location in the user's Dropbox. If the
  * source path is a folder all its contents will be moved.
  * @function Dropbox#filesMove
+ * @deprecated
  * @arg {FilesRelocationArg} arg - The request parameters.
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesRelocationError>>}
  */
@@ -325,6 +364,17 @@ routes.filesMoveBatch = function (arg) {
  */
 routes.filesMoveBatchCheck = function (arg) {
   return this.request('files/move_batch/check', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Move a file or folder to a different location in the user's Dropbox. If the
+ * source path is a folder all its contents will be moved.
+ * @function Dropbox#filesMoveV2
+ * @arg {FilesRelocationArg} arg - The request parameters.
+ * @returns {Promise.<FilesRelocationResult, Error.<FilesRelocationError>>}
+ */
+routes.filesMoveV2 = function (arg) {
+  return this.request('files/move_v2', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -862,10 +912,10 @@ routes.sharingGetSharedLinkMetadata = function (arg) {
 /**
  * Returns a list of LinkMetadata objects for this user, including collection
  * links. If no path is given, returns a list of all shared links for the
- * current user, including collection links. If a non-empty path is given,
- * returns a list of all shared links that allow access to the given path.
- * Collection links are never returned in this case. Note that the url field in
- * the response is never the shortened URL.
+ * current user, including collection links, up to a maximum of 1000 links. If a
+ * non-empty path is given, returns a list of all shared links that allow access
+ * to the given path.  Collection links are never returned in this case. Note
+ * that the url field in the response is never the shortened URL.
  * @function Dropbox#sharingGetSharedLinks
  * @deprecated
  * @arg {SharingGetSharedLinksArg} arg - The request parameters.

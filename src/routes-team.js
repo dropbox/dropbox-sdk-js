@@ -429,6 +429,31 @@ routes.teamMembersUnsuspend = function (arg) {
 };
 
 /**
+ * Returns a list of all team-accessible namespaces. This list includes team
+ * folders, shared folders containing team members, team members' home
+ * namespaces, and team members' app folders. Home namespaces and app folders
+ * are always owned by this team or members of the team, but shared folders may
+ * be owned by other users or other teams. Duplicates may occur in the list.
+ * @function DropboxTeam#teamNamespacesList
+ * @arg {TeamTeamNamespacesListArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamNamespacesListResult, Error.<void>>}
+ */
+routes.teamNamespacesList = function (arg) {
+  return this.request('team/namespaces/list', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Once a cursor has been retrieved from namespaces/list, use this to paginate
+ * through all team-accessible namespaces. Duplicates may occur in the list.
+ * @function DropboxTeam#teamNamespacesListContinue
+ * @arg {TeamTeamNamespacesListContinueArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamNamespacesListResult, Error.<TeamTeamNamespacesListContinueError>>}
+ */
+routes.teamNamespacesListContinue = function (arg) {
+  return this.request('team/namespaces/list/continue', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * Add a property template. See route files/properties/add to add properties to
  * a file.
  * @function DropboxTeam#teamPropertiesTemplateAdd

@@ -411,6 +411,31 @@ declare module DropboxTypes {
     public teamMembersUnsuspend(arg: team.MembersUnsuspendArg): Promise<void>;
 
     /**
+     * Returns a list of all team-accessible namespaces. This list includes team
+     * folders, shared folders containing team members, team members' home
+     * namespaces, and team members' app folders. Home namespaces and app
+     * folders are always owned by this team or members of the team, but shared
+     * folders may be owned by other users or other teams. Duplicates may occur
+     * in the list.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public teamNamespacesList(arg: team.TeamNamespacesListArg): Promise<team.TeamNamespacesListResult>;
+
+    /**
+     * Once a cursor has been retrieved from namespacesList(), use this to
+     * paginate through all team-accessible namespaces. Duplicates may occur in
+     * the list.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.TeamNamespacesListContinueError>.
+     * @param arg The request parameters.
+     */
+    public teamNamespacesListContinue(arg: team.TeamNamespacesListContinueArg): Promise<team.TeamNamespacesListResult>;
+
+    /**
      * Add a property template. See route files/properties/add to add properties
      * to a file.
      * 

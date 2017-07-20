@@ -56,6 +56,7 @@ declare module DropboxTypes {
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.RelocationError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesCopy(arg: files.RelocationArg): Promise<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>;
@@ -108,13 +109,33 @@ declare module DropboxTypes {
     public filesCopyReferenceSave(arg: files.SaveCopyReferenceArg): Promise<files.SaveCopyReferenceResult>;
 
     /**
+     * Copy a file or folder to a different location in the user's Dropbox. If
+     * the source path is a folder all its contents will be copied.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.RelocationError>.
+     * @param arg The request parameters.
+     */
+    public filesCopyV2(arg: files.RelocationArg): Promise<files.RelocationResult>;
+
+    /**
+     * Create a folder at a given path.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.CreateFolderError>.
+     * @deprecated
+     * @param arg The request parameters.
+     */
+    public filesCreateFolder(arg: files.CreateFolderArg): Promise<files.FolderMetadata>;
+
+    /**
      * Create a folder at a given path.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.CreateFolderError>.
      * @param arg The request parameters.
      */
-    public filesCreateFolder(arg: files.CreateFolderArg): Promise<files.FolderMetadata>;
+    public filesCreateFolderV2(arg: files.CreateFolderArg): Promise<files.CreateFolderResult>;
 
     /**
      * Delete the file or folder at a given path. If the path is a folder, all
@@ -125,6 +146,7 @@ declare module DropboxTypes {
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.DeleteError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesDelete(arg: files.DeleteArg): Promise<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>;
@@ -149,6 +171,19 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public filesDeleteBatchCheck(arg: async.PollArg): Promise<files.DeleteBatchJobStatus>;
+
+    /**
+     * Delete the file or folder at a given path. If the path is a folder, all
+     * its contents will be deleted too. A successful response indicates that
+     * the file or folder was deleted. The returned metadata will be the
+     * corresponding FileMetadata or FolderMetadata for the item at time of
+     * deletion, and not a DeletedMetadata object.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.DeleteError>.
+     * @param arg The request parameters.
+     */
+    public filesDeleteV2(arg: files.DeleteArg): Promise<files.DeleteResult>;
 
     /**
      * Download a file from a user's Dropbox.
@@ -256,7 +291,7 @@ declare module DropboxTypes {
      * Error<files.ListFolderError>.
      * @param arg The request parameters.
      */
-    public filesListFolderGetLatestCursor(arg: files.ListFolderArg): Promise<files.ListFolderGetLatestCursorResult>;
+    public filesListFolderGetLatestCursor(arg: files.ListFolderGetCursorArg): Promise<files.ListFolderGetLatestCursorResult>;
 
     /**
      * A longpoll endpoint to wait for changes on an account. In conjunction
@@ -288,6 +323,7 @@ declare module DropboxTypes {
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.RelocationError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesMove(arg: files.RelocationArg): Promise<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>;
@@ -314,6 +350,16 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public filesMoveBatchCheck(arg: async.PollArg): Promise<files.RelocationBatchJobStatus>;
+
+    /**
+     * Move a file or folder to a different location in the user's Dropbox. If
+     * the source path is a folder all its contents will be moved.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.RelocationError>.
+     * @param arg The request parameters.
+     */
+    public filesMoveV2(arg: files.RelocationArg): Promise<files.RelocationResult>;
 
     /**
      * Permanently delete the file or folder at a given path (see
@@ -811,10 +857,11 @@ declare module DropboxTypes {
     /**
      * Returns a list of LinkMetadata objects for this user, including
      * collection links. If no path is given, returns a list of all shared links
-     * for the current user, including collection links. If a non-empty path is
-     * given, returns a list of all shared links that allow access to the given
-     * path.  Collection links are never returned in this case. Note that the
-     * url field in the response is never the shortened URL.
+     * for the current user, including collection links, up to a maximum of 1000
+     * links. If a non-empty path is given, returns a list of all shared links
+     * that allow access to the given path.  Collection links are never returned
+     * in this case. Note that the url field in the response is never the
+     * shortened URL.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.GetSharedLinksError>.

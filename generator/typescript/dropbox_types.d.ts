@@ -394,20 +394,19 @@ declare module DropboxTypes {
     }
 
     /**
-     * Paths are relative to given shared folder id (This results in
-     * PathRootError.no_permission if you don't have access to  this shared
-     * folder.)
+     * Paths are relative to given namespace id (This results in
+     * PathRootError.no_permission if you don't have access to this namespace.)
      */
-    interface PathRootSharedFolder {
-      '.tag': 'shared_folder';
-      shared_folder: PathRootId;
+    interface PathRootNamespaceId {
+      '.tag': 'namespace_id';
+      namespace_id: PathRootId;
     }
 
     interface PathRootOther {
       '.tag': 'other';
     }
 
-    type PathRoot = PathRootHome | PathRootMemberHome | PathRootTeam | PathRootUserHome | PathRootSharedFolder | PathRootOther;
+    type PathRoot = PathRootHome | PathRootMemberHome | PathRootTeam | PathRootUserHome | PathRootNamespaceId | PathRootOther;
 
     /**
      * The path root id value in Dropbox-API-Path-Root header is no longer
@@ -488,7 +487,7 @@ declare module DropboxTypes {
       /**
        * Path in the user's Dropbox to save the file.
        */
-      path: WritePath;
+      path: WritePathOrId;
       /**
        * Defaults to TagRef(Union(u'WriteMode', [UnionField(u'add', Void,
        * False), UnionField(u'overwrite', Void, False), UnionField(u'update',
@@ -542,11 +541,18 @@ declare module DropboxTypes {
 
     type CreateFolderError = CreateFolderErrorPath;
 
+    interface CreateFolderResult extends FileOpsResult {
+      /**
+       * Metadata of the created folder.
+       */
+      metadata: FolderMetadata;
+    }
+
     interface DeleteArg {
       /**
        * Path in the user's Dropbox to delete.
        */
-      path: WritePath;
+      path: WritePathOrId;
     }
 
     interface DeleteBatchArg {
@@ -554,8 +560,9 @@ declare module DropboxTypes {
     }
 
     /**
-     * There are too many write operations in user's Dropbox. Please retry this
-     * request.
+     * Deprecated by DeleteError.too_many_write_operations. deleteBatch() now
+     * provides smaller granularity about which entry has failed because of
+     * this.
      */
     interface DeleteBatchErrorTooManyWriteOperations {
       '.tag': 'too_many_write_operations';
@@ -604,13 +611,20 @@ declare module DropboxTypes {
      */
     type DeleteBatchLaunch = async.LaunchResultBase | DeleteBatchLaunchComplete | DeleteBatchLaunchOther;
 
-    interface DeleteBatchResult {
+    interface DeleteBatchResult extends FileOpsResult {
       entries: Array<DeleteBatchResultEntry>;
+    }
+
+    interface DeleteBatchResultData {
+      /**
+       * Metadata of the deleted object.
+       */
+      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
     }
 
     interface DeleteBatchResultEntrySuccess {
       '.tag': 'success';
-      success: DeleteResult;
+      success: DeleteBatchResultData;
     }
 
     interface DeleteBatchResultEntryFailure {
@@ -630,13 +644,31 @@ declare module DropboxTypes {
       path_write: WriteError;
     }
 
+    /**
+     * There are too many write operations in user's Dropbox. Please retry this
+     * request.
+     */
+    interface DeleteErrorTooManyWriteOperations {
+      '.tag': 'too_many_write_operations';
+    }
+
+    /**
+     * There are too many files in one request. Please retry with fewer files.
+     */
+    interface DeleteErrorTooManyFiles {
+      '.tag': 'too_many_files';
+    }
+
     interface DeleteErrorOther {
       '.tag': 'other';
     }
 
-    type DeleteError = DeleteErrorPathLookup | DeleteErrorPathWrite | DeleteErrorOther;
+    type DeleteError = DeleteErrorPathLookup | DeleteErrorPathWrite | DeleteErrorTooManyWriteOperations | DeleteErrorTooManyFiles | DeleteErrorOther;
 
-    interface DeleteResult {
+    interface DeleteResult extends FileOpsResult {
+      /**
+       * Metadata of the deleted object.
+       */
       metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
     }
 
@@ -762,6 +794,9 @@ declare module DropboxTypes {
        * needed to discriminate between multiple possible subtypes.
        */
       '.tag': 'file';
+    }
+
+    interface FileOpsResult {
     }
 
     /**
@@ -956,27 +991,12 @@ declare module DropboxTypes {
 
     type InvalidPropertyGroupError = PropertiesError | InvalidPropertyGroupErrorPropertyFieldTooLarge | InvalidPropertyGroupErrorDoesNotFitTemplate;
 
-    interface ListFolderArg {
+    interface ListFolderArg extends ListFolderGetCursorArg {
       /**
-       * The path to the folder you want to see the contents of.
+       * A shared link to list the contents of, if the link is protected provide
+       * the password.
        */
-      path: PathR;
-      /**
-       * Defaults to False.
-       */
-      recursive?: boolean;
-      /**
-       * Defaults to False.
-       */
-      include_media_info?: boolean;
-      /**
-       * Defaults to False.
-       */
-      include_deleted?: boolean;
-      /**
-       * Defaults to False.
-       */
-      include_has_explicit_shared_members?: boolean;
+      shared_link?: SharedLink;
     }
 
     interface ListFolderContinueArg {
@@ -1017,6 +1037,29 @@ declare module DropboxTypes {
 
     type ListFolderError = ListFolderErrorPath | ListFolderErrorOther;
 
+    interface ListFolderGetCursorArg {
+      /**
+       * A unique identifier for the file.
+       */
+      path?: PathROrId;
+      /**
+       * Defaults to False.
+       */
+      recursive?: boolean;
+      /**
+       * Defaults to False.
+       */
+      include_media_info?: boolean;
+      /**
+       * Defaults to False.
+       */
+      include_deleted?: boolean;
+      /**
+       * Defaults to False.
+       */
+      include_has_explicit_shared_members?: boolean;
+    }
+
     interface ListFolderGetLatestCursorResult {
       /**
        * Pass the cursor into listFolderContinue() to see what's changed in the
@@ -1028,8 +1071,8 @@ declare module DropboxTypes {
     interface ListFolderLongpollArg {
       /**
        * A cursor as returned by listFolder() or listFolderContinue(). Cursors
-       * retrieved by setting ListFolderArg.include_media_info to true are not
-       * supported.
+       * retrieved by setting ListFolderGetCursorArg.include_media_info to true
+       * are not supported.
        */
       cursor: ListFolderCursor;
       /**
@@ -1110,8 +1153,12 @@ declare module DropboxTypes {
        */
       is_deleted: boolean;
       /**
-       * The revisions for the file. Only non-delete revisions will show up
-       * here.
+       * The time of deletion if the file was deleted.
+       */
+      server_deleted?: common.DropboxTimestamp;
+      /**
+       * The revisions for the file. Only revisions that are not deleted will
+       * show up here.
        */
       entries: Array<FileMetadata>;
     }
@@ -1360,6 +1407,10 @@ declare module DropboxTypes {
        * Defaults to False.
        */
       autorename?: boolean;
+      /**
+       * Defaults to False.
+       */
+      allow_ownership_transfer?: boolean;
     }
 
     interface RelocationBatchArg {
@@ -1376,6 +1427,10 @@ declare module DropboxTypes {
        * Defaults to False.
        */
       autorename?: boolean;
+      /**
+       * Defaults to False.
+       */
+      allow_ownership_transfer?: boolean;
     }
 
     /**
@@ -1421,8 +1476,15 @@ declare module DropboxTypes {
      */
     type RelocationBatchLaunch = async.LaunchResultBase | RelocationBatchLaunchComplete | RelocationBatchLaunchOther;
 
-    interface RelocationBatchResult {
-      entries: Array<RelocationResult>;
+    interface RelocationBatchResult extends FileOpsResult {
+      entries: Array<RelocationBatchResultData>;
+    }
+
+    interface RelocationBatchResultData {
+      /**
+       * Metadata of the relocated object.
+       */
+      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
     }
 
     interface RelocationErrorFromLookup {
@@ -1477,24 +1539,36 @@ declare module DropboxTypes {
       '.tag': 'duplicated_or_nested_paths';
     }
 
+    /**
+     * Your move operation would result in an ownership transfer. You may
+     * reissue the request with the field RelocationArg.allow_ownership_transfer
+     * to true.
+     */
+    interface RelocationErrorCantTransferOwnership {
+      '.tag': 'cant_transfer_ownership';
+    }
+
     interface RelocationErrorOther {
       '.tag': 'other';
     }
 
-    type RelocationError = RelocationErrorFromLookup | RelocationErrorFromWrite | RelocationErrorTo | RelocationErrorCantCopySharedFolder | RelocationErrorCantNestSharedFolder | RelocationErrorCantMoveFolderIntoItself | RelocationErrorTooManyFiles | RelocationErrorDuplicatedOrNestedPaths | RelocationErrorOther;
+    type RelocationError = RelocationErrorFromLookup | RelocationErrorFromWrite | RelocationErrorTo | RelocationErrorCantCopySharedFolder | RelocationErrorCantNestSharedFolder | RelocationErrorCantMoveFolderIntoItself | RelocationErrorTooManyFiles | RelocationErrorDuplicatedOrNestedPaths | RelocationErrorCantTransferOwnership | RelocationErrorOther;
 
     interface RelocationPath {
       /**
        * Path in the user's Dropbox to be copied or moved.
        */
-      from_path: WritePath;
+      from_path: WritePathOrId;
       /**
        * Path in the user's Dropbox that is the destination.
        */
-      to_path: WritePath;
+      to_path: WritePathOrId;
     }
 
-    interface RelocationResult {
+    interface RelocationResult extends FileOpsResult {
+      /**
+       * Metadata of the relocated object.
+       */
       metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
     }
 
@@ -1688,7 +1762,7 @@ declare module DropboxTypes {
       /**
        * The path in the user's Dropbox to search. Should probably be a folder.
        */
-      path: PathR;
+      path: PathROrId;
       /**
        * The string to search for. The search string is split on spaces into
        * multiple tokens. For file name searching, the last token is used for
@@ -1797,6 +1871,17 @@ declare module DropboxTypes {
        * search() to fetch the next page of results.
        */
       start: number;
+    }
+
+    interface SharedLink {
+      /**
+       * Shared link url.
+       */
+      url: SharedLinkUrl;
+      /**
+       * Password for the shared link.
+       */
+      password?: string;
     }
 
     /**
@@ -2288,9 +2373,9 @@ declare module DropboxTypes {
      * Your intent when writing a file to some path. This is used to determine
      * what constitutes a conflict and what the autorename strategy is. In some
      * situations, the conflict behavior is identical: (a) If the target path
-     * doesn't contain anything, the file is always written; no conflict. (b) If
-     * the target path contains a folder, it's always a conflict. (c) If the
-     * target path contains a file with identical contents, nothing gets
+     * doesn't refer to anything, the file is always written; no conflict. (b)
+     * If the target path refers to a folder, it's always a conflict. (c) If the
+     * target path refers to a file with identical contents, nothing gets
      * written; no conflict. The conflict checking differs in the case where
      * there's a file at the target path with contents different from the
      * contents you're trying to write.
@@ -2309,13 +2394,19 @@ declare module DropboxTypes {
 
     type PathR = string;
 
+    type PathROrId = string;
+
     type ReadPath = string;
 
     type Rev = string;
 
     type Sha256HexHash = string;
 
+    type SharedLinkUrl = string;
+
     type WritePath = string;
+
+    type WritePathOrId = string;
 
   }
 
@@ -3540,6 +3631,32 @@ declare module DropboxTypes {
     type AddMemberSelectorError = AddMemberSelectorErrorAutomaticGroup | AddMemberSelectorErrorInvalidDropboxId | AddMemberSelectorErrorInvalidEmail | AddMemberSelectorErrorUnverifiedDropboxId | AddMemberSelectorErrorGroupDeleted | AddMemberSelectorErrorGroupNotOnTeam | AddMemberSelectorErrorOther;
 
     /**
+     * Information about the content that has a link audience different than
+     * that of this folder.
+     */
+    interface AudienceExceptionContentInfo {
+      /**
+       * The name of the content, which is either a file or a folder.
+       */
+      name: string;
+    }
+
+    /**
+     * The total count and truncated list of information of content inside this
+     * folder that has a different audience than the link on this folder. This
+     * is only returned for folders.
+     */
+    interface AudienceExceptions {
+      count: number;
+      /**
+       * A truncated list of some of the content that is an exception. The
+       * length of this list could be smaller than the count since it is only a
+       * sample but will not be empty as long as count is not 0.
+       */
+      exceptions: Array<AudienceExceptionContentInfo>;
+    }
+
+    /**
      * Information about the shared folder that prevents the link audience for
      * this link from being more restrictive.
      */
@@ -3646,7 +3763,8 @@ declare module DropboxTypes {
     }
 
     /**
-     * The shared link already exists
+     * The shared link already exists. You can call listSharedLinks() to get the
+     * existing link.
      */
     interface CreateSharedLinkWithSettingsErrorSharedLinkAlreadyExists {
       '.tag': 'shared_link_already_exists';
@@ -3671,7 +3789,7 @@ declare module DropboxTypes {
 
     /**
      * The expected metadata of a shared link for a file or folder when a link
-     * is first created for  the content. Absent if the link already exists.
+     * is first created for the content. Absent if the link already exists.
      */
     interface ExpectedSharedContentLinkMetadata extends SharedContentLinkMetadataBase {
     }
@@ -4284,6 +4402,20 @@ declare module DropboxTypes {
        * The information about the membership group.
        */
       group: GroupInfo;
+    }
+
+    interface InsufficientPlan {
+      /**
+       * A message to tell the user to upgrade in order to support expected
+       * action.
+       */
+      message: string;
+      /**
+       * A URL to send the user to in order to obtain the account type they
+       * need, e.g. upgrading. Absent if there is no action the user can take to
+       * upgrade.
+       */
+      upsell_url?: string;
     }
 
     interface InsufficientQuotaAmounts {
@@ -5358,6 +5490,11 @@ declare module DropboxTypes {
       '.tag': 'folder_is_inside_shared_folder';
     }
 
+    interface PermissionDeniedReasonInsufficientPlan {
+      '.tag': 'insufficient_plan';
+      insufficient_plan: InsufficientPlan;
+    }
+
     interface PermissionDeniedReasonOther {
       '.tag': 'other';
     }
@@ -5365,7 +5502,7 @@ declare module DropboxTypes {
     /**
      * Possible reasons the user is denied a permission.
      */
-    type PermissionDeniedReason = PermissionDeniedReasonUserNotSameTeamAsOwner | PermissionDeniedReasonUserNotAllowedByOwner | PermissionDeniedReasonTargetIsIndirectMember | PermissionDeniedReasonTargetIsOwner | PermissionDeniedReasonTargetIsSelf | PermissionDeniedReasonTargetNotActive | PermissionDeniedReasonFolderIsLimitedTeamFolder | PermissionDeniedReasonOwnerNotOnTeam | PermissionDeniedReasonPermissionDenied | PermissionDeniedReasonRestrictedByTeam | PermissionDeniedReasonUserAccountType | PermissionDeniedReasonUserNotOnTeam | PermissionDeniedReasonFolderIsInsideSharedFolder | PermissionDeniedReasonOther;
+    type PermissionDeniedReason = PermissionDeniedReasonUserNotSameTeamAsOwner | PermissionDeniedReasonUserNotAllowedByOwner | PermissionDeniedReasonTargetIsIndirectMember | PermissionDeniedReasonTargetIsOwner | PermissionDeniedReasonTargetIsSelf | PermissionDeniedReasonTargetNotActive | PermissionDeniedReasonFolderIsLimitedTeamFolder | PermissionDeniedReasonOwnerNotOnTeam | PermissionDeniedReasonPermissionDenied | PermissionDeniedReasonRestrictedByTeam | PermissionDeniedReasonUserAccountType | PermissionDeniedReasonUserNotOnTeam | PermissionDeniedReasonFolderIsInsideSharedFolder | PermissionDeniedReasonInsufficientPlan | PermissionDeniedReasonOther;
 
     interface RelinquishFileMembershipArg {
       /**
@@ -5667,31 +5804,7 @@ declare module DropboxTypes {
 
     type RevokeSharedLinkError = SharedLinkError | RevokeSharedLinkErrorSharedLinkMalformed;
 
-    interface ShareFolderArg {
-      /**
-       * The path to the folder to share. If it does not exist, then a new one
-       * is created.
-       */
-      path: files.WritePath;
-      /**
-       * Who can be a member of this shared folder. Only applicable if the
-       * current user is on a team.
-       */
-      member_policy?: MemberPolicy;
-      /**
-       * Who can add and remove members of this shared folder.
-       */
-      acl_update_policy?: AclUpdatePolicy;
-      /**
-       * The policy to apply to shared links created for content inside this
-       * shared folder.  The current user must be on a team to set this policy
-       * to SharedLinkPolicy.members.
-       */
-      shared_link_policy?: SharedLinkPolicy;
-      /**
-       * Defaults to False.
-       */
-      force_async?: boolean;
+    interface ShareFolderArg extends ShareFolderArgBase {
       /**
        * A list of `FolderAction`s corresponding to `FolderPermission`s that
        * should appear in the  response's SharedFolderMetadata.permissions field
@@ -5703,6 +5816,33 @@ declare module DropboxTypes {
        * Settings on the link for this folder.
        */
       link_settings?: LinkSettings;
+    }
+
+    interface ShareFolderArgBase {
+      /**
+       * Who can add and remove members of this shared folder.
+       */
+      acl_update_policy?: AclUpdatePolicy;
+      /**
+       * Defaults to False.
+       */
+      force_async?: boolean;
+      /**
+       * Who can be a member of this shared folder. Only applicable if the
+       * current user is on a team.
+       */
+      member_policy?: MemberPolicy;
+      /**
+       * The path to the folder to share. If it does not exist, then a new one
+       * is created.
+       */
+      path: files.WritePath;
+      /**
+       * The policy to apply to shared links created for content inside this
+       * shared folder.  The current user must be on a team to set this policy
+       * to SharedLinkPolicy.members.
+       */
+      shared_link_policy?: SharedLinkPolicy;
       /**
        * Who can enable/disable viewer info for this shared folder.
        */
@@ -5881,6 +6021,12 @@ declare module DropboxTypes {
      */
     interface SharedContentLinkMetadata extends SharedContentLinkMetadataBase {
       /**
+       * The content inside this folder with link audience different than this
+       * folder's. This is only returned when an endpoint that returns metadata
+       * for a single shared folder is called, e.g. /get_folder_metadata.
+       */
+      audience_exceptions?: AudienceExceptions;
+      /**
        * The URL of the link.
        */
       url: string;
@@ -5976,6 +6122,12 @@ declare module DropboxTypes {
        * The name of this file.
        */
       name: string;
+      /**
+       * The display names of the users that own the file. If the file is part
+       * of a team folder, the display names of the team admins are also
+       * included. Absent if the owner display names cannot be fetched.
+       */
+      owner_display_names?: Array<string>;
       /**
        * The team that owns the file. This field is not present if the file is
        * not owned by a team.
@@ -7014,6 +7166,11 @@ declare module DropboxTypes {
       status_error: TeamFolderInvalidStatusError;
     }
 
+    interface BaseTeamFolderErrorTeamSharedDropboxError {
+      '.tag': 'team_shared_dropbox_error';
+      team_shared_dropbox_error: TeamFolderTeamSharedDropboxError;
+    }
+
     interface BaseTeamFolderErrorOther {
       '.tag': 'other';
     }
@@ -7021,7 +7178,7 @@ declare module DropboxTypes {
     /**
      * Base error that all errors for existing team folders should extend.
      */
-    type BaseTeamFolderError = BaseTeamFolderErrorAccessError | BaseTeamFolderErrorStatusError | BaseTeamFolderErrorOther;
+    type BaseTeamFolderError = BaseTeamFolderErrorAccessError | BaseTeamFolderErrorStatusError | BaseTeamFolderErrorTeamSharedDropboxError | BaseTeamFolderErrorOther;
 
     /**
      * Input arguments that can be provided for most reports.
@@ -7177,6 +7334,13 @@ declare module DropboxTypes {
       '.tag': 'upload_api_rate_limit';
     }
 
+    /**
+     * Does this team have a have a company shared dropbox.
+     */
+    interface FeatureHasTeamSharedDropbox {
+      '.tag': 'has_team_shared_dropbox';
+    }
+
     interface FeatureOther {
       '.tag': 'other';
     }
@@ -7184,11 +7348,16 @@ declare module DropboxTypes {
     /**
      * A set of features that Dropbox for Business account support.
      */
-    type Feature = FeatureUploadApiRateLimit | FeatureOther;
+    type Feature = FeatureUploadApiRateLimit | FeatureHasTeamSharedDropbox | FeatureOther;
 
     interface FeatureValueUploadApiRateLimit {
       '.tag': 'upload_api_rate_limit';
       upload_api_rate_limit: UploadApiRateLimitValue;
+    }
+
+    interface FeatureValueHasTeamSharedDropbox {
+      '.tag': 'has_team_shared_dropbox';
+      has_team_shared_dropbox: HasTeamSharedDropboxValue;
     }
 
     interface FeatureValueOther {
@@ -7199,7 +7368,7 @@ declare module DropboxTypes {
      * The values correspond to entries in team.Feature. You may get different
      * value according to your Dropbox for Business plan.
      */
-    type FeatureValue = FeatureValueUploadApiRateLimit | FeatureValueOther;
+    type FeatureValue = FeatureValueUploadApiRateLimit | FeatureValueHasTeamSharedDropbox | FeatureValueOther;
 
     interface FeaturesGetValuesBatchArg {
       /**
@@ -7925,6 +8094,23 @@ declare module DropboxTypes {
      * group IDs.
      */
     type GroupsSelector = GroupsSelectorGroupIds | GroupsSelectorGroupExternalIds;
+
+    /**
+     * Does this team have a team shared dropbox.
+     */
+    interface HasTeamSharedDropboxValueHasTeamSharedDropbox {
+      '.tag': 'has_team_shared_dropbox';
+      has_team_shared_dropbox: boolean;
+    }
+
+    interface HasTeamSharedDropboxValueOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The value for Feature.has_team_shared_dropbox.
+     */
+    type HasTeamSharedDropboxValue = HasTeamSharedDropboxValueHasTeamSharedDropbox | HasTeamSharedDropboxValueOther;
 
     interface IncludeMembersArg {
       /**
@@ -8896,7 +9082,7 @@ declare module DropboxTypes {
     }
 
     /**
-     * Pending team member's email cannot be modified.
+     * Modifying deleted users is not allowed.
      */
     interface MembersSetProfileErrorSetProfileDisallowed {
       '.tag': 'set_profile_disallowed';
@@ -9046,6 +9232,63 @@ declare module DropboxTypes {
        */
       last_carrier?: string;
     }
+
+    /**
+     * Properties of a namespace.
+     */
+    interface NamespaceMetadata {
+      /**
+       * The name of this namespace.
+       */
+      name: string;
+      /**
+       * The ID of this namespace.
+       */
+      namespace_id: common.SharedFolderId;
+      /**
+       * The type of this namespace.
+       */
+      namespace_type: NamespaceType;
+      /**
+       * If this is a team member folder, the ID of the team member. Otherwise,
+       * this field is not present.
+       */
+      team_member_id?: team_common.TeamMemberId;
+    }
+
+    /**
+     * App sandbox folder.
+     */
+    interface NamespaceTypeAppFolder {
+      '.tag': 'app_folder';
+    }
+
+    /**
+     * Shared folder.
+     */
+    interface NamespaceTypeSharedFolder {
+      '.tag': 'shared_folder';
+    }
+
+    /**
+     * Top-level team-owned folder.
+     */
+    interface NamespaceTypeTeamFolder {
+      '.tag': 'team_folder';
+    }
+
+    /**
+     * Team member's home folder.
+     */
+    interface NamespaceTypeTeamMemberFolder {
+      '.tag': 'team_member_folder';
+    }
+
+    interface NamespaceTypeOther {
+      '.tag': 'other';
+    }
+
+    type NamespaceType = NamespaceTypeAppFolder | NamespaceTypeSharedFolder | NamespaceTypeTeamFolder | NamespaceTypeTeamMemberFolder | NamespaceTypeOther;
 
     interface RemovedStatus {
       /**
@@ -9435,6 +9678,10 @@ declare module DropboxTypes {
        * The status of the team folder.
        */
       status: TeamFolderStatus;
+      /**
+       * True if this team folder is the team shared dropbox.
+       */
+      is_team_shared_dropbox: boolean;
     }
 
     type TeamFolderPermanentlyDeleteError = BaseTeamFolderError;
@@ -9496,6 +9743,19 @@ declare module DropboxTypes {
 
     type TeamFolderStatus = TeamFolderStatusActive | TeamFolderStatusArchived | TeamFolderStatusArchiveInProgress | TeamFolderStatusOther;
 
+    /**
+     * This action is not allowed for a team shared dropbox.
+     */
+    interface TeamFolderTeamSharedDropboxErrorDisallowed {
+      '.tag': 'disallowed';
+    }
+
+    interface TeamFolderTeamSharedDropboxErrorOther {
+      '.tag': 'other';
+    }
+
+    type TeamFolderTeamSharedDropboxError = TeamFolderTeamSharedDropboxErrorDisallowed | TeamFolderTeamSharedDropboxErrorOther;
+
     interface TeamGetInfoResult {
       /**
        * The name of the team.
@@ -9539,6 +9799,10 @@ declare module DropboxTypes {
        * List of group IDs of groups that the user belongs to.
        */
       groups: Array<team_common.GroupId>;
+      /**
+       * The namespace id of the user's root folder.
+       */
+      member_folder_id: common.NamespaceId;
     }
 
     /**
@@ -9594,6 +9858,54 @@ declare module DropboxTypes {
     }
 
     type TeamMembershipType = TeamMembershipTypeFull | TeamMembershipTypeLimited;
+
+    interface TeamNamespacesListArg {
+      /**
+       * Defaults to 1000.
+       */
+      limit?: number;
+    }
+
+    interface TeamNamespacesListContinueArg {
+      /**
+       * Indicates from what point to get the next set of team-accessible
+       * namespaces.
+       */
+      cursor: string;
+    }
+
+    /**
+     * The cursor is invalid.
+     */
+    interface TeamNamespacesListContinueErrorInvalidCursor {
+      '.tag': 'invalid_cursor';
+    }
+
+    interface TeamNamespacesListContinueErrorOther {
+      '.tag': 'other';
+    }
+
+    type TeamNamespacesListContinueError = TeamNamespacesListContinueErrorInvalidCursor | TeamNamespacesListContinueErrorOther;
+
+    /**
+     * Result for namespacesList().
+     */
+    interface TeamNamespacesListResult {
+      /**
+       * List of all namespaces the team can access.
+       */
+      namespaces: Array<NamespaceMetadata>;
+      /**
+       * Pass the cursor into namespacesListContinue() to obtain additional
+       * namespaces. Note that duplicate namespaces may be returned.
+       */
+      cursor: string;
+      /**
+       * Is true if there are additional namespaces that have not been returned
+       * yet.
+       */
+      has_more: boolean;
+    }
 
     /**
      * The current token is not associated with a team admin, because mappings
@@ -9910,11 +10222,34 @@ declare module DropboxTypes {
      */
     type AccessMethodLogInfo = AccessMethodLogInfoEndUser | AccessMethodLogInfoSignInAs | AccessMethodLogInfoContentManager | AccessMethodLogInfoAdminConsole | AccessMethodLogInfoApi | AccessMethodLogInfoOther;
 
+    interface AccountCaptureAvailabilityUnavailable {
+      '.tag': 'unavailable';
+    }
+
+    interface AccountCaptureAvailabilityAvailable {
+      '.tag': 'available';
+    }
+
+    interface AccountCaptureAvailabilityOther {
+      '.tag': 'other';
+    }
+
+    type AccountCaptureAvailability = AccountCaptureAvailabilityUnavailable | AccountCaptureAvailabilityAvailable | AccountCaptureAvailabilityOther;
+
     /**
      * Granted or revoked the option to enable account capture on domains
      * belonging to the team.
      */
     interface AccountCaptureChangeAvailabilityDetails {
+      /**
+       * New account capture availabilty value.
+       */
+      new_value: AccountCaptureAvailability;
+      /**
+       * Previous account capture availabilty value. Might be missing due to
+       * historical data gap.
+       */
+      previous_value?: AccountCaptureAvailability;
     }
 
     /**
@@ -9937,9 +10272,9 @@ declare module DropboxTypes {
      */
     interface AccountCaptureMigrateAccountDetails {
       /**
-       * Domain names.
+       * Domain name.
        */
-      domain_name: Array<string>;
+      domain_name: string;
     }
 
     interface AccountCapturePolicyDisabled {
@@ -9966,9 +10301,9 @@ declare module DropboxTypes {
      */
     interface AccountCaptureRelinquishAccountDetails {
       /**
-       * Domain names.
+       * Domain name.
        */
-      domain_name: Array<string>;
+      domain_name: string;
     }
 
     /**
@@ -10018,6 +10353,32 @@ declare module DropboxTypes {
      * The entity who performed the action.
      */
     type ActorLogInfo = ActorLogInfoUser | ActorLogInfoAdmin | ActorLogInfoApp | ActorLogInfoReseller | ActorLogInfoDropbox | ActorLogInfoOther;
+
+    interface AdminRoleUser {
+      '.tag': 'user';
+    }
+
+    interface AdminRoleLimitedAdmin {
+      '.tag': 'limited_admin';
+    }
+
+    interface AdminRoleSupportAdmin {
+      '.tag': 'support_admin';
+    }
+
+    interface AdminRoleUserManagementAdmin {
+      '.tag': 'user_management_admin';
+    }
+
+    interface AdminRoleTeamAdmin {
+      '.tag': 'team_admin';
+    }
+
+    interface AdminRoleOther {
+      '.tag': 'other';
+    }
+
+    type AdminRole = AdminRoleUser | AdminRoleLimitedAdmin | AdminRoleSupportAdmin | AdminRoleUserManagementAdmin | AdminRoleTeamAdmin | AdminRoleOther;
 
     /**
      * Disabled allow downloads.
@@ -10148,6 +10509,40 @@ declare module DropboxTypes {
     type AssetLogInfo = AssetLogInfoFile | AssetLogInfoFolder | AssetLogInfoPaperDocument | AssetLogInfoPaperFolder | AssetLogInfoOther;
 
     /**
+     * Certificate details.
+     */
+    interface Certificate {
+      /**
+       * Certificate subject.
+       */
+      subject: string;
+      /**
+       * Certificate issuer.
+       */
+      issuer: string;
+      /**
+       * Certificate issue date.
+       */
+      issue_date: string;
+      /**
+       * Certificate expiration date.
+       */
+      expiration_date: string;
+      /**
+       * Certificate serial number.
+       */
+      serial_number: string;
+      /**
+       * Certificate sha1 fingerprint.
+       */
+      sha1_fingerprint: string;
+      /**
+       * Certificate common name.
+       */
+      common_name: string;
+    }
+
+    /**
      * Shared an album.
      */
     interface CollectionShareDetails {
@@ -10170,6 +10565,23 @@ declare module DropboxTypes {
     }
 
     type Confidentiality = ConfidentialityConfidential | ConfidentialityNonConfidential | ConfidentialityOther;
+
+    interface ContentPermanentDeletePolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface ContentPermanentDeletePolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface ContentPermanentDeletePolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Policy for pemanent content deletion
+     */
+    type ContentPermanentDeletePolicy = ContentPermanentDeletePolicyDisabled | ContentPermanentDeletePolicyEnabled | ContentPermanentDeletePolicyOther;
 
     /**
      * Action was done on behalf of a team member.
@@ -10325,35 +10737,15 @@ declare module DropboxTypes {
       '.tag': 'unlimited';
     }
 
-    interface DeviceApprovalsPolicyZero {
-      '.tag': 'zero';
-    }
-
-    interface DeviceApprovalsPolicyOne {
-      '.tag': 'one';
-    }
-
-    interface DeviceApprovalsPolicyTwo {
-      '.tag': 'two';
-    }
-
-    interface DeviceApprovalsPolicyThree {
-      '.tag': 'three';
-    }
-
-    interface DeviceApprovalsPolicyFour {
-      '.tag': 'four';
-    }
-
-    interface DeviceApprovalsPolicyFive {
-      '.tag': 'five';
+    interface DeviceApprovalsPolicyLimited {
+      '.tag': 'limited';
     }
 
     interface DeviceApprovalsPolicyOther {
       '.tag': 'other';
     }
 
-    type DeviceApprovalsPolicy = DeviceApprovalsPolicyUnlimited | DeviceApprovalsPolicyZero | DeviceApprovalsPolicyOne | DeviceApprovalsPolicyTwo | DeviceApprovalsPolicyThree | DeviceApprovalsPolicyFour | DeviceApprovalsPolicyFive | DeviceApprovalsPolicyOther;
+    type DeviceApprovalsPolicy = DeviceApprovalsPolicyUnlimited | DeviceApprovalsPolicyLimited | DeviceApprovalsPolicyOther;
 
     interface DeviceApprovalsRolloutPolicyRemoveOldest {
       '.tag': 'remove_oldest';
@@ -10398,6 +10790,10 @@ declare module DropboxTypes {
      */
     interface DeviceChangeIpWebDetails {
       /**
+       * Device information. Might be missing due to historical data gap.
+       */
+      device_info?: DeviceLogInfo;
+      /**
        * Web browser name.
        */
       user_agent: string;
@@ -10432,6 +10828,10 @@ declare module DropboxTypes {
      */
     interface DeviceLinkFailDetails {
       /**
+       * Device information. Might be missing due to historical data gap.
+       */
+      device_info?: DeviceLogInfo;
+      /**
        * A description of the device used while user approval blocked.
        */
       device_type: DeviceType;
@@ -10445,10 +10845,6 @@ declare module DropboxTypes {
        * Device information.
        */
       device_info: DeviceLogInfo;
-      /**
-       * Linking app version. Might be missing due to historical data gap.
-       */
-      app_version?: string;
     }
 
     /**
@@ -10492,6 +10888,10 @@ declare module DropboxTypes {
        * Last activity. Might be missing due to historical data gap.
        */
       last_activity?: string;
+      /**
+       * Linking app version. Might be missing due to historical data gap.
+       */
+      app_version?: string;
     }
 
     /**
@@ -10604,11 +11004,12 @@ declare module DropboxTypes {
      */
     interface DomainVerificationAddDomainFailDetails {
       /**
-       * Domain names.
+       * Domain name.
        */
-      domain_names: Array<string>;
+      domain_name: string;
       /**
-       * Domain name verification method.
+       * Domain name verification method. Might be missing due to historical
+       * data gap.
        */
       verification_method?: string;
     }
@@ -10622,7 +11023,8 @@ declare module DropboxTypes {
        */
       domain_names: Array<string>;
       /**
-       * Domain name verification method.
+       * Domain name verification method. Might be missing due to historical
+       * data gap.
        */
       verification_method?: string;
     }
@@ -10635,6 +11037,25 @@ declare module DropboxTypes {
        * Domain names.
        */
       domain_names: Array<string>;
+      /**
+       * Domain name verification method. Might be missing due to historical
+       * data gap.
+       */
+      verification_method?: string;
+    }
+
+    /**
+     * Represents a time duration: unit and amount
+     */
+    interface DurationLogInfo {
+      /**
+       * Time unit.
+       */
+      unit: TimeUnit;
+      /**
+       * Amount of time.
+       */
+      amount: number;
     }
 
     /**
@@ -10651,12 +11072,12 @@ declare module DropboxTypes {
       /**
        * New enterprise mobility management policy.
        */
-      new_value: OptionalChangePolicy;
+      new_value: EmmPolicy;
       /**
        * Previous enterprise mobility management policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: OptionalChangePolicy;
+      previous_value?: EmmPolicy;
     }
 
     /**
@@ -10677,6 +11098,27 @@ declare module DropboxTypes {
     interface EmmLoginSuccessDetails {
     }
 
+    interface EmmPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface EmmPolicyOptional {
+      '.tag': 'optional';
+    }
+
+    interface EmmPolicyRequired {
+      '.tag': 'required';
+    }
+
+    interface EmmPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Enterprise mobility management policy
+     */
+    type EmmPolicy = EmmPolicyDisabled | EmmPolicyOptional | EmmPolicyRequired | EmmPolicyOther;
+
     /**
      * Refreshed the auth token used for setting up enterprise mobility
      * management.
@@ -10690,20 +11132,6 @@ declare module DropboxTypes {
      */
     interface EmmRemoveExceptionDetails {
     }
-
-    interface EnableDisableChangePolicyDisabled {
-      '.tag': 'disabled';
-    }
-
-    interface EnableDisableChangePolicyEnabled {
-      '.tag': 'enabled';
-    }
-
-    interface EnableDisableChangePolicyOther {
-      '.tag': 'other';
-    }
-
-    type EnableDisableChangePolicy = EnableDisableChangePolicyDisabled | EnableDisableChangePolicyEnabled | EnableDisableChangePolicyOther;
 
     /**
      * Enabled domain invites.
@@ -11033,11 +11461,19 @@ declare module DropboxTypes {
     }
 
     /**
-     * Merged the team into another team.
+     * Merged another team into this team.
      */
-    interface EventDetailsTeamMergeDetails {
-      '.tag': 'team_merge_details';
-      team_merge_details: TeamMergeDetails;
+    interface EventDetailsTeamMergeFromDetails {
+      '.tag': 'team_merge_from_details';
+      team_merge_from_details: TeamMergeFromDetails;
+    }
+
+    /**
+     * Merged this team into another team.
+     */
+    interface EventDetailsTeamMergeToDetails {
+      '.tag': 'team_merge_to_details';
+      team_merge_to_details: TeamMergeToDetails;
     }
 
     /**
@@ -11644,6 +12080,14 @@ declare module DropboxTypes {
     }
 
     /**
+     * Change the admin role belonging to team member.
+     */
+    interface EventDetailsMemberChangeAdminRoleDetails {
+      '.tag': 'member_change_admin_role_details';
+      member_change_admin_role_details: MemberChangeAdminRoleDetails;
+    }
+
+    /**
      * Changed team member email address.
      */
     interface EventDetailsMemberChangeEmailDetails {
@@ -11660,43 +12104,11 @@ declare module DropboxTypes {
     }
 
     /**
-     * Change the admin permissions belonging to team member.
+     * Changed the membership status of a team member.
      */
-    interface EventDetailsMemberChangeRoleDetails {
-      '.tag': 'member_change_role_details';
-      member_change_role_details: MemberChangeRoleDetails;
-    }
-
-    /**
-     * Invited a user to join the team.
-     */
-    interface EventDetailsMemberInviteDetails {
-      '.tag': 'member_invite_details';
-      member_invite_details: MemberInviteDetails;
-    }
-
-    /**
-     * Joined the team.
-     */
-    interface EventDetailsMemberJoinDetails {
-      '.tag': 'member_join_details';
-      member_join_details: MemberJoinDetails;
-    }
-
-    /**
-     * Removed a team member.
-     */
-    interface EventDetailsMemberLeaveDetails {
-      '.tag': 'member_leave_details';
-      member_leave_details: MemberLeaveDetails;
-    }
-
-    /**
-     * Recovered a removed member.
-     */
-    interface EventDetailsMemberRecoverDetails {
-      '.tag': 'member_recover_details';
-      member_recover_details: MemberRecoverDetails;
+    interface EventDetailsMemberChangeStatusDetails {
+      '.tag': 'member_change_status_details';
+      member_change_status_details: MemberChangeStatusDetails;
     }
 
     /**
@@ -11705,22 +12117,6 @@ declare module DropboxTypes {
     interface EventDetailsMemberSuggestDetails {
       '.tag': 'member_suggest_details';
       member_suggest_details: MemberSuggestDetails;
-    }
-
-    /**
-     * Suspended a team member.
-     */
-    interface EventDetailsMemberSuspendDetails {
-      '.tag': 'member_suspend_details';
-      member_suspend_details: MemberSuspendDetails;
-    }
-
-    /**
-     * Unsuspended a team member.
-     */
-    interface EventDetailsMemberUnsuspendDetails {
-      '.tag': 'member_unsuspend_details';
-      member_unsuspend_details: MemberUnsuspendDetails;
     }
 
     /**
@@ -12932,6 +13328,22 @@ declare module DropboxTypes {
     }
 
     /**
+     * Opted team into Smart Sync.
+     */
+    interface EventDetailsSmartSyncNotOptOutDetails {
+      '.tag': 'smart_sync_not_opt_out_details';
+      smart_sync_not_opt_out_details: SmartSyncNotOptOutDetails;
+    }
+
+    /**
+     * Opted team out of Smart Sync.
+     */
+    interface EventDetailsSmartSyncOptOutDetails {
+      '.tag': 'smart_sync_opt_out_details';
+      smart_sync_opt_out_details: SmartSyncOptOutDetails;
+    }
+
+    /**
      * Change the single sign-on policy for the team.
      */
     interface EventDetailsSsoChangePolicyDetails {
@@ -13077,7 +13489,7 @@ declare module DropboxTypes {
     /**
      * Additional fields depending on the event type.
      */
-    type EventDetails = EventDetailsMemberChangeMembershipTypeDetails | EventDetailsMemberPermanentlyDeleteAccountContentsDetails | EventDetailsMemberSpaceLimitsChangeStatusDetails | EventDetailsMemberTransferAccountContentsDetails | EventDetailsPaperEnabledUsersGroupAdditionDetails | EventDetailsPaperEnabledUsersGroupRemovalDetails | EventDetailsPaperExternalViewAllowDetails | EventDetailsPaperExternalViewDefaultTeamDetails | EventDetailsPaperExternalViewForbidDetails | EventDetailsSfExternalInviteWarnDetails | EventDetailsTeamMergeDetails | EventDetailsAppLinkTeamDetails | EventDetailsAppLinkUserDetails | EventDetailsAppUnlinkTeamDetails | EventDetailsAppUnlinkUserDetails | EventDetailsDeviceChangeIpDesktopDetails | EventDetailsDeviceChangeIpMobileDetails | EventDetailsDeviceChangeIpWebDetails | EventDetailsDeviceDeleteOnUnlinkFailDetails | EventDetailsDeviceDeleteOnUnlinkSuccessDetails | EventDetailsDeviceLinkFailDetails | EventDetailsDeviceLinkSuccessDetails | EventDetailsDeviceManagementDisabledDetails | EventDetailsDeviceManagementEnabledDetails | EventDetailsDeviceUnlinkDetails | EventDetailsEmmRefreshAuthTokenDetails | EventDetailsAccountCaptureChangeAvailabilityDetails | EventDetailsAccountCaptureMigrateAccountDetails | EventDetailsAccountCaptureRelinquishAccountDetails | EventDetailsDisabledDomainInvitesDetails | EventDetailsDomainInvitesApproveRequestToJoinTeamDetails | EventDetailsDomainInvitesDeclineRequestToJoinTeamDetails | EventDetailsDomainInvitesEmailExistingUsersDetails | EventDetailsDomainInvitesRequestToJoinTeamDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToNoDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToYesDetails | EventDetailsDomainVerificationAddDomainFailDetails | EventDetailsDomainVerificationAddDomainSuccessDetails | EventDetailsDomainVerificationRemoveDomainDetails | EventDetailsEnabledDomainInvitesDetails | EventDetailsCreateFolderDetails | EventDetailsFileAddDetails | EventDetailsFileCopyDetails | EventDetailsFileDeleteDetails | EventDetailsFileDownloadDetails | EventDetailsFileEditDetails | EventDetailsFileGetCopyReferenceDetails | EventDetailsFileMoveDetails | EventDetailsFilePermanentlyDeleteDetails | EventDetailsFilePreviewDetails | EventDetailsFileRenameDetails | EventDetailsFileRestoreDetails | EventDetailsFileRevertDetails | EventDetailsFileRollbackChangesDetails | EventDetailsFileSaveCopyReferenceDetails | EventDetailsFileRequestAddDeadlineDetails | EventDetailsFileRequestChangeFolderDetails | EventDetailsFileRequestChangeTitleDetails | EventDetailsFileRequestCloseDetails | EventDetailsFileRequestCreateDetails | EventDetailsFileRequestReceiveFileDetails | EventDetailsFileRequestRemoveDeadlineDetails | EventDetailsFileRequestSendDetails | EventDetailsGroupAddExternalIdDetails | EventDetailsGroupAddMemberDetails | EventDetailsGroupChangeExternalIdDetails | EventDetailsGroupChangeManagementTypeDetails | EventDetailsGroupChangeMemberRoleDetails | EventDetailsGroupCreateDetails | EventDetailsGroupDeleteDetails | EventDetailsGroupDescriptionUpdatedDetails | EventDetailsGroupJoinPolicyUpdatedDetails | EventDetailsGroupMovedDetails | EventDetailsGroupRemoveExternalIdDetails | EventDetailsGroupRemoveMemberDetails | EventDetailsGroupRenameDetails | EventDetailsEmmLoginSuccessDetails | EventDetailsLogoutDetails | EventDetailsPasswordLoginFailDetails | EventDetailsPasswordLoginSuccessDetails | EventDetailsResellerSupportSessionEndDetails | EventDetailsResellerSupportSessionStartDetails | EventDetailsSignInAsSessionEndDetails | EventDetailsSignInAsSessionStartDetails | EventDetailsSsoLoginFailDetails | EventDetailsMemberAddNameDetails | EventDetailsMemberChangeEmailDetails | EventDetailsMemberChangeNameDetails | EventDetailsMemberChangeRoleDetails | EventDetailsMemberInviteDetails | EventDetailsMemberJoinDetails | EventDetailsMemberLeaveDetails | EventDetailsMemberRecoverDetails | EventDetailsMemberSuggestDetails | EventDetailsMemberSuspendDetails | EventDetailsMemberUnsuspendDetails | EventDetailsPaperContentAddMemberDetails | EventDetailsPaperContentAddToFolderDetails | EventDetailsPaperContentArchiveDetails | EventDetailsPaperContentChangeSubscriptionDetails | EventDetailsPaperContentCreateDetails | EventDetailsPaperContentPermanentlyDeleteDetails | EventDetailsPaperContentRemoveFromFolderDetails | EventDetailsPaperContentRemoveMemberDetails | EventDetailsPaperContentRenameDetails | EventDetailsPaperContentRestoreDetails | EventDetailsPaperDocAddCommentDetails | EventDetailsPaperDocChangeMemberRoleDetails | EventDetailsPaperDocChangeSharingPolicyDetails | EventDetailsPaperDocDeletedDetails | EventDetailsPaperDocDeleteCommentDetails | EventDetailsPaperDocDownloadDetails | EventDetailsPaperDocEditDetails | EventDetailsPaperDocEditCommentDetails | EventDetailsPaperDocFollowedDetails | EventDetailsPaperDocMentionDetails | EventDetailsPaperDocRequestAccessDetails | EventDetailsPaperDocResolveCommentDetails | EventDetailsPaperDocRevertDetails | EventDetailsPaperDocSlackShareDetails | EventDetailsPaperDocTeamInviteDetails | EventDetailsPaperDocUnresolveCommentDetails | EventDetailsPaperDocViewDetails | EventDetailsPaperFolderDeletedDetails | EventDetailsPaperFolderFollowedDetails | EventDetailsPaperFolderTeamInviteDetails | EventDetailsPasswordChangeDetails | EventDetailsPasswordResetDetails | EventDetailsPasswordResetAllDetails | EventDetailsEmmCreateExceptionsReportDetails | EventDetailsEmmCreateUsageReportDetails | EventDetailsSmartSyncCreateAdminPrivilegeReportDetails | EventDetailsTeamActivityCreateReportDetails | EventDetailsCollectionShareDetails | EventDetailsFileAddCommentDetails | EventDetailsFileLikeCommentDetails | EventDetailsFileUnlikeCommentDetails | EventDetailsNoteAclInviteOnlyDetails | EventDetailsNoteAclLinkDetails | EventDetailsNoteAclTeamLinkDetails | EventDetailsNoteSharedDetails | EventDetailsNoteShareReceiveDetails | EventDetailsOpenNoteSharedDetails | EventDetailsSfAddGroupDetails | EventDetailsSfAllowNonMembersToViewSharedLinksDetails | EventDetailsSfInviteGroupDetails | EventDetailsSfNestDetails | EventDetailsSfTeamDeclineDetails | EventDetailsSfTeamGrantAccessDetails | EventDetailsSfTeamInviteDetails | EventDetailsSfTeamInviteChangeRoleDetails | EventDetailsSfTeamJoinDetails | EventDetailsSfTeamJoinFromOobLinkDetails | EventDetailsSfTeamUninviteDetails | EventDetailsSharedContentAddInviteesDetails | EventDetailsSharedContentAddLinkExpiryDetails | EventDetailsSharedContentAddLinkPasswordDetails | EventDetailsSharedContentAddMemberDetails | EventDetailsSharedContentChangeDownloadsPolicyDetails | EventDetailsSharedContentChangeInviteeRoleDetails | EventDetailsSharedContentChangeLinkAudienceDetails | EventDetailsSharedContentChangeLinkExpiryDetails | EventDetailsSharedContentChangeLinkPasswordDetails | EventDetailsSharedContentChangeMemberRoleDetails | EventDetailsSharedContentChangeViewerInfoPolicyDetails | EventDetailsSharedContentClaimInvitationDetails | EventDetailsSharedContentCopyDetails | EventDetailsSharedContentDownloadDetails | EventDetailsSharedContentRelinquishMembershipDetails | EventDetailsSharedContentRemoveInviteeDetails | EventDetailsSharedContentRemoveLinkExpiryDetails | EventDetailsSharedContentRemoveLinkPasswordDetails | EventDetailsSharedContentRemoveMemberDetails | EventDetailsSharedContentRequestAccessDetails | EventDetailsSharedContentUnshareDetails | EventDetailsSharedContentViewDetails | EventDetailsSharedFolderChangeConfidentialityDetails | EventDetailsSharedFolderChangeLinkPolicyDetails | EventDetailsSharedFolderChangeMemberManagementPolicyDetails | EventDetailsSharedFolderChangeMemberPolicyDetails | EventDetailsSharedFolderCreateDetails | EventDetailsSharedFolderMountDetails | EventDetailsSharedFolderTransferOwnershipDetails | EventDetailsSharedFolderUnmountDetails | EventDetailsSharedNoteOpenedDetails | EventDetailsShmodelAppCreateDetails | EventDetailsShmodelCreateDetails | EventDetailsShmodelDisableDetails | EventDetailsShmodelFbShareDetails | EventDetailsShmodelGroupShareDetails | EventDetailsShmodelRemoveExpirationDetails | EventDetailsShmodelSetExpirationDetails | EventDetailsShmodelTeamCopyDetails | EventDetailsShmodelTeamDownloadDetails | EventDetailsShmodelTeamShareDetails | EventDetailsShmodelTeamViewDetails | EventDetailsShmodelVisibilityPasswordDetails | EventDetailsShmodelVisibilityPublicDetails | EventDetailsShmodelVisibilityTeamOnlyDetails | EventDetailsRemoveLogoutUrlDetails | EventDetailsRemoveSsoUrlDetails | EventDetailsSsoChangeCertDetails | EventDetailsSsoChangeLoginUrlDetails | EventDetailsSsoChangeLogoutUrlDetails | EventDetailsSsoChangeSamlIdentityModeDetails | EventDetailsTeamFolderChangeStatusDetails | EventDetailsTeamFolderCreateDetails | EventDetailsTeamFolderDowngradeDetails | EventDetailsTeamFolderPermanentlyDeleteDetails | EventDetailsTeamFolderRenameDetails | EventDetailsAccountCaptureChangePolicyDetails | EventDetailsAllowDownloadDisabledDetails | EventDetailsAllowDownloadEnabledDetails | EventDetailsDataPlacementRestrictionChangePolicyDetails | EventDetailsDataPlacementRestrictionSatisfyPolicyDetails | EventDetailsDeviceApprovalsChangeDesktopPolicyDetails | EventDetailsDeviceApprovalsChangeMobilePolicyDetails | EventDetailsDeviceApprovalsChangeOverageActionDetails | EventDetailsDeviceApprovalsChangeUnlinkActionDetails | EventDetailsEmmAddExceptionDetails | EventDetailsEmmChangePolicyDetails | EventDetailsEmmRemoveExceptionDetails | EventDetailsExtendedVersionHistoryChangePolicyDetails | EventDetailsFileCommentsChangePolicyDetails | EventDetailsFileRequestsChangePolicyDetails | EventDetailsFileRequestsEmailsEnabledDetails | EventDetailsFileRequestsEmailsRestrictedToTeamOnlyDetails | EventDetailsGoogleSsoChangePolicyDetails | EventDetailsGroupUserManagementChangePolicyDetails | EventDetailsMemberRequestsChangePolicyDetails | EventDetailsMemberSpaceLimitsAddExceptionDetails | EventDetailsMemberSpaceLimitsChangePolicyDetails | EventDetailsMemberSpaceLimitsRemoveExceptionDetails | EventDetailsMemberSuggestionsChangePolicyDetails | EventDetailsMicrosoftOfficeAddinChangePolicyDetails | EventDetailsNetworkControlChangePolicyDetails | EventDetailsPaperChangeDeploymentPolicyDetails | EventDetailsPaperChangeMemberPolicyDetails | EventDetailsPaperChangePolicyDetails | EventDetailsPermanentDeleteChangePolicyDetails | EventDetailsSharingChangeFolderJoinPolicyDetails | EventDetailsSharingChangeLinkPolicyDetails | EventDetailsSharingChangeMemberPolicyDetails | EventDetailsSmartSyncChangePolicyDetails | EventDetailsSsoChangePolicyDetails | EventDetailsTfaChangePolicyDetails | EventDetailsTwoAccountChangePolicyDetails | EventDetailsWebSessionsChangeFixedLengthPolicyDetails | EventDetailsWebSessionsChangeIdleLengthPolicyDetails | EventDetailsTeamProfileAddLogoDetails | EventDetailsTeamProfileChangeLogoDetails | EventDetailsTeamProfileChangeNameDetails | EventDetailsTeamProfileRemoveLogoDetails | EventDetailsTfaAddBackupPhoneDetails | EventDetailsTfaAddSecurityKeyDetails | EventDetailsTfaChangeBackupPhoneDetails | EventDetailsTfaChangeStatusDetails | EventDetailsTfaRemoveBackupPhoneDetails | EventDetailsTfaRemoveSecurityKeyDetails | EventDetailsTfaResetDetails | EventDetailsMissingDetails | EventDetailsOther;
+    type EventDetails = EventDetailsMemberChangeMembershipTypeDetails | EventDetailsMemberPermanentlyDeleteAccountContentsDetails | EventDetailsMemberSpaceLimitsChangeStatusDetails | EventDetailsMemberTransferAccountContentsDetails | EventDetailsPaperEnabledUsersGroupAdditionDetails | EventDetailsPaperEnabledUsersGroupRemovalDetails | EventDetailsPaperExternalViewAllowDetails | EventDetailsPaperExternalViewDefaultTeamDetails | EventDetailsPaperExternalViewForbidDetails | EventDetailsSfExternalInviteWarnDetails | EventDetailsTeamMergeFromDetails | EventDetailsTeamMergeToDetails | EventDetailsAppLinkTeamDetails | EventDetailsAppLinkUserDetails | EventDetailsAppUnlinkTeamDetails | EventDetailsAppUnlinkUserDetails | EventDetailsDeviceChangeIpDesktopDetails | EventDetailsDeviceChangeIpMobileDetails | EventDetailsDeviceChangeIpWebDetails | EventDetailsDeviceDeleteOnUnlinkFailDetails | EventDetailsDeviceDeleteOnUnlinkSuccessDetails | EventDetailsDeviceLinkFailDetails | EventDetailsDeviceLinkSuccessDetails | EventDetailsDeviceManagementDisabledDetails | EventDetailsDeviceManagementEnabledDetails | EventDetailsDeviceUnlinkDetails | EventDetailsEmmRefreshAuthTokenDetails | EventDetailsAccountCaptureChangeAvailabilityDetails | EventDetailsAccountCaptureMigrateAccountDetails | EventDetailsAccountCaptureRelinquishAccountDetails | EventDetailsDisabledDomainInvitesDetails | EventDetailsDomainInvitesApproveRequestToJoinTeamDetails | EventDetailsDomainInvitesDeclineRequestToJoinTeamDetails | EventDetailsDomainInvitesEmailExistingUsersDetails | EventDetailsDomainInvitesRequestToJoinTeamDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToNoDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToYesDetails | EventDetailsDomainVerificationAddDomainFailDetails | EventDetailsDomainVerificationAddDomainSuccessDetails | EventDetailsDomainVerificationRemoveDomainDetails | EventDetailsEnabledDomainInvitesDetails | EventDetailsCreateFolderDetails | EventDetailsFileAddDetails | EventDetailsFileCopyDetails | EventDetailsFileDeleteDetails | EventDetailsFileDownloadDetails | EventDetailsFileEditDetails | EventDetailsFileGetCopyReferenceDetails | EventDetailsFileMoveDetails | EventDetailsFilePermanentlyDeleteDetails | EventDetailsFilePreviewDetails | EventDetailsFileRenameDetails | EventDetailsFileRestoreDetails | EventDetailsFileRevertDetails | EventDetailsFileRollbackChangesDetails | EventDetailsFileSaveCopyReferenceDetails | EventDetailsFileRequestAddDeadlineDetails | EventDetailsFileRequestChangeFolderDetails | EventDetailsFileRequestChangeTitleDetails | EventDetailsFileRequestCloseDetails | EventDetailsFileRequestCreateDetails | EventDetailsFileRequestReceiveFileDetails | EventDetailsFileRequestRemoveDeadlineDetails | EventDetailsFileRequestSendDetails | EventDetailsGroupAddExternalIdDetails | EventDetailsGroupAddMemberDetails | EventDetailsGroupChangeExternalIdDetails | EventDetailsGroupChangeManagementTypeDetails | EventDetailsGroupChangeMemberRoleDetails | EventDetailsGroupCreateDetails | EventDetailsGroupDeleteDetails | EventDetailsGroupDescriptionUpdatedDetails | EventDetailsGroupJoinPolicyUpdatedDetails | EventDetailsGroupMovedDetails | EventDetailsGroupRemoveExternalIdDetails | EventDetailsGroupRemoveMemberDetails | EventDetailsGroupRenameDetails | EventDetailsEmmLoginSuccessDetails | EventDetailsLogoutDetails | EventDetailsPasswordLoginFailDetails | EventDetailsPasswordLoginSuccessDetails | EventDetailsResellerSupportSessionEndDetails | EventDetailsResellerSupportSessionStartDetails | EventDetailsSignInAsSessionEndDetails | EventDetailsSignInAsSessionStartDetails | EventDetailsSsoLoginFailDetails | EventDetailsMemberAddNameDetails | EventDetailsMemberChangeAdminRoleDetails | EventDetailsMemberChangeEmailDetails | EventDetailsMemberChangeNameDetails | EventDetailsMemberChangeStatusDetails | EventDetailsMemberSuggestDetails | EventDetailsPaperContentAddMemberDetails | EventDetailsPaperContentAddToFolderDetails | EventDetailsPaperContentArchiveDetails | EventDetailsPaperContentChangeSubscriptionDetails | EventDetailsPaperContentCreateDetails | EventDetailsPaperContentPermanentlyDeleteDetails | EventDetailsPaperContentRemoveFromFolderDetails | EventDetailsPaperContentRemoveMemberDetails | EventDetailsPaperContentRenameDetails | EventDetailsPaperContentRestoreDetails | EventDetailsPaperDocAddCommentDetails | EventDetailsPaperDocChangeMemberRoleDetails | EventDetailsPaperDocChangeSharingPolicyDetails | EventDetailsPaperDocDeletedDetails | EventDetailsPaperDocDeleteCommentDetails | EventDetailsPaperDocDownloadDetails | EventDetailsPaperDocEditDetails | EventDetailsPaperDocEditCommentDetails | EventDetailsPaperDocFollowedDetails | EventDetailsPaperDocMentionDetails | EventDetailsPaperDocRequestAccessDetails | EventDetailsPaperDocResolveCommentDetails | EventDetailsPaperDocRevertDetails | EventDetailsPaperDocSlackShareDetails | EventDetailsPaperDocTeamInviteDetails | EventDetailsPaperDocUnresolveCommentDetails | EventDetailsPaperDocViewDetails | EventDetailsPaperFolderDeletedDetails | EventDetailsPaperFolderFollowedDetails | EventDetailsPaperFolderTeamInviteDetails | EventDetailsPasswordChangeDetails | EventDetailsPasswordResetDetails | EventDetailsPasswordResetAllDetails | EventDetailsEmmCreateExceptionsReportDetails | EventDetailsEmmCreateUsageReportDetails | EventDetailsSmartSyncCreateAdminPrivilegeReportDetails | EventDetailsTeamActivityCreateReportDetails | EventDetailsCollectionShareDetails | EventDetailsFileAddCommentDetails | EventDetailsFileLikeCommentDetails | EventDetailsFileUnlikeCommentDetails | EventDetailsNoteAclInviteOnlyDetails | EventDetailsNoteAclLinkDetails | EventDetailsNoteAclTeamLinkDetails | EventDetailsNoteSharedDetails | EventDetailsNoteShareReceiveDetails | EventDetailsOpenNoteSharedDetails | EventDetailsSfAddGroupDetails | EventDetailsSfAllowNonMembersToViewSharedLinksDetails | EventDetailsSfInviteGroupDetails | EventDetailsSfNestDetails | EventDetailsSfTeamDeclineDetails | EventDetailsSfTeamGrantAccessDetails | EventDetailsSfTeamInviteDetails | EventDetailsSfTeamInviteChangeRoleDetails | EventDetailsSfTeamJoinDetails | EventDetailsSfTeamJoinFromOobLinkDetails | EventDetailsSfTeamUninviteDetails | EventDetailsSharedContentAddInviteesDetails | EventDetailsSharedContentAddLinkExpiryDetails | EventDetailsSharedContentAddLinkPasswordDetails | EventDetailsSharedContentAddMemberDetails | EventDetailsSharedContentChangeDownloadsPolicyDetails | EventDetailsSharedContentChangeInviteeRoleDetails | EventDetailsSharedContentChangeLinkAudienceDetails | EventDetailsSharedContentChangeLinkExpiryDetails | EventDetailsSharedContentChangeLinkPasswordDetails | EventDetailsSharedContentChangeMemberRoleDetails | EventDetailsSharedContentChangeViewerInfoPolicyDetails | EventDetailsSharedContentClaimInvitationDetails | EventDetailsSharedContentCopyDetails | EventDetailsSharedContentDownloadDetails | EventDetailsSharedContentRelinquishMembershipDetails | EventDetailsSharedContentRemoveInviteeDetails | EventDetailsSharedContentRemoveLinkExpiryDetails | EventDetailsSharedContentRemoveLinkPasswordDetails | EventDetailsSharedContentRemoveMemberDetails | EventDetailsSharedContentRequestAccessDetails | EventDetailsSharedContentUnshareDetails | EventDetailsSharedContentViewDetails | EventDetailsSharedFolderChangeConfidentialityDetails | EventDetailsSharedFolderChangeLinkPolicyDetails | EventDetailsSharedFolderChangeMemberManagementPolicyDetails | EventDetailsSharedFolderChangeMemberPolicyDetails | EventDetailsSharedFolderCreateDetails | EventDetailsSharedFolderMountDetails | EventDetailsSharedFolderTransferOwnershipDetails | EventDetailsSharedFolderUnmountDetails | EventDetailsSharedNoteOpenedDetails | EventDetailsShmodelAppCreateDetails | EventDetailsShmodelCreateDetails | EventDetailsShmodelDisableDetails | EventDetailsShmodelFbShareDetails | EventDetailsShmodelGroupShareDetails | EventDetailsShmodelRemoveExpirationDetails | EventDetailsShmodelSetExpirationDetails | EventDetailsShmodelTeamCopyDetails | EventDetailsShmodelTeamDownloadDetails | EventDetailsShmodelTeamShareDetails | EventDetailsShmodelTeamViewDetails | EventDetailsShmodelVisibilityPasswordDetails | EventDetailsShmodelVisibilityPublicDetails | EventDetailsShmodelVisibilityTeamOnlyDetails | EventDetailsRemoveLogoutUrlDetails | EventDetailsRemoveSsoUrlDetails | EventDetailsSsoChangeCertDetails | EventDetailsSsoChangeLoginUrlDetails | EventDetailsSsoChangeLogoutUrlDetails | EventDetailsSsoChangeSamlIdentityModeDetails | EventDetailsTeamFolderChangeStatusDetails | EventDetailsTeamFolderCreateDetails | EventDetailsTeamFolderDowngradeDetails | EventDetailsTeamFolderPermanentlyDeleteDetails | EventDetailsTeamFolderRenameDetails | EventDetailsAccountCaptureChangePolicyDetails | EventDetailsAllowDownloadDisabledDetails | EventDetailsAllowDownloadEnabledDetails | EventDetailsDataPlacementRestrictionChangePolicyDetails | EventDetailsDataPlacementRestrictionSatisfyPolicyDetails | EventDetailsDeviceApprovalsChangeDesktopPolicyDetails | EventDetailsDeviceApprovalsChangeMobilePolicyDetails | EventDetailsDeviceApprovalsChangeOverageActionDetails | EventDetailsDeviceApprovalsChangeUnlinkActionDetails | EventDetailsEmmAddExceptionDetails | EventDetailsEmmChangePolicyDetails | EventDetailsEmmRemoveExceptionDetails | EventDetailsExtendedVersionHistoryChangePolicyDetails | EventDetailsFileCommentsChangePolicyDetails | EventDetailsFileRequestsChangePolicyDetails | EventDetailsFileRequestsEmailsEnabledDetails | EventDetailsFileRequestsEmailsRestrictedToTeamOnlyDetails | EventDetailsGoogleSsoChangePolicyDetails | EventDetailsGroupUserManagementChangePolicyDetails | EventDetailsMemberRequestsChangePolicyDetails | EventDetailsMemberSpaceLimitsAddExceptionDetails | EventDetailsMemberSpaceLimitsChangePolicyDetails | EventDetailsMemberSpaceLimitsRemoveExceptionDetails | EventDetailsMemberSuggestionsChangePolicyDetails | EventDetailsMicrosoftOfficeAddinChangePolicyDetails | EventDetailsNetworkControlChangePolicyDetails | EventDetailsPaperChangeDeploymentPolicyDetails | EventDetailsPaperChangeMemberPolicyDetails | EventDetailsPaperChangePolicyDetails | EventDetailsPermanentDeleteChangePolicyDetails | EventDetailsSharingChangeFolderJoinPolicyDetails | EventDetailsSharingChangeLinkPolicyDetails | EventDetailsSharingChangeMemberPolicyDetails | EventDetailsSmartSyncChangePolicyDetails | EventDetailsSmartSyncNotOptOutDetails | EventDetailsSmartSyncOptOutDetails | EventDetailsSsoChangePolicyDetails | EventDetailsTfaChangePolicyDetails | EventDetailsTwoAccountChangePolicyDetails | EventDetailsWebSessionsChangeFixedLengthPolicyDetails | EventDetailsWebSessionsChangeIdleLengthPolicyDetails | EventDetailsTeamProfileAddLogoDetails | EventDetailsTeamProfileChangeLogoDetails | EventDetailsTeamProfileChangeNameDetails | EventDetailsTeamProfileRemoveLogoDetails | EventDetailsTfaAddBackupPhoneDetails | EventDetailsTfaAddSecurityKeyDetails | EventDetailsTfaChangeBackupPhoneDetails | EventDetailsTfaChangeStatusDetails | EventDetailsTfaRemoveBackupPhoneDetails | EventDetailsTfaRemoveSecurityKeyDetails | EventDetailsTfaResetDetails | EventDetailsMissingDetails | EventDetailsOther;
 
     /**
      * Changed the membership type (limited vs full) for team member.
@@ -13160,10 +13572,17 @@ declare module DropboxTypes {
     }
 
     /**
-     * Merged the team into another team.
+     * Merged another team into this team.
      */
-    interface EventTypeTeamMerge {
-      '.tag': 'team_merge';
+    interface EventTypeTeamMergeFrom {
+      '.tag': 'team_merge_from';
+    }
+
+    /**
+     * Merged this team into another team.
+     */
+    interface EventTypeTeamMergeTo {
+      '.tag': 'team_merge_to';
     }
 
     /**
@@ -13706,6 +14125,13 @@ declare module DropboxTypes {
     }
 
     /**
+     * Change the admin role belonging to team member.
+     */
+    interface EventTypeMemberChangeAdminRole {
+      '.tag': 'member_change_admin_role';
+    }
+
+    /**
      * Changed team member email address.
      */
     interface EventTypeMemberChangeEmail {
@@ -13720,38 +14146,10 @@ declare module DropboxTypes {
     }
 
     /**
-     * Change the admin permissions belonging to team member.
+     * Changed the membership status of a team member.
      */
-    interface EventTypeMemberChangeRole {
-      '.tag': 'member_change_role';
-    }
-
-    /**
-     * Invited a user to join the team.
-     */
-    interface EventTypeMemberInvite {
-      '.tag': 'member_invite';
-    }
-
-    /**
-     * Joined the team.
-     */
-    interface EventTypeMemberJoin {
-      '.tag': 'member_join';
-    }
-
-    /**
-     * Removed a team member.
-     */
-    interface EventTypeMemberLeave {
-      '.tag': 'member_leave';
-    }
-
-    /**
-     * Recovered a removed member.
-     */
-    interface EventTypeMemberRecover {
-      '.tag': 'member_recover';
+    interface EventTypeMemberChangeStatus {
+      '.tag': 'member_change_status';
     }
 
     /**
@@ -13759,20 +14157,6 @@ declare module DropboxTypes {
      */
     interface EventTypeMemberSuggest {
       '.tag': 'member_suggest';
-    }
-
-    /**
-     * Suspended a team member.
-     */
-    interface EventTypeMemberSuspend {
-      '.tag': 'member_suspend';
-    }
-
-    /**
-     * Unsuspended a team member.
-     */
-    interface EventTypeMemberUnsuspend {
-      '.tag': 'member_unsuspend';
     }
 
     /**
@@ -14887,6 +15271,20 @@ declare module DropboxTypes {
     }
 
     /**
+     * Opted team into Smart Sync.
+     */
+    interface EventTypeSmartSyncNotOptOut {
+      '.tag': 'smart_sync_not_opt_out';
+    }
+
+    /**
+     * Opted team out of Smart Sync.
+     */
+    interface EventTypeSmartSyncOptOut {
+      '.tag': 'smart_sync_opt_out';
+    }
+
+    /**
      * Change the single sign-on policy for the team.
      */
     interface EventTypeSsoChangePolicy {
@@ -15007,7 +15405,7 @@ declare module DropboxTypes {
     /**
      * The type of the event.
      */
-    type EventType = EventTypeMemberChangeMembershipType | EventTypeMemberPermanentlyDeleteAccountContents | EventTypeMemberSpaceLimitsChangeStatus | EventTypeMemberTransferAccountContents | EventTypePaperEnabledUsersGroupAddition | EventTypePaperEnabledUsersGroupRemoval | EventTypePaperExternalViewAllow | EventTypePaperExternalViewDefaultTeam | EventTypePaperExternalViewForbid | EventTypeSfExternalInviteWarn | EventTypeTeamMerge | EventTypeAppLinkTeam | EventTypeAppLinkUser | EventTypeAppUnlinkTeam | EventTypeAppUnlinkUser | EventTypeDeviceChangeIpDesktop | EventTypeDeviceChangeIpMobile | EventTypeDeviceChangeIpWeb | EventTypeDeviceDeleteOnUnlinkFail | EventTypeDeviceDeleteOnUnlinkSuccess | EventTypeDeviceLinkFail | EventTypeDeviceLinkSuccess | EventTypeDeviceManagementDisabled | EventTypeDeviceManagementEnabled | EventTypeDeviceUnlink | EventTypeEmmRefreshAuthToken | EventTypeAccountCaptureChangeAvailability | EventTypeAccountCaptureMigrateAccount | EventTypeAccountCaptureRelinquishAccount | EventTypeDisabledDomainInvites | EventTypeDomainInvitesApproveRequestToJoinTeam | EventTypeDomainInvitesDeclineRequestToJoinTeam | EventTypeDomainInvitesEmailExistingUsers | EventTypeDomainInvitesRequestToJoinTeam | EventTypeDomainInvitesSetInviteNewUserPrefToNo | EventTypeDomainInvitesSetInviteNewUserPrefToYes | EventTypeDomainVerificationAddDomainFail | EventTypeDomainVerificationAddDomainSuccess | EventTypeDomainVerificationRemoveDomain | EventTypeEnabledDomainInvites | EventTypeCreateFolder | EventTypeFileAdd | EventTypeFileCopy | EventTypeFileDelete | EventTypeFileDownload | EventTypeFileEdit | EventTypeFileGetCopyReference | EventTypeFileMove | EventTypeFilePermanentlyDelete | EventTypeFilePreview | EventTypeFileRename | EventTypeFileRestore | EventTypeFileRevert | EventTypeFileRollbackChanges | EventTypeFileSaveCopyReference | EventTypeFileRequestAddDeadline | EventTypeFileRequestChangeFolder | EventTypeFileRequestChangeTitle | EventTypeFileRequestClose | EventTypeFileRequestCreate | EventTypeFileRequestReceiveFile | EventTypeFileRequestRemoveDeadline | EventTypeFileRequestSend | EventTypeGroupAddExternalId | EventTypeGroupAddMember | EventTypeGroupChangeExternalId | EventTypeGroupChangeManagementType | EventTypeGroupChangeMemberRole | EventTypeGroupCreate | EventTypeGroupDelete | EventTypeGroupDescriptionUpdated | EventTypeGroupJoinPolicyUpdated | EventTypeGroupMoved | EventTypeGroupRemoveExternalId | EventTypeGroupRemoveMember | EventTypeGroupRename | EventTypeEmmLoginSuccess | EventTypeLogout | EventTypePasswordLoginFail | EventTypePasswordLoginSuccess | EventTypeResellerSupportSessionEnd | EventTypeResellerSupportSessionStart | EventTypeSignInAsSessionEnd | EventTypeSignInAsSessionStart | EventTypeSsoLoginFail | EventTypeMemberAddName | EventTypeMemberChangeEmail | EventTypeMemberChangeName | EventTypeMemberChangeRole | EventTypeMemberInvite | EventTypeMemberJoin | EventTypeMemberLeave | EventTypeMemberRecover | EventTypeMemberSuggest | EventTypeMemberSuspend | EventTypeMemberUnsuspend | EventTypePaperContentAddMember | EventTypePaperContentAddToFolder | EventTypePaperContentArchive | EventTypePaperContentChangeSubscription | EventTypePaperContentCreate | EventTypePaperContentPermanentlyDelete | EventTypePaperContentRemoveFromFolder | EventTypePaperContentRemoveMember | EventTypePaperContentRename | EventTypePaperContentRestore | EventTypePaperDocAddComment | EventTypePaperDocChangeMemberRole | EventTypePaperDocChangeSharingPolicy | EventTypePaperDocDeleted | EventTypePaperDocDeleteComment | EventTypePaperDocDownload | EventTypePaperDocEdit | EventTypePaperDocEditComment | EventTypePaperDocFollowed | EventTypePaperDocMention | EventTypePaperDocRequestAccess | EventTypePaperDocResolveComment | EventTypePaperDocRevert | EventTypePaperDocSlackShare | EventTypePaperDocTeamInvite | EventTypePaperDocUnresolveComment | EventTypePaperDocView | EventTypePaperFolderDeleted | EventTypePaperFolderFollowed | EventTypePaperFolderTeamInvite | EventTypePasswordChange | EventTypePasswordReset | EventTypePasswordResetAll | EventTypeEmmCreateExceptionsReport | EventTypeEmmCreateUsageReport | EventTypeSmartSyncCreateAdminPrivilegeReport | EventTypeTeamActivityCreateReport | EventTypeCollectionShare | EventTypeFileAddComment | EventTypeFileLikeComment | EventTypeFileUnlikeComment | EventTypeNoteAclInviteOnly | EventTypeNoteAclLink | EventTypeNoteAclTeamLink | EventTypeNoteShared | EventTypeNoteShareReceive | EventTypeOpenNoteShared | EventTypeSfAddGroup | EventTypeSfAllowNonMembersToViewSharedLinks | EventTypeSfInviteGroup | EventTypeSfNest | EventTypeSfTeamDecline | EventTypeSfTeamGrantAccess | EventTypeSfTeamInvite | EventTypeSfTeamInviteChangeRole | EventTypeSfTeamJoin | EventTypeSfTeamJoinFromOobLink | EventTypeSfTeamUninvite | EventTypeSharedContentAddInvitees | EventTypeSharedContentAddLinkExpiry | EventTypeSharedContentAddLinkPassword | EventTypeSharedContentAddMember | EventTypeSharedContentChangeDownloadsPolicy | EventTypeSharedContentChangeInviteeRole | EventTypeSharedContentChangeLinkAudience | EventTypeSharedContentChangeLinkExpiry | EventTypeSharedContentChangeLinkPassword | EventTypeSharedContentChangeMemberRole | EventTypeSharedContentChangeViewerInfoPolicy | EventTypeSharedContentClaimInvitation | EventTypeSharedContentCopy | EventTypeSharedContentDownload | EventTypeSharedContentRelinquishMembership | EventTypeSharedContentRemoveInvitee | EventTypeSharedContentRemoveLinkExpiry | EventTypeSharedContentRemoveLinkPassword | EventTypeSharedContentRemoveMember | EventTypeSharedContentRequestAccess | EventTypeSharedContentUnshare | EventTypeSharedContentView | EventTypeSharedFolderChangeConfidentiality | EventTypeSharedFolderChangeLinkPolicy | EventTypeSharedFolderChangeMemberManagementPolicy | EventTypeSharedFolderChangeMemberPolicy | EventTypeSharedFolderCreate | EventTypeSharedFolderMount | EventTypeSharedFolderTransferOwnership | EventTypeSharedFolderUnmount | EventTypeSharedNoteOpened | EventTypeShmodelAppCreate | EventTypeShmodelCreate | EventTypeShmodelDisable | EventTypeShmodelFbShare | EventTypeShmodelGroupShare | EventTypeShmodelRemoveExpiration | EventTypeShmodelSetExpiration | EventTypeShmodelTeamCopy | EventTypeShmodelTeamDownload | EventTypeShmodelTeamShare | EventTypeShmodelTeamView | EventTypeShmodelVisibilityPassword | EventTypeShmodelVisibilityPublic | EventTypeShmodelVisibilityTeamOnly | EventTypeRemoveLogoutUrl | EventTypeRemoveSsoUrl | EventTypeSsoChangeCert | EventTypeSsoChangeLoginUrl | EventTypeSsoChangeLogoutUrl | EventTypeSsoChangeSamlIdentityMode | EventTypeTeamFolderChangeStatus | EventTypeTeamFolderCreate | EventTypeTeamFolderDowngrade | EventTypeTeamFolderPermanentlyDelete | EventTypeTeamFolderRename | EventTypeAccountCaptureChangePolicy | EventTypeAllowDownloadDisabled | EventTypeAllowDownloadEnabled | EventTypeDataPlacementRestrictionChangePolicy | EventTypeDataPlacementRestrictionSatisfyPolicy | EventTypeDeviceApprovalsChangeDesktopPolicy | EventTypeDeviceApprovalsChangeMobilePolicy | EventTypeDeviceApprovalsChangeOverageAction | EventTypeDeviceApprovalsChangeUnlinkAction | EventTypeEmmAddException | EventTypeEmmChangePolicy | EventTypeEmmRemoveException | EventTypeExtendedVersionHistoryChangePolicy | EventTypeFileCommentsChangePolicy | EventTypeFileRequestsChangePolicy | EventTypeFileRequestsEmailsEnabled | EventTypeFileRequestsEmailsRestrictedToTeamOnly | EventTypeGoogleSsoChangePolicy | EventTypeGroupUserManagementChangePolicy | EventTypeMemberRequestsChangePolicy | EventTypeMemberSpaceLimitsAddException | EventTypeMemberSpaceLimitsChangePolicy | EventTypeMemberSpaceLimitsRemoveException | EventTypeMemberSuggestionsChangePolicy | EventTypeMicrosoftOfficeAddinChangePolicy | EventTypeNetworkControlChangePolicy | EventTypePaperChangeDeploymentPolicy | EventTypePaperChangeMemberPolicy | EventTypePaperChangePolicy | EventTypePermanentDeleteChangePolicy | EventTypeSharingChangeFolderJoinPolicy | EventTypeSharingChangeLinkPolicy | EventTypeSharingChangeMemberPolicy | EventTypeSmartSyncChangePolicy | EventTypeSsoChangePolicy | EventTypeTfaChangePolicy | EventTypeTwoAccountChangePolicy | EventTypeWebSessionsChangeFixedLengthPolicy | EventTypeWebSessionsChangeIdleLengthPolicy | EventTypeTeamProfileAddLogo | EventTypeTeamProfileChangeLogo | EventTypeTeamProfileChangeName | EventTypeTeamProfileRemoveLogo | EventTypeTfaAddBackupPhone | EventTypeTfaAddSecurityKey | EventTypeTfaChangeBackupPhone | EventTypeTfaChangeStatus | EventTypeTfaRemoveBackupPhone | EventTypeTfaRemoveSecurityKey | EventTypeTfaReset | EventTypeOther;
+    type EventType = EventTypeMemberChangeMembershipType | EventTypeMemberPermanentlyDeleteAccountContents | EventTypeMemberSpaceLimitsChangeStatus | EventTypeMemberTransferAccountContents | EventTypePaperEnabledUsersGroupAddition | EventTypePaperEnabledUsersGroupRemoval | EventTypePaperExternalViewAllow | EventTypePaperExternalViewDefaultTeam | EventTypePaperExternalViewForbid | EventTypeSfExternalInviteWarn | EventTypeTeamMergeFrom | EventTypeTeamMergeTo | EventTypeAppLinkTeam | EventTypeAppLinkUser | EventTypeAppUnlinkTeam | EventTypeAppUnlinkUser | EventTypeDeviceChangeIpDesktop | EventTypeDeviceChangeIpMobile | EventTypeDeviceChangeIpWeb | EventTypeDeviceDeleteOnUnlinkFail | EventTypeDeviceDeleteOnUnlinkSuccess | EventTypeDeviceLinkFail | EventTypeDeviceLinkSuccess | EventTypeDeviceManagementDisabled | EventTypeDeviceManagementEnabled | EventTypeDeviceUnlink | EventTypeEmmRefreshAuthToken | EventTypeAccountCaptureChangeAvailability | EventTypeAccountCaptureMigrateAccount | EventTypeAccountCaptureRelinquishAccount | EventTypeDisabledDomainInvites | EventTypeDomainInvitesApproveRequestToJoinTeam | EventTypeDomainInvitesDeclineRequestToJoinTeam | EventTypeDomainInvitesEmailExistingUsers | EventTypeDomainInvitesRequestToJoinTeam | EventTypeDomainInvitesSetInviteNewUserPrefToNo | EventTypeDomainInvitesSetInviteNewUserPrefToYes | EventTypeDomainVerificationAddDomainFail | EventTypeDomainVerificationAddDomainSuccess | EventTypeDomainVerificationRemoveDomain | EventTypeEnabledDomainInvites | EventTypeCreateFolder | EventTypeFileAdd | EventTypeFileCopy | EventTypeFileDelete | EventTypeFileDownload | EventTypeFileEdit | EventTypeFileGetCopyReference | EventTypeFileMove | EventTypeFilePermanentlyDelete | EventTypeFilePreview | EventTypeFileRename | EventTypeFileRestore | EventTypeFileRevert | EventTypeFileRollbackChanges | EventTypeFileSaveCopyReference | EventTypeFileRequestAddDeadline | EventTypeFileRequestChangeFolder | EventTypeFileRequestChangeTitle | EventTypeFileRequestClose | EventTypeFileRequestCreate | EventTypeFileRequestReceiveFile | EventTypeFileRequestRemoveDeadline | EventTypeFileRequestSend | EventTypeGroupAddExternalId | EventTypeGroupAddMember | EventTypeGroupChangeExternalId | EventTypeGroupChangeManagementType | EventTypeGroupChangeMemberRole | EventTypeGroupCreate | EventTypeGroupDelete | EventTypeGroupDescriptionUpdated | EventTypeGroupJoinPolicyUpdated | EventTypeGroupMoved | EventTypeGroupRemoveExternalId | EventTypeGroupRemoveMember | EventTypeGroupRename | EventTypeEmmLoginSuccess | EventTypeLogout | EventTypePasswordLoginFail | EventTypePasswordLoginSuccess | EventTypeResellerSupportSessionEnd | EventTypeResellerSupportSessionStart | EventTypeSignInAsSessionEnd | EventTypeSignInAsSessionStart | EventTypeSsoLoginFail | EventTypeMemberAddName | EventTypeMemberChangeAdminRole | EventTypeMemberChangeEmail | EventTypeMemberChangeName | EventTypeMemberChangeStatus | EventTypeMemberSuggest | EventTypePaperContentAddMember | EventTypePaperContentAddToFolder | EventTypePaperContentArchive | EventTypePaperContentChangeSubscription | EventTypePaperContentCreate | EventTypePaperContentPermanentlyDelete | EventTypePaperContentRemoveFromFolder | EventTypePaperContentRemoveMember | EventTypePaperContentRename | EventTypePaperContentRestore | EventTypePaperDocAddComment | EventTypePaperDocChangeMemberRole | EventTypePaperDocChangeSharingPolicy | EventTypePaperDocDeleted | EventTypePaperDocDeleteComment | EventTypePaperDocDownload | EventTypePaperDocEdit | EventTypePaperDocEditComment | EventTypePaperDocFollowed | EventTypePaperDocMention | EventTypePaperDocRequestAccess | EventTypePaperDocResolveComment | EventTypePaperDocRevert | EventTypePaperDocSlackShare | EventTypePaperDocTeamInvite | EventTypePaperDocUnresolveComment | EventTypePaperDocView | EventTypePaperFolderDeleted | EventTypePaperFolderFollowed | EventTypePaperFolderTeamInvite | EventTypePasswordChange | EventTypePasswordReset | EventTypePasswordResetAll | EventTypeEmmCreateExceptionsReport | EventTypeEmmCreateUsageReport | EventTypeSmartSyncCreateAdminPrivilegeReport | EventTypeTeamActivityCreateReport | EventTypeCollectionShare | EventTypeFileAddComment | EventTypeFileLikeComment | EventTypeFileUnlikeComment | EventTypeNoteAclInviteOnly | EventTypeNoteAclLink | EventTypeNoteAclTeamLink | EventTypeNoteShared | EventTypeNoteShareReceive | EventTypeOpenNoteShared | EventTypeSfAddGroup | EventTypeSfAllowNonMembersToViewSharedLinks | EventTypeSfInviteGroup | EventTypeSfNest | EventTypeSfTeamDecline | EventTypeSfTeamGrantAccess | EventTypeSfTeamInvite | EventTypeSfTeamInviteChangeRole | EventTypeSfTeamJoin | EventTypeSfTeamJoinFromOobLink | EventTypeSfTeamUninvite | EventTypeSharedContentAddInvitees | EventTypeSharedContentAddLinkExpiry | EventTypeSharedContentAddLinkPassword | EventTypeSharedContentAddMember | EventTypeSharedContentChangeDownloadsPolicy | EventTypeSharedContentChangeInviteeRole | EventTypeSharedContentChangeLinkAudience | EventTypeSharedContentChangeLinkExpiry | EventTypeSharedContentChangeLinkPassword | EventTypeSharedContentChangeMemberRole | EventTypeSharedContentChangeViewerInfoPolicy | EventTypeSharedContentClaimInvitation | EventTypeSharedContentCopy | EventTypeSharedContentDownload | EventTypeSharedContentRelinquishMembership | EventTypeSharedContentRemoveInvitee | EventTypeSharedContentRemoveLinkExpiry | EventTypeSharedContentRemoveLinkPassword | EventTypeSharedContentRemoveMember | EventTypeSharedContentRequestAccess | EventTypeSharedContentUnshare | EventTypeSharedContentView | EventTypeSharedFolderChangeConfidentiality | EventTypeSharedFolderChangeLinkPolicy | EventTypeSharedFolderChangeMemberManagementPolicy | EventTypeSharedFolderChangeMemberPolicy | EventTypeSharedFolderCreate | EventTypeSharedFolderMount | EventTypeSharedFolderTransferOwnership | EventTypeSharedFolderUnmount | EventTypeSharedNoteOpened | EventTypeShmodelAppCreate | EventTypeShmodelCreate | EventTypeShmodelDisable | EventTypeShmodelFbShare | EventTypeShmodelGroupShare | EventTypeShmodelRemoveExpiration | EventTypeShmodelSetExpiration | EventTypeShmodelTeamCopy | EventTypeShmodelTeamDownload | EventTypeShmodelTeamShare | EventTypeShmodelTeamView | EventTypeShmodelVisibilityPassword | EventTypeShmodelVisibilityPublic | EventTypeShmodelVisibilityTeamOnly | EventTypeRemoveLogoutUrl | EventTypeRemoveSsoUrl | EventTypeSsoChangeCert | EventTypeSsoChangeLoginUrl | EventTypeSsoChangeLogoutUrl | EventTypeSsoChangeSamlIdentityMode | EventTypeTeamFolderChangeStatus | EventTypeTeamFolderCreate | EventTypeTeamFolderDowngrade | EventTypeTeamFolderPermanentlyDelete | EventTypeTeamFolderRename | EventTypeAccountCaptureChangePolicy | EventTypeAllowDownloadDisabled | EventTypeAllowDownloadEnabled | EventTypeDataPlacementRestrictionChangePolicy | EventTypeDataPlacementRestrictionSatisfyPolicy | EventTypeDeviceApprovalsChangeDesktopPolicy | EventTypeDeviceApprovalsChangeMobilePolicy | EventTypeDeviceApprovalsChangeOverageAction | EventTypeDeviceApprovalsChangeUnlinkAction | EventTypeEmmAddException | EventTypeEmmChangePolicy | EventTypeEmmRemoveException | EventTypeExtendedVersionHistoryChangePolicy | EventTypeFileCommentsChangePolicy | EventTypeFileRequestsChangePolicy | EventTypeFileRequestsEmailsEnabled | EventTypeFileRequestsEmailsRestrictedToTeamOnly | EventTypeGoogleSsoChangePolicy | EventTypeGroupUserManagementChangePolicy | EventTypeMemberRequestsChangePolicy | EventTypeMemberSpaceLimitsAddException | EventTypeMemberSpaceLimitsChangePolicy | EventTypeMemberSpaceLimitsRemoveException | EventTypeMemberSuggestionsChangePolicy | EventTypeMicrosoftOfficeAddinChangePolicy | EventTypeNetworkControlChangePolicy | EventTypePaperChangeDeploymentPolicy | EventTypePaperChangeMemberPolicy | EventTypePaperChangePolicy | EventTypePermanentDeleteChangePolicy | EventTypeSharingChangeFolderJoinPolicy | EventTypeSharingChangeLinkPolicy | EventTypeSharingChangeMemberPolicy | EventTypeSmartSyncChangePolicy | EventTypeSmartSyncNotOptOut | EventTypeSmartSyncOptOut | EventTypeSsoChangePolicy | EventTypeTfaChangePolicy | EventTypeTwoAccountChangePolicy | EventTypeWebSessionsChangeFixedLengthPolicy | EventTypeWebSessionsChangeIdleLengthPolicy | EventTypeTeamProfileAddLogo | EventTypeTeamProfileChangeLogo | EventTypeTeamProfileChangeName | EventTypeTeamProfileRemoveLogo | EventTypeTfaAddBackupPhone | EventTypeTfaAddSecurityKey | EventTypeTfaChangeBackupPhone | EventTypeTfaChangeStatus | EventTypeTfaRemoveBackupPhone | EventTypeTfaRemoveSecurityKey | EventTypeTfaReset | EventTypeOther;
 
     /**
      * Accepted or opted out of extended version history.
@@ -15038,37 +15436,20 @@ declare module DropboxTypes {
 
     type ExtendedVersionHistoryPolicy = ExtendedVersionHistoryPolicyLimited | ExtendedVersionHistoryPolicyUnlimited | ExtendedVersionHistoryPolicyOther;
 
-    interface ExternalSharingAccessibilityPolicyTeamOnly {
-      '.tag': 'team_only';
+    /**
+     * Provides details about a failure
+     */
+    interface FailureDetailsLogInfo {
+      /**
+       * A user friendly explanation of the error. Might be missing due to
+       * historical data gap.
+       */
+      user_friendly_message?: string;
+      /**
+       * A technical explanation of the error. This is relevant for some errors.
+       */
+      technical_error_message?: string;
     }
-
-    interface ExternalSharingAccessibilityPolicyDefaultTeamOnly {
-      '.tag': 'default_team_only';
-    }
-
-    interface ExternalSharingAccessibilityPolicyDefaultAnyone {
-      '.tag': 'default_anyone';
-    }
-
-    interface ExternalSharingAccessibilityPolicyOther {
-      '.tag': 'other';
-    }
-
-    type ExternalSharingAccessibilityPolicy = ExternalSharingAccessibilityPolicyTeamOnly | ExternalSharingAccessibilityPolicyDefaultTeamOnly | ExternalSharingAccessibilityPolicyDefaultAnyone | ExternalSharingAccessibilityPolicyOther;
-
-    interface ExternalSharingPolicyTeamOnly {
-      '.tag': 'team_only';
-    }
-
-    interface ExternalSharingPolicyAnyone {
-      '.tag': 'anyone';
-    }
-
-    interface ExternalSharingPolicyOther {
-      '.tag': 'other';
-    }
-
-    type ExternalSharingPolicy = ExternalSharingPolicyTeamOnly | ExternalSharingPolicyAnyone | ExternalSharingPolicyOther;
 
     /**
      * Added a file comment.
@@ -15097,26 +15478,39 @@ declare module DropboxTypes {
       /**
        * New commenting on team files policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: FileCommentsPolicy;
       /**
        * Previous commenting on team files policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: FileCommentsPolicy;
     }
+
+    interface FileCommentsPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface FileCommentsPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface FileCommentsPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * File comments policy
+     */
+    type FileCommentsPolicy = FileCommentsPolicyDisabled | FileCommentsPolicyEnabled | FileCommentsPolicyOther;
 
     /**
      * Copied files and/or folders.
      */
     interface FileCopyDetails {
       /**
-       * Source asset index.
+       * Relocate action details.
        */
-      src_index: number;
-      /**
-       * Destination asset index.
-       */
-      dest_index: number;
+      relocate_action_details: Array<RelocateAssetReferencesLogInfo>;
     }
 
     /**
@@ -15168,13 +15562,9 @@ declare module DropboxTypes {
      */
     interface FileMoveDetails {
       /**
-       * Source asset index.
+       * Relocate action details.
        */
-      src_index: number;
-      /**
-       * Destination asset index.
-       */
-      dest_index: number;
+      relocate_action_details: Array<RelocateAssetReferencesLogInfo>;
     }
 
     /**
@@ -15212,13 +15602,9 @@ declare module DropboxTypes {
      */
     interface FileRenameDetails {
       /**
-       * Source asset index.
+       * Relocate action details.
        */
-      src_index: number;
-      /**
-       * Destination asset index.
-       */
-      dest_index: number;
+      relocate_action_details: Array<RelocateAssetReferencesLogInfo>;
     }
 
     /**
@@ -15312,12 +15698,12 @@ declare module DropboxTypes {
       /**
        * New file requests policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: FileRequestsPolicy;
       /**
        * Previous file requests policy. Might be missing due to historical data
        * gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: FileRequestsPolicy;
     }
 
     /**
@@ -15331,6 +15717,23 @@ declare module DropboxTypes {
      */
     interface FileRequestsEmailsRestrictedToTeamOnlyDetails {
     }
+
+    interface FileRequestsPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface FileRequestsPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface FileRequestsPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * File requests policy
+     */
+    type FileRequestsPolicy = FileRequestsPolicyDisabled | FileRequestsPolicyEnabled | FileRequestsPolicyOther;
 
     /**
      * Restored deleted files and/or folders.
@@ -15355,13 +15758,9 @@ declare module DropboxTypes {
      */
     interface FileSaveCopyReferenceDetails {
       /**
-       * Source asset index.
+       * Relocate action details.
        */
-      src_index: number;
-      /**
-       * Destination asset index.
-       */
-      dest_index: number;
+      relocate_action_details: Array<RelocateAssetReferencesLogInfo>;
     }
 
     /**
@@ -15420,6 +15819,10 @@ declare module DropboxTypes {
        * Filter by time range.
        */
       time?: team_common.TimeRange;
+      /**
+       * Filter the returned events to a single category.
+       */
+      category?: EventCategory;
     }
 
     interface GetTeamEventsContinueArg {
@@ -15491,22 +15894,35 @@ declare module DropboxTypes {
       /**
        * New Google single sign-on policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: GoogleSsoPolicy;
       /**
        * Previous Google single sign-on policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: GoogleSsoPolicy;
     }
+
+    interface GoogleSsoPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface GoogleSsoPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface GoogleSsoPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Google SSO policy
+     */
+    type GoogleSsoPolicy = GoogleSsoPolicyDisabled | GoogleSsoPolicyEnabled | GoogleSsoPolicyOther;
 
     /**
      * Added an external ID for group.
      */
     interface GroupAddExternalIdDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
       /**
        * Current external id.
        */
@@ -15518,10 +15934,6 @@ declare module DropboxTypes {
      */
     interface GroupAddMemberDetails {
       /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
-      /**
        * Is group owner.
        */
       is_group_owner: boolean;
@@ -15531,10 +15943,6 @@ declare module DropboxTypes {
      * Changed the external ID for group.
      */
     interface GroupChangeExternalIdDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
       /**
        * Current external id.
        */
@@ -15549,10 +15957,6 @@ declare module DropboxTypes {
      * Changed group management type.
      */
     interface GroupChangeManagementTypeDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
       /**
        * New group management type.
        */
@@ -15569,10 +15973,6 @@ declare module DropboxTypes {
      */
     interface GroupChangeMemberRoleDetails {
       /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
-      /**
        * Is group owner.
        */
       is_group_owner: boolean;
@@ -15582,10 +15982,6 @@ declare module DropboxTypes {
      * Created a group.
      */
     interface GroupCreateDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
       /**
        * Is admin managed group. Might be missing due to historical data gap.
        */
@@ -15601,10 +15997,6 @@ declare module DropboxTypes {
      */
     interface GroupDeleteDetails {
       /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
-      /**
        * Is admin managed group. Might be missing due to historical data gap.
        */
       is_admin_managed?: boolean;
@@ -15614,10 +16006,6 @@ declare module DropboxTypes {
      * Updated a group.
      */
     interface GroupDescriptionUpdatedDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
     }
 
     interface GroupJoinPolicyOpen {
@@ -15638,10 +16026,6 @@ declare module DropboxTypes {
      * Updated a group join policy.
      */
     interface GroupJoinPolicyUpdatedDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
       /**
        * Is admin managed group. Might be missing due to historical data gap.
        */
@@ -15689,20 +16073,12 @@ declare module DropboxTypes {
      * Moved a group.
      */
     interface GroupMovedDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
     }
 
     /**
      * Removed the external ID for group.
      */
     interface GroupRemoveExternalIdDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
       /**
        * Old external id.
        */
@@ -15713,20 +16089,12 @@ declare module DropboxTypes {
      * Removed team members from a group.
      */
     interface GroupRemoveMemberDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
     }
 
     /**
      * Renamed a group.
      */
     interface GroupRenameDetails {
-      /**
-       * Group details.
-       */
-      group_info: GroupLogInfo;
       /**
        * Previous display name.
        */
@@ -15740,27 +16108,27 @@ declare module DropboxTypes {
       /**
        * New group users management policy.
        */
-      new_value: GroupsUserManagementPolicy;
+      new_value: GroupUserManagementPolicy;
       /**
        * Previous group users management policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: GroupsUserManagementPolicy;
+      previous_value?: GroupUserManagementPolicy;
     }
 
-    interface GroupsUserManagementPolicyAllUsers {
+    interface GroupUserManagementPolicyAllUsers {
       '.tag': 'all_users';
     }
 
-    interface GroupsUserManagementPolicyOnlyAdmins {
+    interface GroupUserManagementPolicyOnlyAdmins {
       '.tag': 'only_admins';
     }
 
-    interface GroupsUserManagementPolicyOther {
+    interface GroupUserManagementPolicyOther {
       '.tag': 'other';
     }
 
-    type GroupsUserManagementPolicy = GroupsUserManagementPolicyAllUsers | GroupsUserManagementPolicyOnlyAdmins | GroupsUserManagementPolicyOther;
+    type GroupUserManagementPolicy = GroupUserManagementPolicyAllUsers | GroupUserManagementPolicyOnlyAdmins | GroupUserManagementPolicyOther;
 
     /**
      * Host details.
@@ -15774,6 +16142,24 @@ declare module DropboxTypes {
        * Host name. Might be missing due to historical data gap.
        */
       host_name?: string;
+    }
+
+    /**
+     * Additional information relevant when a new member joins the team.
+     */
+    interface JoinTeamDetails {
+      /**
+       * Linked applications.
+       */
+      linked_apps: Array<UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference>;
+      /**
+       * Linked devices.
+       */
+      linked_devices: Array<DeviceLogInfo>;
+      /**
+       * Linked shared folders.
+       */
+      linked_shared_folders: Array<FolderLogInfo>;
     }
 
     interface LinkAudiencePublic {
@@ -15807,7 +16193,23 @@ declare module DropboxTypes {
       /**
        * User's name.
        */
-      new_value: UserNameLogInfo;
+      value: UserNameLogInfo;
+    }
+
+    /**
+     * Change the admin role belonging to team member.
+     */
+    interface MemberChangeAdminRoleDetails {
+      /**
+       * New admin role. This field is relevant when the admin role is changed
+       * or whenthe user role changes from no admin rights to with admin rights.
+       */
+      new_value?: AdminRole;
+      /**
+       * Previous admin role. This field is relevant when the admin role is
+       * changed or when the admin role is removed.
+       */
+      previous_value?: AdminRole;
     }
 
     /**
@@ -15831,11 +16233,11 @@ declare module DropboxTypes {
       /**
        * Previous membership type.
        */
-      prev_membership_type: number;
+      prev_value: TeamMembershipType;
       /**
        * New membership type.
        */
-      new_membership_type: number;
+      new_value: TeamMembershipType;
     }
 
     /**
@@ -15853,51 +16255,21 @@ declare module DropboxTypes {
     }
 
     /**
-     * Change the admin permissions belonging to team member.
+     * Changed the membership status of a team member.
      */
-    interface MemberChangeRoleDetails {
+    interface MemberChangeStatusDetails {
       /**
-       * New admin role. Might be missing due to historical data gap.
+       * Previous member status. Might be missing due to historical data gap.
        */
-      new_value?: string;
+      previous_value?: MemberStatus;
       /**
-       * Previous admin role. Might be missing due to historical data gap.
+       * New member status.
        */
-      previous_value?: string;
-    }
-
-    /**
-     * Invited a user to join the team.
-     */
-    interface MemberInviteDetails {
-    }
-
-    /**
-     * Joined the team.
-     */
-    interface MemberJoinDetails {
+      new_value: MemberStatus;
       /**
-       * Linked Applications.
+       * Additional information relevant when a new member joins the team.
        */
-      linked_apps: Array<UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference>;
-      /**
-       * Shared folders.
-       */
-      initial_shared_folders: Array<SharedFolderLogInfo>;
-      /**
-       * Linked devices.
-       */
-      linked_devices: Array<DeviceLogInfo>;
-    }
-
-    /**
-     * Removed a team member.
-     */
-    interface MemberLeaveDetails {
-      /**
-       * True if the member had joined the team before leaving, False otherwise.
-       */
-      member_was_on_team: boolean;
+      team_join_details?: JoinTeamDetails;
     }
 
     /**
@@ -15907,43 +16279,37 @@ declare module DropboxTypes {
     }
 
     /**
-     * Recovered a removed member.
-     */
-    interface MemberRecoverDetails {
-    }
-
-    interface MemberRequestsChangePolicyDisabled {
-      '.tag': 'disabled';
-    }
-
-    interface MemberRequestsChangePolicyRequireApproval {
-      '.tag': 'require_approval';
-    }
-
-    interface MemberRequestsChangePolicyAutoApproval {
-      '.tag': 'auto_approval';
-    }
-
-    interface MemberRequestsChangePolicyOther {
-      '.tag': 'other';
-    }
-
-    type MemberRequestsChangePolicy = MemberRequestsChangePolicyDisabled | MemberRequestsChangePolicyRequireApproval | MemberRequestsChangePolicyAutoApproval | MemberRequestsChangePolicyOther;
-
-    /**
      * Changed whether users can find the team when not invited.
      */
     interface MemberRequestsChangePolicyDetails {
       /**
        * New member change requests policy.
        */
-      new_value: MemberRequestsChangePolicy;
+      new_value: MemberRequestsPolicy;
       /**
        * Previous member change requests policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: MemberRequestsChangePolicy;
+      previous_value?: MemberRequestsPolicy;
     }
+
+    interface MemberRequestsPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface MemberRequestsPolicyRequireApproval {
+      '.tag': 'require_approval';
+    }
+
+    interface MemberRequestsPolicyAutoApproval {
+      '.tag': 'auto_approval';
+    }
+
+    interface MemberRequestsPolicyOther {
+      '.tag': 'other';
+    }
+
+    type MemberRequestsPolicy = MemberRequestsPolicyDisabled | MemberRequestsPolicyRequireApproval | MemberRequestsPolicyAutoApproval | MemberRequestsPolicyOther;
 
     /**
      * Added an exception for one or more team members to bypass space limits
@@ -15974,11 +16340,11 @@ declare module DropboxTypes {
       /**
        * Previous storage quota status.
        */
-      previous_status: SpaceLimitsStatus;
+      previous_value: SpaceLimitsStatus;
       /**
        * New storage quota status.
        */
-      new_status: SpaceLimitsStatus;
+      new_value: SpaceLimitsStatus;
     }
 
     /**
@@ -15987,6 +16353,32 @@ declare module DropboxTypes {
      */
     interface MemberSpaceLimitsRemoveExceptionDetails {
     }
+
+    interface MemberStatusNotJoined {
+      '.tag': 'not_joined';
+    }
+
+    interface MemberStatusInvited {
+      '.tag': 'invited';
+    }
+
+    interface MemberStatusActive {
+      '.tag': 'active';
+    }
+
+    interface MemberStatusSuspended {
+      '.tag': 'suspended';
+    }
+
+    interface MemberStatusRemoved {
+      '.tag': 'removed';
+    }
+
+    interface MemberStatusOther {
+      '.tag': 'other';
+    }
+
+    type MemberStatus = MemberStatusNotJoined | MemberStatusInvited | MemberStatusActive | MemberStatusSuspended | MemberStatusRemoved | MemberStatusOther;
 
     /**
      * Suggested a new team member to be added to the team.
@@ -16002,19 +16394,30 @@ declare module DropboxTypes {
       /**
        * New team member suggestions policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: MemberSuggestionsPolicy;
       /**
        * Previous team member suggestions policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: MemberSuggestionsPolicy;
+    }
+
+    interface MemberSuggestionsPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface MemberSuggestionsPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface MemberSuggestionsPolicyOther {
+      '.tag': 'other';
     }
 
     /**
-     * Suspended a team member.
+     * Member suggestions policy
      */
-    interface MemberSuspendDetails {
-    }
+    type MemberSuggestionsPolicy = MemberSuggestionsPolicyDisabled | MemberSuggestionsPolicyEnabled | MemberSuggestionsPolicyOther;
 
     /**
      * Transferred contents of a removed team member account to another member.
@@ -16031,12 +16434,6 @@ declare module DropboxTypes {
     }
 
     /**
-     * Unsuspended a team member.
-     */
-    interface MemberUnsuspendDetails {
-    }
-
-    /**
      * Enabled or disabled the Microsoft Office add-in, which lets team members
      * save files to Dropbox directly from Microsoft Office.
      */
@@ -16044,13 +16441,30 @@ declare module DropboxTypes {
       /**
        * New Microsoft Office addin policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: MicrosoftOfficeAddinPolicy;
       /**
        * Previous Microsoft Office addin policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: MicrosoftOfficeAddinPolicy;
     }
+
+    interface MicrosoftOfficeAddinPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface MicrosoftOfficeAddinPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface MicrosoftOfficeAddinPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Microsoft Office addin policy
+     */
+    type MicrosoftOfficeAddinPolicy = MicrosoftOfficeAddinPolicyDisabled | MicrosoftOfficeAddinPolicyEnabled | MicrosoftOfficeAddinPolicyOther;
 
     /**
      * An indication that an event was returned with missing details
@@ -16098,13 +16512,30 @@ declare module DropboxTypes {
       /**
        * New network control policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: NetworkControlPolicy;
       /**
        * Previous network control policy. Might be missing due to historical
        * data gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: NetworkControlPolicy;
     }
+
+    interface NetworkControlPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface NetworkControlPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface NetworkControlPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Network control policy
+     */
+    type NetworkControlPolicy = NetworkControlPolicyDisabled | NetworkControlPolicyEnabled | NetworkControlPolicyOther;
 
     /**
      * Non team member's logged information.
@@ -16159,24 +16590,6 @@ declare module DropboxTypes {
      */
     interface OpenNoteSharedDetails {
     }
-
-    interface OptionalChangePolicyDisabled {
-      '.tag': 'disabled';
-    }
-
-    interface OptionalChangePolicyOptional {
-      '.tag': 'optional';
-    }
-
-    interface OptionalChangePolicyRequired {
-      '.tag': 'required';
-    }
-
-    interface OptionalChangePolicyOther {
-      '.tag': 'other';
-    }
-
-    type OptionalChangePolicy = OptionalChangePolicyDisabled | OptionalChangePolicyOptional | OptionalChangePolicyRequired | OptionalChangePolicyOther;
 
     /**
      * The origin from which the actor performed the action.
@@ -16239,12 +16652,12 @@ declare module DropboxTypes {
       /**
        * New paper external accessibility policy.
        */
-      new_value: ExternalSharingAccessibilityPolicy;
+      new_value: PaperMemberPolicy;
       /**
        * Previous paper external accessibility policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: ExternalSharingAccessibilityPolicy;
+      previous_value?: PaperMemberPolicy;
     }
 
     /**
@@ -16254,12 +16667,12 @@ declare module DropboxTypes {
       /**
        * New Dropbox Paper policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: PaperPolicy;
       /**
        * Previous Dropbox Paper policy. Might be missing due to historical data
        * gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: PaperPolicy;
     }
 
     /**
@@ -16706,6 +17119,45 @@ declare module DropboxTypes {
       event_uuid: string;
     }
 
+    interface PaperMemberPolicyTeamOnly {
+      '.tag': 'team_only';
+    }
+
+    interface PaperMemberPolicyDefaultTeamOnly {
+      '.tag': 'default_team_only';
+    }
+
+    interface PaperMemberPolicyDefaultAnyone {
+      '.tag': 'default_anyone';
+    }
+
+    interface PaperMemberPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Policy for controlling if team members can share Paper documents
+     * externally.
+     */
+    type PaperMemberPolicy = PaperMemberPolicyTeamOnly | PaperMemberPolicyDefaultTeamOnly | PaperMemberPolicyDefaultAnyone | PaperMemberPolicyOther;
+
+    interface PaperPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface PaperPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface PaperPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Policy for enabling or disabling Dropbox Paper for the team.
+     */
+    type PaperPolicy = PaperPolicyDisabled | PaperPolicyEnabled | PaperPolicyOther;
+
     /**
      * Paper tagged value.
      */
@@ -16752,19 +17204,15 @@ declare module DropboxTypes {
      */
     interface PasswordLoginFailDetails {
       /**
-       * Login failure reason. Might be missing due to historical data gap.
+       * Login failure details.
        */
-      failure_reason?: string;
+      error_details: FailureDetailsLogInfo;
     }
 
     /**
      * Signed in using a password.
      */
     interface PasswordLoginSuccessDetails {
-      /**
-       * Tells if the user signed in from an EMM managed device.
-       */
-      is_emm_managed: boolean;
     }
 
     /**
@@ -16802,12 +17250,12 @@ declare module DropboxTypes {
       /**
        * New permanent delete content policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: ContentPermanentDeletePolicy;
       /**
        * Previous permanent delete content policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: ContentPermanentDeletePolicy;
     }
 
     interface PlacementRestrictionEuropeOnly {
@@ -16825,18 +17273,33 @@ declare module DropboxTypes {
     type PlacementRestriction = PlacementRestrictionEuropeOnly | PlacementRestrictionNone | PlacementRestrictionOther;
 
     /**
+     * Provides the indices of the source asset and the destination asset for a
+     * relocate action.
+     */
+    interface RelocateAssetReferencesLogInfo {
+      /**
+       * Source asset index.
+       */
+      src_index: number;
+      /**
+       * Destination asset index.
+       */
+      dest_index: number;
+    }
+
+    /**
      * Removed single sign-on logout URL.
      */
     interface RemoveLogoutUrlDetails {
       /**
        * Previous single sign-on logout URL.
        */
-      previous_sso_logout_url: string;
+      previous_value: string;
       /**
        * New single sign-on logout URL. Might be missing due to historical data
        * gap.
        */
-      new_sso_logout_url?: string;
+      new_value?: string;
     }
 
     /**
@@ -16844,9 +17307,9 @@ declare module DropboxTypes {
      */
     interface RemoveSsoUrlDetails {
       /**
-       * Previous SSO Url.
+       * Previous single sign-on logout URL.
        */
-      previous_sso_url: string;
+      previous_value: string;
     }
 
     /**
@@ -16895,74 +17358,6 @@ declare module DropboxTypes {
        */
       '.tag': "web"|"desktop"|"mobile";
     }
-
-    interface SessionsManagementIdleLengthPolicyNone {
-      '.tag': 'none';
-    }
-
-    interface SessionsManagementIdleLengthPolicyMinute10 {
-      '.tag': 'minute_10';
-    }
-
-    interface SessionsManagementIdleLengthPolicyMinute30 {
-      '.tag': 'minute_30';
-    }
-
-    interface SessionsManagementIdleLengthPolicyHour1 {
-      '.tag': 'hour_1';
-    }
-
-    interface SessionsManagementIdleLengthPolicyHour8 {
-      '.tag': 'hour_8';
-    }
-
-    interface SessionsManagementIdleLengthPolicyHour24 {
-      '.tag': 'hour_24';
-    }
-
-    interface SessionsManagementIdleLengthPolicyHour48 {
-      '.tag': 'hour_48';
-    }
-
-    interface SessionsManagementIdleLengthPolicyOther {
-      '.tag': 'other';
-    }
-
-    type SessionsManagementIdleLengthPolicy = SessionsManagementIdleLengthPolicyNone | SessionsManagementIdleLengthPolicyMinute10 | SessionsManagementIdleLengthPolicyMinute30 | SessionsManagementIdleLengthPolicyHour1 | SessionsManagementIdleLengthPolicyHour8 | SessionsManagementIdleLengthPolicyHour24 | SessionsManagementIdleLengthPolicyHour48 | SessionsManagementIdleLengthPolicyOther;
-
-    interface SessionsManagementSessionLengthPolicyDay1 {
-      '.tag': 'day_1';
-    }
-
-    interface SessionsManagementSessionLengthPolicyDay7 {
-      '.tag': 'day_7';
-    }
-
-    interface SessionsManagementSessionLengthPolicyDay14 {
-      '.tag': 'day_14';
-    }
-
-    interface SessionsManagementSessionLengthPolicyMonth1 {
-      '.tag': 'month_1';
-    }
-
-    interface SessionsManagementSessionLengthPolicyMonth3 {
-      '.tag': 'month_3';
-    }
-
-    interface SessionsManagementSessionLengthPolicyMonth6 {
-      '.tag': 'month_6';
-    }
-
-    interface SessionsManagementSessionLengthPolicyYear1 {
-      '.tag': 'year_1';
-    }
-
-    interface SessionsManagementSessionLengthPolicyOther {
-      '.tag': 'other';
-    }
-
-    type SessionsManagementSessionLengthPolicy = SessionsManagementSessionLengthPolicyDay1 | SessionsManagementSessionLengthPolicyDay7 | SessionsManagementSessionLengthPolicyDay14 | SessionsManagementSessionLengthPolicyMonth1 | SessionsManagementSessionLengthPolicyMonth3 | SessionsManagementSessionLengthPolicyMonth6 | SessionsManagementSessionLengthPolicyYear1 | SessionsManagementSessionLengthPolicyOther;
 
     /**
      * Added the team to a shared folder.
@@ -17085,9 +17480,9 @@ declare module DropboxTypes {
        */
       original_folder_name: string;
       /**
-       * Sharing permission. Might be missing due to historical data gap.
+       * New sharing permission. Might be missing due to historical data gap.
        */
-      sharing_permission?: string;
+      new_sharing_permission?: string;
       /**
        * Previous sharing permission. Might be missing due to historical data
        * gap.
@@ -17267,11 +17662,11 @@ declare module DropboxTypes {
       /**
        * New downlaod policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: SharedContentDownloadsPolicy;
       /**
        * Previous downlaod policy. Might be missing due to historical data gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: SharedContentDownloadsPolicy;
     }
 
     /**
@@ -17288,14 +17683,14 @@ declare module DropboxTypes {
        */
       original_folder_name: string;
       /**
+       * New sharing permission. Might be missing due to historical data gap.
+       */
+      new_sharing_permission?: string;
+      /**
        * Previous sharing permission. Might be missing due to historical data
        * gap.
        */
       previous_sharing_permission?: string;
-      /**
-       * Sharing permission. Might be missing due to historical data gap.
-       */
-      sharing_permission?: string;
     }
 
     /**
@@ -17383,18 +17778,18 @@ declare module DropboxTypes {
        */
       original_folder_name?: string;
       /**
-       * Sharing permission. Might be missing due to historical data gap.
+       * New sharing permission. Might be missing due to historical data gap.
        */
-      sharing_permission?: string;
-      /**
-       * Shared folder type. Might be missing due to historical data gap.
-       */
-      shared_folder_type?: string;
+      new_sharing_permission?: string;
       /**
        * Previous sharing permission. Might be missing due to historical data
        * gap.
        */
       previous_sharing_permission?: string;
+      /**
+       * Shared folder type. Might be missing due to historical data gap.
+       */
+      shared_folder_type?: string;
     }
 
     /**
@@ -17416,11 +17811,11 @@ declare module DropboxTypes {
       /**
        * New viewer info policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: SharedContentViewerInfoPolicy;
       /**
        * Previous view info policy. Might be missing due to historical data gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: SharedContentViewerInfoPolicy;
     }
 
     /**
@@ -17454,17 +17849,13 @@ declare module DropboxTypes {
        */
       sharing_permission?: string;
       /**
-       * Source asset index.
-       */
-      src_index: number;
-      /**
-       * Destination asset index.
-       */
-      dest_index: number;
-      /**
        * Target asset index.
        */
       target_index: number;
+      /**
+       * Specifies the source and destination indices in the assets list.
+       */
+      relocate_action_details: RelocateAssetReferencesLogInfo;
     }
 
     /**
@@ -17484,6 +17875,23 @@ declare module DropboxTypes {
        */
       target_index: number;
     }
+
+    interface SharedContentDownloadsPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface SharedContentDownloadsPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface SharedContentDownloadsPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Shared content downloads policy
+     */
+    type SharedContentDownloadsPolicy = SharedContentDownloadsPolicyDisabled | SharedContentDownloadsPolicyEnabled | SharedContentDownloadsPolicyOther;
 
     /**
      * Left the membership of a shared file or folder.
@@ -17623,6 +18031,23 @@ declare module DropboxTypes {
       target_index: number;
     }
 
+    interface SharedContentViewerInfoPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface SharedContentViewerInfoPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface SharedContentViewerInfoPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Shared content viewer info policy
+     */
+    type SharedContentViewerInfoPolicy = SharedContentViewerInfoPolicyDisabled | SharedContentViewerInfoPolicyEnabled | SharedContentViewerInfoPolicyOther;
+
     /**
      * Set or unset the confidential flag on a shared folder.
      */
@@ -17719,12 +18144,12 @@ declare module DropboxTypes {
       /**
        * New external invite policy.
        */
-      new_value: ExternalSharingPolicy;
+      new_value: SharedFolderMemberPolicy;
       /**
        * Previous external invite policy. Might be missing due to historical
        * data gap.
        */
-      previous_value?: ExternalSharingPolicy;
+      previous_value?: SharedFolderMemberPolicy;
     }
 
     /**
@@ -17759,19 +18184,22 @@ declare module DropboxTypes {
 
     type SharedFolderLinkPolicy = SharedFolderLinkPolicyMembersOnly | SharedFolderLinkPolicyMembersAndTeam | SharedFolderLinkPolicyAnyone | SharedFolderLinkPolicyOther;
 
-    /**
-     * SharedFolder's logged information.
-     */
-    interface SharedFolderLogInfo {
-      /**
-       * Namespace ID. Might be missing due to historical data gap.
-       */
-      ns_id?: common.NamespaceId;
-      /**
-       * Shared folder display name.
-       */
-      display_name: string;
+    interface SharedFolderMemberPolicyTeamOnly {
+      '.tag': 'team_only';
     }
+
+    interface SharedFolderMemberPolicyAnyone {
+      '.tag': 'anyone';
+    }
+
+    interface SharedFolderMemberPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Policy for controlling who can become a member of a shared folder
+     */
+    type SharedFolderMemberPolicy = SharedFolderMemberPolicyTeamOnly | SharedFolderMemberPolicyAnyone | SharedFolderMemberPolicyOther;
 
     interface SharedFolderMembershipManagementPolicyOwner {
       '.tag': 'owner';
@@ -17843,12 +18271,12 @@ declare module DropboxTypes {
       /**
        * New external join policy.
        */
-      new_value: ExternalSharingPolicy;
+      new_value: SharingFolderJoinPolicy;
       /**
        * Previous external join policy. Might be missing due to historical data
        * gap.
        */
-      previous_value?: ExternalSharingPolicy;
+      previous_value?: SharingFolderJoinPolicy;
     }
 
     /**
@@ -17860,12 +18288,12 @@ declare module DropboxTypes {
       /**
        * New external link accessibility policy.
        */
-      new_value: ExternalSharingAccessibilityPolicy;
+      new_value: SharingLinkPolicy;
       /**
        * Previous external link accessibility policy. Might be missing due to
        * historical data gap.
        */
-      previous_value?: ExternalSharingAccessibilityPolicy;
+      previous_value?: SharingLinkPolicy;
     }
 
     /**
@@ -17876,13 +18304,69 @@ declare module DropboxTypes {
       /**
        * New external invite policy.
        */
-      new_value: ExternalSharingPolicy;
+      new_value: SharingMemberPolicy;
       /**
        * Previous external invite policy. Might be missing due to historical
        * data gap.
        */
-      previous_value?: ExternalSharingPolicy;
+      previous_value?: SharingMemberPolicy;
     }
+
+    interface SharingFolderJoinPolicyTeamOnly {
+      '.tag': 'team_only';
+    }
+
+    interface SharingFolderJoinPolicyAnyone {
+      '.tag': 'anyone';
+    }
+
+    interface SharingFolderJoinPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Policy for controlling if team members can join shared folders owned by
+     * non team members.
+     */
+    type SharingFolderJoinPolicy = SharingFolderJoinPolicyTeamOnly | SharingFolderJoinPolicyAnyone | SharingFolderJoinPolicyOther;
+
+    interface SharingLinkPolicyTeamOnly {
+      '.tag': 'team_only';
+    }
+
+    interface SharingLinkPolicyDefaultTeamOnly {
+      '.tag': 'default_team_only';
+    }
+
+    interface SharingLinkPolicyDefaultAnyone {
+      '.tag': 'default_anyone';
+    }
+
+    interface SharingLinkPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Policy for controlling if team members can share links externally
+     */
+    type SharingLinkPolicy = SharingLinkPolicyTeamOnly | SharingLinkPolicyDefaultTeamOnly | SharingLinkPolicyDefaultAnyone | SharingLinkPolicyOther;
+
+    interface SharingMemberPolicyTeamOnly {
+      '.tag': 'team_only';
+    }
+
+    interface SharingMemberPolicyAnyone {
+      '.tag': 'anyone';
+    }
+
+    interface SharingMemberPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * External sharing policy
+     */
+    type SharingMemberPolicy = SharingMemberPolicyTeamOnly | SharingMemberPolicyAnyone | SharingMemberPolicyOther;
 
     /**
      * Created a link to a file using an app.
@@ -18038,6 +18522,48 @@ declare module DropboxTypes {
     interface SmartSyncCreateAdminPrivilegeReportDetails {
     }
 
+    /**
+     * Opted team into Smart Sync.
+     */
+    interface SmartSyncNotOptOutDetails {
+      /**
+       * Previous Smart Sync opt out policy.
+       */
+      previous_value: SmartSyncOptOutPolicy;
+      /**
+       * New Smart Sync opt out policy.
+       */
+      new_value: SmartSyncOptOutPolicy;
+    }
+
+    /**
+     * Opted team out of Smart Sync.
+     */
+    interface SmartSyncOptOutDetails {
+      /**
+       * Previous Smart Sync opt out policy.
+       */
+      previous_value: SmartSyncOptOutPolicy;
+      /**
+       * New Smart Sync opt out policy.
+       */
+      new_value: SmartSyncOptOutPolicy;
+    }
+
+    interface SmartSyncOptOutPolicyOptedOut {
+      '.tag': 'opted_out';
+    }
+
+    interface SmartSyncOptOutPolicyDefault {
+      '.tag': 'default';
+    }
+
+    interface SmartSyncOptOutPolicyOther {
+      '.tag': 'other';
+    }
+
+    type SmartSyncOptOutPolicy = SmartSyncOptOutPolicyOptedOut | SmartSyncOptOutPolicyDefault | SmartSyncOptOutPolicyOther;
+
     interface SmartSyncPolicyLocalOnly {
       '.tag': 'local_only';
     }
@@ -18097,33 +18623,9 @@ declare module DropboxTypes {
      */
     interface SsoChangeCertDetails {
       /**
-       * Certificate subject.
+       * SSO certificate details.
        */
-      subject: string;
-      /**
-       * Certificate issuer.
-       */
-      issuer: string;
-      /**
-       * Certificate issue date.
-       */
-      issue_date: string;
-      /**
-       * Certificate expiration date.
-       */
-      expiration_date: string;
-      /**
-       * Certificate serial number.
-       */
-      serial_number: string;
-      /**
-       * Certificate sha1 fingerprint.
-       */
-      sha1_fingerprint: string;
-      /**
-       * Certificate common name.
-       */
-      common_name: string;
+      certificate_details: Certificate;
     }
 
     /**
@@ -18131,13 +18633,13 @@ declare module DropboxTypes {
      */
     interface SsoChangeLoginUrlDetails {
       /**
-       * Previous SSO Url.
+       * Previous single sign-on login URL.
        */
-      previous_sso_url: string;
+      previous_value: string;
       /**
-       * New SSO Url.
+       * New single sign-on login URL.
        */
-      new_sso_url: string;
+      new_value: string;
     }
 
     /**
@@ -18147,12 +18649,12 @@ declare module DropboxTypes {
       /**
        * Previous single sign-on logout URL.
        */
-      previous_sso_logout_url: string;
+      previous_value: string;
       /**
        * New single sign-on logout URL. Might be missing due to historical data
        * gap.
        */
-      new_sso_logout_url?: string;
+      new_value?: string;
     }
 
     /**
@@ -18162,12 +18664,12 @@ declare module DropboxTypes {
       /**
        * New single sign-on policy.
        */
-      new_value: OptionalChangePolicy;
+      new_value: SsoPolicy;
       /**
        * Previous single sign-on policy. Might be missing due to historical data
        * gap.
        */
-      previous_value?: OptionalChangePolicy;
+      previous_value?: SsoPolicy;
     }
 
     /**
@@ -18177,11 +18679,11 @@ declare module DropboxTypes {
       /**
        * Previous single sign-on identity mode.
        */
-      previous_saml_identity_mode: number;
+      previous_value: number;
       /**
        * New single sign-on identity mode.
        */
-      new_saml_identity_mode: number;
+      new_value: number;
     }
 
     /**
@@ -18189,14 +18691,31 @@ declare module DropboxTypes {
      */
     interface SsoLoginFailDetails {
       /**
-       * A technical description of the error.
+       * Login failure details.
        */
-      system_message: string;
-      /**
-       * A user friendly description of the error.
-       */
-      admin_message: string;
+      error_details: FailureDetailsLogInfo;
     }
+
+    interface SsoPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface SsoPolicyOptional {
+      '.tag': 'optional';
+    }
+
+    interface SsoPolicyRequired {
+      '.tag': 'required';
+    }
+
+    interface SsoPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * SSO policy
+     */
+    type SsoPolicy = SsoPolicyDisabled | SsoPolicyOptional | SsoPolicyRequired | SsoPolicyOther;
 
     /**
      * Created a team activity report.
@@ -18205,11 +18724,11 @@ declare module DropboxTypes {
       /**
        * Report start date.
        */
-      start_date: string;
+      start_date: common.Date;
       /**
        * Report end date.
        */
-      end_date: string;
+      end_date: common.Date;
     }
 
     /**
@@ -18273,12 +18792,12 @@ declare module DropboxTypes {
       /**
        * New team folder status.
        */
-      new_status: TeamFolderStatus;
+      new_value: TeamFolderStatus;
       /**
        * Previous team folder status. Might be missing due to historical data
        * gap.
        */
-      previous_status?: TeamFolderStatus;
+      previous_value?: TeamFolderStatus;
     }
 
     /**
@@ -18308,13 +18827,9 @@ declare module DropboxTypes {
      */
     interface TeamFolderRenameDetails {
       /**
-       * Source asset index.
+       * Specifies the source and destination indices in the assets list.
        */
-      src_index: number;
-      /**
-       * Destination asset index.
-       */
-      dest_index: number;
+      relocate_action_details: RelocateAssetReferencesLogInfo;
     }
 
     interface TeamFolderStatusArchive {
@@ -18375,18 +18890,52 @@ declare module DropboxTypes {
       '.tag': 'team_member';
     }
 
+    interface TeamMembershipTypeFull {
+      '.tag': 'full';
+    }
+
+    interface TeamMembershipTypeFree {
+      '.tag': 'free';
+    }
+
+    interface TeamMembershipTypeOther {
+      '.tag': 'other';
+    }
+
+    type TeamMembershipType = TeamMembershipTypeFull | TeamMembershipTypeFree | TeamMembershipTypeOther;
+
     /**
-     * Merged the team into another team.
+     * Merged another team into this team.
      */
-    interface TeamMergeDetails {
+    interface TeamMergeFromDetails {
       /**
-       * Merged from team name. Might be missing due to historical data gap.
+       * The name of the team that was merged into this team.
        */
-      merged_from_team_name?: string;
+      team_name: string;
+    }
+
+    /**
+     * Merged this team into another team.
+     */
+    interface TeamMergeToDetails {
       /**
-       * Merged to team name. Might be missing due to historical data gap.
+       * The name of the team that this team was merged into.
        */
-      merged_to_team_name?: string;
+      team_name: string;
+    }
+
+    /**
+     * Team name details
+     */
+    interface TeamName {
+      /**
+       * Team's display name.
+       */
+      team_display_name: string;
+      /**
+       * Team's legal name.
+       */
+      team_legal_name: string;
     }
 
     /**
@@ -18406,13 +18955,13 @@ declare module DropboxTypes {
      */
     interface TeamProfileChangeNameDetails {
       /**
-       * Team's display name.
+       * Previous teams name. Might be missing due to historical data gap.
        */
-      team_display_name: string;
+      previous_value?: TeamName;
       /**
-       * Team's legal name.
+       * New team name.
        */
-      team_legal_name: string;
+      new_value: TeamName;
     }
 
     /**
@@ -18446,11 +18995,11 @@ declare module DropboxTypes {
       /**
        * New change policy.
        */
-      new_value: OptionalChangePolicy;
+      new_value: TfaPolicy;
       /**
        * Previous change policy. Might be missing due to historical data gap.
        */
-      previous_value?: OptionalChangePolicy;
+      previous_value?: TfaPolicy;
     }
 
     /**
@@ -18467,7 +19016,8 @@ declare module DropboxTypes {
        */
       previous_value?: TfaConfiguration;
       /**
-       * Used two factor authentication code.
+       * Used two factor authentication rescue code. This flag is relevant when
+       * the two factor authentication configuration is disabled.
        */
       used_rescue_code?: boolean;
     }
@@ -18492,7 +19042,32 @@ declare module DropboxTypes {
       '.tag': 'other';
     }
 
+    /**
+     * Two factor authentication configuration. Note: the enabled option is
+     * deprecated.
+     */
     type TfaConfiguration = TfaConfigurationDisabled | TfaConfigurationEnabled | TfaConfigurationSms | TfaConfigurationAuthenticator | TfaConfigurationOther;
+
+    interface TfaPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface TfaPolicyOptional {
+      '.tag': 'optional';
+    }
+
+    interface TfaPolicyRequired {
+      '.tag': 'required';
+    }
+
+    interface TfaPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Two factor authentication policy
+     */
+    type TfaPolicy = TfaPolicyDisabled | TfaPolicyOptional | TfaPolicyRequired | TfaPolicyOther;
 
     /**
      * Removed the backup phone for two-step verification.
@@ -18512,6 +19087,44 @@ declare module DropboxTypes {
     interface TfaResetDetails {
     }
 
+    interface TimeUnitMilliseconds {
+      '.tag': 'milliseconds';
+    }
+
+    interface TimeUnitSeconds {
+      '.tag': 'seconds';
+    }
+
+    interface TimeUnitMinutes {
+      '.tag': 'minutes';
+    }
+
+    interface TimeUnitHours {
+      '.tag': 'hours';
+    }
+
+    interface TimeUnitDays {
+      '.tag': 'days';
+    }
+
+    interface TimeUnitWeeks {
+      '.tag': 'weeks';
+    }
+
+    interface TimeUnitMonths {
+      '.tag': 'months';
+    }
+
+    interface TimeUnitYears {
+      '.tag': 'years';
+    }
+
+    interface TimeUnitOther {
+      '.tag': 'other';
+    }
+
+    type TimeUnit = TimeUnitMilliseconds | TimeUnitSeconds | TimeUnitMinutes | TimeUnitHours | TimeUnitDays | TimeUnitWeeks | TimeUnitMonths | TimeUnitYears | TimeUnitOther;
+
     /**
      * Enabled or disabled the option for team members to link a personal
      * Dropbox account in addition to their work account to the same computer.
@@ -18520,13 +19133,30 @@ declare module DropboxTypes {
       /**
        * New two account policy.
        */
-      new_value: EnableDisableChangePolicy;
+      new_value: TwoAccountPolicy;
       /**
        * Previous two account policy. Might be missing due to historical data
        * gap.
        */
-      previous_value?: EnableDisableChangePolicy;
+      previous_value?: TwoAccountPolicy;
     }
+
+    interface TwoAccountPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    interface TwoAccountPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface TwoAccountPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Policy for pairing personal account to work account
+     */
+    type TwoAccountPolicy = TwoAccountPolicyDisabled | TwoAccountPolicyEnabled | TwoAccountPolicyOther;
 
     /**
      * User linked app
@@ -18637,11 +19267,11 @@ declare module DropboxTypes {
       /**
        * New session length policy.
        */
-      new_value: SessionsManagementSessionLengthPolicy;
+      new_value: WebSessionsFixedLengthPolicy;
       /**
        * Previous session length policy.
        */
-      previous_value: SessionsManagementSessionLengthPolicy;
+      previous_value: WebSessionsFixedLengthPolicy;
     }
 
     /**
@@ -18652,12 +19282,60 @@ declare module DropboxTypes {
       /**
        * New idle length policy.
        */
-      new_value: SessionsManagementIdleLengthPolicy;
+      new_value: WebSessionsIdleLengthPolicy;
       /**
        * Previous idle length policy.
        */
-      previous_value: SessionsManagementIdleLengthPolicy;
+      previous_value: WebSessionsIdleLengthPolicy;
     }
+
+    /**
+     * Defined fixed session length.
+     */
+    interface WebSessionsFixedLengthPolicyDefined {
+      '.tag': 'defined';
+      defined: DurationLogInfo;
+    }
+
+    /**
+     * Undefined fixed session length.
+     */
+    interface WebSessionsFixedLengthPolicyUndefined {
+      '.tag': 'undefined';
+    }
+
+    interface WebSessionsFixedLengthPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Web sessions fixed length policy.
+     */
+    type WebSessionsFixedLengthPolicy = WebSessionsFixedLengthPolicyDefined | WebSessionsFixedLengthPolicyUndefined | WebSessionsFixedLengthPolicyOther;
+
+    /**
+     * Defined idle session length.
+     */
+    interface WebSessionsIdleLengthPolicyDefined {
+      '.tag': 'defined';
+      defined: DurationLogInfo;
+    }
+
+    /**
+     * Undefined idle session length.
+     */
+    interface WebSessionsIdleLengthPolicyUndefined {
+      '.tag': 'undefined';
+    }
+
+    interface WebSessionsIdleLengthPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Web sessions idle length policy.
+     */
+    type WebSessionsIdleLengthPolicy = WebSessionsIdleLengthPolicyDefined | WebSessionsIdleLengthPolicyUndefined | WebSessionsIdleLengthPolicyOther;
 
     type AppId = string;
 
@@ -18694,6 +19372,26 @@ declare module DropboxTypes {
     }
 
     type EmmState = EmmStateDisabled | EmmStateOptional | EmmStateRequired | EmmStateOther;
+
+    /**
+     * Office Add-In is disabled
+     */
+    interface OfficeAddInPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    /**
+     * Office Add-In is enabled
+     */
+    interface OfficeAddInPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    interface OfficeAddInPolicyOther {
+      '.tag': 'other';
+    }
+
+    type OfficeAddInPolicy = OfficeAddInPolicyDisabled | OfficeAddInPolicyEnabled | OfficeAddInPolicyOther;
 
     /**
      * Team members can only join folders shared by teammates.
@@ -18794,6 +19492,10 @@ declare module DropboxTypes {
        * additional documentation.
        */
       emm_state: EmmState;
+      /**
+       * The admin policy around the Dropbox Office Add-In for this team.
+       */
+      office_addin: OfficeAddInPolicy;
     }
 
     /**
@@ -18916,6 +19618,10 @@ declare module DropboxTypes {
        * Team policies governing sharing.
        */
       sharing_policies: team_policies.TeamSharingPolicies;
+      /**
+       * Team policy governing the use of the Office Add-In.
+       */
+      office_addin_policy: team_policies.OfficeAddInPolicy;
     }
 
     interface GetAccountArg {
