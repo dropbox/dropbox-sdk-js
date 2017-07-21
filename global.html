@@ -10179,8 +10179,6 @@ template_not_found. Property template does not exist for given identifier.</td>
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
         
 
@@ -10207,14 +10205,6 @@ template_not_found. Property template does not exist for given identifier.</td>
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
 
             
 
@@ -10238,12 +10228,6 @@ template_not_found. Property template does not exist for given identifier.</td>
             
             </td>
 
-            
-                <td class="attributes">
-                
-
-                
-                </td>
             
 
             
@@ -10271,12 +10255,6 @@ of all subfolders.</td>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-                </td>
-            
 
             
 
@@ -10301,12 +10279,6 @@ set for photo and video.</td>
             
             </td>
 
-            
-                <td class="attributes">
-                
-
-                
-                </td>
             
 
             
@@ -10333,51 +10305,12 @@ entries for files and folders that used to exist but were deleted.</td>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-                </td>
-            
 
             
 
             <td class="description last">If true, the
 results will include a flag for each file indicating whether or not  that
 file has any explicit members.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>shared_link</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#FilesSharedLink">FilesSharedLink</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">A shared link to list the
-contents of, if the link is protected provide the password.</td>
         </tr>
 
     
@@ -10879,262 +10812,6 @@ list_folder or list_folder/continue.</td>
             
                 
 <hr>
-<dt class="name" id="FilesListFolderGetCursorArg">
-    <h4 id="FilesListFolderGetCursorArg">FilesListFolderGetCursorArg</h4>
-
-    
-</dt>
-<dd>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">Object</span>
-
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>path</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">A unique identifier for the file.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>recursive</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">If true, the list folder operation will be
-applied recursively to all subfolders and the response will contain contents
-of all subfolders.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>include_media_info</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">If true, FileMetadata.media_info is
-set for photo and video.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>include_deleted</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">If true, the results will include
-entries for files and folders that used to exist but were deleted.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>include_has_explicit_shared_members</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">If true, the
-results will include a flag for each file indicating whether or not  that
-file has any explicit members.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-</dd>
-
-            
-                
-<hr>
 <dt class="name" id="FilesListFolderGetLatestCursorResult">
     <h4 id="FilesListFolderGetLatestCursorResult">FilesListFolderGetLatestCursorResult</h4>
 
@@ -11326,7 +11003,7 @@ what's changed in the folder since your previous query.</td>
 
             <td class="description last">A cursor as returned by list_folder or
 list_folder/continue. Cursors retrieved by setting
-ListFolderGetCursorArg.include_media_info to true are not supported.</td>
+ListFolderArg.include_media_info to true are not supported.</td>
         </tr>
 
     
@@ -19094,166 +18771,6 @@ again.</td>
 
             <td class="description last">Used for paging. Value to set the start argument
 to when calling search to fetch the next page of results.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-</dd>
-
-            
-                
-<hr>
-<dt class="name" id="FilesSharedLink">
-    <h4 id="FilesSharedLink">FilesSharedLink</h4>
-
-    
-</dt>
-<dd>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">Object</span>
-
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>url</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Shared link url.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>password</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Password for the shared link.</td>
         </tr>
 
     
@@ -53829,6 +53346,41 @@ user was invited to this shared folder.</td>
 
         <tr>
             
+                <td class="name"><code>owner_display_names</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The display names of the
+users that own the folder. If the folder is part of a team folder, the
+display names of the team admins are also included. Absent if the owner
+display names cannot be fetched.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>owner_team</code></td>
             
 
@@ -54187,6 +53739,41 @@ a team folder.</td>
 
             <td class="description last">Whether this folder is a team folder
 https://www.dropbox.com/en/help/986.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>owner_display_names</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The display names of the
+users that own the folder. If the folder is part of a team folder, the
+display names of the team admins are also included. Absent if the owner
+display names cannot be fetched.</td>
         </tr>
 
     
@@ -81761,10 +81348,10 @@ to historical data gap.</td>
             <td class="type">
             
                 
-<span class="param-type">'mobile'</span>
+<span class="param-type">'desktop'</span>
 |
 
-<span class="param-type">'desktop'</span>
+<span class="param-type">'mobile'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -129685,13 +129272,13 @@ action was taken.</td>
 
         <tr>
             
-                <td class="name"><code>event_categories</code></td>
+                <td class="name"><code>event_category</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="global.html#TeamLogEventCategory">TeamLogEventCategory</a>></span>
+<span class="param-type"><a href="global.html#TeamLogEventCategory">TeamLogEventCategory</a></span>
 
 
 
@@ -129708,8 +129295,8 @@ action was taken.</td>
 
             
 
-            <td class="description last">One or more
-categories that this type of action belongs to.</td>
+            <td class="description last">The category that this type
+of action belongs to.</td>
         </tr>
 
     
@@ -131261,10 +130848,10 @@ historical data gap.</td>
             <td class="type">
             
                 
-<span class="param-type">'full'</span>
+<span class="param-type">'free'</span>
 |
 
-<span class="param-type">'free'</span>
+<span class="param-type">'full'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -155272,7 +154859,7 @@ user shares space with other members of their team.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-07-20T10:37:55-07:00
+		on 2017-07-21T12:58:09-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
