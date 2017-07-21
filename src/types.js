@@ -546,7 +546,7 @@ is only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} FilesListFolderArg
- * @property {string} [path] - A unique identifier for the file.
+ * @property {string} path - A unique identifier for the file.
  * @property {boolean} recursive - If true, the list folder operation will be
  * applied recursively to all subfolders and the response will contain contents
  * of all subfolders.
@@ -557,8 +557,6 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {boolean} include_has_explicit_shared_members - If true, the
  * results will include a flag for each file indicating whether or not  that
  * file has any explicit members.
- * @property {FilesSharedLink} [shared_link] - A shared link to list the
- * contents of, if the link is protected provide the password.
  */
 
 /**
@@ -580,21 +578,6 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * @typedef {Object} FilesListFolderGetCursorArg
- * @property {string} [path] - A unique identifier for the file.
- * @property {boolean} recursive - If true, the list folder operation will be
- * applied recursively to all subfolders and the response will contain contents
- * of all subfolders.
- * @property {boolean} include_media_info - If true, FileMetadata.media_info is
- * set for photo and video.
- * @property {boolean} include_deleted - If true, the results will include
- * entries for files and folders that used to exist but were deleted.
- * @property {boolean} include_has_explicit_shared_members - If true, the
- * results will include a flag for each file indicating whether or not  that
- * file has any explicit members.
- */
-
-/**
  * @typedef {Object} FilesListFolderGetLatestCursorResult
  * @property {string} cursor - Pass the cursor into list_folder/continue to see
  * what's changed in the folder since your previous query.
@@ -604,7 +587,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilesListFolderLongpollArg
  * @property {string} cursor - A cursor as returned by list_folder or
  * list_folder/continue. Cursors retrieved by setting
- * ListFolderGetCursorArg.include_media_info to true are not supported.
+ * ListFolderArg.include_media_info to true are not supported.
  * @property {number} timeout - A timeout in seconds. The request will block for
  * at most this length of time, plus up to 90 seconds of random jitter added to
  * avoid the thundering herd problem. Care should be taken when using this
@@ -986,12 +969,6 @@ only present when needed to discriminate between multiple possible subtypes.
  * again.
  * @property {number} start - Used for paging. Value to set the start argument
  * to when calling search to fetch the next page of results.
- */
-
-/**
- * @typedef {Object} FilesSharedLink
- * @property {string} url - Shared link url.
- * @property {string} [password] - Password for the shared link.
  */
 
 /**
@@ -2926,6 +2903,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} shared_folder_id - The ID of the shared folder.
  * @property {Timestamp} time_invited - Timestamp indicating when the current
  * user was invited to this shared folder.
+ * @property {Array.<string>} [owner_display_names] - The display names of the
+ * users that own the folder. If the folder is part of a team folder, the
+ * display names of the team admins are also included. Absent if the owner
+ * display names cannot be fetched.
  * @property {UsersTeam} [owner_team] - The team that owns the folder. This
  * field is not present if the folder is not owned by a team.
  * @property {string} [parent_shared_folder_id] - The ID of the parent shared
@@ -2951,6 +2932,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * a team folder.
  * @property {boolean} is_team_folder - Whether this folder is a team folder
  * https://www.dropbox.com/en/help/986.
+ * @property {Array.<string>} [owner_display_names] - The display names of the
+ * users that own the folder. If the folder is part of a team folder, the
+ * display names of the team admins are also included. Absent if the owner
+ * display names cannot be fetched.
  * @property {UsersTeam} [owner_team] - The team that owns the folder. This
  * field is not present if the folder is not owned by a team.
  * @property {string} [parent_shared_folder_id] - The ID of the parent shared
@@ -5095,7 +5080,7 @@ is only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamLogDeviceType
- * @property {('mobile'|'desktop'|'other')} .tag - Tag identifying the union variant.
+ * @property {('desktop'|'mobile'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -7875,8 +7860,8 @@ variant.
  * @typedef {Object} TeamLogTeamEvent
  * @property {Timestamp} timestamp - The Dropbox timestamp representing when the
  * action was taken.
- * @property {Array.<TeamLogEventCategory>} event_categories - One or more
- * categories that this type of action belongs to.
+ * @property {TeamLogEventCategory} event_category - The category that this type
+ * of action belongs to.
  * @property {TeamLogActorLogInfo} actor - The entity who actually performed the
  * action.
  * @property {boolean} involve_non_team_member - True if the action involved a
@@ -7968,7 +7953,7 @@ subtypes.
 
 /**
  * @typedef {Object} TeamLogTeamMembershipType
- * @property {('full'|'free'|'other')} .tag - Tag identifying the union variant.
+ * @property {('free'|'full'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**

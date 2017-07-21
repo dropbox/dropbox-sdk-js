@@ -291,7 +291,7 @@ declare module DropboxTypes {
      * Error<files.ListFolderError>.
      * @param arg The request parameters.
      */
-    public filesListFolderGetLatestCursor(arg: files.ListFolderGetCursorArg): Promise<files.ListFolderGetLatestCursorResult>;
+    public filesListFolderGetLatestCursor(arg: files.ListFolderArg): Promise<files.ListFolderGetLatestCursorResult>;
 
     /**
      * A longpoll endpoint to wait for changes on an account. In conjunction

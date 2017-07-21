@@ -991,12 +991,27 @@ declare module DropboxTypes {
 
     type InvalidPropertyGroupError = PropertiesError | InvalidPropertyGroupErrorPropertyFieldTooLarge | InvalidPropertyGroupErrorDoesNotFitTemplate;
 
-    interface ListFolderArg extends ListFolderGetCursorArg {
+    interface ListFolderArg {
       /**
-       * A shared link to list the contents of, if the link is protected provide
-       * the password.
+       * A unique identifier for the file.
        */
-      shared_link?: SharedLink;
+      path: PathROrId;
+      /**
+       * Defaults to False.
+       */
+      recursive?: boolean;
+      /**
+       * Defaults to False.
+       */
+      include_media_info?: boolean;
+      /**
+       * Defaults to False.
+       */
+      include_deleted?: boolean;
+      /**
+       * Defaults to False.
+       */
+      include_has_explicit_shared_members?: boolean;
     }
 
     interface ListFolderContinueArg {
@@ -1037,29 +1052,6 @@ declare module DropboxTypes {
 
     type ListFolderError = ListFolderErrorPath | ListFolderErrorOther;
 
-    interface ListFolderGetCursorArg {
-      /**
-       * A unique identifier for the file.
-       */
-      path?: PathROrId;
-      /**
-       * Defaults to False.
-       */
-      recursive?: boolean;
-      /**
-       * Defaults to False.
-       */
-      include_media_info?: boolean;
-      /**
-       * Defaults to False.
-       */
-      include_deleted?: boolean;
-      /**
-       * Defaults to False.
-       */
-      include_has_explicit_shared_members?: boolean;
-    }
-
     interface ListFolderGetLatestCursorResult {
       /**
        * Pass the cursor into listFolderContinue() to see what's changed in the
@@ -1071,8 +1063,8 @@ declare module DropboxTypes {
     interface ListFolderLongpollArg {
       /**
        * A cursor as returned by listFolder() or listFolderContinue(). Cursors
-       * retrieved by setting ListFolderGetCursorArg.include_media_info to true
-       * are not supported.
+       * retrieved by setting ListFolderArg.include_media_info to true are not
+       * supported.
        */
       cursor: ListFolderCursor;
       /**
@@ -1873,17 +1865,6 @@ declare module DropboxTypes {
       start: number;
     }
 
-    interface SharedLink {
-      /**
-       * Shared link url.
-       */
-      url: SharedLinkUrl;
-      /**
-       * Password for the shared link.
-       */
-      password?: string;
-    }
-
     /**
      * Sharing info for a file or folder.
      */
@@ -2401,8 +2382,6 @@ declare module DropboxTypes {
     type Rev = string;
 
     type Sha256HexHash = string;
-
-    type SharedLinkUrl = string;
 
     type WritePath = string;
 
@@ -6316,6 +6295,12 @@ declare module DropboxTypes {
        * https://www.dropbox.com/en/help/986}.
        */
       is_team_folder: boolean;
+      /**
+       * The display names of the users that own the folder. If the folder is
+       * part of a team folder, the display names of the team admins are also
+       * included. Absent if the owner display names cannot be fetched.
+       */
+      owner_display_names?: Array<string>;
       /**
        * The team that owns the folder. This field is not present if the folder
        * is not owned by a team.
@@ -10906,19 +10891,19 @@ declare module DropboxTypes {
     interface DeviceManagementEnabledDetails {
     }
 
-    interface DeviceTypeMobile {
-      '.tag': 'mobile';
-    }
-
     interface DeviceTypeDesktop {
       '.tag': 'desktop';
+    }
+
+    interface DeviceTypeMobile {
+      '.tag': 'mobile';
     }
 
     interface DeviceTypeOther {
       '.tag': 'other';
     }
 
-    type DeviceType = DeviceTypeMobile | DeviceTypeDesktop | DeviceTypeOther;
+    type DeviceType = DeviceTypeDesktop | DeviceTypeMobile | DeviceTypeOther;
 
     /**
      * Disconnected a device.
@@ -18740,9 +18725,9 @@ declare module DropboxTypes {
        */
       timestamp: common.DropboxTimestamp;
       /**
-       * One or more categories that this type of action belongs to.
+       * The category that this type of action belongs to.
        */
-      event_categories: Array<EventCategory>;
+      event_category: EventCategory;
       /**
        * The entity who actually performed the action.
        */
@@ -18890,19 +18875,19 @@ declare module DropboxTypes {
       '.tag': 'team_member';
     }
 
-    interface TeamMembershipTypeFull {
-      '.tag': 'full';
-    }
-
     interface TeamMembershipTypeFree {
       '.tag': 'free';
+    }
+
+    interface TeamMembershipTypeFull {
+      '.tag': 'full';
     }
 
     interface TeamMembershipTypeOther {
       '.tag': 'other';
     }
 
-    type TeamMembershipType = TeamMembershipTypeFull | TeamMembershipTypeFree | TeamMembershipTypeOther;
+    type TeamMembershipType = TeamMembershipTypeFree | TeamMembershipTypeFull | TeamMembershipTypeOther;
 
     /**
      * Merged another team into this team.

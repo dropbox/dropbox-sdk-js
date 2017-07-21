@@ -297,7 +297,7 @@ routes.filesListFolderContinue = function (arg) {
  * for app which only needs to know about new files and modifications and
  * doesn't need to know about files that already exist in Dropbox.
  * @function Dropbox#filesListFolderGetLatestCursor
- * @arg {FilesListFolderGetCursorArg} arg - The request parameters.
+ * @arg {FilesListFolderArg} arg - The request parameters.
  * @returns {Promise.<FilesListFolderGetLatestCursorResult, Error.<FilesListFolderError>>}
  */
 routes.filesListFolderGetLatestCursor = function (arg) {
