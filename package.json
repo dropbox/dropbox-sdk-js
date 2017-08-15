@@ -9,7 +9,9 @@
     "docs",
     "dist",
     "generator",
-    "src"
+    "src",
+    "conf.json",
+    "*.config.js"
   ],
   "scripts": {
     "build": "npm run build-cjs && npm run build-umd && npm run generate-tsds && npm run compressed-size",
