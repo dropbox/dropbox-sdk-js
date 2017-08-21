@@ -14,19 +14,22 @@ describe('uploadRequest', function () {
   var setStub;
   var typeStub;
   var sendStub;
+  var proxyStub;
 
   beforeEach(function () {
     stubRequest = {
       end: function () {},
       send: function () {},
       set: function () {},
-      type: function () {}
+      type: function () {},
+      proxy: function () {}
     };
     postStub = sinon.stub(request, 'post').returns(stubRequest);
     endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
     setStub = sinon.stub(stubRequest, 'set').returns(stubRequest);
     typeStub = sinon.stub(stubRequest, 'type').returns(stubRequest);
     sendStub = sinon.stub(stubRequest, 'send').returns(stubRequest);
+    proxyStub = sinon.stub(stubRequest, 'proxy').returns(stubRequest);
   });
 
   afterEach(function () {
@@ -101,5 +104,10 @@ describe('uploadRequest', function () {
     uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken');
     assert(endStub.calledOnce);
     assert.isFunction(endStub.firstCall.args[0]);
+  });
+
+  it('sets a proxy', function () {
+    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId', 'proxy');
+    assert(proxyStub.calledOnce);
   });
 });

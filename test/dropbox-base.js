@@ -57,6 +57,25 @@ describe('DropboxBase', function () {
     });
   });
 
+  describe('.proxy', function () {
+    it('can be set in the constructor', function () {
+      dbx = new DropboxBase({ proxy: 'http://localhost:3128' });
+      assert.equal(dbx.getProxy(), 'http://localhost:3128');
+    });
+
+    it('is undefined if not set in constructor', function () {
+      dbx = new DropboxBase();
+      assert.equal(dbx.getProxy(), undefined);
+    });
+
+    it('can be set after being instantiated', function () {
+      dbx = new DropboxBase();
+      dbx.setClientId('http://localhost:3128');
+      assert.equal(dbx.getClientId(), 'http://localhost:3128');
+    });
+  });
+
+
   describe('#rpcRequest()', function () {
     it('defaults to the libraries implementation', function () {
       dbx = new DropboxBase();

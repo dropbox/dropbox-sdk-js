@@ -3,6 +3,8 @@ var Promise = require('es6-promise').Promise;
 var getBaseURL = require('./get-base-url');
 var httpHeaderSafeJson = require('./http-header-safe-json');
 
+require('superagent-proxy')(request);
+
 var buildCustomError;
 var downloadRequest;
 var nodeBinaryParser;
@@ -30,7 +32,7 @@ nodeBinaryParser = function (res, done) {
   });
 };
 
-downloadRequest = function (path, args, auth, host, accessToken, selectUser) {
+downloadRequest = function (path, args, auth, host, accessToken, selectUser, proxy) {
   if (auth !== 'user') {
     throw new Error('Unexpected auth type: ' + auth);
   }
@@ -78,6 +80,10 @@ downloadRequest = function (path, args, auth, host, accessToken, selectUser) {
 
     if (selectUser) {
       apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
+    }
+
+    if (proxy) {
+      apiRequest.proxy(proxy);
     }
 
     // Apply the node binary parser to the response if executing in node

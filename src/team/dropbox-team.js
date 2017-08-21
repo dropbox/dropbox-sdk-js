@@ -32,7 +32,8 @@ DropboxTeam.prototype.actAsUser = function (userId) {
   return new Dropbox({
     accessToken: this.accessToken,
     clientId: this.clientId,
-    selectUser: userId
+    selectUser: userId,
+    proxy: this.proxy
   });
 };
 

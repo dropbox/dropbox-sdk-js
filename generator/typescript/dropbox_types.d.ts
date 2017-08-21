@@ -6,6 +6,8 @@ declare module DropboxTypes {
     clientId?: string;
     // Select user is only used by team endpoints. It specifies which user the team access token should be acting as.
     selectUser?: string;
+    // A URL to proxy all HTTP requests through a proxy server
+    proxy?: string;
   }
 
   class DropboxBase {
@@ -29,6 +31,11 @@ declare module DropboxTypes {
     getClientId(): string;
 
     /**
+     * Get the proxy
+     */
+    getProxy(): string;
+
+    /**
      * Set the access token used to authenticate requests to the API.
      * @param accessToken An access token.
      */
@@ -39,6 +46,12 @@ declare module DropboxTypes {
      * @param clientId Your app's client ID.
      */
     setClientId(clientId: string): void;
+
+    /**
+     * Set the proxy URL
+     * @param proxy The proxy URL
+     */
+    setProxy(proxy: string): void;
   }
 
 
