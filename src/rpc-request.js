@@ -2,6 +2,8 @@ var request = require('superagent');
 var Promise = require('es6-promise').Promise;
 var getBaseURL = require('./get-base-url');
 
+require('superagent-proxy')(request);
+
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
   var err;
@@ -19,7 +21,7 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var rpcRequest = function (path, body, auth, host, accessToken, selectUser) {
+var rpcRequest = function (path, body, auth, host, accessToken, selectUser, proxy) {
   var promiseFunction = function (resolve, reject) {
     var apiRequest;
 
@@ -65,6 +67,10 @@ var rpcRequest = function (path, body, auth, host, accessToken, selectUser) {
 
     if (selectUser) {
       apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
+    }
+
+    if (proxy) {
+      apiRequest.proxy(proxy);
     }
 
     apiRequest.send(body)

@@ -3,6 +3,8 @@ var Promise = require('es6-promise').Promise;
 var getBaseURL = require('./get-base-url');
 var httpHeaderSafeJson = require('./http-header-safe-json');
 
+require('superagent-proxy')(request);
+
 // This doesn't match what was spec'd in paper doc yet
 var buildCustomError = function (error, response) {
   return {
@@ -12,7 +14,7 @@ var buildCustomError = function (error, response) {
   };
 };
 
-var uploadRequest = function (path, args, auth, host, accessToken, selectUser) {
+var uploadRequest = function (path, args, auth, host, accessToken, selectUser, proxy) {
   if (auth !== 'user') {
     throw new Error('Unexpected auth type: ' + auth);
   }
@@ -52,6 +54,10 @@ var uploadRequest = function (path, args, auth, host, accessToken, selectUser) {
 
     if (selectUser) {
       apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
+    }
+
+    if (proxy) {
+      apiRequest.proxy(proxy);
     }
 
     apiRequest
