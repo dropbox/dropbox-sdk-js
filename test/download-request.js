@@ -16,7 +16,6 @@ describe('downloadRequest', function () {
   var typeStub;
   var bufferStub;
   var parseStub;
-  var proxyStub;
 
   beforeEach(function () {
     stubRequest = {
@@ -25,8 +24,7 @@ describe('downloadRequest', function () {
       set: function () {},
       type: function () {},
       buffer: function () {},
-      parse: function () {},
-      proxy: function () {}
+      parse: function () {}
     };
     postStub = sinon.stub(request, 'post').returns(stubRequest);
     endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
@@ -35,7 +33,6 @@ describe('downloadRequest', function () {
     typeStub = sinon.stub(stubRequest, 'type').returns(stubRequest);
     bufferStub = sinon.stub(stubRequest, 'buffer').returns(stubRequest);
     parseStub = sinon.stub(stubRequest, 'parse').returns(stubRequest);
-    proxyStub = sinon.stub(stubRequest, 'proxy').returns(stubRequest);
   });
 
   afterEach(function () {
@@ -95,10 +92,5 @@ describe('downloadRequest', function () {
     downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken');
     assert(endStub.calledOnce);
     assert.isFunction(endStub.firstCall.args[0]);
-  });
-
-  it('sets a proxy', function () {
-    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId', 'proxy');
-    assert(proxyStub.calledOnce);
   });
 });

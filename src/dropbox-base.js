@@ -17,14 +17,12 @@ require('./object-assign-polyfill');
  * authentication URL.
  * @arg {Number} [options.selectUser] - User is the team access token would like
  * to act as.
- * @arg {String} [options.proxy] - URL to proxy all requests to.
  */
 DropboxBase = function (options) {
   options = options || {};
   this.accessToken = options.accessToken;
   this.clientId = options.clientId;
   this.selectUser = options.selectUser;
-  this.proxy = options.proxy;
 };
 
 /**
@@ -60,24 +58,6 @@ DropboxBase.prototype.setClientId = function (clientId) {
 DropboxBase.prototype.getClientId = function () {
   return this.clientId;
 };
-
-/**
- * Set the proxy
- * @arg {String} proxy - The proxy URL
- * @returns {undefined}
- */
-DropboxBase.prototype.setProxy = function (proxy) {
-  this.proxy = proxy;
-};
-
-/**
- * Get the proxy
- * @returns {String} The proxy URL
- */
-DropboxBase.prototype.getProxy = function () {
-  return this.proxy;
-};
-
 
 /**
  * Get a URL that can be used to authenticate users for the Dropbox API.
@@ -191,7 +171,7 @@ DropboxBase.prototype.request = function (path, args, auth, host, style) {
       throw new Error('Invalid request style: ' + style);
   }
 
-  return request(path, args, auth, host, this.getAccessToken(), this.selectUser, this.proxy);
+  return request(path, args, auth, host, this.getAccessToken(), this.selectUser);
 };
 
 DropboxBase.prototype.setRpcRequest = function (newRpcRequest) {
