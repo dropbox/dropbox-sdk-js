@@ -9,8 +9,6 @@ module.exports = {
     path: __dirname + '/dist'
   },
 
-  externals: Object.keys(require(__dirname + '/package.json').dependencies),
-
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin()
   ]
