@@ -28,6 +28,183 @@ declare module DropboxTypes {
     public authTokenRevoke(arg: void): Promise<void>;
 
     /**
+     * Add property groups to a Dropbox file. See templatesAddForUser() or
+     * templatesAddForTeam() to create new templates.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.AddPropertiesError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesPropertiesAdd(arg: file_properties.AddPropertiesArg): Promise<void>;
+
+    /**
+     * Overwrite property groups associated with a file. This endpoint should be
+     * used instead of propertiesUpdate() when property groups are being updated
+     * via a "snapshot" instead of via a "delta". In other words, this endpoint
+     * will delete all omitted fields from a property group, whereas
+     * propertiesUpdate() will only delete fields that are explicitly marked for
+     * deletion.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.InvalidPropertyGroupError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesPropertiesOverwrite(arg: file_properties.OverwritePropertyGroupArg): Promise<void>;
+
+    /**
+     * Remove the specified property group from the file. To remove specific
+     * property field key value pairs, see route propertiesUpdate(). To update a
+     * template, see templatesUpdateForUser() or templatesUpdateForTeam().
+     * Templates can't be removed once created.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.RemovePropertiesError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesPropertiesRemove(arg: file_properties.RemovePropertiesArg): Promise<void>;
+
+    /**
+     * Search across property templates for particular property field values.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.PropertiesSearchError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesPropertiesSearch(arg: file_properties.PropertiesSearchArg): Promise<file_properties.PropertiesSearchResult>;
+
+    /**
+     * Add, update or remove properties associated with the supplied file and
+     * templates. This endpoint should be used instead of propertiesOverwrite()
+     * when property groups are being updated via a "delta" instead of via a
+     * "snapshot" . In other words, this endpoint will not delete any omitted
+     * fields from a property group, whereas propertiesOverwrite() will delete
+     * any fields that are omitted from a property group.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.UpdatePropertiesError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesPropertiesUpdate(arg: file_properties.UpdatePropertiesArg): Promise<void>;
+
+    /**
+     * Add a template associated with a team. See route propertiesAdd() to add
+     * properties to a file or folder.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.ModifyTemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesAddForTeam(arg: file_properties.AddTemplateArg): Promise<file_properties.AddTemplateResult>;
+
+    /**
+     * Add a template associated with a user. See route propertiesAdd() to add
+     * properties to a file.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.ModifyTemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesAddForUser(arg: file_properties.AddTemplateArg): Promise<file_properties.AddTemplateResult>;
+
+    /**
+     * Get the schema for a specified template.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.TemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesGetForTeam(arg: file_properties.GetTemplateArg): Promise<file_properties.GetTemplateResult>;
+
+    /**
+     * Get the schema for a specified template.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.TemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesGetForUser(arg: file_properties.GetTemplateArg): Promise<file_properties.GetTemplateResult>;
+
+    /**
+     * Get the template identifiers for a team. To get the schema of each
+     * template use templatesGetForTeam().
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.TemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesListForTeam(arg: void): Promise<file_properties.ListTemplateResult>;
+
+    /**
+     * Get the template identifiers for a team. To get the schema of each
+     * template use templatesGetForUser().
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.TemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesListForUser(arg: void): Promise<file_properties.ListTemplateResult>;
+
+    /**
+     * Update a template associated with a team. This route can update the
+     * template name, the template description and add optional properties to
+     * templates.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.ModifyTemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesUpdateForTeam(arg: file_properties.UpdateTemplateArg): Promise<file_properties.UpdateTemplateResult>;
+
+    /**
+     * Update a template associated with a user. This route can update the
+     * template name, the template description and add optional properties to
+     * templates.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_properties.ModifyTemplateError>.
+     * @param arg The request parameters.
+     */
+    public filePropertiesTemplatesUpdateForUser(arg: file_properties.UpdateTemplateArg): Promise<file_properties.UpdateTemplateResult>;
+
+    /**
+     * Creates a file request for this user.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.CreateFileRequestError>.
+     * @param arg The request parameters.
+     */
+    public fileRequestsCreate(arg: file_requests.CreateFileRequestArgs): Promise<file_requests.FileRequest>;
+
+    /**
+     * Returns the specified file request.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.GetFileRequestError>.
+     * @param arg The request parameters.
+     */
+    public fileRequestsGet(arg: file_requests.GetFileRequestArgs): Promise<file_requests.FileRequest>;
+
+    /**
+     * Returns a list of file requests owned by this user. For apps with the app
+     * folder permission, this will only return file requests with destinations
+     * in the app folder.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.ListFileRequestsError>.
+     * @param arg The request parameters.
+     */
+    public fileRequestsList(arg: void): Promise<file_requests.ListFileRequestsResult>;
+
+    /**
+     * Update a file request.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.UpdateFileRequestError>.
+     * @param arg The request parameters.
+     */
+    public fileRequestsUpdate(arg: file_requests.UpdateFileRequestArgs): Promise<file_requests.FileRequest>;
+
+    /**
      * Returns the metadata for a file or folder. This is an alpha endpoint
      * compatible with the properties API. Note: Metadata for the root folder is
      * unsupported.
@@ -241,6 +418,18 @@ declare module DropboxTypes {
     public filesGetThumbnail(arg: files.ThumbnailArg): Promise<files.FileMetadata>;
 
     /**
+     * Get thumbnails for a list of images. We allow up to 25 thumbnails in a
+     * single batch. This method currently supports files with the following
+     * file extensions: jpg, jpeg, png, tiff, tif, gif and bmp. Photos that are
+     * larger than 20MB in size won't be converted to a thumbnail.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.GetThumbnailBatchError>.
+     * @param arg The request parameters.
+     */
+    public filesGetThumbnailBatch(arg: files.GetThumbnailBatchArg): Promise<files.GetThumbnailBatchResult>;
+
+    /**
      * Starts returning the contents of a folder. If the result's
      * ListFolderResult.has_more field is true, call listFolderContinue() with
      * the returned ListFolderResult.cursor to retrieve more entries. If you're
@@ -373,67 +562,52 @@ declare module DropboxTypes {
     public filesPermanentlyDelete(arg: files.DeleteArg): Promise<void>;
 
     /**
-     * Add custom properties to a file using a filled property template. See
-     * properties/template/add to create new property templates.
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<files.AddPropertiesError>.
+     * Error<file_properties.AddPropertiesError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public filesPropertiesAdd(arg: files.PropertyGroupWithPath): Promise<void>;
+    public filesPropertiesAdd(arg: file_properties.AddPropertiesArg): Promise<void>;
 
     /**
-     * Overwrite custom properties from a specified template associated with a
-     * file.
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<files.InvalidPropertyGroupError>.
+     * Error<file_properties.InvalidPropertyGroupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public filesPropertiesOverwrite(arg: files.PropertyGroupWithPath): Promise<void>;
+    public filesPropertiesOverwrite(arg: file_properties.OverwritePropertyGroupArg): Promise<void>;
 
     /**
-     * Remove all custom properties from a specified template associated with a
-     * file. To remove specific property key value pairs, see
-     * propertiesUpdate(). To update a property template, see
-     * properties/template/update. Property templates can't be removed once
-     * created.
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<files.RemovePropertiesError>.
+     * Error<file_properties.RemovePropertiesError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public filesPropertiesRemove(arg: files.RemovePropertiesArg): Promise<void>;
+    public filesPropertiesRemove(arg: file_properties.RemovePropertiesArg): Promise<void>;
 
     /**
-     * Get the schema for a specified template.
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<properties.PropertyTemplateError>.
+     * Error<file_properties.TemplateError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public filesPropertiesTemplateGet(arg: properties.GetPropertyTemplateArg): Promise<properties.GetPropertyTemplateResult>;
+    public filesPropertiesTemplateGet(arg: file_properties.GetTemplateArg): Promise<file_properties.GetTemplateResult>;
 
     /**
-     * Get the property template identifiers for a user. To get the schema of
-     * each template use propertiesTemplateGet().
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<properties.PropertyTemplateError>.
+     * Error<file_properties.TemplateError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public filesPropertiesTemplateList(arg: void): Promise<properties.ListPropertyTemplateIds>;
+    public filesPropertiesTemplateList(arg: void): Promise<file_properties.ListTemplateResult>;
 
     /**
-     * Add, update or remove custom properties from a specified template
-     * associated with a file. Fields that already exist and not described in
-     * the request will not be modified.
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<files.UpdatePropertiesError>.
+     * Error<file_properties.UpdatePropertiesError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public filesPropertiesUpdate(arg: files.UpdatePropertyGroupArg): Promise<void>;
+    public filesPropertiesUpdate(arg: file_properties.UpdatePropertiesArg): Promise<void>;
 
     /**
      * Restore a file to a specific revision.
@@ -576,6 +750,15 @@ declare module DropboxTypes {
     public paperDocsArchive(arg: paper.RefPaperDoc): Promise<void>;
 
     /**
+     * Creates a new Paper doc with the provided content.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.PaperDocCreateError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsCreate(arg: paper.PaperDocCreateArgs): Promise<paper.PaperDocCreateUpdateResult>;
+
+    /**
      * Exports and downloads Paper doc either as HTML or markdown.
      * 
      * When an error occurs, the route rejects the promise with type
@@ -673,6 +856,15 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public paperDocsSharingPolicySet(arg: paper.PaperDocSharingPolicy): Promise<void>;
+
+    /**
+     * Updates an existing Paper doc with the provided content.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.PaperDocUpdateError>.
+     * @param arg The request parameters.
+     */
+    public paperDocsUpdate(arg: paper.PaperDocUpdateArgs): Promise<paper.PaperDocCreateUpdateResult>;
 
     /**
      * Allows an owner or editor to add users to a Paper doc or change their

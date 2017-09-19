@@ -45,7 +45,7 @@ declare module DropboxTypes {
     public teamDevicesListTeamDevices(arg: team.ListTeamDevicesArg): Promise<team.ListTeamDevicesResult>;
 
     /**
-     * Revoke a device session of a team's member
+     * Revoke a device session of a team's member.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.RevokeDeviceSessionError>.
@@ -54,7 +54,7 @@ declare module DropboxTypes {
     public teamDevicesRevokeDeviceSession(arg: team.RevokeDeviceSessionArg): Promise<void>;
 
     /**
-     * Revoke a list of device sessions of team members
+     * Revoke a list of device sessions of team members.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.RevokeDeviceSessionBatchError>.
@@ -243,7 +243,7 @@ declare module DropboxTypes {
     public teamLinkedAppsListTeamLinkedApps(arg: team.ListTeamAppsArg): Promise<team.ListTeamAppsResult>;
 
     /**
-     * Revoke a linked application of the team member
+     * Revoke a linked application of the team member.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.RevokeLinkedAppError>.
@@ -252,13 +252,43 @@ declare module DropboxTypes {
     public teamLinkedAppsRevokeLinkedApp(arg: team.RevokeLinkedApiAppArg): Promise<void>;
 
     /**
-     * Revoke a list of linked applications of the team members
+     * Revoke a list of linked applications of the team members.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.RevokeLinkedAppBatchError>.
      * @param arg The request parameters.
      */
     public teamLinkedAppsRevokeLinkedAppBatch(arg: team.RevokeLinkedApiAppBatchArg): Promise<team.RevokeLinkedAppBatchResult>;
+
+    /**
+     * Get users custom quota. Returns none as the custom quota if none was set.
+     * A maximum of 1000 members can be specified in a single call.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.CustomQuotaError>.
+     * @param arg The request parameters.
+     */
+    public teamMemberSpaceLimitsGetCustomQuota(arg: team.CustomQuotaUsersArg): Promise<Array<team.CustomQuotaResult>>;
+
+    /**
+     * Remove users custom quota. A maximum of 1000 members can be specified in
+     * a single call.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.CustomQuotaError>.
+     * @param arg The request parameters.
+     */
+    public teamMemberSpaceLimitsRemoveCustomQuota(arg: team.CustomQuotaUsersArg): Promise<Array<team.RemoveCustomQuotaResult>>;
+
+    /**
+     * Set users custom quota. Custom quota has to be at least 25GB. A maximum
+     * of 1000 members can be specified in a single call.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.CustomQuotaError>.
+     * @param arg The request parameters.
+     */
+    public teamMemberSpaceLimitsSetCustomQuota(arg: team.SetCustomQuotaArg): Promise<Array<team.CustomQuotaResult>>;
 
     /**
      * Adds members to a team. Permission : Team member management A maximum of
@@ -281,7 +311,7 @@ declare module DropboxTypes {
 
     /**
      * Once an async_job_id is returned from membersAdd() , use this to poll the
-     * status of the asynchronous request. Permission : Team member management
+     * status of the asynchronous request. Permission : Team member management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
@@ -301,7 +331,7 @@ declare module DropboxTypes {
     public teamMembersGetInfo(arg: team.MembersGetInfoArgs): Promise<team.MembersGetInfoResult>;
 
     /**
-     * Lists members of a team. Permission : Team information
+     * Lists members of a team. Permission : Team information.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersListError>.
@@ -311,7 +341,7 @@ declare module DropboxTypes {
 
     /**
      * Once a cursor has been retrieved from membersList(), use this to paginate
-     * through all team members. Permission : Team information
+     * through all team members. Permission : Team information.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersListContinueError>.
@@ -337,9 +367,12 @@ declare module DropboxTypes {
      * day period or until the account has been permanently deleted or
      * transferred to another account (whichever comes first). Calling
      * membersAdd() while a user is still recoverable on your team will return
-     * with MemberAddResult.user_already_on_team. This endpoint may initiate an
-     * asynchronous job. To obtain the final result of the job, the client
-     * should periodically poll membersRemoveJobStatusGet().
+     * with MemberAddResult.user_already_on_team. Accounts can have their files
+     * transferred via the admin console for a limited time, based on the
+     * version history length associated with the team (120 days for most
+     * teams). This endpoint may initiate an asynchronous job. To obtain the
+     * final result of the job, the client should periodically poll
+     * membersRemoveJobStatusGet().
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersRemoveError>.
@@ -350,7 +383,7 @@ declare module DropboxTypes {
     /**
      * Once an async_job_id is returned from membersRemove() , use this to poll
      * the status of the asynchronous request. Permission : Team member
-     * management
+     * management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
@@ -371,7 +404,7 @@ declare module DropboxTypes {
     public teamMembersSendWelcomeEmail(arg: team.UserSelectorArg): Promise<void>;
 
     /**
-     * Updates a team member's permissions. Permission : Team member management
+     * Updates a team member's permissions. Permission : Team member management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersSetPermissionsError>.
@@ -380,7 +413,7 @@ declare module DropboxTypes {
     public teamMembersSetAdminPermissions(arg: team.MembersSetPermissionsArg): Promise<team.MembersSetPermissionsResult>;
 
     /**
-     * Updates a team member's profile. Permission : Team member management
+     * Updates a team member's profile. Permission : Team member management.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersSetProfileError>.
@@ -436,43 +469,36 @@ declare module DropboxTypes {
     public teamNamespacesListContinue(arg: team.TeamNamespacesListContinueArg): Promise<team.TeamNamespacesListResult>;
 
     /**
-     * Add a property template. See route files/properties/add to add properties
-     * to a file.
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<properties.ModifyPropertyTemplateError>.
+     * Error<file_properties.ModifyTemplateError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public teamPropertiesTemplateAdd(arg: team.AddPropertyTemplateArg): Promise<team.AddPropertyTemplateResult>;
+    public teamPropertiesTemplateAdd(arg: file_properties.AddTemplateArg): Promise<file_properties.AddTemplateResult>;
 
     /**
-     * Get the schema for a specified template.
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<properties.PropertyTemplateError>.
+     * Error<file_properties.TemplateError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public teamPropertiesTemplateGet(arg: properties.GetPropertyTemplateArg): Promise<properties.GetPropertyTemplateResult>;
+    public teamPropertiesTemplateGet(arg: file_properties.GetTemplateArg): Promise<file_properties.GetTemplateResult>;
 
     /**
-     * Get the property template identifiers for a team. To get the schema of
-     * each template use propertiesTemplateGet().
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<properties.PropertyTemplateError>.
+     * Error<file_properties.TemplateError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public teamPropertiesTemplateList(arg: void): Promise<properties.ListPropertyTemplateIds>;
+    public teamPropertiesTemplateList(arg: void): Promise<file_properties.ListTemplateResult>;
 
     /**
-     * Update a property template. This route can update the template name, the
-     * template description and add optional properties to templates.
-     * 
      * When an error occurs, the route rejects the promise with type
-     * Error<properties.ModifyPropertyTemplateError>.
+     * Error<file_properties.ModifyTemplateError>.
+     * @deprecated
      * @param arg The request parameters.
      */
-    public teamPropertiesTemplateUpdate(arg: team.UpdatePropertyTemplateArg): Promise<team.UpdatePropertyTemplateResult>;
+    public teamPropertiesTemplateUpdate(arg: file_properties.UpdateTemplateArg): Promise<file_properties.UpdateTemplateResult>;
 
     /**
      * Retrieves reporting data about a team's user activity.

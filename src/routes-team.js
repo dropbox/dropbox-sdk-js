@@ -33,7 +33,7 @@ routes.teamDevicesListTeamDevices = function (arg) {
 };
 
 /**
- * Revoke a device session of a team's member
+ * Revoke a device session of a team's member.
  * @function DropboxTeam#teamDevicesRevokeDeviceSession
  * @arg {TeamRevokeDeviceSessionArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<TeamRevokeDeviceSessionError>>}
@@ -43,7 +43,7 @@ routes.teamDevicesRevokeDeviceSession = function (arg) {
 };
 
 /**
- * Revoke a list of device sessions of team members
+ * Revoke a list of device sessions of team members.
  * @function DropboxTeam#teamDevicesRevokeDeviceSessionBatch
  * @arg {TeamRevokeDeviceSessionBatchArg} arg - The request parameters.
  * @returns {Promise.<TeamRevokeDeviceSessionBatchResult, Error.<TeamRevokeDeviceSessionBatchError>>}
@@ -248,7 +248,7 @@ routes.teamLinkedAppsListTeamLinkedApps = function (arg) {
 };
 
 /**
- * Revoke a linked application of the team member
+ * Revoke a linked application of the team member.
  * @function DropboxTeam#teamLinkedAppsRevokeLinkedApp
  * @arg {TeamRevokeLinkedApiAppArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<TeamRevokeLinkedAppError>>}
@@ -258,13 +258,46 @@ routes.teamLinkedAppsRevokeLinkedApp = function (arg) {
 };
 
 /**
- * Revoke a list of linked applications of the team members
+ * Revoke a list of linked applications of the team members.
  * @function DropboxTeam#teamLinkedAppsRevokeLinkedAppBatch
  * @arg {TeamRevokeLinkedApiAppBatchArg} arg - The request parameters.
  * @returns {Promise.<TeamRevokeLinkedAppBatchResult, Error.<TeamRevokeLinkedAppBatchError>>}
  */
 routes.teamLinkedAppsRevokeLinkedAppBatch = function (arg) {
   return this.request('team/linked_apps/revoke_linked_app_batch', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Get users custom quota. Returns none as the custom quota if none was set. A
+ * maximum of 1000 members can be specified in a single call.
+ * @function DropboxTeam#teamMemberSpaceLimitsGetCustomQuota
+ * @arg {TeamCustomQuotaUsersArg} arg - The request parameters.
+ * @returns {Promise.<Array.<TeamCustomQuotaResult>, Error.<TeamCustomQuotaError>>}
+ */
+routes.teamMemberSpaceLimitsGetCustomQuota = function (arg) {
+  return this.request('team/member_space_limits/get_custom_quota', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Remove users custom quota. A maximum of 1000 members can be specified in a
+ * single call.
+ * @function DropboxTeam#teamMemberSpaceLimitsRemoveCustomQuota
+ * @arg {TeamCustomQuotaUsersArg} arg - The request parameters.
+ * @returns {Promise.<Array.<TeamRemoveCustomQuotaResult>, Error.<TeamCustomQuotaError>>}
+ */
+routes.teamMemberSpaceLimitsRemoveCustomQuota = function (arg) {
+  return this.request('team/member_space_limits/remove_custom_quota', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Set users custom quota. Custom quota has to be at least 25GB. A maximum of
+ * 1000 members can be specified in a single call.
+ * @function DropboxTeam#teamMemberSpaceLimitsSetCustomQuota
+ * @arg {TeamSetCustomQuotaArg} arg - The request parameters.
+ * @returns {Promise.<Array.<TeamCustomQuotaResult>, Error.<TeamCustomQuotaError>>}
+ */
+routes.teamMemberSpaceLimitsSetCustomQuota = function (arg) {
+  return this.request('team/member_space_limits/set_custom_quota', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -289,7 +322,7 @@ routes.teamMembersAdd = function (arg) {
 
 /**
  * Once an async_job_id is returned from members/add , use this to poll the
- * status of the asynchronous request. Permission : Team member management
+ * status of the asynchronous request. Permission : Team member management.
  * @function DropboxTeam#teamMembersAddJobStatusGet
  * @arg {AsyncPollArg} arg - The request parameters.
  * @returns {Promise.<TeamMembersAddJobStatus, Error.<AsyncPollError>>}
@@ -311,7 +344,7 @@ routes.teamMembersGetInfo = function (arg) {
 };
 
 /**
- * Lists members of a team. Permission : Team information
+ * Lists members of a team. Permission : Team information.
  * @function DropboxTeam#teamMembersList
  * @arg {TeamMembersListArg} arg - The request parameters.
  * @returns {Promise.<TeamMembersListResult, Error.<TeamMembersListError>>}
@@ -322,7 +355,7 @@ routes.teamMembersList = function (arg) {
 
 /**
  * Once a cursor has been retrieved from members/list, use this to paginate
- * through all team members. Permission : Team information
+ * through all team members. Permission : Team information.
  * @function DropboxTeam#teamMembersListContinue
  * @arg {TeamMembersListContinueArg} arg - The request parameters.
  * @returns {Promise.<TeamMembersListResult, Error.<TeamMembersListContinueError>>}
@@ -350,9 +383,11 @@ routes.teamMembersRecover = function (arg) {
  * period or until the account has been permanently deleted or transferred to
  * another account (whichever comes first). Calling members/add while a user is
  * still recoverable on your team will return with
- * MemberAddResult.user_already_on_team. This endpoint may initiate an
- * asynchronous job. To obtain the final result of the job, the client should
- * periodically poll members/remove/job_status/get.
+ * MemberAddResult.user_already_on_team. Accounts can have their files
+ * transferred via the admin console for a limited time, based on the version
+ * history length associated with the team (120 days for most teams). This
+ * endpoint may initiate an asynchronous job. To obtain the final result of the
+ * job, the client should periodically poll members/remove/job_status/get.
  * @function DropboxTeam#teamMembersRemove
  * @arg {TeamMembersRemoveArg} arg - The request parameters.
  * @returns {Promise.<AsyncLaunchEmptyResult, Error.<TeamMembersRemoveError>>}
@@ -363,7 +398,7 @@ routes.teamMembersRemove = function (arg) {
 
 /**
  * Once an async_job_id is returned from members/remove , use this to poll the
- * status of the asynchronous request. Permission : Team member management
+ * status of the asynchronous request. Permission : Team member management.
  * @function DropboxTeam#teamMembersRemoveJobStatusGet
  * @arg {AsyncPollArg} arg - The request parameters.
  * @returns {Promise.<AsyncPollEmptyResult, Error.<AsyncPollError>>}
@@ -385,7 +420,7 @@ routes.teamMembersSendWelcomeEmail = function (arg) {
 };
 
 /**
- * Updates a team member's permissions. Permission : Team member management
+ * Updates a team member's permissions. Permission : Team member management.
  * @function DropboxTeam#teamMembersSetAdminPermissions
  * @arg {TeamMembersSetPermissionsArg} arg - The request parameters.
  * @returns {Promise.<TeamMembersSetPermissionsResult, Error.<TeamMembersSetPermissionsError>>}
@@ -395,7 +430,7 @@ routes.teamMembersSetAdminPermissions = function (arg) {
 };
 
 /**
- * Updates a team member's profile. Permission : Team member management
+ * Updates a team member's profile. Permission : Team member management.
  * @function DropboxTeam#teamMembersSetProfile
  * @arg {TeamMembersSetProfileArg} arg - The request parameters.
  * @returns {Promise.<TeamTeamMemberInfo, Error.<TeamMembersSetProfileError>>}
@@ -454,43 +489,40 @@ routes.teamNamespacesListContinue = function (arg) {
 };
 
 /**
- * Add a property template. See route files/properties/add to add properties to
- * a file.
  * @function DropboxTeam#teamPropertiesTemplateAdd
- * @arg {TeamAddPropertyTemplateArg} arg - The request parameters.
- * @returns {Promise.<TeamAddPropertyTemplateResult, Error.<PropertiesModifyPropertyTemplateError>>}
+ * @deprecated
+ * @arg {FilePropertiesAddTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesAddTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
  */
 routes.teamPropertiesTemplateAdd = function (arg) {
   return this.request('team/properties/template/add', arg, 'team', 'api', 'rpc');
 };
 
 /**
- * Get the schema for a specified template.
  * @function DropboxTeam#teamPropertiesTemplateGet
- * @arg {PropertiesGetPropertyTemplateArg} arg - The request parameters.
- * @returns {Promise.<PropertiesGetPropertyTemplateResult, Error.<PropertiesPropertyTemplateError>>}
+ * @deprecated
+ * @arg {FilePropertiesGetTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesGetTemplateResult, Error.<FilePropertiesTemplateError>>}
  */
 routes.teamPropertiesTemplateGet = function (arg) {
   return this.request('team/properties/template/get', arg, 'team', 'api', 'rpc');
 };
 
 /**
- * Get the property template identifiers for a team. To get the schema of each
- * template use properties/template/get.
  * @function DropboxTeam#teamPropertiesTemplateList
+ * @deprecated
  * @arg {void} arg - The request parameters.
- * @returns {Promise.<PropertiesListPropertyTemplateIds, Error.<PropertiesPropertyTemplateError>>}
+ * @returns {Promise.<FilePropertiesListTemplateResult, Error.<FilePropertiesTemplateError>>}
  */
 routes.teamPropertiesTemplateList = function (arg) {
   return this.request('team/properties/template/list', arg, 'team', 'api', 'rpc');
 };
 
 /**
- * Update a property template. This route can update the template name, the
- * template description and add optional properties to templates.
  * @function DropboxTeam#teamPropertiesTemplateUpdate
- * @arg {TeamUpdatePropertyTemplateArg} arg - The request parameters.
- * @returns {Promise.<TeamUpdatePropertyTemplateResult, Error.<PropertiesModifyPropertyTemplateError>>}
+ * @deprecated
+ * @arg {FilePropertiesUpdateTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesUpdateTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
  */
 routes.teamPropertiesTemplateUpdate = function (arg) {
   return this.request('team/properties/template/update', arg, 'team', 'api', 'rpc');

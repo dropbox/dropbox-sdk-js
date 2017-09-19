@@ -22,6 +22,197 @@ routes.authTokenRevoke = function (arg) {
 };
 
 /**
+ * Add property groups to a Dropbox file. See templates/add_for_user or
+ * templates/add_for_team to create new templates.
+ * @function Dropbox#filePropertiesPropertiesAdd
+ * @arg {FilePropertiesAddPropertiesArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesAddPropertiesError>>}
+ */
+routes.filePropertiesPropertiesAdd = function (arg) {
+  return this.request('file_properties/properties/add', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Overwrite property groups associated with a file. This endpoint should be
+ * used instead of properties/update when property groups are being updated via
+ * a "snapshot" instead of via a "delta". In other words, this endpoint will
+ * delete all omitted fields from a property group, whereas properties/update
+ * will only delete fields that are explicitly marked for deletion.
+ * @function Dropbox#filePropertiesPropertiesOverwrite
+ * @arg {FilePropertiesOverwritePropertyGroupArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesInvalidPropertyGroupError>>}
+ */
+routes.filePropertiesPropertiesOverwrite = function (arg) {
+  return this.request('file_properties/properties/overwrite', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Remove the specified property group from the file. To remove specific
+ * property field key value pairs, see route properties/update. To update a
+ * template, see templates/update_for_user or templates/update_for_team.
+ * Templates can't be removed once created.
+ * @function Dropbox#filePropertiesPropertiesRemove
+ * @arg {FilePropertiesRemovePropertiesArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesRemovePropertiesError>>}
+ */
+routes.filePropertiesPropertiesRemove = function (arg) {
+  return this.request('file_properties/properties/remove', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Search across property templates for particular property field values.
+ * @function Dropbox#filePropertiesPropertiesSearch
+ * @arg {FilePropertiesPropertiesSearchArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesPropertiesSearchResult, Error.<FilePropertiesPropertiesSearchError>>}
+ */
+routes.filePropertiesPropertiesSearch = function (arg) {
+  return this.request('file_properties/properties/search', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Add, update or remove properties associated with the supplied file and
+ * templates. This endpoint should be used instead of properties/overwrite when
+ * property groups are being updated via a "delta" instead of via a "snapshot" .
+ * In other words, this endpoint will not delete any omitted fields from a
+ * property group, whereas properties/overwrite will delete any fields that are
+ * omitted from a property group.
+ * @function Dropbox#filePropertiesPropertiesUpdate
+ * @arg {FilePropertiesUpdatePropertiesArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesUpdatePropertiesError>>}
+ */
+routes.filePropertiesPropertiesUpdate = function (arg) {
+  return this.request('file_properties/properties/update', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Add a template associated with a team. See route properties/add to add
+ * properties to a file or folder.
+ * @function Dropbox#filePropertiesTemplatesAddForTeam
+ * @arg {FilePropertiesAddTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesAddTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
+ */
+routes.filePropertiesTemplatesAddForTeam = function (arg) {
+  return this.request('file_properties/templates/add_for_team', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Add a template associated with a user. See route properties/add to add
+ * properties to a file.
+ * @function Dropbox#filePropertiesTemplatesAddForUser
+ * @arg {FilePropertiesAddTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesAddTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
+ */
+routes.filePropertiesTemplatesAddForUser = function (arg) {
+  return this.request('file_properties/templates/add_for_user', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Get the schema for a specified template.
+ * @function Dropbox#filePropertiesTemplatesGetForTeam
+ * @arg {FilePropertiesGetTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesGetTemplateResult, Error.<FilePropertiesTemplateError>>}
+ */
+routes.filePropertiesTemplatesGetForTeam = function (arg) {
+  return this.request('file_properties/templates/get_for_team', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Get the schema for a specified template.
+ * @function Dropbox#filePropertiesTemplatesGetForUser
+ * @arg {FilePropertiesGetTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesGetTemplateResult, Error.<FilePropertiesTemplateError>>}
+ */
+routes.filePropertiesTemplatesGetForUser = function (arg) {
+  return this.request('file_properties/templates/get_for_user', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Get the template identifiers for a team. To get the schema of each template
+ * use templates/get_for_team.
+ * @function Dropbox#filePropertiesTemplatesListForTeam
+ * @arg {void} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesListTemplateResult, Error.<FilePropertiesTemplateError>>}
+ */
+routes.filePropertiesTemplatesListForTeam = function (arg) {
+  return this.request('file_properties/templates/list_for_team', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Get the template identifiers for a team. To get the schema of each template
+ * use templates/get_for_user.
+ * @function Dropbox#filePropertiesTemplatesListForUser
+ * @arg {void} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesListTemplateResult, Error.<FilePropertiesTemplateError>>}
+ */
+routes.filePropertiesTemplatesListForUser = function (arg) {
+  return this.request('file_properties/templates/list_for_user', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Update a template associated with a team. This route can update the template
+ * name, the template description and add optional properties to templates.
+ * @function Dropbox#filePropertiesTemplatesUpdateForTeam
+ * @arg {FilePropertiesUpdateTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesUpdateTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
+ */
+routes.filePropertiesTemplatesUpdateForTeam = function (arg) {
+  return this.request('file_properties/templates/update_for_team', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Update a template associated with a user. This route can update the template
+ * name, the template description and add optional properties to templates.
+ * @function Dropbox#filePropertiesTemplatesUpdateForUser
+ * @arg {FilePropertiesUpdateTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesUpdateTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
+ */
+routes.filePropertiesTemplatesUpdateForUser = function (arg) {
+  return this.request('file_properties/templates/update_for_user', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Creates a file request for this user.
+ * @function Dropbox#fileRequestsCreate
+ * @arg {FileRequestsCreateFileRequestArgs} arg - The request parameters.
+ * @returns {Promise.<FileRequestsFileRequest, Error.<FileRequestsCreateFileRequestError>>}
+ */
+routes.fileRequestsCreate = function (arg) {
+  return this.request('file_requests/create', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Returns the specified file request.
+ * @function Dropbox#fileRequestsGet
+ * @arg {FileRequestsGetFileRequestArgs} arg - The request parameters.
+ * @returns {Promise.<FileRequestsFileRequest, Error.<FileRequestsGetFileRequestError>>}
+ */
+routes.fileRequestsGet = function (arg) {
+  return this.request('file_requests/get', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Returns a list of file requests owned by this user. For apps with the app
+ * folder permission, this will only return file requests with destinations in
+ * the app folder.
+ * @function Dropbox#fileRequestsList
+ * @arg {void} arg - The request parameters.
+ * @returns {Promise.<FileRequestsListFileRequestsResult, Error.<FileRequestsListFileRequestsError>>}
+ */
+routes.fileRequestsList = function (arg) {
+  return this.request('file_requests/list', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Update a file request.
+ * @function Dropbox#fileRequestsUpdate
+ * @arg {FileRequestsUpdateFileRequestArgs} arg - The request parameters.
+ * @returns {Promise.<FileRequestsFileRequest, Error.<FileRequestsUpdateFileRequestError>>}
+ */
+routes.fileRequestsUpdate = function (arg) {
+  return this.request('file_requests/update', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Returns the metadata for a file or folder. This is an alpha endpoint
  * compatible with the properties API. Note: Metadata for the root folder is
  * unsupported.
@@ -251,6 +442,19 @@ routes.filesGetThumbnail = function (arg) {
 };
 
 /**
+ * Get thumbnails for a list of images. We allow up to 25 thumbnails in a single
+ * batch. This method currently supports files with the following file
+ * extensions: jpg, jpeg, png, tiff, tif, gif and bmp. Photos that are larger
+ * than 20MB in size won't be converted to a thumbnail.
+ * @function Dropbox#filesGetThumbnailBatch
+ * @arg {FilesGetThumbnailBatchArg} arg - The request parameters.
+ * @returns {Promise.<FilesGetThumbnailBatchResult, Error.<FilesGetThumbnailBatchError>>}
+ */
+routes.filesGetThumbnailBatch = function (arg) {
+  return this.request('files/get_thumbnail_batch', arg, 'user', 'content', 'rpc');
+};
+
+/**
  * Starts returning the contents of a folder. If the result's
  * ListFolderResult.has_more field is true, call list_folder/continue with the
  * returned ListFolderResult.cursor to retrieve more entries. If you're using
@@ -390,67 +594,60 @@ routes.filesPermanentlyDelete = function (arg) {
 };
 
 /**
- * Add custom properties to a file using a filled property template. See
- * properties/template/add to create new property templates.
  * @function Dropbox#filesPropertiesAdd
- * @arg {FilesPropertyGroupWithPath} arg - The request parameters.
- * @returns {Promise.<void, Error.<FilesAddPropertiesError>>}
+ * @deprecated
+ * @arg {FilePropertiesAddPropertiesArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesAddPropertiesError>>}
  */
 routes.filesPropertiesAdd = function (arg) {
   return this.request('files/properties/add', arg, 'user', 'api', 'rpc');
 };
 
 /**
- * Overwrite custom properties from a specified template associated with a file.
  * @function Dropbox#filesPropertiesOverwrite
- * @arg {FilesPropertyGroupWithPath} arg - The request parameters.
- * @returns {Promise.<void, Error.<FilesInvalidPropertyGroupError>>}
+ * @deprecated
+ * @arg {FilePropertiesOverwritePropertyGroupArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesInvalidPropertyGroupError>>}
  */
 routes.filesPropertiesOverwrite = function (arg) {
   return this.request('files/properties/overwrite', arg, 'user', 'api', 'rpc');
 };
 
 /**
- * Remove all custom properties from a specified template associated with a
- * file. To remove specific property key value pairs, see properties/update. To
- * update a property template, see properties/template/update. Property
- * templates can't be removed once created.
  * @function Dropbox#filesPropertiesRemove
- * @arg {FilesRemovePropertiesArg} arg - The request parameters.
- * @returns {Promise.<void, Error.<FilesRemovePropertiesError>>}
+ * @deprecated
+ * @arg {FilePropertiesRemovePropertiesArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesRemovePropertiesError>>}
  */
 routes.filesPropertiesRemove = function (arg) {
   return this.request('files/properties/remove', arg, 'user', 'api', 'rpc');
 };
 
 /**
- * Get the schema for a specified template.
  * @function Dropbox#filesPropertiesTemplateGet
- * @arg {PropertiesGetPropertyTemplateArg} arg - The request parameters.
- * @returns {Promise.<PropertiesGetPropertyTemplateResult, Error.<PropertiesPropertyTemplateError>>}
+ * @deprecated
+ * @arg {FilePropertiesGetTemplateArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesGetTemplateResult, Error.<FilePropertiesTemplateError>>}
  */
 routes.filesPropertiesTemplateGet = function (arg) {
   return this.request('files/properties/template/get', arg, 'user', 'api', 'rpc');
 };
 
 /**
- * Get the property template identifiers for a user. To get the schema of each
- * template use properties/template/get.
  * @function Dropbox#filesPropertiesTemplateList
+ * @deprecated
  * @arg {void} arg - The request parameters.
- * @returns {Promise.<PropertiesListPropertyTemplateIds, Error.<PropertiesPropertyTemplateError>>}
+ * @returns {Promise.<FilePropertiesListTemplateResult, Error.<FilePropertiesTemplateError>>}
  */
 routes.filesPropertiesTemplateList = function (arg) {
   return this.request('files/properties/template/list', arg, 'user', 'api', 'rpc');
 };
 
 /**
- * Add, update or remove custom properties from a specified template associated
- * with a file. Fields that already exist and not described in the request will
- * not be modified.
  * @function Dropbox#filesPropertiesUpdate
- * @arg {FilesUpdatePropertyGroupArg} arg - The request parameters.
- * @returns {Promise.<void, Error.<FilesUpdatePropertiesError>>}
+ * @deprecated
+ * @arg {FilePropertiesUpdatePropertiesArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesUpdatePropertiesError>>}
  */
 routes.filesPropertiesUpdate = function (arg) {
   return this.request('files/properties/update', arg, 'user', 'api', 'rpc');
@@ -607,6 +804,16 @@ routes.paperDocsArchive = function (arg) {
 };
 
 /**
+ * Creates a new Paper doc with the provided content.
+ * @function Dropbox#paperDocsCreate
+ * @arg {PaperPaperDocCreateArgs} arg - The request parameters.
+ * @returns {Promise.<PaperPaperDocCreateUpdateResult, Error.<PaperPaperDocCreateError>>}
+ */
+routes.paperDocsCreate = function (arg) {
+  return this.request('paper/docs/create', arg, 'user', 'api', 'upload');
+};
+
+/**
  * Exports and downloads Paper doc either as HTML or markdown.
  * @function Dropbox#paperDocsDownload
  * @arg {PaperPaperDocExport} arg - The request parameters.
@@ -712,6 +919,16 @@ routes.paperDocsSharingPolicyGet = function (arg) {
  */
 routes.paperDocsSharingPolicySet = function (arg) {
   return this.request('paper/docs/sharing_policy/set', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Updates an existing Paper doc with the provided content.
+ * @function Dropbox#paperDocsUpdate
+ * @arg {PaperPaperDocUpdateArgs} arg - The request parameters.
+ * @returns {Promise.<PaperPaperDocCreateUpdateResult, Error.<PaperPaperDocUpdateError>>}
+ */
+routes.paperDocsUpdate = function (arg) {
+  return this.request('paper/docs/update', arg, 'user', 'api', 'upload');
 };
 
 /**
