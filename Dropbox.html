@@ -837,6 +837,2543 @@ It specifies which user the team access token should be acting as.</td>
             
 <hr>
 <dt>
+    <h4 class="name" id="filePropertiesPropertiesAdd"><span class="type-signature"></span>filePropertiesPropertiesAdd(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Add property groups to a Dropbox file. See templates/add_for_user or
+templates/add_for_team to create new templates.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesAddPropertiesArg">FilePropertiesAddPropertiesArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesAddPropertiesError">FilePropertiesAddPropertiesError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesPropertiesOverwrite"><span class="type-signature"></span>filePropertiesPropertiesOverwrite(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Overwrite property groups associated with a file. This endpoint should be
+used instead of properties/update when property groups are being updated via
+a "snapshot" instead of via a "delta". In other words, this endpoint will
+delete all omitted fields from a property group, whereas properties/update
+will only delete fields that are explicitly marked for deletion.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesOverwritePropertyGroupArg">FilePropertiesOverwritePropertyGroupArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesInvalidPropertyGroupError">FilePropertiesInvalidPropertyGroupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesPropertiesRemove"><span class="type-signature"></span>filePropertiesPropertiesRemove(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Remove the specified property group from the file. To remove specific
+property field key value pairs, see route properties/update. To update a
+template, see templates/update_for_user or templates/update_for_team.
+Templates can't be removed once created.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesRemovePropertiesArg">FilePropertiesRemovePropertiesArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesRemovePropertiesError">FilePropertiesRemovePropertiesError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesPropertiesSearch"><span class="type-signature"></span>filePropertiesPropertiesSearch(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Search across property templates for particular property field values.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesPropertiesSearchArg">FilePropertiesPropertiesSearchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesPropertiesSearchResult">FilePropertiesPropertiesSearchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesPropertiesSearchError">FilePropertiesPropertiesSearchError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesPropertiesUpdate"><span class="type-signature"></span>filePropertiesPropertiesUpdate(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Add, update or remove properties associated with the supplied file and
+templates. This endpoint should be used instead of properties/overwrite when
+property groups are being updated via a "delta" instead of via a "snapshot" .
+In other words, this endpoint will not delete any omitted fields from a
+property group, whereas properties/overwrite will delete any fields that are
+omitted from a property group.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesUpdatePropertiesArg">FilePropertiesUpdatePropertiesArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesUpdatePropertiesError">FilePropertiesUpdatePropertiesError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesTemplatesAddForTeam"><span class="type-signature"></span>filePropertiesTemplatesAddForTeam(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Add a template associated with a team. See route properties/add to add
+properties to a file or folder.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesAddTemplateArg">FilePropertiesAddTemplateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesAddTemplateResult">FilePropertiesAddTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesModifyTemplateError">FilePropertiesModifyTemplateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesTemplatesAddForUser"><span class="type-signature"></span>filePropertiesTemplatesAddForUser(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Add a template associated with a user. See route properties/add to add
+properties to a file.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesAddTemplateArg">FilePropertiesAddTemplateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesAddTemplateResult">FilePropertiesAddTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesModifyTemplateError">FilePropertiesModifyTemplateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesTemplatesGetForTeam"><span class="type-signature"></span>filePropertiesTemplatesGetForTeam(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get the schema for a specified template.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesGetTemplateArg">FilePropertiesGetTemplateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesGetTemplateResult">FilePropertiesGetTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesTemplatesGetForUser"><span class="type-signature"></span>filePropertiesTemplatesGetForUser(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get the schema for a specified template.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesGetTemplateArg">FilePropertiesGetTemplateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesGetTemplateResult">FilePropertiesGetTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesTemplatesListForTeam"><span class="type-signature"></span>filePropertiesTemplatesListForTeam(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get the template identifiers for a team. To get the schema of each template
+use templates/get_for_team.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">void</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesListTemplateResult">FilePropertiesListTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesTemplatesListForUser"><span class="type-signature"></span>filePropertiesTemplatesListForUser(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get the template identifiers for a team. To get the schema of each template
+use templates/get_for_user.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">void</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesListTemplateResult">FilePropertiesListTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesTemplatesUpdateForTeam"><span class="type-signature"></span>filePropertiesTemplatesUpdateForTeam(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Update a template associated with a team. This route can update the template
+name, the template description and add optional properties to templates.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesUpdateTemplateArg">FilePropertiesUpdateTemplateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesUpdateTemplateResult">FilePropertiesUpdateTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesModifyTemplateError">FilePropertiesModifyTemplateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filePropertiesTemplatesUpdateForUser"><span class="type-signature"></span>filePropertiesTemplatesUpdateForUser(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Update a template associated with a user. This route can update the template
+name, the template description and add optional properties to templates.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesUpdateTemplateArg">FilePropertiesUpdateTemplateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesUpdateTemplateResult">FilePropertiesUpdateTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesModifyTemplateError">FilePropertiesModifyTemplateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="fileRequestsCreate"><span class="type-signature"></span>fileRequestsCreate(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Creates a file request for this user.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FileRequestsCreateFileRequestArgs">FileRequestsCreateFileRequestArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsFileRequest">FileRequestsFileRequest</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsCreateFileRequestError">FileRequestsCreateFileRequestError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="fileRequestsGet"><span class="type-signature"></span>fileRequestsGet(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the specified file request.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FileRequestsGetFileRequestArgs">FileRequestsGetFileRequestArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsFileRequest">FileRequestsFileRequest</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsGetFileRequestError">FileRequestsGetFileRequestError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="fileRequestsList"><span class="type-signature"></span>fileRequestsList(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns a list of file requests owned by this user. For apps with the app
+folder permission, this will only return file requests with destinations in
+the app folder.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">void</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsListFileRequestsResult">FileRequestsListFileRequestsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsListFileRequestsError">FileRequestsListFileRequestsError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="fileRequestsUpdate"><span class="type-signature"></span>fileRequestsUpdate(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Update a file request.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FileRequestsUpdateFileRequestArgs">FileRequestsUpdateFileRequestArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsFileRequest">FileRequestsFileRequest</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsUpdateFileRequestError">FileRequestsUpdateFileRequestError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="filesAlphaGetMetadata"><span class="type-signature"></span>filesAlphaGetMetadata(arg)</h4>
     
     
@@ -3712,6 +6249,157 @@ that are larger than 20MB in size won't be converted to a thumbnail.
             
 <hr>
 <dt>
+    <h4 class="name" id="filesGetThumbnailBatch"><span class="type-signature"></span>filesGetThumbnailBatch(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get thumbnails for a list of images. We allow up to 25 thumbnails in a single
+batch. This method currently supports files with the following file
+extensions: jpg, jpeg, png, tiff, tif, gif and bmp. Photos that are larger
+than 20MB in size won't be converted to a thumbnail.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesGetThumbnailBatchArg">FilesGetThumbnailBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesGetThumbnailBatchResult">FilesGetThumbnailBatchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesGetThumbnailBatchError">FilesGetThumbnailBatchError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="filesListFolder"><span class="type-signature"></span>filesListFolder(arg)</h4>
     
     
@@ -5246,11 +7934,6 @@ for Dropbox Business apps.
 <dd>
 
     
-    <div class="description">
-        Add custom properties to a file using a filled property template. See
-properties/template/add to create new property templates.
-    </div>
-    
 
     
 
@@ -5289,7 +7972,7 @@ properties/template/add to create new property templates.
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#FilesPropertyGroupWithPath">FilesPropertyGroupWithPath</a></span>
+<span class="param-type"><a href="global.html#FilePropertiesAddPropertiesArg">FilePropertiesAddPropertiesArg</a></span>
 
 
 
@@ -5328,6 +8011,15 @@ properties/template/add to create new property templates.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -5371,7 +8063,7 @@ properties/template/add to create new property templates.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesAddPropertiesError">FilesAddPropertiesError</a>>></span>
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesAddPropertiesError">FilePropertiesAddPropertiesError</a>>></span>
 
 
 
@@ -5395,10 +8087,6 @@ properties/template/add to create new property templates.
 <dd>
 
     
-    <div class="description">
-        Overwrite custom properties from a specified template associated with a file.
-    </div>
-    
 
     
 
@@ -5437,7 +8125,7 @@ properties/template/add to create new property templates.
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#FilesPropertyGroupWithPath">FilesPropertyGroupWithPath</a></span>
+<span class="param-type"><a href="global.html#FilePropertiesOverwritePropertyGroupArg">FilePropertiesOverwritePropertyGroupArg</a></span>
 
 
 
@@ -5476,6 +8164,15 @@ properties/template/add to create new property templates.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -5519,7 +8216,7 @@ properties/template/add to create new property templates.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesInvalidPropertyGroupError">FilesInvalidPropertyGroupError</a>>></span>
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesInvalidPropertyGroupError">FilePropertiesInvalidPropertyGroupError</a>>></span>
 
 
 
@@ -5543,13 +8240,6 @@ properties/template/add to create new property templates.
 <dd>
 
     
-    <div class="description">
-        Remove all custom properties from a specified template associated with a
-file. To remove specific property key value pairs, see properties/update. To
-update a property template, see properties/template/update. Property
-templates can't be removed once created.
-    </div>
-    
 
     
 
@@ -5588,7 +8278,7 @@ templates can't be removed once created.
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#FilesRemovePropertiesArg">FilesRemovePropertiesArg</a></span>
+<span class="param-type"><a href="global.html#FilePropertiesRemovePropertiesArg">FilePropertiesRemovePropertiesArg</a></span>
 
 
 
@@ -5627,6 +8317,15 @@ templates can't be removed once created.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -5670,7 +8369,7 @@ templates can't be removed once created.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesRemovePropertiesError">FilesRemovePropertiesError</a>>></span>
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesRemovePropertiesError">FilePropertiesRemovePropertiesError</a>>></span>
 
 
 
@@ -5694,10 +8393,6 @@ templates can't be removed once created.
 <dd>
 
     
-    <div class="description">
-        Get the schema for a specified template.
-    </div>
-    
 
     
 
@@ -5736,7 +8431,7 @@ templates can't be removed once created.
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#PropertiesGetPropertyTemplateArg">PropertiesGetPropertyTemplateArg</a></span>
+<span class="param-type"><a href="global.html#FilePropertiesGetTemplateArg">FilePropertiesGetTemplateArg</a></span>
 
 
 
@@ -5775,6 +8470,15 @@ templates can't be removed once created.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -5818,7 +8522,7 @@ templates can't be removed once created.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="global.html#PropertiesGetPropertyTemplateResult">PropertiesGetPropertyTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PropertiesPropertyTemplateError">PropertiesPropertyTemplateError</a>>></span>
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesGetTemplateResult">FilePropertiesGetTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
 
 
 
@@ -5841,11 +8545,6 @@ templates can't be removed once created.
 </dt>
 <dd>
 
-    
-    <div class="description">
-        Get the property template identifiers for a user. To get the schema of each
-template use properties/template/get.
-    </div>
     
 
     
@@ -5924,6 +8623,15 @@ template use properties/template/get.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -5967,7 +8675,7 @@ template use properties/template/get.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="global.html#PropertiesListPropertyTemplateIds">PropertiesListPropertyTemplateIds</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PropertiesPropertyTemplateError">PropertiesPropertyTemplateError</a>>></span>
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesListTemplateResult">FilePropertiesListTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
 
 
 
@@ -5990,12 +8698,6 @@ template use properties/template/get.
 </dt>
 <dd>
 
-    
-    <div class="description">
-        Add, update or remove custom properties from a specified template associated
-with a file. Fields that already exist and not described in the request will
-not be modified.
-    </div>
     
 
     
@@ -6035,7 +8737,7 @@ not be modified.
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#FilesUpdatePropertyGroupArg">FilesUpdatePropertyGroupArg</a></span>
+<span class="param-type"><a href="global.html#FilePropertiesUpdatePropertiesArg">FilePropertiesUpdatePropertiesArg</a></span>
 
 
 
@@ -6074,6 +8776,15 @@ not be modified.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -6117,7 +8828,7 @@ not be modified.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesUpdatePropertiesError">FilesUpdatePropertiesError</a>>></span>
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesUpdatePropertiesError">FilePropertiesUpdatePropertiesError</a>>></span>
 
 
 
@@ -8228,6 +10939,117 @@ prevent cross site scripting attacks.</td>
             
 <hr>
 <dt>
+    <h4 class="name" id="getProxy"><span class="type-signature"></span>getProxy()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get the proxy
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#getProxy">DropboxBase#getProxy</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The proxy URL
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="paperDocsArchive"><span class="type-signature"></span>paperDocsArchive(arg)</h4>
     
     
@@ -8361,6 +11183,154 @@ undone by anyone with edit permissions to the doc.
     <dd>
         
 <span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsCreate"><span class="type-signature"></span>paperDocsCreate(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Creates a new Paper doc with the provided content.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperDocCreateArgs">PaperPaperDocCreateArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperPaperDocCreateUpdateResult">PaperPaperDocCreateUpdateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperPaperDocCreateError">PaperPaperDocCreateError</a>>></span>
 
 
 
@@ -9727,6 +12697,154 @@ console.
             
 <hr>
 <dt>
+    <h4 class="name" id="paperDocsUpdate"><span class="type-signature"></span>paperDocsUpdate(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Updates an existing Paper doc with the provided content.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperDocUpdateArgs">PaperPaperDocUpdateArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperPaperDocCreateUpdateResult">PaperPaperDocCreateUpdateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperPaperDocUpdateError">PaperPaperDocUpdateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="paperDocsUsersAdd"><span class="type-signature"></span>paperDocsUsersAdd(arg)</h4>
     
     
@@ -10566,6 +13684,163 @@ address or Dropbox account ID.  Note: Doc owner cannot be removed.
 		<ul class="dummy">
 			<li>
 				<a href="DropboxBase.html#setClientId">DropboxBase#setClientId</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setProxy"><span class="type-signature"></span>setProxy(proxy)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Set the proxy
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>proxy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The proxy URL</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#setProxy">DropboxBase#setProxy</a>
 			</li>
 		</ul>
 	</dd>
@@ -17907,7 +21182,7 @@ queried per request.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-07-21T12:58:10-07:00
+		on 2017-09-18T22:15:20-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

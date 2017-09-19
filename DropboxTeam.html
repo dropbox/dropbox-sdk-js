@@ -1088,6 +1088,117 @@ prevent cross site scripting attacks.</td>
             
 <hr>
 <dt>
+    <h4 class="name" id="getProxy"><span class="type-signature"></span>getProxy()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get the proxy
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#getProxy">DropboxBase#getProxy</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The proxy URL
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="setAccessToken"><span class="type-signature"></span>setAccessToken(accessToken)</h4>
     
     
@@ -1328,6 +1439,163 @@ prevent cross site scripting attacks.</td>
 		<ul class="dummy">
 			<li>
 				<a href="DropboxBase.html#setClientId">DropboxBase#setClientId</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setProxy"><span class="type-signature"></span>setProxy(proxy)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Set the proxy
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>proxy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The proxy URL</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#setProxy">DropboxBase#setProxy</a>
 			</li>
 		</ul>
 	</dd>
@@ -1863,7 +2131,7 @@ prevent cross site scripting attacks.</td>
 
     
     <div class="description">
-        Revoke a device session of a team's member
+        Revoke a device session of a team's member.
     </div>
     
 
@@ -2011,7 +2279,7 @@ prevent cross site scripting attacks.</td>
 
     
     <div class="description">
-        Revoke a list of device sessions of team members
+        Revoke a list of device sessions of team members.
     </div>
     
 
@@ -4708,7 +4976,7 @@ endpoint doesn't list any team-linked applications.
 
     
     <div class="description">
-        Revoke a linked application of the team member
+        Revoke a linked application of the team member.
     </div>
     
 
@@ -4856,7 +5124,7 @@ endpoint doesn't list any team-linked applications.
 
     
     <div class="description">
-        Revoke a list of linked applications of the team members
+        Revoke a list of linked applications of the team members.
     </div>
     
 
@@ -5163,7 +5431,7 @@ for 'Perform as team member' actions taken on the user before they become
     
     <div class="description">
         Once an async_job_id is returned from members/add , use this to poll the
-status of the asynchronous request. Permission : Team member management
+status of the asynchronous request. Permission : Team member management.
     </div>
     
 
@@ -5461,7 +5729,7 @@ IDs (or emails) that cannot be matched to a valid team member.
 
     
     <div class="description">
-        Lists members of a team. Permission : Team information
+        Lists members of a team. Permission : Team information.
     </div>
     
 
@@ -5610,7 +5878,7 @@ IDs (or emails) that cannot be matched to a valid team member.
     
     <div class="description">
         Once a cursor has been retrieved from members/list, use this to paginate
-through all team members. Permission : Team information
+through all team members. Permission : Team information.
     </div>
     
 
@@ -5734,6 +6002,453 @@ through all team members. Permission : Team information
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#TeamMembersListResult">TeamMembersListResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersListContinueError">TeamMembersListContinueError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMemberSpaceLimitsGetCustomQuota"><span class="type-signature"></span>teamMemberSpaceLimitsGetCustomQuota(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get users custom quota. Returns none as the custom quota if none was set. A
+maximum of 1000 members can be specified in a single call.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamCustomQuotaUsersArg">TeamCustomQuotaUsersArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Array.&lt;<a href="global.html#TeamCustomQuotaResult">TeamCustomQuotaResult</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamCustomQuotaError">TeamCustomQuotaError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMemberSpaceLimitsRemoveCustomQuota"><span class="type-signature"></span>teamMemberSpaceLimitsRemoveCustomQuota(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Remove users custom quota. A maximum of 1000 members can be specified in a
+single call.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamCustomQuotaUsersArg">TeamCustomQuotaUsersArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Array.&lt;<a href="global.html#TeamRemoveCustomQuotaResult">TeamRemoveCustomQuotaResult</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamCustomQuotaError">TeamCustomQuotaError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMemberSpaceLimitsSetCustomQuota"><span class="type-signature"></span>teamMemberSpaceLimitsSetCustomQuota(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Set users custom quota. Custom quota has to be at least 25GB. A maximum of
+1000 members can be specified in a single call.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamSetCustomQuotaArg">TeamSetCustomQuotaArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Array.&lt;<a href="global.html#TeamCustomQuotaResult">TeamCustomQuotaResult</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamCustomQuotaError">TeamCustomQuotaError</a>>></span>
 
 
 
@@ -5914,9 +6629,11 @@ user account. Accounts can be recovered via members/recover for a 7 day
 period or until the account has been permanently deleted or transferred to
 another account (whichever comes first). Calling members/add while a user is
 still recoverable on your team will return with
-MemberAddResult.user_already_on_team. This endpoint may initiate an
-asynchronous job. To obtain the final result of the job, the client should
-periodically poll members/remove/job_status/get.
+MemberAddResult.user_already_on_team. Accounts can have their files
+transferred via the admin console for a limited time, based on the version
+history length associated with the team (120 days for most teams). This
+endpoint may initiate an asynchronous job. To obtain the final result of the
+job, the client should periodically poll members/remove/job_status/get.
     </div>
     
 
@@ -6065,7 +6782,7 @@ periodically poll members/remove/job_status/get.
     
     <div class="description">
         Once an async_job_id is returned from members/remove , use this to poll the
-status of the asynchronous request. Permission : Team member management
+status of the asynchronous request. Permission : Team member management.
     </div>
     
 
@@ -6363,7 +7080,7 @@ provided to identify the user account. No-op if team member is not pending.
 
     
     <div class="description">
-        Updates a team member's permissions. Permission : Team member management
+        Updates a team member's permissions. Permission : Team member management.
     </div>
     
 
@@ -6511,7 +7228,7 @@ provided to identify the user account. No-op if team member is not pending.
 
     
     <div class="description">
-        Updates a team member's profile. Permission : Team member management
+        Updates a team member's profile. Permission : Team member management.
     </div>
     
 
@@ -7259,11 +7976,6 @@ through all team-accessible namespaces. Duplicates may occur in the list.
 <dd>
 
     
-    <div class="description">
-        Add a property template. See route files/properties/add to add properties to
-a file.
-    </div>
-    
 
     
 
@@ -7302,7 +8014,7 @@ a file.
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#TeamAddPropertyTemplateArg">TeamAddPropertyTemplateArg</a></span>
+<span class="param-type"><a href="global.html#FilePropertiesAddTemplateArg">FilePropertiesAddTemplateArg</a></span>
 
 
 
@@ -7341,6 +8053,15 @@ a file.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -7384,7 +8105,7 @@ a file.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="global.html#TeamAddPropertyTemplateResult">TeamAddPropertyTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PropertiesModifyPropertyTemplateError">PropertiesModifyPropertyTemplateError</a>>></span>
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesAddTemplateResult">FilePropertiesAddTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesModifyTemplateError">FilePropertiesModifyTemplateError</a>>></span>
 
 
 
@@ -7408,10 +8129,6 @@ a file.
 <dd>
 
     
-    <div class="description">
-        Get the schema for a specified template.
-    </div>
-    
 
     
 
@@ -7450,7 +8167,7 @@ a file.
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#PropertiesGetPropertyTemplateArg">PropertiesGetPropertyTemplateArg</a></span>
+<span class="param-type"><a href="global.html#FilePropertiesGetTemplateArg">FilePropertiesGetTemplateArg</a></span>
 
 
 
@@ -7489,6 +8206,15 @@ a file.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -7532,7 +8258,7 @@ a file.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="global.html#PropertiesGetPropertyTemplateResult">PropertiesGetPropertyTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PropertiesPropertyTemplateError">PropertiesPropertyTemplateError</a>>></span>
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesGetTemplateResult">FilePropertiesGetTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
 
 
 
@@ -7555,11 +8281,6 @@ a file.
 </dt>
 <dd>
 
-    
-    <div class="description">
-        Get the property template identifiers for a team. To get the schema of each
-template use properties/template/get.
-    </div>
     
 
     
@@ -7638,6 +8359,15 @@ template use properties/template/get.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -7681,7 +8411,7 @@ template use properties/template/get.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="global.html#PropertiesListPropertyTemplateIds">PropertiesListPropertyTemplateIds</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PropertiesPropertyTemplateError">PropertiesPropertyTemplateError</a>>></span>
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesListTemplateResult">FilePropertiesListTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
 
 
 
@@ -7704,11 +8434,6 @@ template use properties/template/get.
 </dt>
 <dd>
 
-    
-    <div class="description">
-        Update a property template. This route can update the template name, the
-template description and add optional properties to templates.
-    </div>
     
 
     
@@ -7748,7 +8473,7 @@ template description and add optional properties to templates.
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#TeamUpdatePropertyTemplateArg">TeamUpdatePropertyTemplateArg</a></span>
+<span class="param-type"><a href="global.html#FilePropertiesUpdateTemplateArg">FilePropertiesUpdateTemplateArg</a></span>
 
 
 
@@ -7787,6 +8512,15 @@ template description and add optional properties to templates.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -7830,7 +8564,7 @@ template description and add optional properties to templates.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;<a href="global.html#TeamUpdatePropertyTemplateResult">TeamUpdatePropertyTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PropertiesModifyPropertyTemplateError">PropertiesModifyPropertyTemplateError</a>>></span>
+<span class="param-type">Promise.&lt;<a href="global.html#FilePropertiesUpdateTemplateResult">FilePropertiesUpdateTemplateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilePropertiesModifyTemplateError">FilePropertiesModifyTemplateError</a>>></span>
 
 
 
@@ -9971,7 +10705,7 @@ used to make the call.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a>
 	
-		on 2017-07-21T12:58:10-07:00
+		on 2017-09-18T22:15:20-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
