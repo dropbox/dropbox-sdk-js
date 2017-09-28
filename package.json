@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "es6-promise": "^4.1.1",
+    "mime": ">=2.0.3",
     "superagent": "^3.5.2",
     "superagent-proxy": "^1.0.2"
   }
