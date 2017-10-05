@@ -48,9 +48,9 @@ routes.filePropertiesPropertiesOverwrite = function (arg) {
 
 /**
  * Remove the specified property group from the file. To remove specific
- * property field key value pairs, see route properties/update. To update a
- * template, see templates/update_for_user or templates/update_for_team.
- * Templates can't be removed once created.
+ * property field key value pairs, see properties/update. To update a template,
+ * see templates/update_for_user or templates/update_for_team. Templates can't
+ * be removed once created.
  * @function Dropbox#filePropertiesPropertiesRemove
  * @arg {FilePropertiesRemovePropertiesArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<FilePropertiesRemovePropertiesError>>}
@@ -85,8 +85,8 @@ routes.filePropertiesPropertiesUpdate = function (arg) {
 };
 
 /**
- * Add a template associated with a team. See route properties/add to add
- * properties to a file or folder.
+ * Add a template associated with a team. See properties/add to add properties
+ * to a file or folder.
  * @function Dropbox#filePropertiesTemplatesAddForTeam
  * @arg {FilePropertiesAddTemplateArg} arg - The request parameters.
  * @returns {Promise.<FilePropertiesAddTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
@@ -96,8 +96,8 @@ routes.filePropertiesTemplatesAddForTeam = function (arg) {
 };
 
 /**
- * Add a template associated with a user. See route properties/add to add
- * properties to a file.
+ * Add a template associated with a user. See properties/add to add properties
+ * to a file. This endpoint can't be called on a team member or admin's behalf.
  * @function Dropbox#filePropertiesTemplatesAddForUser
  * @arg {FilePropertiesAddTemplateArg} arg - The request parameters.
  * @returns {Promise.<FilePropertiesAddTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
@@ -117,7 +117,8 @@ routes.filePropertiesTemplatesGetForTeam = function (arg) {
 };
 
 /**
- * Get the schema for a specified template.
+ * Get the schema for a specified template. This endpoint can't be called on a
+ * team member or admin's behalf.
  * @function Dropbox#filePropertiesTemplatesGetForUser
  * @arg {FilePropertiesGetTemplateArg} arg - The request parameters.
  * @returns {Promise.<FilePropertiesGetTemplateResult, Error.<FilePropertiesTemplateError>>}
@@ -139,7 +140,8 @@ routes.filePropertiesTemplatesListForTeam = function (arg) {
 
 /**
  * Get the template identifiers for a team. To get the schema of each template
- * use templates/get_for_user.
+ * use templates/get_for_user. This endpoint can't be called on a team member or
+ * admin's behalf.
  * @function Dropbox#filePropertiesTemplatesListForUser
  * @arg {void} arg - The request parameters.
  * @returns {Promise.<FilePropertiesListTemplateResult, Error.<FilePropertiesTemplateError>>}
@@ -161,7 +163,8 @@ routes.filePropertiesTemplatesUpdateForTeam = function (arg) {
 
 /**
  * Update a template associated with a user. This route can update the template
- * name, the template description and add optional properties to templates.
+ * name, the template description and add optional properties to templates. This
+ * endpoint can't be called on a team member or admin's behalf.
  * @function Dropbox#filePropertiesTemplatesUpdateForUser
  * @arg {FilePropertiesUpdateTemplateArg} arg - The request parameters.
  * @returns {Promise.<FilePropertiesUpdateTemplateResult, Error.<FilePropertiesModifyTemplateError>>}

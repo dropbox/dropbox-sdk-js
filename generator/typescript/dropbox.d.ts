@@ -53,7 +53,7 @@ declare module DropboxTypes {
 
     /**
      * Remove the specified property group from the file. To remove specific
-     * property field key value pairs, see route propertiesUpdate(). To update a
+     * property field key value pairs, see propertiesUpdate(). To update a
      * template, see templatesUpdateForUser() or templatesUpdateForTeam().
      * Templates can't be removed once created.
      * 
@@ -87,7 +87,7 @@ declare module DropboxTypes {
     public filePropertiesPropertiesUpdate(arg: file_properties.UpdatePropertiesArg): Promise<void>;
 
     /**
-     * Add a template associated with a team. See route propertiesAdd() to add
+     * Add a template associated with a team. See propertiesAdd() to add
      * properties to a file or folder.
      * 
      * When an error occurs, the route rejects the promise with type
@@ -97,8 +97,9 @@ declare module DropboxTypes {
     public filePropertiesTemplatesAddForTeam(arg: file_properties.AddTemplateArg): Promise<file_properties.AddTemplateResult>;
 
     /**
-     * Add a template associated with a user. See route propertiesAdd() to add
-     * properties to a file.
+     * Add a template associated with a user. See propertiesAdd() to add
+     * properties to a file. This endpoint can't be called on a team member or
+     * admin's behalf.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
@@ -116,7 +117,8 @@ declare module DropboxTypes {
     public filePropertiesTemplatesGetForTeam(arg: file_properties.GetTemplateArg): Promise<file_properties.GetTemplateResult>;
 
     /**
-     * Get the schema for a specified template.
+     * Get the schema for a specified template. This endpoint can't be called on
+     * a team member or admin's behalf.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
@@ -136,7 +138,8 @@ declare module DropboxTypes {
 
     /**
      * Get the template identifiers for a team. To get the schema of each
-     * template use templatesGetForUser().
+     * template use templatesGetForUser(). This endpoint can't be called on a
+     * team member or admin's behalf.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
@@ -158,7 +161,8 @@ declare module DropboxTypes {
     /**
      * Update a template associated with a user. This route can update the
      * template name, the template description and add optional properties to
-     * templates.
+     * templates. This endpoint can't be called on a team member or admin's
+     * behalf.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.

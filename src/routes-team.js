@@ -602,7 +602,8 @@ routes.teamTeamFolderArchiveCheck = function (arg) {
 };
 
 /**
- * Creates a new, active, team folder. Permission : Team member file access.
+ * Creates a new, active, team folder with no members. Permission : Team member
+ * file access.
  * @function DropboxTeam#teamTeamFolderCreate
  * @arg {TeamTeamFolderCreateArg} arg - The request parameters.
  * @returns {Promise.<TeamTeamFolderMetadata, Error.<TeamTeamFolderCreateError>>}

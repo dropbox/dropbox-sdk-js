@@ -567,7 +567,8 @@ declare module DropboxTypes {
     public teamTeamFolderArchiveCheck(arg: async.PollArg): Promise<team.TeamFolderArchiveJobStatus>;
 
     /**
-     * Creates a new, active, team folder. Permission : Team member file access.
+     * Creates a new, active, team folder with no members. Permission : Team
+     * member file access.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderCreateError>.
