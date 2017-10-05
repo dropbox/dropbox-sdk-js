@@ -18639,6 +18639,41 @@ result for this file if it was an error.</td>
 
         <tr>
             
+                <td class="name"><code>shared_link</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesSharedLink">FilesSharedLink</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A shared link to list the
+contents of, if the link is protected provide the password. if this field is
+present, ListFolderArg.path will be relative to root of the shared link. Only
+non-recursive mode is supported for shared link.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>recursive</code></td>
             
 
@@ -26239,6 +26274,166 @@ again.</td>
 
             <td class="description last">Used for paging. Value to set the start argument
 to when calling search to fetch the next page of results.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesSharedLink">
+    <h4 id="FilesSharedLink">FilesSharedLink</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Shared link url.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>password</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Password for the shared link.</td>
         </tr>
 
     
@@ -58436,7 +58631,7 @@ results for list_file_members/batch.
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="global.html#SharingUserMembershipInfo">SharingUserMembershipInfo</a>></span>
+<span class="param-type">Array.&lt;<a href="global.html#SharingUserFileMembershipInfo">SharingUserFileMembershipInfo</a>></span>
 
 
 
@@ -66077,6 +66272,300 @@ is access_error.</td>
             
 
             <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="SharingUserFileMembershipInfo">
+    <h4 id="SharingUserFileMembershipInfo">SharingUserFileMembershipInfo</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The information about a user member of the shared content with an appended
+last seen timestamp.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>access_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingAccessLevel">SharingAccessLevel</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The access type for this member.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingUserInfo">SharingUserInfo</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The account information for the membership
+user.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>permissions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#SharingMemberPermission">SharingMemberPermission</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The permissions
+that requesting user has on this member. The set of permissions corresponds
+to the MemberActions in the request.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>initials</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Suggested name initials for a member.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>is_inherited</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">True if the member has access from a
+parent folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>time_last_seen</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The UTC timestamp of when the user
+has last seen the content, if they have.</td>
         </tr>
 
     
@@ -89324,8 +89813,6 @@ Might be missing due to historical data gap.</td>
         <th>Type</th>
 
         
-        <th>Argument</th>
-        
 
         
 
@@ -89352,49 +89839,10 @@ Might be missing due to historical data gap.</td>
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-                </td>
-            
 
             
 
             <td class="description last">Domain names.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>verification_method</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Domain name verification method.
-Might be missing due to historical data gap.</td>
         </tr>
 
     
@@ -97213,6 +97661,39 @@ members with the link.</td>
 
         <tr>
             
+                <td class="name"><code>sso_add_cert_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSsoAddCertDetails">TeamLogSsoAddCertDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is sso_add_cert_details. Added the X.509 certificate for SSO.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>sso_add_login_url_details</code></td>
             
 
@@ -97404,6 +97885,39 @@ URL for SSO.</td>
             <td class="description last">Available if .tag is
 sso_change_saml_identity_mode_details. Changed the SAML identity mode for
 SSO.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sso_remove_cert_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSsoRemoveCertDetails">TeamLogSsoRemoveCertDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available
+if .tag is sso_remove_cert_details. Removed the X.509 certificate for SSO.</td>
         </tr>
 
     
@@ -98560,6 +99074,40 @@ enabled, is deployed to all teams or to specific members of the team.</td>
 
         <tr>
             
+                <td class="name"><code>paper_change_member_link_policy_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPaperChangeMemberLinkPolicyDetails">TeamLogPaperChangeMemberLinkPolicyDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+paper_change_member_link_policy_details. Changed whether non team members can
+view Paper documents using a link.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>paper_change_member_policy_details</code></td>
             
 
@@ -99061,6 +99609,40 @@ can be idle while signed in to Dropbox on the web.</td>
 
             <td class="description last">- Available if .tag is team_profile_add_logo_details. Added a team logo to be
 displayed on shared link headers.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>team_profile_change_default_language_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamProfileChangeDefaultLanguageDetails">TeamLogTeamProfileChangeDefaultLanguageDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_profile_change_default_language_details. Changed the default language
+for the team.</td>
         </tr>
 
     
@@ -100045,6 +100627,9 @@ to an internal error.</td>
 <span class="param-type">'shmodel_visibility_team_only_details'</span>
 |
 
+<span class="param-type">'sso_add_cert_details'</span>
+|
+
 <span class="param-type">'sso_add_login_url_details'</span>
 |
 
@@ -100061,6 +100646,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'sso_change_saml_identity_mode_details'</span>
+|
+
+<span class="param-type">'sso_remove_cert_details'</span>
 |
 
 <span class="param-type">'sso_remove_login_url_details'</span>
@@ -100165,6 +100753,9 @@ to an internal error.</td>
 <span class="param-type">'paper_change_deployment_policy_details'</span>
 |
 
+<span class="param-type">'paper_change_member_link_policy_details'</span>
+|
+
 <span class="param-type">'paper_change_member_policy_details'</span>
 |
 
@@ -100208,6 +100799,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'team_profile_add_logo_details'</span>
+|
+
+<span class="param-type">'team_profile_change_default_language_details'</span>
 |
 
 <span class="param-type">'team_profile_change_logo_details'</span>
@@ -100976,6 +101570,9 @@ to an internal error.</td>
 <span class="param-type">'shmodel_visibility_team_only'</span>
 |
 
+<span class="param-type">'sso_add_cert'</span>
+|
+
 <span class="param-type">'sso_add_login_url'</span>
 |
 
@@ -100992,6 +101589,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'sso_change_saml_identity_mode'</span>
+|
+
+<span class="param-type">'sso_remove_cert'</span>
 |
 
 <span class="param-type">'sso_remove_login_url'</span>
@@ -101096,6 +101696,9 @@ to an internal error.</td>
 <span class="param-type">'paper_change_deployment_policy'</span>
 |
 
+<span class="param-type">'paper_change_member_link_policy'</span>
+|
+
 <span class="param-type">'paper_change_member_policy'</span>
 |
 
@@ -101139,6 +101742,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'team_profile_add_logo'</span>
+|
+
+<span class="param-type">'team_profile_change_default_language'</span>
 |
 
 <span class="param-type">'team_profile_change_logo'</span>
@@ -108727,7 +109333,7 @@ management type. Might be missing due to historical data gap.</td>
 
         <tr>
             
-                <td class="name"><code>is_admin_managed</code></td>
+                <td class="name"><code>is_company_managed</code></td>
             
 
             <td class="type">
@@ -108752,7 +109358,7 @@ management type. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Is admin managed group. Might be
+            <td class="description last">Is company managed group. Might be
 missing due to historical data gap.</td>
         </tr>
 
@@ -108862,7 +109468,7 @@ missing due to historical data gap.</td>
 
         <tr>
             
-                <td class="name"><code>is_admin_managed</code></td>
+                <td class="name"><code>is_company_managed</code></td>
             
 
             <td class="type">
@@ -108887,7 +109493,7 @@ missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Is admin managed group. Might be
+            <td class="description last">Is company managed group. Might be
 missing due to historical data gap.</td>
         </tr>
 
@@ -115118,6 +115724,131 @@ deployment policy.</td>
 
             <td class="description last">Previous
 Dropbox Paper deployment policy. Might be missing due to historical data gap.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogPaperChangeMemberLinkPolicyDetails">
+    <h4 id="TeamLogPaperChangeMemberLinkPolicyDetails">TeamLogPaperChangeMemberLinkPolicyDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed whether non team members can view Paper documents using a link.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPaperMemberPolicy">TeamLogPaperMemberPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New paper external link
+accessibility policy.</td>
         </tr>
 
     
@@ -135376,6 +136107,130 @@ policy.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogSsoAddCertDetails">
+    <h4 id="TeamLogSsoAddCertDetails">TeamLogSsoAddCertDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Added the X.509 certificate for SSO.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>certificate_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogCertificate">TeamLogCertificate</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">SSO certificate details.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogSsoAddLoginUrlDetails">
     <h4 id="TeamLogSsoAddLoginUrlDetails">TeamLogSsoAddLoginUrlDetails</h4>
 
@@ -135678,6 +136533,8 @@ missing due to historical data gap.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -135690,7 +136547,7 @@ missing due to historical data gap.</td>
 
         <tr>
             
-                <td class="name"><code>certificate_details</code></td>
+                <td class="name"><code>new_certificate_details</code></td>
             
 
             <td class="type">
@@ -135704,10 +136561,50 @@ missing due to historical data gap.</td>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
-            <td class="description last">SSO certificate details.</td>
+            <td class="description last">New SSO certificate
+details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_certificate_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogCertificate">TeamLogCertificate</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Previous SSO
+certificate details.</td>
         </tr>
 
     
@@ -136469,6 +137366,77 @@ details.</td>
 </table>
 </dl>
 
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSsoRemoveCertDetails">
+    <h4 id="TeamLogSsoRemoveCertDetails">TeamLogSsoRemoveCertDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Removed the X.509 certificate for SSO.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
     
 
 	
@@ -139112,6 +140080,154 @@ into.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogTeamProfileChangeDefaultLanguageDetails">
+    <h4 id="TeamLogTeamProfileChangeDefaultLanguageDetails">TeamLogTeamProfileChangeDefaultLanguageDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed the default language for the team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New team's default language.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous team's default language.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogTeamProfileChangeLogoDetails">
     <h4 id="TeamLogTeamProfileChangeLogoDetails">TeamLogTeamProfileChangeLogoDetails</h4>
 
@@ -139695,7 +140811,7 @@ missing due to historical data gap.</td>
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#TeamLogTfaPolicy">TeamLogTfaPolicy</a></span>
+<span class="param-type"><a href="global.html#TeamPoliciesTwoStepVerificationPolicy">TeamPoliciesTwoStepVerificationPolicy</a></span>
 
 
 
@@ -139712,7 +140828,8 @@ missing due to historical data gap.</td>
 
             
 
-            <td class="description last">New change policy.</td>
+            <td class="description last">New change
+policy.</td>
         </tr>
 
     
@@ -139725,7 +140842,7 @@ missing due to historical data gap.</td>
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#TeamLogTfaPolicy">TeamLogTfaPolicy</a></span>
+<span class="param-type"><a href="global.html#TeamPoliciesTwoStepVerificationPolicy">TeamPoliciesTwoStepVerificationPolicy</a></span>
 
 
 
@@ -139744,8 +140861,8 @@ missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Previous change policy. Might
-be missing due to historical data gap.</td>
+            <td class="description last">Previous
+change policy. Might be missing due to historical data gap.</td>
         </tr>
 
     
@@ -140070,136 +141187,6 @@ deprecated.
 |
 
 <span class="param-type">'authenticator'</span>
-|
-
-<span class="param-type">'other'</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Tag identifying the union variant.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-</dd>
-
-            
-                
-<hr>
-<dt class="name" id="TeamLogTfaPolicy">
-    <h4 id="TeamLogTfaPolicy">TeamLogTfaPolicy</h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        Two factor authentication policy
-    </div>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">Object</span>
-
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>.tag</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">'allow_disable'</span>
-|
-
-<span class="param-type">'sticky_enable'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -151045,6 +152032,132 @@ around the Dropbox Office Add-In for this team.</td>
             
 
             <td class="description last">Who can view shared links owned by team members.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamPoliciesTwoStepVerificationPolicy">
+    <h4 id="TeamPoliciesTwoStepVerificationPolicy">TeamPoliciesTwoStepVerificationPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'require_tfa_enable'</span>
+|
+
+<span class="param-type">'require_tfa_disable'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -163544,7 +164657,7 @@ user shares space with other members of their team.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2017-09-28T08:04:05-07:00
+		on 2017-10-04T22:12:13-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
