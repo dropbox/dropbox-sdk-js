@@ -19,9 +19,11 @@ $ npm install dropbox --save
 
 #### Script tag
 
-The UMD build is available on [unpkg](https://unpkg.com/):
+The UMD build is available on [jsDelivr](https://www.jsdelivr.com/package/npm/dropbox) or [unpkg](https://unpkg.com/):
 
 ```html
+<script src="https://cdn.jsdelivr.net/npm/dropbox/dist/Dropbox-sdk.min.js"></script>
+<!-- or -->
 <script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
 ```
 
@@ -32,7 +34,7 @@ You can find the library on `window.Dropbox`.
 #### Browser with `<script>`
 
 ```html
-<script src="https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dropbox/dist/Dropbox-sdk.min.js"></script>
 <script>
   var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
   dbx.filesListFolder({path: ''})
