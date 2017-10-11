@@ -502,7 +502,15 @@ declare module DropboxTypes {
     public filesListFolderLongpoll(arg: files.ListFolderLongpollArg): Promise<files.ListFolderLongpollResult>;
 
     /**
-     * Return revisions of a file.
+     * Returns revisions for files based on a file path or a file id. The file
+     * path or file id is identified from the latest file entry at the given
+     * file path or id. This end point allows your app to query either by file
+     * path or file id by setting the mode parameter appropriately. In the
+     * ListRevisionsMode.path (default) mode, all revisions at the same file
+     * path as the latest file entry are returned. If revisions with the same
+     * file id are desired, then mode must be set to ListRevisionsMode.id. The
+     * ListRevisionsMode.id mode is useful to retrieve revisions for a given
+     * file across moves or renames.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.ListRevisionsError>.

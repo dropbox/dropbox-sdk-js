@@ -965,10 +965,6 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} FilesListFolderArg
  * @property {string} path - A unique identifier for the file.
- * @property {FilesSharedLink} [shared_link] - A shared link to list the
- * contents of, if the link is protected provide the password. if this field is
- * present, ListFolderArg.path will be relative to root of the shared link. Only
- * non-recursive mode is supported for shared link.
  * @property {boolean} recursive - If true, the list folder operation will be
  * applied recursively to all subfolders and the response will contain contents
  * of all subfolders.
@@ -985,6 +981,11 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {number} [limit] - The maximum number of results to return per
  * request. Note: This is an approximate number and there can be slightly more
  * entries returned in some cases.
+ * @property {FilesSharedLink} [shared_link] - A shared link to list the
+ * contents of. If the link is password-protected, the password must be
+ * provided. If this field is present, ListFolderArg.path will be relative to
+ * root of the shared link. Only non-recursive mode is supported for shared
+ * link.
  */
 
 /**
@@ -1050,6 +1051,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilesListRevisionsArg
  * @property {string} path - The path to the file you want to see the revisions
  * of.
+ * @property {FilesListRevisionsMode} mode - Determines the behavior of the API
+ * in listing the revisions for a given file path or id.
  * @property {number} limit - The maximum number of revision entries returned.
  */
 
@@ -1060,8 +1063,14 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} FilesListRevisionsMode
+ * @property {('path'|'id'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} FilesListRevisionsResult
- * @property {boolean} is_deleted - If the file is deleted.
+ * @property {boolean} is_deleted - If the file identified by the latest
+ * revision in the response is either deleted or moved.
  * @property {Array.<FilesFileMetadata>} entries - The revisions for the file.
  * Only revisions that are not deleted will show up here.
  * @property {Timestamp} [server_deleted] - The time of deletion if the file was

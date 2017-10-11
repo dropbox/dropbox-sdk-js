@@ -1864,13 +1864,6 @@ declare module DropboxTypes {
        */
       path: PathROrId;
       /**
-       * A shared link to list the contents of, if the link is protected provide
-       * the password. if this field is present, ListFolderArg.path will be
-       * relative to root of the shared link. Only non-recursive mode is
-       * supported for shared link.
-       */
-      shared_link?: SharedLink;
-      /**
        * Defaults to False.
        */
       recursive?: boolean;
@@ -1896,6 +1889,13 @@ declare module DropboxTypes {
        * some cases.
        */
       limit?: number;
+      /**
+       * A shared link to list the contents of. If the link is
+       * password-protected, the password must be provided. If this field is
+       * present, ListFolderArg.path will be relative to root of the shared
+       * link. Only non-recursive mode is supported for shared link.
+       */
+      shared_link?: SharedLink;
     }
 
     interface ListFolderContinueArg {
@@ -2007,6 +2007,12 @@ declare module DropboxTypes {
        */
       path: PathOrId;
       /**
+       * Defaults to TagRef(Union(u'ListRevisionsMode', [UnionField(u'path',
+       * Void, False), UnionField(u'id', Void, False), UnionField(u'other',
+       * Void, True)]), u'path').
+       */
+      mode?: ListRevisionsMode;
+      /**
        * Defaults to 10.
        */
       limit?: number;
@@ -2023,9 +2029,32 @@ declare module DropboxTypes {
 
     type ListRevisionsError = ListRevisionsErrorPath | ListRevisionsErrorOther;
 
+    /**
+     * Returns revisions with the same file path as identified by the latest
+     * file entry at the given file path or id.
+     */
+    interface ListRevisionsModePath {
+      '.tag': 'path';
+    }
+
+    /**
+     * Returns revisions with the same file id as identified by the latest file
+     * entry at the given file path or id.
+     */
+    interface ListRevisionsModeId {
+      '.tag': 'id';
+    }
+
+    interface ListRevisionsModeOther {
+      '.tag': 'other';
+    }
+
+    type ListRevisionsMode = ListRevisionsModePath | ListRevisionsModeId | ListRevisionsModeOther;
+
     interface ListRevisionsResult {
       /**
-       * If the file is deleted.
+       * If the file identified by the latest revision in the response is either
+       * deleted or moved.
        */
       is_deleted: boolean;
       /**
