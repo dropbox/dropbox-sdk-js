@@ -29,12 +29,12 @@ function responseHandler(res, data) {
   return result;
 }
 
-export function downloadRequest(path, args, auth, host, accessToken, selectUser) {
+export function downloadRequest(path, args, auth, host, accessToken, options) {
   if (auth !== 'user') {
     throw new Error(`Unexpected auth type: ${auth}`);
   }
 
-  const options = {
+  const fetchOptions = {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${accessToken}`,
@@ -42,11 +42,17 @@ export function downloadRequest(path, args, auth, host, accessToken, selectUser)
     },
   };
 
-  if (selectUser) {
-    options.headers['Dropbox-API-Select-User'] = selectUser;
+  if (options) {
+    if (options.selectUser) {
+      fetchOptions.headers['Dropbox-API-Select-User'] = options.selectUser;
+    }
+    if (options.selectAdmin) {
+      fetchOptions.headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
+    }
   }
 
-  return fetch(getBaseURL(host) + path, options)
+
+  return fetch(getBaseURL(host) + path, fetchOptions)
     .then(res => getDataFromConsumer(res).then(data => [res, data]))
     .then(([res, data]) => responseHandler(res, data));
 }

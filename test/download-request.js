@@ -61,7 +61,7 @@ describe('downloadRequest', function () {
   });
 
   it('sets the authorization and select user headers if selectUser set', function (done) {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId')
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', {selectUser: 'selectedUserId'})
       .then((data) => {
         assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Select-User'], 'selectedUserId');

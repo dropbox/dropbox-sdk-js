@@ -23,6 +23,7 @@ export class DropboxBase {
     this.accessToken = options.accessToken;
     this.clientId = options.clientId;
     this.selectUser = options.selectUser;
+    this.selectAdmin = options.selectAdmin;
   }
 
   /**
@@ -172,8 +173,11 @@ export class DropboxBase {
       default:
         throw new Error(`Invalid request style: ${style}`);
     }
-
-    return request(path, args, auth, host, this.getAccessToken(), this.selectUser);
+    const options = {
+      selectUser: this.selectUser,
+      selectAdmin: this.selectAdmin,
+    };
+    return request(path, args, auth, host, this.getAccessToken(), options);
   }
 
   setRpcRequest(newRpcRequest) {
