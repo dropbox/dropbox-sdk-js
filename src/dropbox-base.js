@@ -2,7 +2,6 @@ import { UPLOAD, DOWNLOAD, RPC } from './constants';
 import { downloadRequest } from './download-request';
 import { uploadRequest } from './upload-request';
 import { rpcRequest } from './rpc-request';
-
 /**
  * @private
  * @class DropboxBase
@@ -17,12 +16,24 @@ import { rpcRequest } from './rpc-request';
  * @arg {Number} [options.selectUser] - User is the team access token would like
  * to act as.
  */
+
+function parseBodyToType(res) {
+  const clone = res.clone();
+  return new Promise((resolve) => {
+    res.json()
+      .then(data => resolve(data))
+      .catch(() => clone.text().then(data => resolve(data)));
+  }).then(data => [res, data]);
+}
+
 export class DropboxBase {
   constructor(options) {
     options = options || {};
     this.accessToken = options.accessToken;
     this.clientId = options.clientId;
+    this.clientSecret = options.clientSecret;
     this.selectUser = options.selectUser;
+    this.selectAdmin = options.selectAdmin;
   }
 
   /**
@@ -60,14 +71,32 @@ export class DropboxBase {
   }
 
   /**
+   * Set the client secret
+   * @arg {String} clientId - Your apps client secret
+   * @returns {undefined}
+   */
+  setClientSecret(clientSecret) {
+    this.clientSecret = clientSecret;
+  }
+
+  /**
+   * Get the client secret
+   * @returns {String} Client secret
+   */
+  getClientSecret() {
+    return this.clientSecret;
+  }
+
+  /**
    * Get a URL that can be used to authenticate users for the Dropbox API.
    * @arg {String} redirectUri - A URL to redirect the user to after
    * authenticating. This must be added to your app through the admin interface.
    * @arg {String} [state] - State that will be returned in the redirect URL to help
    * prevent cross site scripting attacks.
+   * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state) {
+  getAuthenticationUrl(redirectUri, state, authType = 'token') {
     const clientId = this.getClientId();
     const baseUrl = 'https://www.dropbox.com/oauth2/authorize';
 
@@ -77,8 +106,16 @@ export class DropboxBase {
     if (!redirectUri) {
       throw new Error('A redirect uri is required.');
     }
+    if (!['code', 'token'].includes(authType)) {
+      throw new Error('Authorization type must be code or token');
+    }
 
-    let authUrl = `${baseUrl}?response_type=token&client_id=${clientId}`;
+    let authUrl;
+    if (authType === 'code') {
+      authUrl = `${baseUrl}?response_type=code&client_id=${clientId}`;
+    } else {
+      authUrl = `${baseUrl}?response_type=token&client_id=${clientId}`;
+    }
 
     if (redirectUri) {
       authUrl += `&redirect_uri=${redirectUri}`;
@@ -87,6 +124,49 @@ export class DropboxBase {
       authUrl += `&state=${state}`;
     }
     return authUrl;
+  }
+
+  /**
+   * Get an OAuth2 access token from an OAuth2 Code.
+   * @arg {String} redirectUri - A URL to redirect the user to after
+   * authenticating. This must be added to your app through the admin interface.
+   * @arg {String} code - An OAuth2 code.
+  */
+  getAccessTokenFromCode(redirectUri, code) {
+    const clientId = this.getClientId();
+    const clientSecret = this.getClientSecret();
+
+    if (!clientId) {
+      throw new Error('A client id is required. You can set the client id using .setClientId().');
+    }
+    if (!clientSecret) {
+      throw new Error('A client secret is required. You can set the client id using .setClientSecret().');
+    }
+    const path = `https://api.dropboxapi.com/oauth2/token?code=${code}&\
+grant_type=authorization_code&redirect_uri=${redirectUri}&\
+client_id=${clientId}&client_secret=${clientSecret}`;
+
+    const fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+
+    return fetch(path, fetchOptions)
+      .then(res => parseBodyToType(res))
+      .then(([res, data]) => {
+        // maintaining existing API for error codes not equal to 200 range
+        if (!res.ok) {
+          // eslint-disable-next-line no-throw-literal
+          throw {
+            error: data,
+            response: res,
+            status: res.status,
+          };
+        }
+        return data.access_token;
+      });
   }
 
   /**
@@ -172,8 +252,13 @@ export class DropboxBase {
       default:
         throw new Error(`Invalid request style: ${style}`);
     }
-
-    return request(path, args, auth, host, this.getAccessToken(), this.selectUser);
+    const options = {
+      selectUser: this.selectUser,
+      selectAdmin: this.selectAdmin,
+      clientId: this.getClientId(),
+      clientSecret: this.getClientSecret(),
+    };
+    return request(path, args, auth, host, this.getAccessToken(), options);
   }
 
   setRpcRequest(newRpcRequest) {

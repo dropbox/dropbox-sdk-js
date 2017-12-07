@@ -32,14 +32,12 @@
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
     "build:cjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "build:umd": "cross-env BABEL_ENV=es NODE_ENV=development rollup -c -i src/index.js -o dist/Dropbox-sdk.js -n Dropbox",
-    "build:umd:min": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c -i src/index.js -o dist/Dropbox-sdk.min.js -n Dropbox",
     "build:team:umd": "cross-env BABEL_ENV=es NODE_ENV=development rollup -c -i src/team/index.js -o dist/DropboxTeam-sdk.js -n DropboxTeam",
+    "build:umd:min": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c -i src/index.js -o dist/Dropbox-sdk.min.js -n Dropbox",
     "build:team:umd:min": "cross-env BABEL_ENV=es NODE_ENV=production rollup -c -i src/team/index.js -o dist/DropboxTeam-sdk.min.js -n DropboxTeam",
-    "size": "npm run size:umd && npm run size:umd:min && npm run size:team:umd && npm run size:team:umd:min",
+    "size": "npm run size:umd && npm run size:umd:min",
     "size:umd": "echo 'Dropbox-sdk.js gzipped will weigh' $(cat dist/Dropbox-sdk.js | gzip -9 | wc -c | pretty-bytes)",
-    "size:umd:min": "echo 'Dropbox-sdk.min.js gzipped will weigh' $(cat dist/Dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)",
-    "size:team:umd": "echo 'DropboxTeam-sdk.js gzipped will weigh' $(cat dist/DropboxTeam-sdk.js | gzip -9 | wc -c | pretty-bytes)",
-    "size:team:umd:min": "echo 'DropboxTeam-sdk.min.js gzipped will weigh' $(cat dist/DropboxTeam-sdk.min.js | gzip -9 | wc -c | pretty-bytes)"
+    "size:umd:min": "echo 'Dropbox-sdk.min.js gzipped will weigh' $(cat dist/Dropbox-sdk.min.js | gzip -9 | wc -c | pretty-bytes)"
   },
   "keywords": [
     "dropbox",
@@ -66,8 +64,8 @@
     "babel-register": "^6.24.1",
     "chai": "^4.0.2",
     "cross-env": "^5.0.1",
-    "es6-promise": "^4.1.0",
     "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.3.0",
     "express": "^4.13.4",
@@ -76,7 +74,6 @@
     "fetch-mock": "^5.11.0",
     "gh-pages": "^0.11.0",
     "ink-docstrap": "^1.2.1",
-    "isomorphic-fetch": "^2.2.1",
     "jsdoc": "^3.4.0",
     "mime": ">=2.0.3",
     "mocha": "^3.4.2",
@@ -86,14 +83,13 @@
     "rollup-endpoint": "^0.2.2",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.0.0",
-    "sinon": "^2.3.2",
-    "whatwg-fetch": "^2.0.3"
+    "sinon": "^2.3.2"
   },
   "dependencies": {
-    "eslint-config-airbnb": "^15.0.1"
+    "buffer": "^5.0.8"
   }
 }

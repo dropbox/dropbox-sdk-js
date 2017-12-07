@@ -1,4 +1,4 @@
-var DropboxTeam = require('../../src/team/dropbox-team');
+var DropboxTeam = require('../../../lib/dropbox').DropboxTeam;
 var prompt = require('prompt');
 
 prompt.start();

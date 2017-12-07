@@ -1,6 +1,6 @@
 # Dropbox JavaScript SDK
 [![Build Status](https://travis-ci.org/dropbox/dropbox-sdk-js.svg?branch=master)](https://travis-ci.org/dropbox/dropbox-sdk-js) [![npm version](https://badge.fury.io/js/dropbox.svg)](https://badge.fury.io/js/dropbox)
-The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments. It provides common services for making API requests and helper utilities contributed by the community.  
+The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments. It provides common services for making API requests and helper utilities contributed by the community.
 
 ## Documentation
 Please view our full JavaScript SDK documentation at <http://dropbox.github.io/dropbox-sdk-js>.
@@ -19,7 +19,8 @@ $ npm install --save dropbox
 Include the Dropbox or DropboxTeam class to start making your API calls.
 
 ```javascript
-var Dropbox = require('dropbox');
+require(‘isomorphic-fetch’); // or another library of choice.
+var Dropbox = require('dropbox').Dropbox;
 var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 dbx.filesListFolder({path: ''})
   .then(function(response) {

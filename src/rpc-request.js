@@ -1,4 +1,5 @@
 import { getBaseURL } from './utils';
+import { Buffer } from 'buffer/';
 
 function parseBodyToType(res) {
   const clone = res.clone();
@@ -9,15 +10,21 @@ function parseBodyToType(res) {
   }).then(data => [res, data]);
 }
 
-export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
-  const options = {
+export function rpcRequest(path, body, auth, host, accessToken, options) {
+  const fetchOptions = {
     method: 'POST',
     body: (body) ? JSON.stringify(body) : null,
   };
-
   const headers = { 'Content-Type': 'application/json' };
 
   switch (auth) {
+    case 'app':
+      if ( !options.clientId || !options.clientSecret ) {
+        throw new Error('A client id and secret is required for this function');
+      }
+      var authHeader = new Buffer(options.clientId + ':' + options.clientSecret).toString('base64');
+      headers.Authorization = `Basic ${authHeader}`;
+      break;
     case 'team':
     case 'user':
       headers.Authorization = `Bearer ${accessToken}`;
@@ -28,13 +35,17 @@ export function rpcRequest(path, body, auth, host, accessToken, selectUser) {
       throw new Error(`Unhandled auth type: ${auth}`);
   }
 
-  if (selectUser) {
-    headers['Dropbox-API-Select-User'] = selectUser;
+  if (options) {
+    if (options.selectUser) {
+      headers['Dropbox-API-Select-User'] = options.selectUser;
+    }
+    if (options.selectAdmin) {
+      headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
+    }
   }
 
-  options.headers = headers;
-
-  return fetch(getBaseURL(host) + path, options)
+  fetchOptions.headers = headers;
+  return fetch(getBaseURL(host) + path, fetchOptions)
     .then(res => parseBodyToType(res))
     .then(([res, data]) => {
       // maintaining existing API for error codes not equal to 200 range
