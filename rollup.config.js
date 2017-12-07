@@ -3,11 +3,14 @@ import uglify from 'rollup-plugin-uglify';
 import replace from 'rollup-plugin-replace';
 import commonjs from 'rollup-plugin-commonjs';
 
+
 const env = process.env.NODE_ENV;
 
 const config = {
   format: 'umd',
   sourceMap: (env !== 'production'),
+  external: ['es6-promise/auto', 'isomorphic-fetch'],
+
   plugins: [
     // nodeResolve({
     //   main: true,

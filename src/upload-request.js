@@ -9,7 +9,7 @@ function parseBodyToType(res) {
   }).then(data => [res, data]);
 }
 
-export function uploadRequest(path, args, auth, host, accessToken, selectUser) {
+export function uploadRequest(path, args, auth, host, accessToken, options) {
   if (auth !== 'user') {
     throw new Error(`Unexpected auth type: ${auth}`);
   }
@@ -17,7 +17,7 @@ export function uploadRequest(path, args, auth, host, accessToken, selectUser) {
   const { contents } = args;
   delete args.contents;
 
-  const options = {
+  const fetchOptions = {
     body: contents,
     method: 'POST',
     headers: {
@@ -27,11 +27,16 @@ export function uploadRequest(path, args, auth, host, accessToken, selectUser) {
     },
   };
 
-  if (selectUser) {
-    options.headers['Dropbox-API-Select-User'] = selectUser;
+  if (options) {
+    if (options.selectUser) {
+      fetchOptions.headers['Dropbox-API-Select-User'] = options.selectUser;
+    }
+    if (options.selectAdmin) {
+      fetchOptions.headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
+    }
   }
 
-  return fetch(getBaseURL(host) + path, options)
+  return fetch(getBaseURL(host) + path, fetchOptions)
     .then(res => parseBodyToType(res))
     .then(([res, data]) => {
       // maintaining existing API for error codes not equal to 200 range

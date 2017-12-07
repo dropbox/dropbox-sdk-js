@@ -55,7 +55,7 @@ describe('uploadRequest', function () {
   });
 
   it('sets the authorization and select user headers if selectUser set', function (done) {
-    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId')
+    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', {selectUser: 'selectedUserId'})
       .then((data) => {
         assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Select-User'], 'selectedUserId');

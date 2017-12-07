@@ -2,7 +2,6 @@ import { UPLOAD, DOWNLOAD, RPC } from './constants';
 import { downloadRequest } from './download-request';
 import { uploadRequest } from './upload-request';
 import { rpcRequest } from './rpc-request';
-
 /**
  * @private
  * @class DropboxBase
@@ -17,12 +16,23 @@ import { rpcRequest } from './rpc-request';
  * @arg {Number} [options.selectUser] - User is the team access token would like
  * to act as.
  */
+
+function parseBodyToType(res) {
+  const clone = res.clone();
+  return new Promise((resolve) => {
+    res.json()
+      .then(data => resolve(data))
+      .catch(() => clone.text().then(data => resolve(data)));
+  }).then(data => [res, data]);
+}
+
 export class DropboxBase {
   constructor(options) {
     options = options || {};
     this.accessToken = options.accessToken;
     this.clientId = options.clientId;
     this.selectUser = options.selectUser;
+    this.selectAdmin = options.selectAdmin;
   }
 
   /**
@@ -67,7 +77,7 @@ export class DropboxBase {
    * prevent cross site scripting attacks.
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state) {
+  getAuthenticationUrl(redirectUri, state, auth_type) {
     const clientId = this.getClientId();
     const baseUrl = 'https://www.dropbox.com/oauth2/authorize';
 
@@ -77,8 +87,16 @@ export class DropboxBase {
     if (!redirectUri) {
       throw new Error('A redirect uri is required.');
     }
+    if (!['code', 'token'].includes(auth_type)) {
+      throw new Error('Authorization type must be code or token');
+    }
 
-    let authUrl = `${baseUrl}?response_type=token&client_id=${clientId}`;
+    let authUrl;
+    if (auth_type === 'code') {
+      authUrl = `${baseUrl}?response_type=code&client_id=${clientId}`;
+    } else {
+      authUrl = `${baseUrl}?response_type=token&client_id=${clientId}`;
+    }
 
     if (redirectUri) {
       authUrl += `&redirect_uri=${redirectUri}`;
@@ -87,6 +105,35 @@ export class DropboxBase {
       authUrl += `&state=${state}`;
     }
     return authUrl;
+  }
+
+  /*
+    Some explanation goes here.
+  */
+
+  getAccessTokenFromCode(options) {
+    let path = `https://api.dropboxapi.com/oauth2/token?code=${options.code}&grant_type=authorization_code&redirect_uri=${options.redirectUri}&client_id=${options.clientId}&client_secret=${options.secret}`;
+    var fetchOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      }
+    };
+
+    return fetch(path, fetchOptions)
+      .then(res => parseBodyToType(res))
+      .then(([res, data]) => {
+        // maintaining existing API for error codes not equal to 200 range
+        if (!res.ok) {
+          // eslint-disable-next-line no-throw-literal
+          throw {
+            error: data,
+            response: res,
+            status: res.status,
+          };
+        }
+        return data.access_token;
+      });
   }
 
   /**
@@ -172,8 +219,11 @@ export class DropboxBase {
       default:
         throw new Error(`Invalid request style: ${style}`);
     }
-
-    return request(path, args, auth, host, this.getAccessToken(), this.selectUser);
+    const options = {
+      selectUser: this.selectUser,
+      selectAdmin: this.selectAdmin,
+    };
+    return request(path, args, auth, host, this.getAccessToken(), options);
   }
 
   setRpcRequest(newRpcRequest) {

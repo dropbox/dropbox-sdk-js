@@ -1,6 +1,6 @@
 import { Dropbox } from '../dropbox';
 import { DropboxBase } from '../dropbox-base';
-import teamRoutes from '../routes-team';
+import { routes } from '../routes-team';
 
 /**
  * @class DropboxTeam
@@ -16,7 +16,7 @@ export class DropboxTeam extends DropboxBase {
 
   constructor(options) {
     super(options);
-    Object.assign(this, teamRoutes);
+    Object.assign(this, routes);
   }
 
   /**

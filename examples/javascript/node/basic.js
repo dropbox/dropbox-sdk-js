@@ -1,4 +1,4 @@
-var Dropbox = require('../../src/dropbox');
+var Dropbox = require('../../../lib/dropbox').Dropbox;
 var prompt = require('prompt');
 
 prompt.start();
