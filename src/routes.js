@@ -47,10 +47,10 @@ routes.filePropertiesPropertiesOverwrite = function (arg) {
 };
 
 /**
- * Remove the specified property group from the file. To remove specific
- * property field key value pairs, see properties/update. To update a template,
- * see templates/update_for_user or templates/update_for_team. Templates can't
- * be removed once created.
+ * Permanently removes the specified property group from the file. To remove
+ * specific property field key value pairs, see properties/update. To update a
+ * template, see templates/update_for_user or templates/update_for_team.
+ * Templates can't be removed once created.
  * @function Dropbox#filePropertiesPropertiesRemove
  * @arg {FilePropertiesRemovePropertiesArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<FilePropertiesRemovePropertiesError>>}
@@ -70,6 +70,17 @@ routes.filePropertiesPropertiesSearch = function (arg) {
 };
 
 /**
+ * Once a cursor has been retrieved from properties/search, use this to paginate
+ * through all search results.
+ * @function Dropbox#filePropertiesPropertiesSearchContinue
+ * @arg {FilePropertiesPropertiesSearchContinueArg} arg - The request parameters.
+ * @returns {Promise.<FilePropertiesPropertiesSearchResult, Error.<FilePropertiesPropertiesSearchContinueError>>}
+ */
+routes.filePropertiesPropertiesSearchContinue = function (arg) {
+  return this.request('file_properties/properties/search/continue', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Add, update or remove properties associated with the supplied file and
  * templates. This endpoint should be used instead of properties/overwrite when
  * property groups are being updated via a "delta" instead of via a "snapshot" .
@@ -86,7 +97,7 @@ routes.filePropertiesPropertiesUpdate = function (arg) {
 
 /**
  * Add a template associated with a team. See properties/add to add properties
- * to a file or folder.
+ * to a file or folder. Note: this endpoint will create team-owned templates.
  * @function Dropbox#filePropertiesTemplatesAddForTeam
  * @arg {FilePropertiesAddTemplateArg} arg - The request parameters.
  * @returns {Promise.<FilePropertiesAddTemplateResult, Error.<FilePropertiesModifyTemplateError>>}
@@ -148,6 +159,30 @@ routes.filePropertiesTemplatesListForTeam = function (arg) {
  */
 routes.filePropertiesTemplatesListForUser = function (arg) {
   return this.request('file_properties/templates/list_for_user', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Permanently removes the specified template created from
+ * templates/add_for_user. All properties associated with the template will also
+ * be removed. This action cannot be undone.
+ * @function Dropbox#filePropertiesTemplatesRemoveForTeam
+ * @arg {FilePropertiesRemoveTemplateArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesTemplateError>>}
+ */
+routes.filePropertiesTemplatesRemoveForTeam = function (arg) {
+  return this.request('file_properties/templates/remove_for_team', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Permanently removes the specified template created from
+ * templates/add_for_user. All properties associated with the template will also
+ * be removed. This action cannot be undone.
+ * @function Dropbox#filePropertiesTemplatesRemoveForUser
+ * @arg {FilePropertiesRemoveTemplateArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<FilePropertiesTemplateError>>}
+ */
+routes.filePropertiesTemplatesRemoveForUser = function (arg) {
+  return this.request('file_properties/templates/remove_for_user', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -220,6 +255,7 @@ routes.fileRequestsUpdate = function (arg) {
  * compatible with the properties API. Note: Metadata for the root folder is
  * unsupported.
  * @function Dropbox#filesAlphaGetMetadata
+ * @deprecated
  * @arg {FilesAlphaGetMetadataArg} arg - The request parameters.
  * @returns {Promise.<(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata), Error.<FilesAlphaGetMetadataError>>}
  */
@@ -233,6 +269,7 @@ routes.filesAlphaGetMetadata = function (arg) {
  * upload. Do not use this to upload a file larger than 150 MB. Instead, create
  * an upload session with upload_session/start.
  * @function Dropbox#filesAlphaUpload
+ * @deprecated
  * @arg {FilesCommitInfoWithProperties} arg - The request parameters.
  * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadErrorWithProperties>>}
  */
@@ -393,6 +430,18 @@ routes.filesDeleteV2 = function (arg) {
  */
 routes.filesDownload = function (arg) {
   return this.request('files/download', arg, 'user', 'content', 'download');
+};
+
+/**
+ * Download a folder from the user's Dropbox, as a zip file. The folder must be
+ * less than 1 GB in size and have fewer than 10,000 total files. The input
+ * cannot be a single file.
+ * @function Dropbox#filesDownloadZip
+ * @arg {FilesDownloadZipArg} arg - The request parameters.
+ * @returns {Promise.<FilesDownloadZipResult, Error.<FilesDownloadZipError>>}
+ */
+routes.filesDownloadZip = function (arg) {
+  return this.request('files/download_zip', arg, 'user', 'content', 'download');
 };
 
 /**

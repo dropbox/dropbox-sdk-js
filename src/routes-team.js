@@ -268,6 +268,46 @@ routes.teamLinkedAppsRevokeLinkedAppBatch = function (arg) {
 };
 
 /**
+ * Add users to member space limits excluded users list.
+ * @function DropboxTeam#teamMemberSpaceLimitsExcludedUsersAdd
+ * @arg {TeamExcludedUsersUpdateArg} arg - The request parameters.
+ * @returns {Promise.<TeamExcludedUsersUpdateResult, Error.<TeamExcludedUsersUpdateError>>}
+ */
+routes.teamMemberSpaceLimitsExcludedUsersAdd = function (arg) {
+  return this.request('team/member_space_limits/excluded_users/add', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * List member space limits excluded users.
+ * @function DropboxTeam#teamMemberSpaceLimitsExcludedUsersList
+ * @arg {TeamExcludedUsersListArg} arg - The request parameters.
+ * @returns {Promise.<TeamExcludedUsersListResult, Error.<TeamExcludedUsersListError>>}
+ */
+routes.teamMemberSpaceLimitsExcludedUsersList = function (arg) {
+  return this.request('team/member_space_limits/excluded_users/list', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Continue listing member space limits excluded users.
+ * @function DropboxTeam#teamMemberSpaceLimitsExcludedUsersListContinue
+ * @arg {TeamExcludedUsersListContinueArg} arg - The request parameters.
+ * @returns {Promise.<TeamExcludedUsersListResult, Error.<TeamExcludedUsersListContinueError>>}
+ */
+routes.teamMemberSpaceLimitsExcludedUsersListContinue = function (arg) {
+  return this.request('team/member_space_limits/excluded_users/list/continue', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Remove users from member space limits excluded users list.
+ * @function DropboxTeam#teamMemberSpaceLimitsExcludedUsersRemove
+ * @arg {TeamExcludedUsersUpdateArg} arg - The request parameters.
+ * @returns {Promise.<TeamExcludedUsersUpdateResult, Error.<TeamExcludedUsersUpdateError>>}
+ */
+routes.teamMemberSpaceLimitsExcludedUsersRemove = function (arg) {
+  return this.request('team/member_space_limits/excluded_users/remove', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * Get users custom quota. Returns none as the custom quota if none was set. A
  * maximum of 1000 members can be specified in a single call.
  * @function DropboxTeam#teamMemberSpaceLimitsGetCustomQuota
@@ -290,11 +330,11 @@ routes.teamMemberSpaceLimitsRemoveCustomQuota = function (arg) {
 };
 
 /**
- * Set users custom quota. Custom quota has to be at least 25GB. A maximum of
+ * Set users custom quota. Custom quota has to be at least 15GB. A maximum of
  * 1000 members can be specified in a single call.
  * @function DropboxTeam#teamMemberSpaceLimitsSetCustomQuota
  * @arg {TeamSetCustomQuotaArg} arg - The request parameters.
- * @returns {Promise.<Array.<TeamCustomQuotaResult>, Error.<TeamCustomQuotaError>>}
+ * @returns {Promise.<Array.<TeamCustomQuotaResult>, Error.<TeamSetCustomQuotaError>>}
  */
 routes.teamMemberSpaceLimitsSetCustomQuota = function (arg) {
   return this.request('team/member_space_limits/set_custom_quota', arg, 'team', 'api', 'rpc');

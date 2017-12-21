@@ -261,6 +261,42 @@ declare module DropboxTypes {
     public teamLinkedAppsRevokeLinkedAppBatch(arg: team.RevokeLinkedApiAppBatchArg): Promise<team.RevokeLinkedAppBatchResult>;
 
     /**
+     * Add users to member space limits excluded users list.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.ExcludedUsersUpdateError>.
+     * @param arg The request parameters.
+     */
+    public teamMemberSpaceLimitsExcludedUsersAdd(arg: team.ExcludedUsersUpdateArg): Promise<team.ExcludedUsersUpdateResult>;
+
+    /**
+     * List member space limits excluded users.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.ExcludedUsersListError>.
+     * @param arg The request parameters.
+     */
+    public teamMemberSpaceLimitsExcludedUsersList(arg: team.ExcludedUsersListArg): Promise<team.ExcludedUsersListResult>;
+
+    /**
+     * Continue listing member space limits excluded users.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.ExcludedUsersListContinueError>.
+     * @param arg The request parameters.
+     */
+    public teamMemberSpaceLimitsExcludedUsersListContinue(arg: team.ExcludedUsersListContinueArg): Promise<team.ExcludedUsersListResult>;
+
+    /**
+     * Remove users from member space limits excluded users list.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.ExcludedUsersUpdateError>.
+     * @param arg The request parameters.
+     */
+    public teamMemberSpaceLimitsExcludedUsersRemove(arg: team.ExcludedUsersUpdateArg): Promise<team.ExcludedUsersUpdateResult>;
+
+    /**
      * Get users custom quota. Returns none as the custom quota if none was set.
      * A maximum of 1000 members can be specified in a single call.
      * 
@@ -281,11 +317,11 @@ declare module DropboxTypes {
     public teamMemberSpaceLimitsRemoveCustomQuota(arg: team.CustomQuotaUsersArg): Promise<Array<team.RemoveCustomQuotaResult>>;
 
     /**
-     * Set users custom quota. Custom quota has to be at least 25GB. A maximum
+     * Set users custom quota. Custom quota has to be at least 15GB. A maximum
      * of 1000 members can be specified in a single call.
      * 
      * When an error occurs, the route rejects the promise with type
-     * Error<team.CustomQuotaError>.
+     * Error<team.SetCustomQuotaError>.
      * @param arg The request parameters.
      */
     public teamMemberSpaceLimitsSetCustomQuota(arg: team.SetCustomQuotaArg): Promise<Array<team.CustomQuotaResult>>;
