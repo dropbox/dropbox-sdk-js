@@ -1,1 +1,3 @@
-module.exports = require('./dropbox-team').DropboxTeam;
+var DropboxTeam = require('./dropbox-team');
+
+module.exports = DropboxTeam;

@@ -28,7 +28,7 @@
   <section class="container main">
     <p>This example fetches the contents of your root Dropbox directory. It uses the <code>Dropbox.filesListFolder()</code> method [<a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#filesListFolder">docs</a>].</p>
 
-    <form id="basic-form" onSubmit="return listFiles()">
+    <form onSubmit="return listFiles()">
       <input type="text" id="access-token" placeholder="Access token" />
       <button type="submit">Submit</button>
     </form>
@@ -41,24 +41,18 @@
 
   <!-- Scripts to run example -->
   <script>
-
-    var form = document.getElementById('basic-form');
-
-    form.onsubmit = function listFiles(e) {
-      e.preventDefault();
-
+    function listFiles() {
       var ACCESS_TOKEN = document.getElementById('access-token').value;
       var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
-      console.log('dbx', dbx)
       dbx.filesListFolder({path: ''})
         .then(function(response) {
-          console.log('response', response)
           displayFiles(response.entries);
           console.log(response);
         })
         .catch(function(error) {
           console.error(error);
         });
+      return false;
     }
 
     function displayFiles(files) {

@@ -1,25 +1,36 @@
-import { assert } from 'chai';
-import fetchMock from 'fetch-mock';
-import { uploadRequest } from '../src/upload-request';
+/* eslint-env mocha */
+var Promise = require('es6-promise').Promise;
+var chai = require('chai');
+var request = require('superagent');
+var uploadRequest = require('../src/upload-request');
+var sinon = require('sinon');
+
+var assert = chai.assert;
 
 describe('uploadRequest', function () {
+  var stubRequest;
+  var postStub;
+  var endStub;
+  var setStub;
+  var typeStub;
+  var sendStub;
 
   beforeEach(function () {
-    fetchMock.post('*', new Response(
-      '{"foo": "bar"}',
-      {
-        status : 200 ,
-        statusText : "OK",
-        headers: {
-          'Content-Type': 'application/json',
-          'dropbox-api-result': '{"test":"json"}'
-        }
-      }
-    ));
+    stubRequest = {
+      end: function () {},
+      send: function () {},
+      set: function () {},
+      type: function () {}
+    };
+    postStub = sinon.stub(request, 'post').returns(stubRequest);
+    endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
+    setStub = sinon.stub(stubRequest, 'set').returns(stubRequest);
+    typeStub = sinon.stub(stubRequest, 'type').returns(stubRequest);
+    sendStub = sinon.stub(stubRequest, 'send').returns(stubRequest);
   });
 
   afterEach(function () {
-    fetchMock.restore();
+    postStub.restore();
   });
 
   it('returns a promise', function () {
@@ -29,74 +40,66 @@ describe('uploadRequest', function () {
     );
   });
 
-  it('posts to the correct url', function (done) {
-    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then(() => {
-        assert.equal(fetchMock.calls().matched.length, 1);
-        assert.equal(fetchMock.lastUrl(), 'https://content.dropboxapi.com/2/files/upload');
-        done();
-      }, done);
+  it('posts to the correct url', function () {
+    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(postStub.calledOnce);
+    assert.equal('https://content.dropboxapi.com/2/files/upload', postStub.firstCall.args[0]);
   });
 
-  it('sets the request type to application/octet-stream', function (done) {
-    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then(() => {
-        assert.equal(fetchMock.lastOptions().headers['Content-Type'], 'application/octet-stream');
-        done();
-      }, done);
-  });
-
-  it('sets the authorization header', function (done) {
-    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-        done();
-      }, done);
-  });
-
-  it('sets the authorization and select user headers if selectUser set', function (done) {
-    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId')
-      .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Select-User'], 'selectedUserId');
-        done();
-      }, done);
-  });
-
-  it('sets the Dropbox-API-Arg header', function (done) {
-    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], JSON.stringify({ foo: 'bar' }));
-        done();
-      }, done);
-  });
-
-  it('escapes special characters in the Dropbox-API-Arg header', function (done) {
-    uploadRequest('files/upload', { foo: 'bar单bazá' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], '{"foo":"bar\\u5355baz\\u00e1"}');
-        done();
-      }, done);
+  it('sets the request type to application/octet-stream', function () {
+    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(typeStub.calledOnce);
+    assert.equal('application/octet-stream', typeStub.firstCall.args[0]);
   });
 
 
-
-  it('doesn\'t include args.contents in the Dropbox-API-Arg header', function (done) {
-    uploadRequest('files/upload', { foo: 'bar', contents: 'fakecontents' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], JSON.stringify({ foo: 'bar' }));
-        done();
-      }, done);
+  it('sets the authorization header', function () {
+    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Authorization', setStub.firstCall.args[0]);
+    assert.equal('Bearer atoken', setStub.firstCall.args[1]);
   });
 
-  it('returns a valid response', function (done) {
-    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.deepEqual(data, { foo: 'bar' })
-        done();
-      }, done);
+  it('sets the authorization and select user headers if selectUser set', function () {
+    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId');
+    assert(setStub.calledThrice);
+    assert.equal('Authorization', setStub.firstCall.args[0]);
+    assert.equal('Bearer atoken', setStub.firstCall.args[1]);
+    assert.equal('Dropbox-API-Select-User', setStub.thirdCall.args[0]);
+    assert.equal('selectedUserId', setStub.thirdCall.args[1]);
   });
 
+  it('sets the Dropbox-API-Arg header', function () {
+    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
+    assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
+  });
+
+  it('escapes special characters in the Dropbox-API-Arg header', function () {
+    uploadRequest('files/upload', { foo: 'bar单bazá' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
+    assert.equal('{"foo":"bar\\u5355baz\\u00e1"}', setStub.secondCall.args[1]);
+  });
+
+  it('doesn\'t include args.contents in the Dropbox-API-Arg header', function () {
+    uploadRequest('files/upload', { foo: 'bar', contents: 'fakecontents' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
+    assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
+  });
+
+  it('sends the contents arg as the body of the request', function () {
+    uploadRequest('files/upload', { foo: 'bar', contents: 'fakecontents' }, 'user', 'content', 'atoken');
+    assert(sendStub.calledOnce);
+    assert.equal('fakecontents', sendStub.firstCall.args[0]);
+    // assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
+  });
+
+  it('sets the response handler function', function () {
+    uploadRequest('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(endStub.calledOnce);
+    assert.isFunction(endStub.firstCall.args[0]);
+  });
 });

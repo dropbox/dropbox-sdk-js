@@ -1,13 +1,9 @@
 {
-  "extends": ["airbnb-base"],
-  "env": {
-    "browser": true,
-    "node": true
-  },
+  "extends": "airbnb/legacy",
+  "browser": true,
+  "node": true,
   "rules": {
     "func-names": 0,
-    "no-param-reassign": 0,
-    "import/prefer-default-export": 0
-  },
-  "parserOptions": { "ecmaVersion": 6 }
+    "no-param-reassign": 0
+  }
 }

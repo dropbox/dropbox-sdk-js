@@ -1,8 +1,11 @@
-import sinon from 'sinon';
-import { assert } from 'chai';
-import { RPC } from '../src/constants';
-import { DropboxBase } from '../src/dropbox-base';
-import { rpcRequest } from '../src/rpc-request';
+/* eslint-env mocha */
+var DropboxBase = require('../src/dropbox-base');
+var REQUEST_CONSTANTS = require('../src/request-constants');
+var rpcRequest = require('../src/rpc-request');
+var chai = require('chai');
+var sinon = require('sinon');
+
+var assert = chai.assert;
 
 describe('DropboxBase', function () {
   var dbx;
@@ -113,7 +116,7 @@ describe('DropboxBase', function () {
         addEventListener: sinon.spy(),
         removeEventListener: sinon.spy(),
       };
-      global.window = {
+      global.window = { 
         open: function(url, target) {},
       };
 
@@ -126,7 +129,7 @@ describe('DropboxBase', function () {
       var errorCallback = sinon.spy();
 
       dbx.authenticateWithCordova(
-        successCallback,
+        successCallback, 
         errorCallback);
 
       sinon.assert.neverCalledWith(successCallback);
@@ -140,7 +143,7 @@ describe('DropboxBase', function () {
         addEventListener: sinon.spy(),
         removeEventListener: sinon.spy()
       };
-      global.window = {
+      global.window = { 
         open: sinon.stub()
       };
       global.window.open
@@ -160,11 +163,11 @@ describe('DropboxBase', function () {
 
       var onExit = browser.addEventListener.getCall(2).args[1];
       onExit({ });
-
+      
       sinon.assert.calledWith(browser.removeEventListener, 'loaderror');
       sinon.assert.calledWith(browser.removeEventListener, 'loadstop');
       sinon.assert.calledWith(browser.removeEventListener, 'exit');
-
+      
       sinon.assert.neverCalledWith(successCallback);
       sinon.assert.neverCalledWith(errorCallback);
     });
@@ -175,7 +178,7 @@ describe('DropboxBase', function () {
         removeEventListener: sinon.spy(),
         close: sinon.spy()
       };
-      global.window = {
+      global.window = { 
         open: sinon.stub(),
         setTimeout: sinon.spy()
       };
@@ -196,7 +199,7 @@ describe('DropboxBase', function () {
       var timeOut = global.window.setTimeout.getCall(0).args[0];
       timeOut();
       sinon.assert.called(browser.close);
-
+      
       sinon.assert.neverCalledWith(successCallback);
       sinon.assert.calledWith(errorCallback);
     });
@@ -208,7 +211,7 @@ describe('DropboxBase', function () {
         removeEventListener: sinon.spy(),
         close: sinon.spy()
       };
-      global.window = {
+      global.window = { 
         open: sinon.stub(),
         setTimeout: sinon.spy()
       };
@@ -230,7 +233,7 @@ describe('DropboxBase', function () {
       var timeOut = global.window.setTimeout.getCall(0).args[0];
       timeOut();
       sinon.assert.called(browser.close);
-
+      
       sinon.assert.neverCalledWith(successCallback);
       sinon.assert.calledWith(errorCallback);
     });
@@ -242,7 +245,7 @@ describe('DropboxBase', function () {
         removeEventListener: sinon.spy(),
         close: sinon.spy()
       };
-      global.window = {
+      global.window = { 
         open: sinon.stub(),
         setTimeout: sinon.spy()
       };
@@ -266,7 +269,7 @@ describe('DropboxBase', function () {
       var timeOut = global.window.setTimeout.getCall(0).args[0];
       timeOut();
       sinon.assert.called(browser.close);
-
+      
       sinon.assert.calledWithExactly(successCallback, ACCESS_TOKEN);
       sinon.assert.neverCalledWith(errorCallback);
     });
@@ -278,7 +281,7 @@ describe('DropboxBase', function () {
       dbx = new DropboxBase();
       rpcSpy = sinon.spy(dbx.getRpcRequest());
       dbx.setRpcRequest(rpcSpy);
-      dbx.request('path', {}, 'user', 'api', RPC);
+      dbx.request('path', {}, 'user', 'api', REQUEST_CONSTANTS.RPC);
       assert(rpcSpy.calledOnce);
       assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
       assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);

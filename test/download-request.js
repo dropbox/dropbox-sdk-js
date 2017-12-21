@@ -1,29 +1,42 @@
-import { assert } from 'chai';
-import { resolve } from 'path';
-import fetchMock from 'fetch-mock';
-import { createReadStream } from 'fs';
-import { downloadRequest } from '../src/download-request';
+/* eslint-env mocha */
+var Promise = require('es6-promise').Promise;
+var chai = require('chai');
+var request = require('superagent');
+var downloadRequest = require('../src/download-request');
+var sinon = require('sinon');
 
-fetchMock.configure({sendAsJson: false});
+var assert = chai.assert;
 
 describe('downloadRequest', function () {
+  var stubRequest;
+  var postStub;
+  var endStub;
+  var onStub;
+  var setStub;
+  var typeStub;
+  var bufferStub;
+  var parseStub;
 
   beforeEach(function () {
-    fetchMock.mock('*', new Response(
-      createReadStream(resolve(__dirname, './file.txt')),
-      {
-        status : 200 ,
-        statusText : "OK",
-        headers: {
-          'Content-Type': 'application/octet-stream',
-          'dropbox-api-result': '{"test":"json"}'
-        }
-      }
-    ));
+    stubRequest = {
+      end: function () {},
+      on: function () {},
+      set: function () {},
+      type: function () {},
+      buffer: function () {},
+      parse: function () {}
+    };
+    postStub = sinon.stub(request, 'post').returns(stubRequest);
+    endStub = sinon.stub(stubRequest, 'end').returns(stubRequest);
+    onStub = sinon.stub(stubRequest, 'on').returns(stubRequest);
+    setStub = sinon.stub(stubRequest, 'set').returns(stubRequest);
+    typeStub = sinon.stub(stubRequest, 'type').returns(stubRequest);
+    bufferStub = sinon.stub(stubRequest, 'buffer').returns(stubRequest);
+    parseStub = sinon.stub(stubRequest, 'parse').returns(stubRequest);
   });
 
   afterEach(function () {
-    fetchMock.restore();
+    postStub.restore();
   });
 
   it('returns a promise', function () {
@@ -33,65 +46,51 @@ describe('downloadRequest', function () {
     );
   });
 
-  it('posts to the correct url', function (done) {
-    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.equal(fetchMock.calls().matched.length, 1);
-        assert.equal(fetchMock.lastUrl(), 'https://content.dropboxapi.com/2/sharing/get_shared_link_file');
-        done();
-      }, done);
+  it('posts to the correct url', function () {
+    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(postStub.calledOnce);
+    assert.equal('https://content.dropboxapi.com/2/sharing/get_shared_link_file', postStub.firstCall.args[0]);
   });
 
   // This is just what the API wants...
-  it('the request type is not set', function (done) {
-    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.isUndefined(fetchMock.lastOptions().headers['Content-Type']);
-        done();
-      }, done);
-
+  it('the request type is not set', function () {
+    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(!typeStub.called);
   });
 
-  it('sets the authorization header', function (done) {
-    downloadRequest('sharing/get_shared_link_file', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-        done();
-      }, done);
+  it('sets the authorization header', function () {
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Authorization', setStub.firstCall.args[0]);
+    assert.equal('Bearer atoken', setStub.firstCall.args[1]);
   });
 
-  it('sets the authorization and select user headers if selectUser set', function (done) {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId')
-      .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Select-User'], 'selectedUserId');
-        done();
-      }, done);
+  it('sets the authorization and select user headers if selectUser set', function () {
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', 'selectedUserId');
+    assert(setStub.calledThrice);
+    assert.equal('Authorization', setStub.firstCall.args[0]);
+    assert.equal('Bearer atoken', setStub.firstCall.args[1]);
+    assert.equal('Dropbox-API-Select-User', setStub.thirdCall.args[0]);
+    assert.equal('selectedUserId', setStub.thirdCall.args[1]);
   });
 
-  it('sets the Dropbox-API-Arg header', function (done) {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken')
-    .then((data) => {
-      assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-      assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], JSON.stringify({ foo: 'bar' }));
-      done();
-    }, done);
+  it('sets the Dropbox-API-Arg header', function () {
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
+    assert.equal(JSON.stringify({ foo: 'bar' }), setStub.secondCall.args[1]);
   });
 
-  it('escapes special characters in the Dropbox-API-Arg header', function (done) {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar单bazá' }, 'user', 'content', 'atoken')
-    .then((data) => {
-      assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-      assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], '{"foo":"bar\\u5355baz\\u00e1"}');
-      done();
-    }, done);
+  it('escapes special characters in the Dropbox-API-Arg header', function () {
+    downloadRequest('sharing/create_shared_link', { foo: 'bar单bazá' }, 'user', 'content', 'atoken');
+    assert(setStub.calledTwice);
+    assert.equal('Dropbox-API-Arg', setStub.secondCall.args[0]);
+    assert.equal('{"foo":"bar\\u5355baz\\u00e1"}', setStub.secondCall.args[1]);
   });
 
-  it('returns a valid response', function (done) {
-    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken')
-      .then((data) => {
-        assert.equal(data.fileBinary, 'Some empty text\n')
-        done();
-      }, done);
+  it('sets the response handler function', function () {
+    downloadRequest('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken');
+    assert(endStub.calledOnce);
+    assert.isFunction(endStub.firstCall.args[0]);
   });
 });

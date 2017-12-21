@@ -1,9 +1,11 @@
-import sinon from 'sinon';
-import { assert } from 'chai';
+/* eslint-env mocha */
+var Dropbox = require('../src/dropbox');
+var DropboxTeam = require('../src/team/dropbox-team');
+var REQUEST_CONSTANTS = require('../src/request-constants');
+var chai = require('chai');
+var sinon = require('sinon');
 
-import { RPC } from '../src/constants';
-import { Dropbox } from '../src/dropbox';
-import { DropboxTeam } from '../src/team/dropbox-team';
+var assert = chai.assert;
 
 describe('DropboxTeam', function () {
   var dbx;
@@ -27,7 +29,7 @@ describe('DropboxTeam', function () {
       assert.deepEqual({ limit: 10 }, dbx.request.getCall(0).args[1]);
       assert.equal('team', dbx.request.getCall(0).args[2]);
       assert.equal('api', dbx.request.getCall(0).args[3]);
-      assert.equal(RPC, dbx.request.getCall(0).args[4]);
+      assert.equal(REQUEST_CONSTANTS.RPC, dbx.request.getCall(0).args[4]);
     });
   });
 });

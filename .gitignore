@@ -1,8 +1,4 @@
 dist/
-es/
-lib/
-node_modules/
 generated-docs/
+node_modules/
 npm-debug.log
-.DS_Store
-.env

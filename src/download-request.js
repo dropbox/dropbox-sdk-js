@@ -1,52 +1,97 @@
-import { getBaseURL, httpHeaderSafeJson, isWindowOrWorker } from './utils';
+var request = require('superagent');
+var Promise = require('es6-promise').Promise;
+var getBaseURL = require('./get-base-url');
+var httpHeaderSafeJson = require('./http-header-safe-json');
 
-function getDataFromConsumer(res) {
-  if (!res.ok) {
-    return res.text();
-  }
+var buildCustomError;
+var downloadRequest;
+var nodeBinaryParser;
 
-  return (isWindowOrWorker()) ? res.blob() : res.buffer();
-}
+// Register a handler that will instruct superagent how to parse the response
+request.parse['application/octect-stream'] = function (obj) {
+  return obj;
+};
 
-function responseHandler(res, data) {
-  if (!res.ok) {
-    // eslint-disable-next-line no-throw-literal
-    throw {
-      error: data,
-      response: res,
-      status: res.status,
-    };
-  }
+// This doesn't match what was spec'd in paper doc yet
+buildCustomError = function (error, response) {
+  return {
+    status: error.status,
+    error: (response ? response.text : null) || error.toString(),
+    response: response
+  };
+};
 
-  const result = JSON.parse(res.headers.get('dropbox-api-result'));
+nodeBinaryParser = function (res, done) {
+  res.text = '';
+  res.setEncoding('binary');
+  res.on('data', function (chunk) { res.text += chunk; });
+  res.on('end', function () {
+    done();
+  });
+};
 
-  if (isWindowOrWorker()) {
-    result.fileBlob = data;
-  } else {
-    result.fileBinary = data.toString();
-  }
-
-  return result;
-}
-
-export function downloadRequest(path, args, auth, host, accessToken, selectUser) {
+downloadRequest = function (path, args, auth, host, accessToken, selectUser) {
   if (auth !== 'user') {
-    throw new Error(`Unexpected auth type: ${auth}`);
+    throw new Error('Unexpected auth type: ' + auth);
   }
 
-  const options = {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Dropbox-API-Arg': httpHeaderSafeJson(args),
-    },
+  var promiseFunction = function (resolve, reject) {
+    var apiRequest;
+
+    function success(data) {
+      if (resolve) {
+        resolve(data);
+      }
+    }
+
+    function failure(error) {
+      if (reject) {
+        reject(error);
+      }
+    }
+
+    function responseHandler(error, response) {
+      var data;
+      if (error) {
+        failure(buildCustomError(error, response));
+      } else {
+        // In the browser, the file is passed as a blob and in node the file is
+        // passed as a string of binary data.
+        data = JSON.parse(response.headers['dropbox-api-result']);
+        if (response.xhr) {
+          data.fileBlob = response.xhr.response;
+        } else {
+          data.fileBinary = response.res.text;
+        }
+        success(data);
+      }
+    }
+
+    apiRequest = request.post(getBaseURL(host) + path)
+      .set('Authorization', 'Bearer ' + accessToken)
+      .set('Dropbox-API-Arg', httpHeaderSafeJson(args))
+      .on('request', function () {
+        if (this.xhr) {
+          this.xhr.responseType = 'blob';
+        }
+      });
+
+    if (selectUser) {
+      apiRequest = apiRequest.set('Dropbox-API-Select-User', selectUser);
+    }
+
+    // Apply the node binary parser to the response if executing in node
+    if (typeof window === 'undefined') {
+      apiRequest
+        .buffer(true)
+        .parse(nodeBinaryParser)
+        .end(responseHandler);
+    } else {
+      apiRequest.end(responseHandler);
+    }
   };
 
-  if (selectUser) {
-    options.headers['Dropbox-API-Select-User'] = selectUser;
-  }
+  return new Promise(promiseFunction);
+};
 
-  return fetch(getBaseURL(host) + path, options)
-    .then(res => getDataFromConsumer(res).then(data => [res, data]))
-    .then(([res, data]) => responseHandler(res, data));
-}
+module.exports = downloadRequest;
