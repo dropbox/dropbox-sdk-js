@@ -4686,7 +4686,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamMembersRemoveError
- * @property {('user_not_found'|'user_not_in_team'|'other'|'remove_last_admin'|'removed_and_transfer_dest_should_differ'|'removed_and_transfer_admin_should_differ'|'transfer_dest_user_not_found'|'transfer_dest_user_not_in_team'|'transfer_admin_user_not_found'|'transfer_admin_user_not_in_team'|'unspecified_transfer_admin_id'|'transfer_admin_is_not_admin'|'cannot_keep_account_and_transfer'|'cannot_keep_account_and_delete_data'|'email_address_too_long_to_be_disabled')} .tag - Tag identifying the union variant.
+ * @property {('user_not_found'|'user_not_in_team'|'other'|'remove_last_admin'|'removed_and_transfer_dest_should_differ'|'removed_and_transfer_admin_should_differ'|'transfer_dest_user_not_found'|'transfer_dest_user_not_in_team'|'transfer_admin_user_not_found'|'transfer_admin_user_not_in_team'|'unspecified_transfer_admin_id'|'transfer_admin_is_not_admin'|'cannot_keep_account_and_transfer'|'cannot_keep_account_and_delete_data'|'email_address_too_long_to_be_disabled'|'cannot_keep_invited_user_account')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -4782,8 +4782,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} name - The name of this namespace.
  * @property {string} namespace_id - The ID of this namespace.
  * @property {TeamNamespaceType} namespace_type - The type of this namespace.
- * @property {string} [team_member_id] - If this is a team member folder, the ID
- * of the team member. Otherwise, this field is not present.
+ * @property {string} [team_member_id] - If this is a team member or app folder,
+ * the ID of the owning team member. Otherwise, this field is not present.
  */
 
 /**
@@ -5264,6 +5264,12 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * The type of the space limit imposed on a team member.
+ * @typedef {Object} TeamCommonMemberSpaceLimitType
+ * @property {('off'|'alert_only'|'stop_sync'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * Time range.
  * @typedef {Object} TeamCommonTimeRange
  * @property {Timestamp} [start_time] - Optional starting time (inclusive).
@@ -5334,6 +5340,17 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Proactive account capture email sent to all unmanaged members.
+ * @typedef {Object} TeamLogAccountCaptureNotificationEmailsSentDetails
+ * @property {string} domain_name - Domain name.
+ */
+
+/**
+ * @typedef {Object} TeamLogAccountCaptureNotificationEmailsSentType
+ * @property {string} description
+ */
+
+/**
  * @typedef {Object} TeamLogAccountCapturePolicy
  * @property {('disabled'|'invited_users'|'all_users'|'other')} .tag - Tag identifying the union variant.
  */
@@ -5348,6 +5365,17 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamLogAccountCaptureRelinquishAccountType
  * @property {string} description
+ */
+
+/**
+ * Additional information indicating the action taken that caused status change.
+ * @typedef {Object} TeamLogActionDetails
+ * @property {TeamLogJoinTeamDetails} [team_join_details] - Available if .tag is
+ * team_join_details. Additional information relevant when a new member joins
+ * the team.
+ * @property {TeamLogMemberRemoveActionType} [remove_action] - Available if .tag
+ * is remove_action. Define how the user was removed from the team.
+ * @property {('team_join_details'|'remove_action'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -5499,11 +5527,6 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * @typedef {Object} TeamLogConfidentiality
- * @property {('confidential'|'non_confidential'|'other')} .tag - Tag identifying the union variant.
- */
-
-/**
  * Policy for pemanent content deletion
  * @typedef {Object} TeamLogContentPermanentDeletePolicy
  * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
@@ -5556,6 +5579,29 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamLogDataPlacementRestrictionSatisfyPolicyType
  * @property {string} description
+ */
+
+/**
+ * Information about linked Dropbox desktop client sessions
+ * @typedef {Object} TeamLogDesktopDeviceSessionLogInfo
+@property {'desktop_device_session'} [.tag] - Tag identifying this subtype
+variant. This field is only present when needed to discriminate between multiple
+possible subtypes.
+ * @property {string} host_name - Name of the hosting desktop.
+ * @property {TeamDesktopPlatform} client_type - The Dropbox desktop client
+ * type.
+ * @property {string} platform - Information on the hosting platform.
+ * @property {boolean} is_delete_on_unlink_supported - Whether itu2019s possible
+ * to delete all of the account files upon unlinking.
+ * @property {string} [session_id] - Session unique id. Might be missing due to
+ * historical data gap.
+ * @property {string} [ip_address] - The IP address of the last activity from
+ * this session. Might be missing due to historical data gap.
+ * @property {Timestamp} [created] - The time this session was created. Might be
+ * missing due to historical data gap.
+ * @property {Timestamp} [updated] - The time of the last activity from this
+ * session. Might be missing due to historical data gap.
+ * @property {string} [client_version] - The Dropbox client version.
  */
 
 /**
@@ -5635,7 +5681,9 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * IP address associated with active desktop session changed.
  * @typedef {Object} TeamLogDeviceChangeIpDesktopDetails
- * @property {TeamLogDeviceLogInfo} device_info - Device information.
+ * @property
+ * {(TeamLogDesktopDeviceSessionLogInfo|TeamLogMobileDeviceSessionLogInfo|TeamLogWebDeviceSessionLogInfo|TeamLogLegacyDeviceSessionLogInfo|TeamLogDeviceSessionLogInfo)}
+ * device_session_info - Device's session logged information.
  */
 
 /**
@@ -5646,7 +5694,9 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * IP address associated with active mobile session changed.
  * @typedef {Object} TeamLogDeviceChangeIpMobileDetails
- * @property {TeamLogDeviceLogInfo} device_info - Device information.
+ * @property
+ * {(TeamLogDesktopDeviceSessionLogInfo|TeamLogMobileDeviceSessionLogInfo|TeamLogWebDeviceSessionLogInfo|TeamLogLegacyDeviceSessionLogInfo|TeamLogDeviceSessionLogInfo)}
+ * device_session_info - Device's session logged information.
  */
 
 /**
@@ -5658,8 +5708,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * IP address associated with active Web session changed.
  * @typedef {Object} TeamLogDeviceChangeIpWebDetails
  * @property {string} user_agent - Web browser name.
- * @property {TeamLogDeviceLogInfo} [device_info] - Device information. Might be
- * missing due to historical data gap.
+ * @property
+ * {(TeamLogDesktopDeviceSessionLogInfo|TeamLogMobileDeviceSessionLogInfo|TeamLogWebDeviceSessionLogInfo|TeamLogLegacyDeviceSessionLogInfo|TeamLogDeviceSessionLogInfo)}
+ * [device_session_info] - Device's session logged information. Might be missing
+ * due to historical data gap.
  */
 
 /**
@@ -5670,9 +5722,12 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * Failed to delete all files from an unlinked device.
  * @typedef {Object} TeamLogDeviceDeleteOnUnlinkFailDetails
- * @property {TeamLogDeviceLogInfo} device_info - Device information.
  * @property {number} num_failures - The number of times that remote file
  * deletion failed.
+ * @property {string} [session_id] - Session unique id. Might be missing due to
+ * historical data gap.
+ * @property {string} [display_name] - The device name. Might be missing due to
+ * historical data gap.
  */
 
 /**
@@ -5683,7 +5738,10 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * Deleted all files from an unlinked device.
  * @typedef {Object} TeamLogDeviceDeleteOnUnlinkSuccessDetails
- * @property {TeamLogDeviceLogInfo} device_info - Device information.
+ * @property {string} [session_id] - Session unique id. Might be missing due to
+ * historical data gap.
+ * @property {string} [display_name] - The device name. Might be missing due to
+ * historical data gap.
  */
 
 /**
@@ -5696,8 +5754,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} TeamLogDeviceLinkFailDetails
  * @property {TeamLogDeviceType} device_type - A description of the device used
  * while user approval blocked.
- * @property {TeamLogDeviceLogInfo} [device_info] - Device information. Might be
- * missing due to historical data gap.
+ * @property {string} [ip_address] - IP address. Might be missing due to
+ * historical data gap.
  */
 
 /**
@@ -5708,37 +5766,14 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * Linked a device.
  * @typedef {Object} TeamLogDeviceLinkSuccessDetails
- * @property {TeamLogDeviceLogInfo} device_info - Device information.
+ * @property
+ * {(TeamLogDesktopDeviceSessionLogInfo|TeamLogMobileDeviceSessionLogInfo|TeamLogWebDeviceSessionLogInfo|TeamLogLegacyDeviceSessionLogInfo|TeamLogDeviceSessionLogInfo)}
+ * device_session_info - Device's session logged information.
  */
 
 /**
  * @typedef {Object} TeamLogDeviceLinkSuccessType
  * @property {string} description
- */
-
-/**
- * Device's logged information.
- * @typedef {Object} TeamLogDeviceLogInfo
- * @property {string} [device_id] - Device unique id. Might be missing due to
- * historical data gap.
- * @property {string} [display_name] - Device display name. Might be missing due
- * to historical data gap.
- * @property {boolean} [is_emm_managed] - True if this device is emm managed,
- * false otherwise. Might be missing due to historical data gap.
- * @property {string} [platform] - Device platform name. Might be missing due to
- * historical data gap.
- * @property {string} [mac_address] - Device mac address. Might be missing due
- * to historical data gap.
- * @property {string} [os_version] - Device OS version. Might be missing due to
- * historical data gap.
- * @property {string} [device_type] - Device type. Might be missing due to
- * historical data gap.
- * @property {string} [ip_address] - IP address. Might be missing due to
- * historical data gap.
- * @property {string} [last_activity] - Last activity. Might be missing due to
- * historical data gap.
- * @property {string} [app_version] - Linking app version. Might be missing due
- * to historical data gap.
  */
 
 /**
@@ -5762,6 +5797,22 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Device's session logged information.
+ * @typedef {Object} TeamLogDeviceSessionLogInfo
+@property
+{("desktop_device_session"|"mobile_device_session"|"web_device_session"|"legacy_device_session")}
+.tag - Tag identifying the subtype variant.
+ * @property {string} [session_id] - Session unique id. Might be missing due to
+ * historical data gap.
+ * @property {string} [ip_address] - The IP address of the last activity from
+ * this session. Might be missing due to historical data gap.
+ * @property {Timestamp} [created] - The time this session was created. Might be
+ * missing due to historical data gap.
+ * @property {Timestamp} [updated] - The time of the last activity from this
+ * session. Might be missing due to historical data gap.
+ */
+
+/**
  * @typedef {Object} TeamLogDeviceType
  * @property {('desktop'|'mobile'|'other')} .tag - Tag identifying the union variant.
  */
@@ -5769,9 +5820,12 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * Disconnected a device.
  * @typedef {Object} TeamLogDeviceUnlinkDetails
- * @property {TeamLogDeviceLogInfo} device_info - Device information.
  * @property {boolean} delete_data - True if the user requested to delete data
  * after device unlink, false otherwise.
+ * @property {string} [session_id] - Session unique id. Might be missing due to
+ * historical data gap.
+ * @property {string} [display_name] - The device name. Might be missing due to
+ * historical data gap.
  */
 
 /**
@@ -5891,6 +5945,12 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamLogDomainVerificationRemoveDomainType
  * @property {string} description
+ */
+
+/**
+ * Shared content downloads policy
+ * @typedef {Object} TeamLogDownloadPolicyType
+ * @property {('allow'|'disallow'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -6055,6 +6115,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogAccountCaptureMigrateAccountDetails}
  * [account_capture_migrate_account_details] - Available if .tag is
  * account_capture_migrate_account_details.
+ * @property {TeamLogAccountCaptureNotificationEmailsSentDetails}
+ * [account_capture_notification_emails_sent_details] - Available if .tag is
+ * account_capture_notification_emails_sent_details.
  * @property {TeamLogAccountCaptureRelinquishAccountDetails}
  * [account_capture_relinquish_account_details] - Available if .tag is
  * account_capture_relinquish_account_details.
@@ -6124,14 +6187,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileSaveCopyReferenceDetails}
  * [file_save_copy_reference_details] - Available if .tag is
  * file_save_copy_reference_details.
- * @property {TeamLogFileRequestAddDeadlineDetails}
- * [file_request_add_deadline_details] - Available if .tag is
- * file_request_add_deadline_details.
  * @property {TeamLogFileRequestChangeDetails} [file_request_change_details] -
  * Available if .tag is file_request_change_details.
- * @property {TeamLogFileRequestChangeFolderDetails}
- * [file_request_change_folder_details] - Available if .tag is
- * file_request_change_folder_details.
  * @property {TeamLogFileRequestCloseDetails} [file_request_close_details] -
  * Available if .tag is file_request_close_details.
  * @property {TeamLogFileRequestCreateDetails} [file_request_create_details] -
@@ -6139,11 +6196,6 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileRequestReceiveFileDetails}
  * [file_request_receive_file_details] - Available if .tag is
  * file_request_receive_file_details.
- * @property {TeamLogFileRequestRemoveDeadlineDetails}
- * [file_request_remove_deadline_details] - Available if .tag is
- * file_request_remove_deadline_details.
- * @property {TeamLogFileRequestSendDetails} [file_request_send_details] -
- * Available if .tag is file_request_send_details.
  * @property {TeamLogGroupAddExternalIdDetails} [group_add_external_id_details]
  * - Available if .tag is group_add_external_id_details.
  * @property {TeamLogGroupAddMemberDetails} [group_add_member_details] -
@@ -6191,6 +6243,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * sign_in_as_session_start_details.
  * @property {TeamLogSsoErrorDetails} [sso_error_details] - Available if .tag is
  * sso_error_details.
+ * @property {TeamLogMemberAddNameDetails} [member_add_name_details] - Available
+ * if .tag is member_add_name_details.
  * @property {TeamLogMemberChangeAdminRoleDetails}
  * [member_change_admin_role_details] - Available if .tag is
  * member_change_admin_role_details.
@@ -6206,9 +6260,18 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMemberPermanentlyDeleteAccountContentsDetails}
  * [member_permanently_delete_account_contents_details] - Available if .tag is
  * member_permanently_delete_account_contents_details.
+ * @property {TeamLogMemberSpaceLimitsAddCustomQuotaDetails}
+ * [member_space_limits_add_custom_quota_details] - Available if .tag is
+ * member_space_limits_add_custom_quota_details.
+ * @property {TeamLogMemberSpaceLimitsChangeCustomQuotaDetails}
+ * [member_space_limits_change_custom_quota_details] - Available if .tag is
+ * member_space_limits_change_custom_quota_details.
  * @property {TeamLogMemberSpaceLimitsChangeStatusDetails}
  * [member_space_limits_change_status_details] - Available if .tag is
  * member_space_limits_change_status_details.
+ * @property {TeamLogMemberSpaceLimitsRemoveCustomQuotaDetails}
+ * [member_space_limits_remove_custom_quota_details] - Available if .tag is
+ * member_space_limits_remove_custom_quota_details.
  * @property {TeamLogMemberSuggestDetails} [member_suggest_details] - Available
  * if .tag is member_suggest_details.
  * @property {TeamLogMemberTransferAccountContentsDetails}
@@ -6316,6 +6379,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogEmmCreateUsageReportDetails}
  * [emm_create_usage_report_details] - Available if .tag is
  * emm_create_usage_report_details.
+ * @property {TeamLogExportMembersReportDetails} [export_members_report_details]
+ * - Available if .tag is export_members_report_details.
  * @property {TeamLogPaperAdminExportStartDetails}
  * [paper_admin_export_start_details] - Available if .tag is
  * paper_admin_export_start_details.
@@ -6347,6 +6412,13 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSfExternalInviteWarnDetails}
  * [sf_external_invite_warn_details] - Available if .tag is
  * sf_external_invite_warn_details.
+ * @property {TeamLogSfFbInviteDetails} [sf_fb_invite_details] - Available if
+ * .tag is sf_fb_invite_details.
+ * @property {TeamLogSfFbInviteChangeRoleDetails}
+ * [sf_fb_invite_change_role_details] - Available if .tag is
+ * sf_fb_invite_change_role_details.
+ * @property {TeamLogSfFbUninviteDetails} [sf_fb_uninvite_details] - Available
+ * if .tag is sf_fb_uninvite_details.
  * @property {TeamLogSfInviteGroupDetails} [sf_invite_group_details] - Available
  * if .tag is sf_invite_group_details.
  * @property {TeamLogSfTeamGrantAccessDetails} [sf_team_grant_access_details] -
@@ -6407,9 +6479,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSharedContentRelinquishMembershipDetails}
  * [shared_content_relinquish_membership_details] - Available if .tag is
  * shared_content_relinquish_membership_details.
- * @property {TeamLogSharedContentRemoveInviteeDetails}
- * [shared_content_remove_invitee_details] - Available if .tag is
- * shared_content_remove_invitee_details.
+ * @property {TeamLogSharedContentRemoveInviteesDetails}
+ * [shared_content_remove_invitees_details] - Available if .tag is
+ * shared_content_remove_invitees_details.
  * @property {TeamLogSharedContentRemoveLinkExpiryDetails}
  * [shared_content_remove_link_expiry_details] - Available if .tag is
  * shared_content_remove_link_expiry_details.
@@ -6427,18 +6499,18 @@ is only present when needed to discriminate between multiple possible subtypes.
  * shared_content_unshare_details.
  * @property {TeamLogSharedContentViewDetails} [shared_content_view_details] -
  * Available if .tag is shared_content_view_details.
- * @property {TeamLogSharedFolderChangeConfidentialityDetails}
- * [shared_folder_change_confidentiality_details] - Available if .tag is
- * shared_folder_change_confidentiality_details.
  * @property {TeamLogSharedFolderChangeLinkPolicyDetails}
  * [shared_folder_change_link_policy_details] - Available if .tag is
  * shared_folder_change_link_policy_details.
- * @property {TeamLogSharedFolderChangeMemberManagementPolicyDetails}
- * [shared_folder_change_member_management_policy_details] - Available if .tag
- * is shared_folder_change_member_management_policy_details.
- * @property {TeamLogSharedFolderChangeMemberPolicyDetails}
- * [shared_folder_change_member_policy_details] - Available if .tag is
- * shared_folder_change_member_policy_details.
+ * @property {TeamLogSharedFolderChangeMembersInheritancePolicyDetails}
+ * [shared_folder_change_members_inheritance_policy_details] - Available if .tag
+ * is shared_folder_change_members_inheritance_policy_details.
+ * @property {TeamLogSharedFolderChangeMembersManagementPolicyDetails}
+ * [shared_folder_change_members_management_policy_details] - Available if .tag
+ * is shared_folder_change_members_management_policy_details.
+ * @property {TeamLogSharedFolderChangeMembersPolicyDetails}
+ * [shared_folder_change_members_policy_details] - Available if .tag is
+ * shared_folder_change_members_policy_details.
  * @property {TeamLogSharedFolderCreateDetails} [shared_folder_create_details] -
  * Available if .tag is shared_folder_create_details.
  * @property {TeamLogSharedFolderDeclineInvitationDetails}
@@ -6574,6 +6646,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMemberSpaceLimitsAddExceptionDetails}
  * [member_space_limits_add_exception_details] - Available if .tag is
  * member_space_limits_add_exception_details.
+ * @property {TeamLogMemberSpaceLimitsChangeCapsTypePolicyDetails}
+ * [member_space_limits_change_caps_type_policy_details] - Available if .tag is
+ * member_space_limits_change_caps_type_policy_details.
  * @property {TeamLogMemberSpaceLimitsChangePolicyDetails}
  * [member_space_limits_change_policy_details] - Available if .tag is
  * member_space_limits_change_policy_details.
@@ -6676,7 +6751,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMissingDetails} [missing_details] - Available if .tag is
  * missing_details. Hints that this event was returned with missing details due
  * to an internal error.
- * @property {('app_link_team_details'|'app_link_user_details'|'app_unlink_team_details'|'app_unlink_user_details'|'file_add_comment_details'|'file_change_comment_subscription_details'|'file_delete_comment_details'|'file_like_comment_details'|'file_resolve_comment_details'|'file_unlike_comment_details'|'file_unresolve_comment_details'|'device_change_ip_desktop_details'|'device_change_ip_mobile_details'|'device_change_ip_web_details'|'device_delete_on_unlink_fail_details'|'device_delete_on_unlink_success_details'|'device_link_fail_details'|'device_link_success_details'|'device_management_disabled_details'|'device_management_enabled_details'|'device_unlink_details'|'emm_refresh_auth_token_details'|'account_capture_change_availability_details'|'account_capture_migrate_account_details'|'account_capture_relinquish_account_details'|'disabled_domain_invites_details'|'domain_invites_approve_request_to_join_team_details'|'domain_invites_decline_request_to_join_team_details'|'domain_invites_email_existing_users_details'|'domain_invites_request_to_join_team_details'|'domain_invites_set_invite_new_user_pref_to_no_details'|'domain_invites_set_invite_new_user_pref_to_yes_details'|'domain_verification_add_domain_fail_details'|'domain_verification_add_domain_success_details'|'domain_verification_remove_domain_details'|'enabled_domain_invites_details'|'create_folder_details'|'file_add_details'|'file_copy_details'|'file_delete_details'|'file_download_details'|'file_edit_details'|'file_get_copy_reference_details'|'file_move_details'|'file_permanently_delete_details'|'file_preview_details'|'file_rename_details'|'file_restore_details'|'file_revert_details'|'file_rollback_changes_details'|'file_save_copy_reference_details'|'file_request_add_deadline_details'|'file_request_change_details'|'file_request_change_folder_details'|'file_request_close_details'|'file_request_create_details'|'file_request_receive_file_details'|'file_request_remove_deadline_details'|'file_request_send_details'|'group_add_external_id_details'|'group_add_member_details'|'group_change_external_id_details'|'group_change_management_type_details'|'group_change_member_role_details'|'group_create_details'|'group_delete_details'|'group_moved_details'|'group_remove_external_id_details'|'group_remove_member_details'|'group_rename_details'|'emm_error_details'|'login_fail_details'|'login_success_details'|'logout_details'|'reseller_support_session_end_details'|'reseller_support_session_start_details'|'sign_in_as_session_end_details'|'sign_in_as_session_start_details'|'sso_error_details'|'member_change_admin_role_details'|'member_change_email_details'|'member_change_membership_type_details'|'member_change_name_details'|'member_change_status_details'|'member_permanently_delete_account_contents_details'|'member_space_limits_change_status_details'|'member_suggest_details'|'member_transfer_account_contents_details'|'paper_content_add_member_details'|'paper_content_add_to_folder_details'|'paper_content_archive_details'|'paper_content_create_details'|'paper_content_permanently_delete_details'|'paper_content_remove_from_folder_details'|'paper_content_remove_member_details'|'paper_content_rename_details'|'paper_content_restore_details'|'paper_doc_add_comment_details'|'paper_doc_change_member_role_details'|'paper_doc_change_sharing_policy_details'|'paper_doc_change_subscription_details'|'paper_doc_deleted_details'|'paper_doc_delete_comment_details'|'paper_doc_download_details'|'paper_doc_edit_details'|'paper_doc_edit_comment_details'|'paper_doc_followed_details'|'paper_doc_mention_details'|'paper_doc_request_access_details'|'paper_doc_resolve_comment_details'|'paper_doc_revert_details'|'paper_doc_slack_share_details'|'paper_doc_team_invite_details'|'paper_doc_trashed_details'|'paper_doc_unresolve_comment_details'|'paper_doc_untrashed_details'|'paper_doc_view_details'|'paper_external_view_allow_details'|'paper_external_view_default_team_details'|'paper_external_view_forbid_details'|'paper_folder_change_subscription_details'|'paper_folder_deleted_details'|'paper_folder_followed_details'|'paper_folder_team_invite_details'|'password_change_details'|'password_reset_details'|'password_reset_all_details'|'emm_create_exceptions_report_details'|'emm_create_usage_report_details'|'paper_admin_export_start_details'|'smart_sync_create_admin_privilege_report_details'|'team_activity_create_report_details'|'collection_share_details'|'note_acl_invite_only_details'|'note_acl_link_details'|'note_acl_team_link_details'|'note_shared_details'|'note_share_receive_details'|'open_note_shared_details'|'sf_add_group_details'|'sf_allow_non_members_to_view_shared_links_details'|'sf_external_invite_warn_details'|'sf_invite_group_details'|'sf_team_grant_access_details'|'sf_team_invite_details'|'sf_team_invite_change_role_details'|'sf_team_join_details'|'sf_team_join_from_oob_link_details'|'sf_team_uninvite_details'|'shared_content_add_invitees_details'|'shared_content_add_link_expiry_details'|'shared_content_add_link_password_details'|'shared_content_add_member_details'|'shared_content_change_downloads_policy_details'|'shared_content_change_invitee_role_details'|'shared_content_change_link_audience_details'|'shared_content_change_link_expiry_details'|'shared_content_change_link_password_details'|'shared_content_change_member_role_details'|'shared_content_change_viewer_info_policy_details'|'shared_content_claim_invitation_details'|'shared_content_copy_details'|'shared_content_download_details'|'shared_content_relinquish_membership_details'|'shared_content_remove_invitee_details'|'shared_content_remove_link_expiry_details'|'shared_content_remove_link_password_details'|'shared_content_remove_member_details'|'shared_content_request_access_details'|'shared_content_unshare_details'|'shared_content_view_details'|'shared_folder_change_confidentiality_details'|'shared_folder_change_link_policy_details'|'shared_folder_change_member_management_policy_details'|'shared_folder_change_member_policy_details'|'shared_folder_create_details'|'shared_folder_decline_invitation_details'|'shared_folder_mount_details'|'shared_folder_nest_details'|'shared_folder_transfer_ownership_details'|'shared_folder_unmount_details'|'shared_link_add_expiry_details'|'shared_link_change_expiry_details'|'shared_link_change_visibility_details'|'shared_link_copy_details'|'shared_link_create_details'|'shared_link_disable_details'|'shared_link_download_details'|'shared_link_remove_expiry_details'|'shared_link_share_details'|'shared_link_view_details'|'shared_note_opened_details'|'shmodel_group_share_details'|'sso_add_cert_details'|'sso_add_login_url_details'|'sso_add_logout_url_details'|'sso_change_cert_details'|'sso_change_login_url_details'|'sso_change_logout_url_details'|'sso_change_saml_identity_mode_details'|'sso_remove_cert_details'|'sso_remove_login_url_details'|'sso_remove_logout_url_details'|'team_folder_change_status_details'|'team_folder_create_details'|'team_folder_downgrade_details'|'team_folder_permanently_delete_details'|'team_folder_rename_details'|'account_capture_change_policy_details'|'allow_download_disabled_details'|'allow_download_enabled_details'|'data_placement_restriction_change_policy_details'|'data_placement_restriction_satisfy_policy_details'|'device_approvals_change_desktop_policy_details'|'device_approvals_change_mobile_policy_details'|'device_approvals_change_overage_action_details'|'device_approvals_change_unlink_action_details'|'emm_add_exception_details'|'emm_change_policy_details'|'emm_remove_exception_details'|'extended_version_history_change_policy_details'|'file_comments_change_policy_details'|'file_requests_change_policy_details'|'file_requests_emails_enabled_details'|'file_requests_emails_restricted_to_team_only_details'|'google_sso_change_policy_details'|'group_user_management_change_policy_details'|'member_requests_change_policy_details'|'member_space_limits_add_exception_details'|'member_space_limits_change_policy_details'|'member_space_limits_remove_exception_details'|'member_suggestions_change_policy_details'|'microsoft_office_addin_change_policy_details'|'network_control_change_policy_details'|'paper_change_deployment_policy_details'|'paper_change_member_link_policy_details'|'paper_change_member_policy_details'|'paper_change_policy_details'|'paper_enabled_users_group_addition_details'|'paper_enabled_users_group_removal_details'|'permanent_delete_change_policy_details'|'sharing_change_folder_join_policy_details'|'sharing_change_link_policy_details'|'sharing_change_member_policy_details'|'smart_sync_change_policy_details'|'smart_sync_not_opt_out_details'|'smart_sync_opt_out_details'|'sso_change_policy_details'|'tfa_change_policy_details'|'two_account_change_policy_details'|'web_sessions_change_fixed_length_policy_details'|'web_sessions_change_idle_length_policy_details'|'team_merge_from_details'|'team_merge_to_details'|'team_profile_add_logo_details'|'team_profile_change_default_language_details'|'team_profile_change_logo_details'|'team_profile_change_name_details'|'team_profile_remove_logo_details'|'tfa_add_backup_phone_details'|'tfa_add_security_key_details'|'tfa_change_backup_phone_details'|'tfa_change_status_details'|'tfa_remove_backup_phone_details'|'tfa_remove_security_key_details'|'tfa_reset_details'|'missing_details'|'other')} .tag - Tag identifying the union variant.
+ * @property {('app_link_team_details'|'app_link_user_details'|'app_unlink_team_details'|'app_unlink_user_details'|'file_add_comment_details'|'file_change_comment_subscription_details'|'file_delete_comment_details'|'file_like_comment_details'|'file_resolve_comment_details'|'file_unlike_comment_details'|'file_unresolve_comment_details'|'device_change_ip_desktop_details'|'device_change_ip_mobile_details'|'device_change_ip_web_details'|'device_delete_on_unlink_fail_details'|'device_delete_on_unlink_success_details'|'device_link_fail_details'|'device_link_success_details'|'device_management_disabled_details'|'device_management_enabled_details'|'device_unlink_details'|'emm_refresh_auth_token_details'|'account_capture_change_availability_details'|'account_capture_migrate_account_details'|'account_capture_notification_emails_sent_details'|'account_capture_relinquish_account_details'|'disabled_domain_invites_details'|'domain_invites_approve_request_to_join_team_details'|'domain_invites_decline_request_to_join_team_details'|'domain_invites_email_existing_users_details'|'domain_invites_request_to_join_team_details'|'domain_invites_set_invite_new_user_pref_to_no_details'|'domain_invites_set_invite_new_user_pref_to_yes_details'|'domain_verification_add_domain_fail_details'|'domain_verification_add_domain_success_details'|'domain_verification_remove_domain_details'|'enabled_domain_invites_details'|'create_folder_details'|'file_add_details'|'file_copy_details'|'file_delete_details'|'file_download_details'|'file_edit_details'|'file_get_copy_reference_details'|'file_move_details'|'file_permanently_delete_details'|'file_preview_details'|'file_rename_details'|'file_restore_details'|'file_revert_details'|'file_rollback_changes_details'|'file_save_copy_reference_details'|'file_request_change_details'|'file_request_close_details'|'file_request_create_details'|'file_request_receive_file_details'|'group_add_external_id_details'|'group_add_member_details'|'group_change_external_id_details'|'group_change_management_type_details'|'group_change_member_role_details'|'group_create_details'|'group_delete_details'|'group_moved_details'|'group_remove_external_id_details'|'group_remove_member_details'|'group_rename_details'|'emm_error_details'|'login_fail_details'|'login_success_details'|'logout_details'|'reseller_support_session_end_details'|'reseller_support_session_start_details'|'sign_in_as_session_end_details'|'sign_in_as_session_start_details'|'sso_error_details'|'member_add_name_details'|'member_change_admin_role_details'|'member_change_email_details'|'member_change_membership_type_details'|'member_change_name_details'|'member_change_status_details'|'member_permanently_delete_account_contents_details'|'member_space_limits_add_custom_quota_details'|'member_space_limits_change_custom_quota_details'|'member_space_limits_change_status_details'|'member_space_limits_remove_custom_quota_details'|'member_suggest_details'|'member_transfer_account_contents_details'|'paper_content_add_member_details'|'paper_content_add_to_folder_details'|'paper_content_archive_details'|'paper_content_create_details'|'paper_content_permanently_delete_details'|'paper_content_remove_from_folder_details'|'paper_content_remove_member_details'|'paper_content_rename_details'|'paper_content_restore_details'|'paper_doc_add_comment_details'|'paper_doc_change_member_role_details'|'paper_doc_change_sharing_policy_details'|'paper_doc_change_subscription_details'|'paper_doc_deleted_details'|'paper_doc_delete_comment_details'|'paper_doc_download_details'|'paper_doc_edit_details'|'paper_doc_edit_comment_details'|'paper_doc_followed_details'|'paper_doc_mention_details'|'paper_doc_request_access_details'|'paper_doc_resolve_comment_details'|'paper_doc_revert_details'|'paper_doc_slack_share_details'|'paper_doc_team_invite_details'|'paper_doc_trashed_details'|'paper_doc_unresolve_comment_details'|'paper_doc_untrashed_details'|'paper_doc_view_details'|'paper_external_view_allow_details'|'paper_external_view_default_team_details'|'paper_external_view_forbid_details'|'paper_folder_change_subscription_details'|'paper_folder_deleted_details'|'paper_folder_followed_details'|'paper_folder_team_invite_details'|'password_change_details'|'password_reset_details'|'password_reset_all_details'|'emm_create_exceptions_report_details'|'emm_create_usage_report_details'|'export_members_report_details'|'paper_admin_export_start_details'|'smart_sync_create_admin_privilege_report_details'|'team_activity_create_report_details'|'collection_share_details'|'note_acl_invite_only_details'|'note_acl_link_details'|'note_acl_team_link_details'|'note_shared_details'|'note_share_receive_details'|'open_note_shared_details'|'sf_add_group_details'|'sf_allow_non_members_to_view_shared_links_details'|'sf_external_invite_warn_details'|'sf_fb_invite_details'|'sf_fb_invite_change_role_details'|'sf_fb_uninvite_details'|'sf_invite_group_details'|'sf_team_grant_access_details'|'sf_team_invite_details'|'sf_team_invite_change_role_details'|'sf_team_join_details'|'sf_team_join_from_oob_link_details'|'sf_team_uninvite_details'|'shared_content_add_invitees_details'|'shared_content_add_link_expiry_details'|'shared_content_add_link_password_details'|'shared_content_add_member_details'|'shared_content_change_downloads_policy_details'|'shared_content_change_invitee_role_details'|'shared_content_change_link_audience_details'|'shared_content_change_link_expiry_details'|'shared_content_change_link_password_details'|'shared_content_change_member_role_details'|'shared_content_change_viewer_info_policy_details'|'shared_content_claim_invitation_details'|'shared_content_copy_details'|'shared_content_download_details'|'shared_content_relinquish_membership_details'|'shared_content_remove_invitees_details'|'shared_content_remove_link_expiry_details'|'shared_content_remove_link_password_details'|'shared_content_remove_member_details'|'shared_content_request_access_details'|'shared_content_unshare_details'|'shared_content_view_details'|'shared_folder_change_link_policy_details'|'shared_folder_change_members_inheritance_policy_details'|'shared_folder_change_members_management_policy_details'|'shared_folder_change_members_policy_details'|'shared_folder_create_details'|'shared_folder_decline_invitation_details'|'shared_folder_mount_details'|'shared_folder_nest_details'|'shared_folder_transfer_ownership_details'|'shared_folder_unmount_details'|'shared_link_add_expiry_details'|'shared_link_change_expiry_details'|'shared_link_change_visibility_details'|'shared_link_copy_details'|'shared_link_create_details'|'shared_link_disable_details'|'shared_link_download_details'|'shared_link_remove_expiry_details'|'shared_link_share_details'|'shared_link_view_details'|'shared_note_opened_details'|'shmodel_group_share_details'|'sso_add_cert_details'|'sso_add_login_url_details'|'sso_add_logout_url_details'|'sso_change_cert_details'|'sso_change_login_url_details'|'sso_change_logout_url_details'|'sso_change_saml_identity_mode_details'|'sso_remove_cert_details'|'sso_remove_login_url_details'|'sso_remove_logout_url_details'|'team_folder_change_status_details'|'team_folder_create_details'|'team_folder_downgrade_details'|'team_folder_permanently_delete_details'|'team_folder_rename_details'|'account_capture_change_policy_details'|'allow_download_disabled_details'|'allow_download_enabled_details'|'data_placement_restriction_change_policy_details'|'data_placement_restriction_satisfy_policy_details'|'device_approvals_change_desktop_policy_details'|'device_approvals_change_mobile_policy_details'|'device_approvals_change_overage_action_details'|'device_approvals_change_unlink_action_details'|'emm_add_exception_details'|'emm_change_policy_details'|'emm_remove_exception_details'|'extended_version_history_change_policy_details'|'file_comments_change_policy_details'|'file_requests_change_policy_details'|'file_requests_emails_enabled_details'|'file_requests_emails_restricted_to_team_only_details'|'google_sso_change_policy_details'|'group_user_management_change_policy_details'|'member_requests_change_policy_details'|'member_space_limits_add_exception_details'|'member_space_limits_change_caps_type_policy_details'|'member_space_limits_change_policy_details'|'member_space_limits_remove_exception_details'|'member_suggestions_change_policy_details'|'microsoft_office_addin_change_policy_details'|'network_control_change_policy_details'|'paper_change_deployment_policy_details'|'paper_change_member_link_policy_details'|'paper_change_member_policy_details'|'paper_change_policy_details'|'paper_enabled_users_group_addition_details'|'paper_enabled_users_group_removal_details'|'permanent_delete_change_policy_details'|'sharing_change_folder_join_policy_details'|'sharing_change_link_policy_details'|'sharing_change_member_policy_details'|'smart_sync_change_policy_details'|'smart_sync_not_opt_out_details'|'smart_sync_opt_out_details'|'sso_change_policy_details'|'tfa_change_policy_details'|'two_account_change_policy_details'|'web_sessions_change_fixed_length_policy_details'|'web_sessions_change_idle_length_policy_details'|'team_merge_from_details'|'team_merge_to_details'|'team_profile_add_logo_details'|'team_profile_change_default_language_details'|'team_profile_change_logo_details'|'team_profile_change_name_details'|'team_profile_remove_logo_details'|'tfa_add_backup_phone_details'|'tfa_add_security_key_details'|'tfa_change_backup_phone_details'|'tfa_change_status_details'|'tfa_remove_backup_phone_details'|'tfa_remove_security_key_details'|'tfa_reset_details'|'missing_details'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -6753,6 +6828,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [account_capture_migrate_account] - Available if .tag is
  * account_capture_migrate_account. (domains) Account captured user migrated
  * their account to the team.
+ * @property {TeamLogAccountCaptureNotificationEmailsSentType}
+ * [account_capture_notification_emails_sent] - Available if .tag is
+ * account_capture_notification_emails_sent. (domains) Proactive account capture
+ * email sent to all unmanaged members.
  * @property {TeamLogAccountCaptureRelinquishAccountType}
  * [account_capture_relinquish_account] - Available if .tag is
  * account_capture_relinquish_account. (domains) Account captured user
@@ -6840,16 +6919,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileSaveCopyReferenceType} [file_save_copy_reference] -
  * Available if .tag is file_save_copy_reference. (file_operations) Save a file
  * or folder using a copy reference.
- * @property {TeamLogFileRequestAddDeadlineType} [file_request_add_deadline] -
- * Available if .tag is file_request_add_deadline. (file_requests) Added a
- * deadline to a file request. This event is replaced by file_request_change and
- * will not be logged going forward.
  * @property {TeamLogFileRequestChangeType} [file_request_change] - Available if
  * .tag is file_request_change. (file_requests) Change a file request.
- * @property {TeamLogFileRequestChangeFolderType} [file_request_change_folder] -
- * Available if .tag is file_request_change_folder. (file_requests) Changed the
- * file request folder. This event is replaced by file_request_change and will
- * not be logged going forward.
  * @property {TeamLogFileRequestCloseType} [file_request_close] - Available if
  * .tag is file_request_close. (file_requests) Closed a file request.
  * @property {TeamLogFileRequestCreateType} [file_request_create] - Available if
@@ -6857,15 +6928,6 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileRequestReceiveFileType} [file_request_receive_file] -
  * Available if .tag is file_request_receive_file. (file_requests) Received
  * files for a file request.
- * @property {TeamLogFileRequestRemoveDeadlineType}
- * [file_request_remove_deadline] - Available if .tag is
- * file_request_remove_deadline. (file_requests) Removed the file request
- * deadline. This event is replaced by file_request_change and will not be
- * logged going forward.
- * @property {TeamLogFileRequestSendType} [file_request_send] - Available if
- * .tag is file_request_send. (file_requests) Sent file request to users via
- * email. This event is replaced by file_request_change and will not be logged
- * going forward.
  * @property {TeamLogGroupAddExternalIdType} [group_add_external_id] - Available
  * if .tag is group_add_external_id. (groups) Added an external ID for group.
  * @property {TeamLogGroupAddMemberType} [group_add_member] - Available if .tag
@@ -6918,6 +6980,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSsoErrorType} [sso_error] - Available if .tag is sso_error.
  * (logins) Failed to sign in via SSO. This event is replaced by login_fail and
  * will not be logged going forward.
+ * @property {TeamLogMemberAddNameType} [member_add_name] - Available if .tag is
+ * member_add_name. (members) Specify team member name.
  * @property {TeamLogMemberChangeAdminRoleType} [member_change_admin_role] -
  * Available if .tag is member_change_admin_role. (members) Change the admin
  * role belonging to team member.
@@ -6937,11 +7001,23 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [member_permanently_delete_account_contents] - Available if .tag is
  * member_permanently_delete_account_contents. (members) Permanently deleted
  * contents of a removed team member account.
+ * @property {TeamLogMemberSpaceLimitsAddCustomQuotaType}
+ * [member_space_limits_add_custom_quota] - Available if .tag is
+ * member_space_limits_add_custom_quota. (members) Set custom member space
+ * limit.
+ * @property {TeamLogMemberSpaceLimitsChangeCustomQuotaType}
+ * [member_space_limits_change_custom_quota] - Available if .tag is
+ * member_space_limits_change_custom_quota. (members) Changed custom member
+ * space limit.
  * @property {TeamLogMemberSpaceLimitsChangeStatusType}
  * [member_space_limits_change_status] - Available if .tag is
  * member_space_limits_change_status. (members) Changed the status with respect
  * to whether the team member is under or over storage quota specified by
  * policy.
+ * @property {TeamLogMemberSpaceLimitsRemoveCustomQuotaType}
+ * [member_space_limits_remove_custom_quota] - Available if .tag is
+ * member_space_limits_remove_custom_quota. (members) Removed custom member
+ * space limit.
  * @property {TeamLogMemberSuggestType} [member_suggest] - Available if .tag is
  * member_suggest. (members) Suggested a new team member to be added to the
  * team.
@@ -7076,6 +7152,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogEmmCreateUsageReportType} [emm_create_usage_report] -
  * Available if .tag is emm_create_usage_report. (reports) EMM mobile app usage
  * report created.
+ * @property {TeamLogExportMembersReportType} [export_members_report] -
+ * Available if .tag is export_members_report. (reports) Member data report
+ * created.
  * @property {TeamLogPaperAdminExportStartType} [paper_admin_export_start] -
  * Available if .tag is paper_admin_export_start. (reports) Exported all Paper
  * documents in the team.
@@ -7127,6 +7206,19 @@ is only present when needed to discriminate between multiple possible subtypes.
  * members see a warning before sharing folders outside the team (DEPRECATED
  * FEATURE). This event is deprecated and will not be logged going forward as
  * the associated product functionality no longer exists.
+ * @property {TeamLogSfFbInviteType} [sf_fb_invite] - Available if .tag is
+ * sf_fb_invite. (sharing) Invited Facebook users to a shared folder. This event
+ * is deprecated and will not be logged going forward as the associated product
+ * functionality no longer exists.
+ * @property {TeamLogSfFbInviteChangeRoleType} [sf_fb_invite_change_role] -
+ * Available if .tag is sf_fb_invite_change_role. (sharing) Changed a Facebook
+ * user's role in a shared folder. This event is deprecated and will not be
+ * logged going forward as the associated product functionality no longer
+ * exists.
+ * @property {TeamLogSfFbUninviteType} [sf_fb_uninvite] - Available if .tag is
+ * sf_fb_uninvite. (sharing) Uninvited a Facebook user from a shared folder.
+ * This event is deprecated and will not be logged going forward as the
+ * associated product functionality no longer exists.
  * @property {TeamLogSfInviteGroupType} [sf_invite_group] - Available if .tag is
  * sf_invite_group. (sharing) Invited a group to a shared folder. This event is
  * deprecated and will not be logged going forward as the associated product
@@ -7137,8 +7229,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * associated product functionality no longer exists.
  * @property {TeamLogSfTeamInviteType} [sf_team_invite] - Available if .tag is
  * sf_team_invite. (sharing) Invited team members to a shared folder. This event
- * is deprecated and will not be logged going forward as the associated product
- * functionality no longer exists.
+ * is replaced by shared_content_add_invitees and will not be logged going
+ * forward.
  * @property {TeamLogSfTeamInviteChangeRoleType} [sf_team_invite_change_role] -
  * Available if .tag is sf_team_invite_change_role. (sharing) Changed a team
  * member's role in a shared folder. This event is deprecated and will not be
@@ -7155,8 +7247,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * exists.
  * @property {TeamLogSfTeamUninviteType} [sf_team_uninvite] - Available if .tag
  * is sf_team_uninvite. (sharing) Unshared a folder with a team member. This
- * event is deprecated and will not be logged going forward as the associated
- * product functionality no longer exists.
+ * event is replaced by shared_content_remove_invitees and will not be logged
+ * going forward.
  * @property {TeamLogSharedContentAddInviteesType} [shared_content_add_invitees]
  * - Available if .tag is shared_content_add_invitees. (sharing) Sent an email
  * invitation to the membership of a shared file or folder.
@@ -7201,8 +7293,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * can see who viewed the shared file or folder.
  * @property {TeamLogSharedContentClaimInvitationType}
  * [shared_content_claim_invitation] - Available if .tag is
- * shared_content_claim_invitation. (sharing) Claimed membership to a team
- * member's shared folder.
+ * shared_content_claim_invitation. (sharing) Acquired membership on a shared
+ * file or folder by claiming an invitation.
  * @property {TeamLogSharedContentCopyType} [shared_content_copy] - Available if
  * .tag is shared_content_copy. (sharing) Copied the shared file or folder to
  * own Dropbox.
@@ -7213,9 +7305,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [shared_content_relinquish_membership] - Available if .tag is
  * shared_content_relinquish_membership. (sharing) Left the membership of a
  * shared file or folder.
- * @property {TeamLogSharedContentRemoveInviteeType}
- * [shared_content_remove_invitee] - Available if .tag is
- * shared_content_remove_invitee. (sharing) Removed an invitee from the
+ * @property {TeamLogSharedContentRemoveInviteesType}
+ * [shared_content_remove_invitees] - Available if .tag is
+ * shared_content_remove_invitees. (sharing) Removed an invitee from the
  * membership of a shared file or folder before it was claimed.
  * @property {TeamLogSharedContentRemoveLinkExpiryType}
  * [shared_content_remove_link_expiry] - Available if .tag is
@@ -7238,22 +7330,22 @@ is only present when needed to discriminate between multiple possible subtypes.
  * or folder by clearing its membership and turning off its link.
  * @property {TeamLogSharedContentViewType} [shared_content_view] - Available if
  * .tag is shared_content_view. (sharing) Previewed the shared file or folder.
- * @property {TeamLogSharedFolderChangeConfidentialityType}
- * [shared_folder_change_confidentiality] - Available if .tag is
- * shared_folder_change_confidentiality. (sharing) Set or unset the confidential
- * flag on a shared folder.
  * @property {TeamLogSharedFolderChangeLinkPolicyType}
  * [shared_folder_change_link_policy] - Available if .tag is
  * shared_folder_change_link_policy. (sharing) Changed who can access the shared
  * folder via a link.
- * @property {TeamLogSharedFolderChangeMemberManagementPolicyType}
- * [shared_folder_change_member_management_policy] - Available if .tag is
- * shared_folder_change_member_management_policy. (sharing) Changed who can
- * manage the membership of a shared folder.
- * @property {TeamLogSharedFolderChangeMemberPolicyType}
- * [shared_folder_change_member_policy] - Available if .tag is
- * shared_folder_change_member_policy. (sharing) Changed who can become a member
- * of the shared folder.
+ * @property {TeamLogSharedFolderChangeMembersInheritancePolicyType}
+ * [shared_folder_change_members_inheritance_policy] - Available if .tag is
+ * shared_folder_change_members_inheritance_policy. (sharing) Specify if the
+ * shared folder inherits its members from the parent folder.
+ * @property {TeamLogSharedFolderChangeMembersManagementPolicyType}
+ * [shared_folder_change_members_management_policy] - Available if .tag is
+ * shared_folder_change_members_management_policy. (sharing) Changed who can add
+ * or remove members of a shared folder.
+ * @property {TeamLogSharedFolderChangeMembersPolicyType}
+ * [shared_folder_change_members_policy] - Available if .tag is
+ * shared_folder_change_members_policy. (sharing) Changed who can become a
+ * member of the shared folder.
  * @property {TeamLogSharedFolderCreateType} [shared_folder_create] - Available
  * if .tag is shared_folder_create. (sharing) Created a shared folder.
  * @property {TeamLogSharedFolderDeclineInvitationType}
@@ -7431,6 +7523,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [member_space_limits_add_exception] - Available if .tag is
  * member_space_limits_add_exception. (team_policies) Added an exception for one
  * or more team members to bypass space limits imposed by policy.
+ * @property {TeamLogMemberSpaceLimitsChangeCapsTypePolicyType}
+ * [member_space_limits_change_caps_type_policy] - Available if .tag is
+ * member_space_limits_change_caps_type_policy. (team_policies) Change the
+ * member space limit type for the team.
  * @property {TeamLogMemberSpaceLimitsChangePolicyType}
  * [member_space_limits_change_policy] - Available if .tag is
  * member_space_limits_change_policy. (team_policies) Changed the team default
@@ -7562,7 +7658,17 @@ is only present when needed to discriminate between multiple possible subtypes.
  * for two-step verification.
  * @property {TeamLogTfaResetType} [tfa_reset] - Available if .tag is tfa_reset.
  * (tfa) Reset two-step verification for team member.
- * @property {('app_link_team'|'app_link_user'|'app_unlink_team'|'app_unlink_user'|'file_add_comment'|'file_change_comment_subscription'|'file_delete_comment'|'file_like_comment'|'file_resolve_comment'|'file_unlike_comment'|'file_unresolve_comment'|'device_change_ip_desktop'|'device_change_ip_mobile'|'device_change_ip_web'|'device_delete_on_unlink_fail'|'device_delete_on_unlink_success'|'device_link_fail'|'device_link_success'|'device_management_disabled'|'device_management_enabled'|'device_unlink'|'emm_refresh_auth_token'|'account_capture_change_availability'|'account_capture_migrate_account'|'account_capture_relinquish_account'|'disabled_domain_invites'|'domain_invites_approve_request_to_join_team'|'domain_invites_decline_request_to_join_team'|'domain_invites_email_existing_users'|'domain_invites_request_to_join_team'|'domain_invites_set_invite_new_user_pref_to_no'|'domain_invites_set_invite_new_user_pref_to_yes'|'domain_verification_add_domain_fail'|'domain_verification_add_domain_success'|'domain_verification_remove_domain'|'enabled_domain_invites'|'create_folder'|'file_add'|'file_copy'|'file_delete'|'file_download'|'file_edit'|'file_get_copy_reference'|'file_move'|'file_permanently_delete'|'file_preview'|'file_rename'|'file_restore'|'file_revert'|'file_rollback_changes'|'file_save_copy_reference'|'file_request_add_deadline'|'file_request_change'|'file_request_change_folder'|'file_request_close'|'file_request_create'|'file_request_receive_file'|'file_request_remove_deadline'|'file_request_send'|'group_add_external_id'|'group_add_member'|'group_change_external_id'|'group_change_management_type'|'group_change_member_role'|'group_create'|'group_delete'|'group_moved'|'group_remove_external_id'|'group_remove_member'|'group_rename'|'emm_error'|'login_fail'|'login_success'|'logout'|'reseller_support_session_end'|'reseller_support_session_start'|'sign_in_as_session_end'|'sign_in_as_session_start'|'sso_error'|'member_change_admin_role'|'member_change_email'|'member_change_membership_type'|'member_change_name'|'member_change_status'|'member_permanently_delete_account_contents'|'member_space_limits_change_status'|'member_suggest'|'member_transfer_account_contents'|'paper_content_add_member'|'paper_content_add_to_folder'|'paper_content_archive'|'paper_content_create'|'paper_content_permanently_delete'|'paper_content_remove_from_folder'|'paper_content_remove_member'|'paper_content_rename'|'paper_content_restore'|'paper_doc_add_comment'|'paper_doc_change_member_role'|'paper_doc_change_sharing_policy'|'paper_doc_change_subscription'|'paper_doc_deleted'|'paper_doc_delete_comment'|'paper_doc_download'|'paper_doc_edit'|'paper_doc_edit_comment'|'paper_doc_followed'|'paper_doc_mention'|'paper_doc_request_access'|'paper_doc_resolve_comment'|'paper_doc_revert'|'paper_doc_slack_share'|'paper_doc_team_invite'|'paper_doc_trashed'|'paper_doc_unresolve_comment'|'paper_doc_untrashed'|'paper_doc_view'|'paper_external_view_allow'|'paper_external_view_default_team'|'paper_external_view_forbid'|'paper_folder_change_subscription'|'paper_folder_deleted'|'paper_folder_followed'|'paper_folder_team_invite'|'password_change'|'password_reset'|'password_reset_all'|'emm_create_exceptions_report'|'emm_create_usage_report'|'paper_admin_export_start'|'smart_sync_create_admin_privilege_report'|'team_activity_create_report'|'collection_share'|'note_acl_invite_only'|'note_acl_link'|'note_acl_team_link'|'note_shared'|'note_share_receive'|'open_note_shared'|'sf_add_group'|'sf_allow_non_members_to_view_shared_links'|'sf_external_invite_warn'|'sf_invite_group'|'sf_team_grant_access'|'sf_team_invite'|'sf_team_invite_change_role'|'sf_team_join'|'sf_team_join_from_oob_link'|'sf_team_uninvite'|'shared_content_add_invitees'|'shared_content_add_link_expiry'|'shared_content_add_link_password'|'shared_content_add_member'|'shared_content_change_downloads_policy'|'shared_content_change_invitee_role'|'shared_content_change_link_audience'|'shared_content_change_link_expiry'|'shared_content_change_link_password'|'shared_content_change_member_role'|'shared_content_change_viewer_info_policy'|'shared_content_claim_invitation'|'shared_content_copy'|'shared_content_download'|'shared_content_relinquish_membership'|'shared_content_remove_invitee'|'shared_content_remove_link_expiry'|'shared_content_remove_link_password'|'shared_content_remove_member'|'shared_content_request_access'|'shared_content_unshare'|'shared_content_view'|'shared_folder_change_confidentiality'|'shared_folder_change_link_policy'|'shared_folder_change_member_management_policy'|'shared_folder_change_member_policy'|'shared_folder_create'|'shared_folder_decline_invitation'|'shared_folder_mount'|'shared_folder_nest'|'shared_folder_transfer_ownership'|'shared_folder_unmount'|'shared_link_add_expiry'|'shared_link_change_expiry'|'shared_link_change_visibility'|'shared_link_copy'|'shared_link_create'|'shared_link_disable'|'shared_link_download'|'shared_link_remove_expiry'|'shared_link_share'|'shared_link_view'|'shared_note_opened'|'shmodel_group_share'|'sso_add_cert'|'sso_add_login_url'|'sso_add_logout_url'|'sso_change_cert'|'sso_change_login_url'|'sso_change_logout_url'|'sso_change_saml_identity_mode'|'sso_remove_cert'|'sso_remove_login_url'|'sso_remove_logout_url'|'team_folder_change_status'|'team_folder_create'|'team_folder_downgrade'|'team_folder_permanently_delete'|'team_folder_rename'|'account_capture_change_policy'|'allow_download_disabled'|'allow_download_enabled'|'data_placement_restriction_change_policy'|'data_placement_restriction_satisfy_policy'|'device_approvals_change_desktop_policy'|'device_approvals_change_mobile_policy'|'device_approvals_change_overage_action'|'device_approvals_change_unlink_action'|'emm_add_exception'|'emm_change_policy'|'emm_remove_exception'|'extended_version_history_change_policy'|'file_comments_change_policy'|'file_requests_change_policy'|'file_requests_emails_enabled'|'file_requests_emails_restricted_to_team_only'|'google_sso_change_policy'|'group_user_management_change_policy'|'member_requests_change_policy'|'member_space_limits_add_exception'|'member_space_limits_change_policy'|'member_space_limits_remove_exception'|'member_suggestions_change_policy'|'microsoft_office_addin_change_policy'|'network_control_change_policy'|'paper_change_deployment_policy'|'paper_change_member_link_policy'|'paper_change_member_policy'|'paper_change_policy'|'paper_enabled_users_group_addition'|'paper_enabled_users_group_removal'|'permanent_delete_change_policy'|'sharing_change_folder_join_policy'|'sharing_change_link_policy'|'sharing_change_member_policy'|'smart_sync_change_policy'|'smart_sync_not_opt_out'|'smart_sync_opt_out'|'sso_change_policy'|'tfa_change_policy'|'two_account_change_policy'|'web_sessions_change_fixed_length_policy'|'web_sessions_change_idle_length_policy'|'team_merge_from'|'team_merge_to'|'team_profile_add_logo'|'team_profile_change_default_language'|'team_profile_change_logo'|'team_profile_change_name'|'team_profile_remove_logo'|'tfa_add_backup_phone'|'tfa_add_security_key'|'tfa_change_backup_phone'|'tfa_change_status'|'tfa_remove_backup_phone'|'tfa_remove_security_key'|'tfa_reset'|'other')} .tag - Tag identifying the union variant.
+ * @property {('app_link_team'|'app_link_user'|'app_unlink_team'|'app_unlink_user'|'file_add_comment'|'file_change_comment_subscription'|'file_delete_comment'|'file_like_comment'|'file_resolve_comment'|'file_unlike_comment'|'file_unresolve_comment'|'device_change_ip_desktop'|'device_change_ip_mobile'|'device_change_ip_web'|'device_delete_on_unlink_fail'|'device_delete_on_unlink_success'|'device_link_fail'|'device_link_success'|'device_management_disabled'|'device_management_enabled'|'device_unlink'|'emm_refresh_auth_token'|'account_capture_change_availability'|'account_capture_migrate_account'|'account_capture_notification_emails_sent'|'account_capture_relinquish_account'|'disabled_domain_invites'|'domain_invites_approve_request_to_join_team'|'domain_invites_decline_request_to_join_team'|'domain_invites_email_existing_users'|'domain_invites_request_to_join_team'|'domain_invites_set_invite_new_user_pref_to_no'|'domain_invites_set_invite_new_user_pref_to_yes'|'domain_verification_add_domain_fail'|'domain_verification_add_domain_success'|'domain_verification_remove_domain'|'enabled_domain_invites'|'create_folder'|'file_add'|'file_copy'|'file_delete'|'file_download'|'file_edit'|'file_get_copy_reference'|'file_move'|'file_permanently_delete'|'file_preview'|'file_rename'|'file_restore'|'file_revert'|'file_rollback_changes'|'file_save_copy_reference'|'file_request_change'|'file_request_close'|'file_request_create'|'file_request_receive_file'|'group_add_external_id'|'group_add_member'|'group_change_external_id'|'group_change_management_type'|'group_change_member_role'|'group_create'|'group_delete'|'group_moved'|'group_remove_external_id'|'group_remove_member'|'group_rename'|'emm_error'|'login_fail'|'login_success'|'logout'|'reseller_support_session_end'|'reseller_support_session_start'|'sign_in_as_session_end'|'sign_in_as_session_start'|'sso_error'|'member_add_name'|'member_change_admin_role'|'member_change_email'|'member_change_membership_type'|'member_change_name'|'member_change_status'|'member_permanently_delete_account_contents'|'member_space_limits_add_custom_quota'|'member_space_limits_change_custom_quota'|'member_space_limits_change_status'|'member_space_limits_remove_custom_quota'|'member_suggest'|'member_transfer_account_contents'|'paper_content_add_member'|'paper_content_add_to_folder'|'paper_content_archive'|'paper_content_create'|'paper_content_permanently_delete'|'paper_content_remove_from_folder'|'paper_content_remove_member'|'paper_content_rename'|'paper_content_restore'|'paper_doc_add_comment'|'paper_doc_change_member_role'|'paper_doc_change_sharing_policy'|'paper_doc_change_subscription'|'paper_doc_deleted'|'paper_doc_delete_comment'|'paper_doc_download'|'paper_doc_edit'|'paper_doc_edit_comment'|'paper_doc_followed'|'paper_doc_mention'|'paper_doc_request_access'|'paper_doc_resolve_comment'|'paper_doc_revert'|'paper_doc_slack_share'|'paper_doc_team_invite'|'paper_doc_trashed'|'paper_doc_unresolve_comment'|'paper_doc_untrashed'|'paper_doc_view'|'paper_external_view_allow'|'paper_external_view_default_team'|'paper_external_view_forbid'|'paper_folder_change_subscription'|'paper_folder_deleted'|'paper_folder_followed'|'paper_folder_team_invite'|'password_change'|'password_reset'|'password_reset_all'|'emm_create_exceptions_report'|'emm_create_usage_report'|'export_members_report'|'paper_admin_export_start'|'smart_sync_create_admin_privilege_report'|'team_activity_create_report'|'collection_share'|'note_acl_invite_only'|'note_acl_link'|'note_acl_team_link'|'note_shared'|'note_share_receive'|'open_note_shared'|'sf_add_group'|'sf_allow_non_members_to_view_shared_links'|'sf_external_invite_warn'|'sf_fb_invite'|'sf_fb_invite_change_role'|'sf_fb_uninvite'|'sf_invite_group'|'sf_team_grant_access'|'sf_team_invite'|'sf_team_invite_change_role'|'sf_team_join'|'sf_team_join_from_oob_link'|'sf_team_uninvite'|'shared_content_add_invitees'|'shared_content_add_link_expiry'|'shared_content_add_link_password'|'shared_content_add_member'|'shared_content_change_downloads_policy'|'shared_content_change_invitee_role'|'shared_content_change_link_audience'|'shared_content_change_link_expiry'|'shared_content_change_link_password'|'shared_content_change_member_role'|'shared_content_change_viewer_info_policy'|'shared_content_claim_invitation'|'shared_content_copy'|'shared_content_download'|'shared_content_relinquish_membership'|'shared_content_remove_invitees'|'shared_content_remove_link_expiry'|'shared_content_remove_link_password'|'shared_content_remove_member'|'shared_content_request_access'|'shared_content_unshare'|'shared_content_view'|'shared_folder_change_link_policy'|'shared_folder_change_members_inheritance_policy'|'shared_folder_change_members_management_policy'|'shared_folder_change_members_policy'|'shared_folder_create'|'shared_folder_decline_invitation'|'shared_folder_mount'|'shared_folder_nest'|'shared_folder_transfer_ownership'|'shared_folder_unmount'|'shared_link_add_expiry'|'shared_link_change_expiry'|'shared_link_change_visibility'|'shared_link_copy'|'shared_link_create'|'shared_link_disable'|'shared_link_download'|'shared_link_remove_expiry'|'shared_link_share'|'shared_link_view'|'shared_note_opened'|'shmodel_group_share'|'sso_add_cert'|'sso_add_login_url'|'sso_add_logout_url'|'sso_change_cert'|'sso_change_login_url'|'sso_change_logout_url'|'sso_change_saml_identity_mode'|'sso_remove_cert'|'sso_remove_login_url'|'sso_remove_logout_url'|'team_folder_change_status'|'team_folder_create'|'team_folder_downgrade'|'team_folder_permanently_delete'|'team_folder_rename'|'account_capture_change_policy'|'allow_download_disabled'|'allow_download_enabled'|'data_placement_restriction_change_policy'|'data_placement_restriction_satisfy_policy'|'device_approvals_change_desktop_policy'|'device_approvals_change_mobile_policy'|'device_approvals_change_overage_action'|'device_approvals_change_unlink_action'|'emm_add_exception'|'emm_change_policy'|'emm_remove_exception'|'extended_version_history_change_policy'|'file_comments_change_policy'|'file_requests_change_policy'|'file_requests_emails_enabled'|'file_requests_emails_restricted_to_team_only'|'google_sso_change_policy'|'group_user_management_change_policy'|'member_requests_change_policy'|'member_space_limits_add_exception'|'member_space_limits_change_caps_type_policy'|'member_space_limits_change_policy'|'member_space_limits_remove_exception'|'member_suggestions_change_policy'|'microsoft_office_addin_change_policy'|'network_control_change_policy'|'paper_change_deployment_policy'|'paper_change_member_link_policy'|'paper_change_member_policy'|'paper_change_policy'|'paper_enabled_users_group_addition'|'paper_enabled_users_group_removal'|'permanent_delete_change_policy'|'sharing_change_folder_join_policy'|'sharing_change_link_policy'|'sharing_change_member_policy'|'smart_sync_change_policy'|'smart_sync_not_opt_out'|'smart_sync_opt_out'|'sso_change_policy'|'tfa_change_policy'|'two_account_change_policy'|'web_sessions_change_fixed_length_policy'|'web_sessions_change_idle_length_policy'|'team_merge_from'|'team_merge_to'|'team_profile_add_logo'|'team_profile_change_default_language'|'team_profile_change_logo'|'team_profile_change_name'|'team_profile_remove_logo'|'tfa_add_backup_phone'|'tfa_add_security_key'|'tfa_change_backup_phone'|'tfa_change_status'|'tfa_remove_backup_phone'|'tfa_remove_security_key'|'tfa_reset'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Member data report created.
+ * @typedef {Object} TeamLogExportMembersReportDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogExportMembersReportType
+ * @property {string} description
  */
 
 /**
@@ -7803,19 +7909,6 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * Added a deadline to a file request.
- * @typedef {Object} TeamLogFileRequestAddDeadlineDetails
- * @property {string} [file_request_id] - File request id. Might be missing due
- * to historical data gap.
- * @property {string} [request_title] - File request title.
- */
-
-/**
- * @typedef {Object} TeamLogFileRequestAddDeadlineType
- * @property {string} description
- */
-
-/**
  * Change a file request.
  * @typedef {Object} TeamLogFileRequestChangeDetails
  * @property {TeamLogFileRequestDetails} new_details - New file request details.
@@ -7823,19 +7916,6 @@ is only present when needed to discriminate between multiple possible subtypes.
  * to historical data gap.
  * @property {TeamLogFileRequestDetails} [previous_details] - Previous file
  * request details. Might be missing due to historical data gap.
- */
-
-/**
- * Changed the file request folder.
- * @typedef {Object} TeamLogFileRequestChangeFolderDetails
- * @property {string} [file_request_id] - File request id. Might be missing due
- * to historical data gap.
- * @property {string} [request_title] - File request title.
- */
-
-/**
- * @typedef {Object} TeamLogFileRequestChangeFolderType
- * @property {string} description
  */
 
 /**
@@ -7894,37 +7974,16 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {Array.<string>} submitted_file_names - Submitted file names.
  * @property {string} [file_request_id] - File request id. Might be missing due
  * to historical data gap.
- * @property {string} [request_title] - File request title.
+ * @property {TeamLogFileRequestDetails} [file_request_details] - File request
+ * details. Might be missing due to historical data gap.
+ * @property {string} [submitter_name] - The name as provided by the submitter.
+ * Might be missing due to historical data gap.
+ * @property {string} [submitter_email] - The email as provided by the
+ * submitter. Might be missing due to historical data gap.
  */
 
 /**
  * @typedef {Object} TeamLogFileRequestReceiveFileType
- * @property {string} description
- */
-
-/**
- * Removed the file request deadline.
- * @typedef {Object} TeamLogFileRequestRemoveDeadlineDetails
- * @property {string} [file_request_id] - File request id. Might be missing due
- * to historical data gap.
- * @property {string} [request_title] - File request title.
- */
-
-/**
- * @typedef {Object} TeamLogFileRequestRemoveDeadlineType
- * @property {string} description
- */
-
-/**
- * Sent file request to users via email.
- * @typedef {Object} TeamLogFileRequestSendDetails
- * @property {string} [file_request_id] - File request id. Might be missing due
- * to historical data gap.
- * @property {string} [request_title] - File request title.
- */
-
-/**
- * @typedef {Object} TeamLogFileRequestSendType
  * @property {string} description
  */
 
@@ -8289,14 +8348,53 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property
  * {Array.<(TeamLogUserOrTeamLinkedAppLogInfo|TeamLogUserLinkedAppLogInfo|TeamLogTeamLinkedAppLogInfo|TeamLogAppLogInfo)>}
  * linked_apps - Linked applications.
- * @property {Array.<TeamLogDeviceLogInfo>} linked_devices - Linked devices.
+ * @property {Array.<TeamLogLinkedDeviceLogInfo>} linked_devices - Linked
+ * devices.
  * @property {Array.<TeamLogFolderLogInfo>} linked_shared_folders - Linked
  * shared folders.
  */
 
 /**
- * @typedef {Object} TeamLogLinkAudience
- * @property {('public'|'team'|'members'|'other')} .tag - Tag identifying the union variant.
+ * Information on sessions, in legacy format
+ * @typedef {Object} TeamLogLegacyDeviceSessionLogInfo
+@property {'legacy_device_session'} [.tag] - Tag identifying this subtype
+variant. This field is only present when needed to discriminate between multiple
+possible subtypes.
+ * @property {string} [session_id] - Session unique id. Might be missing due to
+ * historical data gap.
+ * @property {string} [ip_address] - The IP address of the last activity from
+ * this session. Might be missing due to historical data gap.
+ * @property {Timestamp} [created] - The time this session was created. Might be
+ * missing due to historical data gap.
+ * @property {Timestamp} [updated] - The time of the last activity from this
+ * session. Might be missing due to historical data gap.
+ * @property {string} [display_name] - The device name. Might be missing due to
+ * historical data gap.
+ * @property {boolean} [is_emm_managed] - Is device managed by emm. Might be
+ * missing due to historical data gap.
+ * @property {string} [platform] - Information on the hosting platform. Might be
+ * missing due to historical data gap.
+ * @property {string} [mac_address] - The mac address of the last activity from
+ * this session. Might be missing due to historical data gap.
+ * @property {string} [os_version] - The hosting OS version. Might be missing
+ * due to historical data gap.
+ * @property {string} [device_type] - Information on the hosting device type.
+ * Might be missing due to historical data gap.
+ * @property {string} [client_version] - The Dropbox client version. Might be
+ * missing due to historical data gap.
+ * @property {string} [legacy_uniq_id] - Alternative unique device session id,
+ * instead of session id field. Might be missing due to historical data gap.
+ */
+
+/**
+ * Linked Device's logged information.
+ * @typedef {Object} TeamLogLinkedDeviceLogInfo
+ * @property {string} device_type - Device type.
+ * @property {string} [display_name] - Device display name.
+ * @property {string} [ip_address] - The IP address of the last activity from
+ * this device.
+ * @property {string} [last_activity] - Last activity.
+ * @property {string} [platform] - Device platform name.
  */
 
 /**
@@ -8338,6 +8436,17 @@ is only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamLogLogoutType
+ * @property {string} description
+ */
+
+/**
+ * Specify team member name.
+ * @typedef {Object} TeamLogMemberAddNameDetails
+ * @property {TeamLogUserNameLogInfo} new_value - New user's name.
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberAddNameType
  * @property {string} description
  */
 
@@ -8387,6 +8496,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} TeamLogMemberChangeNameDetails
  * @property {TeamLogUserNameLogInfo} new_value - New user's name.
  * @property {TeamLogUserNameLogInfo} [previous_value] - Previous user's name.
+ * Might be missing due to historical data gap.
  */
 
 /**
@@ -8400,8 +8510,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMemberStatus} new_value - New member status.
  * @property {TeamLogMemberStatus} [previous_value] - Previous member status.
  * Might be missing due to historical data gap.
- * @property {TeamLogJoinTeamDetails} [team_join_details] - Additional
- * information relevant when a new member joins the team.
+ * @property {TeamLogActionDetails} [action] - Additional information indicating
+ * the action taken that caused status change.
  */
 
 /**
@@ -8417,6 +8527,11 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamLogMemberPermanentlyDeleteAccountContentsType
  * @property {string} description
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberRemoveActionType
+ * @property {('delete'|'offboard'|'leave'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -8439,6 +8554,17 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Set custom member space limit.
+ * @typedef {Object} TeamLogMemberSpaceLimitsAddCustomQuotaDetails
+ * @property {number} new_value - New custom quota value in bytes.
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberSpaceLimitsAddCustomQuotaType
+ * @property {string} description
+ */
+
+/**
  * Added an exception for one or more team members to bypass space limits
  * imposed by policy.
  * @typedef {Object} TeamLogMemberSpaceLimitsAddExceptionDetails
@@ -8446,6 +8572,30 @@ is only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamLogMemberSpaceLimitsAddExceptionType
+ * @property {string} description
+ */
+
+/**
+ * Change the member space limit type for the team.
+ * @typedef {Object} TeamLogMemberSpaceLimitsChangeCapsTypePolicyDetails
+ * @property {TeamLogSpaceCapsType} previous_value - Previous space limit type.
+ * @property {TeamLogSpaceCapsType} new_value - New space limit type.
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberSpaceLimitsChangeCapsTypePolicyType
+ * @property {string} description
+ */
+
+/**
+ * Changed custom member space limit.
+ * @typedef {Object} TeamLogMemberSpaceLimitsChangeCustomQuotaDetails
+ * @property {number} previous_value - Previous custom quota value in bytes.
+ * @property {number} new_value - New custom quota value in bytes.
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberSpaceLimitsChangeCustomQuotaType
  * @property {string} description
  */
 
@@ -8474,6 +8624,16 @@ is only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamLogMemberSpaceLimitsChangeStatusType
+ * @property {string} description
+ */
+
+/**
+ * Removed custom member space limit.
+ * @typedef {Object} TeamLogMemberSpaceLimitsRemoveCustomQuotaDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberSpaceLimitsRemoveCustomQuotaType
  * @property {string} description
  */
 
@@ -8528,10 +8688,6 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * Transferred contents of a removed team member account to another member.
  * @typedef {Object} TeamLogMemberTransferAccountContentsDetails
- * @property {number} src_participant_index - Source participant position in the
- * Participants list.
- * @property {number} dest_participant_index - Destination participant position
- * in the Participants list.
  */
 
 /**
@@ -8561,8 +8717,33 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * An indication that an event was returned with missing details
+ * An indication that an error occurred while retrieving the event. Some
+ * attributes of the event may be omitted as a result.
  * @typedef {Object} TeamLogMissingDetails
+ * @property {string} [source_event_fields] - All the data that could be
+ * retrieved and converted from the source event.
+ */
+
+/**
+ * Information about linked Dropbox mobile client sessions
+ * @typedef {Object} TeamLogMobileDeviceSessionLogInfo
+@property {'mobile_device_session'} [.tag] - Tag identifying this subtype
+variant. This field is only present when needed to discriminate between multiple
+possible subtypes.
+ * @property {string} device_name - The device name.
+ * @property {TeamMobileClientPlatform} client_type - The mobile application
+ * type.
+ * @property {string} client_version - The Dropbox client version.
+ * @property {string} last_carrier - last carrier used by the device.
+ * @property {string} [session_id] - Session unique id. Might be missing due to
+ * historical data gap.
+ * @property {string} [ip_address] - The IP address of the last activity from
+ * this session. Might be missing due to historical data gap.
+ * @property {Timestamp} [created] - The time this session was created. Might be
+ * missing due to historical data gap.
+ * @property {Timestamp} [updated] - The time of the last activity from this
+ * session. Might be missing due to historical data gap.
+ * @property {string} [os_version] - The hosting OS version.
  */
 
 /**
@@ -9392,6 +9573,51 @@ variant.
  */
 
 /**
+ * Changed a Facebook user's role in a shared folder.
+ * @typedef {Object} TeamLogSfFbInviteChangeRoleDetails
+ * @property {number} target_asset_index - Target asset position in the Assets
+ * list.
+ * @property {string} original_folder_name - Original shared folder name.
+ * @property {string} [previous_sharing_permission] - Previous sharing
+ * permission. Might be missing due to historical data gap.
+ * @property {string} [new_sharing_permission] - New sharing permission. Might
+ * be missing due to historical data gap.
+ */
+
+/**
+ * @typedef {Object} TeamLogSfFbInviteChangeRoleType
+ * @property {string} description
+ */
+
+/**
+ * Invited Facebook users to a shared folder.
+ * @typedef {Object} TeamLogSfFbInviteDetails
+ * @property {number} target_asset_index - Target asset position in the Assets
+ * list.
+ * @property {string} original_folder_name - Original shared folder name.
+ * @property {string} [sharing_permission] - Sharing permission. Might be
+ * missing due to historical data gap.
+ */
+
+/**
+ * @typedef {Object} TeamLogSfFbInviteType
+ * @property {string} description
+ */
+
+/**
+ * Uninvited a Facebook user from a shared folder.
+ * @typedef {Object} TeamLogSfFbUninviteDetails
+ * @property {number} target_asset_index - Target asset position in the Assets
+ * list.
+ * @property {string} original_folder_name - Original shared folder name.
+ */
+
+/**
+ * @typedef {Object} TeamLogSfFbUninviteType
+ * @property {string} description
+ */
+
+/**
  * Invited a group to a shared folder.
  * @typedef {Object} TeamLogSfInviteGroupDetails
  * @property {number} target_asset_index - Target asset position in the Assets
@@ -9493,11 +9719,9 @@ variant.
 /**
  * Sent an email invitation to the membership of a shared file or folder.
  * @typedef {Object} TeamLogSharedContentAddInviteesDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [sharing_permission] - Sharing permission. Might be
- * missing due to historical data gap.
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {Array.<Object>} invitees - A list of invitees.
  */
 
 /**
@@ -9508,14 +9732,8 @@ variant.
 /**
  * Added an expiry to the link for the shared file or folder.
  * @typedef {Object} TeamLogSharedContentAddLinkExpiryDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} expiration_start_date - Expiration starting date.
- * @property {number} expiration_days - The number of days from the starting
- * expiration date after which the link will expire.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
+ * @property {Timestamp} [new_value] - New shared content link expiration date.
+ * Might be missing due to historical data gap.
  */
 
 /**
@@ -9526,11 +9744,6 @@ variant.
 /**
  * Added a password to the link for the shared file or folder.
  * @typedef {Object} TeamLogSharedContentAddLinkPasswordDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
  */
 
 /**
@@ -9541,13 +9754,8 @@ variant.
 /**
  * Added users and/or groups to the membership of a shared file or folder.
  * @typedef {Object} TeamLogSharedContentAddMemberDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [sharing_permission] - Sharing permission. Might be
- * missing due to historical data gap.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
  */
 
 /**
@@ -9558,15 +9766,9 @@ variant.
 /**
  * Changed whether members can download the shared file or folder.
  * @typedef {Object} TeamLogSharedContentChangeDownloadsPolicyDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {TeamLogSharedContentDownloadsPolicy} new_value - New downlaod
- * policy.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
- * @property {TeamLogSharedContentDownloadsPolicy} [previous_value] - Previous
- * downlaod policy. Might be missing due to historical data gap.
+ * @property {TeamLogDownloadPolicyType} new_value - New downloads policy.
+ * @property {TeamLogDownloadPolicyType} [previous_value] - Previous downloads
+ * policy. Might be missing due to historical data gap.
  */
 
 /**
@@ -9578,13 +9780,10 @@ variant.
  * Changed the access type of an invitee to a shared file or folder before the
  * invitation was claimed.
  * @typedef {Object} TeamLogSharedContentChangeInviteeRoleDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} original_folder_name - Original shared folder name.
- * @property {string} [new_sharing_permission] - New sharing permission. Might
- * be missing due to historical data gap.
- * @property {string} [previous_sharing_permission] - Previous sharing
- * permission. Might be missing due to historical data gap.
+ * @property {SharingAccessLevel} new_access_level - New access level.
+ * @property {string} invitee - The invitee whose role was changed.
+ * @property {SharingAccessLevel} [previous_access_level] - Previous access
+ * level. Might be missing due to historical data gap.
  */
 
 /**
@@ -9595,14 +9794,9 @@ variant.
 /**
  * Changed the audience of the link for a shared file or folder.
  * @typedef {Object} TeamLogSharedContentChangeLinkAudienceDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {TeamLogLinkAudience} new_value - New link audience value.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
- * @property {TeamLogLinkAudience} [previous_value] - Previous link audience
- * value. Might be missing due to historical data gap.
+ * @property {SharingLinkAudience} new_value - New link audience value.
+ * @property {SharingLinkAudience} [previous_value] - Previous link audience
+ * value.
  */
 
 /**
@@ -9613,14 +9807,10 @@ variant.
 /**
  * Changed the expiry of the link for the shared file or folder.
  * @typedef {Object} TeamLogSharedContentChangeLinkExpiryDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} expiration_start_date - Expiration starting date.
- * @property {number} expiration_days - The number of days from the starting
- * expiration date after which the link will expire.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
+ * @property {Timestamp} [new_value] - New shared content link expiration date.
+ * Might be missing due to historical data gap.
+ * @property {Timestamp} [previous_value] - Previous shared content link
+ * expiration date. Might be missing due to historical data gap.
  */
 
 /**
@@ -9631,11 +9821,6 @@ variant.
 /**
  * Changed the password on the link for the shared file or folder.
  * @typedef {Object} TeamLogSharedContentChangeLinkPasswordDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
  */
 
 /**
@@ -9646,15 +9831,9 @@ variant.
 /**
  * Changed the access type of a shared file or folder member.
  * @typedef {Object} TeamLogSharedContentChangeMemberRoleDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [new_sharing_permission] - New sharing permission. Might
- * be missing due to historical data gap.
- * @property {string} [previous_sharing_permission] - Previous sharing
- * permission. Might be missing due to historical data gap.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
+ * @property {SharingAccessLevel} new_access_level - New access level.
+ * @property {SharingAccessLevel} [previous_access_level] - Previous access
+ * level. Might be missing due to historical data gap.
  */
 
 /**
@@ -9665,15 +9844,9 @@ variant.
 /**
  * Changed whether members can see who viewed the shared file or folder.
  * @typedef {Object} TeamLogSharedContentChangeViewerInfoPolicyDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {TeamLogSharedContentViewerInfoPolicy} new_value - New viewer info
- * policy.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
- * @property {TeamLogSharedContentViewerInfoPolicy} [previous_value] - Previous
- * view info policy. Might be missing due to historical data gap.
+ * @property {SharingViewerInfoPolicy} new_value - New viewer info policy.
+ * @property {SharingViewerInfoPolicy} [previous_value] - Previous view info
+ * policy. Might be missing due to historical data gap.
  */
 
 /**
@@ -9682,11 +9855,8 @@ variant.
  */
 
 /**
- * Claimed membership to a team member's shared folder.
+ * Acquired membership on a shared file or folder by claiming an invitation.
  * @typedef {Object} TeamLogSharedContentClaimInvitationDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
  * @property {string} [shared_content_link] - Shared content link.
  */
 
@@ -9699,12 +9869,13 @@ variant.
  * Copied the shared file or folder to own Dropbox.
  * @typedef {Object} TeamLogSharedContentCopyDetails
  * @property {string} shared_content_link - Shared content link.
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {TeamLogRelocateAssetReferencesLogInfo} relocate_action_details -
- * Specifies the source and destination indices in the assets list.
- * @property {string} [sharing_permission] - Sharing permission. Might be
- * missing due to historical data gap.
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} destination_path - The path where the member saved the
+ * content.
+ * @property
+ * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * [shared_content_owner] - The shared content owner.
  */
 
 /**
@@ -9716,10 +9887,11 @@ variant.
  * Downloaded the shared file or folder.
  * @typedef {Object} TeamLogSharedContentDownloadDetails
  * @property {string} shared_content_link - Shared content link.
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [sharing_permission] - Sharing permission. Might be
- * missing due to historical data gap.
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property
+ * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * [shared_content_owner] - The shared content owner.
  */
 
 /**
@@ -9728,17 +9900,8 @@ variant.
  */
 
 /**
- * Shared content downloads policy
- * @typedef {Object} TeamLogSharedContentDownloadsPolicy
- * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
- */
-
-/**
  * Left the membership of a shared file or folder.
  * @typedef {Object} TeamLogSharedContentRelinquishMembershipDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} original_folder_name - Original shared folder name.
  */
 
 /**
@@ -9749,25 +9912,20 @@ variant.
 /**
  * Removed an invitee from the membership of a shared file or folder before it
  * was claimed.
- * @typedef {Object} TeamLogSharedContentRemoveInviteeDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} original_folder_name - Original shared folder name.
+ * @typedef {Object} TeamLogSharedContentRemoveInviteesDetails
+ * @property {Array.<Object>} invitees - A list of invitees.
  */
 
 /**
- * @typedef {Object} TeamLogSharedContentRemoveInviteeType
+ * @typedef {Object} TeamLogSharedContentRemoveInviteesType
  * @property {string} description
  */
 
 /**
  * Removed the expiry of the link for the shared file or folder.
  * @typedef {Object} TeamLogSharedContentRemoveLinkExpiryDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
+ * @property {Timestamp} [previous_value] - Previous shared content link
+ * expiration date. Might be missing due to historical data gap.
  */
 
 /**
@@ -9778,11 +9936,6 @@ variant.
 /**
  * Removed the password on the link for the shared file or folder.
  * @typedef {Object} TeamLogSharedContentRemoveLinkPasswordDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
  */
 
 /**
@@ -9793,13 +9946,8 @@ variant.
 /**
  * Removed a user or a group from the membership of a shared file or folder.
  * @typedef {Object} TeamLogSharedContentRemoveMemberDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
- * @property {string} [sharing_permission] - Sharing permission. Might be
- * missing due to historical data gap.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
+ * @property {SharingAccessLevel} [shared_content_access_level] - Shared content
+ * access level.
  */
 
 /**
@@ -9810,9 +9958,6 @@ variant.
 /**
  * Requested to be on the membership of a shared file or folder.
  * @typedef {Object} TeamLogSharedContentRequestAccessDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
  * @property {string} [shared_content_link] - Shared content link.
  */
 
@@ -9825,9 +9970,6 @@ variant.
  * Unshared a shared file or folder by clearing its membership and turning off
  * its link.
  * @typedef {Object} TeamLogSharedContentUnshareDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [original_folder_name] - Original shared folder name.
  */
 
 /**
@@ -9839,10 +9981,11 @@ variant.
  * Previewed the shared file or folder.
  * @typedef {Object} TeamLogSharedContentViewDetails
  * @property {string} shared_content_link - Shared content link.
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} [sharing_permission] - Sharing permission. Might be
- * missing due to historical data gap.
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property
+ * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * [shared_content_owner] - The shared content owner.
  */
 
 /**
@@ -9851,36 +9994,12 @@ variant.
  */
 
 /**
- * Shared content viewer info policy
- * @typedef {Object} TeamLogSharedContentViewerInfoPolicy
- * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
- */
-
-/**
- * Set or unset the confidential flag on a shared folder.
- * @typedef {Object} TeamLogSharedFolderChangeConfidentialityDetails
- * @property {TeamLogConfidentiality} new_value - New confidentiality value.
- * @property {TeamLogConfidentiality} [previous_value] - Previous
- * confidentiality value. Might be missing due to historical data gap.
- */
-
-/**
- * @typedef {Object} TeamLogSharedFolderChangeConfidentialityType
- * @property {string} description
- */
-
-/**
  * Changed who can access the shared folder via a link.
  * @typedef {Object} TeamLogSharedFolderChangeLinkPolicyDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} original_folder_name - Original shared folder name.
- * @property {TeamLogSharedFolderLinkPolicy} new_value - New shared folder link
+ * @property {SharingSharedLinkPolicy} new_value - New shared folder link
  * policy.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
- * @property {TeamLogSharedFolderLinkPolicy} [previous_value] - Previous shared
- * folder link policy. Might be missing due to historical data gap.
+ * @property {SharingSharedLinkPolicy} [previous_value] - Previous shared folder
+ * link policy. Might be missing due to historical data gap.
  */
 
 /**
@@ -9889,41 +10008,43 @@ variant.
  */
 
 /**
- * Changed who can manage the membership of a shared folder.
- * @typedef {Object} TeamLogSharedFolderChangeMemberManagementPolicyDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} original_folder_name - Original shared folder name.
- * @property {TeamLogSharedFolderMembershipManagementPolicy} new_value - New
- * membership management policy.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
- * @property {TeamLogSharedFolderMembershipManagementPolicy} [previous_value] -
- * Previous membership management policy. Might be missing due to historical
- * data gap.
+ * Specify if the shared folder inherits its members from the parent folder.
+ * @typedef {Object} TeamLogSharedFolderChangeMembersInheritancePolicyDetails
+ * @property {TeamLogSharedFolderMembersInheritancePolicy} new_value - New
+ * member inheritance policy.
+ * @property {TeamLogSharedFolderMembersInheritancePolicy} [previous_value] -
+ * Previous member inheritance policy. Might be missing due to historical data
+ * gap.
  */
 
 /**
- * @typedef {Object} TeamLogSharedFolderChangeMemberManagementPolicyType
+ * @typedef {Object} TeamLogSharedFolderChangeMembersInheritancePolicyType
+ * @property {string} description
+ */
+
+/**
+ * Changed who can add or remove members of a shared folder.
+ * @typedef {Object} TeamLogSharedFolderChangeMembersManagementPolicyDetails
+ * @property {SharingAclUpdatePolicy} new_value - New members management policy.
+ * @property {SharingAclUpdatePolicy} [previous_value] - Previous members
+ * management policy. Might be missing due to historical data gap.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedFolderChangeMembersManagementPolicyType
  * @property {string} description
  */
 
 /**
  * Changed who can become a member of the shared folder.
- * @typedef {Object} TeamLogSharedFolderChangeMemberPolicyDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} original_folder_name - Original shared folder name.
- * @property {TeamLogSharedFolderMemberPolicy} new_value - New external invite
- * policy.
- * @property {string} [shared_folder_type] - Shared folder type. Might be
- * missing due to historical data gap.
- * @property {TeamLogSharedFolderMemberPolicy} [previous_value] - Previous
- * external invite policy. Might be missing due to historical data gap.
+ * @typedef {Object} TeamLogSharedFolderChangeMembersPolicyDetails
+ * @property {SharingMemberPolicy} new_value - New external invite policy.
+ * @property {SharingMemberPolicy} [previous_value] - Previous external invite
+ * policy. Might be missing due to historical data gap.
  */
 
 /**
- * @typedef {Object} TeamLogSharedFolderChangeMemberPolicyType
+ * @typedef {Object} TeamLogSharedFolderChangeMembersPolicyType
  * @property {string} description
  */
 
@@ -9950,27 +10071,14 @@ variant.
  */
 
 /**
- * @typedef {Object} TeamLogSharedFolderLinkPolicy
- * @property {('members_only'|'members_and_team'|'anyone'|'other')} .tag - Tag identifying the union variant.
- */
-
-/**
- * Policy for controlling who can become a member of a shared folder
- * @typedef {Object} TeamLogSharedFolderMemberPolicy
- * @property {('team_only'|'anyone'|'other')} .tag - Tag identifying the union variant.
- */
-
-/**
- * @typedef {Object} TeamLogSharedFolderMembershipManagementPolicy
- * @property {('owner'|'editors'|'other')} .tag - Tag identifying the union variant.
+ * Specifies if a shared folder inherits its members from the parent folder.
+ * @typedef {Object} TeamLogSharedFolderMembersInheritancePolicy
+ * @property {('inherit_members'|'dont_inherit_members'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
  * Added a shared folder to own Dropbox.
  * @typedef {Object} TeamLogSharedFolderMountDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} original_folder_name - Original shared folder name.
  */
 
 /**
@@ -10009,9 +10117,6 @@ variant.
 /**
  * Deleted a shared folder from Dropbox.
  * @typedef {Object} TeamLogSharedFolderUnmountDetails
- * @property {number} target_asset_index - Target asset position in the Assets
- * list.
- * @property {string} original_folder_name - Original shared folder name.
  */
 
 /**
@@ -10328,6 +10433,12 @@ variant.
  */
 
 /**
+ * Space limit alert policy
+ * @typedef {Object} TeamLogSpaceCapsType
+ * @property {('hard'|'off'|'soft'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} TeamLogSpaceLimitsStatus
  * @property {('within_quota'|'near_quota'|'over_quota'|'other')} .tag - Tag identifying the union variant.
  */
@@ -10493,21 +10604,23 @@ variant.
  * action was taken.
  * @property {TeamLogEventCategory} event_category - The category that this type
  * of action belongs to.
- * @property {TeamLogActorLogInfo} actor - The entity who actually performed the
- * action.
- * @property {boolean} involve_non_team_member - True if the action involved a
- * non team member either as the actor or as one of the affected users.
- * @property {TeamLogContextLogInfo} context - The user or team on whose behalf
- * the actor performed the action.
  * @property {TeamLogEventType} event_type - The particular type of action
  * taken.
  * @property {TeamLogEventDetails} details - The variable event schema
  * applicable to this type of action, instantiated with respect to this
  * particular action.
+ * @property {TeamLogActorLogInfo} [actor] - The entity who actually performed
+ * the action. Might be missing due to historical data gap.
  * @property {TeamLogOriginLogInfo} [origin] - The origin from which the actor
  * performed the action including information about host, ip address, location,
  * session, etc. If the action was performed programmatically via the API the
  * origin represents the API client.
+ * @property {boolean} [involve_non_team_member] - True if the action involved a
+ * non team member either as the actor or as one of the affected users. Might be
+ * missing due to historical data gap.
+ * @property {TeamLogContextLogInfo} [context] - The user or team on whose
+ * behalf the actor performed the action. Might be missing due to historical
+ * data gap.
  * @property {Array.<TeamLogParticipantLogInfo>} [participants] - Zero or more
  * users and/or groups that are affected by the action. Note that this list
  * doesn't include any actors or users in context.
@@ -10565,8 +10678,8 @@ variant.
 /**
  * Renamed an active or archived team folder.
  * @typedef {Object} TeamLogTeamFolderRenameDetails
- * @property {TeamLogRelocateAssetReferencesLogInfo} relocate_action_details -
- * Specifies the source and destination indices in the assets list.
+ * @property {string} previous_folder_name - Previous folder name.
+ * @property {string} new_folder_name - New folder name.
  */
 
 /**
@@ -10863,6 +10976,26 @@ possible subtypes.
  * historical data gap.
  * @property {string} [display_name] - App display name. Might be missing due to
  * historical data gap.
+ */
+
+/**
+ * Information on active web sessions
+ * @typedef {Object} TeamLogWebDeviceSessionLogInfo
+@property {'web_device_session'} [.tag] - Tag identifying this subtype variant.
+This field is only present when needed to discriminate between multiple possible
+subtypes.
+ * @property {string} user_agent - Information on the hosting device.
+ * @property {string} os - Information on the hosting operating system.
+ * @property {string} browser - Information on the browser used for this web
+ * session.
+ * @property {string} [session_id] - Session unique id. Might be missing due to
+ * historical data gap.
+ * @property {string} [ip_address] - The IP address of the last activity from
+ * this session. Might be missing due to historical data gap.
+ * @property {Timestamp} [created] - The time this session was created. Might be
+ * missing due to historical data gap.
+ * @property {Timestamp} [updated] - The time of the last activity from this
+ * session. Might be missing due to historical data gap.
  */
 
 /**
@@ -11170,6 +11303,12 @@ only present when needed to discriminate between multiple possible subtypes.
  * (bytes).
  * @property {number} allocated - The total space allocated to the user's team
  * (bytes).
+ * @property {number} user_within_team_space_allocated - The total space
+ * allocated to the user within its team allocated space (0 means that no
+ * restriction is imposed on the user's quota within its team).
+ * @property {TeamCommonMemberSpaceLimitType} user_within_team_space_limit_type
+ * - The type of the space limit imposed on the team member (off, alert_only,
+ * stop_sync).
  */
 
 /**
