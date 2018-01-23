@@ -11,9 +11,12 @@ import { rpcRequest } from './rpc-request';
  * @arg {Object} options
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
- * @arg {String} [options.clientId] - The client id fo ryour app. Used to create
+ * @arg {String} [options.clientId] - The client id for your app. Used to create
  * authentication URL.
- * @arg {Number} [options.selectUser] - User is the team access token would like
+ * @arg {String} [options.clientSecret] - The client secret for your app.
+ * @arg {Number} [options.selectUser] - User that the team access token would like
+ * to act as.
+ * @arg {String} [options.selectAdmin] - Team admin that the team access token would like
  * to act as.
  */
 
