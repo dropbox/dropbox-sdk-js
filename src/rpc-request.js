@@ -1,5 +1,5 @@
-import { getBaseURL } from './utils';
 import { Buffer } from 'buffer/';
+import { getBaseURL } from './utils';
 
 function parseBodyToType(res) {
   const clone = res.clone();
@@ -16,13 +16,14 @@ export function rpcRequest(path, body, auth, host, accessToken, options) {
     body: (body) ? JSON.stringify(body) : null,
   };
   const headers = { 'Content-Type': 'application/json' };
+  let authHeader = '';
 
   switch (auth) {
     case 'app':
-      if ( !options.clientId || !options.clientSecret ) {
+      if (!options.clientId || !options.clientSecret) {
         throw new Error('A client id and secret is required for this function');
       }
-      var authHeader = new Buffer(options.clientId + ':' + options.clientSecret).toString('base64');
+      authHeader = new Buffer(`${options.clientId}:${options.clientSecret}`).toString('base64');
       headers.Authorization = `Basic ${authHeader}`;
       break;
     case 'team':

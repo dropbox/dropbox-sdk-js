@@ -74,6 +74,7 @@
     "fetch-mock": "^5.11.0",
     "gh-pages": "^0.11.0",
     "ink-docstrap": "^1.2.1",
+    "isomorphic-fetch": "^2.2.1",
     "jsdoc": "^3.4.0",
     "mime": ">=2.0.3",
     "mocha": "^3.4.2",
