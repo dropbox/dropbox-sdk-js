@@ -15,7 +15,10 @@ export function rpcRequest(path, body, auth, host, accessToken, options) {
     method: 'POST',
     body: (body) ? JSON.stringify(body) : null,
   };
-  const headers = { 'Content-Type': 'application/json' };
+  const headers = {};
+  if (body) {
+    headers['Content-Type'] = 'application/json';
+  }
   let authHeader = '';
 
   switch (auth) {
