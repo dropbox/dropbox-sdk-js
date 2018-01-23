@@ -38,6 +38,13 @@
 			</li>
 			
 			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-Authentication.html">Authentication</a></li><li><a href="tutorial-Getting started.html">Getting started</a></li><li><a href="tutorial-Installation.html">Installation</a></li><li><a href="tutorial-JavaScript SDK.html">JavaScript SDK</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="global.html">Global</a></li>
@@ -93,74 +100,26 @@
 
 
     <section class="readme-section">
-        <article><h1>Dropbox JavaScript SDK Documentation</h1><http://dropbox.github.io/dropbox-sdk-js>
-
-<p>The Dropbox JavaScript SDK is a lightweight, promise based interface to
-the Dropbox v2 API that works in both nodejs and browser environments.</p>
-<h2>Installation</h2><h4>Npm</h4><p>Use <a href="https://www.npmjs.com/">npm</a> for <a href="https://nodejs.org/en/">nodejs</a>,
-<a href="https://github.com/webpack/webpack">webpack</a> or
-<a href="http://browserify.org/">browserify</a>:</p>
-<pre class="prettyprint source lang-console"><code>$ npm install dropbox --save</code></pre><h4>Script tag</h4><p>The UMD build is available on <a href="https://unpkg.com/">unpkg</a>:</p>
-<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js&quot;>&lt;/script></code></pre><p>You can find the library on <code>window.Dropbox</code>.</p>
-<h2>Usage</h2><h4>Browser with <code>&lt;script&gt;</code></h4><pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://unpkg.com/dropbox/dist/Dropbox-sdk.min.js&quot;>&lt;/script>
-&lt;script>
-  var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
-  dbx.filesListFolder({path: ''})
-    .then(function(response) {
-      console.log(response);
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-&lt;/script></code></pre><h4>Nodejs, Browserify or Webpack</h4><pre class="prettyprint source lang-javascript"><code>var Dropbox = require('dropbox');
-var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
-dbx.filesListFolder({path: ''})
-  .then(function(response) {
-    console.log(response);
-  })
-  .catch(function(error) {
-    console.log(error);
-  });</code></pre><h2>General documentation</h2><h4>Endpoints</h4><p>For documentation of all of the available endpoints, the parameters they
-receive and the data they return, see the <a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html">Dropbox class
-definition</a>. These methods are all available directly from
-an instance of the API class, ex: <code>dbx.filesListFolder()</code>.</p>
-<h4>Teams</h4><p>The Dropbox API has a series of actions that can be completed on a team
-wide level. These endpoint methods are available by using the DropboxTeam
-class. It can be loaded like this: <code>var DropboxTeam
-= require('dropbox/team');</code>. For more information , see the <a href="http://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html">DropboxTeam
-class definition</a>.</p>
-<h4>Authentication</h4><p>The Dropbox SDK uses <a href="http://oauth.net/">OAuth 2</a> for authorizing API
-requests. Dropbox requires an access token to make authenticated requests.
-The access token can be supplied at instantiation or set later using the
-<code>setAccessToken()</code> method.</p>
-<p><code>Dropbox.getAuthenticationUrl()</code> is a method that is very helpful for
-authenticating users. See the <a href="https://github.com/dropbox/dropbox-sdk-js/blob/master/examples/javascript/auth/index.html">authentication
-example</a> for a basic example of how it can be
-used.</p>
-<p><code>Dropbox.authenticateWithCordova()</code> is a method that simplifies authentication from a Cordova / PhoneGap application. </p>
-<pre class="prettyprint source lang-javascript"><code>var dbx = new Dropbox({ clientId: 'YOUR_CLIENT_KEY_HERE' });
-dbx.authenticateWithCordova(
-  function(accessToken) {        
-      console.log(accessToken);
-  },
-  function() {        
-      console.log(&quot;failed&quot;);
-  });</code></pre><p>The method requires the cordova inappbrowser plugin.</p>
-<pre class="prettyprint source lang-console"><code>$ cordova plugin add cordova-plugin-inappbrowser</code></pre><p>For more information on how to obtain an access token using OAuth, please
-see our <a href="https://www.dropbox.com/developers/reference/oauth-guide">OAuth
-Guide</a>.</p>
-<h4>Promises implementation</h4><p>The SDK returns Promises using the <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">native Promise
-implementation</a>
-and polyfills with
-<a href="https://github.com/stefanpenner/es6-promise">jakearchibald/es6-promise</a>
-when needed.</p>
-<h2>Examples</h2><p>See <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples">examples/</a> for working examples of how the SDK can be used
-in a few different environments.</p>
+        <article><p><a href="https://travis-ci.org/dropbox/dropbox-sdk-js"><img src="https://travis-ci.org/dropbox/dropbox-sdk-js.svg?branch=master" alt="Build Status"></a> <a href="https://badge.fury.io/js/dropbox"><img src="https://badge.fury.io/js/dropbox.svg" alt="npm version"></a></p>
+<h1>Dropbox JavaScript SDK</h1><p>The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments. It provides common services for making API requests and helper utilities contributed by the community.  </p>
+<h2>Tutorials</h2><ul>
+<li><a href="tutorial-Installation.html">Installation</a></li>
+<li><a href="tutorial-Getting%20started.html">Getting started</a></li>
+<li><a href="tutorial-JavaScript%20SDK.html">JavaScript SDK</a></li>
+<li><a href="tutorial-Authentication.html">Authentication</a></li>
+</ul>
+<h2>Examples</h2><p>See <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples">examples/</a> for working examples of how the SDK can be used in a few different environments.</p>
+<h2>Contributing</h2><p>Please see <a href="https://github.com/dropbox/dropbox-sdk-js/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> for information on how to contribute, setup the development environment and run tests.</p>
 <h2>Versioning</h2><p>We will try to follow <a href="http://semver.org/">semver</a> as close as possible.
 That means bug fixes will be patch releases (1.0.1 -&gt; 1.0.2), additional
 functionality like new endpoints will be minor releases (1.0.1 -&gt; 1.1.0)
 and breaking changes to both the library and the API endpoints it hits,
-will be major releases (1.0.1 -&gt; 2.0.0).</p></article>
+will be major releases (1.0.1 -&gt; 2.0.0).</p>
+<p>This SDK will be taking the <code>dropbox</code> package name on
+<a href="https://www.npmjs.com/package/dropbox">npm</a> from the <a href="https://github.com/dropbox/dropbox-js">legacy
+SDK</a>, that uses the old version of
+the Dropbox API. This will bump the version number from <code>0.10.3</code> to
+<code>2.0.0</code>, which should avoid breaking changes due to semver assumptions.</p></article>
     </section>
 
 
@@ -206,7 +165,7 @@ will be major releases (1.0.1 -&gt; 2.0.0).</p></article>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2017-12-21T12:00:16-08:00
+		on 2018-01-23T01:21:28-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

@@ -38,6 +38,13 @@
 			</li>
 			
 			<li class="dropdown">
+				<a href="tutorials.list.html" class="dropdown-toggle" data-toggle="dropdown">Tutorials<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="tutorial-Authentication.html">Authentication</a></li><li><a href="tutorial-Getting started.html">Getting started</a></li><li><a href="tutorial-Installation.html">Installation</a></li><li><a href="tutorial-JavaScript SDK.html">JavaScript SDK</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
 					<li><a href="global.html">Global</a></li>
@@ -770,7 +777,169 @@ endpoints
             
 <hr>
 <dt>
-    <h4 class="name" id="getAuthenticationUrl"><span class="type-signature"></span>getAuthenticationUrl(redirectUri [, state])</h4>
+    <h4 class="name" id="getAccessTokenFromCode"><span class="type-signature"></span>getAccessTokenFromCode(redirectUri, code)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get an OAuth2 access token from an OAuth2 Code.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>redirectUri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A URL to redirect the user to after
+authenticating. This must be added to your app through the admin interface.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>code</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An OAuth2 code.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#getAccessTokenFromCode">DropboxBase#getAccessTokenFromCode</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getAuthenticationUrl"><span class="type-signature"></span>getAuthenticationUrl(redirectUri [, state] [, authType])</h4>
     
     
 </dt>
@@ -805,6 +974,8 @@ endpoints
         
 
         
+        <th>Default</th>
+        
 
         <th class="last">Description</th>
     </tr>
@@ -838,6 +1009,10 @@ endpoints
                 </td>
             
 
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">A URL to redirect the user to after
@@ -874,9 +1049,53 @@ authenticating. This must be added to your app through the admin interface.</td>
             
 
             
+                <td class="default">
+                
+                </td>
+            
 
             <td class="description last">State that will be returned in the redirect URL to help
 prevent cross site scripting attacks.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>authType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    token
+                
+                </td>
+            
+
+            <td class="description last">auth type, defaults to 'token', other option is 'code'</td>
         </tr>
 
     
@@ -1061,6 +1280,117 @@ prevent cross site scripting attacks.</td>
             
 <div class="param-desc">
     Client id
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getClientSecret"><span class="type-signature"></span>getClientSecret()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get the client secret
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#getClientSecret">DropboxBase#getClientSecret</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Client secret
 </div>
 
 
@@ -1328,6 +1658,163 @@ prevent cross site scripting attacks.</td>
 		<ul class="dummy">
 			<li>
 				<a href="DropboxBase.html#setClientId">DropboxBase#setClientId</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">undefined</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setClientSecret"><span class="type-signature"></span>setClientSecret(clientId)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Set the client secret
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>clientId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Your apps client secret</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#setClientSecret">DropboxBase#setClientSecret</a>
 			</li>
 		</ul>
 	</dd>
@@ -11030,7 +11517,7 @@ used to make the call.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2017-12-21T12:00:16-08:00
+		on 2018-01-23T01:21:29-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
