@@ -20,7 +20,7 @@ We provide interoperability with JSPM to expose the ES6 modules directly to your
 
 **With cached distributed files**
 
-Alternatively, you can load our UMD package directly from [unpkg](https://unpkg.com/). This will expose Dropbox as a global - window.Dropbox within browsers.
+Alternatively, you can load our UMD package directly from [unpkg](https://unpkg.com/). This will expose Dropbox as a global - window.Dropbox.Dropbox within browsers.
 
 
 ## Next steps

@@ -19,7 +19,7 @@ $ npm install --save dropbox
 Include the Dropbox or DropboxTeam class to start making your API calls.
 
 ```javascript
-require(‘isomorphic-fetch’); // or another library of choice.
+require('isomorphic-fetch'); // or another library of choice.
 var Dropbox = require('dropbox').Dropbox;
 var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
 dbx.filesListFolder({path: ''})
