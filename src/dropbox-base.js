@@ -106,7 +106,7 @@ export class DropboxBase {
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
     }
-    if (!redirectUri) {
+    if (authType !== 'code' && !redirectUri) {
       throw new Error('A redirect uri is required.');
     }
     if (!['code', 'token'].includes(authType)) {

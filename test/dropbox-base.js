@@ -86,6 +86,14 @@ describe('DropboxBase', function () {
         'A redirect uri is required.'
       );
     });
+    
+    it('throws an error if the redirect url isn\'t set and type is code', function () {
+      dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
+      assert.equal(
+        dbx.getAuthenticationUrl('', null, 'code'),
+        'https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID'
+      );
+    });
 
     it('returns auth url with redirect uri', function () {
       dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
