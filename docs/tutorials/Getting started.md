@@ -25,6 +25,12 @@ The [Dropbox](https://dropbox.github.io/dropbox-sdk-js/Dropbox.html) and [Dropbo
 <script src="https://unpkg.com/dropbox/dist/DropboxTeam-sdk.min.js"></script>
 ```
 
+On the web and on most modern browsers, `fetch` should be available ([List of supported browsers](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API#Browser_compatibility)).  Otherwise, use the polyfill below (for example), or use an npm package such as `whatwg-fetch`.
+```html
+<!-- Optional. -->
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+```
 
 ## Authentication
 Next, you'll need to learn how to authorize your requests with [Authentication](tutorial-Authentication.html).
