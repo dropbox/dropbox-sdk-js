@@ -20,8 +20,4 @@ export class Dropbox extends DropboxBase {
     super(options);
     Object.assign(this, routes);
   }
-
-  filesGetSharedLinkFile(arg) {
-    return this.request('sharing/get_shared_link_file', arg, 'api', 'download');
-  }
 }
