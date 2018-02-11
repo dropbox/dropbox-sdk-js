@@ -1,6 +1,6 @@
 function listFiles() {
     var ACCESS_TOKEN = document.getElementById('access-token').value;
-    var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
+    var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
     dbx.filesListFolder({ path: '' })
         .then(function (response) {
         displayFiles(response.entries);
