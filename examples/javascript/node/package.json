@@ -1,0 +1,18 @@
+{
+    "name": "dropbox-node-examples",
+    "version": "1.0.0",
+    "description": "Dropbox Javascript SDK Examples",
+    "author": "Moe Jangda",
+    "scripts": {
+        "basic": "node basic.js",
+        "download": "node download.js",
+        "team-as-user": "node team-as-user.js",
+        "team": "node team.js",
+        "upload": "node upload.js"
+    },
+    "dependencies": {
+        "prompt": "1.0.0",
+        "isomorphic-fetch": "^2.2.1",
+        "dropbox": "^3.0.4"
+    }
+}
