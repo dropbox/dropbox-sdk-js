@@ -4,7 +4,7 @@
  * @typedef {Object} Error
  * @property {string} error_summary - Text summary of the error.
  * @property {T} error - The error object.
- * @property {UserMessage} user_message - An optional field. If present, it includes a 
+ * @property {UserMessage} user_message - An optional field. If present, it includes a
     message that can be shown directly to the end user of your app. You should show this message
     if your app is unprepared to programmatically handle the error returned by an endpoint.
  * @template T
