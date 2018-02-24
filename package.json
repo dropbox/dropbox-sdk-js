@@ -53,6 +53,10 @@
     {
       "name": "James Sidhu",
       "email": "james.thomas.sidhu@gmail.com"
+    },
+    {
+      "name": "John Vilk",
+      "email": "jvilk@cs.umass.edu"
     }
   ],
   "devDependencies": {
