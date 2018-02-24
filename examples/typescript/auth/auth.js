@@ -71,7 +71,7 @@ else {
     showPageSection('pre-auth-section');
     // Set the login anchors href using dbx.getAuthenticationUrl()
     var dbx = new Dropbox.Dropbox({ clientId: CLIENT_ID });
-    var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/auth');
+    var authUrl = dbx.getAuthenticationUrl('http://localhost:8081/auth');
     document.getElementById('authlink').href = authUrl;
 }
 //# sourceMappingURL=auth.js.map
