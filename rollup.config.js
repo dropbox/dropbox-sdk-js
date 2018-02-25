@@ -1,9 +1,11 @@
+import path from 'path';
+
 import babel from 'rollup-plugin-babel';
 import uglify from 'rollup-plugin-uglify';
 import replace from 'rollup-plugin-replace';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
-
+import license from 'rollup-plugin-license';
 
 const env = process.env.NODE_ENV;
 
@@ -13,6 +15,11 @@ const config = {
   external: ['es6-promise/auto', 'isomorphic-fetch'],
 
   plugins: [
+    license({
+      thirdParty: {
+        output: path.join(__dirname, 'dependencies.txt'),
+      },
+    }),
     resolve({
       main: true,
       jsnext: true,
