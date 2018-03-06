@@ -95,6 +95,7 @@
     "sinon": "^2.3.2"
   },
   "dependencies": {
-    "buffer": "^5.0.8"
+    "buffer": "^5.0.8",
+    "moment": "^2.19.3"
   }
 }

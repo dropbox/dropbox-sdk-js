@@ -6,3 +6,4 @@ generated-docs/
 npm-debug.log
 .DS_Store
 .env
+*.swp
