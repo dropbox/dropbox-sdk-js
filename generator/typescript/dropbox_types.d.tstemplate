@@ -39,6 +39,12 @@ declare module DropboxTypes {
      * @param clientId Your app's client ID.
      */
     setClientId(clientId: string): void;
+
+    /**
+     * Set the client secret
+     * @param clientSecret Your app's client secret.
+     */
+    setClientSecret(clientSecret: string): void;
   }
 
 /*TYPES*/
