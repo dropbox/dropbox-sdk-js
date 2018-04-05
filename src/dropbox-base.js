@@ -162,7 +162,7 @@ export class DropboxBase {
 
   /**
    * Set the client secret
-   * @arg {String} clientId - Your apps client secret
+   * @arg {String} clientSecret - Your app's client secret
    * @returns {undefined}
    */
   setClientSecret(clientSecret) {
