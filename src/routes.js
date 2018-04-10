@@ -49,8 +49,9 @@ routes.filePropertiesPropertiesOverwrite = function (arg) {
 /**
  * Permanently removes the specified property group from the file. To remove
  * specific property field key value pairs, see properties/update. To update a
- * template, see templates/update_for_user or templates/update_for_team.
- * Templates can't be removed once created.
+ * template, see templates/update_for_user or templates/update_for_team. To
+ * remove a template, see templates/remove_for_user or
+ * templates/remove_for_team.
  * @function Dropbox#filePropertiesPropertiesRemove
  * @arg {FilePropertiesRemovePropertiesArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<FilePropertiesRemovePropertiesError>>}
@@ -358,6 +359,32 @@ routes.filesCopyV2 = function (arg) {
  */
 routes.filesCreateFolder = function (arg) {
   return this.request('files/create_folder', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Create multiple folders at once. This route is asynchronous for large
+ * batches, which returns a job ID immediately and runs the create folder batch
+ * asynchronously. Otherwise, creates the folders and returns the result
+ * synchronously for smaller inputs. You can force asynchronous behaviour by
+ * using the CreateFolderBatchArg.force_async flag.  Use
+ * create_folder_batch/check to check the job status.
+ * @function Dropbox#filesCreateFolderBatch
+ * @arg {FilesCreateFolderBatchArg} arg - The request parameters.
+ * @returns {Promise.<FilesCreateFolderBatchLaunch, Error.<void>>}
+ */
+routes.filesCreateFolderBatch = function (arg) {
+  return this.request('files/create_folder_batch', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Returns the status of an asynchronous job for create_folder_batch. If
+ * success, it returns list of result for each entry.
+ * @function Dropbox#filesCreateFolderBatchCheck
+ * @arg {AsyncPollArg} arg - The request parameters.
+ * @returns {Promise.<FilesCreateFolderBatchJobStatus, Error.<AsyncPollError>>}
+ */
+routes.filesCreateFolderBatchCheck = function (arg) {
+  return this.request('files/create_folder_batch/check', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1447,6 +1474,19 @@ routes.sharingRevokeSharedLink = function (arg) {
 };
 
 /**
+ * Change the inheritance policy of an existing Shared Folder. Only permitted
+ * for shared folders in a shared team root. If a ShareFolderLaunch.async_job_id
+ * is returned, you'll need to call check_share_job_status until the action
+ * completes to get the metadata for the folder.
+ * @function Dropbox#sharingSetAccessInheritance
+ * @arg {SharingSetAccessInheritanceArg} arg - The request parameters.
+ * @returns {Promise.<SharingShareFolderLaunch, Error.<SharingSetAccessInheritanceError>>}
+ */
+routes.sharingSetAccessInheritance = function (arg) {
+  return this.request('sharing/set_access_inheritance', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Share a folder with collaborators. Most sharing will be completed
  * synchronously. Large folders will be completed asynchronously. To make
  * testing the async case repeatable, set `ShareFolderArg.force_async`. If a
@@ -1541,7 +1581,9 @@ routes.sharingUpdateFolderPolicy = function (arg) {
 };
 
 /**
- * Retrieves team events. Permission : Team Auditing.
+ * Retrieves team events. Events have a lifespan of two years. Events older than
+ * two years will not be returned. Many attributes note 'may be missing due to
+ * historical data gap'. Permission : Team Auditing.
  * @function Dropbox#teamLogGetEvents
  * @arg {TeamLogGetTeamEventsArg} arg - The request parameters.
  * @returns {Promise.<TeamLogGetTeamEventsResult, Error.<TeamLogGetTeamEventsError>>}
