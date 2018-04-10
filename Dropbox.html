@@ -1155,8 +1155,9 @@ will only delete fields that are explicitly marked for deletion.
     <div class="description">
         Permanently removes the specified property group from the file. To remove
 specific property field key value pairs, see properties/update. To update a
-template, see templates/update_for_user or templates/update_for_team.
-Templates can't be removed once created.
+template, see templates/update_for_user or templates/update_for_team. To
+remove a template, see templates/remove_for_user or
+templates/remove_for_team.
     </div>
     
 
@@ -5201,6 +5202,308 @@ source path is a folder all its contents will be copied.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#FilesFolderMetadata">FilesFolderMetadata</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesCreateFolderError">FilesCreateFolderError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filesCreateFolderBatch"><span class="type-signature"></span>filesCreateFolderBatch(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Create multiple folders at once. This route is asynchronous for large
+batches, which returns a job ID immediately and runs the create folder batch
+asynchronously. Otherwise, creates the folders and returns the result
+synchronously for smaller inputs. You can force asynchronous behaviour by
+using the CreateFolderBatchArg.force_async flag.  Use
+create_folder_batch/check to check the job status.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesCreateFolderBatchArg">FilesCreateFolderBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesCreateFolderBatchLaunch">FilesCreateFolderBatchLaunch</a>, <a href="global.html#Error">Error</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filesCreateFolderBatchCheck"><span class="type-signature"></span>filesCreateFolderBatchCheck(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the status of an asynchronous job for create_folder_batch. If
+success, it returns list of result for each entry.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesCreateFolderBatchJobStatus">FilesCreateFolderBatchJobStatus</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
 
 
 
@@ -14604,7 +14907,7 @@ address or Dropbox account ID.  Note: Doc owner cannot be removed.
             
 <hr>
 <dt>
-    <h4 class="name" id="setClientSecret"><span class="type-signature"></span>setClientSecret(clientId)</h4>
+    <h4 class="name" id="setClientSecret"><span class="type-signature"></span>setClientSecret(clientSecret)</h4>
     
     
 </dt>
@@ -14647,7 +14950,7 @@ address or Dropbox account ID.  Note: Doc owner cannot be removed.
 
         <tr>
             
-                <td class="name"><code>clientId</code></td>
+                <td class="name"><code>clientSecret</code></td>
             
 
             <td class="type">
@@ -14664,7 +14967,7 @@ address or Dropbox account ID.  Note: Doc owner cannot be removed.
 
             
 
-            <td class="description last">Your apps client secret</td>
+            <td class="description last">Your app's client secret</td>
         </tr>
 
     
@@ -19894,6 +20197,157 @@ ListSharedLinksArg.path argument.
             
 <hr>
 <dt>
+    <h4 class="name" id="sharingSetAccessInheritance"><span class="type-signature"></span>sharingSetAccessInheritance(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Change the inheritance policy of an existing Shared Folder. Only permitted
+for shared folders in a shared team root. If a ShareFolderLaunch.async_job_id
+is returned, you'll need to call check_share_job_status until the action
+completes to get the metadata for the folder.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingSetAccessInheritanceArg">SharingSetAccessInheritanceArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#SharingShareFolderLaunch">SharingShareFolderLaunch</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#SharingSetAccessInheritanceError">SharingSetAccessInheritanceError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="sharingShareFolder"><span class="type-signature"></span>sharingShareFolder(arg)</h4>
     
     
@@ -21100,7 +21554,9 @@ must have full Dropbox access to use this endpoint.
 
     
     <div class="description">
-        Retrieves team events. Permission : Team Auditing.
+        Retrieves team events. Events have a lifespan of two years. Events older than
+two years will not be returned. Many attributes note 'may be missing due to
+historical data gap'. Permission : Team Auditing.
     </div>
     
 
@@ -22028,7 +22484,7 @@ queried per request.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2018-03-06T13:53:19-08:00
+		on 2018-04-10T14:33:49-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
