@@ -662,6 +662,16 @@ declare module DropboxTypes {
     public teamTeamFolderRename(arg: team.TeamFolderRenameArg): Promise<team.TeamFolderMetadata>;
 
     /**
+     * Updates the sync settings on a team folder or its contents.  Use of this
+     * endpoint requires that the team has team selective sync enabled.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.TeamFolderUpdateSyncSettingsError>.
+     * @param arg The request parameters.
+     */
+    public teamTeamFolderUpdateSyncSettings(arg: team.TeamFolderUpdateSyncSettingsArg): Promise<team.TeamFolderMetadata>;
+
+    /**
      * Returns the member profile of the admin who generated the team access
      * token used to make the call.
      * 

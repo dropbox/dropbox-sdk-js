@@ -58,7 +58,7 @@ if (isAuthenticated()) {
     showPageSection('authed-section');
     // Create an instance of Dropbox with the access token and use it to
     // fetch and render the files in the users root directory.
-    var dbx = new Dropbox({ accessToken: getAccessTokenFromUrl() });
+    var dbx = new Dropbox.Dropbox({ accessToken: getAccessTokenFromUrl() });
     dbx.filesListFolder({ path: '', recursive: false, include_media_info: false, include_deleted: false, include_has_explicit_shared_members: false })
         .then(function (response) {
         renderItems(response.entries);
@@ -70,8 +70,8 @@ if (isAuthenticated()) {
 else {
     showPageSection('pre-auth-section');
     // Set the login anchors href using dbx.getAuthenticationUrl()
-    var dbx = new Dropbox({ clientId: CLIENT_ID });
-    var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/auth');
+    var dbx = new Dropbox.Dropbox({ clientId: CLIENT_ID });
+    var authUrl = dbx.getAuthenticationUrl('http://localhost:8081/auth');
     document.getElementById('authlink').href = authUrl;
 }
 //# sourceMappingURL=auth.js.map

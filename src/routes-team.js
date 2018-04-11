@@ -705,6 +705,17 @@ routes.teamTeamFolderRename = function (arg) {
 };
 
 /**
+ * Updates the sync settings on a team folder or its contents.  Use of this
+ * endpoint requires that the team has team selective sync enabled.
+ * @function DropboxTeam#teamTeamFolderUpdateSyncSettings
+ * @arg {TeamTeamFolderUpdateSyncSettingsArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamFolderMetadata, Error.<TeamTeamFolderUpdateSyncSettingsError>>}
+ */
+routes.teamTeamFolderUpdateSyncSettings = function (arg) {
+  return this.request('team/team_folder/update_sync_settings', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * Returns the member profile of the admin who generated the team access token
  * used to make the call.
  * @function DropboxTeam#teamTokenGetAuthenticatedAdmin

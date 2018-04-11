@@ -23,7 +23,7 @@ function responseHandler(res, data) {
   if (isWindowOrWorker()) {
     result.fileBlob = data;
   } else {
-    result.fileBinary = data.toString();
+    result.fileBinary = data;
   }
 
   return result;

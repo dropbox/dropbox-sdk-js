@@ -10,7 +10,7 @@ prompt.get({
     }
   }
 }, function (error: any, result: any) {
-  var dbx = new Dropbox({ accessToken: result.accessToken });
+  var dbx = new Dropbox.Dropbox({ accessToken: result.accessToken });
   dbx.filesListFolder({ path: '/Screenshots' })
     .then(function (response) {
       console.log(response);

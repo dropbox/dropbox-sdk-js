@@ -1,6 +1,6 @@
 {
   "name": "dropbox",
-  "version": "3.0.4",
+  "version": "4.0.2",
   "registry": "npm",
   "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
   "browser": "dist/Dropbox-sdk.min.js",
@@ -53,6 +53,10 @@
     {
       "name": "James Sidhu",
       "email": "james.thomas.sidhu@gmail.com"
+    },
+    {
+      "name": "John Vilk",
+      "email": "jvilk@cs.umass.edu"
     }
   ],
   "devDependencies": {
@@ -91,6 +95,7 @@
     "sinon": "^2.3.2"
   },
   "dependencies": {
-    "buffer": "^5.0.8"
+    "buffer": "^5.0.8",
+    "moment": "^2.19.3"
   }
 }

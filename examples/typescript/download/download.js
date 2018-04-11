@@ -1,7 +1,7 @@
 function downloadFile() {
     var ACCESS_TOKEN = document.getElementById('access-token').value;
     var SHARED_LINK = document.getElementById('shared-link').value;
-    var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
+    var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
     dbx.sharingGetSharedLinkFile({ url: SHARED_LINK })
         .then(function (data) {
         // NOTE: The Dropbox SDK specification does not include a fileBlob
