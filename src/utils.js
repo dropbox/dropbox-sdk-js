@@ -10,10 +10,10 @@ export function isWindowOrWorker() {
     (
       typeof WorkerGlobalScope !== 'undefined' &&
       self instanceof WorkerGlobalScope
-    ) 
-    || 
+    )
+    ||
     (
-      typeof module === 'undefined' || 
+      typeof module === 'undefined' ||
       typeof window !== 'undefined'
     )
   );
