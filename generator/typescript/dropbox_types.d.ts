@@ -28,8 +28,9 @@ declare module DropboxTypes {
      *   This must be added to your app through the admin interface.
      * @param state State that will be returned in the redirect URL to help
      *   prevent cross site scripting attacks.
+     * @param authType Auth type, defaults to 'token', other option is 'code'
      */
-    getAuthenticationUrl(redirectUri: string, state?: string, authType = 'token'): string;
+    getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code'): string;
 
     /**
      * Get the client id
