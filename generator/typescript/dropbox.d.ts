@@ -744,7 +744,8 @@ declare module DropboxTypes {
 
     /**
      * Append more data to an upload session. A single request should not upload
-     * more than 150 MB.
+     * more than 150 MB. The maximum size of a file one can upload to an upload
+     * session is 350 GB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionLookupError>.
@@ -756,7 +757,8 @@ declare module DropboxTypes {
     /**
      * Append more data to an upload session. When the parameter close is set,
      * this call will close the session. A single request should not upload more
-     * than 150 MB.
+     * than 150 MB. The maximum size of a file one can upload to an upload
+     * session is 350 GB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionLookupError>.
@@ -766,7 +768,8 @@ declare module DropboxTypes {
 
     /**
      * Finish an upload session and save the uploaded data to the given file
-     * path. A single request should not upload more than 150 MB.
+     * path. A single request should not upload more than 150 MB. The maximum
+     * size of a file one can upload to an upload session is 350 GB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionFinishError>.
@@ -782,7 +785,8 @@ declare module DropboxTypes {
      * uploadSessionFinish(), use this route to finish all your upload sessions
      * in a single request. UploadSessionStartArg.close or
      * UploadSessionAppendArg.close needs to be true for the last
-     * uploadSessionStart() or uploadSessionAppendV2() call. This route will
+     * uploadSessionStart() or uploadSessionAppendV2() call. The maximum size of
+     * a file one can upload to an upload session is 350 GB. This route will
      * return a job_id immediately and do the async commit job in background.
      * Use uploadSessionFinishBatchCheck() to check the job status. For the same
      * account, this route should be executed serially. That means you should
@@ -811,7 +815,8 @@ declare module DropboxTypes {
      * This call starts a new upload session with the given data. You can then
      * use uploadSessionAppendV2() to add more data and uploadSessionFinish() to
      * save all the data to a file in Dropbox. A single request should not
-     * upload more than 150 MB. An upload session can be used for a maximum of
+     * upload more than 150 MB. The maximum size of a file one can upload to an
+     * upload session is 350 GB. An upload session can be used for a maximum of
      * 48 hours. Attempting to use an UploadSessionStartResult.session_id with
      * uploadSessionAppendV2() or uploadSessionFinish() more than 48 hours after
      * its creation will return a UploadSessionLookupError.not_found.
@@ -1477,7 +1482,12 @@ declare module DropboxTypes {
     /**
      * Retrieves team events. Events have a lifespan of two years. Events older
      * than two years will not be returned. Many attributes note 'may be missing
-     * due to historical data gap'. Permission : Team Auditing.
+     * due to historical data gap'. Note that the file_operations category and &
+     * analogous paper events are not available on all Dropbox Business
+     * [plans]{@link /business/plans-comparison}. Use
+     * [features/get_values]{@link
+     * /developers/documentation/http/teams#team-features-get_values} to check
+     * for this feature. Permission : Team Auditing.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team_log.GetTeamEventsError>.
