@@ -31506,7 +31506,7 @@ to save the uploaded contents to a file.</td>
             
 
             <td class="description last">Available if .tag is properties_error. The supplied property group is
-invalid.</td>
+invalid. The file has uploaded without property groups.</td>
         </tr>
 
     
@@ -31706,7 +31706,7 @@ to save the uploaded contents to a file.</td>
             
 
             <td class="description last">Available if .tag is properties_error. The supplied property group is
-invalid.</td>
+invalid. The file has uploaded without property groups.</td>
         </tr>
 
     
@@ -33227,7 +33227,41 @@ reason.</td>
             
 
             <td class="description last">Available if .tag is path. Unable to
-save the uploaded contents to a file.</td>
+save the uploaded contents to a file. Data has already been appended to the
+upload session. Please retry with empty data body and updated offset.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>properties_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilePropertiesInvalidPropertyGroupError">FilePropertiesInvalidPropertyGroupError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is properties_error. The supplied property group is
+invalid. The file has uploaded without property groups.</td>
         </tr>
 
     
@@ -33244,6 +33278,9 @@ save the uploaded contents to a file.</td>
 |
 
 <span class="param-type">'path'</span>
+|
+
+<span class="param-type">'properties_error'</span>
 |
 
 <span class="param-type">'too_many_shared_folder_targets'</span>
@@ -33426,6 +33463,9 @@ response, e.g. due to a network error.</td>
 |
 
 <span class="param-type">'not_closed'</span>
+|
+
+<span class="param-type">'too_large'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -33978,8 +34018,9 @@ saved.</td>
 
             
 
-            <td class="description last">The upload session ID; this may be
-used to retry the commit.</td>
+            <td class="description last">The upload session ID; data has
+already been uploaded to the corresponding upload session and this ID may be
+used to retry the commit with upload_session/finish.</td>
         </tr>
 
     
@@ -99747,6 +99788,388 @@ historical data gap.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogDirectoryRestrictionsAddMembersDetails">
+    <h4 id="TeamLogDirectoryRestrictionsAddMembersDetails">TeamLogDirectoryRestrictionsAddMembersDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Added members to directory restrictions list.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogDirectoryRestrictionsAddMembersType">
+    <h4 id="TeamLogDirectoryRestrictionsAddMembersType">TeamLogDirectoryRestrictionsAddMembersType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogDirectoryRestrictionsRemoveMembersDetails">
+    <h4 id="TeamLogDirectoryRestrictionsRemoveMembersDetails">TeamLogDirectoryRestrictionsRemoveMembersDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Removed members from directory restrictions list.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogDirectoryRestrictionsRemoveMembersType">
+    <h4 id="TeamLogDirectoryRestrictionsRemoveMembersType">TeamLogDirectoryRestrictionsRemoveMembersType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogDisabledDomainInvitesDetails">
     <h4 id="TeamLogDisabledDomainInvitesDetails">TeamLogDisabledDomainInvitesDetails</h4>
 
@@ -107151,6 +107574,39 @@ member_transfer_account_contents_details.</td>
 
         <tr>
             
+                <td class="name"><code>secondary_mails_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSecondaryMailsPolicyChangedDetails">TeamLogSecondaryMailsPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+secondary_mails_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>paper_content_add_member_details</code></td>
             
 
@@ -111323,6 +111779,39 @@ showcase_resolve_comment_details.</td>
 
         <tr>
             
+                <td class="name"><code>showcase_trashed_deprecated_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseTrashedDeprecatedDetails">TeamLogShowcaseTrashedDeprecatedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_trashed_deprecated_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>showcase_unresolve_comment_details</code></td>
             
 
@@ -111382,6 +111871,39 @@ showcase_unresolve_comment_details.</td>
             
 
             <td class="description last">Available if .tag is showcase_untrashed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showcase_untrashed_deprecated_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseUntrashedDeprecatedDetails">TeamLogShowcaseUntrashedDeprecatedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_untrashed_deprecated_details.</td>
         </tr>
 
     
@@ -112231,6 +112753,72 @@ device_approvals_change_overage_action_details.</td>
 
             <td class="description last">Available if .tag is
 device_approvals_change_unlink_action_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>directory_restrictions_add_members_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogDirectoryRestrictionsAddMembersDetails">TeamLogDirectoryRestrictionsAddMembersDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+directory_restrictions_add_members_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>directory_restrictions_remove_members_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogDirectoryRestrictionsRemoveMembersDetails">TeamLogDirectoryRestrictionsRemoveMembersDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+directory_restrictions_remove_members_details.</td>
         </tr>
 
     
@@ -113151,6 +113739,105 @@ sharing_change_link_policy_details.</td>
 
             <td class="description last">Available if .tag is
 sharing_change_member_policy_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showcase_change_download_policy_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseChangeDownloadPolicyDetails">TeamLogShowcaseChangeDownloadPolicyDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_change_download_policy_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showcase_change_enabled_policy_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseChangeEnabledPolicyDetails">TeamLogShowcaseChangeEnabledPolicyDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_change_enabled_policy_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showcase_change_external_sharing_policy_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseChangeExternalSharingPolicyDetails">TeamLogShowcaseChangeExternalSharingPolicyDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_change_external_sharing_policy_details.</td>
         </tr>
 
     
@@ -114188,6 +114875,9 @@ to an internal error.</td>
 <span class="param-type">'member_transfer_account_contents_details'</span>
 |
 
+<span class="param-type">'secondary_mails_policy_changed_details'</span>
+|
+
 <span class="param-type">'paper_content_add_member_details'</span>
 |
 
@@ -114572,10 +115262,16 @@ to an internal error.</td>
 <span class="param-type">'showcase_trashed_details'</span>
 |
 
+<span class="param-type">'showcase_trashed_deprecated_details'</span>
+|
+
 <span class="param-type">'showcase_unresolve_comment_details'</span>
 |
 
 <span class="param-type">'showcase_untrashed_details'</span>
+|
+
+<span class="param-type">'showcase_untrashed_deprecated_details'</span>
 |
 
 <span class="param-type">'showcase_view_details'</span>
@@ -114654,6 +115350,12 @@ to an internal error.</td>
 |
 
 <span class="param-type">'device_approvals_change_unlink_action_details'</span>
+|
+
+<span class="param-type">'directory_restrictions_add_members_details'</span>
+|
+
+<span class="param-type">'directory_restrictions_remove_members_details'</span>
 |
 
 <span class="param-type">'emm_add_exception_details'</span>
@@ -114738,6 +115440,15 @@ to an internal error.</td>
 |
 
 <span class="param-type">'sharing_change_member_policy_details'</span>
+|
+
+<span class="param-type">'showcase_change_download_policy_details'</span>
+|
+
+<span class="param-type">'showcase_change_enabled_policy_details'</span>
+|
+
+<span class="param-type">'showcase_change_external_sharing_policy_details'</span>
 |
 
 <span class="param-type">'smart_sync_change_policy_details'</span>
@@ -115931,7 +116642,7 @@ request to join team</td>
 
             <td class="description last">Available if .tag is
 domain_invites_email_existing_users. (domains) Sent domain invites to
-existing domain accounts</td>
+existing domain accounts (deprecated, no longer logged)</td>
         </tr>
 
     
@@ -117720,8 +118431,8 @@ member_change_membership_type. (members) Changed membership type
             
 
             <td class="description last">Available
-if .tag is member_change_status. (members) Changed membership status of team
-member</td>
+if .tag is member_change_status. (members) Changed member status (invited,
+joined, suspended, etc.)</td>
         </tr>
 
     
@@ -117957,6 +118668,39 @@ member_suggest. (members) Suggested person to add to team</td>
             <td class="description last">Available if .tag is
 member_transfer_account_contents. (members) Transferred contents of deleted
 member account to another member</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>secondary_mails_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSecondaryMailsPolicyChangedType">TeamLogSecondaryMailsPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+secondary_mails_policy_changed. (members) Secondary mails policy changed</td>
         </tr>
 
     
@@ -120125,7 +120869,8 @@ member's shared folder from link (deprecated, no longer logged)</td>
 
             <td class="description last">Available if .tag
 is sf_team_uninvite. (sharing) Unshared folder with team member (deprecated,
-replaced by 'Removed invitee from shared file/folder before invite accepted')</td>
+replaced by 'Removed invitee from shared file/folder before invite was
+accepted')</td>
         </tr>
 
     
@@ -120327,7 +121072,7 @@ download shared file/folder</td>
 
             <td class="description last">Available if .tag is
 shared_content_change_invitee_role. (sharing) Changed access type of invitee
-to shared file/folder before invite accepted</td>
+to shared file/folder before invite was accepted</td>
         </tr>
 
     
@@ -120665,7 +121410,7 @@ shared_content_relinquish_membership. (sharing) Left shared file/folder</td>
 
             <td class="description last">Available if .tag is
 shared_content_remove_invitees. (sharing) Removed invitee from shared
-file/folder before invite accepted</td>
+file/folder before invite was accepted</td>
         </tr>
 
     
@@ -122235,6 +122980,40 @@ is showcase_trashed. (showcase) Deleted showcase</td>
 
         <tr>
             
+                <td class="name"><code>showcase_trashed_deprecated</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseTrashedDeprecatedType">TeamLogShowcaseTrashedDeprecatedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_trashed_deprecated. (showcase) Deleted showcase (old version)
+(deprecated, replaced by 'Deleted showcase')</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>showcase_unresolve_comment</code></td>
             
 
@@ -122295,6 +123074,40 @@ showcase comment</td>
 
             <td class="description last">Available if
 .tag is showcase_untrashed. (showcase) Restored showcase</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showcase_untrashed_deprecated</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseUntrashedDeprecatedType">TeamLogShowcaseUntrashedDeprecatedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_untrashed_deprecated. (showcase) Restored showcase (old version)
+(deprecated, replaced by 'Restored showcase')</td>
         </tr>
 
     
@@ -123163,6 +123976,74 @@ approvals setting when member is over limit</td>
             <td class="description last">Available if .tag is
 device_approvals_change_unlink_action. (team_policies) Changed device
 approvals setting when member unlinks approved device</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>directory_restrictions_add_members</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogDirectoryRestrictionsAddMembersType">TeamLogDirectoryRestrictionsAddMembersType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+directory_restrictions_add_members. (team_policies) Added members to
+directory restrictions list</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>directory_restrictions_remove_members</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogDirectoryRestrictionsRemoveMembersType">TeamLogDirectoryRestrictionsRemoveMembersType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+directory_restrictions_remove_members. (team_policies) Removed members from
+directory restrictions list</td>
         </tr>
 
     
@@ -124112,6 +124993,108 @@ only by team members or anyone by default</td>
             <td class="description last">Available if .tag is
 sharing_change_member_policy. (team_policies) Changed whether members can
 share files/folders outside team</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showcase_change_download_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseChangeDownloadPolicyType">TeamLogShowcaseChangeDownloadPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_change_download_policy. (team_policies) Enabled/disabled downloading
+files from Dropbox Showcase for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showcase_change_enabled_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseChangeEnabledPolicyType">TeamLogShowcaseChangeEnabledPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_change_enabled_policy. (team_policies) Enabled/disabled Dropbox
+Showcase for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>showcase_change_external_sharing_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseChangeExternalSharingPolicyType">TeamLogShowcaseChangeExternalSharingPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+showcase_change_external_sharing_policy. (team_policies) Enabled/disabled
+sharing Dropbox Showcase externally for team</td>
         </tr>
 
     
@@ -125133,6 +126116,9 @@ two-step verification</td>
 <span class="param-type">'member_transfer_account_contents'</span>
 |
 
+<span class="param-type">'secondary_mails_policy_changed'</span>
+|
+
 <span class="param-type">'paper_content_add_member'</span>
 |
 
@@ -125517,10 +126503,16 @@ two-step verification</td>
 <span class="param-type">'showcase_trashed'</span>
 |
 
+<span class="param-type">'showcase_trashed_deprecated'</span>
+|
+
 <span class="param-type">'showcase_unresolve_comment'</span>
 |
 
 <span class="param-type">'showcase_untrashed'</span>
+|
+
+<span class="param-type">'showcase_untrashed_deprecated'</span>
 |
 
 <span class="param-type">'showcase_view'</span>
@@ -125599,6 +126591,12 @@ two-step verification</td>
 |
 
 <span class="param-type">'device_approvals_change_unlink_action'</span>
+|
+
+<span class="param-type">'directory_restrictions_add_members'</span>
+|
+
+<span class="param-type">'directory_restrictions_remove_members'</span>
 |
 
 <span class="param-type">'emm_add_exception'</span>
@@ -125683,6 +126681,15 @@ two-step verification</td>
 |
 
 <span class="param-type">'sharing_change_member_policy'</span>
+|
+
+<span class="param-type">'showcase_change_download_policy'</span>
+|
+
+<span class="param-type">'showcase_change_enabled_policy'</span>
+|
+
+<span class="param-type">'showcase_change_external_sharing_policy'</span>
 |
 
 <span class="param-type">'smart_sync_change_policy'</span>
@@ -143640,7 +144647,7 @@ Might be missing due to historical data gap.</td>
 <dd>
     
     <div class="description">
-        Changed membership status of team member.
+        Changed member status (invited, joined, suspended, etc.).
     </div>
     
 
@@ -164617,6 +165624,402 @@ Assets list.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogSecondaryMailsPolicy">
+    <h4 id="TeamLogSecondaryMailsPolicy">TeamLogSecondaryMailsPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSecondaryMailsPolicyChangedDetails">
+    <h4 id="TeamLogSecondaryMailsPolicyChangedDetails">TeamLogSecondaryMailsPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Secondary mails policy changed.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSecondaryMailsPolicy">TeamLogSecondaryMailsPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous secondary
+mails policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSecondaryMailsPolicy">TeamLogSecondaryMailsPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New secondary mails
+policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSecondaryMailsPolicyChangedType">
+    <h4 id="TeamLogSecondaryMailsPolicyChangedType">TeamLogSecondaryMailsPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogSessionLogInfo">
     <h4 id="TeamLogSessionLogInfo">TeamLogSessionLogInfo</h4>
 
@@ -170052,7 +171455,8 @@ policy. Might be missing due to historical data gap.</td>
 <dd>
     
     <div class="description">
-        Changed access type of invitee to shared file/folder before invite accepted.
+        Changed access type of invitee to shared file/folder before invite was
+accepted.
     </div>
     
 
@@ -172819,7 +174223,7 @@ access level.</td>
 <dd>
     
     <div class="description">
-        Removed invitee from shared file/folder before invite accepted.
+        Removed invitee from shared file/folder before invite was accepted.
     </div>
     
 
@@ -182495,6 +183899,816 @@ team members.
             
                 
 <hr>
+<dt class="name" id="TeamLogShowcaseChangeDownloadPolicyDetails">
+    <h4 id="TeamLogShowcaseChangeDownloadPolicyDetails">TeamLogShowcaseChangeDownloadPolicyDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Enabled/disabled downloading files from Dropbox Showcase for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseDownloadPolicy">TeamLogShowcaseDownloadPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New Dropbox Showcase
+download policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseDownloadPolicy">TeamLogShowcaseDownloadPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous Dropbox
+Showcase download policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseChangeDownloadPolicyType">
+    <h4 id="TeamLogShowcaseChangeDownloadPolicyType">TeamLogShowcaseChangeDownloadPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseChangeEnabledPolicyDetails">
+    <h4 id="TeamLogShowcaseChangeEnabledPolicyDetails">TeamLogShowcaseChangeEnabledPolicyDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Enabled/disabled Dropbox Showcase for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseEnabledPolicy">TeamLogShowcaseEnabledPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New Dropbox Showcase
+policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseEnabledPolicy">TeamLogShowcaseEnabledPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous Dropbox
+Showcase policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseChangeEnabledPolicyType">
+    <h4 id="TeamLogShowcaseChangeEnabledPolicyType">TeamLogShowcaseChangeEnabledPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseChangeExternalSharingPolicyDetails">
+    <h4 id="TeamLogShowcaseChangeExternalSharingPolicyDetails">TeamLogShowcaseChangeExternalSharingPolicyDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Enabled/disabled sharing Dropbox Showcase externally for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseExternalSharingPolicy">TeamLogShowcaseExternalSharingPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New Dropbox
+Showcase external sharing policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogShowcaseExternalSharingPolicy">TeamLogShowcaseExternalSharingPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous
+Dropbox Showcase external sharing policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseChangeExternalSharingPolicyType">
+    <h4 id="TeamLogShowcaseChangeExternalSharingPolicyType">TeamLogShowcaseChangeExternalSharingPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogShowcaseCreatedDetails">
     <h4 id="TeamLogShowcaseCreatedDetails">TeamLogShowcaseCreatedDetails</h4>
 
@@ -183171,6 +185385,137 @@ team members.
             
                 
 <hr>
+<dt class="name" id="TeamLogShowcaseDownloadPolicy">
+    <h4 id="TeamLogShowcaseDownloadPolicy">TeamLogShowcaseDownloadPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling if files can be downloaded from Showcases by team
+members
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogShowcaseEditCommentDetails">
     <h4 id="TeamLogShowcaseEditCommentDetails">TeamLogShowcaseEditCommentDetails</h4>
 
@@ -183648,6 +185993,266 @@ team members.
             
 
             <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseEnabledPolicy">
+    <h4 id="TeamLogShowcaseEnabledPolicy">TeamLogShowcaseEnabledPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling whether Showcase is enabled.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseExternalSharingPolicy">
+    <h4 id="TeamLogShowcaseExternalSharingPolicy">TeamLogShowcaseExternalSharingPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling if team members can share Showcases externally.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -186487,6 +189092,250 @@ team members.
             
                 
 <hr>
+<dt class="name" id="TeamLogShowcaseTrashedDeprecatedDetails">
+    <h4 id="TeamLogShowcaseTrashedDeprecatedDetails">TeamLogShowcaseTrashedDeprecatedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Deleted showcase (old version).
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event_uuid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Event unique identifier.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseTrashedDeprecatedType">
+    <h4 id="TeamLogShowcaseTrashedDeprecatedType">TeamLogShowcaseTrashedDeprecatedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogShowcaseTrashedDetails">
     <h4 id="TeamLogShowcaseTrashedDetails">TeamLogShowcaseTrashedDetails</h4>
 
@@ -186897,6 +189746,250 @@ team members.
 <hr>
 <dt class="name" id="TeamLogShowcaseUnresolveCommentType">
     <h4 id="TeamLogShowcaseUnresolveCommentType">TeamLogShowcaseUnresolveCommentType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseUntrashedDeprecatedDetails">
+    <h4 id="TeamLogShowcaseUntrashedDeprecatedDetails">TeamLogShowcaseUntrashedDeprecatedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Restored showcase (old version).
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event_uuid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Event unique identifier.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogShowcaseUntrashedDeprecatedType">
+    <h4 id="TeamLogShowcaseUntrashedDeprecatedType">TeamLogShowcaseUntrashedDeprecatedType</h4>
 
     
 </dt>
@@ -202042,6 +205135,39 @@ onboarding that want to handle announcements themselves.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>is_directory_restricted</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether a user is directory
+restricted.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -203375,6 +206501,39 @@ member of a specific team.</td>
 
             <td class="description last">Persistent ID that a team can attach to
 the user. The persistent ID is unique ID to be used for SAML authentication.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>is_directory_restricted</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether the user is a
+directory restricted user.</td>
         </tr>
 
     
@@ -206980,6 +210139,39 @@ available to teams using persistent ID SAML configuration.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>new_is_directory_restricted</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">New value for whether the
+user is a directory restricted user.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -207113,6 +210305,9 @@ available to teams using persistent ID SAML configuration.</td>
 |
 
 <span class="param-type">'persistent_id_used_by_other_user'</span>
+|
+
+<span class="param-type">'directory_restricted_off'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -218566,6 +221761,39 @@ the user. The persistent ID is unique ID to be used for SAML authentication.</td
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>is_directory_restricted</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether the user is a
+directory restricted user.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -224140,7 +227368,7 @@ stop_sync).</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2018-05-08T16:08:20-07:00
+		on 2018-05-18T14:32:49-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
