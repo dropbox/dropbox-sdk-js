@@ -29,7 +29,7 @@ declare module DropboxTypes {
      * @param state State that will be returned in the redirect URL to help
      *   prevent cross site scripting attacks.
      */
-    getAuthenticationUrl(redirectUri: string, state?: string, authType = 'token'): string;
+    getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code'): string;
 
     /**
      * Get the client id
