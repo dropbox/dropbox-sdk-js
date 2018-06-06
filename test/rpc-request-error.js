@@ -21,7 +21,10 @@ describe('rpcRequest error', function () {
     fetchMock.mock('*', function () {
       return {
         status: 500,
-        body: JSON.stringify(exampleErr)
+        body: JSON.stringify(exampleErr),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       };
     }).catch(500);
 
