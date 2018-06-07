@@ -20,7 +20,7 @@ new Dropbox({
 
 ### Dropbox
 
-For documentation of all of the available endpoints, the parameters they receive and the data they return, see the [Dropbox class definition]((http://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html)). These methods are all available directly from an instance of the API class, e.g: `dbx.filesListFolder()`.
+For documentation of all of the available endpoints, the parameters they receive and the data they return, see the [Dropbox class definition](http://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html). These methods are all available directly from an instance of the API class, e.g: `dbx.filesListFolder()`.
 
 ### DropboxTeam
 
