@@ -6,7 +6,7 @@ This library depends on the Promise and Fetch globals which require a polyfill (
 ## Methods of installation
 **With npm or yarn**
 
-`npm i dropbox -S` or `yarn i dropbox -S`
+`npm i dropbox -S` or `yarn add dropbox`
 
 Using an up-to-date [npm](https://www.npmjs.com/) or yarn package you can install [dropbox](http://dropbox.github.io/dropbox-sdk-js) package the from the official npm registry.
 
