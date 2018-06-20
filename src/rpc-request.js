@@ -2,12 +2,10 @@ import { Buffer } from 'buffer/';
 import { getBaseURL } from './utils';
 
 function parseBodyToType(res) {
-  const clone = res.clone();
-  return new Promise((resolve) => {
-    res.json()
-      .then(data => resolve(data))
-      .catch(() => clone.text().then(data => resolve(data)));
-  }).then(data => [res, data]);
+  if (res.headers.get('Content-Type') === 'application/json') {
+    return res.json().then(data => [res, data]);
+  }
+  return res.text().then(data => [res, data]);
 }
 
 export function rpcRequest(path, body, auth, host, accessToken, options) {
