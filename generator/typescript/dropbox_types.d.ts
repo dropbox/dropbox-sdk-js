@@ -1795,6 +1795,13 @@ declare module DropboxTypes {
       path: ReadPath;
     }
 
+    export interface DownloadZipArgV2 {
+      /**
+       * The path of the folder to download.
+       */
+      path: ReadPath;
+    }
+
     export interface DownloadZipErrorPath {
       '.tag': 'path';
       path: LookupError;
@@ -1820,7 +1827,36 @@ declare module DropboxTypes {
 
     export type DownloadZipError = DownloadZipErrorPath | DownloadZipErrorTooLarge | DownloadZipErrorTooManyFiles | DownloadZipErrorOther;
 
+    export interface DownloadZipErrorV2Path {
+      '.tag': 'path';
+      path: LookupError;
+    }
+
+    /**
+     * The folder is too large to download.
+     */
+    export interface DownloadZipErrorV2TooLarge {
+      '.tag': 'too_large';
+    }
+
+    /**
+     * The folder has too many files to download.
+     */
+    export interface DownloadZipErrorV2TooManyFiles {
+      '.tag': 'too_many_files';
+    }
+
+    export interface DownloadZipErrorV2Other {
+      '.tag': 'other';
+    }
+
+    export type DownloadZipErrorV2 = DownloadZipErrorV2Path | DownloadZipErrorV2TooLarge | DownloadZipErrorV2TooManyFiles | DownloadZipErrorV2Other;
+
     export interface DownloadZipResult {
+      metadata: FolderMetadata;
+    }
+
+    export interface DownloadZipResultV2 {
       metadata: FolderMetadata;
     }
 

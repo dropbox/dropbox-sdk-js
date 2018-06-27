@@ -11,7 +11,7 @@ declare module DropboxTypes {
     /**
      * Creates an OAuth 2.0 access token from the supplied OAuth 1.0 access
      * token.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<auth.TokenFromOAuth1Error>.
      * @param arg The request parameters.
@@ -20,7 +20,7 @@ declare module DropboxTypes {
 
     /**
      * Disables the access token used to authenticate the call.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -30,7 +30,7 @@ declare module DropboxTypes {
     /**
      * Add property groups to a Dropbox file. See templatesAddForUser() or
      * templatesAddForTeam() to create new templates.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.AddPropertiesError>.
      * @param arg The request parameters.
@@ -44,7 +44,7 @@ declare module DropboxTypes {
      * will delete all omitted fields from a property group, whereas
      * propertiesUpdate() will only delete fields that are explicitly marked for
      * deletion.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.InvalidPropertyGroupError>.
      * @param arg The request parameters.
@@ -57,7 +57,7 @@ declare module DropboxTypes {
      * update a template, see templatesUpdateForUser() or
      * templatesUpdateForTeam(). To remove a template, see
      * templatesRemoveForUser() or templatesRemoveForTeam().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.RemovePropertiesError>.
      * @param arg The request parameters.
@@ -66,7 +66,7 @@ declare module DropboxTypes {
 
     /**
      * Search across property templates for particular property field values.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.PropertiesSearchError>.
      * @param arg The request parameters.
@@ -76,7 +76,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from propertiesSearch(), use this to
      * paginate through all search results.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.PropertiesSearchContinueError>.
      * @param arg The request parameters.
@@ -90,7 +90,7 @@ declare module DropboxTypes {
      * "snapshot" . In other words, this endpoint will not delete any omitted
      * fields from a property group, whereas propertiesOverwrite() will delete
      * any fields that are omitted from a property group.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.UpdatePropertiesError>.
      * @param arg The request parameters.
@@ -101,7 +101,7 @@ declare module DropboxTypes {
      * Add a template associated with a team. See propertiesAdd() to add
      * properties to a file or folder. Note: this endpoint will create
      * team-owned templates.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
@@ -112,7 +112,7 @@ declare module DropboxTypes {
      * Add a template associated with a user. See propertiesAdd() to add
      * properties to a file. This endpoint can't be called on a team member or
      * admin's behalf.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
@@ -121,7 +121,7 @@ declare module DropboxTypes {
 
     /**
      * Get the schema for a specified template.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @param arg The request parameters.
@@ -131,7 +131,7 @@ declare module DropboxTypes {
     /**
      * Get the schema for a specified template. This endpoint can't be called on
      * a team member or admin's behalf.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @param arg The request parameters.
@@ -141,7 +141,7 @@ declare module DropboxTypes {
     /**
      * Get the template identifiers for a team. To get the schema of each
      * template use templatesGetForTeam().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @param arg The request parameters.
@@ -152,7 +152,7 @@ declare module DropboxTypes {
      * Get the template identifiers for a team. To get the schema of each
      * template use templatesGetForUser(). This endpoint can't be called on a
      * team member or admin's behalf.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @param arg The request parameters.
@@ -163,7 +163,7 @@ declare module DropboxTypes {
      * Permanently removes the specified template created from
      * templatesAddForUser(). All properties associated with the template will
      * also be removed. This action cannot be undone.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @param arg The request parameters.
@@ -174,7 +174,7 @@ declare module DropboxTypes {
      * Permanently removes the specified template created from
      * templatesAddForUser(). All properties associated with the template will
      * also be removed. This action cannot be undone.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @param arg The request parameters.
@@ -185,7 +185,7 @@ declare module DropboxTypes {
      * Update a template associated with a team. This route can update the
      * template name, the template description and add optional properties to
      * templates.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
@@ -197,7 +197,7 @@ declare module DropboxTypes {
      * template name, the template description and add optional properties to
      * templates. This endpoint can't be called on a team member or admin's
      * behalf.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
@@ -206,7 +206,7 @@ declare module DropboxTypes {
 
     /**
      * Creates a file request for this user.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_requests.CreateFileRequestError>.
      * @param arg The request parameters.
@@ -215,7 +215,7 @@ declare module DropboxTypes {
 
     /**
      * Returns the specified file request.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_requests.GetFileRequestError>.
      * @param arg The request parameters.
@@ -226,7 +226,7 @@ declare module DropboxTypes {
      * Returns a list of file requests owned by this user. For apps with the app
      * folder permission, this will only return file requests with destinations
      * in the app folder.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_requests.ListFileRequestsError>.
      * @param arg The request parameters.
@@ -235,7 +235,7 @@ declare module DropboxTypes {
 
     /**
      * Update a file request.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_requests.UpdateFileRequestError>.
      * @param arg The request parameters.
@@ -246,7 +246,7 @@ declare module DropboxTypes {
      * Returns the metadata for a file or folder. This is an alpha endpoint
      * compatible with the properties API. Note: Metadata for the root folder is
      * unsupported.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.AlphaGetMetadataError>.
      * @deprecated
@@ -259,7 +259,7 @@ declare module DropboxTypes {
      * this endpoint is part of the properties API alpha and is slightly
      * different from upload(). Do not use this to upload a file larger than 150
      * MB. Instead, create an upload session with uploadSessionStart().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadErrorWithProperties>.
      * @deprecated
@@ -270,7 +270,7 @@ declare module DropboxTypes {
     /**
      * Copy a file or folder to a different location in the user's Dropbox. If
      * the source path is a folder all its contents will be copied.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.RelocationError>.
      * @deprecated
@@ -287,7 +287,7 @@ declare module DropboxTypes {
      * to new locations. This route will return job ID immediately and do the
      * async copy job in background. Please use copyBatchCheck() to check the
      * job status.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -297,7 +297,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job for copyBatch(). If success, it
      * returns list of results for each entry.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -308,7 +308,7 @@ declare module DropboxTypes {
      * Get a copy reference to a file or folder. This reference string can be
      * used to save that file or folder to another user's Dropbox by passing it
      * to copyReferenceSave().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.GetCopyReferenceError>.
      * @param arg The request parameters.
@@ -318,7 +318,7 @@ declare module DropboxTypes {
     /**
      * Save a copy reference returned by copyReferenceGet() to the user's
      * Dropbox.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.SaveCopyReferenceError>.
      * @param arg The request parameters.
@@ -328,7 +328,7 @@ declare module DropboxTypes {
     /**
      * Copy a file or folder to a different location in the user's Dropbox. If
      * the source path is a folder all its contents will be copied.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.RelocationError>.
      * @param arg The request parameters.
@@ -337,7 +337,7 @@ declare module DropboxTypes {
 
     /**
      * Create a folder at a given path.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.CreateFolderError>.
      * @deprecated
@@ -352,7 +352,7 @@ declare module DropboxTypes {
      * result synchronously for smaller inputs. You can force asynchronous
      * behaviour by using the CreateFolderBatchArg.force_async flag.  Use
      * createFolderBatchCheck() to check the job status.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -362,7 +362,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job for createFolderBatch(). If
      * success, it returns list of result for each entry.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -371,7 +371,7 @@ declare module DropboxTypes {
 
     /**
      * Create a folder at a given path.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.CreateFolderError>.
      * @param arg The request parameters.
@@ -384,7 +384,7 @@ declare module DropboxTypes {
      * the file or folder was deleted. The returned metadata will be the
      * corresponding FileMetadata or FolderMetadata for the item at time of
      * deletion, and not a DeletedMetadata object.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.DeleteError>.
      * @deprecated
@@ -396,7 +396,7 @@ declare module DropboxTypes {
      * Delete multiple files/folders at once. This route is asynchronous, which
      * returns a job ID immediately and runs the delete batch asynchronously.
      * Use deleteBatchCheck() to check the job status.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -406,7 +406,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job for deleteBatch(). If success,
      * it returns list of result for each entry.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -419,7 +419,7 @@ declare module DropboxTypes {
      * the file or folder was deleted. The returned metadata will be the
      * corresponding FileMetadata or FolderMetadata for the item at time of
      * deletion, and not a DeletedMetadata object.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.DeleteError>.
      * @param arg The request parameters.
@@ -428,7 +428,7 @@ declare module DropboxTypes {
 
     /**
      * Download a file from a user's Dropbox.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.DownloadError>.
      * @param arg The request parameters.
@@ -438,8 +438,9 @@ declare module DropboxTypes {
     /**
      * Download a folder from the user's Dropbox, as a zip file. The folder must
      * be less than 1 GB in size and have fewer than 10,000 total files. The
-     * input cannot be a single file.
-     * 
+     * input cannot be a single file. Consider this deprecated by
+     * downloadZipV2().
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.DownloadZipError>.
      * @param arg The request parameters.
@@ -447,9 +448,20 @@ declare module DropboxTypes {
     public filesDownloadZip(arg: files.DownloadZipArg): Promise<files.DownloadZipResult>;
 
     /**
+     * Download a folder from the user's Dropbox, as a zip file. The folder must
+     * be less than 1 GB in size and have fewer than 10,000 total files. The
+     * input cannot be a single file.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.DownloadZipErrorV2>.
+     * @param arg The request parameters.
+     */
+    public filesDownloadZipV2(arg: files.DownloadZipArgV2): Promise<files.DownloadZipResultV2>;
+
+    /**
      * Returns the metadata for a file or folder. Note: Metadata for the root
      * folder is unsupported.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.GetMetadataError>.
      * @param arg The request parameters.
@@ -462,7 +474,7 @@ declare module DropboxTypes {
      * .pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML previews are generated
      * for files with the following extensions: .csv, .ods, .xls, .xlsm, .xlsx.
      * Other formats will return an unsupported extension error.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.PreviewError>.
      * @param arg The request parameters.
@@ -473,7 +485,7 @@ declare module DropboxTypes {
      * Get a temporary link to stream content of a file. This link will expire
      * in four hours and afterwards you will get 410 Gone. Content-Type of the
      * link is determined automatically by the file's mime type.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.GetTemporaryLinkError>.
      * @param arg The request parameters.
@@ -485,7 +497,7 @@ declare module DropboxTypes {
      * the following file extensions: jpg, jpeg, png, tiff, tif, gif and bmp.
      * Photos that are larger than 20MB in size won't be converted to a
      * thumbnail.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.ThumbnailError>.
      * @param arg The request parameters.
@@ -497,7 +509,7 @@ declare module DropboxTypes {
      * single batch. This method currently supports files with the following
      * file extensions: jpg, jpeg, png, tiff, tif, gif and bmp. Photos that are
      * larger than 20MB in size won't be converted to a thumbnail.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.GetThumbnailBatchError>.
      * @param arg The request parameters.
@@ -526,7 +538,7 @@ declare module DropboxTypes {
      * parameters are made simultaneously by same API app for same user. If your
      * app implements retry logic, please hold off the retry until the previous
      * request finishes.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.ListFolderError>.
      * @param arg The request parameters.
@@ -537,7 +549,7 @@ declare module DropboxTypes {
      * Once a cursor has been retrieved from listFolder(), use this to paginate
      * through all files and retrieve updates to the folder, following the same
      * rules as documented for listFolder().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.ListFolderContinueError>.
      * @param arg The request parameters.
@@ -550,7 +562,7 @@ declare module DropboxTypes {
      * This endpoint is for app which only needs to know about new files and
      * modifications and doesn't need to know about files that already exist in
      * Dropbox.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.ListFolderError>.
      * @param arg The request parameters.
@@ -565,7 +577,7 @@ declare module DropboxTypes {
      * mostly for client-side apps. If you're looking for server-side
      * notifications, check out our [webhooks documentation]{@link
      * https://www.dropbox.com/developers/reference/webhooks}.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.ListFolderLongpollError>.
      * @param arg The request parameters.
@@ -582,7 +594,7 @@ declare module DropboxTypes {
      * file id are desired, then mode must be set to ListRevisionsMode.id. The
      * ListRevisionsMode.id mode is useful to retrieve revisions for a given
      * file across moves or renames.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.ListRevisionsError>.
      * @param arg The request parameters.
@@ -592,7 +604,7 @@ declare module DropboxTypes {
     /**
      * Move a file or folder to a different location in the user's Dropbox. If
      * the source path is a folder all its contents will be moved.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.RelocationError>.
      * @deprecated
@@ -606,7 +618,7 @@ declare module DropboxTypes {
      * fails, the whole transaction will abort. This route will return job ID
      * immediately and do the async moving job in background. Please use
      * moveBatchCheck() to check the job status.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -616,7 +628,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job for moveBatch(). If success, it
      * returns list of results for each entry.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -626,7 +638,7 @@ declare module DropboxTypes {
     /**
      * Move a file or folder to a different location in the user's Dropbox. If
      * the source path is a folder all its contents will be moved.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.RelocationError>.
      * @param arg The request parameters.
@@ -637,7 +649,7 @@ declare module DropboxTypes {
      * Permanently delete the file or folder at a given path (see
      * https://www.dropbox.com/en/help/40). Note: This endpoint is only
      * available for Dropbox Business apps.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.DeleteError>.
      * @param arg The request parameters.
@@ -694,7 +706,7 @@ declare module DropboxTypes {
 
     /**
      * Restore a file to a specific revision.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.RestoreError>.
      * @param arg The request parameters.
@@ -705,7 +717,7 @@ declare module DropboxTypes {
      * Save a specified URL into a file in user's Dropbox. If the given path
      * already exists, the file will be renamed to avoid the conflict (e.g.
      * myfile (1).txt).
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.SaveUrlError>.
      * @param arg The request parameters.
@@ -714,7 +726,7 @@ declare module DropboxTypes {
 
     /**
      * Check the status of a saveUrl() job.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -724,7 +736,7 @@ declare module DropboxTypes {
     /**
      * Searches for files and folders. Note: Recent changes may not immediately
      * be reflected in search results due to a short delay in indexing.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.SearchError>.
      * @param arg The request parameters.
@@ -735,7 +747,7 @@ declare module DropboxTypes {
      * Create a new file with the contents provided in the request. Do not use
      * this to upload a file larger than 150 MB. Instead, create an upload
      * session with uploadSessionStart().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadError>.
      * @param arg The request parameters.
@@ -746,7 +758,7 @@ declare module DropboxTypes {
      * Append more data to an upload session. A single request should not upload
      * more than 150 MB. The maximum size of a file one can upload to an upload
      * session is 350 GB.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionLookupError>.
      * @deprecated
@@ -759,7 +771,7 @@ declare module DropboxTypes {
      * this call will close the session. A single request should not upload more
      * than 150 MB. The maximum size of a file one can upload to an upload
      * session is 350 GB.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionLookupError>.
      * @param arg The request parameters.
@@ -770,7 +782,7 @@ declare module DropboxTypes {
      * Finish an upload session and save the uploaded data to the given file
      * path. A single request should not upload more than 150 MB. The maximum
      * size of a file one can upload to an upload session is 350 GB.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionFinishError>.
      * @param arg The request parameters.
@@ -792,7 +804,7 @@ declare module DropboxTypes {
      * account, this route should be executed serially. That means you should
      * not start the next job before current job finishes. We allow up to 1000
      * entries in a single request.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -802,7 +814,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job for uploadSessionFinishBatch().
      * If success, it returns list of result for each entry.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -820,7 +832,7 @@ declare module DropboxTypes {
      * 48 hours. Attempting to use an UploadSessionStartResult.session_id with
      * uploadSessionAppendV2() or uploadSessionFinish() more than 48 hours after
      * its creation will return a UploadSessionLookupError.not_found.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -830,7 +842,7 @@ declare module DropboxTypes {
     /**
      * Marks the given Paper doc as archived. Note: This action can be performed
      * or undone by anyone with edit permissions to the doc.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -839,7 +851,7 @@ declare module DropboxTypes {
 
     /**
      * Creates a new Paper doc with the provided content.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.PaperDocCreateError>.
      * @param arg The request parameters.
@@ -848,7 +860,7 @@ declare module DropboxTypes {
 
     /**
      * Exports and downloads Paper doc either as HTML or markdown.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -860,7 +872,7 @@ declare module DropboxTypes {
      * the Paper doc is contained. For private folders all users (including
      * owner) shared on the folder are listed and for team folders all non-team
      * users shared on the folder are returned.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -870,7 +882,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from docsFolderUsersList(), use this to
      * paginate through all users on the Paper folder.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.ListUsersCursorError>.
      * @param arg The request parameters.
@@ -884,7 +896,7 @@ declare module DropboxTypes {
      * folderId and folderName) from     the root folder to the folder directly
      * containing the Paper doc.  Note: If the Paper doc is not in any folder
      * (aka unfiled) the response will be empty.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -895,7 +907,7 @@ declare module DropboxTypes {
      * Return the list of all Paper docs according to the argument
      * specifications. To iterate over through the full pagination, pass the
      * cursor to docsListContinue().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -905,7 +917,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from docsList(), use this to paginate
      * through all Paper doc.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.ListDocsCursorError>.
      * @param arg The request parameters.
@@ -916,7 +928,7 @@ declare module DropboxTypes {
      * Permanently deletes the given Paper doc. This operation is final as the
      * doc cannot be recovered.  Note: This action can be performed only by the
      * doc owner.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -925,7 +937,7 @@ declare module DropboxTypes {
 
     /**
      * Gets the default sharing policy for the given Paper doc.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -938,7 +950,7 @@ declare module DropboxTypes {
      * personal accounts.  Note: 'public_sharing_policy' cannot be set to the
      * value 'disabled' because this setting can be changed only via the team
      * admin console.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -947,7 +959,7 @@ declare module DropboxTypes {
 
     /**
      * Updates an existing Paper doc with the provided content.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.PaperDocUpdateError>.
      * @param arg The request parameters.
@@ -958,7 +970,7 @@ declare module DropboxTypes {
      * Allows an owner or editor to add users to a Paper doc or change their
      * permissions using their email address or Dropbox account ID.  Note: The
      * Doc owner's permissions cannot be changed.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -971,7 +983,7 @@ declare module DropboxTypes {
      * date of the visit or the share date. The list will include both users,
      * the explicitly shared ones as well as those who came in using the Paper
      * url link.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -981,7 +993,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from docsUsersList(), use this to
      * paginate through all users on the Paper doc.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.ListUsersCursorError>.
      * @param arg The request parameters.
@@ -991,7 +1003,7 @@ declare module DropboxTypes {
     /**
      * Allows an owner or editor to remove users from a Paper doc using their
      * email address or Dropbox account ID.  Note: Doc owner cannot be removed.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
      * @param arg The request parameters.
@@ -1000,7 +1012,7 @@ declare module DropboxTypes {
 
     /**
      * Adds specified members to a file.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.AddFileMemberError>.
      * @param arg The request parameters.
@@ -1012,7 +1024,7 @@ declare module DropboxTypes {
      * folder to add another member. For the new member to get access to all the
      * functionality for this folder, you will need to call mountFolder() on
      * their behalf. Apps must have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.AddFolderMemberError>.
      * @param arg The request parameters.
@@ -1021,7 +1033,7 @@ declare module DropboxTypes {
 
     /**
      * Identical to update_file_member but with less information returned.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.FileMemberActionError>.
      * @deprecated
@@ -1032,7 +1044,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job. Apps must have full Dropbox
      * access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -1042,7 +1054,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job for sharing a folder. Apps must
      * have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -1052,7 +1064,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job for sharing a folder. Apps must
      * have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -1068,7 +1080,7 @@ declare module DropboxTypes {
      * corresponding file or folder. In the future, this will no longer be the
      * case, so your app shouldn't rely on this behavior. Instead, if your app
      * needs to revoke a shared link, use revokeSharedLink().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.CreateSharedLinkError>.
      * @deprecated
@@ -1081,7 +1093,7 @@ declare module DropboxTypes {
      * the default visibility is RequestedVisibility.public (The resolved
      * visibility, though, may depend on other aspects such as team and shared
      * folder settings).
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.CreateSharedLinkWithSettingsError>.
      * @param arg The request parameters.
@@ -1090,7 +1102,7 @@ declare module DropboxTypes {
 
     /**
      * Returns shared file metadata.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.GetFileMetadataError>.
      * @param arg The request parameters.
@@ -1099,7 +1111,7 @@ declare module DropboxTypes {
 
     /**
      * Returns shared file metadata.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SharingUserError>.
      * @param arg The request parameters.
@@ -1109,7 +1121,7 @@ declare module DropboxTypes {
     /**
      * Returns shared folder metadata by its folder ID. Apps must have full
      * Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SharedFolderAccessError>.
      * @param arg The request parameters.
@@ -1118,7 +1130,7 @@ declare module DropboxTypes {
 
     /**
      * Download the shared link's file from a user's Dropbox.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.GetSharedLinkFileError>.
      * @param arg The request parameters.
@@ -1127,7 +1139,7 @@ declare module DropboxTypes {
 
     /**
      * Get the shared link's metadata.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SharedLinkError>.
      * @param arg The request parameters.
@@ -1142,7 +1154,7 @@ declare module DropboxTypes {
      * that allow access to the given path.  Collection links are never returned
      * in this case. Note that the url field in the response is never the
      * shortened URL.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.GetSharedLinksError>.
      * @deprecated
@@ -1153,7 +1165,7 @@ declare module DropboxTypes {
     /**
      * Use to obtain the members who have been invited to a file, both inherited
      * and uninherited members.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFileMembersError>.
      * @param arg The request parameters.
@@ -1166,7 +1178,7 @@ declare module DropboxTypes {
      * To customize the results more, use the individual file endpoint.
      * Inherited users and groups are not included in the result, and
      * permissions are not returned for this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SharingUserError>.
      * @param arg The request parameters.
@@ -1177,7 +1189,7 @@ declare module DropboxTypes {
      * Once a cursor has been retrieved from listFileMembers() or
      * listFileMembersBatch(), use this to paginate through all shared file
      * members.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFileMembersContinueError>.
      * @param arg The request parameters.
@@ -1187,7 +1199,7 @@ declare module DropboxTypes {
     /**
      * Returns shared folder membership by its folder ID. Apps must have full
      * Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SharedFolderAccessError>.
      * @param arg The request parameters.
@@ -1198,7 +1210,7 @@ declare module DropboxTypes {
      * Once a cursor has been retrieved from listFolderMembers(), use this to
      * paginate through all shared folder members. Apps must have full Dropbox
      * access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFolderMembersContinueError>.
      * @param arg The request parameters.
@@ -1208,7 +1220,7 @@ declare module DropboxTypes {
     /**
      * Return the list of all shared folders the current user has access to.
      * Apps must have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -1220,7 +1232,7 @@ declare module DropboxTypes {
      * through all shared folders. The cursor must come from a previous call to
      * listFolders() or listFoldersContinue(). Apps must have full Dropbox
      * access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFoldersContinueError>.
      * @param arg The request parameters.
@@ -1230,7 +1242,7 @@ declare module DropboxTypes {
     /**
      * Return the list of all shared folders the current user can mount or
      * unmount. Apps must have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -1243,7 +1255,7 @@ declare module DropboxTypes {
      * a previous call to listMountableFolders() or
      * listMountableFoldersContinue(). Apps must have full Dropbox access to use
      * this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFoldersContinueError>.
      * @param arg The request parameters.
@@ -1254,7 +1266,7 @@ declare module DropboxTypes {
      * Returns a list of all files shared with current user.  Does not include
      * files the user has received via shared folders, and does  not include
      * unclaimed invitations.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SharingUserError>.
      * @param arg The request parameters.
@@ -1263,7 +1275,7 @@ declare module DropboxTypes {
 
     /**
      * Get more results with a cursor from listReceivedFiles().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFilesContinueError>.
      * @param arg The request parameters.
@@ -1277,7 +1289,7 @@ declare module DropboxTypes {
      * direct links to the given path and links to parent folders of the given
      * path. Links to parent folders can be suppressed by setting direct_only to
      * true.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListSharedLinksError>.
      * @param arg The request parameters.
@@ -1292,7 +1304,7 @@ declare module DropboxTypes {
      * will reflect the actual visibility of the shared link and the
      * LinkPermissions.requested_visibility will reflect the requested
      * visibility.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ModifySharedLinkSettingsError>.
      * @param arg The request parameters.
@@ -1304,7 +1316,7 @@ declare module DropboxTypes {
      * a user after they have been added as a member. Once mounted, the shared
      * folder will appear in their Dropbox. Apps must have full Dropbox access
      * to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.MountFolderError>.
      * @param arg The request parameters.
@@ -1316,7 +1328,7 @@ declare module DropboxTypes {
      * Note that the current user may still have inherited access to this file
      * through the parent folder. Apps must have full Dropbox access to use this
      * endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RelinquishFileMembershipError>.
      * @param arg The request parameters.
@@ -1330,7 +1342,7 @@ declare module DropboxTypes {
      * synchronously if leave_a_copy is false, and asynchronously if
      * leave_a_copy is true. Apps must have full Dropbox access to use this
      * endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RelinquishFolderMembershipError>.
      * @param arg The request parameters.
@@ -1339,7 +1351,7 @@ declare module DropboxTypes {
 
     /**
      * Identical to remove_file_member_2 but with less information returned.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RemoveFileMemberError>.
      * @deprecated
@@ -1349,7 +1361,7 @@ declare module DropboxTypes {
 
     /**
      * Removes a specified member from the file.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RemoveFileMemberError>.
      * @param arg The request parameters.
@@ -1360,7 +1372,7 @@ declare module DropboxTypes {
      * Allows an owner or editor (if the ACL update policy allows) of a shared
      * folder to remove another member. Apps must have full Dropbox access to
      * use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RemoveFolderMemberError>.
      * @param arg The request parameters.
@@ -1373,7 +1385,7 @@ declare module DropboxTypes {
      * of the file parent folders. To list all shared links that enable access
      * to a specific file, you can use the listSharedLinks() with the file as
      * the ListSharedLinksArg.path argument.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RevokeSharedLinkError>.
      * @param arg The request parameters.
@@ -1386,7 +1398,7 @@ declare module DropboxTypes {
      * ShareFolderLaunch.async_job_id is returned, you'll need to call
      * checkShareJobStatus() until the action completes to get the metadata for
      * the folder.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SetAccessInheritanceError>.
      * @param arg The request parameters.
@@ -1400,7 +1412,7 @@ declare module DropboxTypes {
      * ShareFolderLaunch.async_job_id is returned, you'll need to call
      * checkShareJobStatus() until the action completes to get the metadata for
      * the folder. Apps must have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ShareFolderError>.
      * @param arg The request parameters.
@@ -1411,7 +1423,7 @@ declare module DropboxTypes {
      * Transfer ownership of a shared folder to a member of the shared folder.
      * User must have AccessLevel.owner access to the shared folder to perform a
      * transfer. Apps must have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.TransferFolderError>.
      * @param arg The request parameters.
@@ -1422,7 +1434,7 @@ declare module DropboxTypes {
      * The current user unmounts the designated folder. They can re-mount the
      * folder at a later time using mountFolder(). Apps must have full Dropbox
      * access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UnmountFolderError>.
      * @param arg The request parameters.
@@ -1431,7 +1443,7 @@ declare module DropboxTypes {
 
     /**
      * Remove all members from this file. Does not remove inherited members.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UnshareFileError>.
      * @param arg The request parameters.
@@ -1442,7 +1454,7 @@ declare module DropboxTypes {
      * Allows a shared folder owner to unshare the folder. You'll need to call
      * checkJobStatus() to determine if the action has completed successfully.
      * Apps must have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UnshareFolderError>.
      * @param arg The request parameters.
@@ -1451,7 +1463,7 @@ declare module DropboxTypes {
 
     /**
      * Changes a member's access on a shared file.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.FileMemberActionError>.
      * @param arg The request parameters.
@@ -1461,7 +1473,7 @@ declare module DropboxTypes {
     /**
      * Allows an owner or editor of a shared folder to update another member's
      * permissions. Apps must have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UpdateFolderMemberError>.
      * @param arg The request parameters.
@@ -1472,7 +1484,7 @@ declare module DropboxTypes {
      * Update the sharing policies for a shared folder. User must have
      * AccessLevel.owner access to the shared folder to update its policies.
      * Apps must have full Dropbox access to use this endpoint.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UpdateFolderPolicyError>.
      * @param arg The request parameters.
@@ -1488,7 +1500,7 @@ declare module DropboxTypes {
      * [features/get_values]{@link
      * /developers/documentation/http/teams#team-features-get_values} to check
      * for this feature. Permission : Team Auditing.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team_log.GetTeamEventsError>.
      * @param arg The request parameters.
@@ -1498,7 +1510,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from getEvents(), use this to paginate
      * through all events. Permission : Team Auditing.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team_log.GetTeamEventsContinueError>.
      * @param arg The request parameters.
@@ -1507,7 +1519,7 @@ declare module DropboxTypes {
 
     /**
      * Get information about a user's account.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<users.GetAccountError>.
      * @param arg The request parameters.
@@ -1517,7 +1529,7 @@ declare module DropboxTypes {
     /**
      * Get information about multiple user accounts.  At most 300 accounts may
      * be queried per request.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<users.GetAccountBatchError>.
      * @param arg The request parameters.
@@ -1526,7 +1538,7 @@ declare module DropboxTypes {
 
     /**
      * Get information about the current user's account.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -1535,7 +1547,7 @@ declare module DropboxTypes {
 
     /**
      * Get the space usage information for the current user's account.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.

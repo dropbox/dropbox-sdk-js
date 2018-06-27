@@ -909,13 +909,29 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} FilesDownloadZipArgV2
+ * @property {string} path - The path of the folder to download.
+ */
+
+/**
  * @typedef {Object} FilesDownloadZipError
  * @property {FilesLookupError} [path] - Available if .tag is path.
  * @property {('path'|'too_large'|'too_many_files'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
+ * @typedef {Object} FilesDownloadZipErrorV2
+ * @property {FilesLookupError} [path] - Available if .tag is path.
+ * @property {('path'|'too_large'|'too_many_files'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} FilesDownloadZipResult
+ * @property {FilesFolderMetadata} metadata
+ */
+
+/**
+ * @typedef {Object} FilesDownloadZipResultV2
  * @property {FilesFolderMetadata} metadata
  */
 
