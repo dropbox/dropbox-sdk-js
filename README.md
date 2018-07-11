@@ -6,7 +6,7 @@ The Dropbox JavaScript SDK is a lightweight, promise based interface to the Drop
 Please view our full JavaScript SDK documentation at <http://dropbox.github.io/dropbox-sdk-js>.
 
 ## Prerequisites
-This library depends on the Promise and Fetch globals which require a polyfill ([whatwg-fetch](https://www.npmjs.com/package/whatwg-fetch), [es6-promise](https://www.npmjs.com/package/es6-promise)) for unsupported browsers and a wrapper around request within Node.js applications. We advise using the [isormophic-fetch](https://www.npmjs.com/package/isomorphic-fetch) library which supports fetch within both environments.
+This library depends on the Promise global which requires a polyfill ([es6-promise](https://www.npmjs.com/package/es6-promise)) for unsupported browsers. It also requires that `fetch` be passed into the constructor; we advise using the [isormophic-fetch](https://www.npmjs.com/package/isomorphic-fetch) library which supports fetch within both environments.
 
 ## Quickstart
 For a quick overview the below example will install the package and use it as a CommonJS module. For more alternative loading options please view our [Getting started](http://dropbox.github.io/dropbox-sdk-js/tutorial-Getting%20started.html) tutorial.
@@ -19,9 +19,9 @@ $ npm install --save dropbox
 Include the Dropbox or DropboxTeam class to start making your API calls.
 
 ```javascript
-require('isomorphic-fetch'); // or another library of choice.
+var fetch = require('isomorphic-fetch'); // or another library of choice.
 var Dropbox = require('dropbox').Dropbox;
-var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE' });
+var dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN_HERE', fetch: fetch });
 dbx.filesListFolder({path: ''})
   .then(function(response) {
     console.log(response);

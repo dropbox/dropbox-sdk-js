@@ -27,7 +27,7 @@
     "clean": "rimraf dist/ es/ lib/",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint src/",
-    "test:unit": "cross-env BABEL_ENV=testing mocha --require babel-polyfill --require isomorphic-fetch --compilers js:babel-register 'test/*.js'",
+    "test:unit": "cross-env BABEL_ENV=testing mocha --require babel-polyfill --compilers js:babel-register 'test/*.js'",
     "build": "npm run build:cjs && npm run build:es && npm run build:umd && npm run build:umd:min && npm run build:team:umd && npm run build:team:umd:min && npm run generate-tsds",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
     "build:cjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",

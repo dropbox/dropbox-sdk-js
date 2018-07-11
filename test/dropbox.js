@@ -1,5 +1,6 @@
 import sinon from 'sinon';
 import { assert } from 'chai';
+import fetch from 'isomorphic-fetch';
 
 import { RPC } from '../src/constants';
 import { Dropbox } from '../src/dropbox';
@@ -9,7 +10,7 @@ describe('Dropbox', function () {
   describe('api method', function () {
     it('filesListFolder calls Dropbox.request', function () {
       var requestSpy;
-      dbx = new Dropbox();
+      dbx = new Dropbox({fetch});
       requestSpy = sinon.spy(dbx, 'request');
       dbx.filesListFolder({});
       assert(requestSpy.calledOnce);

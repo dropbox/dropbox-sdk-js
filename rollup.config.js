@@ -10,7 +10,7 @@ const env = process.env.NODE_ENV;
 const config = {
   format: 'umd',
   sourceMap: (env !== 'production'),
-  external: ['es6-promise/auto', 'isomorphic-fetch'],
+  external: ['es6-promise/auto'],
 
   plugins: [
     resolve({
