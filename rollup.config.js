@@ -3,6 +3,8 @@ import uglify from 'rollup-plugin-uglify';
 import replace from 'rollup-plugin-replace';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
+import builtins from 'rollup-plugin-node-builtins';
+import globals from 'rollup-plugin-node-globals';
 
 
 const env = process.env.NODE_ENV;
@@ -13,6 +15,8 @@ const config = {
   external: ['es6-promise/auto', 'isomorphic-fetch'],
 
   plugins: [
+    builtins(),
+    globals(),
     resolve({
       main: true,
       jsnext: true,
