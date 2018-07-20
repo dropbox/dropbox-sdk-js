@@ -126,7 +126,7 @@ export class DropboxBase {
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.fetch = options.fetch || fetch;
-    if (!this.fetch) { console.warn('Global fetch is deprecated and will be unsupported in a future version. Please pass fetch function as option when instantiating dropbox instance: new Dropbox({fetch})'); } // eslint-disable-line no-console
+    if (!options.fetch) { console.warn('Global fetch is deprecated and will be unsupported in a future version. Please pass fetch function as option when instantiating dropbox instance: new Dropbox({fetch})'); } // eslint-disable-line no-console
   }
 
   /**
