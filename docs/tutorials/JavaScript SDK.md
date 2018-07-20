@@ -4,9 +4,10 @@ The JavaScript SDK provides a promise interface to relaying calls to the Dropbox
 Using an access token generated from your developer account you'll be able to access your Dropbox information using the Dropbox class to demonstrate the SDK is working correctly.
 
 ```javascript
-require('isomorphic-fetch')
+var fetch = require('isomorphic-fetch');
 var Dropbox = require('dropbox').Dropbox;
 new Dropbox({
+  fetch: fetch,
   accessToken: 'YOUR_ACCESS_TOKEN_HERE'
 })
   .filesListFolder({path: ''})
