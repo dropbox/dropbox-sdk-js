@@ -1,5 +1,6 @@
 import sinon from 'sinon';
 import { assert } from 'chai';
+import fetch from 'isomorphic-fetch';
 import { RPC } from '../src/constants';
 import { DropboxBase } from '../src/dropbox-base';
 import { rpcRequest } from '../src/rpc-request';
@@ -57,7 +58,7 @@ describe('DropboxBase', function () {
   describe('#rpcRequest()', function () {
     it('defaults to the libraries implementation', function () {
       dbx = new DropboxBase();
-      assert.equal(dbx.getRpcRequest(), rpcRequest);
+      assert.equal(dbx.getRpcRequest().toString(), rpcRequest('fetch goes here').toString());
     });
 
     it('can be set to something else by the user', function () {
@@ -86,7 +87,7 @@ describe('DropboxBase', function () {
         'A redirect uri is required.'
       );
     });
-    
+
     it('throws an error if the redirect url isn\'t set and type is code', function () {
       dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
       assert.equal(
@@ -283,7 +284,7 @@ describe('DropboxBase', function () {
   describe('.request()', function () {
     it('calls the correct request method', function () {
       var rpcSpy;
-      dbx = new DropboxBase();
+      dbx = new DropboxBase({fetch});
       rpcSpy = sinon.spy(dbx.getRpcRequest());
       dbx.setRpcRequest(rpcSpy);
       dbx.request('path', {}, 'user', 'api', RPC);
