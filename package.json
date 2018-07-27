@@ -1,6 +1,6 @@
 {
   "name": "dropbox",
-  "version": "4.0.7",
+  "version": "4.0.9",
   "registry": "npm",
   "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
   "browser": "dist/Dropbox-sdk.min.js",
@@ -27,7 +27,7 @@
     "clean": "rimraf dist/ es/ lib/",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint src/",
-    "test:unit": "cross-env BABEL_ENV=testing mocha --require babel-polyfill --require isomorphic-fetch --compilers js:babel-register 'test/*.js'",
+    "test:unit": "cross-env BABEL_ENV=testing mocha --require babel-polyfill --compilers js:babel-register 'test/*.js'",
     "build": "npm run build:cjs && npm run build:es && npm run build:umd && npm run build:umd:min && npm run build:team:umd && npm run build:team:umd:min && npm run generate-tsds",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
     "build:cjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
@@ -57,6 +57,10 @@
     {
       "name": "John Vilk",
       "email": "jvilk@cs.umass.edu"
+    },
+    {
+      "name": "Steve Klebanoff",
+      "email": "steve.klebanoff@gmail.com"
     }
   ],
   "devDependencies": {
@@ -89,6 +93,8 @@
     "rollup-endpoint": "^0.2.2",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.2.1",
     "rollup-plugin-node-resolve": "^3.0.2",
     "rollup-plugin-replace": "^1.1.1",
     "rollup-plugin-uglify": "^2.0.1",

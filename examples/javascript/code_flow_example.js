@@ -5,7 +5,7 @@
 // On the server logs, you should have the auth code, as well as the token
 // from exchanging it. This exchange is invisible to the app user
 
-require('isomorphic-fetch');
+var fetch = require('isomorphic-fetch');
 
 const app = require('express')();
 const hostname = 'localhost';
@@ -14,22 +14,23 @@ const port = 3000;
 
 
 const config = {
+  fetch: fetch,
   clientId: [clientId],
   clientSecret: [clientSecret]
 };
- 
+
 const Dropbox = require('dropbox').Dropbox;
 var dbx = new Dropbox(config);
 
 const redirectUri = `http://${hostname}:${port}/auth`;
 const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code');
- 
+
 app.get('/', (req, res) => {
   res.writeHead(302, { 'Location': authUrl });
   res.end();
 });
 
- 
+
 app.get('/auth', (req, res) => {
   let code = req.query.code;
   console.log(code);
@@ -37,8 +38,8 @@ app.get('/auth', (req, res) => {
     code,
     redirectUri
   }, config);
- 
- 
+
+
   dbx.getAccessTokenFromCode(redirectUri, code)
     .then(function(token) {
         console.log(token);
