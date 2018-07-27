@@ -462,13 +462,25 @@ routes.filesDownload = function (arg) {
 /**
  * Download a folder from the user's Dropbox, as a zip file. The folder must be
  * less than 1 GB in size and have fewer than 10,000 total files. The input
- * cannot be a single file.
+ * cannot be a single file. Consider this deprecated by download_zip_v2.
  * @function Dropbox#filesDownloadZip
  * @arg {FilesDownloadZipArg} arg - The request parameters.
  * @returns {Promise.<FilesDownloadZipResult, Error.<FilesDownloadZipError>>}
  */
 routes.filesDownloadZip = function (arg) {
   return this.request('files/download_zip', arg, 'user', 'content', 'download');
+};
+
+/**
+ * Download a folder from the user's Dropbox, as a zip file. The folder must be
+ * less than 1 GB in size and have fewer than 10,000 total files. The input
+ * cannot be a single file.
+ * @function Dropbox#filesDownloadZipV2
+ * @arg {FilesDownloadZipArgV2} arg - The request parameters.
+ * @returns {Promise.<FilesDownloadZipResultV2, Error.<FilesDownloadZipErrorV2>>}
+ */
+routes.filesDownloadZipV2 = function (arg) {
+  return this.request('files/download_zip_v2', arg, 'user', 'content', 'download');
 };
 
 /**
