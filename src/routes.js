@@ -49,8 +49,9 @@ routes.filePropertiesPropertiesOverwrite = function (arg) {
 /**
  * Permanently removes the specified property group from the file. To remove
  * specific property field key value pairs, see properties/update. To update a
- * template, see templates/update_for_user or templates/update_for_team.
- * Templates can't be removed once created.
+ * template, see templates/update_for_user or templates/update_for_team. To
+ * remove a template, see templates/remove_for_user or
+ * templates/remove_for_team.
  * @function Dropbox#filePropertiesPropertiesRemove
  * @arg {FilePropertiesRemovePropertiesArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<FilePropertiesRemovePropertiesError>>}
@@ -358,6 +359,32 @@ routes.filesCopyV2 = function (arg) {
  */
 routes.filesCreateFolder = function (arg) {
   return this.request('files/create_folder', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Create multiple folders at once. This route is asynchronous for large
+ * batches, which returns a job ID immediately and runs the create folder batch
+ * asynchronously. Otherwise, creates the folders and returns the result
+ * synchronously for smaller inputs. You can force asynchronous behaviour by
+ * using the CreateFolderBatchArg.force_async flag.  Use
+ * create_folder_batch/check to check the job status.
+ * @function Dropbox#filesCreateFolderBatch
+ * @arg {FilesCreateFolderBatchArg} arg - The request parameters.
+ * @returns {Promise.<FilesCreateFolderBatchLaunch, Error.<void>>}
+ */
+routes.filesCreateFolderBatch = function (arg) {
+  return this.request('files/create_folder_batch', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Returns the status of an asynchronous job for create_folder_batch. If
+ * success, it returns list of result for each entry.
+ * @function Dropbox#filesCreateFolderBatchCheck
+ * @arg {AsyncPollArg} arg - The request parameters.
+ * @returns {Promise.<FilesCreateFolderBatchJobStatus, Error.<AsyncPollError>>}
+ */
+routes.filesCreateFolderBatchCheck = function (arg) {
+  return this.request('files/create_folder_batch/check', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -768,7 +795,8 @@ routes.filesUpload = function (arg) {
 
 /**
  * Append more data to an upload session. A single request should not upload
- * more than 150 MB.
+ * more than 150 MB. The maximum size of a file one can upload to an upload
+ * session is 350 GB.
  * @function Dropbox#filesUploadSessionAppend
  * @deprecated
  * @arg {FilesUploadSessionCursor} arg - The request parameters.
@@ -781,7 +809,7 @@ routes.filesUploadSessionAppend = function (arg) {
 /**
  * Append more data to an upload session. When the parameter close is set, this
  * call will close the session. A single request should not upload more than 150
- * MB.
+ * MB. The maximum size of a file one can upload to an upload session is 350 GB.
  * @function Dropbox#filesUploadSessionAppendV2
  * @arg {FilesUploadSessionAppendArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<FilesUploadSessionLookupError>>}
@@ -792,7 +820,8 @@ routes.filesUploadSessionAppendV2 = function (arg) {
 
 /**
  * Finish an upload session and save the uploaded data to the given file path. A
- * single request should not upload more than 150 MB.
+ * single request should not upload more than 150 MB. The maximum size of a file
+ * one can upload to an upload session is 350 GB.
  * @function Dropbox#filesUploadSessionFinish
  * @arg {FilesUploadSessionFinishArg} arg - The request parameters.
  * @returns {Promise.<FilesFileMetadata, Error.<FilesUploadSessionFinishError>>}
@@ -808,7 +837,8 @@ routes.filesUploadSessionFinish = function (arg) {
  * file contents have been uploaded, rather than calling upload_session/finish,
  * use this route to finish all your upload sessions in a single request.
  * UploadSessionStartArg.close or UploadSessionAppendArg.close needs to be true
- * for the last upload_session/start or upload_session/append_v2 call. This
+ * for the last upload_session/start or upload_session/append_v2 call. The
+ * maximum size of a file one can upload to an upload session is 350 GB. This
  * route will return a job_id immediately and do the async commit job in
  * background. Use upload_session/finish_batch/check to check the job status.
  * For the same account, this route should be executed serially. That means you
@@ -839,7 +869,8 @@ routes.filesUploadSessionFinishBatchCheck = function (arg) {
  * starts a new upload session with the given data. You can then use
  * upload_session/append_v2 to add more data and upload_session/finish to save
  * all the data to a file in Dropbox. A single request should not upload more
- * than 150 MB. An upload session can be used for a maximum of 48 hours.
+ * than 150 MB. The maximum size of a file one can upload to an upload session
+ * is 350 GB. An upload session can be used for a maximum of 48 hours.
  * Attempting to use an UploadSessionStartResult.session_id with
  * upload_session/append_v2 or upload_session/finish more than 48 hours after
  * its creation will return a UploadSessionLookupError.not_found.
@@ -1447,6 +1478,19 @@ routes.sharingRevokeSharedLink = function (arg) {
 };
 
 /**
+ * Change the inheritance policy of an existing Shared Folder. Only permitted
+ * for shared folders in a shared team root. If a ShareFolderLaunch.async_job_id
+ * is returned, you'll need to call check_share_job_status until the action
+ * completes to get the metadata for the folder.
+ * @function Dropbox#sharingSetAccessInheritance
+ * @arg {SharingSetAccessInheritanceArg} arg - The request parameters.
+ * @returns {Promise.<SharingShareFolderLaunch, Error.<SharingSetAccessInheritanceError>>}
+ */
+routes.sharingSetAccessInheritance = function (arg) {
+  return this.request('sharing/set_access_inheritance', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Share a folder with collaborators. Most sharing will be completed
  * synchronously. Large folders will be completed asynchronously. To make
  * testing the async case repeatable, set `ShareFolderArg.force_async`. If a
@@ -1541,7 +1585,13 @@ routes.sharingUpdateFolderPolicy = function (arg) {
 };
 
 /**
- * Retrieves team events. Permission : Team Auditing.
+ * Retrieves team events. Events have a lifespan of two years. Events older than
+ * two years will not be returned. Many attributes note 'may be missing due to
+ * historical data gap'. Note that the file_operations category and & analogous
+ * paper events are not available on all Dropbox Business plans
+ * /business/plans-comparison. Use features/get_values
+ * /developers/documentation/http/teams#team-features-get_values to check for
+ * this feature. Permission : Team Auditing.
  * @function Dropbox#teamLogGetEvents
  * @arg {TeamLogGetTeamEventsArg} arg - The request parameters.
  * @returns {Promise.<TeamLogGetTeamEventsResult, Error.<TeamLogGetTeamEventsError>>}

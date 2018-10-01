@@ -1,5 +1,6 @@
 import sinon from 'sinon';
 import { assert } from 'chai';
+import fetch from 'isomorphic-fetch';
 
 import { RPC } from '../src/constants';
 import { Dropbox } from '../src/dropbox';

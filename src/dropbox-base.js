@@ -96,6 +96,7 @@ if (!Array.prototype.includes) {
  * shared between Dropbox and DropboxTeam classes. It is marked as private so
  * that it doesn't show up in the docs because it is never used directly.
  * @arg {Object} options
+ * @arg {Function} [options.fetch] - fetch library for making requests.
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
  * @arg {String} [options.clientId] - The client id for your app. Used to create
@@ -124,6 +125,8 @@ export class DropboxBase {
     this.clientSecret = options.clientSecret;
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
+    this.fetch = options.fetch || fetch;
+    if (!options.fetch) { console.warn('Global fetch is deprecated and will be unsupported in a future version. Please pass fetch function as option when instantiating dropbox instance: new Dropbox({fetch})'); } // eslint-disable-line no-console
   }
 
   /**
@@ -162,7 +165,7 @@ export class DropboxBase {
 
   /**
    * Set the client secret
-   * @arg {String} clientId - Your apps client secret
+   * @arg {String} clientSecret - Your app's client secret
    * @returns {undefined}
    */
   setClientSecret(clientSecret) {
@@ -243,7 +246,7 @@ client_id=${clientId}&client_secret=${clientSecret}`;
       },
     };
 
-    return fetch(path, fetchOptions)
+    return this.fetch(path, fetchOptions)
       .then(res => parseBodyToType(res))
       .then(([res, data]) => {
         // maintaining existing API for error codes not equal to 200 range
@@ -357,7 +360,7 @@ client_id=${clientId}&client_secret=${clientSecret}`;
 
   getRpcRequest() {
     if (this.rpcRequest === undefined) {
-      this.rpcRequest = rpcRequest;
+      this.rpcRequest = rpcRequest(this.fetch);
     }
     return this.rpcRequest;
   }
@@ -368,7 +371,7 @@ client_id=${clientId}&client_secret=${clientSecret}`;
 
   getDownloadRequest() {
     if (this.downloadRequest === undefined) {
-      this.downloadRequest = downloadRequest;
+      this.downloadRequest = downloadRequest(this.fetch);
     }
     return this.downloadRequest;
   }
@@ -379,7 +382,7 @@ client_id=${clientId}&client_secret=${clientSecret}`;
 
   getUploadRequest() {
     if (this.uploadRequest === undefined) {
-      this.uploadRequest = uploadRequest;
+      this.uploadRequest = uploadRequest(this.fetch);
     }
     return this.uploadRequest;
   }

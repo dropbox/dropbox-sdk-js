@@ -16,9 +16,9 @@ used.
 `Dropbox.authenticateWithCordova()` is a method that simplifies authentication from a Cordova / PhoneGap application.
 
 ```javascript
-require('isomorphic-fetch')
+var fetch = require('isomorphic-fetch');
 var Dropbox = require('dropbox').Dropbox;
-var dbx = new Dropbox({ clientId: 'YOUR_CLIENT_KEY_HERE' });
+var dbx = new Dropbox({ clientId: 'YOUR_CLIENT_KEY_HERE', fetch: fetch });
 dbx.authenticateWithCordova(
   function(accessToken) {
       console.log(accessToken);

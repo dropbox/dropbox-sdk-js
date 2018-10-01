@@ -8,6 +8,7 @@ import { DropboxBase } from './dropbox-base';
  * @classdesc The Dropbox SDK class that provides methods to read, write and
  * create files or folders in a user's Dropbox.
  * @arg {Object} options
+ * @arg {Function} [options.fetch] - fetch library for making requests.
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
  * @arg {String} [options.clientId] - The client id for your app. Used to create

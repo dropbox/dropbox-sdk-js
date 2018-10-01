@@ -1,6 +1,6 @@
 function uploadFile() {
   var ACCESS_TOKEN = (<HTMLInputElement> document.getElementById('access-token')).value;
-  var dbx = new Dropbox({ accessToken: ACCESS_TOKEN });
+  var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
   var fileInput = (<HTMLInputElement> document.getElementById('file-upload'));
   var file = fileInput.files[0];
   dbx.filesUpload({path: '/' + file.name, contents: file})

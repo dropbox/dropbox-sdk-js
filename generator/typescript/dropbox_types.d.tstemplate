@@ -15,13 +15,21 @@ declare module DropboxTypes {
     getAccessToken(): string;
 
     /**
+     * Get an OAuth2 access token from an OAuth2 Code.
+     * @param redirectUri A URL to redirect the user to after authenticating.
+     *   This must be added to your app through the admin interface.
+     * @param code An OAuth2 code.
+     */
+    getAccessTokenFromCode(redirectUri: string, code: string): Promise<string>;
+
+    /**
      * Get a URL that can be used to authenticate users for the Dropbox API.
      * @param redirectUri A URL to redirect the user to after authenticating.
      *   This must be added to your app through the admin interface.
      * @param state State that will be returned in the redirect URL to help
      *   prevent cross site scripting attacks.
      */
-    getAuthenticationUrl(redirectUri: string, state?: string): string;
+    getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code'): string;
 
     /**
      * Get the client id
@@ -39,6 +47,12 @@ declare module DropboxTypes {
      * @param clientId Your app's client ID.
      */
     setClientId(clientId: string): void;
+
+    /**
+     * Set the client secret
+     * @param clientSecret Your app's client secret.
+     */
+    setClientSecret(clientSecret: string): void;
   }
 
 /*TYPES*/

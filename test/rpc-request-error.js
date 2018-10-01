@@ -1,6 +1,7 @@
 import sinon from 'sinon';
 import { assert } from 'chai';
-import fetchMock from 'fetch-mock';
+import FetchMock from 'fetch-mock';
+import isomorphicFetch from 'isomorphic-fetch'; // fetchMock needs this in scope to mock correctly.
 import { rpcRequest } from '../src/rpc-request';
 
 var exampleErr = {
@@ -13,19 +14,22 @@ var exampleErr = {
 describe('rpcRequest error', function () {
 
   afterEach(function () {
-    fetchMock.restore();
+    FetchMock.restore();
   });
 
   it('handles errors in expected format', function (done) {
 
-    fetchMock.mock('*', function () {
+    const fetchMock = FetchMock.sandbox().mock('*', function () {
       return {
         status: 500,
-        body: JSON.stringify(exampleErr)
+        body: JSON.stringify(exampleErr),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       };
     }).catch(500);
 
-    rpcRequest('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
       .then(function (data) {
         done(new Error('shouldn’t reach this callback'));
       })
@@ -39,14 +43,14 @@ describe('rpcRequest error', function () {
 
   it('handles errors when json cannot be parsed', function (done) {
 
-    fetchMock.mock('*', function () {
+    const fetchMock = FetchMock.sandbox().mock('*', function () {
       return {
         status: 500,
         body: 'not json'
       };
     }).catch(500);
 
-    rpcRequest('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
       .then(function (data) {
         done(new Error('shouldn’t reach this callback'));
       })

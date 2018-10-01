@@ -1,12 +1,12 @@
 This package supports ES6 Modules, CommonJS and UMD distributable files we will guide you through the installation steps of installing the JavaScript SDK for your application. If you're having problems installing the package please [submit an issue](https://github.com/dropbox/dropbox-sdk-js/issues).
 
 ## Prerequisites
-This library depends on the Promise and Fetch globals which require a polyfill ([whatwg-fetch](https://www.npmjs.com/package/whatwg-fetch), [es6-promise](https://www.npmjs.com/package/es6-promise)) for unsupported browsers and a small wrapper around request within Node.js applications ([node-fetch](https://www.npmjs.com/package/node-fetch)). For universal applications we advise using the [isormophic-fetch](https://www.npmjs.com/package/isomorphic-fetch) library which supports fetch within both environments.
+This library depends on the Promise global which requires a polyfill ([es6-promise](https://www.npmjs.com/package/es6-promise)) for unsupported browsers. It also requires that `fetch` be passed into the constructor; we advise using the [isormophic-fetch](https://www.npmjs.com/package/isomorphic-fetch) library which supports fetch within both environments.
 
 ## Methods of installation
 **With npm or yarn**
 
-`npm i dropbox -S` or `yarn i dropbox -S`
+`npm i dropbox -S` or `yarn add dropbox`
 
 Using an up-to-date [npm](https://www.npmjs.com/) or yarn package you can install [dropbox](http://dropbox.github.io/dropbox-sdk-js) package the from the official npm registry.
 

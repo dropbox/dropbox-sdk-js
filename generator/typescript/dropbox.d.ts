@@ -55,7 +55,8 @@ declare module DropboxTypes {
      * Permanently removes the specified property group from the file. To remove
      * specific property field key value pairs, see propertiesUpdate(). To
      * update a template, see templatesUpdateForUser() or
-     * templatesUpdateForTeam(). Templates can't be removed once created.
+     * templatesUpdateForTeam(). To remove a template, see
+     * templatesRemoveForUser() or templatesRemoveForTeam().
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.RemovePropertiesError>.
@@ -343,6 +344,30 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public filesCreateFolder(arg: files.CreateFolderArg): Promise<files.FolderMetadata>;
+
+    /**
+     * Create multiple folders at once. This route is asynchronous for large
+     * batches, which returns a job ID immediately and runs the create folder
+     * batch asynchronously. Otherwise, creates the folders and returns the
+     * result synchronously for smaller inputs. You can force asynchronous
+     * behaviour by using the CreateFolderBatchArg.force_async flag.  Use
+     * createFolderBatchCheck() to check the job status.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public filesCreateFolderBatch(arg: files.CreateFolderBatchArg): Promise<files.CreateFolderBatchLaunch>;
+
+    /**
+     * Returns the status of an asynchronous job for createFolderBatch(). If
+     * success, it returns list of result for each entry.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<async.PollError>.
+     * @param arg The request parameters.
+     */
+    public filesCreateFolderBatchCheck(arg: async.PollArg): Promise<files.CreateFolderBatchJobStatus>;
 
     /**
      * Create a folder at a given path.
@@ -719,7 +744,8 @@ declare module DropboxTypes {
 
     /**
      * Append more data to an upload session. A single request should not upload
-     * more than 150 MB.
+     * more than 150 MB. The maximum size of a file one can upload to an upload
+     * session is 350 GB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionLookupError>.
@@ -731,7 +757,8 @@ declare module DropboxTypes {
     /**
      * Append more data to an upload session. When the parameter close is set,
      * this call will close the session. A single request should not upload more
-     * than 150 MB.
+     * than 150 MB. The maximum size of a file one can upload to an upload
+     * session is 350 GB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionLookupError>.
@@ -741,7 +768,8 @@ declare module DropboxTypes {
 
     /**
      * Finish an upload session and save the uploaded data to the given file
-     * path. A single request should not upload more than 150 MB.
+     * path. A single request should not upload more than 150 MB. The maximum
+     * size of a file one can upload to an upload session is 350 GB.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<files.UploadSessionFinishError>.
@@ -757,7 +785,8 @@ declare module DropboxTypes {
      * uploadSessionFinish(), use this route to finish all your upload sessions
      * in a single request. UploadSessionStartArg.close or
      * UploadSessionAppendArg.close needs to be true for the last
-     * uploadSessionStart() or uploadSessionAppendV2() call. This route will
+     * uploadSessionStart() or uploadSessionAppendV2() call. The maximum size of
+     * a file one can upload to an upload session is 350 GB. This route will
      * return a job_id immediately and do the async commit job in background.
      * Use uploadSessionFinishBatchCheck() to check the job status. For the same
      * account, this route should be executed serially. That means you should
@@ -786,7 +815,8 @@ declare module DropboxTypes {
      * This call starts a new upload session with the given data. You can then
      * use uploadSessionAppendV2() to add more data and uploadSessionFinish() to
      * save all the data to a file in Dropbox. A single request should not
-     * upload more than 150 MB. An upload session can be used for a maximum of
+     * upload more than 150 MB. The maximum size of a file one can upload to an
+     * upload session is 350 GB. An upload session can be used for a maximum of
      * 48 hours. Attempting to use an UploadSessionStartResult.session_id with
      * uploadSessionAppendV2() or uploadSessionFinish() more than 48 hours after
      * its creation will return a UploadSessionLookupError.not_found.
@@ -1351,6 +1381,19 @@ declare module DropboxTypes {
     public sharingRevokeSharedLink(arg: sharing.RevokeSharedLinkArg): Promise<void>;
 
     /**
+     * Change the inheritance policy of an existing Shared Folder. Only
+     * permitted for shared folders in a shared team root. If a
+     * ShareFolderLaunch.async_job_id is returned, you'll need to call
+     * checkShareJobStatus() until the action completes to get the metadata for
+     * the folder.
+     * 
+     * When an error occurs, the route rejects the promise with type
+     * Error<sharing.SetAccessInheritanceError>.
+     * @param arg The request parameters.
+     */
+    public sharingSetAccessInheritance(arg: sharing.SetAccessInheritanceArg): Promise<sharing.ShareFolderLaunch>;
+
+    /**
      * Share a folder with collaborators. Most sharing will be completed
      * synchronously. Large folders will be completed asynchronously. To make
      * testing the async case repeatable, set `ShareFolderArg.force_async`. If a
@@ -1437,7 +1480,14 @@ declare module DropboxTypes {
     public sharingUpdateFolderPolicy(arg: sharing.UpdateFolderPolicyArg): Promise<sharing.SharedFolderMetadata>;
 
     /**
-     * Retrieves team events. Permission : Team Auditing.
+     * Retrieves team events. Events have a lifespan of two years. Events older
+     * than two years will not be returned. Many attributes note 'may be missing
+     * due to historical data gap'. Note that the file_operations category and &
+     * analogous paper events are not available on all Dropbox Business
+     * [plans]{@link /business/plans-comparison}. Use
+     * [features/get_values]{@link
+     * /developers/documentation/http/teams#team-features-get_values} to check
+     * for this feature. Permission : Team Auditing.
      * 
      * When an error occurs, the route rejects the promise with type
      * Error<team_log.GetTeamEventsError>.
