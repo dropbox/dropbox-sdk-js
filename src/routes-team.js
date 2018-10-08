@@ -405,6 +405,31 @@ routes.teamMembersListContinue = function (arg) {
 };
 
 /**
+ * Moves removed member's files to a different member. This endpoint initiates
+ * an asynchronous job. To obtain the final result of the job, the client should
+ * periodically poll members/move_former_member_files/job_status/check.
+ * Permission : Team member management.
+ * @function DropboxTeam#teamMembersMoveFormerMemberFiles
+ * @arg {TeamMembersDataTransferArg} arg - The request parameters.
+ * @returns {Promise.<AsyncLaunchEmptyResult, Error.<TeamMembersTransferFormerMembersFilesError>>}
+ */
+routes.teamMembersMoveFormerMemberFiles = function (arg) {
+  return this.request('team/members/move_former_member_files', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Once an async_job_id is returned from members/move_former_member_files , use
+ * this to poll the status of the asynchronous request. Permission : Team member
+ * management.
+ * @function DropboxTeam#teamMembersMoveFormerMemberFilesJobStatusCheck
+ * @arg {AsyncPollArg} arg - The request parameters.
+ * @returns {Promise.<AsyncPollEmptyResult, Error.<AsyncPollError>>}
+ */
+routes.teamMembersMoveFormerMemberFilesJobStatusCheck = function (arg) {
+  return this.request('team/members/move_former_member_files/job_status/check', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * Recover a deleted member. Permission : Team member management Exactly one of
  * team_member_id, email, or external_id must be provided to identify the user
  * account.
