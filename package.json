@@ -85,6 +85,7 @@
     "ink-docstrap": "^1.2.1",
     "isomorphic-fetch": "^2.2.1",
     "jsdoc": "^3.4.0",
+    "lodash": "~> 4.17.5",
     "mime": ">=2.0.3",
     "mocha": "^3.4.2",
     "pretty-bytes-cli": "^2.0.0",
