@@ -1290,6 +1290,9 @@ paper_access_denied. Current account cannot access Paper.</td>
 <span class="param-type">'user_suspended'</span>
 |
 
+<span class="param-type">'expired_access_token'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -13000,6 +13003,39 @@ custom properties to add to file.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>strict_conflict</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Be more strict about how each WriteMode
+detects conflict. For example, always return a conflict error when mode =
+WriteMode.update and the given "rev" doesn't match the existing file's "rev",
+even if the existing file has been deleted.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -13319,6 +13355,39 @@ result in a user notification.</td>
 
             <td class="description last">List of
 custom properties to add to file.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>strict_conflict</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Be more strict about how each WriteMode
+detects conflict. For example, always return a conflict error when mode =
+WriteMode.update and the given "rev" doesn't match the existing file's "rev",
+even if the existing file has been deleted.</td>
         </tr>
 
     
@@ -18700,7 +18769,7 @@ contained within  a shared folder.</td>
 
             <td class="description last">A hash of the file content. This field
 can be used to verify data integrity. For more information see our Content
-hash /developers/reference/content-hash page.</td>
+hash https://www.dropbox.com/developers/reference/content-hash page.</td>
         </tr>
 
     
@@ -20983,6 +21052,275 @@ content the file.</td>
             
                 
 <hr>
+<dt class="name" id="FilesGetTemporaryUploadLinkArg">
+    <h4 id="FilesGetTemporaryUploadLinkArg">FilesGetTemporaryUploadLinkArg</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>commit_info</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesCommitInfo">FilesCommitInfo</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Contains the path and other
+optional modifiers for the future upload commit. Equivalent to the parameters
+provided to upload.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>duration</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">How long before this link expires, in seconds.
+Attempting to start an upload with this link longer than this period  of time
+after link creation will result in an error.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesGetTemporaryUploadLinkResult">
+    <h4 id="FilesGetTemporaryUploadLinkResult">FilesGetTemporaryUploadLinkResult</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>link</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The temporary link which can be used to stream a
+file to a Dropbox location.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="FilesGetThumbnailBatchArg">
     <h4 id="FilesGetThumbnailBatchArg">FilesGetThumbnailBatchArg</h4>
 
@@ -21444,7 +21782,8 @@ and their thumbnails.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">A string containing the base64-encoded
+thumbnail data for this file.</td>
         </tr>
 
     
@@ -24140,7 +24479,11 @@ deleted.</td>
 
             
 
-            <td class="description last">Available if .tag is malformed_path.</td>
+            <td class="description last">Available if .tag is malformed_path.
+The given path does not satisfy the required path format. Please refer to the
+:link:`Path formats documentation
+https://www.dropbox.com/developers/documentation/http/documentation#path-formats`
+for more information.</td>
         </tr>
 
     
@@ -27404,7 +27747,7 @@ destination.</td>
 
             
 
-            <td class="description last">The path to the file you want to restore.</td>
+            <td class="description last">The path to save the restored file.</td>
         </tr>
 
     
@@ -27428,7 +27771,7 @@ destination.</td>
 
             
 
-            <td class="description last">The revision to restore for the file.</td>
+            <td class="description last">The revision to restore.</td>
         </tr>
 
     
@@ -31912,7 +32255,7 @@ and the offset.</td>
             
 
             <td class="description last">If true, the current session will be closed, at
-which point you won't be able to call upload_session/append_v2 anymore with
+which point you won't be able to call upload_session/append:2 anymore with
 the current session.</td>
         </tr>
 
@@ -33751,7 +34094,7 @@ collected.</td>
             
 
             <td class="description last">If true, the current session will be closed, at
-which point you won't be able to call upload_session/append_v2 anymore with
+which point you won't be able to call upload_session/append:2 anymore with
 the current session.</td>
         </tr>
 
@@ -33873,7 +34216,7 @@ the current session.</td>
             
 
             <td class="description last">A unique identifier for the upload session.
-Pass this to upload_session/append_v2 and upload_session/finish.</td>
+Pass this to upload_session/append:2 and upload_session/finish.</td>
         </tr>
 
     
@@ -34544,7 +34887,11 @@ taken.</td>
 
             
 
-            <td class="description last">Available if .tag is malformed_path.</td>
+            <td class="description last">Available if .tag is malformed_path.
+The given path does not satisfy the required path format. Please refer to the
+:link:`Path formats documentation
+https://www.dropbox.com/developers/documentation/http/documentation#path-formats`
+for more information.</td>
         </tr>
 
     
@@ -37604,7 +37951,7 @@ docs/list/continue. Allows for pagination.</td>
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;string></span>
+<span class="param-type">Array.&lt;Object></span>
 
 
 
@@ -45927,6 +46274,9 @@ expiry is reached.</td>
 <span class="param-type">'invite_viewer_no_comment'</span>
 |
 
+<span class="param-type">'invite_editor'</span>
+|
+
 <span class="param-type">'unshare'</span>
 |
 
@@ -50990,7 +51340,9 @@ arbitrary ID that an admin can attach to a group.</td>
 
             
 
-            <td class="description last">The access type for this member.</td>
+            <td class="description last">The access type for this member.
+It contains inherited access type from parent folder, and acquired access
+type from this folder.</td>
         </tr>
 
     
@@ -51752,7 +52104,9 @@ invited user.</td>
 
             
 
-            <td class="description last">The access type for this member.</td>
+            <td class="description last">The access type for this member.
+It contains inherited access type from parent folder, and acquired access
+type from this folder.</td>
         </tr>
 
     
@@ -58640,7 +58994,9 @@ member.</td>
 
             
 
-            <td class="description last">The access type for this member.</td>
+            <td class="description last">The access type for this member.
+It contains inherited access type from parent folder, and acquired access
+type from this folder.</td>
         </tr>
 
     
@@ -67026,6 +67382,37 @@ enable/disable viewer info for this shared folder.</td>
 
         <tr>
             
+                <td class="name"><code>access_inheritance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingAccessInheritance">SharingAccessInheritance</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The access
+inheritance settings for the folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>actions</code></td>
             
 
@@ -67382,6 +67769,37 @@ SharedLinkPolicy.members.</td>
 
             <td class="description last">Who can
 enable/disable viewer info for this shared folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>access_inheritance</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingAccessInheritance">SharingAccessInheritance</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The access
+inheritance settings for the folder.</td>
         </tr>
 
     
@@ -71289,7 +71707,9 @@ last seen timestamp.
 
             
 
-            <td class="description last">The access type for this member.</td>
+            <td class="description last">The access type for this member.
+It contains inherited access type from parent folder, and acquired access
+type from this folder.</td>
         </tr>
 
     
@@ -71872,7 +72292,9 @@ member. Only present if same_team is true.</td>
 
             
 
-            <td class="description last">The access type for this member.</td>
+            <td class="description last">The access type for this member.
+It contains inherited access type from parent folder, and acquired access
+type from this folder.</td>
         </tr>
 
     
@@ -107343,6 +107765,39 @@ member_change_membership_type_details.</td>
 
         <tr>
             
+                <td class="name"><code>member_delete_manual_contacts_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogMemberDeleteManualContactsDetails">TeamLogMemberDeleteManualContactsDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+member_delete_manual_contacts_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>member_permanently_delete_account_contents_details</code></td>
             
 
@@ -108252,6 +108707,39 @@ paper_doc_edit_comment_details.</td>
             
 
             <td class="description last">Available if .tag is paper_doc_mention_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>paper_doc_ownership_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPaperDocOwnershipChangedDetails">TeamLogPaperDocOwnershipChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+paper_doc_ownership_changed_details.</td>
         </tr>
 
     
@@ -113973,6 +114461,39 @@ smart_sync_change_policy_details.</td>
 
         <tr>
             
+                <td class="name"><code>team_selective_sync_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamSelectiveSyncPolicyChangedDetails">TeamLogTeamSelectiveSyncPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_selective_sync_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>tfa_change_policy_details</code></td>
             
 
@@ -114032,6 +114553,39 @@ smart_sync_change_policy_details.</td>
 
             <td class="description last">Available if .tag is
 two_account_change_policy_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewer_info_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogViewerInfoPolicyChangedDetails">TeamLogViewerInfoPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+viewer_info_policy_changed_details.</td>
         </tr>
 
     
@@ -114854,6 +115408,9 @@ to an internal error.</td>
 <span class="param-type">'member_change_status_details'</span>
 |
 
+<span class="param-type">'member_delete_manual_contacts_details'</span>
+|
+
 <span class="param-type">'member_permanently_delete_account_contents_details'</span>
 |
 
@@ -114936,6 +115493,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'paper_doc_mention_details'</span>
+|
+
+<span class="param-type">'paper_doc_ownership_changed_details'</span>
 |
 
 <span class="param-type">'paper_doc_request_access_details'</span>
@@ -115463,10 +116023,16 @@ to an internal error.</td>
 <span class="param-type">'sso_change_policy_details'</span>
 |
 
+<span class="param-type">'team_selective_sync_policy_changed_details'</span>
+|
+
 <span class="param-type">'tfa_change_policy_details'</span>
 |
 
 <span class="param-type">'two_account_change_policy_details'</span>
+|
+
+<span class="param-type">'viewer_info_policy_changed_details'</span>
 |
 
 <span class="param-type">'web_sessions_change_fixed_length_policy_details'</span>
@@ -118439,6 +119005,39 @@ joined, suspended, etc.)</td>
 
         <tr>
             
+                <td class="name"><code>member_delete_manual_contacts</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogMemberDeleteManualContactsType">TeamLogMemberDeleteManualContactsType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+member_delete_manual_contacts. (members) Cleared saved contacts</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>member_permanently_delete_account_contents</code></td>
             
 
@@ -119365,6 +119964,39 @@ by 'Followed/unfollowed Paper doc')</td>
 
             <td class="description last">Available if
 .tag is paper_doc_mention. (paper) Mentioned team member in Paper doc</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>paper_doc_ownership_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPaperDocOwnershipChangedType">TeamLogPaperDocOwnershipChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">- Available if .tag is paper_doc_ownership_changed. (paper) Transferred
+ownership of Paper doc</td>
         </tr>
 
     
@@ -125234,6 +125866,40 @@ team</td>
 
         <tr>
             
+                <td class="name"><code>team_selective_sync_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamSelectiveSyncPolicyChangedType">TeamLogTeamSelectiveSyncPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_selective_sync_policy_changed. (team_policies) Enabled/disabled Team
+Selective Sync for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>tfa_change_policy</code></td>
             
 
@@ -125296,6 +125962,39 @@ setting for team</td>
             <td class="description last">Available if .tag is two_account_change_policy. (team_policies)
 Enabled/disabled option for members to link personal Dropbox account and team
 account to same computer</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>viewer_info_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogViewerInfoPolicyChangedType">TeamLogViewerInfoPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is viewer_info_policy_changed. (team_policies) Changed team
+policy for viewer info</td>
         </tr>
 
     
@@ -126095,6 +126794,9 @@ two-step verification</td>
 <span class="param-type">'member_change_status'</span>
 |
 
+<span class="param-type">'member_delete_manual_contacts'</span>
+|
+
 <span class="param-type">'member_permanently_delete_account_contents'</span>
 |
 
@@ -126177,6 +126879,9 @@ two-step verification</td>
 |
 
 <span class="param-type">'paper_doc_mention'</span>
+|
+
+<span class="param-type">'paper_doc_ownership_changed'</span>
 |
 
 <span class="param-type">'paper_doc_request_access'</span>
@@ -126704,10 +127409,16 @@ two-step verification</td>
 <span class="param-type">'sso_change_policy'</span>
 |
 
+<span class="param-type">'team_selective_sync_policy_changed'</span>
+|
+
 <span class="param-type">'tfa_change_policy'</span>
 |
 
 <span class="param-type">'two_account_change_policy'</span>
+|
+
+<span class="param-type">'viewer_info_policy_changed'</span>
 |
 
 <span class="param-type">'web_sessions_change_fixed_length_policy'</span>
@@ -136306,7 +137017,10 @@ data gap.</td>
 
             
 
-            <td class="description last">Number of results to return per call.</td>
+            <td class="description last">The maximal number of results to return per call.
+Note that some calls may not return limit number of events, and may even
+return no events, even with `has_more` set to true. In this case, callers
+should fetch again using get_events/continue.</td>
         </tr>
 
     
@@ -136620,6 +137334,8 @@ events.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -136628,6 +137344,44 @@ events.</td>
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>reset</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#Timestamp">Timestamp</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is reset. Cursors are
+intended to be used quickly. Individual cursor values are normally valid for
+days, but in rare cases may be reset sooner. Cursor reset errors should be
+handled by fetching a new cursor from :route:`get_events`. The associated
+value is the approximate timestamp of the most recent event returned by the
+cursor. This should be used as a resumption point when calling
+:route:`get_events` to obtain a new cursor.</td>
+        </tr>
+
     
 
         <tr>
@@ -136641,6 +137395,9 @@ events.</td>
 <span class="param-type">'bad_cursor'</span>
 |
 
+<span class="param-type">'reset'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -136648,6 +137405,12 @@ events.</td>
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -136902,7 +137665,8 @@ events.</td>
 
             
 
-            <td class="description last">List of events.</td>
+            <td class="description last">List of events. Note that
+events are not guaranteed to be sorted by their timestamp value.</td>
         </tr>
 
     
@@ -136927,7 +137691,12 @@ events.</td>
             
 
             <td class="description last">Pass the cursor into get_events/continue to
-obtain additional events.</td>
+obtain additional events. The value of cursor may change for each response
+from get_events/continue, regardless of the value of has_more; older cursor
+strings may expire. Thus, callers should ensure that they update their cursor
+based on the latest value of cursor after each call, and poll regularly if
+they wish to poll for new events. Callers should handle reset exceptions for
+expired cursors.</td>
         </tr>
 
     
@@ -136951,9 +137720,9 @@ obtain additional events.</td>
 
             
 
-            <td class="description last">Is true if there are additional events that
+            <td class="description last">Is true if there may be additional events that
 have not been returned yet. An additional call to get_events/continue can
-retrieve them.</td>
+retrieve them. Note that has_more may be true, even if events is empty.</td>
         </tr>
 
     
@@ -144839,6 +145608,197 @@ the action taken that caused status change.</td>
 <hr>
 <dt class="name" id="TeamLogMemberChangeStatusType">
     <h4 id="TeamLogMemberChangeStatusType">TeamLogMemberChangeStatusType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogMemberDeleteManualContactsDetails">
+    <h4 id="TeamLogMemberDeleteManualContactsDetails">TeamLogMemberDeleteManualContactsDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Cleared saved contacts.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogMemberDeleteManualContactsType">
+    <h4 id="TeamLogMemberDeleteManualContactsType">TeamLogMemberDeleteManualContactsType</h4>
 
     
 </dt>
@@ -158586,6 +159546,320 @@ historical data gap.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogPaperDocOwnershipChangedDetails">
+    <h4 id="TeamLogPaperDocOwnershipChangedDetails">TeamLogPaperDocOwnershipChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Transferred ownership of Paper doc.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event_uuid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Event unique identifier.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_owner_user_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">New owner.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>old_owner_user_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Previous owner.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogPaperDocOwnershipChangedType">
+    <h4 id="TeamLogPaperDocOwnershipChangedType">TeamLogPaperDocOwnershipChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogPaperDocRequestAccessDetails">
     <h4 id="TeamLogPaperDocRequestAccessDetails">TeamLogPaperDocRequestAccessDetails</h4>
 
@@ -163792,6 +165066,135 @@ details.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogPassPolicy">
+    <h4 id="TeamLogPassPolicy">TeamLogPassPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'allow'</span>
+|
+
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogPasswordChangeDetails">
     <h4 id="TeamLogPasswordChangeDetails">TeamLogPasswordChangeDetails</h4>
 
@@ -164878,6 +166281,133 @@ permanent delete content policy. Might be missing due to historical data gap.</t
 |
 
 <span class="param-type">'none'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogQuickActionType">
+    <h4 id="TeamLogQuickActionType">TeamLogQuickActionType</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Quick action type.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'delete_shared_link'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -177955,6 +179485,72 @@ missing due to historical data gap.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>previous_ns_path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Previous namespace path. Might be
+missing due to historical data gap.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_ns_path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">New namespace path. Might be missing due
+to historical data gap.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -182911,6 +184507,9 @@ team members.
 |
 
 <span class="param-type">'forbid'</span>
+|
+
+<span class="param-type">'team_members_and_whitelist'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -199717,6 +201316,406 @@ missing due to historical data gap.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogTeamSelectiveSyncPolicy">
+    <h4 id="TeamLogTeamSelectiveSyncPolicy">TeamLogTeamSelectiveSyncPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling whether team selective sync is enabled for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamSelectiveSyncPolicyChangedDetails">
+    <h4 id="TeamLogTeamSelectiveSyncPolicyChangedDetails">TeamLogTeamSelectiveSyncPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Enabled/disabled Team Selective Sync for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamSelectiveSyncPolicy">TeamLogTeamSelectiveSyncPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New Team Selective
+Sync policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamSelectiveSyncPolicy">TeamLogTeamSelectiveSyncPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous Team
+Selective Sync policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamSelectiveSyncPolicyChangedType">
+    <h4 id="TeamLogTeamSelectiveSyncPolicyChangedType">TeamLogTeamSelectiveSyncPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogTeamSelectiveSyncSettingsChangedDetails">
     <h4 id="TeamLogTeamSelectiveSyncSettingsChangedDetails">TeamLogTeamSelectiveSyncSettingsChangedDetails</h4>
 
@@ -203219,6 +205218,274 @@ historical data gap.</td>
 
             <td class="description last">App display name. Might be missing due to
 historical data gap.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogViewerInfoPolicyChangedDetails">
+    <h4 id="TeamLogViewerInfoPolicyChangedDetails">TeamLogViewerInfoPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed team policy for viewer info.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPassPolicy">TeamLogPassPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous Viewer Info policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPassPolicy">TeamLogPassPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New Viewer Info policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogViewerInfoPolicyChangedType">
+    <h4 id="TeamLogViewerInfoPolicyChangedType">TeamLogViewerInfoPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -207131,8 +209398,325 @@ complete.</td>
             
                 
 <hr>
+<dt class="name" id="TeamMembersDataTransferArg">
+    <h4 id="TeamMembersDataTransferArg">TeamMembersDataTransferArg</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>user</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamUserSelectorArg">TeamUserSelectorArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Identity of user to
+remove/suspend/have their files moved.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>transfer_dest_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamUserSelectorArg">TeamUserSelectorArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Files from the deleted
+member account will be transferred to this user.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>transfer_admin_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamUserSelectorArg">TeamUserSelectorArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Errors during the
+transfer process will be sent via email to this user.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamMembersDeactivateArg">
     <h4 id="TeamMembersDeactivateArg">TeamMembersDeactivateArg</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>user</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamUserSelectorArg">TeamUserSelectorArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Identity of user to
+remove/suspend/have their files moved.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>wipe_data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">If provided, controls if the user's data will
+be deleted on their linked devices.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamMembersDeactivateBaseArg">
+    <h4 id="TeamMembersDeactivateBaseArg">TeamMembersDeactivateBaseArg</h4>
 
     
 </dt>
@@ -207204,32 +209788,8 @@ identify the user account.
 
             
 
-            <td class="description last">Identity of user to remove/suspend.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>wipe_data</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">If provided, controls if the user's data will
-be deleted on their linked devices.</td>
+            <td class="description last">Identity of user to
+remove/suspend/have their files moved.</td>
         </tr>
 
     
@@ -208986,7 +211546,8 @@ identify the user account.
 
             
 
-            <td class="description last">Identity of user to remove/suspend.</td>
+            <td class="description last">Identity of user to
+remove/suspend/have their files moved.</td>
         </tr>
 
     
@@ -209236,9 +211797,6 @@ keep the account the argument wipe_data should be set to False.</td>
 <span class="param-type">'other'</span>
 |
 
-<span class="param-type">'remove_last_admin'</span>
-|
-
 <span class="param-type">'removed_and_transfer_dest_should_differ'</span>
 |
 
@@ -209251,16 +211809,22 @@ keep the account the argument wipe_data should be set to False.</td>
 <span class="param-type">'transfer_dest_user_not_in_team'</span>
 |
 
-<span class="param-type">'transfer_admin_user_not_found'</span>
+<span class="param-type">'transfer_admin_user_not_in_team'</span>
 |
 
-<span class="param-type">'transfer_admin_user_not_in_team'</span>
+<span class="param-type">'transfer_admin_user_not_found'</span>
 |
 
 <span class="param-type">'unspecified_transfer_admin_id'</span>
 |
 
 <span class="param-type">'transfer_admin_is_not_admin'</span>
+|
+
+<span class="param-type">'recipient_not_verified'</span>
+|
+
+<span class="param-type">'remove_last_admin'</span>
 |
 
 <span class="param-type">'cannot_keep_account_and_transfer'</span>
@@ -210508,6 +213072,324 @@ user is a directory restricted user.</td>
             
                 
 <hr>
+<dt class="name" id="TeamMembersTransferFilesError">
+    <h4 id="TeamMembersTransferFilesError">TeamMembersTransferFilesError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'user_not_found'</span>
+|
+
+<span class="param-type">'user_not_in_team'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
+<span class="param-type">'removed_and_transfer_dest_should_differ'</span>
+|
+
+<span class="param-type">'removed_and_transfer_admin_should_differ'</span>
+|
+
+<span class="param-type">'transfer_dest_user_not_found'</span>
+|
+
+<span class="param-type">'transfer_dest_user_not_in_team'</span>
+|
+
+<span class="param-type">'transfer_admin_user_not_in_team'</span>
+|
+
+<span class="param-type">'transfer_admin_user_not_found'</span>
+|
+
+<span class="param-type">'unspecified_transfer_admin_id'</span>
+|
+
+<span class="param-type">'transfer_admin_is_not_admin'</span>
+|
+
+<span class="param-type">'recipient_not_verified'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamMembersTransferFormerMembersFilesError">
+    <h4 id="TeamMembersTransferFormerMembersFilesError">TeamMembersTransferFormerMembersFilesError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'user_not_found'</span>
+|
+
+<span class="param-type">'user_not_in_team'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
+<span class="param-type">'removed_and_transfer_dest_should_differ'</span>
+|
+
+<span class="param-type">'removed_and_transfer_admin_should_differ'</span>
+|
+
+<span class="param-type">'transfer_dest_user_not_found'</span>
+|
+
+<span class="param-type">'transfer_dest_user_not_in_team'</span>
+|
+
+<span class="param-type">'transfer_admin_user_not_in_team'</span>
+|
+
+<span class="param-type">'transfer_admin_user_not_found'</span>
+|
+
+<span class="param-type">'unspecified_transfer_admin_id'</span>
+|
+
+<span class="param-type">'transfer_admin_is_not_admin'</span>
+|
+
+<span class="param-type">'recipient_not_verified'</span>
+|
+
+<span class="param-type">'user_data_is_being_transferred'</span>
+|
+
+<span class="param-type">'user_not_removed'</span>
+|
+
+<span class="param-type">'user_data_cannot_be_transferred'</span>
+|
+
+<span class="param-type">'user_data_already_transferred'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamMembersUnsuspendArg">
     <h4 id="TeamMembersUnsuspendArg">TeamMembersUnsuspendArg</h4>
 
@@ -211612,6 +214494,132 @@ the ID of the owning team member. Otherwise, this field is not present.</td>
 |
 
 <span class="param-type">'team_member_folder'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamPoliciesCameraUploadsPolicyState">
+    <h4 id="TeamPoliciesCameraUploadsPolicyState">TeamPoliciesCameraUploadsPolicyState</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -227368,7 +230376,7 @@ stop_sync).</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2018-07-19T16:29:33-07:00
+		on 2018-10-08T11:48:13-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

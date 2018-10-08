@@ -185,6 +185,40 @@ create files or folders in a user's Dropbox.</div>
 
         <tr>
             
+                <td class="name"><code>fetch</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">fetch library for making requests.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>accessToken</code></td>
             
 
@@ -4321,9 +4355,9 @@ source path is a folder all its contents will be copied.
     <div class="description">
         Copy multiple files or folders to different locations at once in the user's
 Dropbox. If RelocationBatchArg.allow_shared_folder is false, this route is
-atomic. If on entry failes, the whole transaction will abort. If
-RelocationBatchArg.allow_shared_folder is true, not atomicity is guaranteed,
-but you will be able to copy the contents of shared folders to new locations.
+atomic. If one entry fails, the whole transaction will abort. If
+RelocationBatchArg.allow_shared_folder is true, atomicity is not guaranteed,
+but it allows you to copy the contents of shared folders to new locations.
 This route will return job ID immediately and do the async copy job in
 background. Please use copy_batch/check to check the job status.
     </div>
@@ -6437,8 +6471,8 @@ DeletedMetadata object.
     
     <div class="description">
         Download a folder from the user's Dropbox, as a zip file. The folder must be
-less than 1 GB in size and have fewer than 10,000 total files. The input
-cannot be a single file.
+less than 20 GB in size and have fewer than 10,000 total files. The input
+cannot be a single file. Any single file must be less than 4GB in size.
     </div>
     
 
@@ -6888,7 +6922,8 @@ formats will return an unsupported extension error.
     
     <div class="description">
         Get a temporary link to stream content of a file. This link will expire in
-four hours and afterwards you will get 410 Gone. Content-Type of the link is
+four hours and afterwards you will get 410 Gone. So this URL should not be
+used to display content directly in the browser.  Content-Type of the link is
 determined automatically by the file's mime type.
     </div>
     
@@ -7013,6 +7048,180 @@ determined automatically by the file's mime type.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#FilesGetTemporaryLinkResult">FilesGetTemporaryLinkResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesGetTemporaryLinkError">FilesGetTemporaryLinkError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filesGetTemporaryUploadLink"><span class="type-signature"></span>filesGetTemporaryUploadLink(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get a one-time use temporary upload link to upload a file to a Dropbox
+location.  This endpoint acts as a delayed upload. The returned temporary
+upload link may be used to make a POST request with the data to be uploaded.
+The upload will then be perfomed with the CommitInfo previously provided to
+get_temporary_upload_link but evaluated only upon consumption. Hence, errors
+stemming from invalid CommitInfo with respect to the state of the user's
+Dropbox will only be communicated at consumption time. Additionally, these
+errors are surfaced as generic HTTP 409 Conflict responses, potentially
+hiding issue details. The maximum temporary upload link duration is 4 hours.
+Upon consumption or expiration, a new link will have to be generated.
+Multiple links may exist for a specific upload path at any given time.  The
+POST request on the temporary upload link must have its Content-Type set to
+"application/octet-stream".  Example temporary upload link consumption
+request:  curl -X POST
+https://dl.dropboxusercontent.com/apitul/1/bNi2uIYF51cVBND --header
+"Content-Type: application/octet-stream" --data-binary @local_file.txt  A
+successful temporary upload link consumption request returns the content hash
+of the uploaded data in JSON format.  Example succesful temporary upload link
+consumption response: {"content-hash":
+"599d71033d700ac892a0e48fa61b125d2f5994"}  An unsuccessful temporary upload
+link consumption request returns any of the following status codes:  HTTP 400
+Bad Request: Content-Type is not one of application/octet-stream and
+text/plain or request is invalid. HTTP 409 Conflict: The temporary upload
+link does not exist or is currently unavailable, the upload failed, or
+another error happened. HTTP 410 Gone: The temporary upload link is expired
+or consumed.  Example unsuccessful temporary upload link consumption
+response: Temporary upload link has been recently consumed.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesGetTemporaryUploadLinkArg">FilesGetTemporaryUploadLinkArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesGetTemporaryUploadLinkResult">FilesGetTemporaryUploadLinkResult</a>, <a href="global.html#Error">Error</a>.&lt;void>></span>
 
 
 
@@ -9790,7 +9999,7 @@ for Dropbox Business apps.
 
     
     <div class="description">
-        Restore a file to a specific revision.
+        Restore a specific revision of a file to the given path.
     </div>
     
 
@@ -10386,7 +10595,11 @@ reflected in search results due to a short delay in indexing.
     <div class="description">
         Create a new file with the contents provided in the request. Do not use this
 to upload a file larger than 150 MB. Instead, create an upload session with
-upload_session/start.
+upload_session/start. Calls to this endpoint will count as data transport
+calls for any Dropbox Business teams with a limit on the number of data
+transport calls allowed per month. For more information, see the Data
+transport limit page
+https://www.dropbox.com/developers/reference/data-transport-limit.
     </div>
     
 
@@ -10536,7 +10749,10 @@ upload_session/start.
     <div class="description">
         Append more data to an upload session. A single request should not upload
 more than 150 MB. The maximum size of a file one can upload to an upload
-session is 350 GB.
+session is 350 GB. Calls to this endpoint will count as data transport calls
+for any Dropbox Business teams with a limit on the number of data transport
+calls allowed per month. For more information, see the Data transport limit
+page https://www.dropbox.com/developers/reference/data-transport-limit.
     </div>
     
 
@@ -10696,6 +10912,10 @@ session is 350 GB.
         Append more data to an upload session. When the parameter close is set, this
 call will close the session. A single request should not upload more than 150
 MB. The maximum size of a file one can upload to an upload session is 350 GB.
+Calls to this endpoint will count as data transport calls for any Dropbox
+Business teams with a limit on the number of data transport calls allowed per
+month. For more information, see the Data transport limit page
+https://www.dropbox.com/developers/reference/data-transport-limit.
     </div>
     
 
@@ -10845,7 +11065,11 @@ MB. The maximum size of a file one can upload to an upload session is 350 GB.
     <div class="description">
         Finish an upload session and save the uploaded data to the given file path. A
 single request should not upload more than 150 MB. The maximum size of a file
-one can upload to an upload session is 350 GB.
+one can upload to an upload session is 350 GB. Calls to this endpoint will
+count as data transport calls for any Dropbox Business teams with a limit on
+the number of data transport calls allowed per month. For more information,
+see the Data transport limit page
+https://www.dropbox.com/developers/reference/data-transport-limit.
     </div>
     
 
@@ -11005,7 +11229,11 @@ route will return a job_id immediately and do the async commit job in
 background. Use upload_session/finish_batch/check to check the job status.
 For the same account, this route should be executed serially. That means you
 should not start the next job before current job finishes. We allow up to
-1000 entries in a single request.
+1000 entries in a single request. Calls to this endpoint will count as data
+transport calls for any Dropbox Business teams with a limit on the number of
+data transport calls allowed per month. For more information, see the Data
+transport limit page
+https://www.dropbox.com/developers/reference/data-transport-limit.
     </div>
     
 
@@ -11311,7 +11539,11 @@ than 150 MB. The maximum size of a file one can upload to an upload session
 is 350 GB. An upload session can be used for a maximum of 48 hours.
 Attempting to use an UploadSessionStartResult.session_id with
 upload_session/append_v2 or upload_session/finish more than 48 hours after
-its creation will return a UploadSessionLookupError.not_found.
+its creation will return a UploadSessionLookupError.not_found. Calls to this
+endpoint will count as data transport calls for any Dropbox Business teams
+with a limit on the number of data transport calls allowed per month. For
+more information, see the Data transport limit page
+https://www.dropbox.com/developers/reference/data-transport-limit.
     </div>
     
 
@@ -22492,7 +22724,7 @@ queried per request.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2018-07-19T16:29:33-07:00
+		on 2018-10-08T11:48:13-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
