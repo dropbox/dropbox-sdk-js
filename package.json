@@ -90,6 +90,7 @@
     "mocha": "^3.4.2",
     "pretty-bytes-cli": "^2.0.0",
     "prompt": "^1.0.0",
+    "randomatic": "~>3.0.0",
     "rollup": "^0.42.0",
     "rollup-endpoint": "^0.2.2",
     "rollup-plugin-babel": "^2.7.1",
