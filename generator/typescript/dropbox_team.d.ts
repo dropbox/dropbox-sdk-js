@@ -512,7 +512,7 @@ declare module DropboxTypes {
      * in the list.
      *
      * When an error occurs, the route rejects the promise with type
-     * Error<void>.
+     * Error<team.TeamNamespacesListError>.
      * @param arg The request parameters.
      */
     public teamNamespacesList(arg: team.TeamNamespacesListArg): Promise<team.TeamNamespacesListResult>;

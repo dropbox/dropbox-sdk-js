@@ -22,6 +22,27 @@ routes.authTokenRevoke = function (arg) {
 };
 
 /**
+ * Removes all manually added contacts. You'll still keep contacts who are on
+ * your team or who you imported. New contacts will be added when you share.
+ * @function Dropbox#contactsDeleteManualContacts
+ * @arg {void} arg - The request parameters.
+ * @returns {Promise.<void, Error.<void>>}
+ */
+routes.contactsDeleteManualContacts = function (arg) {
+  return this.request('contacts/delete_manual_contacts', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Removes manually added contacts from the given list.
+ * @function Dropbox#contactsDeleteManualContactsBatch
+ * @arg {ContactsDeleteManualContactsArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<ContactsDeleteManualContactsError>>}
+ */
+routes.contactsDeleteManualContactsBatch = function (arg) {
+  return this.request('contacts/delete_manual_contacts_batch', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Add property groups to a Dropbox file. See templates/add_for_user or
  * templates/add_for_team to create new templates.
  * @function Dropbox#filePropertiesPropertiesAdd

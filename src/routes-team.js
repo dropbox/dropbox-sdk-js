@@ -536,7 +536,7 @@ routes.teamMembersUnsuspend = function (arg) {
  * be owned by other users or other teams. Duplicates may occur in the list.
  * @function DropboxTeam#teamNamespacesList
  * @arg {TeamTeamNamespacesListArg} arg - The request parameters.
- * @returns {Promise.<TeamTeamNamespacesListResult, Error.<void>>}
+ * @returns {Promise.<TeamTeamNamespacesListResult, Error.<TeamTeamNamespacesListError>>}
  */
 routes.teamNamespacesList = function (arg) {
   return this.request('team/namespaces/list', arg, 'team', 'api', 'rpc');

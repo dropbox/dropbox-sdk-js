@@ -197,6 +197,20 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} ContactsDeleteManualContactsArg
+ * @property {Array.<Object>} email_addresses - List of manually added contacts
+ * to be deleted.
+ */
+
+/**
+ * @typedef {Object} ContactsDeleteManualContactsError
+ * @property {Array.<Object>} [contacts_not_found] - Available if .tag is
+ * contacts_not_found. Can't delete contacts from this list. Make sure the list
+ * only has manually added contacts. The deletion was cancelled.
+ * @property {('contacts_not_found'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} FilePropertiesAddPropertiesArg
  * @property {string} path - A unique identifier for the file or folder.
  * @property {Array.<FilePropertiesPropertyGroup>} property_groups - The
@@ -2761,7 +2775,7 @@ is only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} SharingLinkAudience
- * @property {('public'|'team'|'members'|'other')} .tag - Tag identifying the union variant.
+ * @property {('public'|'team'|'no_one'|'members'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -5039,6 +5053,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} TeamRemovedStatus
  * @property {boolean} is_recoverable - True if the removed team member is
  * recoverable.
+ * @property {boolean} is_disconnected - True if the team member's account was
+ * converted to individual account.
  */
 
 /**
@@ -5426,7 +5442,12 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamTeamNamespacesListContinueError
- * @property {('invalid_cursor'|'other')} .tag - Tag identifying the union variant.
+ * @property {('invalid_arg'|'other'|'invalid_cursor')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamTeamNamespacesListError
+ * @property {('invalid_arg'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -5647,10 +5668,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * The entity who performed the action.
  * @typedef {Object} TeamLogActorLogInfo
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [user] - Available if .tag is user. The user who did the action.
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [admin] - Available if .tag is admin. The admin who did the action.
  * @property
  * {(TeamLogUserOrTeamLinkedAppLogInfo|TeamLogUserLinkedAppLogInfo|TeamLogTeamLinkedAppLogInfo|TeamLogAppLogInfo)}
@@ -5771,6 +5792,26 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Policy for controlling if team members can activate camera uploads
+ * @typedef {Object} TeamLogCameraUploadsPolicy
+ * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Changed camera uploads setting for team.
+ * @typedef {Object} TeamLogCameraUploadsPolicyChangedDetails
+ * @property {TeamLogCameraUploadsPolicy} new_value - New camera uploads
+ * setting.
+ * @property {TeamLogCameraUploadsPolicy} previous_value - Previous camera
+ * uploads setting.
+ */
+
+/**
+ * @typedef {Object} TeamLogCameraUploadsPolicyChangedType
+ * @property {string} description
+ */
+
+/**
  * Certificate details.
  * @typedef {Object} TeamLogCertificate
  * @property {string} subject - Certificate subject.
@@ -5806,7 +5847,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * team_member. Action was done on behalf of a team member.
  * @property {TeamLogNonTeamMemberLogInfo} [non_team_member] - Available if .tag
  * is non_team_member. Action was done on behalf of a non team member.
- * @property {('team_member'|'non_team_member'|'anonymous'|'team'|'other')} .tag - Tag identifying the union variant.
+ * @property {TeamLogTrustedNonTeamMemberLogInfo} [trusted_non_team_member] -
+ * Available if .tag is trusted_non_team_member. Action was done on behalf of a
+ * trusted non team member.
+ * @property {('team_member'|'non_team_member'|'anonymous'|'team'|'trusted_non_team_member'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -6350,6 +6394,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * file_change_comment_subscription_details.
  * @property {TeamLogFileDeleteCommentDetails} [file_delete_comment_details] -
  * Available if .tag is file_delete_comment_details.
+ * @property {TeamLogFileEditCommentDetails} [file_edit_comment_details] -
+ * Available if .tag is file_edit_comment_details.
  * @property {TeamLogFileLikeCommentDetails} [file_like_comment_details] -
  * Available if .tag is file_like_comment_details.
  * @property {TeamLogFileResolveCommentDetails} [file_resolve_comment_details] -
@@ -6950,6 +6996,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogAllowDownloadEnabledDetails}
  * [allow_download_enabled_details] - Available if .tag is
  * allow_download_enabled_details.
+ * @property {TeamLogCameraUploadsPolicyChangedDetails}
+ * [camera_uploads_policy_changed_details] - Available if .tag is
+ * camera_uploads_policy_changed_details.
  * @property {TeamLogDataPlacementRestrictionChangePolicyDetails}
  * [data_placement_restriction_change_policy_details] - Available if .tag is
  * data_placement_restriction_change_policy_details.
@@ -7127,7 +7176,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMissingDetails} [missing_details] - Available if .tag is
  * missing_details. Hints that this event was returned with missing details due
  * to an internal error.
- * @property {('app_link_team_details'|'app_link_user_details'|'app_unlink_team_details'|'app_unlink_user_details'|'file_add_comment_details'|'file_change_comment_subscription_details'|'file_delete_comment_details'|'file_like_comment_details'|'file_resolve_comment_details'|'file_unlike_comment_details'|'file_unresolve_comment_details'|'device_change_ip_desktop_details'|'device_change_ip_mobile_details'|'device_change_ip_web_details'|'device_delete_on_unlink_fail_details'|'device_delete_on_unlink_success_details'|'device_link_fail_details'|'device_link_success_details'|'device_management_disabled_details'|'device_management_enabled_details'|'device_unlink_details'|'emm_refresh_auth_token_details'|'account_capture_change_availability_details'|'account_capture_migrate_account_details'|'account_capture_notification_emails_sent_details'|'account_capture_relinquish_account_details'|'disabled_domain_invites_details'|'domain_invites_approve_request_to_join_team_details'|'domain_invites_decline_request_to_join_team_details'|'domain_invites_email_existing_users_details'|'domain_invites_request_to_join_team_details'|'domain_invites_set_invite_new_user_pref_to_no_details'|'domain_invites_set_invite_new_user_pref_to_yes_details'|'domain_verification_add_domain_fail_details'|'domain_verification_add_domain_success_details'|'domain_verification_remove_domain_details'|'enabled_domain_invites_details'|'create_folder_details'|'file_add_details'|'file_copy_details'|'file_delete_details'|'file_download_details'|'file_edit_details'|'file_get_copy_reference_details'|'file_move_details'|'file_permanently_delete_details'|'file_preview_details'|'file_rename_details'|'file_restore_details'|'file_revert_details'|'file_rollback_changes_details'|'file_save_copy_reference_details'|'file_request_change_details'|'file_request_close_details'|'file_request_create_details'|'file_request_receive_file_details'|'group_add_external_id_details'|'group_add_member_details'|'group_change_external_id_details'|'group_change_management_type_details'|'group_change_member_role_details'|'group_create_details'|'group_delete_details'|'group_description_updated_details'|'group_join_policy_updated_details'|'group_moved_details'|'group_remove_external_id_details'|'group_remove_member_details'|'group_rename_details'|'emm_error_details'|'login_fail_details'|'login_success_details'|'logout_details'|'reseller_support_session_end_details'|'reseller_support_session_start_details'|'sign_in_as_session_end_details'|'sign_in_as_session_start_details'|'sso_error_details'|'member_add_name_details'|'member_change_admin_role_details'|'member_change_email_details'|'member_change_membership_type_details'|'member_change_name_details'|'member_change_status_details'|'member_delete_manual_contacts_details'|'member_permanently_delete_account_contents_details'|'member_space_limits_add_custom_quota_details'|'member_space_limits_change_custom_quota_details'|'member_space_limits_change_status_details'|'member_space_limits_remove_custom_quota_details'|'member_suggest_details'|'member_transfer_account_contents_details'|'secondary_mails_policy_changed_details'|'paper_content_add_member_details'|'paper_content_add_to_folder_details'|'paper_content_archive_details'|'paper_content_create_details'|'paper_content_permanently_delete_details'|'paper_content_remove_from_folder_details'|'paper_content_remove_member_details'|'paper_content_rename_details'|'paper_content_restore_details'|'paper_doc_add_comment_details'|'paper_doc_change_member_role_details'|'paper_doc_change_sharing_policy_details'|'paper_doc_change_subscription_details'|'paper_doc_deleted_details'|'paper_doc_delete_comment_details'|'paper_doc_download_details'|'paper_doc_edit_details'|'paper_doc_edit_comment_details'|'paper_doc_followed_details'|'paper_doc_mention_details'|'paper_doc_ownership_changed_details'|'paper_doc_request_access_details'|'paper_doc_resolve_comment_details'|'paper_doc_revert_details'|'paper_doc_slack_share_details'|'paper_doc_team_invite_details'|'paper_doc_trashed_details'|'paper_doc_unresolve_comment_details'|'paper_doc_untrashed_details'|'paper_doc_view_details'|'paper_external_view_allow_details'|'paper_external_view_default_team_details'|'paper_external_view_forbid_details'|'paper_folder_change_subscription_details'|'paper_folder_deleted_details'|'paper_folder_followed_details'|'paper_folder_team_invite_details'|'password_change_details'|'password_reset_details'|'password_reset_all_details'|'emm_create_exceptions_report_details'|'emm_create_usage_report_details'|'export_members_report_details'|'paper_admin_export_start_details'|'smart_sync_create_admin_privilege_report_details'|'team_activity_create_report_details'|'collection_share_details'|'note_acl_invite_only_details'|'note_acl_link_details'|'note_acl_team_link_details'|'note_shared_details'|'note_share_receive_details'|'open_note_shared_details'|'sf_add_group_details'|'sf_allow_non_members_to_view_shared_links_details'|'sf_external_invite_warn_details'|'sf_fb_invite_details'|'sf_fb_invite_change_role_details'|'sf_fb_uninvite_details'|'sf_invite_group_details'|'sf_team_grant_access_details'|'sf_team_invite_details'|'sf_team_invite_change_role_details'|'sf_team_join_details'|'sf_team_join_from_oob_link_details'|'sf_team_uninvite_details'|'shared_content_add_invitees_details'|'shared_content_add_link_expiry_details'|'shared_content_add_link_password_details'|'shared_content_add_member_details'|'shared_content_change_downloads_policy_details'|'shared_content_change_invitee_role_details'|'shared_content_change_link_audience_details'|'shared_content_change_link_expiry_details'|'shared_content_change_link_password_details'|'shared_content_change_member_role_details'|'shared_content_change_viewer_info_policy_details'|'shared_content_claim_invitation_details'|'shared_content_copy_details'|'shared_content_download_details'|'shared_content_relinquish_membership_details'|'shared_content_remove_invitees_details'|'shared_content_remove_link_expiry_details'|'shared_content_remove_link_password_details'|'shared_content_remove_member_details'|'shared_content_request_access_details'|'shared_content_unshare_details'|'shared_content_view_details'|'shared_folder_change_link_policy_details'|'shared_folder_change_members_inheritance_policy_details'|'shared_folder_change_members_management_policy_details'|'shared_folder_change_members_policy_details'|'shared_folder_create_details'|'shared_folder_decline_invitation_details'|'shared_folder_mount_details'|'shared_folder_nest_details'|'shared_folder_transfer_ownership_details'|'shared_folder_unmount_details'|'shared_link_add_expiry_details'|'shared_link_change_expiry_details'|'shared_link_change_visibility_details'|'shared_link_copy_details'|'shared_link_create_details'|'shared_link_disable_details'|'shared_link_download_details'|'shared_link_remove_expiry_details'|'shared_link_share_details'|'shared_link_view_details'|'shared_note_opened_details'|'shmodel_group_share_details'|'showcase_access_granted_details'|'showcase_add_member_details'|'showcase_archived_details'|'showcase_created_details'|'showcase_delete_comment_details'|'showcase_edited_details'|'showcase_edit_comment_details'|'showcase_file_added_details'|'showcase_file_download_details'|'showcase_file_removed_details'|'showcase_file_view_details'|'showcase_permanently_deleted_details'|'showcase_post_comment_details'|'showcase_remove_member_details'|'showcase_renamed_details'|'showcase_request_access_details'|'showcase_resolve_comment_details'|'showcase_restored_details'|'showcase_trashed_details'|'showcase_trashed_deprecated_details'|'showcase_unresolve_comment_details'|'showcase_untrashed_details'|'showcase_untrashed_deprecated_details'|'showcase_view_details'|'sso_add_cert_details'|'sso_add_login_url_details'|'sso_add_logout_url_details'|'sso_change_cert_details'|'sso_change_login_url_details'|'sso_change_logout_url_details'|'sso_change_saml_identity_mode_details'|'sso_remove_cert_details'|'sso_remove_login_url_details'|'sso_remove_logout_url_details'|'team_folder_change_status_details'|'team_folder_create_details'|'team_folder_downgrade_details'|'team_folder_permanently_delete_details'|'team_folder_rename_details'|'team_selective_sync_settings_changed_details'|'account_capture_change_policy_details'|'allow_download_disabled_details'|'allow_download_enabled_details'|'data_placement_restriction_change_policy_details'|'data_placement_restriction_satisfy_policy_details'|'device_approvals_change_desktop_policy_details'|'device_approvals_change_mobile_policy_details'|'device_approvals_change_overage_action_details'|'device_approvals_change_unlink_action_details'|'directory_restrictions_add_members_details'|'directory_restrictions_remove_members_details'|'emm_add_exception_details'|'emm_change_policy_details'|'emm_remove_exception_details'|'extended_version_history_change_policy_details'|'file_comments_change_policy_details'|'file_requests_change_policy_details'|'file_requests_emails_enabled_details'|'file_requests_emails_restricted_to_team_only_details'|'google_sso_change_policy_details'|'group_user_management_change_policy_details'|'member_requests_change_policy_details'|'member_space_limits_add_exception_details'|'member_space_limits_change_caps_type_policy_details'|'member_space_limits_change_policy_details'|'member_space_limits_remove_exception_details'|'member_suggestions_change_policy_details'|'microsoft_office_addin_change_policy_details'|'network_control_change_policy_details'|'paper_change_deployment_policy_details'|'paper_change_member_link_policy_details'|'paper_change_member_policy_details'|'paper_change_policy_details'|'paper_enabled_users_group_addition_details'|'paper_enabled_users_group_removal_details'|'permanent_delete_change_policy_details'|'sharing_change_folder_join_policy_details'|'sharing_change_link_policy_details'|'sharing_change_member_policy_details'|'showcase_change_download_policy_details'|'showcase_change_enabled_policy_details'|'showcase_change_external_sharing_policy_details'|'smart_sync_change_policy_details'|'smart_sync_not_opt_out_details'|'smart_sync_opt_out_details'|'sso_change_policy_details'|'team_selective_sync_policy_changed_details'|'tfa_change_policy_details'|'two_account_change_policy_details'|'viewer_info_policy_changed_details'|'web_sessions_change_fixed_length_policy_details'|'web_sessions_change_idle_length_policy_details'|'team_merge_from_details'|'team_merge_to_details'|'team_profile_add_logo_details'|'team_profile_change_default_language_details'|'team_profile_change_logo_details'|'team_profile_change_name_details'|'team_profile_remove_logo_details'|'tfa_add_backup_phone_details'|'tfa_add_security_key_details'|'tfa_change_backup_phone_details'|'tfa_change_status_details'|'tfa_remove_backup_phone_details'|'tfa_remove_security_key_details'|'tfa_reset_details'|'missing_details'|'other')} .tag - Tag identifying the union variant.
+ * @property {('app_link_team_details'|'app_link_user_details'|'app_unlink_team_details'|'app_unlink_user_details'|'file_add_comment_details'|'file_change_comment_subscription_details'|'file_delete_comment_details'|'file_edit_comment_details'|'file_like_comment_details'|'file_resolve_comment_details'|'file_unlike_comment_details'|'file_unresolve_comment_details'|'device_change_ip_desktop_details'|'device_change_ip_mobile_details'|'device_change_ip_web_details'|'device_delete_on_unlink_fail_details'|'device_delete_on_unlink_success_details'|'device_link_fail_details'|'device_link_success_details'|'device_management_disabled_details'|'device_management_enabled_details'|'device_unlink_details'|'emm_refresh_auth_token_details'|'account_capture_change_availability_details'|'account_capture_migrate_account_details'|'account_capture_notification_emails_sent_details'|'account_capture_relinquish_account_details'|'disabled_domain_invites_details'|'domain_invites_approve_request_to_join_team_details'|'domain_invites_decline_request_to_join_team_details'|'domain_invites_email_existing_users_details'|'domain_invites_request_to_join_team_details'|'domain_invites_set_invite_new_user_pref_to_no_details'|'domain_invites_set_invite_new_user_pref_to_yes_details'|'domain_verification_add_domain_fail_details'|'domain_verification_add_domain_success_details'|'domain_verification_remove_domain_details'|'enabled_domain_invites_details'|'create_folder_details'|'file_add_details'|'file_copy_details'|'file_delete_details'|'file_download_details'|'file_edit_details'|'file_get_copy_reference_details'|'file_move_details'|'file_permanently_delete_details'|'file_preview_details'|'file_rename_details'|'file_restore_details'|'file_revert_details'|'file_rollback_changes_details'|'file_save_copy_reference_details'|'file_request_change_details'|'file_request_close_details'|'file_request_create_details'|'file_request_receive_file_details'|'group_add_external_id_details'|'group_add_member_details'|'group_change_external_id_details'|'group_change_management_type_details'|'group_change_member_role_details'|'group_create_details'|'group_delete_details'|'group_description_updated_details'|'group_join_policy_updated_details'|'group_moved_details'|'group_remove_external_id_details'|'group_remove_member_details'|'group_rename_details'|'emm_error_details'|'login_fail_details'|'login_success_details'|'logout_details'|'reseller_support_session_end_details'|'reseller_support_session_start_details'|'sign_in_as_session_end_details'|'sign_in_as_session_start_details'|'sso_error_details'|'member_add_name_details'|'member_change_admin_role_details'|'member_change_email_details'|'member_change_membership_type_details'|'member_change_name_details'|'member_change_status_details'|'member_delete_manual_contacts_details'|'member_permanently_delete_account_contents_details'|'member_space_limits_add_custom_quota_details'|'member_space_limits_change_custom_quota_details'|'member_space_limits_change_status_details'|'member_space_limits_remove_custom_quota_details'|'member_suggest_details'|'member_transfer_account_contents_details'|'secondary_mails_policy_changed_details'|'paper_content_add_member_details'|'paper_content_add_to_folder_details'|'paper_content_archive_details'|'paper_content_create_details'|'paper_content_permanently_delete_details'|'paper_content_remove_from_folder_details'|'paper_content_remove_member_details'|'paper_content_rename_details'|'paper_content_restore_details'|'paper_doc_add_comment_details'|'paper_doc_change_member_role_details'|'paper_doc_change_sharing_policy_details'|'paper_doc_change_subscription_details'|'paper_doc_deleted_details'|'paper_doc_delete_comment_details'|'paper_doc_download_details'|'paper_doc_edit_details'|'paper_doc_edit_comment_details'|'paper_doc_followed_details'|'paper_doc_mention_details'|'paper_doc_ownership_changed_details'|'paper_doc_request_access_details'|'paper_doc_resolve_comment_details'|'paper_doc_revert_details'|'paper_doc_slack_share_details'|'paper_doc_team_invite_details'|'paper_doc_trashed_details'|'paper_doc_unresolve_comment_details'|'paper_doc_untrashed_details'|'paper_doc_view_details'|'paper_external_view_allow_details'|'paper_external_view_default_team_details'|'paper_external_view_forbid_details'|'paper_folder_change_subscription_details'|'paper_folder_deleted_details'|'paper_folder_followed_details'|'paper_folder_team_invite_details'|'password_change_details'|'password_reset_details'|'password_reset_all_details'|'emm_create_exceptions_report_details'|'emm_create_usage_report_details'|'export_members_report_details'|'paper_admin_export_start_details'|'smart_sync_create_admin_privilege_report_details'|'team_activity_create_report_details'|'collection_share_details'|'note_acl_invite_only_details'|'note_acl_link_details'|'note_acl_team_link_details'|'note_shared_details'|'note_share_receive_details'|'open_note_shared_details'|'sf_add_group_details'|'sf_allow_non_members_to_view_shared_links_details'|'sf_external_invite_warn_details'|'sf_fb_invite_details'|'sf_fb_invite_change_role_details'|'sf_fb_uninvite_details'|'sf_invite_group_details'|'sf_team_grant_access_details'|'sf_team_invite_details'|'sf_team_invite_change_role_details'|'sf_team_join_details'|'sf_team_join_from_oob_link_details'|'sf_team_uninvite_details'|'shared_content_add_invitees_details'|'shared_content_add_link_expiry_details'|'shared_content_add_link_password_details'|'shared_content_add_member_details'|'shared_content_change_downloads_policy_details'|'shared_content_change_invitee_role_details'|'shared_content_change_link_audience_details'|'shared_content_change_link_expiry_details'|'shared_content_change_link_password_details'|'shared_content_change_member_role_details'|'shared_content_change_viewer_info_policy_details'|'shared_content_claim_invitation_details'|'shared_content_copy_details'|'shared_content_download_details'|'shared_content_relinquish_membership_details'|'shared_content_remove_invitees_details'|'shared_content_remove_link_expiry_details'|'shared_content_remove_link_password_details'|'shared_content_remove_member_details'|'shared_content_request_access_details'|'shared_content_unshare_details'|'shared_content_view_details'|'shared_folder_change_link_policy_details'|'shared_folder_change_members_inheritance_policy_details'|'shared_folder_change_members_management_policy_details'|'shared_folder_change_members_policy_details'|'shared_folder_create_details'|'shared_folder_decline_invitation_details'|'shared_folder_mount_details'|'shared_folder_nest_details'|'shared_folder_transfer_ownership_details'|'shared_folder_unmount_details'|'shared_link_add_expiry_details'|'shared_link_change_expiry_details'|'shared_link_change_visibility_details'|'shared_link_copy_details'|'shared_link_create_details'|'shared_link_disable_details'|'shared_link_download_details'|'shared_link_remove_expiry_details'|'shared_link_share_details'|'shared_link_view_details'|'shared_note_opened_details'|'shmodel_group_share_details'|'showcase_access_granted_details'|'showcase_add_member_details'|'showcase_archived_details'|'showcase_created_details'|'showcase_delete_comment_details'|'showcase_edited_details'|'showcase_edit_comment_details'|'showcase_file_added_details'|'showcase_file_download_details'|'showcase_file_removed_details'|'showcase_file_view_details'|'showcase_permanently_deleted_details'|'showcase_post_comment_details'|'showcase_remove_member_details'|'showcase_renamed_details'|'showcase_request_access_details'|'showcase_resolve_comment_details'|'showcase_restored_details'|'showcase_trashed_details'|'showcase_trashed_deprecated_details'|'showcase_unresolve_comment_details'|'showcase_untrashed_details'|'showcase_untrashed_deprecated_details'|'showcase_view_details'|'sso_add_cert_details'|'sso_add_login_url_details'|'sso_add_logout_url_details'|'sso_change_cert_details'|'sso_change_login_url_details'|'sso_change_logout_url_details'|'sso_change_saml_identity_mode_details'|'sso_remove_cert_details'|'sso_remove_login_url_details'|'sso_remove_logout_url_details'|'team_folder_change_status_details'|'team_folder_create_details'|'team_folder_downgrade_details'|'team_folder_permanently_delete_details'|'team_folder_rename_details'|'team_selective_sync_settings_changed_details'|'account_capture_change_policy_details'|'allow_download_disabled_details'|'allow_download_enabled_details'|'camera_uploads_policy_changed_details'|'data_placement_restriction_change_policy_details'|'data_placement_restriction_satisfy_policy_details'|'device_approvals_change_desktop_policy_details'|'device_approvals_change_mobile_policy_details'|'device_approvals_change_overage_action_details'|'device_approvals_change_unlink_action_details'|'directory_restrictions_add_members_details'|'directory_restrictions_remove_members_details'|'emm_add_exception_details'|'emm_change_policy_details'|'emm_remove_exception_details'|'extended_version_history_change_policy_details'|'file_comments_change_policy_details'|'file_requests_change_policy_details'|'file_requests_emails_enabled_details'|'file_requests_emails_restricted_to_team_only_details'|'google_sso_change_policy_details'|'group_user_management_change_policy_details'|'member_requests_change_policy_details'|'member_space_limits_add_exception_details'|'member_space_limits_change_caps_type_policy_details'|'member_space_limits_change_policy_details'|'member_space_limits_remove_exception_details'|'member_suggestions_change_policy_details'|'microsoft_office_addin_change_policy_details'|'network_control_change_policy_details'|'paper_change_deployment_policy_details'|'paper_change_member_link_policy_details'|'paper_change_member_policy_details'|'paper_change_policy_details'|'paper_enabled_users_group_addition_details'|'paper_enabled_users_group_removal_details'|'permanent_delete_change_policy_details'|'sharing_change_folder_join_policy_details'|'sharing_change_link_policy_details'|'sharing_change_member_policy_details'|'showcase_change_download_policy_details'|'showcase_change_enabled_policy_details'|'showcase_change_external_sharing_policy_details'|'smart_sync_change_policy_details'|'smart_sync_not_opt_out_details'|'smart_sync_opt_out_details'|'sso_change_policy_details'|'team_selective_sync_policy_changed_details'|'tfa_change_policy_details'|'two_account_change_policy_details'|'viewer_info_policy_changed_details'|'web_sessions_change_fixed_length_policy_details'|'web_sessions_change_idle_length_policy_details'|'team_merge_from_details'|'team_merge_to_details'|'team_profile_add_logo_details'|'team_profile_change_default_language_details'|'team_profile_change_logo_details'|'team_profile_change_name_details'|'team_profile_remove_logo_details'|'tfa_add_backup_phone_details'|'tfa_add_security_key_details'|'tfa_change_backup_phone_details'|'tfa_change_status_details'|'tfa_remove_backup_phone_details'|'tfa_remove_security_key_details'|'tfa_reset_details'|'missing_details'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -7149,6 +7198,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * from comment notifications for file
  * @property {TeamLogFileDeleteCommentType} [file_delete_comment] - Available if
  * .tag is file_delete_comment. (comments) Deleted file comment
+ * @property {TeamLogFileEditCommentType} [file_edit_comment] - Available if
+ * .tag is file_edit_comment. (comments) Edited file comment
  * @property {TeamLogFileLikeCommentType} [file_like_comment] - Available if
  * .tag is file_like_comment. (comments) Liked file comment (deprecated, no
  * longer logged)
@@ -7365,7 +7416,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * joined, suspended, etc.)
  * @property {TeamLogMemberDeleteManualContactsType}
  * [member_delete_manual_contacts] - Available if .tag is
- * member_delete_manual_contacts. (members) Cleared saved contacts
+ * member_delete_manual_contacts. (members) Cleared manually added contacts
  * @property {TeamLogMemberPermanentlyDeleteAccountContentsType}
  * [member_permanently_delete_account_contents] - Available if .tag is
  * member_permanently_delete_account_contents. (members) Permanently deleted
@@ -7839,6 +7890,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogAllowDownloadEnabledType} [allow_download_enabled] -
  * Available if .tag is allow_download_enabled. (team_policies) Enabled
  * downloads (deprecated, no longer logged)
+ * @property {TeamLogCameraUploadsPolicyChangedType}
+ * [camera_uploads_policy_changed] - Available if .tag is
+ * camera_uploads_policy_changed. (team_policies) Changed camera uploads setting
+ * for team
  * @property {TeamLogDataPlacementRestrictionChangePolicyType}
  * [data_placement_restriction_change_policy] - Available if .tag is
  * data_placement_restriction_change_policy. (team_policies) Set restrictions on
@@ -8061,7 +8116,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * two-step verification
  * @property {TeamLogTfaResetType} [tfa_reset] - Available if .tag is tfa_reset.
  * (tfa) Reset two-step verification for team member
- * @property {('app_link_team'|'app_link_user'|'app_unlink_team'|'app_unlink_user'|'file_add_comment'|'file_change_comment_subscription'|'file_delete_comment'|'file_like_comment'|'file_resolve_comment'|'file_unlike_comment'|'file_unresolve_comment'|'device_change_ip_desktop'|'device_change_ip_mobile'|'device_change_ip_web'|'device_delete_on_unlink_fail'|'device_delete_on_unlink_success'|'device_link_fail'|'device_link_success'|'device_management_disabled'|'device_management_enabled'|'device_unlink'|'emm_refresh_auth_token'|'account_capture_change_availability'|'account_capture_migrate_account'|'account_capture_notification_emails_sent'|'account_capture_relinquish_account'|'disabled_domain_invites'|'domain_invites_approve_request_to_join_team'|'domain_invites_decline_request_to_join_team'|'domain_invites_email_existing_users'|'domain_invites_request_to_join_team'|'domain_invites_set_invite_new_user_pref_to_no'|'domain_invites_set_invite_new_user_pref_to_yes'|'domain_verification_add_domain_fail'|'domain_verification_add_domain_success'|'domain_verification_remove_domain'|'enabled_domain_invites'|'create_folder'|'file_add'|'file_copy'|'file_delete'|'file_download'|'file_edit'|'file_get_copy_reference'|'file_move'|'file_permanently_delete'|'file_preview'|'file_rename'|'file_restore'|'file_revert'|'file_rollback_changes'|'file_save_copy_reference'|'file_request_change'|'file_request_close'|'file_request_create'|'file_request_receive_file'|'group_add_external_id'|'group_add_member'|'group_change_external_id'|'group_change_management_type'|'group_change_member_role'|'group_create'|'group_delete'|'group_description_updated'|'group_join_policy_updated'|'group_moved'|'group_remove_external_id'|'group_remove_member'|'group_rename'|'emm_error'|'login_fail'|'login_success'|'logout'|'reseller_support_session_end'|'reseller_support_session_start'|'sign_in_as_session_end'|'sign_in_as_session_start'|'sso_error'|'member_add_name'|'member_change_admin_role'|'member_change_email'|'member_change_membership_type'|'member_change_name'|'member_change_status'|'member_delete_manual_contacts'|'member_permanently_delete_account_contents'|'member_space_limits_add_custom_quota'|'member_space_limits_change_custom_quota'|'member_space_limits_change_status'|'member_space_limits_remove_custom_quota'|'member_suggest'|'member_transfer_account_contents'|'secondary_mails_policy_changed'|'paper_content_add_member'|'paper_content_add_to_folder'|'paper_content_archive'|'paper_content_create'|'paper_content_permanently_delete'|'paper_content_remove_from_folder'|'paper_content_remove_member'|'paper_content_rename'|'paper_content_restore'|'paper_doc_add_comment'|'paper_doc_change_member_role'|'paper_doc_change_sharing_policy'|'paper_doc_change_subscription'|'paper_doc_deleted'|'paper_doc_delete_comment'|'paper_doc_download'|'paper_doc_edit'|'paper_doc_edit_comment'|'paper_doc_followed'|'paper_doc_mention'|'paper_doc_ownership_changed'|'paper_doc_request_access'|'paper_doc_resolve_comment'|'paper_doc_revert'|'paper_doc_slack_share'|'paper_doc_team_invite'|'paper_doc_trashed'|'paper_doc_unresolve_comment'|'paper_doc_untrashed'|'paper_doc_view'|'paper_external_view_allow'|'paper_external_view_default_team'|'paper_external_view_forbid'|'paper_folder_change_subscription'|'paper_folder_deleted'|'paper_folder_followed'|'paper_folder_team_invite'|'password_change'|'password_reset'|'password_reset_all'|'emm_create_exceptions_report'|'emm_create_usage_report'|'export_members_report'|'paper_admin_export_start'|'smart_sync_create_admin_privilege_report'|'team_activity_create_report'|'collection_share'|'note_acl_invite_only'|'note_acl_link'|'note_acl_team_link'|'note_shared'|'note_share_receive'|'open_note_shared'|'sf_add_group'|'sf_allow_non_members_to_view_shared_links'|'sf_external_invite_warn'|'sf_fb_invite'|'sf_fb_invite_change_role'|'sf_fb_uninvite'|'sf_invite_group'|'sf_team_grant_access'|'sf_team_invite'|'sf_team_invite_change_role'|'sf_team_join'|'sf_team_join_from_oob_link'|'sf_team_uninvite'|'shared_content_add_invitees'|'shared_content_add_link_expiry'|'shared_content_add_link_password'|'shared_content_add_member'|'shared_content_change_downloads_policy'|'shared_content_change_invitee_role'|'shared_content_change_link_audience'|'shared_content_change_link_expiry'|'shared_content_change_link_password'|'shared_content_change_member_role'|'shared_content_change_viewer_info_policy'|'shared_content_claim_invitation'|'shared_content_copy'|'shared_content_download'|'shared_content_relinquish_membership'|'shared_content_remove_invitees'|'shared_content_remove_link_expiry'|'shared_content_remove_link_password'|'shared_content_remove_member'|'shared_content_request_access'|'shared_content_unshare'|'shared_content_view'|'shared_folder_change_link_policy'|'shared_folder_change_members_inheritance_policy'|'shared_folder_change_members_management_policy'|'shared_folder_change_members_policy'|'shared_folder_create'|'shared_folder_decline_invitation'|'shared_folder_mount'|'shared_folder_nest'|'shared_folder_transfer_ownership'|'shared_folder_unmount'|'shared_link_add_expiry'|'shared_link_change_expiry'|'shared_link_change_visibility'|'shared_link_copy'|'shared_link_create'|'shared_link_disable'|'shared_link_download'|'shared_link_remove_expiry'|'shared_link_share'|'shared_link_view'|'shared_note_opened'|'shmodel_group_share'|'showcase_access_granted'|'showcase_add_member'|'showcase_archived'|'showcase_created'|'showcase_delete_comment'|'showcase_edited'|'showcase_edit_comment'|'showcase_file_added'|'showcase_file_download'|'showcase_file_removed'|'showcase_file_view'|'showcase_permanently_deleted'|'showcase_post_comment'|'showcase_remove_member'|'showcase_renamed'|'showcase_request_access'|'showcase_resolve_comment'|'showcase_restored'|'showcase_trashed'|'showcase_trashed_deprecated'|'showcase_unresolve_comment'|'showcase_untrashed'|'showcase_untrashed_deprecated'|'showcase_view'|'sso_add_cert'|'sso_add_login_url'|'sso_add_logout_url'|'sso_change_cert'|'sso_change_login_url'|'sso_change_logout_url'|'sso_change_saml_identity_mode'|'sso_remove_cert'|'sso_remove_login_url'|'sso_remove_logout_url'|'team_folder_change_status'|'team_folder_create'|'team_folder_downgrade'|'team_folder_permanently_delete'|'team_folder_rename'|'team_selective_sync_settings_changed'|'account_capture_change_policy'|'allow_download_disabled'|'allow_download_enabled'|'data_placement_restriction_change_policy'|'data_placement_restriction_satisfy_policy'|'device_approvals_change_desktop_policy'|'device_approvals_change_mobile_policy'|'device_approvals_change_overage_action'|'device_approvals_change_unlink_action'|'directory_restrictions_add_members'|'directory_restrictions_remove_members'|'emm_add_exception'|'emm_change_policy'|'emm_remove_exception'|'extended_version_history_change_policy'|'file_comments_change_policy'|'file_requests_change_policy'|'file_requests_emails_enabled'|'file_requests_emails_restricted_to_team_only'|'google_sso_change_policy'|'group_user_management_change_policy'|'member_requests_change_policy'|'member_space_limits_add_exception'|'member_space_limits_change_caps_type_policy'|'member_space_limits_change_policy'|'member_space_limits_remove_exception'|'member_suggestions_change_policy'|'microsoft_office_addin_change_policy'|'network_control_change_policy'|'paper_change_deployment_policy'|'paper_change_member_link_policy'|'paper_change_member_policy'|'paper_change_policy'|'paper_enabled_users_group_addition'|'paper_enabled_users_group_removal'|'permanent_delete_change_policy'|'sharing_change_folder_join_policy'|'sharing_change_link_policy'|'sharing_change_member_policy'|'showcase_change_download_policy'|'showcase_change_enabled_policy'|'showcase_change_external_sharing_policy'|'smart_sync_change_policy'|'smart_sync_not_opt_out'|'smart_sync_opt_out'|'sso_change_policy'|'team_selective_sync_policy_changed'|'tfa_change_policy'|'two_account_change_policy'|'viewer_info_policy_changed'|'web_sessions_change_fixed_length_policy'|'web_sessions_change_idle_length_policy'|'team_merge_from'|'team_merge_to'|'team_profile_add_logo'|'team_profile_change_default_language'|'team_profile_change_logo'|'team_profile_change_name'|'team_profile_remove_logo'|'tfa_add_backup_phone'|'tfa_add_security_key'|'tfa_change_backup_phone'|'tfa_change_status'|'tfa_remove_backup_phone'|'tfa_remove_security_key'|'tfa_reset'|'other')} .tag - Tag identifying the union variant.
+ * @property {('app_link_team'|'app_link_user'|'app_unlink_team'|'app_unlink_user'|'file_add_comment'|'file_change_comment_subscription'|'file_delete_comment'|'file_edit_comment'|'file_like_comment'|'file_resolve_comment'|'file_unlike_comment'|'file_unresolve_comment'|'device_change_ip_desktop'|'device_change_ip_mobile'|'device_change_ip_web'|'device_delete_on_unlink_fail'|'device_delete_on_unlink_success'|'device_link_fail'|'device_link_success'|'device_management_disabled'|'device_management_enabled'|'device_unlink'|'emm_refresh_auth_token'|'account_capture_change_availability'|'account_capture_migrate_account'|'account_capture_notification_emails_sent'|'account_capture_relinquish_account'|'disabled_domain_invites'|'domain_invites_approve_request_to_join_team'|'domain_invites_decline_request_to_join_team'|'domain_invites_email_existing_users'|'domain_invites_request_to_join_team'|'domain_invites_set_invite_new_user_pref_to_no'|'domain_invites_set_invite_new_user_pref_to_yes'|'domain_verification_add_domain_fail'|'domain_verification_add_domain_success'|'domain_verification_remove_domain'|'enabled_domain_invites'|'create_folder'|'file_add'|'file_copy'|'file_delete'|'file_download'|'file_edit'|'file_get_copy_reference'|'file_move'|'file_permanently_delete'|'file_preview'|'file_rename'|'file_restore'|'file_revert'|'file_rollback_changes'|'file_save_copy_reference'|'file_request_change'|'file_request_close'|'file_request_create'|'file_request_receive_file'|'group_add_external_id'|'group_add_member'|'group_change_external_id'|'group_change_management_type'|'group_change_member_role'|'group_create'|'group_delete'|'group_description_updated'|'group_join_policy_updated'|'group_moved'|'group_remove_external_id'|'group_remove_member'|'group_rename'|'emm_error'|'login_fail'|'login_success'|'logout'|'reseller_support_session_end'|'reseller_support_session_start'|'sign_in_as_session_end'|'sign_in_as_session_start'|'sso_error'|'member_add_name'|'member_change_admin_role'|'member_change_email'|'member_change_membership_type'|'member_change_name'|'member_change_status'|'member_delete_manual_contacts'|'member_permanently_delete_account_contents'|'member_space_limits_add_custom_quota'|'member_space_limits_change_custom_quota'|'member_space_limits_change_status'|'member_space_limits_remove_custom_quota'|'member_suggest'|'member_transfer_account_contents'|'secondary_mails_policy_changed'|'paper_content_add_member'|'paper_content_add_to_folder'|'paper_content_archive'|'paper_content_create'|'paper_content_permanently_delete'|'paper_content_remove_from_folder'|'paper_content_remove_member'|'paper_content_rename'|'paper_content_restore'|'paper_doc_add_comment'|'paper_doc_change_member_role'|'paper_doc_change_sharing_policy'|'paper_doc_change_subscription'|'paper_doc_deleted'|'paper_doc_delete_comment'|'paper_doc_download'|'paper_doc_edit'|'paper_doc_edit_comment'|'paper_doc_followed'|'paper_doc_mention'|'paper_doc_ownership_changed'|'paper_doc_request_access'|'paper_doc_resolve_comment'|'paper_doc_revert'|'paper_doc_slack_share'|'paper_doc_team_invite'|'paper_doc_trashed'|'paper_doc_unresolve_comment'|'paper_doc_untrashed'|'paper_doc_view'|'paper_external_view_allow'|'paper_external_view_default_team'|'paper_external_view_forbid'|'paper_folder_change_subscription'|'paper_folder_deleted'|'paper_folder_followed'|'paper_folder_team_invite'|'password_change'|'password_reset'|'password_reset_all'|'emm_create_exceptions_report'|'emm_create_usage_report'|'export_members_report'|'paper_admin_export_start'|'smart_sync_create_admin_privilege_report'|'team_activity_create_report'|'collection_share'|'note_acl_invite_only'|'note_acl_link'|'note_acl_team_link'|'note_shared'|'note_share_receive'|'open_note_shared'|'sf_add_group'|'sf_allow_non_members_to_view_shared_links'|'sf_external_invite_warn'|'sf_fb_invite'|'sf_fb_invite_change_role'|'sf_fb_uninvite'|'sf_invite_group'|'sf_team_grant_access'|'sf_team_invite'|'sf_team_invite_change_role'|'sf_team_join'|'sf_team_join_from_oob_link'|'sf_team_uninvite'|'shared_content_add_invitees'|'shared_content_add_link_expiry'|'shared_content_add_link_password'|'shared_content_add_member'|'shared_content_change_downloads_policy'|'shared_content_change_invitee_role'|'shared_content_change_link_audience'|'shared_content_change_link_expiry'|'shared_content_change_link_password'|'shared_content_change_member_role'|'shared_content_change_viewer_info_policy'|'shared_content_claim_invitation'|'shared_content_copy'|'shared_content_download'|'shared_content_relinquish_membership'|'shared_content_remove_invitees'|'shared_content_remove_link_expiry'|'shared_content_remove_link_password'|'shared_content_remove_member'|'shared_content_request_access'|'shared_content_unshare'|'shared_content_view'|'shared_folder_change_link_policy'|'shared_folder_change_members_inheritance_policy'|'shared_folder_change_members_management_policy'|'shared_folder_change_members_policy'|'shared_folder_create'|'shared_folder_decline_invitation'|'shared_folder_mount'|'shared_folder_nest'|'shared_folder_transfer_ownership'|'shared_folder_unmount'|'shared_link_add_expiry'|'shared_link_change_expiry'|'shared_link_change_visibility'|'shared_link_copy'|'shared_link_create'|'shared_link_disable'|'shared_link_download'|'shared_link_remove_expiry'|'shared_link_share'|'shared_link_view'|'shared_note_opened'|'shmodel_group_share'|'showcase_access_granted'|'showcase_add_member'|'showcase_archived'|'showcase_created'|'showcase_delete_comment'|'showcase_edited'|'showcase_edit_comment'|'showcase_file_added'|'showcase_file_download'|'showcase_file_removed'|'showcase_file_view'|'showcase_permanently_deleted'|'showcase_post_comment'|'showcase_remove_member'|'showcase_renamed'|'showcase_request_access'|'showcase_resolve_comment'|'showcase_restored'|'showcase_trashed'|'showcase_trashed_deprecated'|'showcase_unresolve_comment'|'showcase_untrashed'|'showcase_untrashed_deprecated'|'showcase_view'|'sso_add_cert'|'sso_add_login_url'|'sso_add_logout_url'|'sso_change_cert'|'sso_change_login_url'|'sso_change_logout_url'|'sso_change_saml_identity_mode'|'sso_remove_cert'|'sso_remove_login_url'|'sso_remove_logout_url'|'team_folder_change_status'|'team_folder_create'|'team_folder_downgrade'|'team_folder_permanently_delete'|'team_folder_rename'|'team_selective_sync_settings_changed'|'account_capture_change_policy'|'allow_download_disabled'|'allow_download_enabled'|'camera_uploads_policy_changed'|'data_placement_restriction_change_policy'|'data_placement_restriction_satisfy_policy'|'device_approvals_change_desktop_policy'|'device_approvals_change_mobile_policy'|'device_approvals_change_overage_action'|'device_approvals_change_unlink_action'|'directory_restrictions_add_members'|'directory_restrictions_remove_members'|'emm_add_exception'|'emm_change_policy'|'emm_remove_exception'|'extended_version_history_change_policy'|'file_comments_change_policy'|'file_requests_change_policy'|'file_requests_emails_enabled'|'file_requests_emails_restricted_to_team_only'|'google_sso_change_policy'|'group_user_management_change_policy'|'member_requests_change_policy'|'member_space_limits_add_exception'|'member_space_limits_change_caps_type_policy'|'member_space_limits_change_policy'|'member_space_limits_remove_exception'|'member_suggestions_change_policy'|'microsoft_office_addin_change_policy'|'network_control_change_policy'|'paper_change_deployment_policy'|'paper_change_member_link_policy'|'paper_change_member_policy'|'paper_change_policy'|'paper_enabled_users_group_addition'|'paper_enabled_users_group_removal'|'permanent_delete_change_policy'|'sharing_change_folder_join_policy'|'sharing_change_link_policy'|'sharing_change_member_policy'|'showcase_change_download_policy'|'showcase_change_enabled_policy'|'showcase_change_external_sharing_policy'|'smart_sync_change_policy'|'smart_sync_not_opt_out'|'smart_sync_opt_out'|'sso_change_policy'|'team_selective_sync_policy_changed'|'tfa_change_policy'|'two_account_change_policy'|'viewer_info_policy_changed'|'web_sessions_change_fixed_length_policy'|'web_sessions_change_idle_length_policy'|'team_merge_from'|'team_merge_to'|'team_profile_add_logo'|'team_profile_change_default_language'|'team_profile_change_logo'|'team_profile_change_name'|'team_profile_remove_logo'|'tfa_add_backup_phone'|'tfa_add_security_key'|'tfa_change_backup_phone'|'tfa_change_status'|'tfa_remove_backup_phone'|'tfa_remove_security_key'|'tfa_reset'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -8212,6 +8267,19 @@ is only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamLogFileDownloadType
+ * @property {string} description
+ */
+
+/**
+ * Edited file comment.
+ * @typedef {Object} TeamLogFileEditCommentDetails
+ * @property {string} previous_comment_text - Previous comment text.
+ * @property {string} [comment_text] - Comment text. Might be missing due to
+ * historical data gap.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileEditCommentType
  * @property {string} description
  */
 
@@ -8967,7 +9035,7 @@ possible subtypes.
  */
 
 /**
- * Cleared saved contacts.
+ * Cleared manually added contacts.
  * @typedef {Object} TeamLogMemberDeleteManualContactsDetails
  */
 
@@ -9759,7 +9827,7 @@ subtypes.
 
 /**
  * @typedef {Object} TeamLogPaperDownloadFormat
- * @property {('docx'|'html'|'markdown'|'other')} .tag - Tag identifying the union variant.
+ * @property {('docx'|'html'|'markdown'|'pdf'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -9879,7 +9947,7 @@ subtypes.
  * A user or group
  * @typedef {Object} TeamLogParticipantLogInfo
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [user] - Available if .tag is user. A user with a Dropbox account.
  * @property {TeamLogGroupLogInfo} [group] - Available if .tag is group. Group
  * details.
@@ -10370,7 +10438,7 @@ variant.
  * @property {string} destination_path - The path where the member saved the
  * content.
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [shared_content_owner] - The shared content owner.
  */
 
@@ -10386,7 +10454,7 @@ variant.
  * @property {SharingAccessLevel} shared_content_access_level - Shared content
  * access level.
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [shared_content_owner] - The shared content owner.
  */
 
@@ -10478,7 +10546,7 @@ variant.
  * @property {SharingAccessLevel} shared_content_access_level - Shared content
  * access level.
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [shared_content_owner] - The shared content owner.
  */
 
@@ -10671,7 +10739,7 @@ variant.
  * Added file/folder to Dropbox from shared link.
  * @typedef {Object} TeamLogSharedLinkCopyDetails
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [shared_link_owner] - Shared link owner details. Might be missing due to
  * historical data gap.
  */
@@ -10697,7 +10765,7 @@ variant.
  * Removed shared link.
  * @typedef {Object} TeamLogSharedLinkDisableDetails
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [shared_link_owner] - Shared link owner details. Might be missing due to
  * historical data gap.
  */
@@ -10711,7 +10779,7 @@ variant.
  * Downloaded file/folder from shared link.
  * @typedef {Object} TeamLogSharedLinkDownloadDetails
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [shared_link_owner] - Shared link owner details. Might be missing due to
  * historical data gap.
  */
@@ -10737,7 +10805,7 @@ variant.
  * Added members as audience of shared link.
  * @typedef {Object} TeamLogSharedLinkShareDetails
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [shared_link_owner] - Shared link owner details. Might be missing due to
  * historical data gap.
  * @property {Array.<TeamLogExternalUserLogInfo>} [external_users] - Users
@@ -10753,7 +10821,7 @@ variant.
  * Opened shared link.
  * @typedef {Object} TeamLogSharedLinkViewDetails
  * @property
- * {(TeamLogTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
+ * {(TeamLogTeamMemberLogInfo|TeamLogTrustedNonTeamMemberLogInfo|TeamLogNonTeamMemberLogInfo|TeamLogUserLogInfo)}
  * [shared_link_owner] - Shared link owner details. Might be missing due to
  * historical data gap.
  */
@@ -10838,7 +10906,7 @@ variant.
 /**
  * External sharing policy
  * @typedef {Object} TeamLogSharingMemberPolicy
- * @property {('allow'|'forbid'|'team_members_and_whitelist'|'other')} .tag - Tag identifying the union variant.
+ * @property {('allow'|'forbid'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -11777,6 +11845,27 @@ subtypes.
  */
 
 /**
+ * User that is not a member of the team but considered trusted.
+ * @typedef {Object} TeamLogTrustedNonTeamMemberLogInfo
+@property {'trusted_non_team_member'} [.tag] - Tag identifying this subtype
+variant. This field is only present when needed to discriminate between multiple
+possible subtypes.
+ * @property {TeamLogTrustedNonTeamMemberType} trusted_non_team_member_type -
+ * Indicates the type of the trusted non team member user.
+ * @property {string} [account_id] - User unique ID. Might be missing due to
+ * historical data gap.
+ * @property {string} [display_name] - User display name. Might be missing due
+ * to historical data gap.
+ * @property {string} [email] - User email address. Might be missing due to
+ * historical data gap.
+ */
+
+/**
+ * @typedef {Object} TeamLogTrustedNonTeamMemberType
+ * @property {('multi_instance_admin'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * Enabled/disabled option for members to link personal Dropbox account and team
  * account to same computer.
  * @typedef {Object} TeamLogTwoAccountChangePolicyDetails
@@ -11811,8 +11900,8 @@ subtypes.
 /**
  * User's logged information.
  * @typedef {Object} TeamLogUserLogInfo
-@property {("team_member"|"non_team_member")} .tag - Tag identifying the subtype
-variant.
+@property {("team_member"|"trusted_non_team_member"|"non_team_member")} .tag -
+Tag identifying the subtype variant.
  * @property {string} [account_id] - User unique ID. Might be missing due to
  * historical data gap.
  * @property {string} [display_name] - User display name. Might be missing due

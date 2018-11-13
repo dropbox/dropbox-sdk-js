@@ -521,6 +521,31 @@ declare module DropboxTypes {
 
   }
 
+  namespace contacts {
+    export interface DeleteManualContactsArg {
+      /**
+       * List of manually added contacts to be deleted.
+       */
+      email_addresses: Array<common.EmailAddress>;
+    }
+
+    /**
+     * Can't delete contacts from this list. Make sure the list only has
+     * manually added contacts. The deletion was cancelled.
+     */
+    export interface DeleteManualContactsErrorContactsNotFound {
+      '.tag': 'contacts_not_found';
+      contacts_not_found: Array<common.EmailAddress>;
+    }
+
+    export interface DeleteManualContactsErrorOther {
+      '.tag': 'other';
+    }
+
+    export type DeleteManualContactsError = DeleteManualContactsErrorContactsNotFound | DeleteManualContactsErrorOther;
+
+  }
+
   /**
    * This namespace contains helpers for property and template metadata
    * endpoints.  These endpoints enable you to tag arbitrary key/value data to
@@ -6010,6 +6035,16 @@ declare module DropboxTypes {
     }
 
     /**
+     * The link can be used by no one. The link merely points the user to the
+     * content, and does not grant additional rights to the user. Members of the
+     * content who use this link can only access the content with their
+     * pre-existing access rights.
+     */
+    export interface LinkAudienceNoOne {
+      '.tag': 'no_one';
+    }
+
+    /**
      * Link is accessible only by members of the content.
      */
     export interface LinkAudienceMembers {
@@ -6020,7 +6055,7 @@ declare module DropboxTypes {
       '.tag': 'other';
     }
 
-    export type LinkAudience = LinkAudiencePublic | LinkAudienceTeam | LinkAudienceMembers | LinkAudienceOther;
+    export type LinkAudience = LinkAudiencePublic | LinkAudienceTeam | LinkAudienceNoOne | LinkAudienceMembers | LinkAudienceOther;
 
     /**
      * Remove the currently set expiry for the link.
@@ -11131,6 +11166,10 @@ declare module DropboxTypes {
        * True if the removed team member is recoverable.
        */
       is_recoverable: boolean;
+      /**
+       * True if the team member's account was converted to individual account.
+       */
+      is_disconnected: boolean;
     }
 
     export interface RevokeDesktopClientArg extends DeviceSessionArg {
@@ -11773,11 +11812,20 @@ declare module DropboxTypes {
       '.tag': 'invalid_cursor';
     }
 
-    export interface TeamNamespacesListContinueErrorOther {
+    export type TeamNamespacesListContinueError = TeamNamespacesListError | TeamNamespacesListContinueErrorInvalidCursor;
+
+    /**
+     * Argument passed in is invalid.
+     */
+    export interface TeamNamespacesListErrorInvalidArg {
+      '.tag': 'invalid_arg';
+    }
+
+    export interface TeamNamespacesListErrorOther {
       '.tag': 'other';
     }
 
-    export type TeamNamespacesListContinueError = TeamNamespacesListContinueErrorInvalidCursor | TeamNamespacesListContinueErrorOther;
+    export type TeamNamespacesListError = TeamNamespacesListErrorInvalidArg | TeamNamespacesListErrorOther;
 
     /**
      * Result for namespacesList().
@@ -12274,7 +12322,7 @@ declare module DropboxTypes {
      */
     export interface ActorLogInfoUser {
       '.tag': 'user';
-      user: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      user: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
     }
 
     /**
@@ -12282,7 +12330,7 @@ declare module DropboxTypes {
      */
     export interface ActorLogInfoAdmin {
       '.tag': 'admin';
-      admin: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      admin: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
     }
 
     /**
@@ -12504,6 +12552,41 @@ declare module DropboxTypes {
      */
     export type AssetLogInfo = AssetLogInfoFile | AssetLogInfoFolder | AssetLogInfoPaperDocument | AssetLogInfoPaperFolder | AssetLogInfoShowcaseDocument | AssetLogInfoOther;
 
+    export interface CameraUploadsPolicyDisabled {
+      '.tag': 'disabled';
+    }
+
+    export interface CameraUploadsPolicyEnabled {
+      '.tag': 'enabled';
+    }
+
+    export interface CameraUploadsPolicyOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Policy for controlling if team members can activate camera uploads
+     */
+    export type CameraUploadsPolicy = CameraUploadsPolicyDisabled | CameraUploadsPolicyEnabled | CameraUploadsPolicyOther;
+
+    /**
+     * Changed camera uploads setting for team.
+     */
+    export interface CameraUploadsPolicyChangedDetails {
+      /**
+       * New camera uploads setting.
+       */
+      new_value: CameraUploadsPolicy;
+      /**
+       * Previous camera uploads setting.
+       */
+      previous_value: CameraUploadsPolicy;
+    }
+
+    export interface CameraUploadsPolicyChangedType {
+      description: string;
+    }
+
     /**
      * Certificate details.
      */
@@ -12597,6 +12680,13 @@ declare module DropboxTypes {
       '.tag': 'team';
     }
 
+    /**
+     * Action was done on behalf of a trusted non team member.
+     */
+    export interface ContextLogInfoTrustedNonTeamMember extends TrustedNonTeamMemberLogInfo {
+      '.tag': 'trusted_non_team_member';
+    }
+
     export interface ContextLogInfoOther {
       '.tag': 'other';
     }
@@ -12604,7 +12694,7 @@ declare module DropboxTypes {
     /**
      * The primary entity on which the action was done.
      */
-    export type ContextLogInfo = ContextLogInfoTeamMember | ContextLogInfoNonTeamMember | ContextLogInfoAnonymous | ContextLogInfoTeam | ContextLogInfoOther;
+    export type ContextLogInfo = ContextLogInfoTeamMember | ContextLogInfoNonTeamMember | ContextLogInfoAnonymous | ContextLogInfoTeam | ContextLogInfoTrustedNonTeamMember | ContextLogInfoOther;
 
     /**
      * Created folders.
@@ -13468,6 +13558,10 @@ declare module DropboxTypes {
 
     export interface EventDetailsFileDeleteCommentDetails extends FileDeleteCommentDetails {
       '.tag': 'file_delete_comment_details';
+    }
+
+    export interface EventDetailsFileEditCommentDetails extends FileEditCommentDetails {
+      '.tag': 'file_edit_comment_details';
     }
 
     export interface EventDetailsFileLikeCommentDetails extends FileLikeCommentDetails {
@@ -14426,6 +14520,10 @@ declare module DropboxTypes {
       '.tag': 'allow_download_enabled_details';
     }
 
+    export interface EventDetailsCameraUploadsPolicyChangedDetails extends CameraUploadsPolicyChangedDetails {
+      '.tag': 'camera_uploads_policy_changed_details';
+    }
+
     export interface EventDetailsDataPlacementRestrictionChangePolicyDetails extends DataPlacementRestrictionChangePolicyDetails {
       '.tag': 'data_placement_restriction_change_policy_details';
     }
@@ -14693,7 +14791,7 @@ declare module DropboxTypes {
     /**
      * Additional fields depending on the event type.
      */
-    export type EventDetails = EventDetailsAppLinkTeamDetails | EventDetailsAppLinkUserDetails | EventDetailsAppUnlinkTeamDetails | EventDetailsAppUnlinkUserDetails | EventDetailsFileAddCommentDetails | EventDetailsFileChangeCommentSubscriptionDetails | EventDetailsFileDeleteCommentDetails | EventDetailsFileLikeCommentDetails | EventDetailsFileResolveCommentDetails | EventDetailsFileUnlikeCommentDetails | EventDetailsFileUnresolveCommentDetails | EventDetailsDeviceChangeIpDesktopDetails | EventDetailsDeviceChangeIpMobileDetails | EventDetailsDeviceChangeIpWebDetails | EventDetailsDeviceDeleteOnUnlinkFailDetails | EventDetailsDeviceDeleteOnUnlinkSuccessDetails | EventDetailsDeviceLinkFailDetails | EventDetailsDeviceLinkSuccessDetails | EventDetailsDeviceManagementDisabledDetails | EventDetailsDeviceManagementEnabledDetails | EventDetailsDeviceUnlinkDetails | EventDetailsEmmRefreshAuthTokenDetails | EventDetailsAccountCaptureChangeAvailabilityDetails | EventDetailsAccountCaptureMigrateAccountDetails | EventDetailsAccountCaptureNotificationEmailsSentDetails | EventDetailsAccountCaptureRelinquishAccountDetails | EventDetailsDisabledDomainInvitesDetails | EventDetailsDomainInvitesApproveRequestToJoinTeamDetails | EventDetailsDomainInvitesDeclineRequestToJoinTeamDetails | EventDetailsDomainInvitesEmailExistingUsersDetails | EventDetailsDomainInvitesRequestToJoinTeamDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToNoDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToYesDetails | EventDetailsDomainVerificationAddDomainFailDetails | EventDetailsDomainVerificationAddDomainSuccessDetails | EventDetailsDomainVerificationRemoveDomainDetails | EventDetailsEnabledDomainInvitesDetails | EventDetailsCreateFolderDetails | EventDetailsFileAddDetails | EventDetailsFileCopyDetails | EventDetailsFileDeleteDetails | EventDetailsFileDownloadDetails | EventDetailsFileEditDetails | EventDetailsFileGetCopyReferenceDetails | EventDetailsFileMoveDetails | EventDetailsFilePermanentlyDeleteDetails | EventDetailsFilePreviewDetails | EventDetailsFileRenameDetails | EventDetailsFileRestoreDetails | EventDetailsFileRevertDetails | EventDetailsFileRollbackChangesDetails | EventDetailsFileSaveCopyReferenceDetails | EventDetailsFileRequestChangeDetails | EventDetailsFileRequestCloseDetails | EventDetailsFileRequestCreateDetails | EventDetailsFileRequestReceiveFileDetails | EventDetailsGroupAddExternalIdDetails | EventDetailsGroupAddMemberDetails | EventDetailsGroupChangeExternalIdDetails | EventDetailsGroupChangeManagementTypeDetails | EventDetailsGroupChangeMemberRoleDetails | EventDetailsGroupCreateDetails | EventDetailsGroupDeleteDetails | EventDetailsGroupDescriptionUpdatedDetails | EventDetailsGroupJoinPolicyUpdatedDetails | EventDetailsGroupMovedDetails | EventDetailsGroupRemoveExternalIdDetails | EventDetailsGroupRemoveMemberDetails | EventDetailsGroupRenameDetails | EventDetailsEmmErrorDetails | EventDetailsLoginFailDetails | EventDetailsLoginSuccessDetails | EventDetailsLogoutDetails | EventDetailsResellerSupportSessionEndDetails | EventDetailsResellerSupportSessionStartDetails | EventDetailsSignInAsSessionEndDetails | EventDetailsSignInAsSessionStartDetails | EventDetailsSsoErrorDetails | EventDetailsMemberAddNameDetails | EventDetailsMemberChangeAdminRoleDetails | EventDetailsMemberChangeEmailDetails | EventDetailsMemberChangeMembershipTypeDetails | EventDetailsMemberChangeNameDetails | EventDetailsMemberChangeStatusDetails | EventDetailsMemberDeleteManualContactsDetails | EventDetailsMemberPermanentlyDeleteAccountContentsDetails | EventDetailsMemberSpaceLimitsAddCustomQuotaDetails | EventDetailsMemberSpaceLimitsChangeCustomQuotaDetails | EventDetailsMemberSpaceLimitsChangeStatusDetails | EventDetailsMemberSpaceLimitsRemoveCustomQuotaDetails | EventDetailsMemberSuggestDetails | EventDetailsMemberTransferAccountContentsDetails | EventDetailsSecondaryMailsPolicyChangedDetails | EventDetailsPaperContentAddMemberDetails | EventDetailsPaperContentAddToFolderDetails | EventDetailsPaperContentArchiveDetails | EventDetailsPaperContentCreateDetails | EventDetailsPaperContentPermanentlyDeleteDetails | EventDetailsPaperContentRemoveFromFolderDetails | EventDetailsPaperContentRemoveMemberDetails | EventDetailsPaperContentRenameDetails | EventDetailsPaperContentRestoreDetails | EventDetailsPaperDocAddCommentDetails | EventDetailsPaperDocChangeMemberRoleDetails | EventDetailsPaperDocChangeSharingPolicyDetails | EventDetailsPaperDocChangeSubscriptionDetails | EventDetailsPaperDocDeletedDetails | EventDetailsPaperDocDeleteCommentDetails | EventDetailsPaperDocDownloadDetails | EventDetailsPaperDocEditDetails | EventDetailsPaperDocEditCommentDetails | EventDetailsPaperDocFollowedDetails | EventDetailsPaperDocMentionDetails | EventDetailsPaperDocOwnershipChangedDetails | EventDetailsPaperDocRequestAccessDetails | EventDetailsPaperDocResolveCommentDetails | EventDetailsPaperDocRevertDetails | EventDetailsPaperDocSlackShareDetails | EventDetailsPaperDocTeamInviteDetails | EventDetailsPaperDocTrashedDetails | EventDetailsPaperDocUnresolveCommentDetails | EventDetailsPaperDocUntrashedDetails | EventDetailsPaperDocViewDetails | EventDetailsPaperExternalViewAllowDetails | EventDetailsPaperExternalViewDefaultTeamDetails | EventDetailsPaperExternalViewForbidDetails | EventDetailsPaperFolderChangeSubscriptionDetails | EventDetailsPaperFolderDeletedDetails | EventDetailsPaperFolderFollowedDetails | EventDetailsPaperFolderTeamInviteDetails | EventDetailsPasswordChangeDetails | EventDetailsPasswordResetDetails | EventDetailsPasswordResetAllDetails | EventDetailsEmmCreateExceptionsReportDetails | EventDetailsEmmCreateUsageReportDetails | EventDetailsExportMembersReportDetails | EventDetailsPaperAdminExportStartDetails | EventDetailsSmartSyncCreateAdminPrivilegeReportDetails | EventDetailsTeamActivityCreateReportDetails | EventDetailsCollectionShareDetails | EventDetailsNoteAclInviteOnlyDetails | EventDetailsNoteAclLinkDetails | EventDetailsNoteAclTeamLinkDetails | EventDetailsNoteSharedDetails | EventDetailsNoteShareReceiveDetails | EventDetailsOpenNoteSharedDetails | EventDetailsSfAddGroupDetails | EventDetailsSfAllowNonMembersToViewSharedLinksDetails | EventDetailsSfExternalInviteWarnDetails | EventDetailsSfFbInviteDetails | EventDetailsSfFbInviteChangeRoleDetails | EventDetailsSfFbUninviteDetails | EventDetailsSfInviteGroupDetails | EventDetailsSfTeamGrantAccessDetails | EventDetailsSfTeamInviteDetails | EventDetailsSfTeamInviteChangeRoleDetails | EventDetailsSfTeamJoinDetails | EventDetailsSfTeamJoinFromOobLinkDetails | EventDetailsSfTeamUninviteDetails | EventDetailsSharedContentAddInviteesDetails | EventDetailsSharedContentAddLinkExpiryDetails | EventDetailsSharedContentAddLinkPasswordDetails | EventDetailsSharedContentAddMemberDetails | EventDetailsSharedContentChangeDownloadsPolicyDetails | EventDetailsSharedContentChangeInviteeRoleDetails | EventDetailsSharedContentChangeLinkAudienceDetails | EventDetailsSharedContentChangeLinkExpiryDetails | EventDetailsSharedContentChangeLinkPasswordDetails | EventDetailsSharedContentChangeMemberRoleDetails | EventDetailsSharedContentChangeViewerInfoPolicyDetails | EventDetailsSharedContentClaimInvitationDetails | EventDetailsSharedContentCopyDetails | EventDetailsSharedContentDownloadDetails | EventDetailsSharedContentRelinquishMembershipDetails | EventDetailsSharedContentRemoveInviteesDetails | EventDetailsSharedContentRemoveLinkExpiryDetails | EventDetailsSharedContentRemoveLinkPasswordDetails | EventDetailsSharedContentRemoveMemberDetails | EventDetailsSharedContentRequestAccessDetails | EventDetailsSharedContentUnshareDetails | EventDetailsSharedContentViewDetails | EventDetailsSharedFolderChangeLinkPolicyDetails | EventDetailsSharedFolderChangeMembersInheritancePolicyDetails | EventDetailsSharedFolderChangeMembersManagementPolicyDetails | EventDetailsSharedFolderChangeMembersPolicyDetails | EventDetailsSharedFolderCreateDetails | EventDetailsSharedFolderDeclineInvitationDetails | EventDetailsSharedFolderMountDetails | EventDetailsSharedFolderNestDetails | EventDetailsSharedFolderTransferOwnershipDetails | EventDetailsSharedFolderUnmountDetails | EventDetailsSharedLinkAddExpiryDetails | EventDetailsSharedLinkChangeExpiryDetails | EventDetailsSharedLinkChangeVisibilityDetails | EventDetailsSharedLinkCopyDetails | EventDetailsSharedLinkCreateDetails | EventDetailsSharedLinkDisableDetails | EventDetailsSharedLinkDownloadDetails | EventDetailsSharedLinkRemoveExpiryDetails | EventDetailsSharedLinkShareDetails | EventDetailsSharedLinkViewDetails | EventDetailsSharedNoteOpenedDetails | EventDetailsShmodelGroupShareDetails | EventDetailsShowcaseAccessGrantedDetails | EventDetailsShowcaseAddMemberDetails | EventDetailsShowcaseArchivedDetails | EventDetailsShowcaseCreatedDetails | EventDetailsShowcaseDeleteCommentDetails | EventDetailsShowcaseEditedDetails | EventDetailsShowcaseEditCommentDetails | EventDetailsShowcaseFileAddedDetails | EventDetailsShowcaseFileDownloadDetails | EventDetailsShowcaseFileRemovedDetails | EventDetailsShowcaseFileViewDetails | EventDetailsShowcasePermanentlyDeletedDetails | EventDetailsShowcasePostCommentDetails | EventDetailsShowcaseRemoveMemberDetails | EventDetailsShowcaseRenamedDetails | EventDetailsShowcaseRequestAccessDetails | EventDetailsShowcaseResolveCommentDetails | EventDetailsShowcaseRestoredDetails | EventDetailsShowcaseTrashedDetails | EventDetailsShowcaseTrashedDeprecatedDetails | EventDetailsShowcaseUnresolveCommentDetails | EventDetailsShowcaseUntrashedDetails | EventDetailsShowcaseUntrashedDeprecatedDetails | EventDetailsShowcaseViewDetails | EventDetailsSsoAddCertDetails | EventDetailsSsoAddLoginUrlDetails | EventDetailsSsoAddLogoutUrlDetails | EventDetailsSsoChangeCertDetails | EventDetailsSsoChangeLoginUrlDetails | EventDetailsSsoChangeLogoutUrlDetails | EventDetailsSsoChangeSamlIdentityModeDetails | EventDetailsSsoRemoveCertDetails | EventDetailsSsoRemoveLoginUrlDetails | EventDetailsSsoRemoveLogoutUrlDetails | EventDetailsTeamFolderChangeStatusDetails | EventDetailsTeamFolderCreateDetails | EventDetailsTeamFolderDowngradeDetails | EventDetailsTeamFolderPermanentlyDeleteDetails | EventDetailsTeamFolderRenameDetails | EventDetailsTeamSelectiveSyncSettingsChangedDetails | EventDetailsAccountCaptureChangePolicyDetails | EventDetailsAllowDownloadDisabledDetails | EventDetailsAllowDownloadEnabledDetails | EventDetailsDataPlacementRestrictionChangePolicyDetails | EventDetailsDataPlacementRestrictionSatisfyPolicyDetails | EventDetailsDeviceApprovalsChangeDesktopPolicyDetails | EventDetailsDeviceApprovalsChangeMobilePolicyDetails | EventDetailsDeviceApprovalsChangeOverageActionDetails | EventDetailsDeviceApprovalsChangeUnlinkActionDetails | EventDetailsDirectoryRestrictionsAddMembersDetails | EventDetailsDirectoryRestrictionsRemoveMembersDetails | EventDetailsEmmAddExceptionDetails | EventDetailsEmmChangePolicyDetails | EventDetailsEmmRemoveExceptionDetails | EventDetailsExtendedVersionHistoryChangePolicyDetails | EventDetailsFileCommentsChangePolicyDetails | EventDetailsFileRequestsChangePolicyDetails | EventDetailsFileRequestsEmailsEnabledDetails | EventDetailsFileRequestsEmailsRestrictedToTeamOnlyDetails | EventDetailsGoogleSsoChangePolicyDetails | EventDetailsGroupUserManagementChangePolicyDetails | EventDetailsMemberRequestsChangePolicyDetails | EventDetailsMemberSpaceLimitsAddExceptionDetails | EventDetailsMemberSpaceLimitsChangeCapsTypePolicyDetails | EventDetailsMemberSpaceLimitsChangePolicyDetails | EventDetailsMemberSpaceLimitsRemoveExceptionDetails | EventDetailsMemberSuggestionsChangePolicyDetails | EventDetailsMicrosoftOfficeAddinChangePolicyDetails | EventDetailsNetworkControlChangePolicyDetails | EventDetailsPaperChangeDeploymentPolicyDetails | EventDetailsPaperChangeMemberLinkPolicyDetails | EventDetailsPaperChangeMemberPolicyDetails | EventDetailsPaperChangePolicyDetails | EventDetailsPaperEnabledUsersGroupAdditionDetails | EventDetailsPaperEnabledUsersGroupRemovalDetails | EventDetailsPermanentDeleteChangePolicyDetails | EventDetailsSharingChangeFolderJoinPolicyDetails | EventDetailsSharingChangeLinkPolicyDetails | EventDetailsSharingChangeMemberPolicyDetails | EventDetailsShowcaseChangeDownloadPolicyDetails | EventDetailsShowcaseChangeEnabledPolicyDetails | EventDetailsShowcaseChangeExternalSharingPolicyDetails | EventDetailsSmartSyncChangePolicyDetails | EventDetailsSmartSyncNotOptOutDetails | EventDetailsSmartSyncOptOutDetails | EventDetailsSsoChangePolicyDetails | EventDetailsTeamSelectiveSyncPolicyChangedDetails | EventDetailsTfaChangePolicyDetails | EventDetailsTwoAccountChangePolicyDetails | EventDetailsViewerInfoPolicyChangedDetails | EventDetailsWebSessionsChangeFixedLengthPolicyDetails | EventDetailsWebSessionsChangeIdleLengthPolicyDetails | EventDetailsTeamMergeFromDetails | EventDetailsTeamMergeToDetails | EventDetailsTeamProfileAddLogoDetails | EventDetailsTeamProfileChangeDefaultLanguageDetails | EventDetailsTeamProfileChangeLogoDetails | EventDetailsTeamProfileChangeNameDetails | EventDetailsTeamProfileRemoveLogoDetails | EventDetailsTfaAddBackupPhoneDetails | EventDetailsTfaAddSecurityKeyDetails | EventDetailsTfaChangeBackupPhoneDetails | EventDetailsTfaChangeStatusDetails | EventDetailsTfaRemoveBackupPhoneDetails | EventDetailsTfaRemoveSecurityKeyDetails | EventDetailsTfaResetDetails | EventDetailsMissingDetails | EventDetailsOther;
+    export type EventDetails = EventDetailsAppLinkTeamDetails | EventDetailsAppLinkUserDetails | EventDetailsAppUnlinkTeamDetails | EventDetailsAppUnlinkUserDetails | EventDetailsFileAddCommentDetails | EventDetailsFileChangeCommentSubscriptionDetails | EventDetailsFileDeleteCommentDetails | EventDetailsFileEditCommentDetails | EventDetailsFileLikeCommentDetails | EventDetailsFileResolveCommentDetails | EventDetailsFileUnlikeCommentDetails | EventDetailsFileUnresolveCommentDetails | EventDetailsDeviceChangeIpDesktopDetails | EventDetailsDeviceChangeIpMobileDetails | EventDetailsDeviceChangeIpWebDetails | EventDetailsDeviceDeleteOnUnlinkFailDetails | EventDetailsDeviceDeleteOnUnlinkSuccessDetails | EventDetailsDeviceLinkFailDetails | EventDetailsDeviceLinkSuccessDetails | EventDetailsDeviceManagementDisabledDetails | EventDetailsDeviceManagementEnabledDetails | EventDetailsDeviceUnlinkDetails | EventDetailsEmmRefreshAuthTokenDetails | EventDetailsAccountCaptureChangeAvailabilityDetails | EventDetailsAccountCaptureMigrateAccountDetails | EventDetailsAccountCaptureNotificationEmailsSentDetails | EventDetailsAccountCaptureRelinquishAccountDetails | EventDetailsDisabledDomainInvitesDetails | EventDetailsDomainInvitesApproveRequestToJoinTeamDetails | EventDetailsDomainInvitesDeclineRequestToJoinTeamDetails | EventDetailsDomainInvitesEmailExistingUsersDetails | EventDetailsDomainInvitesRequestToJoinTeamDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToNoDetails | EventDetailsDomainInvitesSetInviteNewUserPrefToYesDetails | EventDetailsDomainVerificationAddDomainFailDetails | EventDetailsDomainVerificationAddDomainSuccessDetails | EventDetailsDomainVerificationRemoveDomainDetails | EventDetailsEnabledDomainInvitesDetails | EventDetailsCreateFolderDetails | EventDetailsFileAddDetails | EventDetailsFileCopyDetails | EventDetailsFileDeleteDetails | EventDetailsFileDownloadDetails | EventDetailsFileEditDetails | EventDetailsFileGetCopyReferenceDetails | EventDetailsFileMoveDetails | EventDetailsFilePermanentlyDeleteDetails | EventDetailsFilePreviewDetails | EventDetailsFileRenameDetails | EventDetailsFileRestoreDetails | EventDetailsFileRevertDetails | EventDetailsFileRollbackChangesDetails | EventDetailsFileSaveCopyReferenceDetails | EventDetailsFileRequestChangeDetails | EventDetailsFileRequestCloseDetails | EventDetailsFileRequestCreateDetails | EventDetailsFileRequestReceiveFileDetails | EventDetailsGroupAddExternalIdDetails | EventDetailsGroupAddMemberDetails | EventDetailsGroupChangeExternalIdDetails | EventDetailsGroupChangeManagementTypeDetails | EventDetailsGroupChangeMemberRoleDetails | EventDetailsGroupCreateDetails | EventDetailsGroupDeleteDetails | EventDetailsGroupDescriptionUpdatedDetails | EventDetailsGroupJoinPolicyUpdatedDetails | EventDetailsGroupMovedDetails | EventDetailsGroupRemoveExternalIdDetails | EventDetailsGroupRemoveMemberDetails | EventDetailsGroupRenameDetails | EventDetailsEmmErrorDetails | EventDetailsLoginFailDetails | EventDetailsLoginSuccessDetails | EventDetailsLogoutDetails | EventDetailsResellerSupportSessionEndDetails | EventDetailsResellerSupportSessionStartDetails | EventDetailsSignInAsSessionEndDetails | EventDetailsSignInAsSessionStartDetails | EventDetailsSsoErrorDetails | EventDetailsMemberAddNameDetails | EventDetailsMemberChangeAdminRoleDetails | EventDetailsMemberChangeEmailDetails | EventDetailsMemberChangeMembershipTypeDetails | EventDetailsMemberChangeNameDetails | EventDetailsMemberChangeStatusDetails | EventDetailsMemberDeleteManualContactsDetails | EventDetailsMemberPermanentlyDeleteAccountContentsDetails | EventDetailsMemberSpaceLimitsAddCustomQuotaDetails | EventDetailsMemberSpaceLimitsChangeCustomQuotaDetails | EventDetailsMemberSpaceLimitsChangeStatusDetails | EventDetailsMemberSpaceLimitsRemoveCustomQuotaDetails | EventDetailsMemberSuggestDetails | EventDetailsMemberTransferAccountContentsDetails | EventDetailsSecondaryMailsPolicyChangedDetails | EventDetailsPaperContentAddMemberDetails | EventDetailsPaperContentAddToFolderDetails | EventDetailsPaperContentArchiveDetails | EventDetailsPaperContentCreateDetails | EventDetailsPaperContentPermanentlyDeleteDetails | EventDetailsPaperContentRemoveFromFolderDetails | EventDetailsPaperContentRemoveMemberDetails | EventDetailsPaperContentRenameDetails | EventDetailsPaperContentRestoreDetails | EventDetailsPaperDocAddCommentDetails | EventDetailsPaperDocChangeMemberRoleDetails | EventDetailsPaperDocChangeSharingPolicyDetails | EventDetailsPaperDocChangeSubscriptionDetails | EventDetailsPaperDocDeletedDetails | EventDetailsPaperDocDeleteCommentDetails | EventDetailsPaperDocDownloadDetails | EventDetailsPaperDocEditDetails | EventDetailsPaperDocEditCommentDetails | EventDetailsPaperDocFollowedDetails | EventDetailsPaperDocMentionDetails | EventDetailsPaperDocOwnershipChangedDetails | EventDetailsPaperDocRequestAccessDetails | EventDetailsPaperDocResolveCommentDetails | EventDetailsPaperDocRevertDetails | EventDetailsPaperDocSlackShareDetails | EventDetailsPaperDocTeamInviteDetails | EventDetailsPaperDocTrashedDetails | EventDetailsPaperDocUnresolveCommentDetails | EventDetailsPaperDocUntrashedDetails | EventDetailsPaperDocViewDetails | EventDetailsPaperExternalViewAllowDetails | EventDetailsPaperExternalViewDefaultTeamDetails | EventDetailsPaperExternalViewForbidDetails | EventDetailsPaperFolderChangeSubscriptionDetails | EventDetailsPaperFolderDeletedDetails | EventDetailsPaperFolderFollowedDetails | EventDetailsPaperFolderTeamInviteDetails | EventDetailsPasswordChangeDetails | EventDetailsPasswordResetDetails | EventDetailsPasswordResetAllDetails | EventDetailsEmmCreateExceptionsReportDetails | EventDetailsEmmCreateUsageReportDetails | EventDetailsExportMembersReportDetails | EventDetailsPaperAdminExportStartDetails | EventDetailsSmartSyncCreateAdminPrivilegeReportDetails | EventDetailsTeamActivityCreateReportDetails | EventDetailsCollectionShareDetails | EventDetailsNoteAclInviteOnlyDetails | EventDetailsNoteAclLinkDetails | EventDetailsNoteAclTeamLinkDetails | EventDetailsNoteSharedDetails | EventDetailsNoteShareReceiveDetails | EventDetailsOpenNoteSharedDetails | EventDetailsSfAddGroupDetails | EventDetailsSfAllowNonMembersToViewSharedLinksDetails | EventDetailsSfExternalInviteWarnDetails | EventDetailsSfFbInviteDetails | EventDetailsSfFbInviteChangeRoleDetails | EventDetailsSfFbUninviteDetails | EventDetailsSfInviteGroupDetails | EventDetailsSfTeamGrantAccessDetails | EventDetailsSfTeamInviteDetails | EventDetailsSfTeamInviteChangeRoleDetails | EventDetailsSfTeamJoinDetails | EventDetailsSfTeamJoinFromOobLinkDetails | EventDetailsSfTeamUninviteDetails | EventDetailsSharedContentAddInviteesDetails | EventDetailsSharedContentAddLinkExpiryDetails | EventDetailsSharedContentAddLinkPasswordDetails | EventDetailsSharedContentAddMemberDetails | EventDetailsSharedContentChangeDownloadsPolicyDetails | EventDetailsSharedContentChangeInviteeRoleDetails | EventDetailsSharedContentChangeLinkAudienceDetails | EventDetailsSharedContentChangeLinkExpiryDetails | EventDetailsSharedContentChangeLinkPasswordDetails | EventDetailsSharedContentChangeMemberRoleDetails | EventDetailsSharedContentChangeViewerInfoPolicyDetails | EventDetailsSharedContentClaimInvitationDetails | EventDetailsSharedContentCopyDetails | EventDetailsSharedContentDownloadDetails | EventDetailsSharedContentRelinquishMembershipDetails | EventDetailsSharedContentRemoveInviteesDetails | EventDetailsSharedContentRemoveLinkExpiryDetails | EventDetailsSharedContentRemoveLinkPasswordDetails | EventDetailsSharedContentRemoveMemberDetails | EventDetailsSharedContentRequestAccessDetails | EventDetailsSharedContentUnshareDetails | EventDetailsSharedContentViewDetails | EventDetailsSharedFolderChangeLinkPolicyDetails | EventDetailsSharedFolderChangeMembersInheritancePolicyDetails | EventDetailsSharedFolderChangeMembersManagementPolicyDetails | EventDetailsSharedFolderChangeMembersPolicyDetails | EventDetailsSharedFolderCreateDetails | EventDetailsSharedFolderDeclineInvitationDetails | EventDetailsSharedFolderMountDetails | EventDetailsSharedFolderNestDetails | EventDetailsSharedFolderTransferOwnershipDetails | EventDetailsSharedFolderUnmountDetails | EventDetailsSharedLinkAddExpiryDetails | EventDetailsSharedLinkChangeExpiryDetails | EventDetailsSharedLinkChangeVisibilityDetails | EventDetailsSharedLinkCopyDetails | EventDetailsSharedLinkCreateDetails | EventDetailsSharedLinkDisableDetails | EventDetailsSharedLinkDownloadDetails | EventDetailsSharedLinkRemoveExpiryDetails | EventDetailsSharedLinkShareDetails | EventDetailsSharedLinkViewDetails | EventDetailsSharedNoteOpenedDetails | EventDetailsShmodelGroupShareDetails | EventDetailsShowcaseAccessGrantedDetails | EventDetailsShowcaseAddMemberDetails | EventDetailsShowcaseArchivedDetails | EventDetailsShowcaseCreatedDetails | EventDetailsShowcaseDeleteCommentDetails | EventDetailsShowcaseEditedDetails | EventDetailsShowcaseEditCommentDetails | EventDetailsShowcaseFileAddedDetails | EventDetailsShowcaseFileDownloadDetails | EventDetailsShowcaseFileRemovedDetails | EventDetailsShowcaseFileViewDetails | EventDetailsShowcasePermanentlyDeletedDetails | EventDetailsShowcasePostCommentDetails | EventDetailsShowcaseRemoveMemberDetails | EventDetailsShowcaseRenamedDetails | EventDetailsShowcaseRequestAccessDetails | EventDetailsShowcaseResolveCommentDetails | EventDetailsShowcaseRestoredDetails | EventDetailsShowcaseTrashedDetails | EventDetailsShowcaseTrashedDeprecatedDetails | EventDetailsShowcaseUnresolveCommentDetails | EventDetailsShowcaseUntrashedDetails | EventDetailsShowcaseUntrashedDeprecatedDetails | EventDetailsShowcaseViewDetails | EventDetailsSsoAddCertDetails | EventDetailsSsoAddLoginUrlDetails | EventDetailsSsoAddLogoutUrlDetails | EventDetailsSsoChangeCertDetails | EventDetailsSsoChangeLoginUrlDetails | EventDetailsSsoChangeLogoutUrlDetails | EventDetailsSsoChangeSamlIdentityModeDetails | EventDetailsSsoRemoveCertDetails | EventDetailsSsoRemoveLoginUrlDetails | EventDetailsSsoRemoveLogoutUrlDetails | EventDetailsTeamFolderChangeStatusDetails | EventDetailsTeamFolderCreateDetails | EventDetailsTeamFolderDowngradeDetails | EventDetailsTeamFolderPermanentlyDeleteDetails | EventDetailsTeamFolderRenameDetails | EventDetailsTeamSelectiveSyncSettingsChangedDetails | EventDetailsAccountCaptureChangePolicyDetails | EventDetailsAllowDownloadDisabledDetails | EventDetailsAllowDownloadEnabledDetails | EventDetailsCameraUploadsPolicyChangedDetails | EventDetailsDataPlacementRestrictionChangePolicyDetails | EventDetailsDataPlacementRestrictionSatisfyPolicyDetails | EventDetailsDeviceApprovalsChangeDesktopPolicyDetails | EventDetailsDeviceApprovalsChangeMobilePolicyDetails | EventDetailsDeviceApprovalsChangeOverageActionDetails | EventDetailsDeviceApprovalsChangeUnlinkActionDetails | EventDetailsDirectoryRestrictionsAddMembersDetails | EventDetailsDirectoryRestrictionsRemoveMembersDetails | EventDetailsEmmAddExceptionDetails | EventDetailsEmmChangePolicyDetails | EventDetailsEmmRemoveExceptionDetails | EventDetailsExtendedVersionHistoryChangePolicyDetails | EventDetailsFileCommentsChangePolicyDetails | EventDetailsFileRequestsChangePolicyDetails | EventDetailsFileRequestsEmailsEnabledDetails | EventDetailsFileRequestsEmailsRestrictedToTeamOnlyDetails | EventDetailsGoogleSsoChangePolicyDetails | EventDetailsGroupUserManagementChangePolicyDetails | EventDetailsMemberRequestsChangePolicyDetails | EventDetailsMemberSpaceLimitsAddExceptionDetails | EventDetailsMemberSpaceLimitsChangeCapsTypePolicyDetails | EventDetailsMemberSpaceLimitsChangePolicyDetails | EventDetailsMemberSpaceLimitsRemoveExceptionDetails | EventDetailsMemberSuggestionsChangePolicyDetails | EventDetailsMicrosoftOfficeAddinChangePolicyDetails | EventDetailsNetworkControlChangePolicyDetails | EventDetailsPaperChangeDeploymentPolicyDetails | EventDetailsPaperChangeMemberLinkPolicyDetails | EventDetailsPaperChangeMemberPolicyDetails | EventDetailsPaperChangePolicyDetails | EventDetailsPaperEnabledUsersGroupAdditionDetails | EventDetailsPaperEnabledUsersGroupRemovalDetails | EventDetailsPermanentDeleteChangePolicyDetails | EventDetailsSharingChangeFolderJoinPolicyDetails | EventDetailsSharingChangeLinkPolicyDetails | EventDetailsSharingChangeMemberPolicyDetails | EventDetailsShowcaseChangeDownloadPolicyDetails | EventDetailsShowcaseChangeEnabledPolicyDetails | EventDetailsShowcaseChangeExternalSharingPolicyDetails | EventDetailsSmartSyncChangePolicyDetails | EventDetailsSmartSyncNotOptOutDetails | EventDetailsSmartSyncOptOutDetails | EventDetailsSsoChangePolicyDetails | EventDetailsTeamSelectiveSyncPolicyChangedDetails | EventDetailsTfaChangePolicyDetails | EventDetailsTwoAccountChangePolicyDetails | EventDetailsViewerInfoPolicyChangedDetails | EventDetailsWebSessionsChangeFixedLengthPolicyDetails | EventDetailsWebSessionsChangeIdleLengthPolicyDetails | EventDetailsTeamMergeFromDetails | EventDetailsTeamMergeToDetails | EventDetailsTeamProfileAddLogoDetails | EventDetailsTeamProfileChangeDefaultLanguageDetails | EventDetailsTeamProfileChangeLogoDetails | EventDetailsTeamProfileChangeNameDetails | EventDetailsTeamProfileRemoveLogoDetails | EventDetailsTfaAddBackupPhoneDetails | EventDetailsTfaAddSecurityKeyDetails | EventDetailsTfaChangeBackupPhoneDetails | EventDetailsTfaChangeStatusDetails | EventDetailsTfaRemoveBackupPhoneDetails | EventDetailsTfaRemoveSecurityKeyDetails | EventDetailsTfaResetDetails | EventDetailsMissingDetails | EventDetailsOther;
 
     /**
      * (apps) Linked app for team
@@ -14743,6 +14841,13 @@ declare module DropboxTypes {
      */
     export interface EventTypeFileDeleteComment extends FileDeleteCommentType {
       '.tag': 'file_delete_comment';
+    }
+
+    /**
+     * (comments) Edited file comment
+     */
+    export interface EventTypeFileEditComment extends FileEditCommentType {
+      '.tag': 'file_edit_comment';
     }
 
     /**
@@ -15293,7 +15398,7 @@ declare module DropboxTypes {
     }
 
     /**
-     * (members) Cleared saved contacts
+     * (members) Cleared manually added contacts
      */
     export interface EventTypeMemberDeleteManualContacts extends MemberDeleteManualContactsType {
       '.tag': 'member_delete_manual_contacts';
@@ -16451,6 +16556,13 @@ declare module DropboxTypes {
     }
 
     /**
+     * (team_policies) Changed camera uploads setting for team
+     */
+    export interface EventTypeCameraUploadsPolicyChanged extends CameraUploadsPolicyChangedType {
+      '.tag': 'camera_uploads_policy_changed';
+    }
+
+    /**
      * (team_policies) Set restrictions on data center locations where team data
      * resides
      */
@@ -16921,7 +17033,7 @@ declare module DropboxTypes {
     /**
      * The type of the event.
      */
-    export type EventType = EventTypeAppLinkTeam | EventTypeAppLinkUser | EventTypeAppUnlinkTeam | EventTypeAppUnlinkUser | EventTypeFileAddComment | EventTypeFileChangeCommentSubscription | EventTypeFileDeleteComment | EventTypeFileLikeComment | EventTypeFileResolveComment | EventTypeFileUnlikeComment | EventTypeFileUnresolveComment | EventTypeDeviceChangeIpDesktop | EventTypeDeviceChangeIpMobile | EventTypeDeviceChangeIpWeb | EventTypeDeviceDeleteOnUnlinkFail | EventTypeDeviceDeleteOnUnlinkSuccess | EventTypeDeviceLinkFail | EventTypeDeviceLinkSuccess | EventTypeDeviceManagementDisabled | EventTypeDeviceManagementEnabled | EventTypeDeviceUnlink | EventTypeEmmRefreshAuthToken | EventTypeAccountCaptureChangeAvailability | EventTypeAccountCaptureMigrateAccount | EventTypeAccountCaptureNotificationEmailsSent | EventTypeAccountCaptureRelinquishAccount | EventTypeDisabledDomainInvites | EventTypeDomainInvitesApproveRequestToJoinTeam | EventTypeDomainInvitesDeclineRequestToJoinTeam | EventTypeDomainInvitesEmailExistingUsers | EventTypeDomainInvitesRequestToJoinTeam | EventTypeDomainInvitesSetInviteNewUserPrefToNo | EventTypeDomainInvitesSetInviteNewUserPrefToYes | EventTypeDomainVerificationAddDomainFail | EventTypeDomainVerificationAddDomainSuccess | EventTypeDomainVerificationRemoveDomain | EventTypeEnabledDomainInvites | EventTypeCreateFolder | EventTypeFileAdd | EventTypeFileCopy | EventTypeFileDelete | EventTypeFileDownload | EventTypeFileEdit | EventTypeFileGetCopyReference | EventTypeFileMove | EventTypeFilePermanentlyDelete | EventTypeFilePreview | EventTypeFileRename | EventTypeFileRestore | EventTypeFileRevert | EventTypeFileRollbackChanges | EventTypeFileSaveCopyReference | EventTypeFileRequestChange | EventTypeFileRequestClose | EventTypeFileRequestCreate | EventTypeFileRequestReceiveFile | EventTypeGroupAddExternalId | EventTypeGroupAddMember | EventTypeGroupChangeExternalId | EventTypeGroupChangeManagementType | EventTypeGroupChangeMemberRole | EventTypeGroupCreate | EventTypeGroupDelete | EventTypeGroupDescriptionUpdated | EventTypeGroupJoinPolicyUpdated | EventTypeGroupMoved | EventTypeGroupRemoveExternalId | EventTypeGroupRemoveMember | EventTypeGroupRename | EventTypeEmmError | EventTypeLoginFail | EventTypeLoginSuccess | EventTypeLogout | EventTypeResellerSupportSessionEnd | EventTypeResellerSupportSessionStart | EventTypeSignInAsSessionEnd | EventTypeSignInAsSessionStart | EventTypeSsoError | EventTypeMemberAddName | EventTypeMemberChangeAdminRole | EventTypeMemberChangeEmail | EventTypeMemberChangeMembershipType | EventTypeMemberChangeName | EventTypeMemberChangeStatus | EventTypeMemberDeleteManualContacts | EventTypeMemberPermanentlyDeleteAccountContents | EventTypeMemberSpaceLimitsAddCustomQuota | EventTypeMemberSpaceLimitsChangeCustomQuota | EventTypeMemberSpaceLimitsChangeStatus | EventTypeMemberSpaceLimitsRemoveCustomQuota | EventTypeMemberSuggest | EventTypeMemberTransferAccountContents | EventTypeSecondaryMailsPolicyChanged | EventTypePaperContentAddMember | EventTypePaperContentAddToFolder | EventTypePaperContentArchive | EventTypePaperContentCreate | EventTypePaperContentPermanentlyDelete | EventTypePaperContentRemoveFromFolder | EventTypePaperContentRemoveMember | EventTypePaperContentRename | EventTypePaperContentRestore | EventTypePaperDocAddComment | EventTypePaperDocChangeMemberRole | EventTypePaperDocChangeSharingPolicy | EventTypePaperDocChangeSubscription | EventTypePaperDocDeleted | EventTypePaperDocDeleteComment | EventTypePaperDocDownload | EventTypePaperDocEdit | EventTypePaperDocEditComment | EventTypePaperDocFollowed | EventTypePaperDocMention | EventTypePaperDocOwnershipChanged | EventTypePaperDocRequestAccess | EventTypePaperDocResolveComment | EventTypePaperDocRevert | EventTypePaperDocSlackShare | EventTypePaperDocTeamInvite | EventTypePaperDocTrashed | EventTypePaperDocUnresolveComment | EventTypePaperDocUntrashed | EventTypePaperDocView | EventTypePaperExternalViewAllow | EventTypePaperExternalViewDefaultTeam | EventTypePaperExternalViewForbid | EventTypePaperFolderChangeSubscription | EventTypePaperFolderDeleted | EventTypePaperFolderFollowed | EventTypePaperFolderTeamInvite | EventTypePasswordChange | EventTypePasswordReset | EventTypePasswordResetAll | EventTypeEmmCreateExceptionsReport | EventTypeEmmCreateUsageReport | EventTypeExportMembersReport | EventTypePaperAdminExportStart | EventTypeSmartSyncCreateAdminPrivilegeReport | EventTypeTeamActivityCreateReport | EventTypeCollectionShare | EventTypeNoteAclInviteOnly | EventTypeNoteAclLink | EventTypeNoteAclTeamLink | EventTypeNoteShared | EventTypeNoteShareReceive | EventTypeOpenNoteShared | EventTypeSfAddGroup | EventTypeSfAllowNonMembersToViewSharedLinks | EventTypeSfExternalInviteWarn | EventTypeSfFbInvite | EventTypeSfFbInviteChangeRole | EventTypeSfFbUninvite | EventTypeSfInviteGroup | EventTypeSfTeamGrantAccess | EventTypeSfTeamInvite | EventTypeSfTeamInviteChangeRole | EventTypeSfTeamJoin | EventTypeSfTeamJoinFromOobLink | EventTypeSfTeamUninvite | EventTypeSharedContentAddInvitees | EventTypeSharedContentAddLinkExpiry | EventTypeSharedContentAddLinkPassword | EventTypeSharedContentAddMember | EventTypeSharedContentChangeDownloadsPolicy | EventTypeSharedContentChangeInviteeRole | EventTypeSharedContentChangeLinkAudience | EventTypeSharedContentChangeLinkExpiry | EventTypeSharedContentChangeLinkPassword | EventTypeSharedContentChangeMemberRole | EventTypeSharedContentChangeViewerInfoPolicy | EventTypeSharedContentClaimInvitation | EventTypeSharedContentCopy | EventTypeSharedContentDownload | EventTypeSharedContentRelinquishMembership | EventTypeSharedContentRemoveInvitees | EventTypeSharedContentRemoveLinkExpiry | EventTypeSharedContentRemoveLinkPassword | EventTypeSharedContentRemoveMember | EventTypeSharedContentRequestAccess | EventTypeSharedContentUnshare | EventTypeSharedContentView | EventTypeSharedFolderChangeLinkPolicy | EventTypeSharedFolderChangeMembersInheritancePolicy | EventTypeSharedFolderChangeMembersManagementPolicy | EventTypeSharedFolderChangeMembersPolicy | EventTypeSharedFolderCreate | EventTypeSharedFolderDeclineInvitation | EventTypeSharedFolderMount | EventTypeSharedFolderNest | EventTypeSharedFolderTransferOwnership | EventTypeSharedFolderUnmount | EventTypeSharedLinkAddExpiry | EventTypeSharedLinkChangeExpiry | EventTypeSharedLinkChangeVisibility | EventTypeSharedLinkCopy | EventTypeSharedLinkCreate | EventTypeSharedLinkDisable | EventTypeSharedLinkDownload | EventTypeSharedLinkRemoveExpiry | EventTypeSharedLinkShare | EventTypeSharedLinkView | EventTypeSharedNoteOpened | EventTypeShmodelGroupShare | EventTypeShowcaseAccessGranted | EventTypeShowcaseAddMember | EventTypeShowcaseArchived | EventTypeShowcaseCreated | EventTypeShowcaseDeleteComment | EventTypeShowcaseEdited | EventTypeShowcaseEditComment | EventTypeShowcaseFileAdded | EventTypeShowcaseFileDownload | EventTypeShowcaseFileRemoved | EventTypeShowcaseFileView | EventTypeShowcasePermanentlyDeleted | EventTypeShowcasePostComment | EventTypeShowcaseRemoveMember | EventTypeShowcaseRenamed | EventTypeShowcaseRequestAccess | EventTypeShowcaseResolveComment | EventTypeShowcaseRestored | EventTypeShowcaseTrashed | EventTypeShowcaseTrashedDeprecated | EventTypeShowcaseUnresolveComment | EventTypeShowcaseUntrashed | EventTypeShowcaseUntrashedDeprecated | EventTypeShowcaseView | EventTypeSsoAddCert | EventTypeSsoAddLoginUrl | EventTypeSsoAddLogoutUrl | EventTypeSsoChangeCert | EventTypeSsoChangeLoginUrl | EventTypeSsoChangeLogoutUrl | EventTypeSsoChangeSamlIdentityMode | EventTypeSsoRemoveCert | EventTypeSsoRemoveLoginUrl | EventTypeSsoRemoveLogoutUrl | EventTypeTeamFolderChangeStatus | EventTypeTeamFolderCreate | EventTypeTeamFolderDowngrade | EventTypeTeamFolderPermanentlyDelete | EventTypeTeamFolderRename | EventTypeTeamSelectiveSyncSettingsChanged | EventTypeAccountCaptureChangePolicy | EventTypeAllowDownloadDisabled | EventTypeAllowDownloadEnabled | EventTypeDataPlacementRestrictionChangePolicy | EventTypeDataPlacementRestrictionSatisfyPolicy | EventTypeDeviceApprovalsChangeDesktopPolicy | EventTypeDeviceApprovalsChangeMobilePolicy | EventTypeDeviceApprovalsChangeOverageAction | EventTypeDeviceApprovalsChangeUnlinkAction | EventTypeDirectoryRestrictionsAddMembers | EventTypeDirectoryRestrictionsRemoveMembers | EventTypeEmmAddException | EventTypeEmmChangePolicy | EventTypeEmmRemoveException | EventTypeExtendedVersionHistoryChangePolicy | EventTypeFileCommentsChangePolicy | EventTypeFileRequestsChangePolicy | EventTypeFileRequestsEmailsEnabled | EventTypeFileRequestsEmailsRestrictedToTeamOnly | EventTypeGoogleSsoChangePolicy | EventTypeGroupUserManagementChangePolicy | EventTypeMemberRequestsChangePolicy | EventTypeMemberSpaceLimitsAddException | EventTypeMemberSpaceLimitsChangeCapsTypePolicy | EventTypeMemberSpaceLimitsChangePolicy | EventTypeMemberSpaceLimitsRemoveException | EventTypeMemberSuggestionsChangePolicy | EventTypeMicrosoftOfficeAddinChangePolicy | EventTypeNetworkControlChangePolicy | EventTypePaperChangeDeploymentPolicy | EventTypePaperChangeMemberLinkPolicy | EventTypePaperChangeMemberPolicy | EventTypePaperChangePolicy | EventTypePaperEnabledUsersGroupAddition | EventTypePaperEnabledUsersGroupRemoval | EventTypePermanentDeleteChangePolicy | EventTypeSharingChangeFolderJoinPolicy | EventTypeSharingChangeLinkPolicy | EventTypeSharingChangeMemberPolicy | EventTypeShowcaseChangeDownloadPolicy | EventTypeShowcaseChangeEnabledPolicy | EventTypeShowcaseChangeExternalSharingPolicy | EventTypeSmartSyncChangePolicy | EventTypeSmartSyncNotOptOut | EventTypeSmartSyncOptOut | EventTypeSsoChangePolicy | EventTypeTeamSelectiveSyncPolicyChanged | EventTypeTfaChangePolicy | EventTypeTwoAccountChangePolicy | EventTypeViewerInfoPolicyChanged | EventTypeWebSessionsChangeFixedLengthPolicy | EventTypeWebSessionsChangeIdleLengthPolicy | EventTypeTeamMergeFrom | EventTypeTeamMergeTo | EventTypeTeamProfileAddLogo | EventTypeTeamProfileChangeDefaultLanguage | EventTypeTeamProfileChangeLogo | EventTypeTeamProfileChangeName | EventTypeTeamProfileRemoveLogo | EventTypeTfaAddBackupPhone | EventTypeTfaAddSecurityKey | EventTypeTfaChangeBackupPhone | EventTypeTfaChangeStatus | EventTypeTfaRemoveBackupPhone | EventTypeTfaRemoveSecurityKey | EventTypeTfaReset | EventTypeOther;
+    export type EventType = EventTypeAppLinkTeam | EventTypeAppLinkUser | EventTypeAppUnlinkTeam | EventTypeAppUnlinkUser | EventTypeFileAddComment | EventTypeFileChangeCommentSubscription | EventTypeFileDeleteComment | EventTypeFileEditComment | EventTypeFileLikeComment | EventTypeFileResolveComment | EventTypeFileUnlikeComment | EventTypeFileUnresolveComment | EventTypeDeviceChangeIpDesktop | EventTypeDeviceChangeIpMobile | EventTypeDeviceChangeIpWeb | EventTypeDeviceDeleteOnUnlinkFail | EventTypeDeviceDeleteOnUnlinkSuccess | EventTypeDeviceLinkFail | EventTypeDeviceLinkSuccess | EventTypeDeviceManagementDisabled | EventTypeDeviceManagementEnabled | EventTypeDeviceUnlink | EventTypeEmmRefreshAuthToken | EventTypeAccountCaptureChangeAvailability | EventTypeAccountCaptureMigrateAccount | EventTypeAccountCaptureNotificationEmailsSent | EventTypeAccountCaptureRelinquishAccount | EventTypeDisabledDomainInvites | EventTypeDomainInvitesApproveRequestToJoinTeam | EventTypeDomainInvitesDeclineRequestToJoinTeam | EventTypeDomainInvitesEmailExistingUsers | EventTypeDomainInvitesRequestToJoinTeam | EventTypeDomainInvitesSetInviteNewUserPrefToNo | EventTypeDomainInvitesSetInviteNewUserPrefToYes | EventTypeDomainVerificationAddDomainFail | EventTypeDomainVerificationAddDomainSuccess | EventTypeDomainVerificationRemoveDomain | EventTypeEnabledDomainInvites | EventTypeCreateFolder | EventTypeFileAdd | EventTypeFileCopy | EventTypeFileDelete | EventTypeFileDownload | EventTypeFileEdit | EventTypeFileGetCopyReference | EventTypeFileMove | EventTypeFilePermanentlyDelete | EventTypeFilePreview | EventTypeFileRename | EventTypeFileRestore | EventTypeFileRevert | EventTypeFileRollbackChanges | EventTypeFileSaveCopyReference | EventTypeFileRequestChange | EventTypeFileRequestClose | EventTypeFileRequestCreate | EventTypeFileRequestReceiveFile | EventTypeGroupAddExternalId | EventTypeGroupAddMember | EventTypeGroupChangeExternalId | EventTypeGroupChangeManagementType | EventTypeGroupChangeMemberRole | EventTypeGroupCreate | EventTypeGroupDelete | EventTypeGroupDescriptionUpdated | EventTypeGroupJoinPolicyUpdated | EventTypeGroupMoved | EventTypeGroupRemoveExternalId | EventTypeGroupRemoveMember | EventTypeGroupRename | EventTypeEmmError | EventTypeLoginFail | EventTypeLoginSuccess | EventTypeLogout | EventTypeResellerSupportSessionEnd | EventTypeResellerSupportSessionStart | EventTypeSignInAsSessionEnd | EventTypeSignInAsSessionStart | EventTypeSsoError | EventTypeMemberAddName | EventTypeMemberChangeAdminRole | EventTypeMemberChangeEmail | EventTypeMemberChangeMembershipType | EventTypeMemberChangeName | EventTypeMemberChangeStatus | EventTypeMemberDeleteManualContacts | EventTypeMemberPermanentlyDeleteAccountContents | EventTypeMemberSpaceLimitsAddCustomQuota | EventTypeMemberSpaceLimitsChangeCustomQuota | EventTypeMemberSpaceLimitsChangeStatus | EventTypeMemberSpaceLimitsRemoveCustomQuota | EventTypeMemberSuggest | EventTypeMemberTransferAccountContents | EventTypeSecondaryMailsPolicyChanged | EventTypePaperContentAddMember | EventTypePaperContentAddToFolder | EventTypePaperContentArchive | EventTypePaperContentCreate | EventTypePaperContentPermanentlyDelete | EventTypePaperContentRemoveFromFolder | EventTypePaperContentRemoveMember | EventTypePaperContentRename | EventTypePaperContentRestore | EventTypePaperDocAddComment | EventTypePaperDocChangeMemberRole | EventTypePaperDocChangeSharingPolicy | EventTypePaperDocChangeSubscription | EventTypePaperDocDeleted | EventTypePaperDocDeleteComment | EventTypePaperDocDownload | EventTypePaperDocEdit | EventTypePaperDocEditComment | EventTypePaperDocFollowed | EventTypePaperDocMention | EventTypePaperDocOwnershipChanged | EventTypePaperDocRequestAccess | EventTypePaperDocResolveComment | EventTypePaperDocRevert | EventTypePaperDocSlackShare | EventTypePaperDocTeamInvite | EventTypePaperDocTrashed | EventTypePaperDocUnresolveComment | EventTypePaperDocUntrashed | EventTypePaperDocView | EventTypePaperExternalViewAllow | EventTypePaperExternalViewDefaultTeam | EventTypePaperExternalViewForbid | EventTypePaperFolderChangeSubscription | EventTypePaperFolderDeleted | EventTypePaperFolderFollowed | EventTypePaperFolderTeamInvite | EventTypePasswordChange | EventTypePasswordReset | EventTypePasswordResetAll | EventTypeEmmCreateExceptionsReport | EventTypeEmmCreateUsageReport | EventTypeExportMembersReport | EventTypePaperAdminExportStart | EventTypeSmartSyncCreateAdminPrivilegeReport | EventTypeTeamActivityCreateReport | EventTypeCollectionShare | EventTypeNoteAclInviteOnly | EventTypeNoteAclLink | EventTypeNoteAclTeamLink | EventTypeNoteShared | EventTypeNoteShareReceive | EventTypeOpenNoteShared | EventTypeSfAddGroup | EventTypeSfAllowNonMembersToViewSharedLinks | EventTypeSfExternalInviteWarn | EventTypeSfFbInvite | EventTypeSfFbInviteChangeRole | EventTypeSfFbUninvite | EventTypeSfInviteGroup | EventTypeSfTeamGrantAccess | EventTypeSfTeamInvite | EventTypeSfTeamInviteChangeRole | EventTypeSfTeamJoin | EventTypeSfTeamJoinFromOobLink | EventTypeSfTeamUninvite | EventTypeSharedContentAddInvitees | EventTypeSharedContentAddLinkExpiry | EventTypeSharedContentAddLinkPassword | EventTypeSharedContentAddMember | EventTypeSharedContentChangeDownloadsPolicy | EventTypeSharedContentChangeInviteeRole | EventTypeSharedContentChangeLinkAudience | EventTypeSharedContentChangeLinkExpiry | EventTypeSharedContentChangeLinkPassword | EventTypeSharedContentChangeMemberRole | EventTypeSharedContentChangeViewerInfoPolicy | EventTypeSharedContentClaimInvitation | EventTypeSharedContentCopy | EventTypeSharedContentDownload | EventTypeSharedContentRelinquishMembership | EventTypeSharedContentRemoveInvitees | EventTypeSharedContentRemoveLinkExpiry | EventTypeSharedContentRemoveLinkPassword | EventTypeSharedContentRemoveMember | EventTypeSharedContentRequestAccess | EventTypeSharedContentUnshare | EventTypeSharedContentView | EventTypeSharedFolderChangeLinkPolicy | EventTypeSharedFolderChangeMembersInheritancePolicy | EventTypeSharedFolderChangeMembersManagementPolicy | EventTypeSharedFolderChangeMembersPolicy | EventTypeSharedFolderCreate | EventTypeSharedFolderDeclineInvitation | EventTypeSharedFolderMount | EventTypeSharedFolderNest | EventTypeSharedFolderTransferOwnership | EventTypeSharedFolderUnmount | EventTypeSharedLinkAddExpiry | EventTypeSharedLinkChangeExpiry | EventTypeSharedLinkChangeVisibility | EventTypeSharedLinkCopy | EventTypeSharedLinkCreate | EventTypeSharedLinkDisable | EventTypeSharedLinkDownload | EventTypeSharedLinkRemoveExpiry | EventTypeSharedLinkShare | EventTypeSharedLinkView | EventTypeSharedNoteOpened | EventTypeShmodelGroupShare | EventTypeShowcaseAccessGranted | EventTypeShowcaseAddMember | EventTypeShowcaseArchived | EventTypeShowcaseCreated | EventTypeShowcaseDeleteComment | EventTypeShowcaseEdited | EventTypeShowcaseEditComment | EventTypeShowcaseFileAdded | EventTypeShowcaseFileDownload | EventTypeShowcaseFileRemoved | EventTypeShowcaseFileView | EventTypeShowcasePermanentlyDeleted | EventTypeShowcasePostComment | EventTypeShowcaseRemoveMember | EventTypeShowcaseRenamed | EventTypeShowcaseRequestAccess | EventTypeShowcaseResolveComment | EventTypeShowcaseRestored | EventTypeShowcaseTrashed | EventTypeShowcaseTrashedDeprecated | EventTypeShowcaseUnresolveComment | EventTypeShowcaseUntrashed | EventTypeShowcaseUntrashedDeprecated | EventTypeShowcaseView | EventTypeSsoAddCert | EventTypeSsoAddLoginUrl | EventTypeSsoAddLogoutUrl | EventTypeSsoChangeCert | EventTypeSsoChangeLoginUrl | EventTypeSsoChangeLogoutUrl | EventTypeSsoChangeSamlIdentityMode | EventTypeSsoRemoveCert | EventTypeSsoRemoveLoginUrl | EventTypeSsoRemoveLogoutUrl | EventTypeTeamFolderChangeStatus | EventTypeTeamFolderCreate | EventTypeTeamFolderDowngrade | EventTypeTeamFolderPermanentlyDelete | EventTypeTeamFolderRename | EventTypeTeamSelectiveSyncSettingsChanged | EventTypeAccountCaptureChangePolicy | EventTypeAllowDownloadDisabled | EventTypeAllowDownloadEnabled | EventTypeCameraUploadsPolicyChanged | EventTypeDataPlacementRestrictionChangePolicy | EventTypeDataPlacementRestrictionSatisfyPolicy | EventTypeDeviceApprovalsChangeDesktopPolicy | EventTypeDeviceApprovalsChangeMobilePolicy | EventTypeDeviceApprovalsChangeOverageAction | EventTypeDeviceApprovalsChangeUnlinkAction | EventTypeDirectoryRestrictionsAddMembers | EventTypeDirectoryRestrictionsRemoveMembers | EventTypeEmmAddException | EventTypeEmmChangePolicy | EventTypeEmmRemoveException | EventTypeExtendedVersionHistoryChangePolicy | EventTypeFileCommentsChangePolicy | EventTypeFileRequestsChangePolicy | EventTypeFileRequestsEmailsEnabled | EventTypeFileRequestsEmailsRestrictedToTeamOnly | EventTypeGoogleSsoChangePolicy | EventTypeGroupUserManagementChangePolicy | EventTypeMemberRequestsChangePolicy | EventTypeMemberSpaceLimitsAddException | EventTypeMemberSpaceLimitsChangeCapsTypePolicy | EventTypeMemberSpaceLimitsChangePolicy | EventTypeMemberSpaceLimitsRemoveException | EventTypeMemberSuggestionsChangePolicy | EventTypeMicrosoftOfficeAddinChangePolicy | EventTypeNetworkControlChangePolicy | EventTypePaperChangeDeploymentPolicy | EventTypePaperChangeMemberLinkPolicy | EventTypePaperChangeMemberPolicy | EventTypePaperChangePolicy | EventTypePaperEnabledUsersGroupAddition | EventTypePaperEnabledUsersGroupRemoval | EventTypePermanentDeleteChangePolicy | EventTypeSharingChangeFolderJoinPolicy | EventTypeSharingChangeLinkPolicy | EventTypeSharingChangeMemberPolicy | EventTypeShowcaseChangeDownloadPolicy | EventTypeShowcaseChangeEnabledPolicy | EventTypeShowcaseChangeExternalSharingPolicy | EventTypeSmartSyncChangePolicy | EventTypeSmartSyncNotOptOut | EventTypeSmartSyncOptOut | EventTypeSsoChangePolicy | EventTypeTeamSelectiveSyncPolicyChanged | EventTypeTfaChangePolicy | EventTypeTwoAccountChangePolicy | EventTypeViewerInfoPolicyChanged | EventTypeWebSessionsChangeFixedLengthPolicy | EventTypeWebSessionsChangeIdleLengthPolicy | EventTypeTeamMergeFrom | EventTypeTeamMergeTo | EventTypeTeamProfileAddLogo | EventTypeTeamProfileChangeDefaultLanguage | EventTypeTeamProfileChangeLogo | EventTypeTeamProfileChangeName | EventTypeTeamProfileRemoveLogo | EventTypeTfaAddBackupPhone | EventTypeTfaAddSecurityKey | EventTypeTfaChangeBackupPhone | EventTypeTfaChangeStatus | EventTypeTfaRemoveBackupPhone | EventTypeTfaRemoveSecurityKey | EventTypeTfaReset | EventTypeOther;
 
     /**
      * Created member data report.
@@ -17144,6 +17256,24 @@ declare module DropboxTypes {
     }
 
     export interface FileDownloadType {
+      description: string;
+    }
+
+    /**
+     * Edited file comment.
+     */
+    export interface FileEditCommentDetails {
+      /**
+       * Comment text. Might be missing due to historical data gap.
+       */
+      comment_text?: string;
+      /**
+       * Previous comment text.
+       */
+      previous_comment_text: string;
+    }
+
+    export interface FileEditCommentType {
       description: string;
     }
 
@@ -18237,7 +18367,7 @@ declare module DropboxTypes {
     }
 
     /**
-     * Cleared saved contacts.
+     * Cleared manually added contacts.
      */
     export interface MemberDeleteManualContactsDetails {
     }
@@ -19384,11 +19514,15 @@ declare module DropboxTypes {
       '.tag': 'markdown';
     }
 
+    export interface PaperDownloadFormatPdf {
+      '.tag': 'pdf';
+    }
+
     export interface PaperDownloadFormatOther {
       '.tag': 'other';
     }
 
-    export type PaperDownloadFormat = PaperDownloadFormatDocx | PaperDownloadFormatHtml | PaperDownloadFormatMarkdown | PaperDownloadFormatOther;
+    export type PaperDownloadFormat = PaperDownloadFormatDocx | PaperDownloadFormatHtml | PaperDownloadFormatMarkdown | PaperDownloadFormatPdf | PaperDownloadFormatOther;
 
     /**
      * Added users to Paper-enabled users list.
@@ -19558,7 +19692,7 @@ declare module DropboxTypes {
      */
     export interface ParticipantLogInfoUser {
       '.tag': 'user';
-      user: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      user: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
     }
 
     /**
@@ -20280,7 +20414,7 @@ declare module DropboxTypes {
       /**
        * The shared content owner.
        */
-      shared_content_owner?: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_content_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
       /**
        * Shared content access level.
        */
@@ -20306,7 +20440,7 @@ declare module DropboxTypes {
       /**
        * The shared content owner.
        */
-      shared_content_owner?: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_content_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
       /**
        * Shared content access level.
        */
@@ -20415,7 +20549,7 @@ declare module DropboxTypes {
       /**
        * The shared content owner.
        */
-      shared_content_owner?: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_content_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
       /**
        * Shared content access level.
        */
@@ -20689,7 +20823,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
     }
 
     export interface SharedLinkCopyType {
@@ -20718,7 +20852,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
     }
 
     export interface SharedLinkDisableType {
@@ -20732,7 +20866,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
     }
 
     export interface SharedLinkDownloadType {
@@ -20761,7 +20895,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
       /**
        * Users without a Dropbox account that were added as shared link
        * audience.
@@ -20780,7 +20914,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
     }
 
     export interface SharedLinkViewType {
@@ -20923,10 +21057,6 @@ declare module DropboxTypes {
       '.tag': 'forbid';
     }
 
-    export interface SharingMemberPolicyTeamMembersAndWhitelist {
-      '.tag': 'team_members_and_whitelist';
-    }
-
     export interface SharingMemberPolicyOther {
       '.tag': 'other';
     }
@@ -20934,7 +21064,7 @@ declare module DropboxTypes {
     /**
      * External sharing policy
      */
-    export type SharingMemberPolicy = SharingMemberPolicyAllow | SharingMemberPolicyForbid | SharingMemberPolicyTeamMembersAndWhitelist | SharingMemberPolicyOther;
+    export type SharingMemberPolicy = SharingMemberPolicyAllow | SharingMemberPolicyForbid | SharingMemberPolicyOther;
 
     /**
      * Shared link with group.
@@ -22283,6 +22413,38 @@ declare module DropboxTypes {
     export type TimeUnit = TimeUnitMilliseconds | TimeUnitSeconds | TimeUnitMinutes | TimeUnitHours | TimeUnitDays | TimeUnitWeeks | TimeUnitMonths | TimeUnitYears | TimeUnitOther;
 
     /**
+     * User that is not a member of the team but considered trusted.
+     */
+    export interface TrustedNonTeamMemberLogInfo extends UserLogInfo {
+      /**
+       * Indicates the type of the trusted non team member user.
+       */
+      trusted_non_team_member_type: TrustedNonTeamMemberType;
+    }
+
+    /**
+     * Reference to the TrustedNonTeamMemberLogInfo type, identified by the
+     * value of the .tag property.
+     */
+    export interface TrustedNonTeamMemberLogInfoReference extends TrustedNonTeamMemberLogInfo {
+      /**
+       * Tag identifying this subtype variant. This field is only present when
+       * needed to discriminate between multiple possible subtypes.
+       */
+      '.tag': 'trusted_non_team_member';
+    }
+
+    export interface TrustedNonTeamMemberTypeMultiInstanceAdmin {
+      '.tag': 'multi_instance_admin';
+    }
+
+    export interface TrustedNonTeamMemberTypeOther {
+      '.tag': 'other';
+    }
+
+    export type TrustedNonTeamMemberType = TrustedNonTeamMemberTypeMultiInstanceAdmin | TrustedNonTeamMemberTypeOther;
+
+    /**
      * Enabled/disabled option for members to link personal Dropbox account and
      * team account to same computer.
      */
@@ -22363,7 +22525,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "team_member"|"non_team_member";
+      '.tag': "team_member"|"trusted_non_team_member"|"non_team_member";
     }
 
     /**

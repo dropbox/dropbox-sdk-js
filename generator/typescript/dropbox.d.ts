@@ -28,6 +28,26 @@ declare module DropboxTypes {
     public authTokenRevoke(arg: void): Promise<void>;
 
     /**
+     * Removes all manually added contacts. You'll still keep contacts who are
+     * on your team or who you imported. New contacts will be added when you
+     * share.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public contactsDeleteManualContacts(arg: void): Promise<void>;
+
+    /**
+     * Removes manually added contacts from the given list.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<contacts.DeleteManualContactsError>.
+     * @param arg The request parameters.
+     */
+    public contactsDeleteManualContactsBatch(arg: contacts.DeleteManualContactsArg): Promise<void>;
+
+    /**
      * Add property groups to a Dropbox file. See templatesAddForUser() or
      * templatesAddForTeam() to create new templates.
      *
