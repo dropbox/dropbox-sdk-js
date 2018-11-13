@@ -3266,6 +3266,292 @@ namespace.</td>
             
                 
 <hr>
+<dt class="name" id="ContactsDeleteManualContactsArg">
+    <h4 id="ContactsDeleteManualContactsArg">ContactsDeleteManualContactsArg</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>email_addresses</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of manually added contacts
+to be deleted.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="ContactsDeleteManualContactsError">
+    <h4 id="ContactsDeleteManualContactsError">ContactsDeleteManualContactsError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>contacts_not_found</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+contacts_not_found. Can't delete contacts from this list. Make sure the list
+only has manually added contacts. The deletion was cancelled.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'contacts_not_found'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="Error">
     <h4 id="Error">Error</h4>
 
@@ -52933,6 +53219,9 @@ asynchronous job returned an error.</td>
 <span class="param-type">'team'</span>
 |
 
+<span class="param-type">'no_one'</span>
+|
+
 <span class="param-type">'members'</span>
 |
 
@@ -91189,6 +91478,9 @@ is remove_action. Define how the user was removed from the team.</td>
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
 |
 
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
+|
+
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
 |
 
@@ -91225,6 +91517,9 @@ is remove_action. Define how the user was removed from the team.</td>
             
                 
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
 |
 
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
@@ -93592,6 +93887,406 @@ paper_folder. Paper folder's details.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogCameraUploadsPolicy">
+    <h4 id="TeamLogCameraUploadsPolicy">TeamLogCameraUploadsPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling if team members can activate camera uploads
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogCameraUploadsPolicyChangedDetails">
+    <h4 id="TeamLogCameraUploadsPolicyChangedDetails">TeamLogCameraUploadsPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed camera uploads setting for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogCameraUploadsPolicy">TeamLogCameraUploadsPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New camera uploads
+setting.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogCameraUploadsPolicy">TeamLogCameraUploadsPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous camera
+uploads setting.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogCameraUploadsPolicyChangedType">
+    <h4 id="TeamLogCameraUploadsPolicyChangedType">TeamLogCameraUploadsPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogCertificate">
     <h4 id="TeamLogCertificate">TeamLogCertificate</h4>
 
@@ -94403,6 +95098,39 @@ is non_team_member. Action was done on behalf of a non team member.</td>
 
         <tr>
             
+                <td class="name"><code>trusted_non_team_member</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is trusted_non_team_member. Action was done on behalf of a
+trusted non team member.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>.tag</code></td>
             
 
@@ -94419,6 +95147,9 @@ is non_team_member. Action was done on behalf of a non team member.</td>
 |
 
 <span class="param-type">'team'</span>
+|
+
+<span class="param-type">'trusted_non_team_member'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -105241,6 +105972,38 @@ file_change_comment_subscription_details.</td>
 
         <tr>
             
+                <td class="name"><code>file_edit_comment_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogFileEditCommentDetails">TeamLogFileEditCommentDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is file_edit_comment_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>file_like_comment_details</code></td>
             
 
@@ -113049,6 +113812,39 @@ allow_download_enabled_details.</td>
 
         <tr>
             
+                <td class="name"><code>camera_uploads_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogCameraUploadsPolicyChangedDetails">TeamLogCameraUploadsPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+camera_uploads_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>data_placement_restriction_change_policy_details</code></td>
             
 
@@ -115177,6 +115973,9 @@ to an internal error.</td>
 <span class="param-type">'file_delete_comment_details'</span>
 |
 
+<span class="param-type">'file_edit_comment_details'</span>
+|
+
 <span class="param-type">'file_like_comment_details'</span>
 |
 
@@ -115894,6 +116693,9 @@ to an internal error.</td>
 <span class="param-type">'allow_download_enabled_details'</span>
 |
 
+<span class="param-type">'camera_uploads_policy_changed_details'</span>
+|
+
 <span class="param-type">'data_placement_restriction_change_policy_details'</span>
 |
 
@@ -116438,6 +117240,39 @@ from comment notifications for file</td>
 
             <td class="description last">Available if
 .tag is file_delete_comment. (comments) Deleted file comment</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>file_edit_comment</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogFileEditCommentType">TeamLogFileEditCommentType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is file_edit_comment. (comments) Edited file comment</td>
         </tr>
 
     
@@ -119031,7 +119866,7 @@ joined, suspended, etc.)</td>
             
 
             <td class="description last">Available if .tag is
-member_delete_manual_contacts. (members) Cleared saved contacts</td>
+member_delete_manual_contacts. (members) Cleared manually added contacts</td>
         </tr>
 
     
@@ -124410,6 +125245,40 @@ downloads (deprecated, no longer logged)</td>
 
         <tr>
             
+                <td class="name"><code>camera_uploads_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogCameraUploadsPolicyChangedType">TeamLogCameraUploadsPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+camera_uploads_policy_changed. (team_policies) Changed camera uploads setting
+for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>data_placement_restriction_change_policy</code></td>
             
 
@@ -126563,6 +127432,9 @@ two-step verification</td>
 <span class="param-type">'file_delete_comment'</span>
 |
 
+<span class="param-type">'file_edit_comment'</span>
+|
+
 <span class="param-type">'file_like_comment'</span>
 |
 
@@ -127278,6 +128150,9 @@ two-step verification</td>
 |
 
 <span class="param-type">'allow_download_enabled'</span>
+|
+
+<span class="param-type">'camera_uploads_policy_changed'</span>
 |
 
 <span class="param-type">'data_placement_restriction_change_policy'</span>
@@ -130504,6 +131379,291 @@ historical data gap.</td>
 <hr>
 <dt class="name" id="TeamLogFileDownloadType">
     <h4 id="TeamLogFileDownloadType">TeamLogFileDownloadType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogFileEditCommentDetails">
+    <h4 id="TeamLogFileEditCommentDetails">TeamLogFileEditCommentDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Edited file comment.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_comment_text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Previous comment text.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>comment_text</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Comment text. Might be missing due to
+historical data gap.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogFileEditCommentType">
+    <h4 id="TeamLogFileEditCommentType">TeamLogFileEditCommentType</h4>
 
     
 </dt>
@@ -145734,7 +146894,7 @@ the action taken that caused status change.</td>
 <dd>
     
     <div class="description">
-        Cleared saved contacts.
+        Cleared manually added contacts.
     </div>
     
 
@@ -162352,6 +163512,9 @@ historical data gap.</td>
 <span class="param-type">'markdown'</span>
 |
 
+<span class="param-type">'pdf'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -164921,6 +166084,9 @@ subscription level. Might be missing due to historical data gap.</td>
             
                 
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
 |
 
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
@@ -175039,6 +176205,9 @@ content.</td>
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
 |
 
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
+|
+
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
 |
 
@@ -175358,6 +176527,9 @@ access level.</td>
             
                 
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
 |
 
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
@@ -177260,6 +178432,9 @@ access level.</td>
             
                 
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
 |
 
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
@@ -181213,6 +182388,9 @@ link visibility. Might be missing due to historical data gap.</td>
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
 |
 
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
+|
+
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
 |
 
@@ -181729,6 +182907,9 @@ who can access the shared link. Might be missing due to historical data gap.</td
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
 |
 
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
+|
+
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
 |
 
@@ -181988,6 +183169,9 @@ historical data gap.</td>
             
                 
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
 |
 
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
@@ -182506,6 +183690,9 @@ date. Might be missing due to historical data gap.</td>
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
 |
 
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
+|
+
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
 |
 
@@ -182798,6 +183985,9 @@ without a Dropbox account that were added as shared link audience.</td>
             
                 
 <span class="param-type"><a href="global.html#TeamLogTeamMemberLogInfo">TeamLogTeamMemberLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</a></span>
 |
 
 <span class="param-type"><a href="global.html#TeamLogNonTeamMemberLogInfo">TeamLogNonTeamMemberLogInfo</a></span>
@@ -184507,9 +185697,6 @@ team members.
 |
 
 <span class="param-type">'forbid'</span>
-|
-
-<span class="param-type">'team_members_and_whitelist'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -204018,6 +205205,394 @@ deprecated.
             
                 
 <hr>
+<dt class="name" id="TeamLogTrustedNonTeamMemberLogInfo">
+    <h4 id="TeamLogTrustedNonTeamMemberLogInfo">TeamLogTrustedNonTeamMemberLogInfo</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        User that is not a member of the team but considered trusted.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'trusted_non_team_member'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying this subtype
+variant. This field is only present when needed to discriminate between multiple
+possible subtypes.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>trusted_non_team_member_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTrustedNonTeamMemberType">TeamLogTrustedNonTeamMemberType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Indicates the type of the trusted non team member user.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>account_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">User unique ID. Might be missing due to
+historical data gap.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>display_name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">User display name. Might be missing due
+to historical data gap.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>email</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">User email address. Might be missing due to
+historical data gap.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTrustedNonTeamMemberType">
+    <h4 id="TeamLogTrustedNonTeamMemberType">TeamLogTrustedNonTeamMemberType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'multi_instance_admin'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogTwoAccountChangePolicyDetails">
     <h4 id="TeamLogTwoAccountChangePolicyDetails">TeamLogTwoAccountChangePolicyDetails</h4>
 
@@ -204702,6 +206277,9 @@ historical data gap.</td>
 <span class="param-type">"team_member"</span>
 |
 
+<span class="param-type">"trusted_non_team_member"</span>
+|
+
 <span class="param-type">"non_team_member"</span>
 
 
@@ -204719,8 +206297,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Tag identifying the subtype
-variant.</td>
+            <td class="description last">Tag identifying the subtype variant.</td>
         </tr>
 
     
@@ -217354,6 +218931,31 @@ recoverable.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>is_disconnected</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">True if the team member's account was
+converted to individual account.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -225446,7 +227048,133 @@ team-accessible namespaces.</td>
             <td class="type">
             
                 
+<span class="param-type">'invalid_arg'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
 <span class="param-type">'invalid_cursor'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamTeamNamespacesListError">
+    <h4 id="TeamTeamNamespacesListError">TeamTeamNamespacesListError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'invalid_arg'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -230376,7 +232104,7 @@ stop_sync).</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2018-10-12T10:20:30-07:00
+		on 2018-11-12T19:19:04-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
