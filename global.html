@@ -10274,7 +10274,8 @@ will be relative to the app folder.</td>
             
 
             <td class="description last">The deadline for the
-file request. Deadlines can only be set by Pro and Business accounts.</td>
+file request. Deadlines can only be set by Professional and Business
+accounts.</td>
         </tr>
 
     
@@ -12131,7 +12132,8 @@ this will be relative to the app folder.</td>
             
 
             <td class="description last">The new deadline
-for the file request.</td>
+for the file request. Deadlines can only be set by Professional and Business
+accounts.</td>
         </tr>
 
     
@@ -14929,7 +14931,9 @@ complete.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Each entry in
+CreateFolderBatchArg.paths will appear at the same position inside
+CreateFolderBatchResult.entries.</td>
         </tr>
 
     
@@ -16622,7 +16626,9 @@ complete.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Each entry in
+DeleteBatchArg.entries will appear at the same position inside
+DeleteBatchResult.entries.</td>
         </tr>
 
     
@@ -25542,6 +25548,178 @@ FolderSharingInfo.parent_shared_folder_id instead.</td>
             
                 
 <hr>
+<dt class="name" id="FilesMoveBatchArg">
+    <h4 id="FilesMoveBatchArg">FilesMoveBatchArg</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entries</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#FilesRelocationPath">FilesRelocationPath</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of entries to be moved
+or copied. Each entry is RelocationPath.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>autorename</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">If there's a conflict with any file, have
+the Dropbox server try to autorename that file to avoid the conflict.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>allow_ownership_transfer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Allow moves by owner even if
+it would result in an ownership transfer for the content being moved. This
+does not apply to copies.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="FilesPhotoMetadata">
     <h4 id="FilesPhotoMetadata">FilesPhotoMetadata</h4>
 
@@ -26405,33 +26583,6 @@ or copied. Each entry is RelocationPath.</td>
 
         <tr>
             
-                <td class="name"><code>allow_shared_folder</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">If true, copy_batch will copy
-contents in shared folder, otherwise RelocationError.cant_copy_shared_folder
-will be returned if RelocationPath.from_path contains shared folder.  This
-field is always true for move_batch.</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>autorename</code></td>
             
 
@@ -26451,6 +26602,33 @@ field is always true for move_batch.</td>
 
             <td class="description last">If there's a conflict with any file, have
 the Dropbox server try to autorename that file to avoid the conflict.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>allow_shared_folder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">If true, copy_batch will copy
+contents in shared folder, otherwise RelocationError.cant_copy_shared_folder
+will be returned if RelocationPath.from_path contains shared folder. This
+field is always true for move_batch.</td>
         </tr>
 
     
@@ -26477,6 +26655,152 @@ the Dropbox server try to autorename that file to avoid the conflict.</td>
             <td class="description last">Allow moves by owner even if
 it would result in an ownership transfer for the content being moved. This
 does not apply to copies.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesRelocationBatchArgBase">
+    <h4 id="FilesRelocationBatchArgBase">FilesRelocationBatchArgBase</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entries</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#FilesRelocationPath">FilesRelocationPath</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">List of entries to be moved
+or copied. Each entry is RelocationPath.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>autorename</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">If there's a conflict with any file, have
+the Dropbox server try to autorename that file to avoid the conflict.</td>
         </tr>
 
     
@@ -26714,10 +27038,183 @@ from_lookup.</td>
 <span class="param-type">'insufficient_quota'</span>
 |
 
+<span class="param-type">'internal_error'</span>
+|
+
 <span class="param-type">'other'</span>
 |
 
 <span class="param-type">'too_many_write_operations'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesRelocationBatchErrorEntry">
+    <h4 id="FilesRelocationBatchErrorEntry">FilesRelocationBatchErrorEntry</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>relocation_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesRelocationError">FilesRelocationError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+relocation_error. User errors that retry won't help.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'relocation_error'</span>
+|
+
+<span class="param-type">'internal_error'</span>
+|
+
+<span class="param-type">'too_many_write_operations'</span>
+|
+
+<span class="param-type">'other'</span>
 
 
 
@@ -27438,6 +27935,705 @@ complete.</td>
             
                 
 <hr>
+<dt class="name" id="FilesRelocationBatchResultEntry">
+    <h4 id="FilesRelocationBatchResultEntry">FilesRelocationBatchResultEntry</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>success</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesFileMetadata">FilesFileMetadata</a></span>
+|
+
+<span class="param-type"><a href="global.html#FilesFolderMetadata">FilesFolderMetadata</a></span>
+|
+
+<span class="param-type"><a href="global.html#FilesDeletedMetadata">FilesDeletedMetadata</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is success.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>failure</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesRelocationBatchErrorEntry">FilesRelocationBatchErrorEntry</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+failure.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'success'</span>
+|
+
+<span class="param-type">'failure'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesRelocationBatchV2JobStatus">
+    <h4 id="FilesRelocationBatchV2JobStatus">FilesRelocationBatchV2JobStatus</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Result returned by copy_batch:2 or move_batch:2 that may either launch an
+asynchronous job or complete synchronously.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>complete</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesRelocationBatchV2Result">FilesRelocationBatchV2Result</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+complete. The copy or move batch job has finished.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'in_progress'</span>
+|
+
+<span class="param-type">'complete'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesRelocationBatchV2Launch">
+    <h4 id="FilesRelocationBatchV2Launch">FilesRelocationBatchV2Launch</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Result returned by copy_batch:2 or move_batch:2 that may either launch an
+asynchronous job or complete synchronously.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>async_job_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is async_job_id. This
+response indicates that the processing is asynchronous. The string is an id
+that can be used to obtain the status of the asynchronous job.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>complete</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesRelocationBatchV2Result">FilesRelocationBatchV2Result</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+complete.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'async_job_id'</span>
+|
+
+<span class="param-type">'complete'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesRelocationBatchV2Result">
+    <h4 id="FilesRelocationBatchV2Result">FilesRelocationBatchV2Result</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>entries</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#FilesRelocationBatchResultEntry">FilesRelocationBatchResultEntry</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Each entry in
+CopyBatchArg.entries or MoveBatchArg.entries will appear at the same position
+inside RelocationBatchV2Result.entries.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="FilesRelocationError">
     <h4 id="FilesRelocationError">FilesRelocationError</h4>
 
@@ -27622,6 +28818,9 @@ from_lookup.</td>
 |
 
 <span class="param-type">'insufficient_quota'</span>
+|
+
+<span class="param-type">'internal_error'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -33494,8 +34693,9 @@ that can be used to obtain the status of the asynchronous job.</td>
 
             
 
-            <td class="description last">Commit
-result for each file in the batch.</td>
+            <td class="description last">Each
+entry in UploadSessionFinishBatchArg.entries will appear at the same position
+inside UploadSessionFinishBatchResult.entries.</td>
         </tr>
 
     
@@ -232104,7 +233304,7 @@ stop_sync).</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a>
 	
-		on 2018-11-12T19:19:04-08:00
+		on 2018-12-04T10:44:02-08:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
