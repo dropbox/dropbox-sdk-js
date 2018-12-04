@@ -310,6 +310,20 @@ declare module DropboxTypes {
 
     /**
      * Copy multiple files or folders to different locations at once in the
+     * user's Dropbox. This route will replace copyBatch(). The main difference
+     * is this route will return stutus for each entry, while copyBatch() raises
+     * failure if any entry fails. This route will either finish synchronously,
+     * or return a job ID and do the async copy job in background. Please use
+     * copyBatchCheckV2() to check the job status.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public filesCopyBatchV2(arg: files.CopyBatchArg): Promise<files.RelocationBatchV2Launch>;
+
+    /**
+     * Copy multiple files or folders to different locations at once in the
      * user's Dropbox. If RelocationBatchArg.allow_shared_folder is false, this
      * route is atomic. If one entry fails, the whole transaction will abort. If
      * RelocationBatchArg.allow_shared_folder is true, atomicity is not
@@ -320,9 +334,20 @@ declare module DropboxTypes {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesCopyBatch(arg: files.RelocationBatchArg): Promise<files.RelocationBatchLaunch>;
+
+    /**
+     * Returns the status of an asynchronous job for copyBatchV2(). It returns
+     * list of results for each entry.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<async.PollError>.
+     * @param arg The request parameters.
+     */
+    public filesCopyBatchCheckV2(arg: async.PollArg): Promise<files.RelocationBatchV2JobStatus>;
 
     /**
      * Returns the status of an asynchronous job for copyBatch(). If success, it
@@ -330,6 +355,7 @@ declare module DropboxTypes {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesCopyBatchCheck(arg: async.PollArg): Promise<files.RelocationBatchJobStatus>;
@@ -671,6 +697,20 @@ declare module DropboxTypes {
 
     /**
      * Move multiple files or folders to different locations at once in the
+     * user's Dropbox. This route will replace moveBatchV2(). The main
+     * difference is this route will return stutus for each entry, while
+     * moveBatch() raises failure if any entry fails. This route will either
+     * finish synchronously, or return a job ID and do the async move job in
+     * background. Please use moveBatchCheckV2() to check the job status.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public filesMoveBatchV2(arg: files.MoveBatchArg): Promise<files.RelocationBatchV2Launch>;
+
+    /**
+     * Move multiple files or folders to different locations at once in the
      * user's Dropbox. This route is 'all or nothing', which means if one entry
      * fails, the whole transaction will abort. This route will return job ID
      * immediately and do the async moving job in background. Please use
@@ -681,6 +721,16 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public filesMoveBatch(arg: files.RelocationBatchArg): Promise<files.RelocationBatchLaunch>;
+
+    /**
+     * Returns the status of an asynchronous job for moveBatchV2(). It returns
+     * list of results for each entry.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<async.PollError>.
+     * @param arg The request parameters.
+     */
+    public filesMoveBatchCheckV2(arg: async.PollArg): Promise<files.RelocationBatchV2JobStatus>;
 
     /**
      * Returns the status of an asynchronous job for moveBatch(). If success, it
@@ -761,9 +811,11 @@ declare module DropboxTypes {
     public filesRestore(arg: files.RestoreArg): Promise<files.FileMetadata>;
 
     /**
-     * Save a specified URL into a file in user's Dropbox. If the given path
-     * already exists, the file will be renamed to avoid the conflict (e.g.
-     * myfile (1).txt).
+     * Save the data from a specified URL into a file in user's Dropbox. Note
+     * that the transfer from the URL must complete within 5 minutes, or the
+     * operation will time out and the job will fail. If the given path already
+     * exists, the file will be renamed to avoid the conflict (e.g. myfile
+     * (1).txt).
      *
      * When an error occurs, the route rejects the promise with type
      * Error<files.SaveUrlError>.
@@ -1094,7 +1146,7 @@ declare module DropboxTypes {
      * Allows an owner or editor (if the ACL update policy allows) of a shared
      * folder to add another member. For the new member to get access to all the
      * functionality for this folder, you will need to call mountFolder() on
-     * their behalf. Apps must have full Dropbox access to use this endpoint.
+     * their behalf.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.AddFolderMemberError>.
@@ -1113,8 +1165,7 @@ declare module DropboxTypes {
     public sharingChangeFileMemberAccess(arg: sharing.ChangeFileMemberAccessArgs): Promise<sharing.FileMemberActionResult>;
 
     /**
-     * Returns the status of an asynchronous job. Apps must have full Dropbox
-     * access to use this endpoint.
+     * Returns the status of an asynchronous job.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
@@ -1123,8 +1174,7 @@ declare module DropboxTypes {
     public sharingCheckJobStatus(arg: async.PollArg): Promise<sharing.JobStatus>;
 
     /**
-     * Returns the status of an asynchronous job for sharing a folder. Apps must
-     * have full Dropbox access to use this endpoint.
+     * Returns the status of an asynchronous job for sharing a folder.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
@@ -1133,8 +1183,7 @@ declare module DropboxTypes {
     public sharingCheckRemoveMemberJobStatus(arg: async.PollArg): Promise<sharing.RemoveMemberJobStatus>;
 
     /**
-     * Returns the status of an asynchronous job for sharing a folder. Apps must
-     * have full Dropbox access to use this endpoint.
+     * Returns the status of an asynchronous job for sharing a folder.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
@@ -1190,8 +1239,7 @@ declare module DropboxTypes {
     public sharingGetFileMetadataBatch(arg: sharing.GetFileMetadataBatchArg): Promise<Array<sharing.GetFileMetadataBatchResult>>;
 
     /**
-     * Returns shared folder metadata by its folder ID. Apps must have full
-     * Dropbox access to use this endpoint.
+     * Returns shared folder metadata by its folder ID.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SharedFolderAccessError>.
@@ -1268,8 +1316,7 @@ declare module DropboxTypes {
     public sharingListFileMembersContinue(arg: sharing.ListFileMembersContinueArg): Promise<sharing.SharedFileMembers>;
 
     /**
-     * Returns shared folder membership by its folder ID. Apps must have full
-     * Dropbox access to use this endpoint.
+     * Returns shared folder membership by its folder ID.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.SharedFolderAccessError>.
@@ -1279,8 +1326,7 @@ declare module DropboxTypes {
 
     /**
      * Once a cursor has been retrieved from listFolderMembers(), use this to
-     * paginate through all shared folder members. Apps must have full Dropbox
-     * access to use this endpoint.
+     * paginate through all shared folder members.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFolderMembersContinueError>.
@@ -1290,7 +1336,6 @@ declare module DropboxTypes {
 
     /**
      * Return the list of all shared folders the current user has access to.
-     * Apps must have full Dropbox access to use this endpoint.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
@@ -1301,8 +1346,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from listFolders(), use this to paginate
      * through all shared folders. The cursor must come from a previous call to
-     * listFolders() or listFoldersContinue(). Apps must have full Dropbox
-     * access to use this endpoint.
+     * listFolders() or listFoldersContinue().
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFoldersContinueError>.
@@ -1312,7 +1356,7 @@ declare module DropboxTypes {
 
     /**
      * Return the list of all shared folders the current user can mount or
-     * unmount. Apps must have full Dropbox access to use this endpoint.
+     * unmount.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
@@ -1324,8 +1368,7 @@ declare module DropboxTypes {
      * Once a cursor has been retrieved from listMountableFolders(), use this to
      * paginate through all mountable shared folders. The cursor must come from
      * a previous call to listMountableFolders() or
-     * listMountableFoldersContinue(). Apps must have full Dropbox access to use
-     * this endpoint.
+     * listMountableFoldersContinue().
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ListFoldersContinueError>.
@@ -1385,8 +1428,7 @@ declare module DropboxTypes {
     /**
      * The current user mounts the designated folder. Mount a shared folder for
      * a user after they have been added as a member. Once mounted, the shared
-     * folder will appear in their Dropbox. Apps must have full Dropbox access
-     * to use this endpoint.
+     * folder will appear in their Dropbox.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.MountFolderError>.
@@ -1397,8 +1439,7 @@ declare module DropboxTypes {
     /**
      * The current user relinquishes their membership in the designated file.
      * Note that the current user may still have inherited access to this file
-     * through the parent folder. Apps must have full Dropbox access to use this
-     * endpoint.
+     * through the parent folder.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RelinquishFileMembershipError>.
@@ -1411,8 +1452,7 @@ declare module DropboxTypes {
      * folder and will no longer have access to the folder.  A folder owner
      * cannot relinquish membership in their own folder. This will run
      * synchronously if leave_a_copy is false, and asynchronously if
-     * leave_a_copy is true. Apps must have full Dropbox access to use this
-     * endpoint.
+     * leave_a_copy is true.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RelinquishFolderMembershipError>.
@@ -1441,8 +1481,7 @@ declare module DropboxTypes {
 
     /**
      * Allows an owner or editor (if the ACL update policy allows) of a shared
-     * folder to remove another member. Apps must have full Dropbox access to
-     * use this endpoint.
+     * folder to remove another member.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.RemoveFolderMemberError>.
@@ -1482,7 +1521,7 @@ declare module DropboxTypes {
      * testing the async case repeatable, set `ShareFolderArg.force_async`. If a
      * ShareFolderLaunch.async_job_id is returned, you'll need to call
      * checkShareJobStatus() until the action completes to get the metadata for
-     * the folder. Apps must have full Dropbox access to use this endpoint.
+     * the folder.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.ShareFolderError>.
@@ -1493,7 +1532,7 @@ declare module DropboxTypes {
     /**
      * Transfer ownership of a shared folder to a member of the shared folder.
      * User must have AccessLevel.owner access to the shared folder to perform a
-     * transfer. Apps must have full Dropbox access to use this endpoint.
+     * transfer.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.TransferFolderError>.
@@ -1503,8 +1542,7 @@ declare module DropboxTypes {
 
     /**
      * The current user unmounts the designated folder. They can re-mount the
-     * folder at a later time using mountFolder(). Apps must have full Dropbox
-     * access to use this endpoint.
+     * folder at a later time using mountFolder().
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UnmountFolderError>.
@@ -1524,7 +1562,6 @@ declare module DropboxTypes {
     /**
      * Allows a shared folder owner to unshare the folder. You'll need to call
      * checkJobStatus() to determine if the action has completed successfully.
-     * Apps must have full Dropbox access to use this endpoint.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UnshareFolderError>.
@@ -1543,7 +1580,7 @@ declare module DropboxTypes {
 
     /**
      * Allows an owner or editor of a shared folder to update another member's
-     * permissions. Apps must have full Dropbox access to use this endpoint.
+     * permissions.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UpdateFolderMemberError>.
@@ -1554,7 +1591,6 @@ declare module DropboxTypes {
     /**
      * Update the sharing policies for a shared folder. User must have
      * AccessLevel.owner access to the shared folder to update its policies.
-     * Apps must have full Dropbox access to use this endpoint.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<sharing.UpdateFolderPolicyError>.

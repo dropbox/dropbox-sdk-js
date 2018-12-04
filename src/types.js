@@ -532,7 +532,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * uploaded files will be sent. For apps with the app folder permission, this
  * will be relative to the app folder.
  * @property {FileRequestsFileRequestDeadline} [deadline] - The deadline for the
- * file request. Deadlines can only be set by Pro and Business accounts.
+ * file request. Deadlines can only be set by Professional and Business
+ * accounts.
  * @property {boolean} open - Whether or not the file request should be open. If
  * the file request is closed, it will not accept any file submissions, but it
  * can be opened later.
@@ -625,7 +626,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * where uploaded files will be sent. For apps with the app folder permission,
  * this will be relative to the app folder.
  * @property {FileRequestsUpdateFileRequestDeadline} deadline - The new deadline
- * for the file request.
+ * for the file request. Deadlines can only be set by Professional and Business
+ * accounts.
  * @property {boolean} [open] - Whether to set this file request as open or
  * closed.
  */
@@ -778,7 +780,9 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} FilesCreateFolderBatchResult
- * @property {Array.<FilesCreateFolderBatchResultEntry>} entries
+ * @property {Array.<FilesCreateFolderBatchResultEntry>} entries - Each entry in
+ * CreateFolderBatchArg.paths will appear at the same position inside
+ * CreateFolderBatchResult.entries.
  */
 
 /**
@@ -852,7 +856,9 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} FilesDeleteBatchResult
- * @property {Array.<FilesDeleteBatchResultEntry>} entries
+ * @property {Array.<FilesDeleteBatchResultEntry>} entries - Each entry in
+ * DeleteBatchArg.entries will appear at the same position inside
+ * DeleteBatchResult.entries.
  */
 
 /**
@@ -1343,6 +1349,17 @@ variant.
  */
 
 /**
+ * @typedef {Object} FilesMoveBatchArg
+ * @property {Array.<FilesRelocationPath>} entries - List of entries to be moved
+ * or copied. Each entry is RelocationPath.
+ * @property {boolean} autorename - If there's a conflict with any file, have
+ * the Dropbox server try to autorename that file to avoid the conflict.
+ * @property {boolean} allow_ownership_transfer - Allow moves by owner even if
+ * it would result in an ownership transfer for the content being moved. This
+ * does not apply to copies.
+ */
+
+/**
  * Metadata for a photo.
  * @typedef {Object} FilesPhotoMetadata
 @property {'photo'} [.tag] - Tag identifying this subtype variant. This field is
@@ -1388,15 +1405,23 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilesRelocationBatchArg
  * @property {Array.<FilesRelocationPath>} entries - List of entries to be moved
  * or copied. Each entry is RelocationPath.
- * @property {boolean} allow_shared_folder - If true, copy_batch will copy
- * contents in shared folder, otherwise RelocationError.cant_copy_shared_folder
- * will be returned if RelocationPath.from_path contains shared folder.  This
- * field is always true for move_batch.
  * @property {boolean} autorename - If there's a conflict with any file, have
  * the Dropbox server try to autorename that file to avoid the conflict.
+ * @property {boolean} allow_shared_folder - If true, copy_batch will copy
+ * contents in shared folder, otherwise RelocationError.cant_copy_shared_folder
+ * will be returned if RelocationPath.from_path contains shared folder. This
+ * field is always true for move_batch.
  * @property {boolean} allow_ownership_transfer - Allow moves by owner even if
  * it would result in an ownership transfer for the content being moved. This
  * does not apply to copies.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationBatchArgBase
+ * @property {Array.<FilesRelocationPath>} entries - List of entries to be moved
+ * or copied. Each entry is RelocationPath.
+ * @property {boolean} autorename - If there's a conflict with any file, have
+ * the Dropbox server try to autorename that file to avoid the conflict.
  */
 
 /**
@@ -1405,7 +1430,14 @@ only present when needed to discriminate between multiple possible subtypes.
  * from_lookup.
  * @property {FilesWriteError} [from_write] - Available if .tag is from_write.
  * @property {FilesWriteError} [to] - Available if .tag is to.
- * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'duplicated_or_nested_paths'|'cant_transfer_ownership'|'insufficient_quota'|'other'|'too_many_write_operations')} .tag - Tag identifying the union variant.
+ * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'duplicated_or_nested_paths'|'cant_transfer_ownership'|'insufficient_quota'|'internal_error'|'other'|'too_many_write_operations')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationBatchErrorEntry
+ * @property {FilesRelocationError} [relocation_error] - Available if .tag is
+ * relocation_error. User errors that retry won't help.
+ * @property {('relocation_error'|'internal_error'|'too_many_write_operations'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1441,12 +1473,49 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} FilesRelocationBatchResultEntry
+ * @property {(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata)}
+ * [success] - Available if .tag is success.
+ * @property {FilesRelocationBatchErrorEntry} [failure] - Available if .tag is
+ * failure.
+ * @property {('success'|'failure'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Result returned by copy_batch:2 or move_batch:2 that may either launch an
+ * asynchronous job or complete synchronously.
+ * @typedef {Object} FilesRelocationBatchV2JobStatus
+ * @property {FilesRelocationBatchV2Result} [complete] - Available if .tag is
+ * complete. The copy or move batch job has finished.
+ * @property {('in_progress'|'complete')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Result returned by copy_batch:2 or move_batch:2 that may either launch an
+ * asynchronous job or complete synchronously.
+ * @typedef {Object} FilesRelocationBatchV2Launch
+ * @property {string} [async_job_id] - Available if .tag is async_job_id. This
+ * response indicates that the processing is asynchronous. The string is an id
+ * that can be used to obtain the status of the asynchronous job.
+ * @property {FilesRelocationBatchV2Result} [complete] - Available if .tag is
+ * complete.
+ * @property {('async_job_id'|'complete')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesRelocationBatchV2Result
+ * @property {Array.<FilesRelocationBatchResultEntry>} entries - Each entry in
+ * CopyBatchArg.entries or MoveBatchArg.entries will appear at the same position
+ * inside RelocationBatchV2Result.entries.
+ */
+
+/**
  * @typedef {Object} FilesRelocationError
  * @property {FilesLookupError} [from_lookup] - Available if .tag is
  * from_lookup.
  * @property {FilesWriteError} [from_write] - Available if .tag is from_write.
  * @property {FilesWriteError} [to] - Available if .tag is to.
- * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'duplicated_or_nested_paths'|'cant_transfer_ownership'|'insufficient_quota'|'other')} .tag - Tag identifying the union variant.
+ * @property {('from_lookup'|'from_write'|'to'|'cant_copy_shared_folder'|'cant_nest_shared_folder'|'cant_move_folder_into_itself'|'too_many_files'|'duplicated_or_nested_paths'|'cant_transfer_ownership'|'insufficient_quota'|'internal_error'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1722,8 +1791,9 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} FilesUploadSessionFinishBatchResult
- * @property {Array.<FilesUploadSessionFinishBatchResultEntry>} entries - Commit
- * result for each file in the batch.
+ * @property {Array.<FilesUploadSessionFinishBatchResultEntry>} entries - Each
+ * entry in UploadSessionFinishBatchArg.entries will appear at the same position
+ * inside UploadSessionFinishBatchResult.entries.
  */
 
 /**

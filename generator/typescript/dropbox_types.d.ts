@@ -1161,8 +1161,8 @@ declare module DropboxTypes {
        */
       destination: files.Path;
       /**
-       * The deadline for the file request. Deadlines can only be set by Pro and
-       * Business accounts.
+       * The deadline for the file request. Deadlines can only be set by
+       * Professional and Business accounts.
        */
       deadline?: FileRequestDeadline;
       /**
@@ -1598,6 +1598,10 @@ declare module DropboxTypes {
     export type CreateFolderBatchLaunch = async.LaunchResultBase | CreateFolderBatchLaunchComplete | CreateFolderBatchLaunchOther;
 
     export interface CreateFolderBatchResult extends FileOpsResult {
+      /**
+       * Each entry in CreateFolderBatchArg.paths will appear at the same
+       * position inside CreateFolderBatchResult.entries.
+       */
       entries: Array<CreateFolderBatchResultEntry>;
     }
 
@@ -1710,6 +1714,10 @@ declare module DropboxTypes {
     export type DeleteBatchLaunch = async.LaunchResultBase | DeleteBatchLaunchComplete | DeleteBatchLaunchOther;
 
     export interface DeleteBatchResult extends FileOpsResult {
+      /**
+       * Each entry in DeleteBatchArg.entries will appear at the same position
+       * inside DeleteBatchResult.entries.
+       */
       entries: Array<DeleteBatchResultEntry>;
     }
 
@@ -2548,6 +2556,13 @@ declare module DropboxTypes {
       '.tag': "file"|"folder"|"deleted";
     }
 
+    export interface MoveBatchArg extends RelocationBatchArgBase {
+      /**
+       * Defaults to False.
+       */
+      allow_ownership_transfer?: boolean;
+    }
+
     /**
      * Metadata for a photo.
      */
@@ -2624,7 +2639,18 @@ declare module DropboxTypes {
       allow_ownership_transfer?: boolean;
     }
 
-    export interface RelocationBatchArg {
+    export interface RelocationBatchArg extends RelocationBatchArgBase {
+      /**
+       * Defaults to False.
+       */
+      allow_shared_folder?: boolean;
+      /**
+       * Defaults to False.
+       */
+      allow_ownership_transfer?: boolean;
+    }
+
+    export interface RelocationBatchArgBase {
       /**
        * List of entries to be moved or copied. Each entry is
        * files.RelocationPath.
@@ -2633,15 +2659,7 @@ declare module DropboxTypes {
       /**
        * Defaults to False.
        */
-      allow_shared_folder?: boolean;
-      /**
-       * Defaults to False.
-       */
       autorename?: boolean;
-      /**
-       * Defaults to False.
-       */
-      allow_ownership_transfer?: boolean;
     }
 
     /**
@@ -2653,6 +2671,37 @@ declare module DropboxTypes {
     }
 
     export type RelocationBatchError = RelocationError | RelocationBatchErrorTooManyWriteOperations;
+
+    /**
+     * User errors that retry won't help.
+     */
+    export interface RelocationBatchErrorEntryRelocationError {
+      '.tag': 'relocation_error';
+      relocation_error: RelocationError;
+    }
+
+    /**
+     * Something went wrong with the job on Dropbox's end. You'll need to verify
+     * that the action you were taking succeeded, and if not, try again. This
+     * should happen very rarely.
+     */
+    export interface RelocationBatchErrorEntryInternalError {
+      '.tag': 'internal_error';
+    }
+
+    /**
+     * There are too many write operations in user's Dropbox. Please retry this
+     * request.
+     */
+    export interface RelocationBatchErrorEntryTooManyWriteOperations {
+      '.tag': 'too_many_write_operations';
+    }
+
+    export interface RelocationBatchErrorEntryOther {
+      '.tag': 'other';
+    }
+
+    export type RelocationBatchErrorEntry = RelocationBatchErrorEntryRelocationError | RelocationBatchErrorEntryInternalError | RelocationBatchErrorEntryTooManyWriteOperations | RelocationBatchErrorEntryOther;
 
     /**
      * The copy or move batch job has finished.
@@ -2694,6 +2743,53 @@ declare module DropboxTypes {
        * Metadata of the relocated object.
        */
       metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+    }
+
+    export interface RelocationBatchResultEntrySuccess {
+      '.tag': 'success';
+      success: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+    }
+
+    export interface RelocationBatchResultEntryFailure {
+      '.tag': 'failure';
+      failure: RelocationBatchErrorEntry;
+    }
+
+    export interface RelocationBatchResultEntryOther {
+      '.tag': 'other';
+    }
+
+    export type RelocationBatchResultEntry = RelocationBatchResultEntrySuccess | RelocationBatchResultEntryFailure | RelocationBatchResultEntryOther;
+
+    /**
+     * The copy or move batch job has finished.
+     */
+    export interface RelocationBatchV2JobStatusComplete extends RelocationBatchV2Result {
+      '.tag': 'complete';
+    }
+
+    /**
+     * Result returned by copyBatchV2() or moveBatchV2() that may either launch
+     * an asynchronous job or complete synchronously.
+     */
+    export type RelocationBatchV2JobStatus = async.PollResultBase | RelocationBatchV2JobStatusComplete;
+
+    export interface RelocationBatchV2LaunchComplete extends RelocationBatchV2Result {
+      '.tag': 'complete';
+    }
+
+    /**
+     * Result returned by copyBatchV2() or moveBatchV2() that may either launch
+     * an asynchronous job or complete synchronously.
+     */
+    export type RelocationBatchV2Launch = async.LaunchResultBase | RelocationBatchV2LaunchComplete;
+
+    export interface RelocationBatchV2Result extends FileOpsResult {
+      /**
+       * Each entry in CopyBatchArg.entries or MoveBatchArg.entries will appear
+       * at the same position inside RelocationBatchV2Result.entries.
+       */
+      entries: Array<RelocationBatchResultEntry>;
     }
 
     export interface RelocationErrorFromLookup {
@@ -2764,11 +2860,20 @@ declare module DropboxTypes {
       '.tag': 'insufficient_quota';
     }
 
+    /**
+     * Something went wrong with the job on Dropbox's end. You'll need to verify
+     * that the action you were taking succeeded, and if not, try again. This
+     * should happen very rarely.
+     */
+    export interface RelocationErrorInternalError {
+      '.tag': 'internal_error';
+    }
+
     export interface RelocationErrorOther {
       '.tag': 'other';
     }
 
-    export type RelocationError = RelocationErrorFromLookup | RelocationErrorFromWrite | RelocationErrorTo | RelocationErrorCantCopySharedFolder | RelocationErrorCantNestSharedFolder | RelocationErrorCantMoveFolderIntoItself | RelocationErrorTooManyFiles | RelocationErrorDuplicatedOrNestedPaths | RelocationErrorCantTransferOwnership | RelocationErrorInsufficientQuota | RelocationErrorOther;
+    export type RelocationError = RelocationErrorFromLookup | RelocationErrorFromWrite | RelocationErrorTo | RelocationErrorCantCopySharedFolder | RelocationErrorCantNestSharedFolder | RelocationErrorCantMoveFolderIntoItself | RelocationErrorTooManyFiles | RelocationErrorDuplicatedOrNestedPaths | RelocationErrorCantTransferOwnership | RelocationErrorInsufficientQuota | RelocationErrorInternalError | RelocationErrorOther;
 
     export interface RelocationPath {
       /**
@@ -3435,7 +3540,8 @@ declare module DropboxTypes {
 
     export interface UploadSessionFinishBatchResult {
       /**
-       * Commit result for each file in the batch.
+       * Each entry in UploadSessionFinishBatchArg.entries will appear at the
+       * same position inside UploadSessionFinishBatchResult.entries.
        */
       entries: Array<UploadSessionFinishBatchResultEntry>;
     }
@@ -3738,6 +3844,8 @@ declare module DropboxTypes {
      * contents you're trying to write.
      */
     export type WriteMode = WriteModeAdd | WriteModeOverwrite | WriteModeUpdate;
+
+    export type CopyBatchArg = RelocationBatchArgBase;
 
     export type FileId = string;
 

@@ -12,7 +12,7 @@ routes.teamDevicesListMemberDevices = function (arg) {
 };
 
 /**
- * List all device sessions of a team.
+ * List all device sessions of a team. Permission : Team member file access.
  * @function DropboxTeam#teamDevicesListMembersDevices
  * @arg {TeamListMembersDevicesArg} arg - The request parameters.
  * @returns {Promise.<TeamListMembersDevicesResult, Error.<TeamListMembersDevicesError>>}
@@ -22,7 +22,7 @@ routes.teamDevicesListMembersDevices = function (arg) {
 };
 
 /**
- * List all device sessions of a team.
+ * List all device sessions of a team. Permission : Team member file access.
  * @function DropboxTeam#teamDevicesListTeamDevices
  * @deprecated
  * @arg {TeamListTeamDevicesArg} arg - The request parameters.
@@ -554,6 +554,7 @@ routes.teamNamespacesListContinue = function (arg) {
 };
 
 /**
+ * Permission : Team member file access.
  * @function DropboxTeam#teamPropertiesTemplateAdd
  * @deprecated
  * @arg {FilePropertiesAddTemplateArg} arg - The request parameters.
@@ -564,6 +565,7 @@ routes.teamPropertiesTemplateAdd = function (arg) {
 };
 
 /**
+ * Permission : Team member file access.
  * @function DropboxTeam#teamPropertiesTemplateGet
  * @deprecated
  * @arg {FilePropertiesGetTemplateArg} arg - The request parameters.
@@ -574,6 +576,7 @@ routes.teamPropertiesTemplateGet = function (arg) {
 };
 
 /**
+ * Permission : Team member file access.
  * @function DropboxTeam#teamPropertiesTemplateList
  * @deprecated
  * @arg {void} arg - The request parameters.
@@ -584,6 +587,7 @@ routes.teamPropertiesTemplateList = function (arg) {
 };
 
 /**
+ * Permission : Team member file access.
  * @function DropboxTeam#teamPropertiesTemplateUpdate
  * @deprecated
  * @arg {FilePropertiesUpdateTemplateArg} arg - The request parameters.

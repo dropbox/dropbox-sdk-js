@@ -26,7 +26,7 @@ declare module DropboxTypes {
     public teamDevicesListMemberDevices(arg: team.ListMemberDevicesArg): Promise<team.ListMemberDevicesResult>;
 
     /**
-     * List all device sessions of a team.
+     * List all device sessions of a team. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ListMembersDevicesError>.
@@ -35,7 +35,7 @@ declare module DropboxTypes {
     public teamDevicesListMembersDevices(arg: team.ListMembersDevicesArg): Promise<team.ListMembersDevicesResult>;
 
     /**
-     * List all device sessions of a team.
+     * List all device sessions of a team. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ListTeamDevicesError>.
@@ -529,6 +529,8 @@ declare module DropboxTypes {
     public teamNamespacesListContinue(arg: team.TeamNamespacesListContinueArg): Promise<team.TeamNamespacesListResult>;
 
     /**
+     * Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
      * @deprecated
@@ -537,6 +539,8 @@ declare module DropboxTypes {
     public teamPropertiesTemplateAdd(arg: file_properties.AddTemplateArg): Promise<file_properties.AddTemplateResult>;
 
     /**
+     * Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @deprecated
@@ -545,6 +549,8 @@ declare module DropboxTypes {
     public teamPropertiesTemplateGet(arg: file_properties.GetTemplateArg): Promise<file_properties.GetTemplateResult>;
 
     /**
+     * Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @deprecated
@@ -553,6 +559,8 @@ declare module DropboxTypes {
     public teamPropertiesTemplateList(arg: void): Promise<file_properties.ListTemplateResult>;
 
     /**
+     * Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
      * @deprecated
