@@ -286,10 +286,15 @@ client_id=${clientId}&client_secret=${clientSecret}`;
     let removed = false;
     const browser = window.open(url, '_blank');
 
-    function onLoadError() {
-      // Try to avoid a browser crash on browser.close().
-      window.setTimeout(() => { browser.close(); }, 10);
-      errorCallback();
+    function onLoadError(event) {
+      console.log(event);
+      if (event.code == -999) { // Workaround to fix wrong behavior on cordova-plugin-inappbrowser
+        console.log('Don\'t worry about this error');
+      } else {
+        // Try to avoid a browser crash on browser.close().
+        window.setTimeout(() => { browser.close(); }, 10);
+        errorCallback();
+      }
     }
 
     function onLoadStop(event) {
