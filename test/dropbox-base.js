@@ -301,4 +301,16 @@ describe('DropboxBase', function () {
       );
     });
   });
+
+  describe('.pathRoot', function () {
+    it('can be set in the constructor', function () {
+      dbx = new DropboxBase({ pathRoot: 'foo' });
+      assert.equal(dbx.pathRoot, 'foo');
+    });
+
+    it('is undefined if not set in constructor', function () {
+      dbx = new DropboxBase();
+      assert.equal(dbx.pathRoot, undefined);
+    });
+  });
 });

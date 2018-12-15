@@ -14,6 +14,8 @@ import { DropboxBase } from './dropbox-base';
  * authentication URL.
  * @arg {String} [options.selectUser] - Select user is only used by DropboxTeam.
  * It specifies which user the team access token should be acting as.
+ * @arg {String} [options.pathRoot] - root pass to access other namespaces
+ * Use to access team folders for example
  */
 export class Dropbox extends DropboxBase {
 
