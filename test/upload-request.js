@@ -10,8 +10,8 @@ describe('uploadRequest', function () {
     fetchMock = FetchMock.sandbox().post('*', new Response(
       '{"foo": "bar"}',
       {
-        status : 200 ,
-        statusText : "OK",
+        status: 200,
+        statusText: "OK",
         headers: {
           'Content-Type': 'application/json',
           'dropbox-api-result': '{"test":"json"}'
@@ -57,7 +57,7 @@ describe('uploadRequest', function () {
   });
 
   it('sets the authorization and select user headers if selectUser set', function (done) {
-    uploadRequest(fetchMock)('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', {selectUser: 'selectedUserId'})
+    uploadRequest(fetchMock)('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', { selectUser: 'selectedUserId' })
       .then((data) => {
         assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Select-User'], 'selectedUserId');
@@ -97,6 +97,14 @@ describe('uploadRequest', function () {
     uploadRequest(fetchMock)('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken')
       .then((data) => {
         assert.deepEqual(data, { foo: 'bar' })
+        done();
+      }, done);
+  });
+
+  it('sets Dropbox-Api-Path-Root header if pathRoot set', function (done) {
+    uploadRequest(fetchMock)('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', { pathRoot: 'selectedPathRoot' })
+      .then((data) => {
+        assert.equal(fetchMock.lastOptions().headers['Dropbox-Api-Path-Root'], 'selectedPathRoot');
         done();
       }, done);
   });

@@ -35,6 +35,9 @@ export function uploadRequest(fetch) {
       if (options.selectAdmin) {
         fetchOptions.headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
       }
+      if (options.pathRoot) {
+        fetchOptions.headers['Dropbox-API-Path-Root'] = options.pathRoot;
+      }
     }
 
     return fetch(getBaseURL(host) + path, fetchOptions)

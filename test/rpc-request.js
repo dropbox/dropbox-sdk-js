@@ -12,8 +12,8 @@ describe('rpcRequest', function () {
     fetchMock = FetchMock.sandbox().mock('*', new Response(
       '{"test": "test"}',
       {
-        status : 200 ,
-        statusText : "OK",
+        status: 200,
+        statusText: "OK",
         headers: {
           'Content-Type': 'application/json',
           'dropbox-api-result': '{"test":"json"}'
@@ -66,7 +66,7 @@ describe('rpcRequest', function () {
   });
 
   it('sets the authorization and select user headers if selectUser set', function (done) {
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken', {selectUser: 'selectedUserId'})
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken', { selectUser: 'selectedUserId' })
       .then((res) => {
         assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Select-User'], 'selectedUserId');
@@ -88,6 +88,14 @@ describe('rpcRequest', function () {
         assert.deepEqual(fetchMock.lastOptions().body, null);
         done();
       });
+  });
+
+  it('sets Dropbox-Api-Path-Root header if pathRoot set', function (done) {
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken', { pathRoot: 'selectedPathRoot' })
+      .then((data) => {
+        assert.equal(fetchMock.lastOptions().headers['Dropbox-Api-Path-Root'], 'selectedPathRoot');
+        done();
+      }, done);
   });
 
 });
