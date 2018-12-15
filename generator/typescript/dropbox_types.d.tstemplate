@@ -9,7 +9,7 @@ declare module DropboxTypes {
     // Root path used to access namespaces different from home namespace (team folders etc)
     pathRoot?: string;
     // Fetch library for making requests.
-    fetch?: string
+    fetch?: Function
   }
 
   class DropboxBase {
