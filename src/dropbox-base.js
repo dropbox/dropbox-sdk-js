@@ -353,6 +353,7 @@ client_id=${clientId}&client_secret=${clientSecret}`;
       selectAdmin: this.selectAdmin,
       clientId: this.getClientId(),
       clientSecret: this.getClientSecret(),
+      pathRoot: this.pathRoot,
     };
     return request(path, args, auth, host, this.getAccessToken(), options);
   }

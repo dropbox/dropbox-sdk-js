@@ -93,7 +93,7 @@ describe('rpcRequest', function () {
   it('sets Dropbox-Api-Path-Root header if pathRoot set', function (done) {
     rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken', { pathRoot: 'selectedPathRoot' })
       .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Dropbox-Api-Path-Root'], 'selectedPathRoot');
+        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Path-Root'], 'selectedPathRoot');
         done();
       }, done);
   });

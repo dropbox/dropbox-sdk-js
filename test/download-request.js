@@ -100,7 +100,7 @@ describe('downloadRequest', function () {
   it('sets Dropbox-Api-Path-Root header if pathRoot set', function (done) {
     downloadRequest(fetchMock)('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', { pathRoot: 'selectedPathRoot' })
       .then((data) => {
-        assert.equal(fetchMock.lastOptions().headers['Dropbox-Api-Path-Root'], 'selectedPathRoot');
+        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Path-Root'], 'selectedPathRoot');
         done();
       }, done);
   });
