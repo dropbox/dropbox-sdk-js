@@ -5,7 +5,7 @@ import { createReadStream } from 'fs';
 import isomorphicFetch from 'isomorphic-fetch'; // fetchMock needs this in scope to mock correctly.
 import { downloadRequest } from '../src/download-request';
 
-FetchMock.configure({ sendAsJson: false });
+FetchMock.configure({sendAsJson: false});
 
 describe('downloadRequest', function () {
 
@@ -63,7 +63,7 @@ describe('downloadRequest', function () {
   });
 
   it('sets the authorization and select user headers if selectUser set', function (done) {
-    downloadRequest(fetchMock)('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', { selectUser: 'selectedUserId' })
+    downloadRequest(fetchMock)('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', {selectUser: 'selectedUserId'})
       .then((data) => {
         assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Select-User'], 'selectedUserId');
@@ -98,7 +98,7 @@ describe('downloadRequest', function () {
   });
 
   it('sets Dropbox-Api-Path-Root header if pathRoot set', function (done) {
-    downloadRequest(fetchMock)('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', { pathRoot: 'selectedPathRoot' })
+    downloadRequest(fetchMock)('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', {pathRoot: 'selectedPathRoot'})
       .then((data) => {
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Path-Root'], 'selectedPathRoot');
         done();

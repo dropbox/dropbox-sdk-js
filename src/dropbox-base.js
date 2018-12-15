@@ -39,7 +39,7 @@ if (typeof Object.assign !== 'function') {
 // https://tc39.github.io/ecma262/#sec-array.prototype.includes
 if (!Array.prototype.includes) {
   Object.defineProperty(Array.prototype, 'includes', {
-    value: function (searchElement, fromIndex) {
+    value: function(searchElement, fromIndex) {
 
       if (this == null) {
         throw new TypeError('"this" is null or not defined');

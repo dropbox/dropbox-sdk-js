@@ -102,7 +102,7 @@ describe('uploadRequest', function () {
   });
 
   it('sets Dropbox-Api-Path-Root header if pathRoot set', function (done) {
-    uploadRequest(fetchMock)('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', { pathRoot: 'selectedPathRoot' })
+    uploadRequest(fetchMock)('files/upload', { foo: 'bar' }, 'user', 'content', 'atoken', {pathRoot: 'selectedPathRoot'})
       .then((data) => {
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Path-Root'], 'selectedPathRoot');
         done();
