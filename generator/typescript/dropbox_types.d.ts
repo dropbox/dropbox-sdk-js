@@ -6,10 +6,6 @@ declare module DropboxTypes {
     clientId?: string;
     // Select user is only used by team endpoints. It specifies which user the team access token should be acting as.
     selectUser?: string;
-    // Root path used to access namespaces different from home namespace (team folders etc)
-    pathRoot?: string;
-    // Fetch library for making requests.
-    fetch?: Function
   }
 
   class DropboxBase {
@@ -71,7 +67,7 @@ declare module DropboxTypes {
     // User-friendly error message.
     user_message: UserMessage;
   }
-  
+
   /**
    * User-friendly error message.
    */
@@ -81,8 +77,8 @@ declare module DropboxTypes {
     // The locale of the message.
     locale: string;
   }
-  
-  
+
+
   type Timestamp = string;
 
   namespace async {
