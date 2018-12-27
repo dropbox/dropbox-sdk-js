@@ -67,7 +67,7 @@ declare module DropboxTypes {
     // User-friendly error message.
     user_message: UserMessage;
   }
-
+  
   /**
    * User-friendly error message.
    */
@@ -77,8 +77,8 @@ declare module DropboxTypes {
     // The locale of the message.
     locale: string;
   }
-
-
+  
+  
   type Timestamp = string;
 
   namespace async {
