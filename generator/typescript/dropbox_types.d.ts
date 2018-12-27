@@ -6,10 +6,6 @@ declare module DropboxTypes {
     clientId?: string;
     // Select user is only used by team endpoints. It specifies which user the team access token should be acting as.
     selectUser?: string;
-    // Root path used to access namespaces different from home namespace (team folders etc)
-    pathRoot?: string;
-    // Fetch library for making requests.
-    fetch?: Function
   }
 
   class DropboxBase {
@@ -71,7 +67,7 @@ declare module DropboxTypes {
     // User-friendly error message.
     user_message: UserMessage;
   }
-  
+
   /**
    * User-friendly error message.
    */
@@ -81,8 +77,8 @@ declare module DropboxTypes {
     // The locale of the message.
     locale: string;
   }
-  
-  
+
+
   type Timestamp = string;
 
   namespace async {
@@ -415,7 +411,7 @@ declare module DropboxTypes {
      */
     export interface PathRootErrorInvalidRoot {
       '.tag': 'invalid_root';
-      invalid_root: TeamRootInfoReference|UserRootInfoReference|RootInfoReference;
+      invalid_root: TeamRootInfoReference | UserRootInfoReference | RootInfoReference;
     }
 
     /**
@@ -456,7 +452,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "team"|"user";
+      '.tag': "team" | "user";
     }
 
     /**
@@ -1729,7 +1725,7 @@ declare module DropboxTypes {
       /**
        * Metadata of the deleted object.
        */
-      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+      metadata: FileMetadataReference | FolderMetadataReference | DeletedMetadataReference;
     }
 
     export interface DeleteBatchResultEntrySuccess extends DeleteBatchResultData {
@@ -1778,7 +1774,7 @@ declare module DropboxTypes {
       /**
        * Metadata of the deleted object.
        */
-      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+      metadata: FileMetadataReference | FolderMetadataReference | DeletedMetadataReference;
     }
 
     /**
@@ -2044,7 +2040,7 @@ declare module DropboxTypes {
       /**
        * Metadata of the file or folder.
        */
-      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+      metadata: FileMetadataReference | FolderMetadataReference | DeletedMetadataReference;
       /**
        * A copy reference to the file or folder.
        */
@@ -2344,7 +2340,7 @@ declare module DropboxTypes {
       /**
        * The files and (direct) subfolders in the folder.
        */
-      entries: Array<FileMetadataReference|FolderMetadataReference|DeletedMetadataReference>;
+      entries: Array<FileMetadataReference | FolderMetadataReference | DeletedMetadataReference>;
       /**
        * Pass the cursor into listFolderContinue() to see what's changed in the
        * folder since your previous query.
@@ -2485,7 +2481,7 @@ declare module DropboxTypes {
      */
     export interface MediaInfoMetadata {
       '.tag': 'metadata';
-      metadata: PhotoMetadataReference|VideoMetadataReference;
+      metadata: PhotoMetadataReference | VideoMetadataReference;
     }
 
     export type MediaInfo = MediaInfoPending | MediaInfoMetadata;
@@ -2516,7 +2512,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "photo"|"video";
+      '.tag': "photo" | "video";
     }
 
     /**
@@ -2557,7 +2553,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "file"|"folder"|"deleted";
+      '.tag': "file" | "folder" | "deleted";
     }
 
     export interface MoveBatchArg extends RelocationBatchArgBase {
@@ -2746,12 +2742,12 @@ declare module DropboxTypes {
       /**
        * Metadata of the relocated object.
        */
-      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+      metadata: FileMetadataReference | FolderMetadataReference | DeletedMetadataReference;
     }
 
     export interface RelocationBatchResultEntrySuccess {
       '.tag': 'success';
-      success: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+      success: FileMetadataReference | FolderMetadataReference | DeletedMetadataReference;
     }
 
     export interface RelocationBatchResultEntryFailure {
@@ -2894,7 +2890,7 @@ declare module DropboxTypes {
       /**
        * Metadata of the relocated object.
        */
-      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+      metadata: FileMetadataReference | FolderMetadataReference | DeletedMetadataReference;
     }
 
     export interface RestoreArg {
@@ -2993,7 +2989,7 @@ declare module DropboxTypes {
       /**
        * The metadata of the saved file or folder in the user's Dropbox.
        */
-      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+      metadata: FileMetadataReference | FolderMetadataReference | DeletedMetadataReference;
     }
 
     export interface SaveUrlArg {
@@ -3108,7 +3104,7 @@ declare module DropboxTypes {
       /**
        * The metadata for the matched file or folder.
        */
-      metadata: FileMetadataReference|FolderMetadataReference|DeletedMetadataReference;
+      metadata: FileMetadataReference | FolderMetadataReference | DeletedMetadataReference;
     }
 
     /**
@@ -5934,7 +5930,7 @@ declare module DropboxTypes {
       /**
        * Shared links applicable to the path argument.
        */
-      links: Array<PathLinkMetadataReference|CollectionLinkMetadataReference|LinkMetadataReference>;
+      links: Array<PathLinkMetadataReference | CollectionLinkMetadataReference | LinkMetadataReference>;
     }
 
     /**
@@ -6217,7 +6213,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "path"|"collection";
+      '.tag': "path" | "collection";
     }
 
     /**
@@ -6641,7 +6637,7 @@ declare module DropboxTypes {
       /**
        * Shared links applicable to the path argument.
        */
-      links: Array<FileLinkMetadataReference|FolderLinkMetadataReference|SharedLinkMetadataReference>;
+      links: Array<FileLinkMetadataReference | FolderLinkMetadataReference | SharedLinkMetadataReference>;
       /**
        * Is true if there are additional shared links that have not been
        * returned yet. Pass the cursor into listSharedLinks() to retrieve them.
@@ -8088,7 +8084,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "file"|"folder";
+      '.tag': "file" | "folder";
     }
 
     /**
@@ -12252,7 +12248,7 @@ declare module DropboxTypes {
      */
     export interface AccessMethodLogInfoEndUser {
       '.tag': 'end_user';
-      end_user: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
+      end_user: WebSessionLogInfoReference | DesktopSessionLogInfoReference | MobileSessionLogInfoReference | SessionLogInfoReference;
     }
 
     /**
@@ -12434,7 +12430,7 @@ declare module DropboxTypes {
      */
     export interface ActorLogInfoUser {
       '.tag': 'user';
-      user: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      user: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
     }
 
     /**
@@ -12442,7 +12438,7 @@ declare module DropboxTypes {
      */
     export interface ActorLogInfoAdmin {
       '.tag': 'admin';
-      admin: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      admin: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
     }
 
     /**
@@ -12450,7 +12446,7 @@ declare module DropboxTypes {
      */
     export interface ActorLogInfoApp {
       '.tag': 'app';
-      app: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+      app: UserOrTeamLinkedAppLogInfoReference | UserLinkedAppLogInfoReference | TeamLinkedAppLogInfoReference | AppLogInfoReference;
     }
 
     /**
@@ -12546,7 +12542,7 @@ declare module DropboxTypes {
       /**
        * Relevant application details.
        */
-      app_info: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+      app_info: UserOrTeamLinkedAppLogInfoReference | UserLinkedAppLogInfoReference | TeamLinkedAppLogInfoReference | AppLogInfoReference;
     }
 
     export interface AppLinkTeamType {
@@ -12560,7 +12556,7 @@ declare module DropboxTypes {
       /**
        * Relevant application details.
        */
-      app_info: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+      app_info: UserOrTeamLinkedAppLogInfoReference | UserLinkedAppLogInfoReference | TeamLinkedAppLogInfoReference | AppLogInfoReference;
     }
 
     export interface AppLinkUserType {
@@ -12589,7 +12585,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "user_or_team_linked_app"|"user_linked_app"|"team_linked_app";
+      '.tag': "user_or_team_linked_app" | "user_linked_app" | "team_linked_app";
     }
 
     /**
@@ -12599,7 +12595,7 @@ declare module DropboxTypes {
       /**
        * Relevant application details.
        */
-      app_info: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+      app_info: UserOrTeamLinkedAppLogInfoReference | UserLinkedAppLogInfoReference | TeamLinkedAppLogInfoReference | AppLogInfoReference;
     }
 
     export interface AppUnlinkTeamType {
@@ -12613,7 +12609,7 @@ declare module DropboxTypes {
       /**
        * Relevant application details.
        */
-      app_info: UserOrTeamLinkedAppLogInfoReference|UserLinkedAppLogInfoReference|TeamLinkedAppLogInfoReference|AppLogInfoReference;
+      app_info: UserOrTeamLinkedAppLogInfoReference | UserLinkedAppLogInfoReference | TeamLinkedAppLogInfoReference | AppLogInfoReference;
     }
 
     export interface AppUnlinkUserType {
@@ -13013,7 +13009,7 @@ declare module DropboxTypes {
       /**
        * Device's session logged information.
        */
-      device_session_info: DesktopDeviceSessionLogInfoReference|MobileDeviceSessionLogInfoReference|WebDeviceSessionLogInfoReference|LegacyDeviceSessionLogInfoReference|DeviceSessionLogInfoReference;
+      device_session_info: DesktopDeviceSessionLogInfoReference | MobileDeviceSessionLogInfoReference | WebDeviceSessionLogInfoReference | LegacyDeviceSessionLogInfoReference | DeviceSessionLogInfoReference;
     }
 
     export interface DeviceChangeIpDesktopType {
@@ -13027,7 +13023,7 @@ declare module DropboxTypes {
       /**
        * Device's session logged information.
        */
-      device_session_info?: DesktopDeviceSessionLogInfoReference|MobileDeviceSessionLogInfoReference|WebDeviceSessionLogInfoReference|LegacyDeviceSessionLogInfoReference|DeviceSessionLogInfoReference;
+      device_session_info?: DesktopDeviceSessionLogInfoReference | MobileDeviceSessionLogInfoReference | WebDeviceSessionLogInfoReference | LegacyDeviceSessionLogInfoReference | DeviceSessionLogInfoReference;
     }
 
     export interface DeviceChangeIpMobileType {
@@ -13055,7 +13051,7 @@ declare module DropboxTypes {
       /**
        * Session unique id. Might be missing due to historical data gap.
        */
-      session_info?: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
+      session_info?: WebSessionLogInfoReference | DesktopSessionLogInfoReference | MobileSessionLogInfoReference | SessionLogInfoReference;
       /**
        * The device name. Might be missing due to historical data gap.
        */
@@ -13077,7 +13073,7 @@ declare module DropboxTypes {
       /**
        * Session unique id. Might be missing due to historical data gap.
        */
-      session_info?: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
+      session_info?: WebSessionLogInfoReference | DesktopSessionLogInfoReference | MobileSessionLogInfoReference | SessionLogInfoReference;
       /**
        * The device name. Might be missing due to historical data gap.
        */
@@ -13113,7 +13109,7 @@ declare module DropboxTypes {
       /**
        * Device's session logged information.
        */
-      device_session_info?: DesktopDeviceSessionLogInfoReference|MobileDeviceSessionLogInfoReference|WebDeviceSessionLogInfoReference|LegacyDeviceSessionLogInfoReference|DeviceSessionLogInfoReference;
+      device_session_info?: DesktopDeviceSessionLogInfoReference | MobileDeviceSessionLogInfoReference | WebDeviceSessionLogInfoReference | LegacyDeviceSessionLogInfoReference | DeviceSessionLogInfoReference;
     }
 
     export interface DeviceLinkSuccessType {
@@ -13169,7 +13165,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "desktop_device_session"|"mobile_device_session"|"web_device_session"|"legacy_device_session";
+      '.tag': "desktop_device_session" | "mobile_device_session" | "web_device_session" | "legacy_device_session";
     }
 
     export interface DeviceTypeDesktop {
@@ -13193,7 +13189,7 @@ declare module DropboxTypes {
       /**
        * Session unique id.
        */
-      session_info?: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
+      session_info?: WebSessionLogInfoReference | DesktopSessionLogInfoReference | MobileSessionLogInfoReference | SessionLogInfoReference;
       /**
        * The device name. Might be missing due to historical data gap.
        */
@@ -18208,7 +18204,7 @@ declare module DropboxTypes {
       /**
        * Session unique id. Might be missing due to historical data gap.
        */
-      session_info?: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
+      session_info?: WebSessionLogInfoReference | DesktopSessionLogInfoReference | MobileSessionLogInfoReference | SessionLogInfoReference;
       /**
        * The device name. Might be missing due to historical data gap.
        */
@@ -19804,7 +19800,7 @@ declare module DropboxTypes {
      */
     export interface ParticipantLogInfoUser {
       '.tag': 'user';
-      user: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      user: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
     }
 
     /**
@@ -20031,7 +20027,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "web"|"desktop"|"mobile";
+      '.tag': "web" | "desktop" | "mobile";
     }
 
     /**
@@ -20526,7 +20522,7 @@ declare module DropboxTypes {
       /**
        * The shared content owner.
        */
-      shared_content_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_content_owner?: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
       /**
        * Shared content access level.
        */
@@ -20552,7 +20548,7 @@ declare module DropboxTypes {
       /**
        * The shared content owner.
        */
-      shared_content_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_content_owner?: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
       /**
        * Shared content access level.
        */
@@ -20661,7 +20657,7 @@ declare module DropboxTypes {
       /**
        * The shared content owner.
        */
-      shared_content_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_content_owner?: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
       /**
        * Shared content access level.
        */
@@ -20935,7 +20931,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
     }
 
     export interface SharedLinkCopyType {
@@ -20964,7 +20960,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
     }
 
     export interface SharedLinkDisableType {
@@ -20978,7 +20974,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
     }
 
     export interface SharedLinkDownloadType {
@@ -21007,7 +21003,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
       /**
        * Users without a Dropbox account that were added as shared link
        * audience.
@@ -21026,7 +21022,7 @@ declare module DropboxTypes {
       /**
        * Shared link owner details. Might be missing due to historical data gap.
        */
-      shared_link_owner?: TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|NonTeamMemberLogInfoReference|UserLogInfoReference;
+      shared_link_owner?: TeamMemberLogInfoReference | TrustedNonTeamMemberLogInfoReference | NonTeamMemberLogInfoReference | UserLogInfoReference;
     }
 
     export interface SharedLinkViewType {
@@ -22637,7 +22633,7 @@ declare module DropboxTypes {
       /**
        * Tag identifying the subtype variant.
        */
-      '.tag': "team_member"|"trusted_non_team_member"|"non_team_member";
+      '.tag': "team_member" | "trusted_non_team_member" | "non_team_member";
     }
 
     /**
@@ -23375,7 +23371,7 @@ declare module DropboxTypes {
       /**
        * The root info for this account.
        */
-      root_info: common.TeamRootInfoReference|common.UserRootInfoReference|common.RootInfoReference;
+      root_info: common.TeamRootInfoReference | common.UserRootInfoReference | common.RootInfoReference;
     }
 
     /**
