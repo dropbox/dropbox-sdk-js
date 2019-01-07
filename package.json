@@ -61,6 +61,10 @@
     {
       "name": "Steve Klebanoff",
       "email": "steve.klebanoff@gmail.com"
+    },
+    {
+      "name": "Bohdan Tereta",
+      "email": "Bohdan.Tereta@gmail.com"
     }
   ],
   "devDependencies": {
