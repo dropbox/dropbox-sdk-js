@@ -14,8 +14,8 @@ describe('downloadRequest', function () {
     fetchMock = FetchMock.sandbox().mock('*', new Response(
       createReadStream(resolve(__dirname, './file.txt')),
       {
-        status : 200 ,
-        statusText : "OK",
+        status: 200,
+        statusText: "OK",
         headers: {
           'Content-Type': 'application/octet-stream',
           'dropbox-api-result': '{"test":"json"}'
@@ -73,20 +73,20 @@ describe('downloadRequest', function () {
 
   it('sets the Dropbox-API-Arg header', function (done) {
     downloadRequest(fetchMock)('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken')
-    .then((data) => {
-      assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-      assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], JSON.stringify({ foo: 'bar' }));
-      done();
-    }, done);
+      .then((data) => {
+        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
+        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], JSON.stringify({ foo: 'bar' }));
+        done();
+      }, done);
   });
 
   it('escapes special characters in the Dropbox-API-Arg header', function (done) {
     downloadRequest(fetchMock)('sharing/create_shared_link', { foo: 'bar单bazá' }, 'user', 'content', 'atoken')
-    .then((data) => {
-      assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
-      assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], '{"foo":"bar\\u5355baz\\u00e1"}');
-      done();
-    }, done);
+      .then((data) => {
+        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
+        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Arg'], '{"foo":"bar\\u5355baz\\u00e1"}');
+        done();
+      }, done);
   });
 
   it('returns a valid response', function (done) {
@@ -96,4 +96,13 @@ describe('downloadRequest', function () {
         done();
       }, done);
   });
+
+  it('sets Dropbox-Api-Path-Root header if pathRoot set', function (done) {
+    downloadRequest(fetchMock)('sharing/create_shared_link', { foo: 'bar' }, 'user', 'content', 'atoken', {pathRoot: 'selectedPathRoot'})
+      .then((data) => {
+        assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Path-Root'], 'selectedPathRoot');
+        done();
+      }, done);
+  });
+
 });

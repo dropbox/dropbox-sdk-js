@@ -12,7 +12,7 @@ routes.teamDevicesListMemberDevices = function (arg) {
 };
 
 /**
- * List all device sessions of a team.
+ * List all device sessions of a team. Permission : Team member file access.
  * @function DropboxTeam#teamDevicesListMembersDevices
  * @arg {TeamListMembersDevicesArg} arg - The request parameters.
  * @returns {Promise.<TeamListMembersDevicesResult, Error.<TeamListMembersDevicesError>>}
@@ -22,7 +22,7 @@ routes.teamDevicesListMembersDevices = function (arg) {
 };
 
 /**
- * List all device sessions of a team.
+ * List all device sessions of a team. Permission : Team member file access.
  * @function DropboxTeam#teamDevicesListTeamDevices
  * @deprecated
  * @arg {TeamListTeamDevicesArg} arg - The request parameters.
@@ -405,6 +405,31 @@ routes.teamMembersListContinue = function (arg) {
 };
 
 /**
+ * Moves removed member's files to a different member. This endpoint initiates
+ * an asynchronous job. To obtain the final result of the job, the client should
+ * periodically poll members/move_former_member_files/job_status/check.
+ * Permission : Team member management.
+ * @function DropboxTeam#teamMembersMoveFormerMemberFiles
+ * @arg {TeamMembersDataTransferArg} arg - The request parameters.
+ * @returns {Promise.<AsyncLaunchEmptyResult, Error.<TeamMembersTransferFormerMembersFilesError>>}
+ */
+routes.teamMembersMoveFormerMemberFiles = function (arg) {
+  return this.request('team/members/move_former_member_files', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Once an async_job_id is returned from members/move_former_member_files , use
+ * this to poll the status of the asynchronous request. Permission : Team member
+ * management.
+ * @function DropboxTeam#teamMembersMoveFormerMemberFilesJobStatusCheck
+ * @arg {AsyncPollArg} arg - The request parameters.
+ * @returns {Promise.<AsyncPollEmptyResult, Error.<AsyncPollError>>}
+ */
+routes.teamMembersMoveFormerMemberFilesJobStatusCheck = function (arg) {
+  return this.request('team/members/move_former_member_files/job_status/check', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * Recover a deleted member. Permission : Team member management Exactly one of
  * team_member_id, email, or external_id must be provided to identify the user
  * account.
@@ -511,7 +536,7 @@ routes.teamMembersUnsuspend = function (arg) {
  * be owned by other users or other teams. Duplicates may occur in the list.
  * @function DropboxTeam#teamNamespacesList
  * @arg {TeamTeamNamespacesListArg} arg - The request parameters.
- * @returns {Promise.<TeamTeamNamespacesListResult, Error.<void>>}
+ * @returns {Promise.<TeamTeamNamespacesListResult, Error.<TeamTeamNamespacesListError>>}
  */
 routes.teamNamespacesList = function (arg) {
   return this.request('team/namespaces/list', arg, 'team', 'api', 'rpc');
@@ -529,6 +554,7 @@ routes.teamNamespacesListContinue = function (arg) {
 };
 
 /**
+ * Permission : Team member file access.
  * @function DropboxTeam#teamPropertiesTemplateAdd
  * @deprecated
  * @arg {FilePropertiesAddTemplateArg} arg - The request parameters.
@@ -539,6 +565,7 @@ routes.teamPropertiesTemplateAdd = function (arg) {
 };
 
 /**
+ * Permission : Team member file access.
  * @function DropboxTeam#teamPropertiesTemplateGet
  * @deprecated
  * @arg {FilePropertiesGetTemplateArg} arg - The request parameters.
@@ -549,6 +576,7 @@ routes.teamPropertiesTemplateGet = function (arg) {
 };
 
 /**
+ * Permission : Team member file access.
  * @function DropboxTeam#teamPropertiesTemplateList
  * @deprecated
  * @arg {void} arg - The request parameters.
@@ -559,6 +587,7 @@ routes.teamPropertiesTemplateList = function (arg) {
 };
 
 /**
+ * Permission : Team member file access.
  * @function DropboxTeam#teamPropertiesTemplateUpdate
  * @deprecated
  * @arg {FilePropertiesUpdateTemplateArg} arg - The request parameters.

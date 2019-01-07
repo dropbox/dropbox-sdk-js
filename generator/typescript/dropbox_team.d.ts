@@ -18,7 +18,7 @@ declare module DropboxTypes {
 
     /**
      * List all device sessions of a team's member.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ListMemberDevicesError>.
      * @param arg The request parameters.
@@ -26,8 +26,8 @@ declare module DropboxTypes {
     public teamDevicesListMemberDevices(arg: team.ListMemberDevicesArg): Promise<team.ListMemberDevicesResult>;
 
     /**
-     * List all device sessions of a team.
-     * 
+     * List all device sessions of a team. Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ListMembersDevicesError>.
      * @param arg The request parameters.
@@ -35,8 +35,8 @@ declare module DropboxTypes {
     public teamDevicesListMembersDevices(arg: team.ListMembersDevicesArg): Promise<team.ListMembersDevicesResult>;
 
     /**
-     * List all device sessions of a team.
-     * 
+     * List all device sessions of a team. Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ListTeamDevicesError>.
      * @deprecated
@@ -46,7 +46,7 @@ declare module DropboxTypes {
 
     /**
      * Revoke a device session of a team's member.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.RevokeDeviceSessionError>.
      * @param arg The request parameters.
@@ -55,7 +55,7 @@ declare module DropboxTypes {
 
     /**
      * Revoke a list of device sessions of team members.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.RevokeDeviceSessionBatchError>.
      * @param arg The request parameters.
@@ -66,7 +66,7 @@ declare module DropboxTypes {
      * Get the values for one or more featues. This route allows you to check
      * your account's capability for what feature you can access or what value
      * you have for certain features. Permission : Team information.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.FeaturesGetValuesBatchError>.
      * @param arg The request parameters.
@@ -75,7 +75,7 @@ declare module DropboxTypes {
 
     /**
      * Retrieves information about a team.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -85,7 +85,7 @@ declare module DropboxTypes {
     /**
      * Creates a new, empty group, with a requested name. Permission : Team
      * member management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupCreateError>.
      * @param arg The request parameters.
@@ -97,7 +97,7 @@ declare module DropboxTypes {
      * of group-owned resources may take additional time. Use the
      * groupsJobStatusGet() to determine whether this process has completed.
      * Permission : Team member management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupDeleteError>.
      * @param arg The request parameters.
@@ -108,7 +108,7 @@ declare module DropboxTypes {
      * Retrieves information about one or more groups. Note that the optional
      * field  GroupFullInfo.members is not returned for system-managed groups.
      * Permission : Team Information.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupsGetInfoError>.
      * @param arg The request parameters.
@@ -120,7 +120,7 @@ declare module DropboxTypes {
      * , or groupsMembersRemove() use this method to poll the status of
      * granting/revoking group members' access to group-owned resources.
      * Permission : Team member management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupsPollError>.
      * @param arg The request parameters.
@@ -129,7 +129,7 @@ declare module DropboxTypes {
 
     /**
      * Lists groups on a team. Permission : Team Information.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -139,7 +139,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from groupsList(), use this to paginate
      * through all groups. Permission : Team Information.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupsListContinueError>.
      * @param arg The request parameters.
@@ -151,7 +151,7 @@ declare module DropboxTypes {
      * granting of group-owned resources may take additional time. Use the
      * groupsJobStatusGet() to determine whether this process has completed.
      * Permission : Team member management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupMembersAddError>.
      * @param arg The request parameters.
@@ -160,7 +160,7 @@ declare module DropboxTypes {
 
     /**
      * Lists members of a group. Permission : Team Information.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupSelectorError>.
      * @param arg The request parameters.
@@ -170,7 +170,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from groupsMembersList(), use this to
      * paginate through all members of the group. Permission : Team information.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupsMembersListContinueError>.
      * @param arg The request parameters.
@@ -184,7 +184,7 @@ declare module DropboxTypes {
      * completed. This method permits removing the only owner of a group, even
      * in cases where this is not possible via the web client. Permission : Team
      * member management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupMembersRemoveError>.
      * @param arg The request parameters.
@@ -194,7 +194,7 @@ declare module DropboxTypes {
     /**
      * Sets a member's access type in a group. Permission : Team member
      * management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupMemberSetAccessTypeError>.
      * @param arg The request parameters.
@@ -204,7 +204,7 @@ declare module DropboxTypes {
     /**
      * Updates a group's name and/or external ID. Permission : Team member
      * management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.GroupUpdateError>.
      * @param arg The request parameters.
@@ -214,7 +214,7 @@ declare module DropboxTypes {
     /**
      * List all linked applications of the team member. Note, this endpoint does
      * not list any team-linked applications.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ListMemberAppsError>.
      * @param arg The request parameters.
@@ -224,7 +224,7 @@ declare module DropboxTypes {
     /**
      * List all applications linked to the team members' accounts. Note, this
      * endpoint does not list any team-linked applications.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ListMembersAppsError>.
      * @param arg The request parameters.
@@ -234,7 +234,7 @@ declare module DropboxTypes {
     /**
      * List all applications linked to the team members' accounts. Note, this
      * endpoint doesn't list any team-linked applications.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ListTeamAppsError>.
      * @deprecated
@@ -244,7 +244,7 @@ declare module DropboxTypes {
 
     /**
      * Revoke a linked application of the team member.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.RevokeLinkedAppError>.
      * @param arg The request parameters.
@@ -253,7 +253,7 @@ declare module DropboxTypes {
 
     /**
      * Revoke a list of linked applications of the team members.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.RevokeLinkedAppBatchError>.
      * @param arg The request parameters.
@@ -262,7 +262,7 @@ declare module DropboxTypes {
 
     /**
      * Add users to member space limits excluded users list.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ExcludedUsersUpdateError>.
      * @param arg The request parameters.
@@ -271,7 +271,7 @@ declare module DropboxTypes {
 
     /**
      * List member space limits excluded users.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ExcludedUsersListError>.
      * @param arg The request parameters.
@@ -280,7 +280,7 @@ declare module DropboxTypes {
 
     /**
      * Continue listing member space limits excluded users.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ExcludedUsersListContinueError>.
      * @param arg The request parameters.
@@ -289,7 +289,7 @@ declare module DropboxTypes {
 
     /**
      * Remove users from member space limits excluded users list.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.ExcludedUsersUpdateError>.
      * @param arg The request parameters.
@@ -299,7 +299,7 @@ declare module DropboxTypes {
     /**
      * Get users custom quota. Returns none as the custom quota if none was set.
      * A maximum of 1000 members can be specified in a single call.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.CustomQuotaError>.
      * @param arg The request parameters.
@@ -309,7 +309,7 @@ declare module DropboxTypes {
     /**
      * Remove users custom quota. A maximum of 1000 members can be specified in
      * a single call.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.CustomQuotaError>.
      * @param arg The request parameters.
@@ -319,7 +319,7 @@ declare module DropboxTypes {
     /**
      * Set users custom quota. Custom quota has to be at least 15GB. A maximum
      * of 1000 members can be specified in a single call.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.SetCustomQuotaError>.
      * @param arg The request parameters.
@@ -338,7 +338,7 @@ declare module DropboxTypes {
      * management apps are required to set an initial given_name and surname for
      * a user to use in the team invitation and for 'Perform as team member'
      * actions taken on the user before they become 'active'.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -348,7 +348,7 @@ declare module DropboxTypes {
     /**
      * Once an async_job_id is returned from membersAdd() , use this to poll the
      * status of the asynchronous request. Permission : Team member management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -359,7 +359,7 @@ declare module DropboxTypes {
      * Returns information about multiple team members. Permission : Team
      * information This endpoint will return MembersGetInfoItem.id_not_found,
      * for IDs (or emails) that cannot be matched to a valid team member.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersGetInfoError>.
      * @param arg The request parameters.
@@ -368,7 +368,7 @@ declare module DropboxTypes {
 
     /**
      * Lists members of a team. Permission : Team information.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersListError>.
      * @param arg The request parameters.
@@ -378,7 +378,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from membersList(), use this to paginate
      * through all team members. Permission : Team information.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersListContinueError>.
      * @param arg The request parameters.
@@ -386,10 +386,34 @@ declare module DropboxTypes {
     public teamMembersListContinue(arg: team.MembersListContinueArg): Promise<team.MembersListResult>;
 
     /**
+     * Moves removed member's files to a different member. This endpoint
+     * initiates an asynchronous job. To obtain the final result of the job, the
+     * client should periodically poll
+     * membersMoveFormerMemberFilesJobStatusCheck(). Permission : Team member
+     * management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersTransferFormerMembersFilesError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersMoveFormerMemberFiles(arg: team.MembersDataTransferArg): Promise<async.LaunchEmptyResult>;
+
+    /**
+     * Once an async_job_id is returned from membersMoveFormerMemberFiles() ,
+     * use this to poll the status of the asynchronous request. Permission :
+     * Team member management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<async.PollError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersMoveFormerMemberFilesJobStatusCheck(arg: async.PollArg): Promise<async.PollEmptyResult>;
+
+    /**
      * Recover a deleted member. Permission : Team member management Exactly one
      * of team_member_id, email, or external_id must be provided to identify the
      * user account.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersRecoverError>.
      * @param arg The request parameters.
@@ -409,7 +433,7 @@ declare module DropboxTypes {
      * teams). This endpoint may initiate an asynchronous job. To obtain the
      * final result of the job, the client should periodically poll
      * membersRemoveJobStatusGet().
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersRemoveError>.
      * @param arg The request parameters.
@@ -420,7 +444,7 @@ declare module DropboxTypes {
      * Once an async_job_id is returned from membersRemove() , use this to poll
      * the status of the asynchronous request. Permission : Team member
      * management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -432,7 +456,7 @@ declare module DropboxTypes {
      * management Exactly one of team_member_id, email, or external_id must be
      * provided to identify the user account. No-op if team member is not
      * pending.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersSendWelcomeError>.
      * @param arg The request parameters.
@@ -441,7 +465,7 @@ declare module DropboxTypes {
 
     /**
      * Updates a team member's permissions. Permission : Team member management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersSetPermissionsError>.
      * @param arg The request parameters.
@@ -450,7 +474,7 @@ declare module DropboxTypes {
 
     /**
      * Updates a team member's profile. Permission : Team member management.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersSetProfileError>.
      * @param arg The request parameters.
@@ -461,7 +485,7 @@ declare module DropboxTypes {
      * Suspend a member from a team. Permission : Team member management Exactly
      * one of team_member_id, email, or external_id must be provided to identify
      * the user account.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersSuspendError>.
      * @param arg The request parameters.
@@ -472,7 +496,7 @@ declare module DropboxTypes {
      * Unsuspend a member from a team. Permission : Team member management
      * Exactly one of team_member_id, email, or external_id must be provided to
      * identify the user account.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.MembersUnsuspendError>.
      * @param arg The request parameters.
@@ -486,9 +510,9 @@ declare module DropboxTypes {
      * folders are always owned by this team or members of the team, but shared
      * folders may be owned by other users or other teams. Duplicates may occur
      * in the list.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
-     * Error<void>.
+     * Error<team.TeamNamespacesListError>.
      * @param arg The request parameters.
      */
     public teamNamespacesList(arg: team.TeamNamespacesListArg): Promise<team.TeamNamespacesListResult>;
@@ -497,7 +521,7 @@ declare module DropboxTypes {
      * Once a cursor has been retrieved from namespacesList(), use this to
      * paginate through all team-accessible namespaces. Duplicates may occur in
      * the list.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamNamespacesListContinueError>.
      * @param arg The request parameters.
@@ -505,6 +529,8 @@ declare module DropboxTypes {
     public teamNamespacesListContinue(arg: team.TeamNamespacesListContinueArg): Promise<team.TeamNamespacesListResult>;
 
     /**
+     * Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
      * @deprecated
@@ -513,6 +539,8 @@ declare module DropboxTypes {
     public teamPropertiesTemplateAdd(arg: file_properties.AddTemplateArg): Promise<file_properties.AddTemplateResult>;
 
     /**
+     * Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @deprecated
@@ -521,6 +549,8 @@ declare module DropboxTypes {
     public teamPropertiesTemplateGet(arg: file_properties.GetTemplateArg): Promise<file_properties.GetTemplateResult>;
 
     /**
+     * Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @deprecated
@@ -529,6 +559,8 @@ declare module DropboxTypes {
     public teamPropertiesTemplateList(arg: void): Promise<file_properties.ListTemplateResult>;
 
     /**
+     * Permission : Team member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.ModifyTemplateError>.
      * @deprecated
@@ -538,7 +570,7 @@ declare module DropboxTypes {
 
     /**
      * Retrieves reporting data about a team's user activity.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
      * @param arg The request parameters.
@@ -547,7 +579,7 @@ declare module DropboxTypes {
 
     /**
      * Retrieves reporting data about a team's linked devices.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
      * @param arg The request parameters.
@@ -556,7 +588,7 @@ declare module DropboxTypes {
 
     /**
      * Retrieves reporting data about a team's membership.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
      * @param arg The request parameters.
@@ -565,7 +597,7 @@ declare module DropboxTypes {
 
     /**
      * Retrieves reporting data about a team's storage usage.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
      * @param arg The request parameters.
@@ -575,7 +607,7 @@ declare module DropboxTypes {
     /**
      * Sets an archived team folder's status to active. Permission : Team member
      * file access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderActivateError>.
      * @param arg The request parameters.
@@ -585,7 +617,7 @@ declare module DropboxTypes {
     /**
      * Sets an active team folder's status to archived and removes all folder
      * and file members. Permission : Team member file access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderArchiveError>.
      * @param arg The request parameters.
@@ -595,7 +627,7 @@ declare module DropboxTypes {
     /**
      * Returns the status of an asynchronous job for archiving a team folder.
      * Permission : Team member file access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
      * @param arg The request parameters.
@@ -605,7 +637,7 @@ declare module DropboxTypes {
     /**
      * Creates a new, active, team folder with no members. Permission : Team
      * member file access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderCreateError>.
      * @param arg The request parameters.
@@ -615,7 +647,7 @@ declare module DropboxTypes {
     /**
      * Retrieves metadata for team folders. Permission : Team member file
      * access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
      * @param arg The request parameters.
@@ -624,7 +656,7 @@ declare module DropboxTypes {
 
     /**
      * Lists all team folders. Permission : Team member file access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderListError>.
      * @param arg The request parameters.
@@ -634,7 +666,7 @@ declare module DropboxTypes {
     /**
      * Once a cursor has been retrieved from teamFolderList(), use this to
      * paginate through all team folders. Permission : Team member file access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderListContinueError>.
      * @param arg The request parameters.
@@ -644,7 +676,7 @@ declare module DropboxTypes {
     /**
      * Permanently deletes an archived team folder. Permission : Team member
      * file access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderPermanentlyDeleteError>.
      * @param arg The request parameters.
@@ -654,7 +686,7 @@ declare module DropboxTypes {
     /**
      * Changes an active team folder's name. Permission : Team member file
      * access.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderRenameError>.
      * @param arg The request parameters.
@@ -664,7 +696,7 @@ declare module DropboxTypes {
     /**
      * Updates the sync settings on a team folder or its contents.  Use of this
      * endpoint requires that the team has team selective sync enabled.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TeamFolderUpdateSyncSettingsError>.
      * @param arg The request parameters.
@@ -674,7 +706,7 @@ declare module DropboxTypes {
     /**
      * Returns the member profile of the admin who generated the team access
      * token used to make the call.
-     * 
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TokenGetAuthenticatedAdminError>.
      * @param arg The request parameters.

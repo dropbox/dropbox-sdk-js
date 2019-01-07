@@ -106,6 +106,8 @@ if (!Array.prototype.includes) {
  * to act as.
  * @arg {String} [options.selectAdmin] - Team admin that the team access token would like
  * to act as.
+ * @arg {String} [options.pathRoot] - root pass to access other namespaces
+ * Use to access team folders for example
  */
 
 function parseBodyToType(res) {
@@ -126,6 +128,7 @@ export class DropboxBase {
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.fetch = options.fetch || fetch;
+    this.pathRoot = options.pathRoot;
     if (!options.fetch) { console.warn('Global fetch is deprecated and will be unsupported in a future version. Please pass fetch function as option when instantiating dropbox instance: new Dropbox({fetch})'); } // eslint-disable-line no-console
   }
 
@@ -274,11 +277,11 @@ client_id=${clientId}&client_secret=${clientSecret}`;
    */
 
 
- /**
-  * An authentication process that works with cordova applications.
-  * @param {successCallback} successCallback
-  * @param {errorCallback} errorCallback
-  */
+  /**
+   * An authentication process that works with cordova applications.
+   * @param {successCallback} successCallback
+   * @param {errorCallback} errorCallback
+   */
   authenticateWithCordova(successCallback, errorCallback) {
     const redirectUrl = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
     const url = this.getAuthenticationUrl(redirectUrl);
@@ -286,10 +289,12 @@ client_id=${clientId}&client_secret=${clientSecret}`;
     let removed = false;
     const browser = window.open(url, '_blank');
 
-    function onLoadError() {
-      // Try to avoid a browser crash on browser.close().
-      window.setTimeout(() => { browser.close(); }, 10);
-      errorCallback();
+    function onLoadError(event) {
+      if (event.code != -999) { // Workaround to fix wrong behavior on cordova-plugin-inappbrowser
+        // Try to avoid a browser crash on browser.close().
+        window.setTimeout(() => { browser.close(); }, 10);
+        errorCallback();
+      }
     }
 
     function onLoadStop(event) {
@@ -350,6 +355,7 @@ client_id=${clientId}&client_secret=${clientSecret}`;
       selectAdmin: this.selectAdmin,
       clientId: this.getClientId(),
       clientSecret: this.getClientSecret(),
+      pathRoot: this.pathRoot,
     };
     return request(path, args, auth, host, this.getAccessToken(), options);
   }

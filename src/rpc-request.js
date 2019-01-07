@@ -45,6 +45,9 @@ export function rpcRequest(fetch) {
       if (options.selectAdmin) {
         headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
       }
+      if (options.pathRoot) {
+        headers['Dropbox-API-Path-Root'] = options.pathRoot;
+      }
     }
 
     fetchOptions.headers = headers;

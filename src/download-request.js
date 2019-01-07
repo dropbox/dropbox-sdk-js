@@ -50,6 +50,9 @@ export function downloadRequest(fetch) {
       if (options.selectAdmin) {
         fetchOptions.headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
       }
+      if (options.pathRoot) {
+        fetchOptions.headers['Dropbox-API-Path-Root'] = options.pathRoot;
+      }
     }
 
 
