@@ -290,7 +290,7 @@ client_id=${clientId}&client_secret=${clientSecret}`;
     const browser = window.open(url, '_blank');
 
     function onLoadError(event) {
-      if (event.code != -999) { // Workaround to fix wrong behavior on cordova-plugin-inappbrowser
+      if (event.code !== -999) { // Workaround to fix wrong behavior on cordova-plugin-inappbrowser
         // Try to avoid a browser crash on browser.close().
         window.setTimeout(() => { browser.close(); }, 10);
         errorCallback();
