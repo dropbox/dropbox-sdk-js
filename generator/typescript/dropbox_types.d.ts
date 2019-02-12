@@ -6,6 +6,10 @@ declare module DropboxTypes {
     clientId?: string;
     // Select user is only used by team endpoints. It specifies which user the team access token should be acting as.
     selectUser?: string;
+    // Root path used to access namespaces different from home namespace (team folders etc)
+    pathRoot?: string;
+    // Fetch library for making requests.
+    fetch?: Function
   }
 
   class DropboxBase {
