@@ -33,4 +33,4 @@ On the web and on most modern browsers, `fetch` should be available ([List of su
 ```
 
 ## Authentication
-Next, you'll need to learn how to authorize your requests with [Authentication](https://dropbox.github.io/dropbox-sdk-js/tutorial-Authentication).
+Next, you'll need to learn how to authorize your requests with [Authentication](https://dropbox.github.io/dropbox-sdk-js/tutorial-Authentication.html).
