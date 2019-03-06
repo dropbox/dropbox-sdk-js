@@ -34,4 +34,4 @@ $ cordova plugin add cordova-plugin-inappbrowser
 ```
 
 ## Using the SDK
-Learn more about using the [JavaScript SDK](https://dropbox.github.io/dropbox-sdk-js/tutorial-JavaScriptSDK)
+Learn more about using the [JavaScript SDK](https://dropbox.github.io/dropbox-sdk-js/tutorial-JavaScript%20SDK.html)
