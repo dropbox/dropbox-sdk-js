@@ -23,7 +23,7 @@
     "publish-docs": "rm -rf generated-docs && npm run generate-docs && gh-pages -d generated-docs",
     "start": "node examples/javascript/server.js",
     "generate-tsds": "node generator/typescript/typescript-copy.js dist",
-    "generate-docs": "jsdoc -c ./conf.json -d generated-docs -t ./node_modules/ink-docstrap/template -u docs/tutorials -R docs/README.md -r ./src",
+    "generate-docs": "jsdoc -c ./conf.json",
     "clean": "rimraf dist/ es/ lib/",
     "test": "npm run test:lint && npm run test:unit",
     "test:lint": "eslint src/",

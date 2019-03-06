@@ -5,10 +5,10 @@ The Dropbox JavaScript SDK is a lightweight, promise based interface to the Drop
 
 ## Tutorials
 
-- [Installation](tutorials/Installation.md)
-- [Getting started](tutorials/Getting%20started.md)
-- [JavaScript SDK](tutorials/JavaScript%20SDK.md)
-- [Authentication](tutorials/Authentication.md)
+- [Installation](https://dropbox.github.io/dropbox-sdk-js/tutorial-Installation.html)
+- [Getting started](https://dropbox.github.io/dropbox-sdk-js/tutorial-Getting%20started.html)
+- [JavaScript SDK](https://dropbox.github.io/dropbox-sdk-js/tutorial-JavaScript%20SDK.html)
+- [Authentication](https://dropbox.github.io/dropbox-sdk-js/tutorial-Authentication.html)
 
 ## Examples
 

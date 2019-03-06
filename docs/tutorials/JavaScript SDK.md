@@ -16,8 +16,8 @@ new Dropbox({
 
 ## API Classes
 
-- [Dropbox](Dropbox.html)
-- [DropboxTeam](DropboxTeam.html)
+- [Dropbox](https://dropbox.github.io/dropbox-sdk-js/Dropbox.html)
+- [DropboxTeam](https://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html)
 
 ### Dropbox
 
