@@ -24,4 +24,4 @@ Alternatively, you can load our UMD package directly from [unpkg](https://unpkg.
 
 
 ## Next steps
-Once installed, you're ready to [get started](tutorial-Getting%20started.html).
+Once installed, you're ready to [get started](https://dropbox.github.io/dropbox-sdk-js/tutorial-Getting%20started.html).

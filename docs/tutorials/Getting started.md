@@ -3,7 +3,7 @@ requests using the
 [Dropbox](https://dropbox.github.io/dropbox-sdk-js/Dropbox.html) or [DropboxTeam](https://dropbox.github.io/dropbox-sdk-js/DropboxTeam.html) class. The way you access these classes depends on how you've installed the package.
 
 ### When installed with CommonJS (Node.js)
-Both classes are available as separated requires as most users require only the [Dropbox](/Dropbox.html) class.
+Both classes are available as separated requires as most users require only the [Dropbox](https://dropbox.github.io/dropbox-sdk-js/Dropbox.html) class.
 ```javascript
 var Dropbox = require('dropbox').Dropbox;
 var DropboxTeam = require('dropbox').DropboxTeam;
@@ -33,4 +33,4 @@ On the web and on most modern browsers, `fetch` should be available ([List of su
 ```
 
 ## Authentication
-Next, you'll need to learn how to authorize your requests with [Authentication](tutorial-Authentication.html).
+Next, you'll need to learn how to authorize your requests with [Authentication](https://dropbox.github.io/dropbox-sdk-js/tutorial-Authentication.html).

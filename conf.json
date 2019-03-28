@@ -1,4 +1,14 @@
 {
+  "source": {
+    "include": ["./src"]
+  },
+  "opts": {
+    "template": "./node_modules/ink-docstrap/template",
+    "destination": "generated-docs",
+    "tutorials": "docs/tutorials",
+    "readme": "docs/README.md",
+    "recurse": true
+  },
   "templates": {
     "systemName": "Dropbox JavaScript SDK",
     "theme": "cosmo"
