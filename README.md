@@ -6,7 +6,7 @@ The Dropbox JavaScript SDK is a lightweight, promise based interface to the Drop
 Please view our full JavaScript SDK documentation at <http://dropbox.github.io/dropbox-sdk-js>.
 
 ## Prerequisites
-This library depends on the Promise global which requires a polyfill ([es6-promise](https://www.npmjs.com/package/es6-promise)) for unsupported browsers. It also requires that `fetch` be passed into the constructor; we advise using the [isormophic-fetch](https://www.npmjs.com/package/isomorphic-fetch) library which supports fetch within both environments.
+This library depends on the Promise global which requires a polyfill ([es6-promise](https://www.npmjs.com/package/es6-promise)) for unsupported browsers. It also requires that `fetch` be passed into the constructor; we advise using the [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch) library which supports fetch within both environments.
 
 ## Quickstart
 For a quick overview the below example will install the package and use it as a CommonJS module. For more alternative loading options please view our [Getting started](http://dropbox.github.io/dropbox-sdk-js/tutorial-Getting%20started.html) tutorial.
