@@ -1,6 +1,6 @@
 {
   "name": "dropbox",
-  "version": "4.0.17",
+  "version": "4.0.27",
   "registry": "npm",
   "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
   "browser": "dist/Dropbox-sdk.min.js",
@@ -88,7 +88,7 @@
     "growl": "^1.10.0",
     "ink-docstrap": "^1.2.1",
     "isomorphic-fetch": "^2.2.1",
-    "jsdoc": "^3.4.0",
+    "jsdoc": "^3.6.2",
     "lodash": "~> 4.17.5",
     "mime": ">=2.0.3",
     "mocha": "^3.4.2",
