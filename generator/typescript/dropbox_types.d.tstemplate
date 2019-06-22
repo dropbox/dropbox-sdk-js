@@ -27,6 +27,13 @@ declare module DropboxTypes {
     getAccessTokenFromCode(redirectUri: string, code: string): Promise<string>;
 
     /**
+     * An authentication process that works with cordova applications.
+     * @param successCallback Called when the authentication succeed
+     * @param errorCallback Called when the authentication failed.
+     */
+    authenticateWithCordova(successCallback: (accessToken: string) => void, errorCallback: () => void): void;
+
+    /**
      * Get a URL that can be used to authenticate users for the Dropbox API.
      * @param redirectUri A URL to redirect the user to after authenticating.
      *   This must be added to your app through the admin interface.
