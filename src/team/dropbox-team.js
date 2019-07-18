@@ -30,6 +30,7 @@ export class DropboxTeam extends DropboxBase {
     return new Dropbox({
       accessToken: this.accessToken,
       clientId: this.clientId,
+      pathRoot: this.pathRoot,
       selectUser: userId,
     });
   }
