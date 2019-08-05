@@ -3606,6 +3606,155 @@ endpoint can't be called on a team member or admin's behalf.
             
 <hr>
 <dt>
+    <h4 class="name" id="fileRequestsCount"><span class="type-signature"></span>fileRequestsCount(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the total number of file requests owned by this user. Includes both
+open and closed file requests.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">void</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsCountFileRequestsResult">FileRequestsCountFileRequestsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsCountFileRequestsError">FileRequestsCountFileRequestsError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="fileRequestsCreate"><span class="type-signature"></span>fileRequestsCreate(arg)</h4>
     
     
@@ -3738,6 +3887,302 @@ endpoint can't be called on a team member or admin's behalf.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#FileRequestsFileRequest">FileRequestsFileRequest</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsCreateFileRequestError">FileRequestsCreateFileRequestError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="fileRequestsDelete"><span class="type-signature"></span>fileRequestsDelete(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Delete a batch of closed file requests.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FileRequestsDeleteFileRequestArgs">FileRequestsDeleteFileRequestArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsDeleteFileRequestsResult">FileRequestsDeleteFileRequestsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsDeleteFileRequestError">FileRequestsDeleteFileRequestError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="fileRequestsDeleteAllClosed"><span class="type-signature"></span>fileRequestsDeleteAllClosed(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Delete all closed file requests owned by this user.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">void</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsDeleteAllClosedFileRequestsResult">FileRequestsDeleteAllClosedFileRequestsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsDeleteAllClosedFileRequestsError">FileRequestsDeleteAllClosedFileRequestsError</a>>></span>
 
 
 
@@ -4036,6 +4481,306 @@ the app folder.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#FileRequestsListFileRequestsResult">FileRequestsListFileRequestsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsListFileRequestsError">FileRequestsListFileRequestsError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="fileRequestsListContinue"><span class="type-signature"></span>fileRequestsListContinue(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Once a cursor has been retrieved from list_v2, use this to paginate through
+all file requests. The cursor must come from a previous call to list_v2 or
+list/continue.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FileRequestsListFileRequestsContinueArg">FileRequestsListFileRequestsContinueArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsListFileRequestsV2Result">FileRequestsListFileRequestsV2Result</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsListFileRequestsContinueError">FileRequestsListFileRequestsContinueError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="fileRequestsListV2"><span class="type-signature"></span>fileRequestsListV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns a list of file requests owned by this user. For apps with the app
+folder permission, this will only return file requests with destinations in
+the app folder.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FileRequestsListFileRequestsArg">FileRequestsListFileRequestsArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FileRequestsListFileRequestsV2Result">FileRequestsListFileRequestsV2Result</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FileRequestsListFileRequestsError">FileRequestsListFileRequestsError</a>>></span>
 
 
 
@@ -5157,7 +5902,7 @@ of results for each entry.
     <div class="description">
         Copy multiple files or folders to different locations at once in the user's
 Dropbox. This route will replace copy_batch. The main difference is this
-route will return stutus for each entry, while copy_batch raises failure if
+route will return status for each entry, while copy_batch raises failure if
 any entry fails. This route will either finish synchronously, or return a job
 ID and do the async copy job in background. Please use copy_batch/check_v2 to
 check the job status.
@@ -7264,6 +8009,156 @@ cannot be a single file. Any single file must be less than 4GB in size.
             
 <hr>
 <dt>
+    <h4 class="name" id="filesExport"><span class="type-signature"></span>filesExport(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Export a file from a user's Dropbox. This route only supports exporting files
+that cannot be downloaded directly  and whose ExportResult.file_metadata has
+ExportInfo.export_as populated.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesExportArg">FilesExportArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesExportResult">FilesExportResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesExportError">FilesExportError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="filesGetMetadata"><span class="type-signature"></span>filesGetMetadata(arg)</h4>
     
     
@@ -7422,10 +8317,11 @@ is unsupported.
     
     <div class="description">
         Get a preview for a file. Currently, PDF previews are generated for files
-with the following extensions: .ai, .doc, .docm, .docx, .eps, .odp, .odt,
-.pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML previews are generated for
-files with the following extensions: .csv, .ods, .xls, .xlsm, .xlsx. Other
-formats will return an unsupported extension error.
+with the following extensions: .ai, .doc, .docm, .docx, .eps, .gdoc,
+.gslides, .odp, .odt, .pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML
+previews are generated for files with the following extensions: .csv, .ods,
+.xls, .xlsm, .gsheet, .xlsx. Other formats will return an unsupported
+extension error.
     </div>
     
 
@@ -7574,8 +8470,8 @@ formats will return an unsupported extension error.
     
     <div class="description">
         Get a temporary link to stream content of a file. This link will expire in
-four hours and afterwards you will get 410 Gone. So this URL should not be
-used to display content directly in the browser.  Content-Type of the link is
+four hours and afterwards you will get 410 Gone. This URL should not be used
+to display content directly in the browser. The Content-Type of the link is
 determined automatically by the file's mime type.
     </div>
     
@@ -9584,8 +10480,8 @@ of results for each entry.
     
     <div class="description">
         Move multiple files or folders to different locations at once in the user's
-Dropbox. This route will replace move_batch_v2. The main difference is this
-route will return stutus for each entry, while move_batch raises failure if
+Dropbox. This route will replace move_batch. The main difference is this
+route will return status for each entry, while move_batch raises failure if
 any entry fails. This route will either finish synchronously, or return a job
 ID and do the async move job in background. Please use move_batch/check_v2 to
 check the job status.
@@ -23664,7 +24560,7 @@ queried per request.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a>
 	
-		on 2019-08-05T14:55:29-07:00
+		on 2019-08-05T15:04:36-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
