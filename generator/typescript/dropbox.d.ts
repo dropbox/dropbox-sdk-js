@@ -225,6 +225,16 @@ declare module DropboxTypes {
     public filePropertiesTemplatesUpdateForUser(arg: file_properties.UpdateTemplateArg): Promise<file_properties.UpdateTemplateResult>;
 
     /**
+     * Returns the total number of file requests owned by this user. Includes
+     * both open and closed file requests.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.CountFileRequestsError>.
+     * @param arg The request parameters.
+     */
+    public fileRequestsCount(arg: void): Promise<file_requests.CountFileRequestsResult>;
+
+    /**
      * Creates a file request for this user.
      *
      * When an error occurs, the route rejects the promise with type
@@ -232,6 +242,24 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public fileRequestsCreate(arg: file_requests.CreateFileRequestArgs): Promise<file_requests.FileRequest>;
+
+    /**
+     * Delete a batch of closed file requests.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.DeleteFileRequestError>.
+     * @param arg The request parameters.
+     */
+    public fileRequestsDelete(arg: file_requests.DeleteFileRequestArgs): Promise<file_requests.DeleteFileRequestsResult>;
+
+    /**
+     * Delete all closed file requests owned by this user.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.DeleteAllClosedFileRequestsError>.
+     * @param arg The request parameters.
+     */
+    public fileRequestsDeleteAllClosed(arg: void): Promise<file_requests.DeleteAllClosedFileRequestsResult>;
 
     /**
      * Returns the specified file request.
@@ -251,7 +279,29 @@ declare module DropboxTypes {
      * Error<file_requests.ListFileRequestsError>.
      * @param arg The request parameters.
      */
+    public fileRequestsListV2(arg: file_requests.ListFileRequestsArg): Promise<file_requests.ListFileRequestsV2Result>;
+
+    /**
+     * Returns a list of file requests owned by this user. For apps with the app
+     * folder permission, this will only return file requests with destinations
+     * in the app folder.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.ListFileRequestsError>.
+     * @param arg The request parameters.
+     */
     public fileRequestsList(arg: void): Promise<file_requests.ListFileRequestsResult>;
+
+    /**
+     * Once a cursor has been retrieved from listV2(), use this to paginate
+     * through all file requests. The cursor must come from a previous call to
+     * listV2() or listContinue().
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<file_requests.ListFileRequestsContinueError>.
+     * @param arg The request parameters.
+     */
+    public fileRequestsListContinue(arg: file_requests.ListFileRequestsContinueArg): Promise<file_requests.ListFileRequestsV2Result>;
 
     /**
      * Update a file request.
@@ -311,7 +361,7 @@ declare module DropboxTypes {
     /**
      * Copy multiple files or folders to different locations at once in the
      * user's Dropbox. This route will replace copyBatch(). The main difference
-     * is this route will return stutus for each entry, while copyBatch() raises
+     * is this route will return status for each entry, while copyBatch() raises
      * failure if any entry fails. This route will either finish synchronously,
      * or return a job ID and do the async copy job in background. Please use
      * copyBatchCheckV2() to check the job status.
@@ -494,6 +544,17 @@ declare module DropboxTypes {
     public filesDownloadZip(arg: files.DownloadZipArg): Promise<files.DownloadZipResult>;
 
     /**
+     * Export a file from a user's Dropbox. This route only supports exporting
+     * files that cannot be downloaded directly  and whose
+     * ExportResult.file_metadata has ExportInfo.export_as populated.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.ExportError>.
+     * @param arg The request parameters.
+     */
+    public filesExport(arg: files.ExportArg): Promise<files.ExportResult>;
+
+    /**
      * Returns the metadata for a file or folder. Note: Metadata for the root
      * folder is unsupported.
      *
@@ -505,10 +566,11 @@ declare module DropboxTypes {
 
     /**
      * Get a preview for a file. Currently, PDF previews are generated for files
-     * with the following extensions: .ai, .doc, .docm, .docx, .eps, .odp, .odt,
-     * .pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML previews are generated
-     * for files with the following extensions: .csv, .ods, .xls, .xlsm, .xlsx.
-     * Other formats will return an unsupported extension error.
+     * with the following extensions: .ai, .doc, .docm, .docx, .eps, .gdoc,
+     * .gslides, .odp, .odt, .pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML
+     * previews are generated for files with the following extensions: .csv,
+     * .ods, .xls, .xlsm, .gsheet, .xlsx. Other formats will return an
+     * unsupported extension error.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<files.PreviewError>.
@@ -518,8 +580,8 @@ declare module DropboxTypes {
 
     /**
      * Get a temporary link to stream content of a file. This link will expire
-     * in four hours and afterwards you will get 410 Gone. So this URL should
-     * not be used to display content directly in the browser.  Content-Type of
+     * in four hours and afterwards you will get 410 Gone. This URL should not
+     * be used to display content directly in the browser. The Content-Type of
      * the link is determined automatically by the file's mime type.
      *
      * When an error occurs, the route rejects the promise with type
@@ -697,11 +759,11 @@ declare module DropboxTypes {
 
     /**
      * Move multiple files or folders to different locations at once in the
-     * user's Dropbox. This route will replace moveBatchV2(). The main
-     * difference is this route will return stutus for each entry, while
-     * moveBatch() raises failure if any entry fails. This route will either
-     * finish synchronously, or return a job ID and do the async move job in
-     * background. Please use moveBatchCheckV2() to check the job status.
+     * user's Dropbox. This route will replace moveBatch(). The main difference
+     * is this route will return status for each entry, while moveBatch() raises
+     * failure if any entry fails. This route will either finish synchronously,
+     * or return a job ID and do the async move job in background. Please use
+     * moveBatchCheckV2() to check the job status.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
