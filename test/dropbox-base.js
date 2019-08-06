@@ -111,6 +111,22 @@ describe('DropboxBase', function () {
         'https://www.dropbox.com/oauth2/authorize?response_type=token&client_id=CLIENT_ID&redirect_uri=redirect&state=state'
       );
     });
+
+    it('returns auth url with redirect uri and state and scope', function () {
+      dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
+      assert.equal(
+        dbx.getAuthenticationUrl('redirect', 'state', 'token', ['openid']),
+        'https://www.dropbox.com/oauth2/authorize?response_type=token&client_id=CLIENT_ID&redirect_uri=redirect&state=state&scope=openid'
+      );
+    });
+
+    it('returns auth url with redirect uri and state and multiple scopes', function () {
+      dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
+      assert.equal(
+        dbx.getAuthenticationUrl('redirect', 'state', 'token', ['openid', 'profile']),
+        'https://www.dropbox.com/oauth2/authorize?response_type=token&client_id=CLIENT_ID&redirect_uri=redirect&state=state&scope=openid profile'
+      );
+    });
   });
 
   describe('#authenticateWithCordova()', function () {

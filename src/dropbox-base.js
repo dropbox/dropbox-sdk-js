@@ -192,7 +192,7 @@ export class DropboxBase {
    * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state, authType = 'token') {
+  getAuthenticationUrl(redirectUri, state, authType = 'token', scope = []) {
     const clientId = this.getClientId();
     const baseUrl = 'https://www.dropbox.com/oauth2/authorize';
 
@@ -219,6 +219,12 @@ export class DropboxBase {
     if (state) {
       authUrl += `&state=${state}`;
     }
+
+    if (scope.length > 0) {
+      const scopeString = scope.join(' ');
+      authUrl += `&scope=${scopeString}`;
+    }
+
     return authUrl;
   }
 
