@@ -190,6 +190,7 @@ export class DropboxBase {
    * @arg {String} [state] - State that will be returned in the redirect URL to help
    * prevent cross site scripting attacks.
    * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
+   * @arg {Array} [scope] - array of scope strings, defaults to empty array.
    * @returns {String} Url to send user to for Dropbox API authentication
    */
   getAuthenticationUrl(redirectUri, state, authType = 'token', scope = []) {
