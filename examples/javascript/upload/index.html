@@ -54,7 +54,9 @@
         dbx.filesUpload({path: '/' + file.name, contents: file})
           .then(function(response) {
             var results = document.getElementById('results');
+            var br = document.createElement("br");
             results.appendChild(document.createTextNode('File uploaded!'));
+            results.appendChild(br);
             console.log(response);
           })
           .catch(function(error) {
