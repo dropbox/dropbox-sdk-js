@@ -1,5 +1,14 @@
-import { Buffer } from 'buffer/';
 import { getBaseURL } from './utils';
+
+// [https://gist.github.com/999166] by [https://github.com/nignag]
+function b64(a, b = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=', c, d, e) {
+  for (
+    d = e = '';
+    a[d | 0] || (b = '=', d % 1);
+    e += b[63 & c >> 8 - d % 1 * 8]
+  ) c = c << 8 | a.charCodeAt(d -= -.75);
+  return e;
+}
 
 function parseBodyToType(res) {
   if (res.headers.get('Content-Type') === 'application/json') {
@@ -25,7 +34,7 @@ export function rpcRequest(fetch) {
         if (!options.clientId || !options.clientSecret) {
           throw new Error('A client id and secret is required for this function');
         }
-        authHeader = new Buffer(`${options.clientId}:${options.clientSecret}`).toString('base64');
+        authHeader = b64(`${options.clientId}:${options.clientSecret}`);
         headers.Authorization = `Basic ${authHeader}`;
         break;
       case 'team':
