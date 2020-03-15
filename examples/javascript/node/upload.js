@@ -14,7 +14,7 @@ prompt.get({
 }, function (error, result) {
   var dbx = new Dropbox({ accessToken: result.accessToken });
 
-  fs.readFile(path.join(__dirname, '/basic.js'), 'utf8', function (err, contents) {
+  fs.readFile(path.join(__dirname, '/basic.js'), function (err, contents) {
     if (err) {
       console.log('Error: ', err);
     }
