@@ -29,8 +29,9 @@
   <!-- Example description and UI -->
   <section class="container main">
     <p>
-      This example fetches the contents of your root Dropbox directory with a limit of 3. It uses the <code>Dropbox.filesListFolder()</code> method [<a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#filesListFolder">docs</a>].
+      This example fetches the contents of your root Dropbox directory with a limit of 3.
       And if the result's ListFolderResult.has_more field is true. call list_folder/continue with the returned ListFolderResult.cursor to retrieve more entries.
+      It uses the <code>Dropbox.filesListFolderContinue()</code> method [<a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#filesListFolderContinue">docs</a>]
     </p>
 
     <form id="basic-form" onSubmit="return listFiles()">
@@ -56,6 +57,16 @@
 
     form.onsubmit = function listFiles(e) {
       e.preventDefault();
+      var filesList = document.getElementById('files');
+      filesList.innerHTML = '';
+      isButtonCreated = false;
+      isHasNoMoreCreated = false;
+      if (document.getElementById('continue-button')) {
+        document.getElementById('continue-button').remove();
+      }
+      if (document.getElementById('has-more')) {
+        document.getElementById('has-more').remove();
+      }
 
       var ACCESS_TOKEN = document.getElementById('access-token').value;
       var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
@@ -87,12 +98,18 @@
         button.id = 'continue-button';
         parentDiv.appendChild(button);
         isButtonCreated = true;
+        if (document.getElementById('has-more')) {
+          document.getElementById('has-more').remove();
+        }
       } else if (!hasMore && !isHasNoMoreCreated) {
         var p = document.createElement('p')
         p.innerText = 'folder has no more files';
+        p.id = 'has-more';
         parentDiv.appendChild(p);
         isHasNoMoreCreated = true;
-        document.getElementById('continue-button').hidden = true;
+        if (document.getElementById('continue-button')) {
+          document.getElementById('continue-button').remove();
+        }
       }
     }
 
