@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+  <title>Dropbox JavaScript SDK</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+  <script src="/__build__/Dropbox-sdk.min.js"></script>
+</head>
+<body>
+  <!-- Example layout boilerplate -->
+  <header class="page-header">
+    <div class="container">
+      <nav>
+        <a href="/">
+          <h1>
+            <img src="https://cfl.dropboxstatic.com/static/images/brand/logotype_white-vflRG5Zd8.svg" class="logo" />
+            JavaScript SDK Examples
+          </h1>
+        </a>
+        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript" class="view-source">View Source</a>
+      </nav>
+      <h2 class="code">
+        <a href="/">examples</a> / filesListFolderContinue
+      </h2>
+    </div>
+  </header>
+
+  <!-- Example description and UI -->
+  <section class="container main">
+    <p>
+      This example fetches the contents of your root Dropbox directory with a limit of 3. It uses the <code>Dropbox.filesListFolder()</code> method [<a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#filesListFolder">docs</a>].
+      And if the result's ListFolderResult.has_more field is true. call list_folder/continue with the returned ListFolderResult.cursor to retrieve more entries.
+    </p>
+
+    <form id="basic-form" onSubmit="return listFiles()">
+      <input type="text" id="access-token" placeholder="Access token" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- The files returned from the SDK will be added here -->
+    <div id="parent">
+      <ul id="files"></ul>
+    </div>
+
+    <p class="info">To obtain an access token for quick testing, you can go to <a href="https://dropbox.github.io/dropbox-api-v2-explorer/#files_list_folder" target="_blank">API Explorer</a> click the "Get Token" button on the top right, copy the token it creates and then paste it here.</p>
+  </section>
+
+  <!-- Scripts to run example -->
+  <script>
+
+    var form = document.getElementById('basic-form');
+    var isButtonCreated = false;
+    var isHasNoMoreCreated = false;
+    var cursor = '';
+
+    form.onsubmit = function listFiles(e) {
+      e.preventDefault();
+
+      var ACCESS_TOKEN = document.getElementById('access-token').value;
+      var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
+      dbx.filesListFolder({path: '',limit: 3})
+        .then(function(response) {
+          console.log('response', response)
+          cursor = response.cursor
+          displayFiles(response.entries, response.has_more);
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.error(error);
+        });
+    }
+
+    function displayFiles(files, hasMore) {
+      var filesList = document.getElementById('files');
+      var li;
+      for (var i = 0; i < files.length; i++) {
+        li = document.createElement('li');
+        li.appendChild(document.createTextNode(files[i].name));
+        filesList.appendChild(li);
+      }
+      var parentDiv = document.getElementById('parent');
+      if (hasMore && !isButtonCreated) {
+        var button = document.createElement('button');
+        button.innerText = 'Call filesListFolderContinue';
+        button.onclick = displayFilesContinue;
+        button.id = 'continue-button';
+        parentDiv.appendChild(button);
+        isButtonCreated = true;
+      } else if (!hasMore && !isHasNoMoreCreated) {
+        var p = document.createElement('p')
+        p.innerText = 'folder has no more files';
+        parentDiv.appendChild(p);
+        isHasNoMoreCreated = true;
+        document.getElementById('continue-button').hidden = true;
+      }
+    }
+
+    function displayFilesContinue() {
+      var ACCESS_TOKEN = document.getElementById('access-token').value;
+      var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
+      console.log('dbx', dbx)
+      dbx.filesListFolderContinue({cursor: cursor})
+        .then(function(response) {
+          console.log('response', response)
+          cursor = response.cursor
+          displayFiles(response.entries, response.has_more);
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.error(error);
+        });
+    }
+  </script>
+</body>
+</html>
