@@ -238,9 +238,13 @@ export class DropboxBase {
     if (!clientSecret) {
       throw new Error('A client secret is required. You can set the client id using .setClientSecret().');
     }
-    const path = `https://api.dropboxapi.com/oauth2/token?code=${code}&\
-grant_type=authorization_code&redirect_uri=${redirectUri}&\
-client_id=${clientId}&client_secret=${clientSecret}`;
+    let path = 'https://api.dropboxapi.com/oauth2/token?grant_type=authorization_code';
+    path += `&code=${code}`;
+    path += `&client_id=${clientId}`;
+    path += `&client_secret=${clientSecret}`;
+    if (redirectUri) {
+      path += `&redirect_uri=${redirectUri}`;
+    }
 
     const fetchOptions = {
       method: 'POST',
