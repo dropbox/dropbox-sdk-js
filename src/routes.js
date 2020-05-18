@@ -2,6 +2,16 @@
 var routes = {};
 
 /**
+ * Sets a user's profile photo.
+ * @function Dropbox#accountSetProfilePhoto
+ * @arg {AccountSetProfilePhotoArg} arg - The request parameters.
+ * @returns {Promise.<AccountSetProfilePhotoResult, Error.<AccountSetProfilePhotoError>>}
+ */
+routes.accountSetProfilePhoto = function (arg) {
+  return this.request('account/set_profile_photo', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Creates an OAuth 2.0 access token from the supplied OAuth 1.0 access token.
  * @function Dropbox#authTokenFromOauth1
  * @arg {AuthTokenFromOAuth1Arg} arg - The request parameters.
@@ -19,6 +29,105 @@ routes.authTokenFromOauth1 = function (arg) {
  */
 routes.authTokenRevoke = function (arg) {
   return this.request('auth/token/revoke', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * This endpoint performs App Authentication, validating the supplied app key
+ * and secret, and returns the supplied string, to allow you to test your code
+ * and connection to the Dropbox API. It has no other effect. If you receive an
+ * HTTP 200 response with the supplied query, it indicates at least part of the
+ * Dropbox API infrastructure is working and that the app key and secret valid.
+ * @function Dropbox#checkApp
+ * @arg {CheckEchoArg} arg - The request parameters.
+ * @returns {Promise.<CheckEchoResult, Error.<void>>}
+ */
+routes.checkApp = function (arg) {
+  return this.request('check/app', arg, 'app', 'api', 'rpc');
+};
+
+/**
+ * This endpoint performs User Authentication, validating the supplied access
+ * token, and returns the supplied string, to allow you to test your code and
+ * connection to the Dropbox API. It has no other effect. If you receive an HTTP
+ * 200 response with the supplied query, it indicates at least part of the
+ * Dropbox API infrastructure is working and that the access token is valid.
+ * @function Dropbox#checkUser
+ * @arg {CheckEchoArg} arg - The request parameters.
+ * @returns {Promise.<CheckEchoResult, Error.<void>>}
+ */
+routes.checkUser = function (arg) {
+  return this.request('check/user', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Fetch the binary content of the requested document. This route requires Cloud
+ * Docs auth. Please make a request to cloud_docs/authorize and supply that
+ * token in the Authorization header.
+ * @function Dropbox#cloudDocsGetContent
+ * @arg {CloudDocsGetContentArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<CloudDocsCloudDocsAccessError>>}
+ */
+routes.cloudDocsGetContent = function (arg) {
+  return this.request('cloud_docs/get_content', arg, 'user', 'content', 'download');
+};
+
+/**
+ * Fetches metadata associated with a Cloud Doc and user. This route requires
+ * Cloud Docs auth. Please make a request to cloud_docs/authorize and supply
+ * that token in the Authorization header.
+ * @function Dropbox#cloudDocsGetMetadata
+ * @arg {CloudDocsGetMetadataArg} arg - The request parameters.
+ * @returns {Promise.<CloudDocsGetMetadataResult, Error.<CloudDocsGetMetadataError>>}
+ */
+routes.cloudDocsGetMetadata = function (arg) {
+  return this.request('cloud_docs/get_metadata', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Lock a Cloud Doc. This route requires Cloud Docs auth. Please make a request
+ * to cloud_docs/authorize and supply that token in the Authorization header.
+ * @function Dropbox#cloudDocsLock
+ * @arg {CloudDocsLockArg} arg - The request parameters.
+ * @returns {Promise.<CloudDocsLockResult, Error.<CloudDocsLockingError>>}
+ */
+routes.cloudDocsLock = function (arg) {
+  return this.request('cloud_docs/lock', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Update the title of a Cloud Doc. This route requires Cloud Docs auth. Please
+ * make a request to cloud_docs/authorize and supply that token in the
+ * Authorization header.
+ * @function Dropbox#cloudDocsRename
+ * @arg {CloudDocsRenameArg} arg - The request parameters.
+ * @returns {Promise.<CloudDocsRenameResult, Error.<CloudDocsRenameError>>}
+ */
+routes.cloudDocsRename = function (arg) {
+  return this.request('cloud_docs/rename', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Unlock a Cloud Doc. This route requires Cloud Docs auth. Please make a
+ * request to cloud_docs/authorize and supply that token in the Authorization
+ * header.
+ * @function Dropbox#cloudDocsUnlock
+ * @arg {CloudDocsUnlockArg} arg - The request parameters.
+ * @returns {Promise.<CloudDocsUnlockResult, Error.<CloudDocsLockingError>>}
+ */
+routes.cloudDocsUnlock = function (arg) {
+  return this.request('cloud_docs/unlock', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Update the contents of a Cloud Doc. This should be called for files with a
+ * max size of 150MB. This route requires Cloud Docs auth. Please make a request
+ * to cloud_docs/authorize and supply that token in the Authorization header.
+ * @function Dropbox#cloudDocsUpdateContent
+ * @arg {CloudDocsUpdateContentArg} arg - The request parameters.
+ * @returns {Promise.<CloudDocsUpdateContentResult, Error.<CloudDocsUpdateContentError>>}
+ */
+routes.cloudDocsUpdateContent = function (arg) {
+  return this.request('cloud_docs/update_content', arg, 'user', 'content', 'upload');
 };
 
 /**
@@ -588,6 +697,16 @@ routes.filesExport = function (arg) {
 };
 
 /**
+ * Return the lock metadata for the given list of paths.
+ * @function Dropbox#filesGetFileLockBatch
+ * @arg {FilesLockFileBatchArg} arg - The request parameters.
+ * @returns {Promise.<FilesLockFileBatchResult, Error.<FilesLockFileError>>}
+ */
+routes.filesGetFileLockBatch = function (arg) {
+  return this.request('files/get_file_lock_batch', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Returns the metadata for a file or folder. Note: Metadata for the root folder
  * is unsupported.
  * @function Dropbox#filesGetMetadata
@@ -672,6 +791,16 @@ routes.filesGetTemporaryUploadLink = function (arg) {
  */
 routes.filesGetThumbnail = function (arg) {
   return this.request('files/get_thumbnail', arg, 'user', 'content', 'download');
+};
+
+/**
+ * Get a thumbnail for a file.
+ * @function Dropbox#filesGetThumbnailV2
+ * @arg {FilesThumbnailV2Arg} arg - The request parameters.
+ * @returns {Promise.<FilesPreviewResult, Error.<FilesThumbnailV2Error>>}
+ */
+routes.filesGetThumbnailV2 = function (arg) {
+  return this.request('files/get_thumbnail_v2', arg, 'app, user', 'content', 'download');
 };
 
 /**
@@ -774,8 +903,22 @@ routes.filesListRevisions = function (arg) {
 };
 
 /**
+ * Lock the files at the given paths. A locked file will be writable only by the
+ * lock holder. A successful response indicates that the file has been locked.
+ * Returns a list of the locked file paths and their metadata after this
+ * operation.
+ * @function Dropbox#filesLockFileBatch
+ * @arg {FilesLockFileBatchArg} arg - The request parameters.
+ * @returns {Promise.<FilesLockFileBatchResult, Error.<FilesLockFileError>>}
+ */
+routes.filesLockFileBatch = function (arg) {
+  return this.request('files/lock_file_batch', arg, 'user', 'api', 'rpc');
+};
+
+/**
  * Move a file or folder to a different location in the user's Dropbox. If the
- * source path is a folder all its contents will be moved.
+ * source path is a folder all its contents will be moved. Note that we do not
+ * currently support case-only renaming.
  * @function Dropbox#filesMoveV2
  * @arg {FilesRelocationArg} arg - The request parameters.
  * @returns {Promise.<FilesRelocationResult, Error.<FilesRelocationError>>}
@@ -798,11 +941,12 @@ routes.filesMove = function (arg) {
 
 /**
  * Move multiple files or folders to different locations at once in the user's
- * Dropbox. This route will replace move_batch. The main difference is this
- * route will return status for each entry, while move_batch raises failure if
- * any entry fails. This route will either finish synchronously, or return a job
- * ID and do the async move job in background. Please use move_batch/check_v2 to
- * check the job status.
+ * Dropbox. Note that we do not currently support case-only renaming. This route
+ * will replace move_batch. The main difference is this route will return status
+ * for each entry, while move_batch raises failure if any entry fails. This
+ * route will either finish synchronously, or return a job ID and do the async
+ * move job in background. Please use move_batch/check_v2 to check the job
+ * status.
  * @function Dropbox#filesMoveBatchV2
  * @arg {FilesMoveBatchArg} arg - The request parameters.
  * @returns {Promise.<FilesRelocationBatchV2Launch, Error.<void>>}
@@ -813,11 +957,10 @@ routes.filesMoveBatchV2 = function (arg) {
 
 /**
  * Move multiple files or folders to different locations at once in the user's
- * Dropbox. This route is 'all or nothing', which means if one entry fails, the
- * whole transaction will abort. This route will return job ID immediately and
- * do the async moving job in background. Please use move_batch/check to check
- * the job status.
+ * Dropbox. This route will return job ID immediately and do the async moving
+ * job in background. Please use move_batch/check to check the job status.
  * @function Dropbox#filesMoveBatch
+ * @deprecated
  * @arg {FilesRelocationBatchArg} arg - The request parameters.
  * @returns {Promise.<FilesRelocationBatchLaunch, Error.<void>>}
  */
@@ -840,6 +983,7 @@ routes.filesMoveBatchCheckV2 = function (arg) {
  * Returns the status of an asynchronous job for move_batch. If success, it
  * returns list of results for each entry.
  * @function Dropbox#filesMoveBatchCheck
+ * @deprecated
  * @arg {AsyncPollArg} arg - The request parameters.
  * @returns {Promise.<FilesRelocationBatchJobStatus, Error.<AsyncPollError>>}
  */
@@ -956,11 +1100,53 @@ routes.filesSaveUrlCheckJobStatus = function (arg) {
  * Searches for files and folders. Note: Recent changes may not immediately be
  * reflected in search results due to a short delay in indexing.
  * @function Dropbox#filesSearch
+ * @deprecated
  * @arg {FilesSearchArg} arg - The request parameters.
  * @returns {Promise.<FilesSearchResult, Error.<FilesSearchError>>}
  */
 routes.filesSearch = function (arg) {
   return this.request('files/search', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Searches for files and folders. Note: search_v2 along with search/continue_v2
+ * can only be used to retrieve a maximum of 10,000 matches. Recent changes may
+ * not immediately be reflected in search results due to a short delay in
+ * indexing. Duplicate results may be returned across pages. Some results may
+ * not be returned.
+ * @function Dropbox#filesSearchV2
+ * @arg {FilesSearchV2Arg} arg - The request parameters.
+ * @returns {Promise.<FilesSearchV2Result, Error.<FilesSearchError>>}
+ */
+routes.filesSearchV2 = function (arg) {
+  return this.request('files/search_v2', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Fetches the next page of search results returned from search_v2. Note:
+ * search_v2 along with search/continue_v2 can only be used to retrieve a
+ * maximum of 10,000 matches. Recent changes may not immediately be reflected in
+ * search results due to a short delay in indexing. Duplicate results may be
+ * returned across pages. Some results may not be returned.
+ * @function Dropbox#filesSearchContinueV2
+ * @arg {FilesSearchV2ContinueArg} arg - The request parameters.
+ * @returns {Promise.<FilesSearchV2Result, Error.<FilesSearchError>>}
+ */
+routes.filesSearchContinueV2 = function (arg) {
+  return this.request('files/search/continue_v2', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Unlock the files at the given paths. A locked file can only be unlocked by
+ * the lock holder or, if a business account, a team admin. A successful
+ * response indicates that the file has been unlocked. Returns a list of the
+ * unlocked file paths and their metadata after this operation.
+ * @function Dropbox#filesUnlockFileBatch
+ * @arg {FilesUnlockFileBatchArg} arg - The request parameters.
+ * @returns {Promise.<FilesLockFileBatchResult, Error.<FilesLockFileError>>}
+ */
+routes.filesUnlockFileBatch = function (arg) {
+  return this.request('files/unlock_file_batch', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1088,9 +1274,17 @@ routes.filesUploadSessionStart = function (arg) {
 };
 
 /**
- * Marks the given Paper doc as archived. Note: This action can be performed or
- * undone by anyone with edit permissions to the doc.
+ * Marks the given Paper doc as archived. This action can be performed or undone
+ * by anyone with edit permissions to the doc. Note that this endpoint will
+ * continue to work for content created by users on the older version of Paper.
+ * To check which version of Paper a user is on, use /users/features/get_values.
+ * If the paper_as_files feature is enabled, then the user is running the new
+ * version of Paper. This endpoint will be retired in September 2020. Refer to
+ * the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * more information.
  * @function Dropbox#paperDocsArchive
+ * @deprecated
  * @arg {PaperRefPaperDoc} arg - The request parameters.
  * @returns {Promise.<void, Error.<PaperDocLookupError>>}
  */
@@ -1099,8 +1293,16 @@ routes.paperDocsArchive = function (arg) {
 };
 
 /**
- * Creates a new Paper doc with the provided content.
+ * Creates a new Paper doc with the provided content. Note that this endpoint
+ * will continue to work for content created by users on the older version of
+ * Paper. To check which version of Paper a user is on, use
+ * /users/features/get_values. If the paper_as_files feature is enabled, then
+ * the user is running the new version of Paper. This endpoint will be retired
+ * in September 2020. Refer to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * more information.
  * @function Dropbox#paperDocsCreate
+ * @deprecated
  * @arg {PaperPaperDocCreateArgs} arg - The request parameters.
  * @returns {Promise.<PaperPaperDocCreateUpdateResult, Error.<PaperPaperDocCreateError>>}
  */
@@ -1109,8 +1311,15 @@ routes.paperDocsCreate = function (arg) {
 };
 
 /**
- * Exports and downloads Paper doc either as HTML or markdown.
+ * Exports and downloads Paper doc either as HTML or markdown. Note that this
+ * endpoint will continue to work for content created by users on the older
+ * version of Paper. To check which version of Paper a user is on, use
+ * /users/features/get_values. If the paper_as_files feature is enabled, then
+ * the user is running the new version of Paper. Refer to the Paper Migration
+ * Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+ * for migration information.
  * @function Dropbox#paperDocsDownload
+ * @deprecated
  * @arg {PaperPaperDocExport} arg - The request parameters.
  * @returns {Promise.<PaperPaperDocExportResult, Error.<PaperDocLookupError>>}
  */
@@ -1122,8 +1331,15 @@ routes.paperDocsDownload = function (arg) {
  * Lists the users who are explicitly invited to the Paper folder in which the
  * Paper doc is contained. For private folders all users (including owner)
  * shared on the folder are listed and for team folders all non-team users
- * shared on the folder are returned.
+ * shared on the folder are returned. Note that this endpoint will continue to
+ * work for content created by users on the older version of Paper. To check
+ * which version of Paper a user is on, use /users/features/get_values. If the
+ * paper_as_files feature is enabled, then the user is running the new version
+ * of Paper. Refer to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * migration information.
  * @function Dropbox#paperDocsFolderUsersList
+ * @deprecated
  * @arg {PaperListUsersOnFolderArgs} arg - The request parameters.
  * @returns {Promise.<PaperListUsersOnFolderResponse, Error.<PaperDocLookupError>>}
  */
@@ -1133,8 +1349,15 @@ routes.paperDocsFolderUsersList = function (arg) {
 
 /**
  * Once a cursor has been retrieved from docs/folder_users/list, use this to
- * paginate through all users on the Paper folder.
+ * paginate through all users on the Paper folder. Note that this endpoint will
+ * continue to work for content created by users on the older version of Paper.
+ * To check which version of Paper a user is on, use /users/features/get_values.
+ * If the paper_as_files feature is enabled, then the user is running the new
+ * version of Paper. Refer to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * migration information.
  * @function Dropbox#paperDocsFolderUsersListContinue
+ * @deprecated
  * @arg {PaperListUsersOnFolderContinueArgs} arg - The request parameters.
  * @returns {Promise.<PaperListUsersOnFolderResponse, Error.<PaperListUsersCursorError>>}
  */
@@ -1147,9 +1370,16 @@ routes.paperDocsFolderUsersListContinue = function (arg) {
  * folder sharing policy; permissions for subfolders are set by the top-level
  * folder.   - full 'filepath', i.e. the list of folders (both folderId and
  * folderName) from     the root folder to the folder directly containing the
- * Paper doc.  Note: If the Paper doc is not in any folder (aka unfiled) the
- * response will be empty.
+ * Paper doc.  If the Paper doc is not in any folder (aka unfiled) the response
+ * will be empty. Note that this endpoint will continue to work for content
+ * created by users on the older version of Paper. To check which version of
+ * Paper a user is on, use /users/features/get_values. If the paper_as_files
+ * feature is enabled, then the user is running the new version of Paper. Refer
+ * to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * migration information.
  * @function Dropbox#paperDocsGetFolderInfo
+ * @deprecated
  * @arg {PaperRefPaperDoc} arg - The request parameters.
  * @returns {Promise.<PaperFoldersContainingPaperDoc, Error.<PaperDocLookupError>>}
  */
@@ -1160,8 +1390,15 @@ routes.paperDocsGetFolderInfo = function (arg) {
 /**
  * Return the list of all Paper docs according to the argument specifications.
  * To iterate over through the full pagination, pass the cursor to
- * docs/list/continue.
+ * docs/list/continue. Note that this endpoint will continue to work for content
+ * created by users on the older version of Paper. To check which version of
+ * Paper a user is on, use /users/features/get_values. If the paper_as_files
+ * feature is enabled, then the user is running the new version of Paper. Refer
+ * to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * migration information.
  * @function Dropbox#paperDocsList
+ * @deprecated
  * @arg {PaperListPaperDocsArgs} arg - The request parameters.
  * @returns {Promise.<PaperListPaperDocsResponse, Error.<void>>}
  */
@@ -1171,8 +1408,15 @@ routes.paperDocsList = function (arg) {
 
 /**
  * Once a cursor has been retrieved from docs/list, use this to paginate through
- * all Paper doc.
+ * all Paper doc. Note that this endpoint will continue to work for content
+ * created by users on the older version of Paper. To check which version of
+ * Paper a user is on, use /users/features/get_values. If the paper_as_files
+ * feature is enabled, then the user is running the new version of Paper. Refer
+ * to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * migration information.
  * @function Dropbox#paperDocsListContinue
+ * @deprecated
  * @arg {PaperListPaperDocsContinueArgs} arg - The request parameters.
  * @returns {Promise.<PaperListPaperDocsResponse, Error.<PaperListDocsCursorError>>}
  */
@@ -1182,9 +1426,15 @@ routes.paperDocsListContinue = function (arg) {
 
 /**
  * Permanently deletes the given Paper doc. This operation is final as the doc
- * cannot be recovered.  Note: This action can be performed only by the doc
- * owner.
+ * cannot be recovered. This action can be performed only by the doc owner. Note
+ * that this endpoint will continue to work for content created by users on the
+ * older version of Paper. To check which version of Paper a user is on, use
+ * /users/features/get_values. If the paper_as_files feature is enabled, then
+ * the user is running the new version of Paper. Refer to the Paper Migration
+ * Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+ * for migration information.
  * @function Dropbox#paperDocsPermanentlyDelete
+ * @deprecated
  * @arg {PaperRefPaperDoc} arg - The request parameters.
  * @returns {Promise.<void, Error.<PaperDocLookupError>>}
  */
@@ -1193,8 +1443,15 @@ routes.paperDocsPermanentlyDelete = function (arg) {
 };
 
 /**
- * Gets the default sharing policy for the given Paper doc.
+ * Gets the default sharing policy for the given Paper doc. Note that this
+ * endpoint will continue to work for content created by users on the older
+ * version of Paper. To check which version of Paper a user is on, use
+ * /users/features/get_values. If the paper_as_files feature is enabled, then
+ * the user is running the new version of Paper. Refer to the Paper Migration
+ * Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+ * for migration information.
  * @function Dropbox#paperDocsSharingPolicyGet
+ * @deprecated
  * @arg {PaperRefPaperDoc} arg - The request parameters.
  * @returns {Promise.<PaperSharingPolicy, Error.<PaperDocLookupError>>}
  */
@@ -1205,10 +1462,17 @@ routes.paperDocsSharingPolicyGet = function (arg) {
 /**
  * Sets the default sharing policy for the given Paper doc. The default
  * 'team_sharing_policy' can be changed only by teams, omit this field for
- * personal accounts.  Note: 'public_sharing_policy' cannot be set to the value
- * 'disabled' because this setting can be changed only via the team admin
- * console.
+ * personal accounts. The 'public_sharing_policy' policy can't be set to the
+ * value 'disabled' because this setting can be changed only via the team admin
+ * console. Note that this endpoint will continue to work for content created by
+ * users on the older version of Paper. To check which version of Paper a user
+ * is on, use /users/features/get_values. If the paper_as_files feature is
+ * enabled, then the user is running the new version of Paper. Refer to the
+ * Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * migration information.
  * @function Dropbox#paperDocsSharingPolicySet
+ * @deprecated
  * @arg {PaperPaperDocSharingPolicy} arg - The request parameters.
  * @returns {Promise.<void, Error.<PaperDocLookupError>>}
  */
@@ -1217,8 +1481,16 @@ routes.paperDocsSharingPolicySet = function (arg) {
 };
 
 /**
- * Updates an existing Paper doc with the provided content.
+ * Updates an existing Paper doc with the provided content. Note that this
+ * endpoint will continue to work for content created by users on the older
+ * version of Paper. To check which version of Paper a user is on, use
+ * /users/features/get_values. If the paper_as_files feature is enabled, then
+ * the user is running the new version of Paper. This endpoint will be retired
+ * in September 2020. Refer to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * more information.
  * @function Dropbox#paperDocsUpdate
+ * @deprecated
  * @arg {PaperPaperDocUpdateArgs} arg - The request parameters.
  * @returns {Promise.<PaperPaperDocCreateUpdateResult, Error.<PaperPaperDocUpdateError>>}
  */
@@ -1228,9 +1500,16 @@ routes.paperDocsUpdate = function (arg) {
 
 /**
  * Allows an owner or editor to add users to a Paper doc or change their
- * permissions using their email address or Dropbox account ID.  Note: The Doc
- * owner's permissions cannot be changed.
+ * permissions using their email address or Dropbox account ID. The doc owner's
+ * permissions cannot be changed. Note that this endpoint will continue to work
+ * for content created by users on the older version of Paper. To check which
+ * version of Paper a user is on, use /users/features/get_values. If the
+ * paper_as_files feature is enabled, then the user is running the new version
+ * of Paper. Refer to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * migration information.
  * @function Dropbox#paperDocsUsersAdd
+ * @deprecated
  * @arg {PaperAddPaperDocUser} arg - The request parameters.
  * @returns {Promise.<Array.<PaperAddPaperDocUserMemberResult>, Error.<PaperDocLookupError>>}
  */
@@ -1242,8 +1521,15 @@ routes.paperDocsUsersAdd = function (arg) {
  * Lists all users who visited the Paper doc or users with explicit access. This
  * call excludes users who have been removed. The list is sorted by the date of
  * the visit or the share date. The list will include both users, the explicitly
- * shared ones as well as those who came in using the Paper url link.
+ * shared ones as well as those who came in using the Paper url link. Note that
+ * this endpoint will continue to work for content created by users on the older
+ * version of Paper. To check which version of Paper a user is on, use
+ * /users/features/get_values. If the paper_as_files feature is enabled, then
+ * the user is running the new version of Paper. Refer to the Paper Migration
+ * Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+ * for migration information.
  * @function Dropbox#paperDocsUsersList
+ * @deprecated
  * @arg {PaperListUsersOnPaperDocArgs} arg - The request parameters.
  * @returns {Promise.<PaperListUsersOnPaperDocResponse, Error.<PaperDocLookupError>>}
  */
@@ -1253,8 +1539,15 @@ routes.paperDocsUsersList = function (arg) {
 
 /**
  * Once a cursor has been retrieved from docs/users/list, use this to paginate
- * through all users on the Paper doc.
+ * through all users on the Paper doc. Note that this endpoint will continue to
+ * work for content created by users on the older version of Paper. To check
+ * which version of Paper a user is on, use /users/features/get_values. If the
+ * paper_as_files feature is enabled, then the user is running the new version
+ * of Paper. Refer to the Paper Migration Guide
+ * https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+ * migration information.
  * @function Dropbox#paperDocsUsersListContinue
+ * @deprecated
  * @arg {PaperListUsersOnPaperDocContinueArgs} arg - The request parameters.
  * @returns {Promise.<PaperListUsersOnPaperDocResponse, Error.<PaperListUsersCursorError>>}
  */
@@ -1264,13 +1557,37 @@ routes.paperDocsUsersListContinue = function (arg) {
 
 /**
  * Allows an owner or editor to remove users from a Paper doc using their email
- * address or Dropbox account ID.  Note: Doc owner cannot be removed.
+ * address or Dropbox account ID. The doc owner cannot be removed. Note that
+ * this endpoint will continue to work for content created by users on the older
+ * version of Paper. To check which version of Paper a user is on, use
+ * /users/features/get_values. If the paper_as_files feature is enabled, then
+ * the user is running the new version of Paper. Refer to the Paper Migration
+ * Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+ * for migration information.
  * @function Dropbox#paperDocsUsersRemove
+ * @deprecated
  * @arg {PaperRemovePaperDocUser} arg - The request parameters.
  * @returns {Promise.<void, Error.<PaperDocLookupError>>}
  */
 routes.paperDocsUsersRemove = function (arg) {
   return this.request('paper/docs/users/remove', arg, 'user', 'api', 'rpc');
+};
+
+/**
+ * Create a new Paper folder with the provided info. Note that this endpoint
+ * will continue to work for content created by users on the older version of
+ * Paper. To check which version of Paper a user is on, use
+ * /users/features/get_values. If the paper_as_files feature is enabled, then
+ * the user is running the new version of Paper. Refer to the Paper Migration
+ * Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+ * for migration information.
+ * @function Dropbox#paperFoldersCreate
+ * @deprecated
+ * @arg {PaperPaperFolderCreateArg} arg - The request parameters.
+ * @returns {Promise.<PaperPaperFolderCreateResult, Error.<PaperPaperFolderCreateError>>}
+ */
+routes.paperFoldersCreate = function (arg) {
+  return this.request('paper/folders/create', arg, 'user', 'api', 'rpc');
 };
 
 /**
@@ -1774,11 +2091,14 @@ routes.sharingUpdateFolderPolicy = function (arg) {
 };
 
 /**
- * Retrieves team events. Events have a lifespan of two years. Events older than
- * two years will not be returned. Many attributes note 'may be missing due to
- * historical data gap'. Note that the file_operations category and & analogous
- * paper events are not available on all Dropbox Business plans
- * /business/plans-comparison. Use features/get_values
+ * Retrieves team events. If the result's GetTeamEventsResult.has_more field is
+ * true, call get_events/continue with the returned cursor to retrieve more
+ * entries. If end_time is not specified in your request, you may use the
+ * returned cursor to poll get_events/continue for new events. Many attributes
+ * note 'may be missing due to historical data gap'. Note that the
+ * file_operations category and & analogous paper events are not available on
+ * all Dropbox Business plans /business/plans-comparison. Use
+ * features/get_values
  * /developers/documentation/http/teams#team-features-get_values to check for
  * this feature. Permission : Team Auditing.
  * @function Dropbox#teamLogGetEvents
@@ -1798,6 +2118,16 @@ routes.teamLogGetEvents = function (arg) {
  */
 routes.teamLogGetEventsContinue = function (arg) {
   return this.request('team_log/get_events/continue', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Get a list of feature values that may be configured for the current account.
+ * @function Dropbox#usersFeaturesGetValues
+ * @arg {UsersUserFeaturesGetValuesBatchArg} arg - The request parameters.
+ * @returns {Promise.<UsersUserFeaturesGetValuesBatchResult, Error.<UsersUserFeaturesGetValuesBatchError>>}
+ */
+routes.usersFeaturesGetValues = function (arg) {
+  return this.request('users/features/get_values', arg, 'user', 'api', 'rpc');
 };
 
 /**
