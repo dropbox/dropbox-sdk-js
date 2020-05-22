@@ -9,6 +9,15 @@ declare module DropboxTypes {
 
 
     /**
+     * Sets a user's profile photo.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<account.SetProfilePhotoError>.
+     * @param arg The request parameters.
+     */
+    public accountSetProfilePhoto(arg: account.SetProfilePhotoArg): Promise<account.SetProfilePhotoResult>;
+
+    /**
      * Creates an OAuth 2.0 access token from the supplied OAuth 1.0 access
      * token.
      *
@@ -26,6 +35,101 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public authTokenRevoke(arg: void): Promise<void>;
+
+    /**
+     * This endpoint performs App Authentication, validating the supplied app
+     * key and secret, and returns the supplied string, to allow you to test
+     * your code and connection to the Dropbox API. It has no other effect. If
+     * you receive an HTTP 200 response with the supplied query, it indicates at
+     * least part of the Dropbox API infrastructure is working and that the app
+     * key and secret valid.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public checkApp(arg: check.EchoArg): Promise<check.EchoResult>;
+
+    /**
+     * This endpoint performs User Authentication, validating the supplied
+     * access token, and returns the supplied string, to allow you to test your
+     * code and connection to the Dropbox API. It has no other effect. If you
+     * receive an HTTP 200 response with the supplied query, it indicates at
+     * least part of the Dropbox API infrastructure is working and that the
+     * access token is valid.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public checkUser(arg: check.EchoArg): Promise<check.EchoResult>;
+
+    /**
+     * Fetch the binary content of the requested document. This route requires
+     * Cloud Docs auth. Please make a request to cloud_docs/authorize and supply
+     * that token in the Authorization header.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<cloud_docs.CloudDocsAccessError>.
+     * @param arg The request parameters.
+     */
+    public cloudDocsGetContent(arg: cloud_docs.GetContentArg): Promise<void>;
+
+    /**
+     * Fetches metadata associated with a Cloud Doc and user. This route
+     * requires Cloud Docs auth. Please make a request to cloud_docs/authorize
+     * and supply that token in the Authorization header.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<cloud_docs.GetMetadataError>.
+     * @param arg The request parameters.
+     */
+    public cloudDocsGetMetadata(arg: cloud_docs.GetMetadataArg): Promise<cloud_docs.GetMetadataResult>;
+
+    /**
+     * Lock a Cloud Doc. This route requires Cloud Docs auth. Please make a
+     * request to cloud_docs/authorize and supply that token in the
+     * Authorization header.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<cloud_docs.LockingError>.
+     * @param arg The request parameters.
+     */
+    public cloudDocsLock(arg: cloud_docs.LockArg): Promise<cloud_docs.LockResult>;
+
+    /**
+     * Update the title of a Cloud Doc. This route requires Cloud Docs auth.
+     * Please make a request to cloud_docs/authorize and supply that token in
+     * the Authorization header.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<cloud_docs.RenameError>.
+     * @param arg The request parameters.
+     */
+    public cloudDocsRename(arg: cloud_docs.RenameArg): Promise<cloud_docs.RenameResult>;
+
+    /**
+     * Unlock a Cloud Doc. This route requires Cloud Docs auth. Please make a
+     * request to cloud_docs/authorize and supply that token in the
+     * Authorization header.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<cloud_docs.LockingError>.
+     * @param arg The request parameters.
+     */
+    public cloudDocsUnlock(arg: cloud_docs.UnlockArg): Promise<cloud_docs.UnlockResult>;
+
+    /**
+     * Update the contents of a Cloud Doc. This should be called for files with
+     * a max size of 150MB. This route requires Cloud Docs auth. Please make a
+     * request to cloud_docs/authorize and supply that token in the
+     * Authorization header.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<cloud_docs.UpdateContentError>.
+     * @param arg The request parameters.
+     */
+    public cloudDocsUpdateContent(arg: cloud_docs.UpdateContentArg): Promise<cloud_docs.UpdateContentResult>;
 
     /**
      * Removes all manually added contacts. You'll still keep contacts who are
@@ -555,6 +659,15 @@ declare module DropboxTypes {
     public filesExport(arg: files.ExportArg): Promise<files.ExportResult>;
 
     /**
+     * Return the lock metadata for the given list of paths.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.LockFileError>.
+     * @param arg The request parameters.
+     */
+    public filesGetFileLockBatch(arg: files.LockFileBatchArg): Promise<files.LockFileBatchResult>;
+
+    /**
      * Returns the metadata for a file or folder. Note: Metadata for the root
      * folder is unsupported.
      *
@@ -638,6 +751,15 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public filesGetThumbnail(arg: files.ThumbnailArg): Promise<files.FileMetadata>;
+
+    /**
+     * Get a thumbnail for a file.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.ThumbnailV2Error>.
+     * @param arg The request parameters.
+     */
+    public filesGetThumbnailV2(arg: files.ThumbnailV2Arg): Promise<files.PreviewResult>;
 
     /**
      * Get thumbnails for a list of images. We allow up to 25 thumbnails in a
@@ -737,8 +859,21 @@ declare module DropboxTypes {
     public filesListRevisions(arg: files.ListRevisionsArg): Promise<files.ListRevisionsResult>;
 
     /**
+     * Lock the files at the given paths. A locked file will be writable only by
+     * the lock holder. A successful response indicates that the file has been
+     * locked. Returns a list of the locked file paths and their metadata after
+     * this operation.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.LockFileError>.
+     * @param arg The request parameters.
+     */
+    public filesLockFileBatch(arg: files.LockFileBatchArg): Promise<files.LockFileBatchResult>;
+
+    /**
      * Move a file or folder to a different location in the user's Dropbox. If
-     * the source path is a folder all its contents will be moved.
+     * the source path is a folder all its contents will be moved. Note that we
+     * do not currently support case-only renaming.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<files.RelocationError>.
@@ -759,10 +894,11 @@ declare module DropboxTypes {
 
     /**
      * Move multiple files or folders to different locations at once in the
-     * user's Dropbox. This route will replace moveBatch(). The main difference
-     * is this route will return status for each entry, while moveBatch() raises
-     * failure if any entry fails. This route will either finish synchronously,
-     * or return a job ID and do the async move job in background. Please use
+     * user's Dropbox. Note that we do not currently support case-only renaming.
+     * This route will replace moveBatch(). The main difference is this route
+     * will return status for each entry, while moveBatch() raises failure if
+     * any entry fails. This route will either finish synchronously, or return a
+     * job ID and do the async move job in background. Please use
      * moveBatchCheckV2() to check the job status.
      *
      * When an error occurs, the route rejects the promise with type
@@ -773,13 +909,13 @@ declare module DropboxTypes {
 
     /**
      * Move multiple files or folders to different locations at once in the
-     * user's Dropbox. This route is 'all or nothing', which means if one entry
-     * fails, the whole transaction will abort. This route will return job ID
-     * immediately and do the async moving job in background. Please use
-     * moveBatchCheck() to check the job status.
+     * user's Dropbox. This route will return job ID immediately and do the
+     * async moving job in background. Please use moveBatchCheck() to check the
+     * job status.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesMoveBatch(arg: files.RelocationBatchArg): Promise<files.RelocationBatchLaunch>;
@@ -800,6 +936,7 @@ declare module DropboxTypes {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<async.PollError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesMoveBatchCheck(arg: async.PollArg): Promise<files.RelocationBatchJobStatus>;
@@ -900,9 +1037,48 @@ declare module DropboxTypes {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<files.SearchError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesSearch(arg: files.SearchArg): Promise<files.SearchResult>;
+
+    /**
+     * Searches for files and folders. Note: searchV2() along with
+     * searchContinueV2() can only be used to retrieve a maximum of 10,000
+     * matches. Recent changes may not immediately be reflected in search
+     * results due to a short delay in indexing. Duplicate results may be
+     * returned across pages. Some results may not be returned.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.SearchError>.
+     * @param arg The request parameters.
+     */
+    public filesSearchV2(arg: files.SearchV2Arg): Promise<files.SearchV2Result>;
+
+    /**
+     * Fetches the next page of search results returned from searchV2(). Note:
+     * searchV2() along with searchContinueV2() can only be used to retrieve a
+     * maximum of 10,000 matches. Recent changes may not immediately be
+     * reflected in search results due to a short delay in indexing. Duplicate
+     * results may be returned across pages. Some results may not be returned.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.SearchError>.
+     * @param arg The request parameters.
+     */
+    public filesSearchContinueV2(arg: files.SearchV2ContinueArg): Promise<files.SearchV2Result>;
+
+    /**
+     * Unlock the files at the given paths. A locked file can only be unlocked
+     * by the lock holder or, if a business account, a team admin. A successful
+     * response indicates that the file has been unlocked. Returns a list of the
+     * unlocked file paths and their metadata after this operation.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.LockFileError>.
+     * @param arg The request parameters.
+     */
+    public filesUnlockFileBatch(arg: files.UnlockFileBatchArg): Promise<files.LockFileBatchResult>;
 
     /**
      * Create a new file with the contents provided in the request. Do not use
@@ -1025,29 +1201,53 @@ declare module DropboxTypes {
     public filesUploadSessionStart(arg: files.UploadSessionStartArg): Promise<files.UploadSessionStartResult>;
 
     /**
-     * Marks the given Paper doc as archived. Note: This action can be performed
-     * or undone by anyone with edit permissions to the doc.
+     * Marks the given Paper doc as archived. This action can be performed or
+     * undone by anyone with edit permissions to the doc. Note that this
+     * endpoint will continue to work for content created by users on the older
+     * version of Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. This endpoint will be
+     * retired in September 2020. Refer to the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for more information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsArchive(arg: paper.RefPaperDoc): Promise<void>;
 
     /**
-     * Creates a new Paper doc with the provided content.
+     * Creates a new Paper doc with the provided content. Note that this
+     * endpoint will continue to work for content created by users on the older
+     * version of Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. This endpoint will be
+     * retired in September 2020. Refer to the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for more information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.PaperDocCreateError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsCreate(arg: paper.PaperDocCreateArgs): Promise<paper.PaperDocCreateUpdateResult>;
 
     /**
-     * Exports and downloads Paper doc either as HTML or markdown.
+     * Exports and downloads Paper doc either as HTML or markdown. Note that
+     * this endpoint will continue to work for content created by users on the
+     * older version of Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. Refer to the [Paper
+     * Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsDownload(arg: paper.PaperDocExport): Promise<paper.PaperDocExportResult>;
@@ -1056,20 +1256,36 @@ declare module DropboxTypes {
      * Lists the users who are explicitly invited to the Paper folder in which
      * the Paper doc is contained. For private folders all users (including
      * owner) shared on the folder are listed and for team folders all non-team
-     * users shared on the folder are returned.
+     * users shared on the folder are returned. Note that this endpoint will
+     * continue to work for content created by users on the older version of
+     * Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. Refer to the [Paper
+     * Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsFolderUsersList(arg: paper.ListUsersOnFolderArgs): Promise<paper.ListUsersOnFolderResponse>;
 
     /**
      * Once a cursor has been retrieved from docsFolderUsersList(), use this to
-     * paginate through all users on the Paper folder.
+     * paginate through all users on the Paper folder. Note that this endpoint
+     * will continue to work for content created by users on the older version
+     * of Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. Refer to the [Paper
+     * Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.ListUsersCursorError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsFolderUsersListContinue(arg: paper.ListUsersOnFolderContinueArgs): Promise<paper.ListUsersOnFolderResponse>;
@@ -1079,11 +1295,19 @@ declare module DropboxTypes {
      * folder sharing policy; permissions for subfolders are set by the
      * top-level folder.   - full 'filepath', i.e. the list of folders (both
      * folderId and folderName) from     the root folder to the folder directly
-     * containing the Paper doc.  Note: If the Paper doc is not in any folder
-     * (aka unfiled) the response will be empty.
+     * containing the Paper doc.  If the Paper doc is not in any folder (aka
+     * unfiled) the response will be empty. Note that this endpoint will
+     * continue to work for content created by users on the older version of
+     * Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. Refer to the [Paper
+     * Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsGetFolderInfo(arg: paper.RefPaperDoc): Promise<paper.FoldersContainingPaperDoc>;
@@ -1091,40 +1315,69 @@ declare module DropboxTypes {
     /**
      * Return the list of all Paper docs according to the argument
      * specifications. To iterate over through the full pagination, pass the
-     * cursor to docsListContinue().
+     * cursor to docsListContinue(). Note that this endpoint will continue to
+     * work for content created by users on the older version of Paper. To check
+     * which version of Paper a user is on, use /users/features/get_values. If
+     * the paper_as_files feature is enabled, then the user is running the new
+     * version of Paper. Refer to the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsList(arg: paper.ListPaperDocsArgs): Promise<paper.ListPaperDocsResponse>;
 
     /**
      * Once a cursor has been retrieved from docsList(), use this to paginate
-     * through all Paper doc.
+     * through all Paper doc. Note that this endpoint will continue to work for
+     * content created by users on the older version of Paper. To check which
+     * version of Paper a user is on, use /users/features/get_values. If the
+     * paper_as_files feature is enabled, then the user is running the new
+     * version of Paper. Refer to the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.ListDocsCursorError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsListContinue(arg: paper.ListPaperDocsContinueArgs): Promise<paper.ListPaperDocsResponse>;
 
     /**
      * Permanently deletes the given Paper doc. This operation is final as the
-     * doc cannot be recovered.  Note: This action can be performed only by the
-     * doc owner.
+     * doc cannot be recovered. This action can be performed only by the doc
+     * owner. Note that this endpoint will continue to work for content created
+     * by users on the older version of Paper. To check which version of Paper a
+     * user is on, use /users/features/get_values. If the paper_as_files feature
+     * is enabled, then the user is running the new version of Paper. Refer to
+     * the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsPermanentlyDelete(arg: paper.RefPaperDoc): Promise<void>;
 
     /**
-     * Gets the default sharing policy for the given Paper doc.
+     * Gets the default sharing policy for the given Paper doc. Note that this
+     * endpoint will continue to work for content created by users on the older
+     * version of Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. Refer to the [Paper
+     * Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsSharingPolicyGet(arg: paper.RefPaperDoc): Promise<paper.SharingPolicy>;
@@ -1132,32 +1385,55 @@ declare module DropboxTypes {
     /**
      * Sets the default sharing policy for the given Paper doc. The default
      * 'team_sharing_policy' can be changed only by teams, omit this field for
-     * personal accounts.  Note: 'public_sharing_policy' cannot be set to the
+     * personal accounts. The 'public_sharing_policy' policy can't be set to the
      * value 'disabled' because this setting can be changed only via the team
-     * admin console.
+     * admin console. Note that this endpoint will continue to work for content
+     * created by users on the older version of Paper. To check which version of
+     * Paper a user is on, use /users/features/get_values. If the paper_as_files
+     * feature is enabled, then the user is running the new version of Paper.
+     * Refer to the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsSharingPolicySet(arg: paper.PaperDocSharingPolicy): Promise<void>;
 
     /**
-     * Updates an existing Paper doc with the provided content.
+     * Updates an existing Paper doc with the provided content. Note that this
+     * endpoint will continue to work for content created by users on the older
+     * version of Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. This endpoint will be
+     * retired in September 2020. Refer to the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for more information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.PaperDocUpdateError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsUpdate(arg: paper.PaperDocUpdateArgs): Promise<paper.PaperDocCreateUpdateResult>;
 
     /**
      * Allows an owner or editor to add users to a Paper doc or change their
-     * permissions using their email address or Dropbox account ID.  Note: The
-     * Doc owner's permissions cannot be changed.
+     * permissions using their email address or Dropbox account ID. The doc
+     * owner's permissions cannot be changed. Note that this endpoint will
+     * continue to work for content created by users on the older version of
+     * Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. Refer to the [Paper
+     * Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsUsersAdd(arg: paper.AddPaperDocUser): Promise<Array<paper.AddPaperDocUserMemberResult>>;
@@ -1167,33 +1443,73 @@ declare module DropboxTypes {
      * This call excludes users who have been removed. The list is sorted by the
      * date of the visit or the share date. The list will include both users,
      * the explicitly shared ones as well as those who came in using the Paper
-     * url link.
+     * url link. Note that this endpoint will continue to work for content
+     * created by users on the older version of Paper. To check which version of
+     * Paper a user is on, use /users/features/get_values. If the paper_as_files
+     * feature is enabled, then the user is running the new version of Paper.
+     * Refer to the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsUsersList(arg: paper.ListUsersOnPaperDocArgs): Promise<paper.ListUsersOnPaperDocResponse>;
 
     /**
      * Once a cursor has been retrieved from docsUsersList(), use this to
-     * paginate through all users on the Paper doc.
+     * paginate through all users on the Paper doc. Note that this endpoint will
+     * continue to work for content created by users on the older version of
+     * Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. Refer to the [Paper
+     * Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.ListUsersCursorError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsUsersListContinue(arg: paper.ListUsersOnPaperDocContinueArgs): Promise<paper.ListUsersOnPaperDocResponse>;
 
     /**
      * Allows an owner or editor to remove users from a Paper doc using their
-     * email address or Dropbox account ID.  Note: Doc owner cannot be removed.
+     * email address or Dropbox account ID. The doc owner cannot be removed.
+     * Note that this endpoint will continue to work for content created by
+     * users on the older version of Paper. To check which version of Paper a
+     * user is on, use /users/features/get_values. If the paper_as_files feature
+     * is enabled, then the user is running the new version of Paper. Refer to
+     * the [Paper Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<paper.DocLookupError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public paperDocsUsersRemove(arg: paper.RemovePaperDocUser): Promise<void>;
+
+    /**
+     * Create a new Paper folder with the provided info. Note that this endpoint
+     * will continue to work for content created by users on the older version
+     * of Paper. To check which version of Paper a user is on, use
+     * /users/features/get_values. If the paper_as_files feature is enabled,
+     * then the user is running the new version of Paper. Refer to the [Paper
+     * Migration Guide]{@link
+     * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
+     * for migration information.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<paper.PaperFolderCreateError>.
+     * @deprecated
+     * @param arg The request parameters.
+     */
+    public paperFoldersCreate(arg: paper.PaperFolderCreateArg): Promise<paper.PaperFolderCreateResult>;
 
     /**
      * Adds specified members to a file.
@@ -1661,12 +1977,14 @@ declare module DropboxTypes {
     public sharingUpdateFolderPolicy(arg: sharing.UpdateFolderPolicyArg): Promise<sharing.SharedFolderMetadata>;
 
     /**
-     * Retrieves team events. Events have a lifespan of two years. Events older
-     * than two years will not be returned. Many attributes note 'may be missing
-     * due to historical data gap'. Note that the file_operations category and &
-     * analogous paper events are not available on all Dropbox Business
-     * [plans]{@link /business/plans-comparison}. Use
-     * [features/get_values]{@link
+     * Retrieves team events. If the result's GetTeamEventsResult.has_more field
+     * is true, call getEventsContinue() with the returned cursor to retrieve
+     * more entries. If end_time is not specified in your request, you may use
+     * the returned cursor to poll getEventsContinue() for new events. Many
+     * attributes note 'may be missing due to historical data gap'. Note that
+     * the file_operations category and & analogous paper events are not
+     * available on all Dropbox Business [plans]{@link
+     * /business/plans-comparison}. Use [features/get_values]{@link
      * /developers/documentation/http/teams#team-features-get_values} to check
      * for this feature. Permission : Team Auditing.
      *
@@ -1685,6 +2003,16 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public teamLogGetEventsContinue(arg: team_log.GetTeamEventsContinueArg): Promise<team_log.GetTeamEventsResult>;
+
+    /**
+     * Get a list of feature values that may be configured for the current
+     * account.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<users.UserFeaturesGetValuesBatchError>.
+     * @param arg The request parameters.
+     */
+    public usersFeaturesGetValues(arg: users.UserFeaturesGetValuesBatchArg): Promise<users.UserFeaturesGetValuesBatchResult>;
 
     /**
      * Get information about a user's account.

@@ -212,6 +212,65 @@ declare module DropboxTypes {
     public teamGroupsUpdate(arg: team.GroupUpdateArgs): Promise<team.GroupFullInfo>;
 
     /**
+     * Creates new legal hold policy. Permission : Team member file access.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.LegalHoldsPolicyCreateError>.
+     * @param arg The request parameters.
+     */
+    public teamLegalHoldsCreatePolicy(arg: team.LegalHoldsPolicyCreateArg): Promise<team.LegalHoldsPolicyCreateResult>;
+
+    /**
+     * Gets a legal hold by Id. Permission : Team member file access.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.LegalHoldsGetPolicyError>.
+     * @param arg The request parameters.
+     */
+    public teamLegalHoldsGetPolicy(arg: team.LegalHoldsGetPolicyArg): Promise<team.LegalHoldsGetPolicyResult>;
+
+    /**
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.LegalHoldsListHeldRevisionsError>.
+     * @param arg The request parameters.
+     */
+    public teamLegalHoldsListHeldRevisions(arg: team.LegalHoldsListHeldRevisionsArg): Promise<team.LegalHoldsListHeldRevisionResult>;
+
+    /**
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.LegalHoldsListHeldRevisionsError>.
+     * @param arg The request parameters.
+     */
+    public teamLegalHoldsListHeldRevisionsContinue(arg: team.LegalHoldsListHeldRevisionsContinueArg): Promise<team.LegalHoldsListHeldRevisionResult>;
+
+    /**
+     * Lists legal holds on a team. Permission : Team member file access.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.LegalHoldsListPoliciesError>.
+     * @param arg The request parameters.
+     */
+    public teamLegalHoldsListPolicies(arg: team.LegalHoldsListPoliciesArg): Promise<team.LegalHoldsListPoliciesResult>;
+
+    /**
+     * Releases a legal hold by Id. Permission : Team member file access.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.LegalHoldsPolicyReleaseError>.
+     * @param arg The request parameters.
+     */
+    public teamLegalHoldsReleasePolicy(arg: team.LegalHoldsPolicyReleaseArg): Promise<void>;
+
+    /**
+     * Updates a legal hold. Permission : Team member file access.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.LegalHoldsPolicyUpdateError>.
+     * @param arg The request parameters.
+     */
+    public teamLegalHoldsUpdatePolicy(arg: team.LegalHoldsPolicyUpdateArg): Promise<team.LegalHoldsPolicyUpdateResult>;
+
+    /**
      * List all linked applications of the team member. Note, this endpoint does
      * not list any team-linked applications.
      *
@@ -356,6 +415,16 @@ declare module DropboxTypes {
     public teamMembersAddJobStatusGet(arg: async.PollArg): Promise<team.MembersAddJobStatus>;
 
     /**
+     * Deletes a team member's profile photo. Permission : Team member
+     * management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersDeleteProfilePhotoError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersDeleteProfilePhoto(arg: team.MembersDeleteProfilePhotoArg): Promise<team.TeamMemberInfo>;
+
+    /**
      * Returns information about multiple team members. Permission : Team
      * information This endpoint will return MembersGetInfoItem.id_not_found,
      * for IDs (or emails) that cannot be matched to a valid team member.
@@ -429,7 +498,7 @@ declare module DropboxTypes {
      * membersAdd() while a user is still recoverable on your team will return
      * with MemberAddResult.user_already_on_team. Accounts can have their files
      * transferred via the admin console for a limited time, based on the
-     * version history length associated with the team (120 days for most
+     * version history length associated with the team (180 days for most
      * teams). This endpoint may initiate an asynchronous job. To obtain the
      * final result of the job, the client should periodically poll
      * membersRemoveJobStatusGet().
@@ -450,6 +519,39 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public teamMembersRemoveJobStatusGet(arg: async.PollArg): Promise<async.PollEmptyResult>;
+
+    /**
+     * Add secondary emails to users. Permission : Team member management.
+     * Emails that are on verified domains will be verified automatically. For
+     * each email address not on a verified domain a verification email will be
+     * sent.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.AddSecondaryEmailsError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersSecondaryEmailsAdd(arg: team.AddSecondaryEmailsArg): Promise<team.AddSecondaryEmailsResult>;
+
+    /**
+     * Delete secondary emails from users Permission : Team member management.
+     * Users will be notified of deletions of verified secondary emails at both
+     * the secondary email and their primary email.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public teamMembersSecondaryEmailsDelete(arg: team.DeleteSecondaryEmailsArg): Promise<team.DeleteSecondaryEmailsResult>;
+
+    /**
+     * Resend secondary email verification emails. Permission : Team member
+     * management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
+    public teamMembersSecondaryEmailsResendVerificationEmails(arg: team.ResendVerificationEmailArg): Promise<team.ResendVerificationEmailResult>;
 
     /**
      * Sends welcome email to pending team member. Permission : Team member
@@ -480,6 +582,16 @@ declare module DropboxTypes {
      * @param arg The request parameters.
      */
     public teamMembersSetProfile(arg: team.MembersSetProfileArg): Promise<team.TeamMemberInfo>;
+
+    /**
+     * Updates a team member's profile photo. Permission : Team member
+     * management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersSetProfilePhotoError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersSetProfilePhoto(arg: team.MembersSetProfilePhotoArg): Promise<team.TeamMemberInfo>;
 
     /**
      * Suspend a member from a team. Permission : Team member management Exactly

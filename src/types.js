@@ -22,6 +22,30 @@
   */
 
 /**
+ * @typedef {Object} AccountPhotoSourceArg
+ * @property {string} [base64_data] - Available if .tag is base64_data. Image
+ * data in base64-encoded bytes.
+ * @property {('base64_data'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} AccountSetProfilePhotoArg
+ * @property {AccountPhotoSourceArg} photo - Image to set as the user's new
+ * profile photo.
+ */
+
+/**
+ * @typedef {Object} AccountSetProfilePhotoError
+ * @property {('file_type_error'|'file_size_error'|'dimension_error'|'thumbnail_error'|'transient_error'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} AccountSetProfilePhotoResult
+ * @property {string} profile_photo_url - URL for the photo representing the
+ * user, if one is set.
+ */
+
+/**
  * Result returned by methods that may either launch an asynchronous job or
  * complete synchronously. Upon synchronous completion of the job, no additional
  * information is returned.
@@ -91,7 +115,7 @@
  * @property {AuthTokenScopeError} [missing_scope] - Available if .tag is
  * missing_scope. The access token does not have the required scope to access
  * the route.
- * @property {('invalid_access_token'|'invalid_select_user'|'invalid_select_admin'|'user_suspended'|'expired_access_token'|'missing_scope'|'other')} .tag - Tag identifying the union variant.
+ * @property {('invalid_access_token'|'invalid_select_user'|'invalid_select_admin'|'user_suspended'|'expired_access_token'|'missing_scope'|'route_access_denied'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -139,6 +163,199 @@
 /**
  * @typedef {Object} AuthTokenScopeError
  * @property {string} required_scope - The required scope to access the route.
+ */
+
+/**
+ * EchoArg contains the arguments to be sent to the Dropbox servers.
+ * @typedef {Object} CheckEchoArg
+ * @property {string} query - The string that you'd like to be echoed back to
+ * you.
+ */
+
+/**
+ * EchoResult contains the result returned from the Dropbox servers.
+ * @typedef {Object} CheckEchoResult
+ * @property {string} result - If everything worked correctly, this would be the
+ * same as query.
+ */
+
+/**
+ * @typedef {Object} CloudDocsCloudDocsAccessError
+ * @property {('invalid_doc_id'|'not_found'|'permission_denied'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} CloudDocsContent
+ * @property {CloudDocsContentPurpose} purpose
+ * @property {string} content_key - The key returned from an
+ * upload_additional_content response.
+ */
+
+/**
+ * @typedef {Object} CloudDocsContentPurpose
+ * @property {('search'|'preview'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} CloudDocsGenericErrorTag
+ * @property {('invalid_argument'|'unauthenticated'|'permission_denied'|'doc_not_found'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} CloudDocsGetContentArg
+ * @property {string} file_id
+ */
+
+/**
+ * @typedef {Object} CloudDocsGetMetadataArg
+ * @property {string} file_id - API ID ("id:...") associated with the Cloud Doc.
+ */
+
+/**
+ * @typedef {Object} CloudDocsGetMetadataError
+ * @property {CloudDocsgetMetadataErrorTagUnion} [get_metadata_error_tag]
+ */
+
+/**
+ * @typedef {Object} CloudDocsGetMetadataResult
+ * @property {string} file_id
+ * @property {string} title - Title of the Cloud Doc without extension.
+ * @property {string} mime_type - MIME type of the Cloud Doc.
+ * @property {string} version - Opaque string representing the version of the
+ * document stored in Dropbox (only set for Dropbox-stored Documents).
+ * @property {string} provider_version - Application specific string
+ * representing the revision of a document (only set for App-stored Documents).
+ * @property {CloudDocsUserInfo} [user] - User identified by the auth token.
+ * @property {boolean} is_deleted - true if the document is deleted or purged.
+ * @property {CloudDocsUserPermissions} [user_permissions] - Actions that the
+ * user identified by the auth token can performn. This message will not be
+ * populated for deleted documents.
+ */
+
+/**
+ * @typedef {Object} CloudDocsLockArg
+ * @property {string} file_id - The API ID ("id:...") associated with the Cloud
+ * Doc
+ */
+
+/**
+ * @typedef {Object} CloudDocsLockResult
+ * @property {string} file_id
+ * @property {number} expires_at - The timestamp after which the lock will
+ * expire, measured in seconds since 1970-01-01 00:00:00 UTC
+ */
+
+/**
+ * @typedef {Object} CloudDocsLockingError
+ * @property {CloudDocslockingErrorTagUnion} [locking_error_tag]
+ */
+
+/**
+ * @typedef {Object} CloudDocsLockingErrorTag
+ * @property {('conflict'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} CloudDocsRenameArg
+ * @property {string} file_id - The API ID ("id:...") associated with the Cloud
+ * Doc
+ * @property {string} title - The new title of the doc, excluding extension
+ */
+
+/**
+ * @typedef {Object} CloudDocsRenameError
+ * @property {CloudDocsrenameErrorTagUnion} [rename_error_tag]
+ */
+
+/**
+ * @typedef {Object} CloudDocsRenameErrorTag
+ * @property {('invalid_title'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} CloudDocsRenameResult
+ * @property {string} title - The updated title of the doc without extension,
+ * which could be different from the supplied title in the request because
+ * Dropbox may remove/replace charaters that are not supported in Dropbox
+ * Filesystem.
+ */
+
+/**
+ * @typedef {Object} CloudDocsUnlockArg
+ * @property {string} file_id - The API ID ("id:...") associated with the Cloud
+ * Doc
+ */
+
+/**
+ * Empty message for unlock
+ * @typedef {Object} CloudDocsUnlockResult
+ */
+
+/**
+ * @typedef {Object} CloudDocsUpdateContentArg
+ * @property {Object} contents - The file contents to be uploaded.
+ * @property {string} file_id
+ * @property {Array.<string>} actor_tokens - A list of auth_tokens, one for each
+ * editor who made changes to the document since the last call to
+ * update_content.
+ * @property {Array.<CloudDocsContent>} [additional_contents] - Currently, this
+ * will always be empty until we implement upload_additional_content.
+ */
+
+/**
+ * @typedef {Object} CloudDocsUpdateContentError
+ * @property {('invalid_doc_id'|'not_found'|'permission_denied'|'other'|'upload_size_too_large'|'conflict'|'unlocked')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} CloudDocsUpdateContentResult
+ * @property {string} version - Version of the document stored in Dropbox.
+ */
+
+/**
+ * @typedef {Object} CloudDocsUserInfo
+ * @property {string} id - ID associated with the user.
+ * @property {string} email - Email associated with the user.
+ */
+
+/**
+ * @typedef {Object} CloudDocsUserPermissions
+ * @property {boolean} can_edit - true if the user can edit the content of this
+ * document
+ * @property {boolean} can_rename - true if the user can edit the title of this
+ * document
+ * @property {boolean} can_comment - true if the user can comment on this
+ * document
+ * @property {boolean} can_download - true if the user can download the contents
+ * of this document. currently always true if the user has view access to the
+ * document.
+ */
+
+/**
+ * @typedef {Object} CloudDocsgetMetadataErrorTagUnion
+ * @property {CloudDocsGenericErrorTag} [generic_error] - Available if .tag is
+ * generic_error.
+ * @property {('generic_error'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} CloudDocslockingErrorTagUnion
+ * @property {CloudDocsLockingErrorTag} [locking_error] - Available if .tag is
+ * locking_error.
+ * @property {CloudDocsGenericErrorTag} [generic_error] - Available if .tag is
+ * generic_error.
+ * @property {('locking_error'|'generic_error'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} CloudDocsrenameErrorTagUnion
+ * @property {CloudDocsRenameErrorTag} [rename_error] - Available if .tag is
+ * rename_error.
+ * @property {CloudDocsGenericErrorTag} [generic_error] - Available if .tag is
+ * generic_error.
+ * @property {CloudDocsLockingErrorTag} [locking_error] - Available if .tag is
+ * locking_error.
+ * @property {('rename_error'|'generic_error'|'locking_error'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -222,7 +439,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilePropertiesAddPropertiesArg
  * @property {string} path - A unique identifier for the file or folder.
  * @property {Array.<FilePropertiesPropertyGroup>} property_groups - The
- * property groups which are to be added to a Dropbox file.
+ * property groups which are to be added to a Dropbox file. No two groups in the
+ * input should  refer to the same template.
  */
 
 /**
@@ -230,7 +448,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [template_not_found] - Available if .tag is
  * template_not_found. Template does not exist for the given identifier.
  * @property {FilePropertiesLookupError} [path] - Available if .tag is path.
- * @property {('template_not_found'|'restricted_content'|'other'|'path'|'unsupported_folder'|'property_field_too_large'|'does_not_fit_template'|'property_group_already_exists')} .tag - Tag identifying the union variant.
+ * @property {('template_not_found'|'restricted_content'|'other'|'path'|'unsupported_folder'|'property_field_too_large'|'does_not_fit_template'|'duplicate_property_groups'|'property_group_already_exists')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -272,7 +490,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [template_not_found] - Available if .tag is
  * template_not_found. Template does not exist for the given identifier.
  * @property {FilePropertiesLookupError} [path] - Available if .tag is path.
- * @property {('template_not_found'|'restricted_content'|'other'|'path'|'unsupported_folder'|'property_field_too_large'|'does_not_fit_template')} .tag - Tag identifying the union variant.
+ * @property {('template_not_found'|'restricted_content'|'other'|'path'|'unsupported_folder'|'property_field_too_large'|'does_not_fit_template'|'duplicate_property_groups')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -309,7 +527,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilePropertiesOverwritePropertyGroupArg
  * @property {string} path - A unique identifier for the file or folder.
  * @property {Array.<FilePropertiesPropertyGroup>} property_groups - The
- * property groups "snapshot" updates to force apply.
+ * property groups "snapshot" updates to force apply. No two groups in the input
+ * should  refer to the same template.
  */
 
 /**
@@ -510,7 +729,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {FilePropertiesLookupError} [path] - Available if .tag is path.
  * @property {FilePropertiesLookUpPropertiesError} [property_group_lookup] -
  * Available if .tag is property_group_lookup.
- * @property {('template_not_found'|'restricted_content'|'other'|'path'|'unsupported_folder'|'property_field_too_large'|'does_not_fit_template'|'property_group_lookup')} .tag - Tag identifying the union variant.
+ * @property {('template_not_found'|'restricted_content'|'other'|'path'|'unsupported_folder'|'property_field_too_large'|'does_not_fit_template'|'duplicate_property_groups'|'property_group_lookup')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1040,7 +1259,7 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} FilesExportError
  * @property {FilesLookupError} [path] - Available if .tag is path.
- * @property {('path'|'non_exportable'|'other')} .tag - Tag identifying the union variant.
+ * @property {('path'|'non_exportable'|'retry_error'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1065,6 +1284,32 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {FilesExportMetadata} export_metadata - Metadata for the exported
  * version of the file.
  * @property {FilesFileMetadata} file_metadata - Metadata for the original file.
+ */
+
+/**
+ * @typedef {Object} FilesFileCategory
+ * @property {('image'|'document'|'pdf'|'spreadsheet'|'presentation'|'audio'|'video'|'folder'|'paper'|'others'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesFileLock
+ * @property {FilesFileLockContent} content - The lock description.
+ */
+
+/**
+ * @typedef {Object} FilesFileLockContent
+ * @property {FilesSingleUserLock} [single_user] - Available if .tag is
+ * single_user. A lock held by a single user.
+ * @property {('unlocked'|'single_user'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesFileLockMetadata
+ * @property {boolean} [is_lockholder] - True if caller holds the file lock.
+ * @property {string} [lockholder_name] - The display name of the lock holder.
+ * @property {string} [lockholder_account_id] - The account ID of the lock
+ * holder if known.
+ * @property {Timestamp} [created] - The timestamp of the lock was created.
  */
 
 /**
@@ -1122,6 +1367,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [content_hash] - A hash of the file content. This field
  * can be used to verify data integrity. For more information see our Content
  * hash https://www.dropbox.com/developers/reference/content-hash page.
+ * @property {FilesFileLockMetadata} [file_lock_info] - If present, the metadata
+ * associated with the file's current lock.
  */
 
 /**
@@ -1137,6 +1384,11 @@ only present when needed to discriminate between multiple possible subtypes.
  * this file.
  * @property {string} [modified_by] - The last user who modified the file. This
  * field will be null if the user's account has been deleted.
+ */
+
+/**
+ * @typedef {Object} FilesFileStatus
+ * @property {('active'|'deleted'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1307,6 +1559,13 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} FilesHighlightSpan
+ * @property {string} highlight_str - String to be determined whether it should
+ * be highlighted or not.
+ * @property {boolean} is_highlighted - The string should be highlighted or not.
+ */
+
+/**
  * @typedef {Object} FilesListFolderArg
  * @property {string} path - A unique identifier for the file.
  * @property {boolean} recursive - If true, the list folder operation will be
@@ -1354,7 +1613,9 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} FilesListFolderError
  * @property {FilesLookupError} [path] - Available if .tag is path.
- * @property {('path'|'other')} .tag - Tag identifying the union variant.
+ * @property {FilePropertiesTemplateError} [template_error] - Available if .tag
+ * is template_error.
+ * @property {('path'|'template_error'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1429,6 +1690,53 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} FilesLockConflictError
+ * @property {FilesFileLock} lock - The lock that caused the conflict.
+ */
+
+/**
+ * @typedef {Object} FilesLockFileArg
+ * @property {string} path - Path in the user's Dropbox to a file.
+ */
+
+/**
+ * @typedef {Object} FilesLockFileBatchArg
+ * @property {Array.<FilesLockFileArg>} entries - List of 'entries'. Each
+ * 'entry' contains a path of the file which will be locked or queried.
+ * Duplicate path arguments in the batch are considered only once.
+ */
+
+/**
+ * @typedef {Object} FilesLockFileBatchResult
+ * @property {Array.<FilesLockFileResultEntry>} entries - Each Entry in the
+ * 'entries' will have '.tag' with the operation status (e.g. success), the
+ * metadata for the file and the lock state after the operation.
+ */
+
+/**
+ * @typedef {Object} FilesLockFileError
+ * @property {FilesLookupError} [path_lookup] - Available if .tag is
+ * path_lookup. Could not find the specified resource.
+ * @property {FilesLockConflictError} [lock_conflict] - Available if .tag is
+ * lock_conflict. The user action conflicts with an existing lock on the file.
+ * @property {('path_lookup'|'too_many_write_operations'|'too_many_files'|'no_write_permission'|'cannot_be_locked'|'file_not_shared'|'lock_conflict'|'internal_error'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesLockFileResult
+ * @property {(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata)}
+ * metadata - Metadata of the file.
+ * @property {FilesFileLock} lock - The file lock state after the operation.
+ */
+
+/**
+ * @typedef {Object} FilesLockFileResultEntry
+ * @property {FilesLockFileResult} [success] - Available if .tag is success.
+ * @property {FilesLockFileError} [failure] - Available if .tag is failure.
+ * @property {('success'|'failure')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} FilesLookupError
  * @property {string} [malformed_path] - Available if .tag is malformed_path.
  * The given path does not satisfy the required path format. Please refer to the
@@ -1479,6 +1787,26 @@ variant.
  */
 
 /**
+ * Metadata for a file, folder or other resource types.
+ * @typedef {Object} FilesMetadataV2
+ * @property {(FilesFileMetadata|FilesFolderMetadata|FilesDeletedMetadata)}
+ * [metadata] - Available if .tag is metadata.
+ * @property {('metadata'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesMinimalFileLinkMetadata
+ * @property {string} url - URL of the shared link.
+ * @property {string} rev - A unique identifier for the current revision of a
+ * file. This field is the same rev as elsewhere in the API and can be used to
+ * detect changes and avoid conflicts.
+ * @property {string} [id] - Unique identifier for the linked file.
+ * @property {string} [path] - Full path in the user's Dropbox. This always
+ * starts with a slash. This field will only be present only if the linked file
+ * is in the authenticated user's Dropbox.
+ */
+
+/**
  * @typedef {Object} FilesMoveBatchArg
  * @property {Array.<FilesRelocationPath>} entries - List of entries to be moved
  * or copied. Each entry is RelocationPath.
@@ -1487,6 +1815,13 @@ variant.
  * @property {boolean} allow_ownership_transfer - Allow moves by owner even if
  * it would result in an ownership transfer for the content being moved. This
  * does not apply to copies.
+ */
+
+/**
+ * @typedef {Object} FilesPathOrLink
+ * @property {string} [path] - Available if .tag is path.
+ * @property {FilesSharedLinkFileInfo} [link] - Available if .tag is link.
+ * @property {('path'|'link'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1512,6 +1847,16 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {FilesLookupError} [path] - Available if .tag is path. An error
  * occurs when downloading metadata for the file.
  * @property {('path'|'in_progress'|'unsupported_extension'|'unsupported_content')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesPreviewResult
+ * @property {FilesFileMetadata} [file_metadata] - Metadata corresponding to the
+ * file received as an argument. Will be populated if the endpoint is called
+ * with a path (ReadPath).
+ * @property {FilesMinimalFileLinkMetadata} [link_metadata] - Minimal metadata
+ * corresponding to the file received as an argument. Will be populated if the
+ * endpoint is called using a shared link (SharedLinkFileInfo).
  */
 
 /**
@@ -1730,10 +2075,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilesSearchArg
  * @property {string} path - The path in the user's Dropbox to search. Should
  * probably be a folder.
- * @property {string} query - The string to search for. The search string is
- * split on spaces into multiple tokens. For file name searching, the last token
- * is used for prefix matching (i.e. "bat c" matches "bat cave" but not "batman
- * car").
+ * @property {string} query - The string to search for. Query string may be
+ * rewritten to improve relevance of results. The string is split on spaces into
+ * multiple tokens. For file name searching, the last token is used for prefix
+ * matching (i.e. "bat c" matches "bat cave" but not "batman car").
  * @property {number} start - The starting index within the search results (used
  * for paging).
  * @property {number} max_results - The maximum number of search results to
@@ -1746,7 +2091,9 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} FilesSearchError
  * @property {FilesLookupError} [path] - Available if .tag is path.
- * @property {('path'|'other')} .tag - Tag identifying the union variant.
+ * @property {string} [invalid_argument] - Available if .tag is
+ * invalid_argument.
+ * @property {('path'|'invalid_argument'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -1763,8 +2110,32 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} FilesSearchMatchV2
+ * @property {FilesMetadataV2} metadata - The metadata for the matched file or
+ * folder.
+ * @property {Array.<FilesHighlightSpan>} [highlight_spans] - The list of
+ * HighlightSpan determines which parts of the result should be highlighted.
+ */
+
+/**
  * @typedef {Object} FilesSearchMode
  * @property {('filename'|'filename_and_content'|'deleted_filename')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesSearchOptions
+ * @property {string} [path] - Scopes the search to a path in the user's
+ * Dropbox. Searches the entire Dropbox if not specified.
+ * @property {number} max_results - The maximum number of search results to
+ * return.
+ * @property {FilesFileStatus} file_status - Restricts search to the given file
+ * status.
+ * @property {boolean} filename_only - Restricts search to only match on
+ * filenames.
+ * @property {Array.<string>} [file_extensions] - Restricts search to only the
+ * extensions specified. Only supported for active file search.
+ * @property {Array.<FilesFileCategory>} [file_categories] - Restricts search to
+ * only the file categories specified. Only supported for active file search.
  */
 
 /**
@@ -1779,9 +2150,48 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} FilesSearchV2Arg
+ * @property {string} query - The string to search for. May match across
+ * multiple fields based on the request arguments. Query string may be rewritten
+ * to improve relevance of results.
+ * @property {FilesSearchOptions} [options] - Options for more targeted search
+ * results.
+ * @property {boolean} include_highlights
+ */
+
+/**
+ * @typedef {Object} FilesSearchV2ContinueArg
+ * @property {string} cursor - The cursor returned by your last call to
+ * search:2. Used to fetch the next page of results.
+ */
+
+/**
+ * @typedef {Object} FilesSearchV2Result
+ * @property {Array.<FilesSearchMatchV2>} matches - A list (possibly empty) of
+ * matches for the query.
+ * @property {boolean} has_more - Used for paging. If true, indicates there is
+ * another page of results available that can be fetched by calling
+ * search/continue:2 with the cursor.
+ * @property {string} [cursor] - Pass the cursor into search/continue:2 to fetch
+ * the next page of results.
+ */
+
+/**
  * @typedef {Object} FilesSharedLink
  * @property {string} url - Shared link url.
  * @property {string} [password] - Password for the shared link.
+ */
+
+/**
+ * @typedef {Object} FilesSharedLinkFileInfo
+ * @property {string} url - The shared link corresponding to either a file or
+ * shared link to a folder. If it is for a folder shared link, we use the path
+ * param to determine for which file in the folder the view is for.
+ * @property {string} [path] - The path corresponding to a file in a shared link
+ * to a folder. Required for shared links to folders.
+ * @property {string} [password] - Password for the shared link. Required for
+ * password-protected shared links to files  unless it can be read from a
+ * cookie.
  */
 
 /**
@@ -1789,6 +2199,15 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} FilesSharingInfo
  * @property {boolean} read_only - True if the file or folder is inside a
  * read-only shared folder.
+ */
+
+/**
+ * @typedef {Object} FilesSingleUserLock
+ * @property {Timestamp} created - The time the lock was created.
+ * @property {string} lock_holder_account_id - The account ID of the lock holder
+ * if known.
+ * @property {string} [lock_holder_team_id] - The id of the team of the account
+ * holder if it exists.
  */
 
 /**
@@ -1843,6 +2262,38 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} FilesThumbnailSize
  * @property {('w32h32'|'w64h64'|'w128h128'|'w256h256'|'w480h320'|'w640h480'|'w960h640'|'w1024h768'|'w2048h1536')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesThumbnailV2Arg
+ * @property {FilesPathOrLink} resource - Information specifying which file to
+ * preview. This could be a path to a file, a shared link pointing to a file, or
+ * a shared link pointing to a folder, with a relative path.
+ * @property {FilesThumbnailFormat} format - The format for the thumbnail image,
+ * jpeg (default) or png. For  images that are photos, jpeg should be preferred,
+ * while png is  better for screenshots and digital arts.
+ * @property {FilesThumbnailSize} size - The size for the thumbnail image.
+ * @property {FilesThumbnailMode} mode - How to resize and crop the image to
+ * achieve the desired size.
+ */
+
+/**
+ * @typedef {Object} FilesThumbnailV2Error
+ * @property {FilesLookupError} [path] - Available if .tag is path. An error
+ * occurred when downloading metadata for the image.
+ * @property {('path'|'unsupported_extension'|'unsupported_image'|'conversion_error'|'access_denied'|'not_found'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} FilesUnlockFileArg
+ * @property {string} path - Path in the user's Dropbox to a file.
+ */
+
+/**
+ * @typedef {Object} FilesUnlockFileBatchArg
+ * @property {Array.<FilesUnlockFileArg>} entries - List of 'entries'. Each
+ * 'entry' contains a path of the file which will be unlocked. Duplicate path
+ * arguments in the batch are considered only once.
  */
 
 /**
@@ -2112,8 +2563,8 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * The sharing policy of a Paper folder.  Note: The sharing policy of subfolders
- * is inherited from the root folder.
+ * The sharing policy of a Paper folder. The sharing policy of subfolders is
+ * inherited from the root folder.
  * @typedef {Object} PaperFolderSharingPolicyType
  * @property {('team'|'invite_only')} .tag - Tag identifying the union variant.
  */
@@ -2358,6 +2809,30 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} PaperPaperFolderCreateArg
+ * @property {string} name - The name of the new Paper folder.
+ * @property {string} [parent_folder_id] - The encrypted Paper folder Id where
+ * the new Paper folder should be created. The API user has to have write access
+ * to this folder or error is thrown. If not supplied, the new folder will be
+ * created at top level.
+ * @property {boolean} [is_team_folder] - Whether the folder to be created
+ * should be a team folder. This value will be ignored if parent_folder_id is
+ * supplied, as the new folder will inherit the type (private or team folder)
+ * from its parent. We will by default create a top-level private folder if both
+ * parent_folder_id and is_team_folder are not supplied.
+ */
+
+/**
+ * @typedef {Object} PaperPaperFolderCreateError
+ * @property {('insufficient_permissions'|'other'|'folder_not_found'|'invalid_folder_id')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} PaperPaperFolderCreateResult
+ * @property {string} folder_id - Folder ID of the newly created folder.
+ */
+
+/**
  * @typedef {Object} PaperRefPaperDoc
  * @property {string} doc_id - The Paper doc ID.
  */
@@ -2400,6 +2875,13 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} PaperUserOnPaperDocFilter
  * @property {('visited'|'shared'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} SecondaryEmailsSecondaryEmail
+ * @property {string} email - Secondary email address.
+ * @property {boolean} is_verified - Whether or not the secondary email address
+ * is verified to be owned by a user.
  */
 
 /**
@@ -3776,6 +4258,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * shared folder.
  * @property {string} [path_lower] - The lower-cased full path of this shared
  * folder. Absent for unmounted folders.
+ * @property {string} [parent_folder_name] - Display name for the parent folder.
  * @property {SharingSharedContentLinkMetadata} [link_metadata] - The metadata
  * of the shared content link to this shared folder. Absent if there is no link
  * on the folder. This is for an unreleased feature so it may not be returned
@@ -3807,6 +4290,7 @@ only present when needed to discriminate between multiple possible subtypes.
  * shared folder.
  * @property {string} [path_lower] - The lower-cased full path of this shared
  * folder. Absent for unmounted folders.
+ * @property {string} [parent_folder_name] - Display name for the parent folder.
  */
 
 /**
@@ -3874,7 +4358,8 @@ only present when needed to discriminate between multiple possible subtypes.
  * effective audience type in the `effective_audience` field of
  * `LinkPermissions.
  * @property {SharingRequestedLinkAccessLevel} [access] - Requested access level
- * you want the audience to gain from this link.
+ * you want the audience to gain from this link. Note, modifying access level
+ * for an existing link is not supported.
  */
 
 /**
@@ -4104,6 +4589,53 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Result of trying to add a secondary email to a user. 'success' is the only
+ * value indicating that a secondary email was successfully added to a user. The
+ * other values explain the type of error that occurred, and include the email
+ * for which the error occured.
+ * @typedef {Object} TeamAddSecondaryEmailResult
+ * @property {SecondaryEmailsSecondaryEmail} [success] - Available if .tag is
+ * success. Describes a secondary email that was successfully added to a user.
+ * @property {string} [unavailable] - Available if .tag is unavailable.
+ * Secondary email is not available to be claimed by the user.
+ * @property {string} [already_pending] - Available if .tag is already_pending.
+ * Secondary email is already a pending email for the user.
+ * @property {string} [already_owned_by_user] - Available if .tag is
+ * already_owned_by_user. Secondary email is already a verified email for the
+ * user.
+ * @property {string} [reached_limit] - Available if .tag is reached_limit. User
+ * already has the maximum number of secondary emails allowed.
+ * @property {string} [transient_error] - Available if .tag is transient_error.
+ * A transient error occurred. Please try again later.
+ * @property {string} [too_many_updates] - Available if .tag is
+ * too_many_updates. An error occurred due to conflicting updates. Please try
+ * again later.
+ * @property {string} [unknown_error] - Available if .tag is unknown_error. An
+ * unknown error occurred.
+ * @property {string} [rate_limited] - Available if .tag is rate_limited. Too
+ * many emails are being sent to this email address. Please try again later.
+ * @property {('success'|'unavailable'|'already_pending'|'already_owned_by_user'|'reached_limit'|'transient_error'|'too_many_updates'|'unknown_error'|'rate_limited'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamAddSecondaryEmailsArg
+ * @property {Array.<TeamUserSecondaryEmailsArg>} new_secondary_emails - List of
+ * users and secondary emails to add.
+ */
+
+/**
+ * Error returned when adding secondary emails fails.
+ * @typedef {Object} TeamAddSecondaryEmailsError
+ * @property {('secondary_emails_disabled'|'too_many_emails'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamAddSecondaryEmailsResult
+ * @property {Array.<TeamUserAddResult>} results - List of users and secondary
+ * email results.
+ */
+
+/**
  * Describes which team-related admin permissions a user has.
  * @typedef {Object} TeamAdminTier
  * @property {('team_admin'|'user_management_admin'|'support_admin'|'member_only')} .tag - Tag identifying the union variant.
@@ -4164,7 +4696,8 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * Input arguments that can be provided for most reports.
  * @typedef {Object} TeamDateRange
- * @property {Timestamp} [start_date] - Optional starting date (inclusive).
+ * @property {Timestamp} [start_date] - Optional starting date (inclusive). If
+ * start_date is None or too long ago, this field will  be set to 6 months ago.
  * @property {Timestamp} [end_date] - Optional ending date (exclusive).
  */
 
@@ -4172,6 +4705,33 @@ only present when needed to discriminate between multiple possible subtypes.
  * Errors that can originate from problems in input arguments to reports.
  * @typedef {Object} TeamDateRangeError
  * @property {'other'} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Result of trying to delete a secondary email address. 'success' is the only
+ * value indicating that a secondary email was successfully deleted. The other
+ * values explain the type of error that occurred, and include the email for
+ * which the error occured.
+ * @typedef {Object} TeamDeleteSecondaryEmailResult
+ * @property {string} [success] - Available if .tag is success. The secondary
+ * email was successfully deleted.
+ * @property {string} [not_found] - Available if .tag is not_found. The email
+ * address was not found for the user.
+ * @property {string} [cannot_remove_primary] - Available if .tag is
+ * cannot_remove_primary. The email address is the primary email address of the
+ * user, and cannot be removed.
+ * @property {('success'|'not_found'|'cannot_remove_primary'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamDeleteSecondaryEmailsArg
+ * @property {Array.<TeamUserSecondaryEmailsArg>} emails_to_delete - List of
+ * users and their secondary emails to delete.
+ */
+
+/**
+ * @typedef {Object} TeamDeleteSecondaryEmailsResult
+ * @property {Array.<TeamUserDeleteResult>} results
  */
 
 /**
@@ -4446,6 +5006,8 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamGroupCreateArg
  * @property {string} group_name - Group name.
+ * @property {boolean} add_creator_as_owner - Automatically add the creator of
+ * the group.
  * @property {string} [group_external_id] - The creator of a team can associate
  * an arbitrary external ID to the group.
  * @property {TeamCommonGroupManagementType} [group_management_type] - Whether
@@ -4535,8 +5097,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} TeamGroupMembersChangeResult
  * @property {TeamGroupFullInfo} group_info - The group info after member change
  * operation has been performed.
- * @property {string} async_job_id - An ID that can be used to obtain the status
- * of granting/revoking group-owned resources.
+ * @property {string} async_job_id - For legacy purposes async_job_id will
+ * always return one space ' '. Formerly, it was an ID that was used to obtain
+ * the status of granting/revoking group-owned resources. It's no longer
+ * necessary because the async processing now happens automatically.
  */
 
 /**
@@ -4744,6 +5308,141 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {boolean} return_members - Whether to return the list of members in
  * the group.  Note that the default value will cause all the group members  to
  * be returned in the response. This may take a long time for large groups.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldHeldRevisionMetadata
+ * @property {string} new_filename - The held revision filename.
+ * @property {string} original_revision_id - The id of the held revision.
+ * @property {string} original_file_path - The original path of the held
+ * revision.
+ * @property {Timestamp} server_modified - The last time the file was modified
+ * on Dropbox.
+ * @property {string} author_member_id - The member id of the revision's author.
+ * @property {TeamTeamMemberStatus} author_member_status - The member status of
+ * the revision's author.
+ * @property {string} author_email - The email address of the held revision
+ * author.
+ * @property {string} file_type - The type of the held revision's file.
+ * @property {number} size - The file size in bytes.
+ * @property {string} content_hash - A hash of the file content. This field can
+ * be used to verify data integrity. For more information see our Content hash
+ * https://www.dropbox.com/developers/reference/content-hash page.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldPolicy
+ * @property {string} id - The legal hold id.
+ * @property {string} name - Policy name.
+ * @property {TeamMembersInfo} members
+ * @property {TeamLegalHoldStatus} status
+ * @property {Timestamp} start_date - start date of the legal hold policy.
+ * @property {string} [description] - A description of the legal hold policy.
+ * @property {Timestamp} [activation_time] - The time at which the legal hold
+ * was activated.
+ * @property {Timestamp} [end_date] - end date of the legal hold policy.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldStatus
+ * @property {('active'|'released'|'activating'|'updating'|'exporting'|'releasing'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsError
+ * @property {('unknown_legal_hold_error'|'insufficient_permissions'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsGetPolicyArg
+ * @property {string} id - The legal hold Id.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsGetPolicyError
+ * @property {('unknown_legal_hold_error'|'insufficient_permissions'|'other'|'legal_hold_policy_not_found')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsListHeldRevisionResult
+ * @property {Array.<TeamLegalHoldHeldRevisionMetadata>} entries - Entries list.
+ * @property {boolean} has_more - Has more.
+ * @property {string} [cursor] - List held revisions cursor.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsListHeldRevisionsArg
+ * @property {string} id - The legal hold Id.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsListHeldRevisionsContinueArg
+ * @property {string} id - The legal hold Id.
+ * @property {string} [cursor] - cursor of list held revisions.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsListHeldRevisionsContinueError
+ * @property {('unknown_legal_hold_error'|'transient_error'|'reset'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsListHeldRevisionsError
+ * @property {('unknown_legal_hold_error'|'insufficient_permissions'|'other'|'transient_error'|'legal_hold_still_empty'|'inactive_legal_hold')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsListPoliciesArg
+ * @property {boolean} include_released - Whether to return holds that were
+ * released.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsListPoliciesError
+ * @property {('unknown_legal_hold_error'|'insufficient_permissions'|'other'|'transient_error')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsListPoliciesResult
+ * @property {Array.<TeamLegalHoldPolicy>} policies
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsPolicyCreateArg
+ * @property {string} name - Policy name.
+ * @property {Array.<Object>} members - List of team members added to the hold.
+ * @property {string} [description] - A description of the legal hold policy.
+ * @property {Timestamp} [start_date] - start date of the legal hold policy.
+ * @property {Timestamp} [end_date] - end date of the legal hold policy.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsPolicyCreateError
+ * @property {('unknown_legal_hold_error'|'insufficient_permissions'|'other'|'start_date_is_later_than_end_date'|'empty_members_list'|'invalid_members'|'number_of_users_on_hold_is_greater_than_hold_limitation'|'transient_error'|'name_must_be_unique'|'team_exceeded_legal_hold_quota')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsPolicyReleaseArg
+ * @property {string} id - The legal hold Id.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsPolicyReleaseError
+ * @property {('unknown_legal_hold_error'|'insufficient_permissions'|'other'|'legal_hold_performing_another_operation'|'legal_hold_already_releasing'|'legal_hold_policy_not_found')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsPolicyUpdateArg
+ * @property {string} id - The legal hold Id.
+ * @property {Array.<Object>} members - List of team members to apply the policy
+ * on.
+ * @property {string} [name] - Policy new name.
+ * @property {string} [description] - Policy new description.
+ */
+
+/**
+ * @typedef {Object} TeamLegalHoldsPolicyUpdateError
+ * @property {('unknown_legal_hold_error'|'insufficient_permissions'|'other'|'inactive_legal_hold'|'legal_hold_performing_another_operation'|'invalid_members'|'number_of_users_on_hold_is_greater_than_hold_limitation'|'empty_members_list'|'name_must_be_unique'|'legal_hold_policy_not_found')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -5006,11 +5705,16 @@ only present when needed to discriminate between multiple possible subtypes.
  * user. An application using the API may find it easier to use their own IDs
  * instead of Dropbox IDs like account_id or team_member_id.
  * @property {string} [account_id] - A user's account identifier.
+ * @property {Array.<SecondaryEmailsSecondaryEmail>} [secondary_emails] -
+ * Secondary emails of a user.
+ * @property {Timestamp} [invited_on] - The date and time the user was invited
+ * to the team (contains value only when the member's status matches
+ * TeamMemberStatus.invited).
  * @property {Timestamp} [joined_on] - The date and time the user joined as a
  * member of a specific team.
  * @property {Timestamp} [suspended_on] - The date and time the user was
  * suspended from the team (contains value only when the member's status matches
- * TeamMemberStatus.suspended.
+ * TeamMemberStatus.suspended).
  * @property {string} [persistent_id] - Persistent ID that a team can attach to
  * the user. The persistent ID is unique ID to be used for SAML authentication.
  * @property {boolean} [is_directory_restricted] - Whether the user is a
@@ -5085,6 +5789,17 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} TeamMembersDeleteProfilePhotoArg
+ * @property {TeamUserSelectorArg} user - Identity of the user whose profile
+ * photo will be deleted.
+ */
+
+/**
+ * @typedef {Object} TeamMembersDeleteProfilePhotoError
+ * @property {('user_not_found'|'user_not_in_team'|'set_profile_disallowed'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} TeamMembersGetInfoArgs
  * @property {Array.<TeamUserSelectorArg>} members - List of team members.
  */
@@ -5105,6 +5820,14 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamTeamMemberInfo} [member_info] - Available if .tag is
  * member_info. Info about a team member.
  * @property {('id_not_found'|'member_info')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamMembersInfo
+ * @property {Array.<Object>} team_member_ids - Team member IDs of the users
+ * under this hold.
+ * @property {number} permanently_deleted_users - The number of permanently
+ * deleted users that were under this hold.
  */
 
 /**
@@ -5166,12 +5889,18 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {boolean} keep_account - Downgrade the member to a Basic account.
  * The user will retain the email address associated with their Dropbox  account
  * and data in their account that is not restricted to team members. In order to
- * keep the account the argument wipe_data should be set to False.
+ * keep the account the argument wipe_data should be set to false.
+ * @property {boolean} retain_team_shares - If provided, allows removed users to
+ * keep access to folders already explicitly shared with them (not via a group)
+ * when they are downgraded to a Basic account. Users will not retain access to
+ * folders that do not allow external sharing. In order to keep the sharing
+ * relationships, the arguments wipe_data should be set to false and
+ * keep_account should be set to true.
  */
 
 /**
  * @typedef {Object} TeamMembersRemoveError
- * @property {('user_not_found'|'user_not_in_team'|'other'|'removed_and_transfer_dest_should_differ'|'removed_and_transfer_admin_should_differ'|'transfer_dest_user_not_found'|'transfer_dest_user_not_in_team'|'transfer_admin_user_not_in_team'|'transfer_admin_user_not_found'|'unspecified_transfer_admin_id'|'transfer_admin_is_not_admin'|'recipient_not_verified'|'remove_last_admin'|'cannot_keep_account_and_transfer'|'cannot_keep_account_and_delete_data'|'email_address_too_long_to_be_disabled'|'cannot_keep_invited_user_account')} .tag - Tag identifying the union variant.
+ * @property {('user_not_found'|'user_not_in_team'|'other'|'removed_and_transfer_dest_should_differ'|'removed_and_transfer_admin_should_differ'|'transfer_dest_user_not_found'|'transfer_dest_user_not_in_team'|'transfer_admin_user_not_in_team'|'transfer_admin_user_not_found'|'unspecified_transfer_admin_id'|'transfer_admin_is_not_admin'|'recipient_not_verified'|'remove_last_admin'|'cannot_keep_account_and_transfer'|'cannot_keep_account_and_delete_data'|'email_address_too_long_to_be_disabled'|'cannot_keep_invited_user_account'|'cannot_retain_shares_when_data_wiped'|'cannot_retain_shares_when_no_account_kept'|'cannot_retain_shares_when_team_external_sharing_off'|'cannot_keep_account'|'cannot_keep_account_under_legal_hold'|'cannot_keep_account_required_to_sign_tos')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -5220,6 +5949,21 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamMembersSetProfileError
  * @property {('user_not_found'|'user_not_in_team'|'external_id_and_new_external_id_unsafe'|'no_new_data_specified'|'email_reserved_for_other_user'|'external_id_used_by_other_user'|'set_profile_disallowed'|'param_cannot_be_empty'|'persistent_id_disabled'|'persistent_id_used_by_other_user'|'directory_restricted_off'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamMembersSetProfilePhotoArg
+ * @property {TeamUserSelectorArg} user - Identity of the user whose profile
+ * photo will be set.
+ * @property {AccountPhotoSourceArg} photo - Image to set as the member's new
+ * profile photo.
+ */
+
+/**
+ * @typedef {Object} TeamMembersSetProfilePhotoError
+ * @property {AccountSetProfilePhotoError} [photo_error] - Available if .tag is
+ * photo_error.
+ * @property {('user_not_found'|'user_not_in_team'|'set_profile_disallowed'|'photo_error'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -5304,6 +6048,33 @@ only present when needed to discriminate between multiple possible subtypes.
  * recoverable.
  * @property {boolean} is_disconnected - True if the team member's account was
  * converted to individual account.
+ */
+
+/**
+ * Result of trying to resend verification email to a secondary email address.
+ * 'success' is the only value indicating that a verification email was
+ * successfully sent. The other values explain the type of error that occurred,
+ * and include the email for which the error occured.
+ * @typedef {Object} TeamResendSecondaryEmailResult
+ * @property {string} [success] - Available if .tag is success. A verification
+ * email was successfully sent to the secondary email address.
+ * @property {string} [not_pending] - Available if .tag is not_pending. This
+ * secondary email address is not pending for the user.
+ * @property {string} [rate_limited] - Available if .tag is rate_limited. Too
+ * many emails are being sent to this email address. Please try again later.
+ * @property {('success'|'not_pending'|'rate_limited'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamResendVerificationEmailArg
+ * @property {Array.<TeamUserSecondaryEmailsArg>} emails_to_resend - List of
+ * users and secondary emails to resend verification emails to.
+ */
+
+/**
+ * List of users and resend results.
+ * @typedef {Object} TeamResendVerificationEmailResult
+ * @property {Array.<TeamUserResendResult>} results
  */
 
 /**
@@ -5656,11 +6427,16 @@ only present when needed to discriminate between multiple possible subtypes.
  * user. An application using the API may find it easier to use their own IDs
  * instead of Dropbox IDs like account_id or team_member_id.
  * @property {string} [account_id] - A user's account identifier.
+ * @property {Array.<SecondaryEmailsSecondaryEmail>} [secondary_emails] -
+ * Secondary emails of a user.
+ * @property {Timestamp} [invited_on] - The date and time the user was invited
+ * to the team (contains value only when the member's status matches
+ * TeamMemberStatus.invited).
  * @property {Timestamp} [joined_on] - The date and time the user joined as a
  * member of a specific team.
  * @property {Timestamp} [suspended_on] - The date and time the user was
  * suspended from the team (contains value only when the member's status matches
- * TeamMemberStatus.suspended.
+ * TeamMemberStatus.suspended).
  * @property {string} [persistent_id] - Persistent ID that a team can attach to
  * the user. The persistent ID is unique ID to be used for SAML authentication.
  * @property {boolean} [is_directory_restricted] - Whether the user is a
@@ -5742,6 +6518,25 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Result of trying to add secondary emails to a user. 'success' is the only
+ * value indicating that a user was successfully retrieved for adding secondary
+ * emails. The other values explain the type of error that occurred, and include
+ * the user for which the error occured.
+ * @typedef {Object} TeamUserAddResult
+ * @property {TeamUserSecondaryEmailsResult} [success] - Available if .tag is
+ * success. Describes a user and the results for each attempt to add a secondary
+ * email.
+ * @property {TeamUserSelectorArg} [invalid_user] - Available if .tag is
+ * invalid_user. Specified user is not a valid target for adding secondary
+ * emails.
+ * @property {TeamUserSelectorArg} [unverified] - Available if .tag is
+ * unverified. Secondary emails can only be added to verified users.
+ * @property {TeamUserSelectorArg} [placeholder_user] - Available if .tag is
+ * placeholder_user. Secondary emails cannot be added to placeholder users.
+ * @property {('success'|'invalid_user'|'unverified'|'placeholder_user'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * User and their required custom quota in GB (1 TB = 1024 GB).
  * @typedef {Object} TeamUserCustomQuotaArg
  * @property {TeamUserSelectorArg} user
@@ -5754,6 +6549,61 @@ only present when needed to discriminate between multiple possible subtypes.
  * @typedef {Object} TeamUserCustomQuotaResult
  * @property {TeamUserSelectorArg} user
  * @property {number} [quota_gb]
+ */
+
+/**
+ * @typedef {Object} TeamUserDeleteEmailsResult
+ * @property {TeamUserSelectorArg} user
+ * @property {Array.<TeamDeleteSecondaryEmailResult>} results
+ */
+
+/**
+ * Result of trying to delete a user's secondary emails. 'success' is the only
+ * value indicating that a user was successfully retrieved for deleting
+ * secondary emails. The other values explain the type of error that occurred,
+ * and include the user for which the error occured.
+ * @typedef {Object} TeamUserDeleteResult
+ * @property {TeamUserDeleteEmailsResult} [success] - Available if .tag is
+ * success. Describes a user and the results for each attempt to delete a
+ * secondary email.
+ * @property {TeamUserSelectorArg} [invalid_user] - Available if .tag is
+ * invalid_user. Specified user is not a valid target for deleting secondary
+ * emails.
+ * @property {('success'|'invalid_user'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamUserResendEmailsResult
+ * @property {TeamUserSelectorArg} user
+ * @property {Array.<TeamResendSecondaryEmailResult>} results
+ */
+
+/**
+ * Result of trying to resend verification emails to a user. 'success' is the
+ * only value indicating that a user was successfully retrieved for sending
+ * verification emails. The other values explain the type of error that
+ * occurred, and include the user for which the error occured.
+ * @typedef {Object} TeamUserResendResult
+ * @property {TeamUserResendEmailsResult} [success] - Available if .tag is
+ * success. Describes a user and the results for each attempt to resend
+ * verification emails.
+ * @property {TeamUserSelectorArg} [invalid_user] - Available if .tag is
+ * invalid_user. Specified user is not a valid target for resending verification
+ * emails.
+ * @property {('success'|'invalid_user'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * User and a list of secondary emails.
+ * @typedef {Object} TeamUserSecondaryEmailsArg
+ * @property {TeamUserSelectorArg} user
+ * @property {Array.<Object>} secondary_emails
+ */
+
+/**
+ * @typedef {Object} TeamUserSecondaryEmailsResult
+ * @property {TeamUserSelectorArg} user
+ * @property {Array.<TeamAddSecondaryEmailResult>} results
  */
 
 /**
@@ -5835,9 +6685,11 @@ only present when needed to discriminate between multiple possible subtypes.
  * content_manager. Content manager session details.
  * @property {TeamLogWebSessionLogInfo} [admin_console] - Available if .tag is
  * admin_console. Admin console session details.
+ * @property {TeamLogWebSessionLogInfo} [enterprise_console] - Available if .tag
+ * is enterprise_console. Enterprise console session details.
  * @property {TeamLogApiSessionLogInfo} [api] - Available if .tag is api. Api
  * session details.
- * @property {('end_user'|'sign_in_as'|'content_manager'|'admin_console'|'api'|'other')} .tag - Tag identifying the union variant.
+ * @property {('end_user'|'sign_in_as'|'content_manager'|'admin_console'|'enterprise_console'|'api'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -5886,14 +6738,21 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
- * Sent proactive account capture email to all unmanaged members.
+ * Sent account capture email to all unmanaged members.
  * @typedef {Object} TeamLogAccountCaptureNotificationEmailsSentDetails
  * @property {string} domain_name - Domain name.
+ * @property {TeamLogAccountCaptureNotificationType} [notification_type] -
+ * Account-capture email notification type.
  */
 
 /**
  * @typedef {Object} TeamLogAccountCaptureNotificationEmailsSentType
  * @property {string} description
+ */
+
+/**
+ * @typedef {Object} TeamLogAccountCaptureNotificationType
+ * @property {('proactive_warning_notification'|'actionable_notification'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -5913,6 +6772,23 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Unlocked/locked account after failed sign in attempts.
+ * @typedef {Object} TeamLogAccountLockOrUnlockedDetails
+ * @property {TeamLogAccountState} previous_value - The previous account status.
+ * @property {TeamLogAccountState} new_value - The new account status.
+ */
+
+/**
+ * @typedef {Object} TeamLogAccountLockOrUnlockedType
+ * @property {string} description
+ */
+
+/**
+ * @typedef {Object} TeamLogAccountState
+ * @property {('locked'|'unlocked'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * Additional information indicating the action taken that caused status change.
  * @typedef {Object} TeamLogActionDetails
  * @property {TeamLogJoinTeamDetails} [team_join_details] - Available if .tag is
@@ -5920,7 +6796,10 @@ only present when needed to discriminate between multiple possible subtypes.
  * the team.
  * @property {TeamLogMemberRemoveActionType} [remove_action] - Available if .tag
  * is remove_action. Define how the user was removed from the team.
- * @property {('team_join_details'|'remove_action'|'other')} .tag - Tag identifying the union variant.
+ * @property {TeamLogTeamInviteDetails} [team_invite_details] - Available if
+ * .tag is team_invite_details. Additional information relevant when someone is
+ * invited to the team.
+ * @property {('team_join_details'|'remove_action'|'team_invite_details'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -6051,6 +6930,114 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Added Binder page.
+ * @typedef {Object} TeamLogBinderAddPageDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} doc_title - Title of the Binder doc.
+ * @property {string} binder_item_name - Name of the Binder page/section.
+ */
+
+/**
+ * @typedef {Object} TeamLogBinderAddPageType
+ * @property {string} description
+ */
+
+/**
+ * Added Binder section.
+ * @typedef {Object} TeamLogBinderAddSectionDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} doc_title - Title of the Binder doc.
+ * @property {string} binder_item_name - Name of the Binder page/section.
+ */
+
+/**
+ * @typedef {Object} TeamLogBinderAddSectionType
+ * @property {string} description
+ */
+
+/**
+ * Removed Binder page.
+ * @typedef {Object} TeamLogBinderRemovePageDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} doc_title - Title of the Binder doc.
+ * @property {string} binder_item_name - Name of the Binder page/section.
+ */
+
+/**
+ * @typedef {Object} TeamLogBinderRemovePageType
+ * @property {string} description
+ */
+
+/**
+ * Removed Binder section.
+ * @typedef {Object} TeamLogBinderRemoveSectionDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} doc_title - Title of the Binder doc.
+ * @property {string} binder_item_name - Name of the Binder page/section.
+ */
+
+/**
+ * @typedef {Object} TeamLogBinderRemoveSectionType
+ * @property {string} description
+ */
+
+/**
+ * Renamed Binder page.
+ * @typedef {Object} TeamLogBinderRenamePageDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} doc_title - Title of the Binder doc.
+ * @property {string} binder_item_name - Name of the Binder page/section.
+ * @property {string} [previous_binder_item_name] - Previous name of the Binder
+ * page/section.
+ */
+
+/**
+ * @typedef {Object} TeamLogBinderRenamePageType
+ * @property {string} description
+ */
+
+/**
+ * Renamed Binder section.
+ * @typedef {Object} TeamLogBinderRenameSectionDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} doc_title - Title of the Binder doc.
+ * @property {string} binder_item_name - Name of the Binder page/section.
+ * @property {string} [previous_binder_item_name] - Previous name of the Binder
+ * page/section.
+ */
+
+/**
+ * @typedef {Object} TeamLogBinderRenameSectionType
+ * @property {string} description
+ */
+
+/**
+ * Reordered Binder page.
+ * @typedef {Object} TeamLogBinderReorderPageDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} doc_title - Title of the Binder doc.
+ * @property {string} binder_item_name - Name of the Binder page/section.
+ */
+
+/**
+ * @typedef {Object} TeamLogBinderReorderPageType
+ * @property {string} description
+ */
+
+/**
+ * Reordered Binder section.
+ * @typedef {Object} TeamLogBinderReorderSectionDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} doc_title - Title of the Binder doc.
+ * @property {string} binder_item_name - Name of the Binder page/section.
+ */
+
+/**
+ * @typedef {Object} TeamLogBinderReorderSectionType
+ * @property {string} description
+ */
+
+/**
  * Policy for controlling if team members can activate camera uploads
  * @typedef {Object} TeamLogCameraUploadsPolicy
  * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
@@ -6083,6 +7070,38 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Changed enterprise admin role.
+ * @typedef {Object} TeamLogChangedEnterpriseAdminRoleDetails
+ * @property {TeamLogFedAdminRole} previous_value - The member&#x2019s previous
+ * enterprise admin role.
+ * @property {TeamLogFedAdminRole} new_value - The member&#x2019s new enterprise
+ * admin role.
+ * @property {string} team_name - The name of the member&#x2019s team.
+ */
+
+/**
+ * @typedef {Object} TeamLogChangedEnterpriseAdminRoleType
+ * @property {string} description
+ */
+
+/**
+ * Changed enterprise-connected team status.
+ * @typedef {Object} TeamLogChangedEnterpriseConnectedTeamStatusDetails
+ * @property {TeamLogFedHandshakeAction} action - The preformed change in the
+ * team&#x2019s connection status.
+ * @property {TeamLogFederationStatusChangeAdditionalInfo} additional_info -
+ * Additional information about the organization or team.
+ * @property {TeamLogTrustedTeamsRequestState} previous_value - Previous request
+ * state.
+ * @property {TeamLogTrustedTeamsRequestState} new_value - New request state.
+ */
+
+/**
+ * @typedef {Object} TeamLogChangedEnterpriseConnectedTeamStatusType
+ * @property {string} description
+ */
+
+/**
  * Shared album.
  * @typedef {Object} TeamLogCollectionShareDetails
  * @property {string} album_name - Album name.
@@ -6091,6 +7110,12 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamLogCollectionShareType
  * @property {string} description
+ */
+
+/**
+ * The name of the team
+ * @typedef {Object} TeamLogConnectedTeamName
+ * @property {string} team - The name of the team.
  */
 
 /**
@@ -6106,10 +7131,13 @@ only present when needed to discriminate between multiple possible subtypes.
  * team_member. Action was done on behalf of a team member.
  * @property {TeamLogNonTeamMemberLogInfo} [non_team_member] - Available if .tag
  * is non_team_member. Action was done on behalf of a non team member.
+ * @property {TeamLogTeamLogInfo} [organization_team] - Available if .tag is
+ * organization_team. Action was done on behalf of a team that's part of an
+ * organization.
  * @property {TeamLogTrustedNonTeamMemberLogInfo} [trusted_non_team_member] -
  * Available if .tag is trusted_non_team_member. Action was done on behalf of a
  * trusted non team member.
- * @property {('team_member'|'non_team_member'|'anonymous'|'team'|'trusted_non_team_member'|'other')} .tag - Tag identifying the union variant.
+ * @property {('team_member'|'non_team_member'|'anonymous'|'team'|'organization_team'|'trusted_non_team_member'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -6119,6 +7147,18 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamLogCreateFolderType
+ * @property {string} description
+ */
+
+/**
+ * Created team invite link.
+ * @typedef {Object} TeamLogCreateTeamInviteLinkDetails
+ * @property {string} link_url - The invite link url that was created.
+ * @property {string} expiry_date - The expiration date of the invite link.
+ */
+
+/**
+ * @typedef {Object} TeamLogCreateTeamInviteLinkType
  * @property {string} description
  */
 
@@ -6145,6 +7185,17 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamLogDataPlacementRestrictionSatisfyPolicyType
+ * @property {string} description
+ */
+
+/**
+ * Deleted team invite link.
+ * @typedef {Object} TeamLogDeleteTeamInviteLinkDetails
+ * @property {string} link_url - The invite link url that was deleted.
+ */
+
+/**
+ * @typedef {Object} TeamLogDeleteTeamInviteLinkType
  * @property {string} description
  */
 
@@ -6178,6 +7229,16 @@ possible subtypes.
 is only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [session_id] - Session ID. Might be missing due to
  * historical data gap.
+ */
+
+/**
+ * Added members to device approvals exception list.
+ * @typedef {Object} TeamLogDeviceApprovalsAddExceptionDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogDeviceApprovalsAddExceptionType
+ * @property {string} description
  */
 
 /**
@@ -6241,6 +7302,16 @@ is only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamLogDeviceApprovalsPolicy
  * @property {('unlimited'|'limited'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Removed members from device approvals exception list.
+ * @typedef {Object} TeamLogDeviceApprovalsRemoveExceptionDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogDeviceApprovalsRemoveExceptionType
+ * @property {string} description
  */
 
 /**
@@ -6630,9 +7701,47 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Ended enterprise admin session.
+ * @typedef {Object} TeamLogEndedEnterpriseAdminSessionDeprecatedDetails
+ * @property {TeamLogFedExtraDetails} federation_extra_details - More
+ * information about the organization or team.
+ */
+
+/**
+ * @typedef {Object} TeamLogEndedEnterpriseAdminSessionDeprecatedType
+ * @property {string} description
+ */
+
+/**
+ * Ended enterprise admin session.
+ * @typedef {Object} TeamLogEndedEnterpriseAdminSessionDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogEndedEnterpriseAdminSessionType
+ * @property {string} description
+ */
+
+/**
+ * Changed who can update a setting.
+ * @typedef {Object} TeamLogEnterpriseSettingsLockingDetails
+ * @property {string} team_name - The secondary team name.
+ * @property {string} settings_page_name - Settings page name.
+ * @property {string} previous_settings_page_locking_state - Previous locked
+ * settings page state.
+ * @property {string} new_settings_page_locking_state - New locked settings page
+ * state.
+ */
+
+/**
+ * @typedef {Object} TeamLogEnterpriseSettingsLockingType
+ * @property {string} description
+ */
+
+/**
  * Category of events in event audit log.
  * @typedef {Object} TeamLogEventCategory
- * @property {('apps'|'comments'|'devices'|'domains'|'file_operations'|'file_requests'|'groups'|'logins'|'members'|'paper'|'passwords'|'reports'|'sharing'|'showcase'|'sso'|'team_folders'|'team_policies'|'team_profile'|'tfa'|'trusted_teams'|'other')} .tag - Tag identifying the union variant.
+ * @property {('apps'|'comments'|'devices'|'domains'|'file_operations'|'file_requests'|'groups'|'legal_holds'|'logins'|'members'|'paper'|'passwords'|'reports'|'sharing'|'showcase'|'sso'|'team_folders'|'team_policies'|'team_profile'|'tfa'|'trusted_teams'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -6759,6 +7868,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileGetCopyReferenceDetails}
  * [file_get_copy_reference_details] - Available if .tag is
  * file_get_copy_reference_details.
+ * @property {TeamLogFileLockingLockStatusChangedDetails}
+ * [file_locking_lock_status_changed_details] - Available if .tag is
+ * file_locking_lock_status_changed_details.
  * @property {TeamLogFileMoveDetails} [file_move_details] - Available if .tag is
  * file_move_details.
  * @property {TeamLogFilePermanentlyDeleteDetails}
@@ -6777,6 +7889,17 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileSaveCopyReferenceDetails}
  * [file_save_copy_reference_details] - Available if .tag is
  * file_save_copy_reference_details.
+ * @property {TeamLogFolderOverviewDescriptionChangedDetails}
+ * [folder_overview_description_changed_details] - Available if .tag is
+ * folder_overview_description_changed_details.
+ * @property {TeamLogFolderOverviewItemPinnedDetails}
+ * [folder_overview_item_pinned_details] - Available if .tag is
+ * folder_overview_item_pinned_details.
+ * @property {TeamLogFolderOverviewItemUnpinnedDetails}
+ * [folder_overview_item_unpinned_details] - Available if .tag is
+ * folder_overview_item_unpinned_details.
+ * @property {TeamLogRewindFolderDetails} [rewind_folder_details] - Available if
+ * .tag is rewind_folder_details.
  * @property {TeamLogFileRequestChangeDetails} [file_request_change_details] -
  * Available if .tag is file_request_change_details.
  * @property {TeamLogFileRequestCloseDetails} [file_request_close_details] -
@@ -6820,6 +7943,42 @@ is only present when needed to discriminate between multiple possible subtypes.
  * Available if .tag is group_remove_member_details.
  * @property {TeamLogGroupRenameDetails} [group_rename_details] - Available if
  * .tag is group_rename_details.
+ * @property {TeamLogLegalHoldsActivateAHoldDetails}
+ * [legal_holds_activate_a_hold_details] - Available if .tag is
+ * legal_holds_activate_a_hold_details.
+ * @property {TeamLogLegalHoldsAddMembersDetails}
+ * [legal_holds_add_members_details] - Available if .tag is
+ * legal_holds_add_members_details.
+ * @property {TeamLogLegalHoldsChangeHoldDetailsDetails}
+ * [legal_holds_change_hold_details_details] - Available if .tag is
+ * legal_holds_change_hold_details_details.
+ * @property {TeamLogLegalHoldsChangeHoldNameDetails}
+ * [legal_holds_change_hold_name_details] - Available if .tag is
+ * legal_holds_change_hold_name_details.
+ * @property {TeamLogLegalHoldsExportAHoldDetails}
+ * [legal_holds_export_a_hold_details] - Available if .tag is
+ * legal_holds_export_a_hold_details.
+ * @property {TeamLogLegalHoldsExportCancelledDetails}
+ * [legal_holds_export_cancelled_details] - Available if .tag is
+ * legal_holds_export_cancelled_details.
+ * @property {TeamLogLegalHoldsExportDownloadedDetails}
+ * [legal_holds_export_downloaded_details] - Available if .tag is
+ * legal_holds_export_downloaded_details.
+ * @property {TeamLogLegalHoldsExportRemovedDetails}
+ * [legal_holds_export_removed_details] - Available if .tag is
+ * legal_holds_export_removed_details.
+ * @property {TeamLogLegalHoldsReleaseAHoldDetails}
+ * [legal_holds_release_a_hold_details] - Available if .tag is
+ * legal_holds_release_a_hold_details.
+ * @property {TeamLogLegalHoldsRemoveMembersDetails}
+ * [legal_holds_remove_members_details] - Available if .tag is
+ * legal_holds_remove_members_details.
+ * @property {TeamLogLegalHoldsReportAHoldDetails}
+ * [legal_holds_report_a_hold_details] - Available if .tag is
+ * legal_holds_report_a_hold_details.
+ * @property {TeamLogAccountLockOrUnlockedDetails}
+ * [account_lock_or_unlocked_details] - Available if .tag is
+ * account_lock_or_unlocked_details.
  * @property {TeamLogEmmErrorDetails} [emm_error_details] - Available if .tag is
  * emm_error_details.
  * @property {TeamLogGuestAdminSignedInViaTrustedTeamsDetails}
@@ -6847,6 +8006,12 @@ is only present when needed to discriminate between multiple possible subtypes.
  * sign_in_as_session_start_details.
  * @property {TeamLogSsoErrorDetails} [sso_error_details] - Available if .tag is
  * sso_error_details.
+ * @property {TeamLogCreateTeamInviteLinkDetails}
+ * [create_team_invite_link_details] - Available if .tag is
+ * create_team_invite_link_details.
+ * @property {TeamLogDeleteTeamInviteLinkDetails}
+ * [delete_team_invite_link_details] - Available if .tag is
+ * delete_team_invite_link_details.
  * @property {TeamLogMemberAddExternalIdDetails}
  * [member_add_external_id_details] - Available if .tag is
  * member_add_external_id_details.
@@ -6870,12 +8035,18 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMemberDeleteManualContactsDetails}
  * [member_delete_manual_contacts_details] - Available if .tag is
  * member_delete_manual_contacts_details.
+ * @property {TeamLogMemberDeleteProfilePhotoDetails}
+ * [member_delete_profile_photo_details] - Available if .tag is
+ * member_delete_profile_photo_details.
  * @property {TeamLogMemberPermanentlyDeleteAccountContentsDetails}
  * [member_permanently_delete_account_contents_details] - Available if .tag is
  * member_permanently_delete_account_contents_details.
  * @property {TeamLogMemberRemoveExternalIdDetails}
  * [member_remove_external_id_details] - Available if .tag is
  * member_remove_external_id_details.
+ * @property {TeamLogMemberSetProfilePhotoDetails}
+ * [member_set_profile_photo_details] - Available if .tag is
+ * member_set_profile_photo_details.
  * @property {TeamLogMemberSpaceLimitsAddCustomQuotaDetails}
  * [member_space_limits_add_custom_quota_details] - Available if .tag is
  * member_space_limits_add_custom_quota_details.
@@ -6893,9 +8064,35 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMemberTransferAccountContentsDetails}
  * [member_transfer_account_contents_details] - Available if .tag is
  * member_transfer_account_contents_details.
+ * @property {TeamLogPendingSecondaryEmailAddedDetails}
+ * [pending_secondary_email_added_details] - Available if .tag is
+ * pending_secondary_email_added_details.
+ * @property {TeamLogSecondaryEmailDeletedDetails}
+ * [secondary_email_deleted_details] - Available if .tag is
+ * secondary_email_deleted_details.
+ * @property {TeamLogSecondaryEmailVerifiedDetails}
+ * [secondary_email_verified_details] - Available if .tag is
+ * secondary_email_verified_details.
  * @property {TeamLogSecondaryMailsPolicyChangedDetails}
  * [secondary_mails_policy_changed_details] - Available if .tag is
  * secondary_mails_policy_changed_details.
+ * @property {TeamLogBinderAddPageDetails} [binder_add_page_details] - Available
+ * if .tag is binder_add_page_details.
+ * @property {TeamLogBinderAddSectionDetails} [binder_add_section_details] -
+ * Available if .tag is binder_add_section_details.
+ * @property {TeamLogBinderRemovePageDetails} [binder_remove_page_details] -
+ * Available if .tag is binder_remove_page_details.
+ * @property {TeamLogBinderRemoveSectionDetails} [binder_remove_section_details]
+ * - Available if .tag is binder_remove_section_details.
+ * @property {TeamLogBinderRenamePageDetails} [binder_rename_page_details] -
+ * Available if .tag is binder_rename_page_details.
+ * @property {TeamLogBinderRenameSectionDetails} [binder_rename_section_details]
+ * - Available if .tag is binder_rename_section_details.
+ * @property {TeamLogBinderReorderPageDetails} [binder_reorder_page_details] -
+ * Available if .tag is binder_reorder_page_details.
+ * @property {TeamLogBinderReorderSectionDetails}
+ * [binder_reorder_section_details] - Available if .tag is
+ * binder_reorder_section_details.
  * @property {TeamLogPaperContentAddMemberDetails}
  * [paper_content_add_member_details] - Available if .tag is
  * paper_content_add_member_details.
@@ -6989,6 +8186,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogPaperFolderTeamInviteDetails}
  * [paper_folder_team_invite_details] - Available if .tag is
  * paper_folder_team_invite_details.
+ * @property {TeamLogPaperPublishedLinkChangePermissionDetails}
+ * [paper_published_link_change_permission_details] - Available if .tag is
+ * paper_published_link_change_permission_details.
  * @property {TeamLogPaperPublishedLinkCreateDetails}
  * [paper_published_link_create_details] - Available if .tag is
  * paper_published_link_create_details.
@@ -7012,6 +8212,33 @@ is only present when needed to discriminate between multiple possible subtypes.
  * emm_create_usage_report_details.
  * @property {TeamLogExportMembersReportDetails} [export_members_report_details]
  * - Available if .tag is export_members_report_details.
+ * @property {TeamLogExportMembersReportFailDetails}
+ * [export_members_report_fail_details] - Available if .tag is
+ * export_members_report_fail_details.
+ * @property {TeamLogNoExpirationLinkGenCreateReportDetails}
+ * [no_expiration_link_gen_create_report_details] - Available if .tag is
+ * no_expiration_link_gen_create_report_details.
+ * @property {TeamLogNoExpirationLinkGenReportFailedDetails}
+ * [no_expiration_link_gen_report_failed_details] - Available if .tag is
+ * no_expiration_link_gen_report_failed_details.
+ * @property {TeamLogNoPasswordLinkGenCreateReportDetails}
+ * [no_password_link_gen_create_report_details] - Available if .tag is
+ * no_password_link_gen_create_report_details.
+ * @property {TeamLogNoPasswordLinkGenReportFailedDetails}
+ * [no_password_link_gen_report_failed_details] - Available if .tag is
+ * no_password_link_gen_report_failed_details.
+ * @property {TeamLogNoPasswordLinkViewCreateReportDetails}
+ * [no_password_link_view_create_report_details] - Available if .tag is
+ * no_password_link_view_create_report_details.
+ * @property {TeamLogNoPasswordLinkViewReportFailedDetails}
+ * [no_password_link_view_report_failed_details] - Available if .tag is
+ * no_password_link_view_report_failed_details.
+ * @property {TeamLogOutdatedLinkViewCreateReportDetails}
+ * [outdated_link_view_create_report_details] - Available if .tag is
+ * outdated_link_view_create_report_details.
+ * @property {TeamLogOutdatedLinkViewReportFailedDetails}
+ * [outdated_link_view_report_failed_details] - Available if .tag is
+ * outdated_link_view_report_failed_details.
  * @property {TeamLogPaperAdminExportStartDetails}
  * [paper_admin_export_start_details] - Available if .tag is
  * paper_admin_export_start_details.
@@ -7026,6 +8253,21 @@ is only present when needed to discriminate between multiple possible subtypes.
  * team_activity_create_report_fail_details.
  * @property {TeamLogCollectionShareDetails} [collection_share_details] -
  * Available if .tag is collection_share_details.
+ * @property {TeamLogFileTransfersFileAddDetails}
+ * [file_transfers_file_add_details] - Available if .tag is
+ * file_transfers_file_add_details.
+ * @property {TeamLogFileTransfersTransferDeleteDetails}
+ * [file_transfers_transfer_delete_details] - Available if .tag is
+ * file_transfers_transfer_delete_details.
+ * @property {TeamLogFileTransfersTransferDownloadDetails}
+ * [file_transfers_transfer_download_details] - Available if .tag is
+ * file_transfers_transfer_download_details.
+ * @property {TeamLogFileTransfersTransferSendDetails}
+ * [file_transfers_transfer_send_details] - Available if .tag is
+ * file_transfers_transfer_send_details.
+ * @property {TeamLogFileTransfersTransferViewDetails}
+ * [file_transfers_transfer_view_details] - Available if .tag is
+ * file_transfers_transfer_view_details.
  * @property {TeamLogNoteAclInviteOnlyDetails} [note_acl_invite_only_details] -
  * Available if .tag is note_acl_invite_only_details.
  * @property {TeamLogNoteAclLinkDetails} [note_acl_link_details] - Available if
@@ -7128,6 +8370,12 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSharedContentRequestAccessDetails}
  * [shared_content_request_access_details] - Available if .tag is
  * shared_content_request_access_details.
+ * @property {TeamLogSharedContentRestoreInviteesDetails}
+ * [shared_content_restore_invitees_details] - Available if .tag is
+ * shared_content_restore_invitees_details.
+ * @property {TeamLogSharedContentRestoreMemberDetails}
+ * [shared_content_restore_member_details] - Available if .tag is
+ * shared_content_restore_member_details.
  * @property {TeamLogSharedContentUnshareDetails}
  * [shared_content_unshare_details] - Available if .tag is
  * shared_content_unshare_details.
@@ -7179,6 +8427,33 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSharedLinkRemoveExpiryDetails}
  * [shared_link_remove_expiry_details] - Available if .tag is
  * shared_link_remove_expiry_details.
+ * @property {TeamLogSharedLinkSettingsAddExpirationDetails}
+ * [shared_link_settings_add_expiration_details] - Available if .tag is
+ * shared_link_settings_add_expiration_details.
+ * @property {TeamLogSharedLinkSettingsAddPasswordDetails}
+ * [shared_link_settings_add_password_details] - Available if .tag is
+ * shared_link_settings_add_password_details.
+ * @property {TeamLogSharedLinkSettingsAllowDownloadDisabledDetails}
+ * [shared_link_settings_allow_download_disabled_details] - Available if .tag is
+ * shared_link_settings_allow_download_disabled_details.
+ * @property {TeamLogSharedLinkSettingsAllowDownloadEnabledDetails}
+ * [shared_link_settings_allow_download_enabled_details] - Available if .tag is
+ * shared_link_settings_allow_download_enabled_details.
+ * @property {TeamLogSharedLinkSettingsChangeAudienceDetails}
+ * [shared_link_settings_change_audience_details] - Available if .tag is
+ * shared_link_settings_change_audience_details.
+ * @property {TeamLogSharedLinkSettingsChangeExpirationDetails}
+ * [shared_link_settings_change_expiration_details] - Available if .tag is
+ * shared_link_settings_change_expiration_details.
+ * @property {TeamLogSharedLinkSettingsChangePasswordDetails}
+ * [shared_link_settings_change_password_details] - Available if .tag is
+ * shared_link_settings_change_password_details.
+ * @property {TeamLogSharedLinkSettingsRemoveExpirationDetails}
+ * [shared_link_settings_remove_expiration_details] - Available if .tag is
+ * shared_link_settings_remove_expiration_details.
+ * @property {TeamLogSharedLinkSettingsRemovePasswordDetails}
+ * [shared_link_settings_remove_password_details] - Available if .tag is
+ * shared_link_settings_remove_password_details.
  * @property {TeamLogSharedLinkShareDetails} [shared_link_share_details] -
  * Available if .tag is shared_link_share_details.
  * @property {TeamLogSharedLinkViewDetails} [shared_link_view_details] -
@@ -7299,6 +8574,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogDataPlacementRestrictionSatisfyPolicyDetails}
  * [data_placement_restriction_satisfy_policy_details] - Available if .tag is
  * data_placement_restriction_satisfy_policy_details.
+ * @property {TeamLogDeviceApprovalsAddExceptionDetails}
+ * [device_approvals_add_exception_details] - Available if .tag is
+ * device_approvals_add_exception_details.
  * @property {TeamLogDeviceApprovalsChangeDesktopPolicyDetails}
  * [device_approvals_change_desktop_policy_details] - Available if .tag is
  * device_approvals_change_desktop_policy_details.
@@ -7311,6 +8589,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogDeviceApprovalsChangeUnlinkActionDetails}
  * [device_approvals_change_unlink_action_details] - Available if .tag is
  * device_approvals_change_unlink_action_details.
+ * @property {TeamLogDeviceApprovalsRemoveExceptionDetails}
+ * [device_approvals_remove_exception_details] - Available if .tag is
+ * device_approvals_remove_exception_details.
  * @property {TeamLogDirectoryRestrictionsAddMembersDetails}
  * [directory_restrictions_add_members_details] - Available if .tag is
  * directory_restrictions_add_members_details.
@@ -7329,6 +8610,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileCommentsChangePolicyDetails}
  * [file_comments_change_policy_details] - Available if .tag is
  * file_comments_change_policy_details.
+ * @property {TeamLogFileLockingPolicyChangedDetails}
+ * [file_locking_policy_changed_details] - Available if .tag is
+ * file_locking_policy_changed_details.
  * @property {TeamLogFileRequestsChangePolicyDetails}
  * [file_requests_change_policy_details] - Available if .tag is
  * file_requests_change_policy_details.
@@ -7338,6 +8622,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileRequestsEmailsRestrictedToTeamOnlyDetails}
  * [file_requests_emails_restricted_to_team_only_details] - Available if .tag is
  * file_requests_emails_restricted_to_team_only_details.
+ * @property {TeamLogFileTransfersPolicyChangedDetails}
+ * [file_transfers_policy_changed_details] - Available if .tag is
+ * file_transfers_policy_changed_details.
  * @property {TeamLogGoogleSsoChangePolicyDetails}
  * [google_sso_change_policy_details] - Available if .tag is
  * google_sso_change_policy_details.
@@ -7350,6 +8637,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMemberRequestsChangePolicyDetails}
  * [member_requests_change_policy_details] - Available if .tag is
  * member_requests_change_policy_details.
+ * @property {TeamLogMemberSendInvitePolicyChangedDetails}
+ * [member_send_invite_policy_changed_details] - Available if .tag is
+ * member_send_invite_policy_changed_details.
  * @property {TeamLogMemberSpaceLimitsAddExceptionDetails}
  * [member_space_limits_add_exception_details] - Available if .tag is
  * member_space_limits_add_exception_details.
@@ -7394,12 +8684,17 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogPaperEnabledUsersGroupRemovalDetails}
  * [paper_enabled_users_group_removal_details] - Available if .tag is
  * paper_enabled_users_group_removal_details.
+ * @property {TeamLogPasswordStrengthRequirementsChangePolicyDetails}
+ * [password_strength_requirements_change_policy_details] - Available if .tag is
+ * password_strength_requirements_change_policy_details.
  * @property {TeamLogPermanentDeleteChangePolicyDetails}
  * [permanent_delete_change_policy_details] - Available if .tag is
  * permanent_delete_change_policy_details.
  * @property {TeamLogResellerSupportChangePolicyDetails}
  * [reseller_support_change_policy_details] - Available if .tag is
  * reseller_support_change_policy_details.
+ * @property {TeamLogRewindPolicyChangedDetails} [rewind_policy_changed_details]
+ * - Available if .tag is rewind_policy_changed_details.
  * @property {TeamLogSharingChangeFolderJoinPolicyDetails}
  * [sharing_change_folder_join_policy_details] - Available if .tag is
  * sharing_change_folder_join_policy_details.
@@ -7418,6 +8713,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogShowcaseChangeExternalSharingPolicyDetails}
  * [showcase_change_external_sharing_policy_details] - Available if .tag is
  * showcase_change_external_sharing_policy_details.
+ * @property {TeamLogSmarterSmartSyncPolicyChangedDetails}
+ * [smarter_smart_sync_policy_changed_details] - Available if .tag is
+ * smarter_smart_sync_policy_changed_details.
  * @property {TeamLogSmartSyncChangePolicyDetails}
  * [smart_sync_change_policy_details] - Available if .tag is
  * smart_sync_change_policy_details.
@@ -7433,14 +8731,27 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogTeamSelectiveSyncPolicyChangedDetails}
  * [team_selective_sync_policy_changed_details] - Available if .tag is
  * team_selective_sync_policy_changed_details.
+ * @property {TeamLogTeamSharingWhitelistSubjectsChangedDetails}
+ * [team_sharing_whitelist_subjects_changed_details] - Available if .tag is
+ * team_sharing_whitelist_subjects_changed_details.
+ * @property {TeamLogTfaAddExceptionDetails} [tfa_add_exception_details] -
+ * Available if .tag is tfa_add_exception_details.
  * @property {TeamLogTfaChangePolicyDetails} [tfa_change_policy_details] -
  * Available if .tag is tfa_change_policy_details.
+ * @property {TeamLogTfaRemoveExceptionDetails} [tfa_remove_exception_details] -
+ * Available if .tag is tfa_remove_exception_details.
  * @property {TeamLogTwoAccountChangePolicyDetails}
  * [two_account_change_policy_details] - Available if .tag is
  * two_account_change_policy_details.
  * @property {TeamLogViewerInfoPolicyChangedDetails}
  * [viewer_info_policy_changed_details] - Available if .tag is
  * viewer_info_policy_changed_details.
+ * @property {TeamLogWatermarkingPolicyChangedDetails}
+ * [watermarking_policy_changed_details] - Available if .tag is
+ * watermarking_policy_changed_details.
+ * @property {TeamLogWebSessionsChangeActiveSessionLimitDetails}
+ * [web_sessions_change_active_session_limit_details] - Available if .tag is
+ * web_sessions_change_active_session_limit_details.
  * @property {TeamLogWebSessionsChangeFixedLengthPolicyDetails}
  * [web_sessions_change_fixed_length_policy_details] - Available if .tag is
  * web_sessions_change_fixed_length_policy_details.
@@ -7482,9 +8793,27 @@ is only present when needed to discriminate between multiple possible subtypes.
  * tfa_remove_security_key_details.
  * @property {TeamLogTfaResetDetails} [tfa_reset_details] - Available if .tag is
  * tfa_reset_details.
+ * @property {TeamLogChangedEnterpriseAdminRoleDetails}
+ * [changed_enterprise_admin_role_details] - Available if .tag is
+ * changed_enterprise_admin_role_details.
+ * @property {TeamLogChangedEnterpriseConnectedTeamStatusDetails}
+ * [changed_enterprise_connected_team_status_details] - Available if .tag is
+ * changed_enterprise_connected_team_status_details.
+ * @property {TeamLogEndedEnterpriseAdminSessionDetails}
+ * [ended_enterprise_admin_session_details] - Available if .tag is
+ * ended_enterprise_admin_session_details.
+ * @property {TeamLogEndedEnterpriseAdminSessionDeprecatedDetails}
+ * [ended_enterprise_admin_session_deprecated_details] - Available if .tag is
+ * ended_enterprise_admin_session_deprecated_details.
+ * @property {TeamLogEnterpriseSettingsLockingDetails}
+ * [enterprise_settings_locking_details] - Available if .tag is
+ * enterprise_settings_locking_details.
  * @property {TeamLogGuestAdminChangeStatusDetails}
  * [guest_admin_change_status_details] - Available if .tag is
  * guest_admin_change_status_details.
+ * @property {TeamLogStartedEnterpriseAdminSessionDetails}
+ * [started_enterprise_admin_session_details] - Available if .tag is
+ * started_enterprise_admin_session_details.
  * @property {TeamLogTeamMergeRequestAcceptedDetails}
  * [team_merge_request_accepted_details] - Available if .tag is
  * team_merge_request_accepted_details.
@@ -7542,7 +8871,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMissingDetails} [missing_details] - Available if .tag is
  * missing_details. Hints that this event was returned with missing details due
  * to an internal error.
- * @property {('app_link_team_details'|'app_link_user_details'|'app_unlink_team_details'|'app_unlink_user_details'|'integration_connected_details'|'integration_disconnected_details'|'file_add_comment_details'|'file_change_comment_subscription_details'|'file_delete_comment_details'|'file_edit_comment_details'|'file_like_comment_details'|'file_resolve_comment_details'|'file_unlike_comment_details'|'file_unresolve_comment_details'|'device_change_ip_desktop_details'|'device_change_ip_mobile_details'|'device_change_ip_web_details'|'device_delete_on_unlink_fail_details'|'device_delete_on_unlink_success_details'|'device_link_fail_details'|'device_link_success_details'|'device_management_disabled_details'|'device_management_enabled_details'|'device_unlink_details'|'emm_refresh_auth_token_details'|'account_capture_change_availability_details'|'account_capture_migrate_account_details'|'account_capture_notification_emails_sent_details'|'account_capture_relinquish_account_details'|'disabled_domain_invites_details'|'domain_invites_approve_request_to_join_team_details'|'domain_invites_decline_request_to_join_team_details'|'domain_invites_email_existing_users_details'|'domain_invites_request_to_join_team_details'|'domain_invites_set_invite_new_user_pref_to_no_details'|'domain_invites_set_invite_new_user_pref_to_yes_details'|'domain_verification_add_domain_fail_details'|'domain_verification_add_domain_success_details'|'domain_verification_remove_domain_details'|'enabled_domain_invites_details'|'create_folder_details'|'file_add_details'|'file_copy_details'|'file_delete_details'|'file_download_details'|'file_edit_details'|'file_get_copy_reference_details'|'file_move_details'|'file_permanently_delete_details'|'file_preview_details'|'file_rename_details'|'file_restore_details'|'file_revert_details'|'file_rollback_changes_details'|'file_save_copy_reference_details'|'file_request_change_details'|'file_request_close_details'|'file_request_create_details'|'file_request_delete_details'|'file_request_receive_file_details'|'group_add_external_id_details'|'group_add_member_details'|'group_change_external_id_details'|'group_change_management_type_details'|'group_change_member_role_details'|'group_create_details'|'group_delete_details'|'group_description_updated_details'|'group_join_policy_updated_details'|'group_moved_details'|'group_remove_external_id_details'|'group_remove_member_details'|'group_rename_details'|'emm_error_details'|'guest_admin_signed_in_via_trusted_teams_details'|'guest_admin_signed_out_via_trusted_teams_details'|'login_fail_details'|'login_success_details'|'logout_details'|'reseller_support_session_end_details'|'reseller_support_session_start_details'|'sign_in_as_session_end_details'|'sign_in_as_session_start_details'|'sso_error_details'|'member_add_external_id_details'|'member_add_name_details'|'member_change_admin_role_details'|'member_change_email_details'|'member_change_external_id_details'|'member_change_membership_type_details'|'member_change_name_details'|'member_change_status_details'|'member_delete_manual_contacts_details'|'member_permanently_delete_account_contents_details'|'member_remove_external_id_details'|'member_space_limits_add_custom_quota_details'|'member_space_limits_change_custom_quota_details'|'member_space_limits_change_status_details'|'member_space_limits_remove_custom_quota_details'|'member_suggest_details'|'member_transfer_account_contents_details'|'secondary_mails_policy_changed_details'|'paper_content_add_member_details'|'paper_content_add_to_folder_details'|'paper_content_archive_details'|'paper_content_create_details'|'paper_content_permanently_delete_details'|'paper_content_remove_from_folder_details'|'paper_content_remove_member_details'|'paper_content_rename_details'|'paper_content_restore_details'|'paper_doc_add_comment_details'|'paper_doc_change_member_role_details'|'paper_doc_change_sharing_policy_details'|'paper_doc_change_subscription_details'|'paper_doc_deleted_details'|'paper_doc_delete_comment_details'|'paper_doc_download_details'|'paper_doc_edit_details'|'paper_doc_edit_comment_details'|'paper_doc_followed_details'|'paper_doc_mention_details'|'paper_doc_ownership_changed_details'|'paper_doc_request_access_details'|'paper_doc_resolve_comment_details'|'paper_doc_revert_details'|'paper_doc_slack_share_details'|'paper_doc_team_invite_details'|'paper_doc_trashed_details'|'paper_doc_unresolve_comment_details'|'paper_doc_untrashed_details'|'paper_doc_view_details'|'paper_external_view_allow_details'|'paper_external_view_default_team_details'|'paper_external_view_forbid_details'|'paper_folder_change_subscription_details'|'paper_folder_deleted_details'|'paper_folder_followed_details'|'paper_folder_team_invite_details'|'paper_published_link_create_details'|'paper_published_link_disabled_details'|'paper_published_link_view_details'|'password_change_details'|'password_reset_details'|'password_reset_all_details'|'emm_create_exceptions_report_details'|'emm_create_usage_report_details'|'export_members_report_details'|'paper_admin_export_start_details'|'smart_sync_create_admin_privilege_report_details'|'team_activity_create_report_details'|'team_activity_create_report_fail_details'|'collection_share_details'|'note_acl_invite_only_details'|'note_acl_link_details'|'note_acl_team_link_details'|'note_shared_details'|'note_share_receive_details'|'open_note_shared_details'|'sf_add_group_details'|'sf_allow_non_members_to_view_shared_links_details'|'sf_external_invite_warn_details'|'sf_fb_invite_details'|'sf_fb_invite_change_role_details'|'sf_fb_uninvite_details'|'sf_invite_group_details'|'sf_team_grant_access_details'|'sf_team_invite_details'|'sf_team_invite_change_role_details'|'sf_team_join_details'|'sf_team_join_from_oob_link_details'|'sf_team_uninvite_details'|'shared_content_add_invitees_details'|'shared_content_add_link_expiry_details'|'shared_content_add_link_password_details'|'shared_content_add_member_details'|'shared_content_change_downloads_policy_details'|'shared_content_change_invitee_role_details'|'shared_content_change_link_audience_details'|'shared_content_change_link_expiry_details'|'shared_content_change_link_password_details'|'shared_content_change_member_role_details'|'shared_content_change_viewer_info_policy_details'|'shared_content_claim_invitation_details'|'shared_content_copy_details'|'shared_content_download_details'|'shared_content_relinquish_membership_details'|'shared_content_remove_invitees_details'|'shared_content_remove_link_expiry_details'|'shared_content_remove_link_password_details'|'shared_content_remove_member_details'|'shared_content_request_access_details'|'shared_content_unshare_details'|'shared_content_view_details'|'shared_folder_change_link_policy_details'|'shared_folder_change_members_inheritance_policy_details'|'shared_folder_change_members_management_policy_details'|'shared_folder_change_members_policy_details'|'shared_folder_create_details'|'shared_folder_decline_invitation_details'|'shared_folder_mount_details'|'shared_folder_nest_details'|'shared_folder_transfer_ownership_details'|'shared_folder_unmount_details'|'shared_link_add_expiry_details'|'shared_link_change_expiry_details'|'shared_link_change_visibility_details'|'shared_link_copy_details'|'shared_link_create_details'|'shared_link_disable_details'|'shared_link_download_details'|'shared_link_remove_expiry_details'|'shared_link_share_details'|'shared_link_view_details'|'shared_note_opened_details'|'shmodel_group_share_details'|'showcase_access_granted_details'|'showcase_add_member_details'|'showcase_archived_details'|'showcase_created_details'|'showcase_delete_comment_details'|'showcase_edited_details'|'showcase_edit_comment_details'|'showcase_file_added_details'|'showcase_file_download_details'|'showcase_file_removed_details'|'showcase_file_view_details'|'showcase_permanently_deleted_details'|'showcase_post_comment_details'|'showcase_remove_member_details'|'showcase_renamed_details'|'showcase_request_access_details'|'showcase_resolve_comment_details'|'showcase_restored_details'|'showcase_trashed_details'|'showcase_trashed_deprecated_details'|'showcase_unresolve_comment_details'|'showcase_untrashed_details'|'showcase_untrashed_deprecated_details'|'showcase_view_details'|'sso_add_cert_details'|'sso_add_login_url_details'|'sso_add_logout_url_details'|'sso_change_cert_details'|'sso_change_login_url_details'|'sso_change_logout_url_details'|'sso_change_saml_identity_mode_details'|'sso_remove_cert_details'|'sso_remove_login_url_details'|'sso_remove_logout_url_details'|'team_folder_change_status_details'|'team_folder_create_details'|'team_folder_downgrade_details'|'team_folder_permanently_delete_details'|'team_folder_rename_details'|'team_selective_sync_settings_changed_details'|'account_capture_change_policy_details'|'allow_download_disabled_details'|'allow_download_enabled_details'|'camera_uploads_policy_changed_details'|'data_placement_restriction_change_policy_details'|'data_placement_restriction_satisfy_policy_details'|'device_approvals_change_desktop_policy_details'|'device_approvals_change_mobile_policy_details'|'device_approvals_change_overage_action_details'|'device_approvals_change_unlink_action_details'|'directory_restrictions_add_members_details'|'directory_restrictions_remove_members_details'|'emm_add_exception_details'|'emm_change_policy_details'|'emm_remove_exception_details'|'extended_version_history_change_policy_details'|'file_comments_change_policy_details'|'file_requests_change_policy_details'|'file_requests_emails_enabled_details'|'file_requests_emails_restricted_to_team_only_details'|'google_sso_change_policy_details'|'group_user_management_change_policy_details'|'integration_policy_changed_details'|'member_requests_change_policy_details'|'member_space_limits_add_exception_details'|'member_space_limits_change_caps_type_policy_details'|'member_space_limits_change_policy_details'|'member_space_limits_remove_exception_details'|'member_suggestions_change_policy_details'|'microsoft_office_addin_change_policy_details'|'network_control_change_policy_details'|'paper_change_deployment_policy_details'|'paper_change_member_link_policy_details'|'paper_change_member_policy_details'|'paper_change_policy_details'|'paper_default_folder_policy_changed_details'|'paper_desktop_policy_changed_details'|'paper_enabled_users_group_addition_details'|'paper_enabled_users_group_removal_details'|'permanent_delete_change_policy_details'|'reseller_support_change_policy_details'|'sharing_change_folder_join_policy_details'|'sharing_change_link_policy_details'|'sharing_change_member_policy_details'|'showcase_change_download_policy_details'|'showcase_change_enabled_policy_details'|'showcase_change_external_sharing_policy_details'|'smart_sync_change_policy_details'|'smart_sync_not_opt_out_details'|'smart_sync_opt_out_details'|'sso_change_policy_details'|'team_extensions_policy_changed_details'|'team_selective_sync_policy_changed_details'|'tfa_change_policy_details'|'two_account_change_policy_details'|'viewer_info_policy_changed_details'|'web_sessions_change_fixed_length_policy_details'|'web_sessions_change_idle_length_policy_details'|'team_merge_from_details'|'team_merge_to_details'|'team_profile_add_logo_details'|'team_profile_change_default_language_details'|'team_profile_change_logo_details'|'team_profile_change_name_details'|'team_profile_remove_logo_details'|'tfa_add_backup_phone_details'|'tfa_add_security_key_details'|'tfa_change_backup_phone_details'|'tfa_change_status_details'|'tfa_remove_backup_phone_details'|'tfa_remove_security_key_details'|'tfa_reset_details'|'guest_admin_change_status_details'|'team_merge_request_accepted_details'|'team_merge_request_accepted_shown_to_primary_team_details'|'team_merge_request_accepted_shown_to_secondary_team_details'|'team_merge_request_auto_canceled_details'|'team_merge_request_canceled_details'|'team_merge_request_canceled_shown_to_primary_team_details'|'team_merge_request_canceled_shown_to_secondary_team_details'|'team_merge_request_expired_details'|'team_merge_request_expired_shown_to_primary_team_details'|'team_merge_request_expired_shown_to_secondary_team_details'|'team_merge_request_rejected_shown_to_primary_team_details'|'team_merge_request_rejected_shown_to_secondary_team_details'|'team_merge_request_reminder_details'|'team_merge_request_reminder_shown_to_primary_team_details'|'team_merge_request_reminder_shown_to_secondary_team_details'|'team_merge_request_revoked_details'|'team_merge_request_sent_shown_to_primary_team_details'|'team_merge_request_sent_shown_to_secondary_team_details'|'missing_details'|'other')} .tag - Tag identifying the union variant.
+ * @property {('app_link_team_details'|'app_link_user_details'|'app_unlink_team_details'|'app_unlink_user_details'|'integration_connected_details'|'integration_disconnected_details'|'file_add_comment_details'|'file_change_comment_subscription_details'|'file_delete_comment_details'|'file_edit_comment_details'|'file_like_comment_details'|'file_resolve_comment_details'|'file_unlike_comment_details'|'file_unresolve_comment_details'|'device_change_ip_desktop_details'|'device_change_ip_mobile_details'|'device_change_ip_web_details'|'device_delete_on_unlink_fail_details'|'device_delete_on_unlink_success_details'|'device_link_fail_details'|'device_link_success_details'|'device_management_disabled_details'|'device_management_enabled_details'|'device_unlink_details'|'emm_refresh_auth_token_details'|'account_capture_change_availability_details'|'account_capture_migrate_account_details'|'account_capture_notification_emails_sent_details'|'account_capture_relinquish_account_details'|'disabled_domain_invites_details'|'domain_invites_approve_request_to_join_team_details'|'domain_invites_decline_request_to_join_team_details'|'domain_invites_email_existing_users_details'|'domain_invites_request_to_join_team_details'|'domain_invites_set_invite_new_user_pref_to_no_details'|'domain_invites_set_invite_new_user_pref_to_yes_details'|'domain_verification_add_domain_fail_details'|'domain_verification_add_domain_success_details'|'domain_verification_remove_domain_details'|'enabled_domain_invites_details'|'create_folder_details'|'file_add_details'|'file_copy_details'|'file_delete_details'|'file_download_details'|'file_edit_details'|'file_get_copy_reference_details'|'file_locking_lock_status_changed_details'|'file_move_details'|'file_permanently_delete_details'|'file_preview_details'|'file_rename_details'|'file_restore_details'|'file_revert_details'|'file_rollback_changes_details'|'file_save_copy_reference_details'|'folder_overview_description_changed_details'|'folder_overview_item_pinned_details'|'folder_overview_item_unpinned_details'|'rewind_folder_details'|'file_request_change_details'|'file_request_close_details'|'file_request_create_details'|'file_request_delete_details'|'file_request_receive_file_details'|'group_add_external_id_details'|'group_add_member_details'|'group_change_external_id_details'|'group_change_management_type_details'|'group_change_member_role_details'|'group_create_details'|'group_delete_details'|'group_description_updated_details'|'group_join_policy_updated_details'|'group_moved_details'|'group_remove_external_id_details'|'group_remove_member_details'|'group_rename_details'|'legal_holds_activate_a_hold_details'|'legal_holds_add_members_details'|'legal_holds_change_hold_details_details'|'legal_holds_change_hold_name_details'|'legal_holds_export_a_hold_details'|'legal_holds_export_cancelled_details'|'legal_holds_export_downloaded_details'|'legal_holds_export_removed_details'|'legal_holds_release_a_hold_details'|'legal_holds_remove_members_details'|'legal_holds_report_a_hold_details'|'account_lock_or_unlocked_details'|'emm_error_details'|'guest_admin_signed_in_via_trusted_teams_details'|'guest_admin_signed_out_via_trusted_teams_details'|'login_fail_details'|'login_success_details'|'logout_details'|'reseller_support_session_end_details'|'reseller_support_session_start_details'|'sign_in_as_session_end_details'|'sign_in_as_session_start_details'|'sso_error_details'|'create_team_invite_link_details'|'delete_team_invite_link_details'|'member_add_external_id_details'|'member_add_name_details'|'member_change_admin_role_details'|'member_change_email_details'|'member_change_external_id_details'|'member_change_membership_type_details'|'member_change_name_details'|'member_change_status_details'|'member_delete_manual_contacts_details'|'member_delete_profile_photo_details'|'member_permanently_delete_account_contents_details'|'member_remove_external_id_details'|'member_set_profile_photo_details'|'member_space_limits_add_custom_quota_details'|'member_space_limits_change_custom_quota_details'|'member_space_limits_change_status_details'|'member_space_limits_remove_custom_quota_details'|'member_suggest_details'|'member_transfer_account_contents_details'|'pending_secondary_email_added_details'|'secondary_email_deleted_details'|'secondary_email_verified_details'|'secondary_mails_policy_changed_details'|'binder_add_page_details'|'binder_add_section_details'|'binder_remove_page_details'|'binder_remove_section_details'|'binder_rename_page_details'|'binder_rename_section_details'|'binder_reorder_page_details'|'binder_reorder_section_details'|'paper_content_add_member_details'|'paper_content_add_to_folder_details'|'paper_content_archive_details'|'paper_content_create_details'|'paper_content_permanently_delete_details'|'paper_content_remove_from_folder_details'|'paper_content_remove_member_details'|'paper_content_rename_details'|'paper_content_restore_details'|'paper_doc_add_comment_details'|'paper_doc_change_member_role_details'|'paper_doc_change_sharing_policy_details'|'paper_doc_change_subscription_details'|'paper_doc_deleted_details'|'paper_doc_delete_comment_details'|'paper_doc_download_details'|'paper_doc_edit_details'|'paper_doc_edit_comment_details'|'paper_doc_followed_details'|'paper_doc_mention_details'|'paper_doc_ownership_changed_details'|'paper_doc_request_access_details'|'paper_doc_resolve_comment_details'|'paper_doc_revert_details'|'paper_doc_slack_share_details'|'paper_doc_team_invite_details'|'paper_doc_trashed_details'|'paper_doc_unresolve_comment_details'|'paper_doc_untrashed_details'|'paper_doc_view_details'|'paper_external_view_allow_details'|'paper_external_view_default_team_details'|'paper_external_view_forbid_details'|'paper_folder_change_subscription_details'|'paper_folder_deleted_details'|'paper_folder_followed_details'|'paper_folder_team_invite_details'|'paper_published_link_change_permission_details'|'paper_published_link_create_details'|'paper_published_link_disabled_details'|'paper_published_link_view_details'|'password_change_details'|'password_reset_details'|'password_reset_all_details'|'emm_create_exceptions_report_details'|'emm_create_usage_report_details'|'export_members_report_details'|'export_members_report_fail_details'|'no_expiration_link_gen_create_report_details'|'no_expiration_link_gen_report_failed_details'|'no_password_link_gen_create_report_details'|'no_password_link_gen_report_failed_details'|'no_password_link_view_create_report_details'|'no_password_link_view_report_failed_details'|'outdated_link_view_create_report_details'|'outdated_link_view_report_failed_details'|'paper_admin_export_start_details'|'smart_sync_create_admin_privilege_report_details'|'team_activity_create_report_details'|'team_activity_create_report_fail_details'|'collection_share_details'|'file_transfers_file_add_details'|'file_transfers_transfer_delete_details'|'file_transfers_transfer_download_details'|'file_transfers_transfer_send_details'|'file_transfers_transfer_view_details'|'note_acl_invite_only_details'|'note_acl_link_details'|'note_acl_team_link_details'|'note_shared_details'|'note_share_receive_details'|'open_note_shared_details'|'sf_add_group_details'|'sf_allow_non_members_to_view_shared_links_details'|'sf_external_invite_warn_details'|'sf_fb_invite_details'|'sf_fb_invite_change_role_details'|'sf_fb_uninvite_details'|'sf_invite_group_details'|'sf_team_grant_access_details'|'sf_team_invite_details'|'sf_team_invite_change_role_details'|'sf_team_join_details'|'sf_team_join_from_oob_link_details'|'sf_team_uninvite_details'|'shared_content_add_invitees_details'|'shared_content_add_link_expiry_details'|'shared_content_add_link_password_details'|'shared_content_add_member_details'|'shared_content_change_downloads_policy_details'|'shared_content_change_invitee_role_details'|'shared_content_change_link_audience_details'|'shared_content_change_link_expiry_details'|'shared_content_change_link_password_details'|'shared_content_change_member_role_details'|'shared_content_change_viewer_info_policy_details'|'shared_content_claim_invitation_details'|'shared_content_copy_details'|'shared_content_download_details'|'shared_content_relinquish_membership_details'|'shared_content_remove_invitees_details'|'shared_content_remove_link_expiry_details'|'shared_content_remove_link_password_details'|'shared_content_remove_member_details'|'shared_content_request_access_details'|'shared_content_restore_invitees_details'|'shared_content_restore_member_details'|'shared_content_unshare_details'|'shared_content_view_details'|'shared_folder_change_link_policy_details'|'shared_folder_change_members_inheritance_policy_details'|'shared_folder_change_members_management_policy_details'|'shared_folder_change_members_policy_details'|'shared_folder_create_details'|'shared_folder_decline_invitation_details'|'shared_folder_mount_details'|'shared_folder_nest_details'|'shared_folder_transfer_ownership_details'|'shared_folder_unmount_details'|'shared_link_add_expiry_details'|'shared_link_change_expiry_details'|'shared_link_change_visibility_details'|'shared_link_copy_details'|'shared_link_create_details'|'shared_link_disable_details'|'shared_link_download_details'|'shared_link_remove_expiry_details'|'shared_link_settings_add_expiration_details'|'shared_link_settings_add_password_details'|'shared_link_settings_allow_download_disabled_details'|'shared_link_settings_allow_download_enabled_details'|'shared_link_settings_change_audience_details'|'shared_link_settings_change_expiration_details'|'shared_link_settings_change_password_details'|'shared_link_settings_remove_expiration_details'|'shared_link_settings_remove_password_details'|'shared_link_share_details'|'shared_link_view_details'|'shared_note_opened_details'|'shmodel_group_share_details'|'showcase_access_granted_details'|'showcase_add_member_details'|'showcase_archived_details'|'showcase_created_details'|'showcase_delete_comment_details'|'showcase_edited_details'|'showcase_edit_comment_details'|'showcase_file_added_details'|'showcase_file_download_details'|'showcase_file_removed_details'|'showcase_file_view_details'|'showcase_permanently_deleted_details'|'showcase_post_comment_details'|'showcase_remove_member_details'|'showcase_renamed_details'|'showcase_request_access_details'|'showcase_resolve_comment_details'|'showcase_restored_details'|'showcase_trashed_details'|'showcase_trashed_deprecated_details'|'showcase_unresolve_comment_details'|'showcase_untrashed_details'|'showcase_untrashed_deprecated_details'|'showcase_view_details'|'sso_add_cert_details'|'sso_add_login_url_details'|'sso_add_logout_url_details'|'sso_change_cert_details'|'sso_change_login_url_details'|'sso_change_logout_url_details'|'sso_change_saml_identity_mode_details'|'sso_remove_cert_details'|'sso_remove_login_url_details'|'sso_remove_logout_url_details'|'team_folder_change_status_details'|'team_folder_create_details'|'team_folder_downgrade_details'|'team_folder_permanently_delete_details'|'team_folder_rename_details'|'team_selective_sync_settings_changed_details'|'account_capture_change_policy_details'|'allow_download_disabled_details'|'allow_download_enabled_details'|'camera_uploads_policy_changed_details'|'data_placement_restriction_change_policy_details'|'data_placement_restriction_satisfy_policy_details'|'device_approvals_add_exception_details'|'device_approvals_change_desktop_policy_details'|'device_approvals_change_mobile_policy_details'|'device_approvals_change_overage_action_details'|'device_approvals_change_unlink_action_details'|'device_approvals_remove_exception_details'|'directory_restrictions_add_members_details'|'directory_restrictions_remove_members_details'|'emm_add_exception_details'|'emm_change_policy_details'|'emm_remove_exception_details'|'extended_version_history_change_policy_details'|'file_comments_change_policy_details'|'file_locking_policy_changed_details'|'file_requests_change_policy_details'|'file_requests_emails_enabled_details'|'file_requests_emails_restricted_to_team_only_details'|'file_transfers_policy_changed_details'|'google_sso_change_policy_details'|'group_user_management_change_policy_details'|'integration_policy_changed_details'|'member_requests_change_policy_details'|'member_send_invite_policy_changed_details'|'member_space_limits_add_exception_details'|'member_space_limits_change_caps_type_policy_details'|'member_space_limits_change_policy_details'|'member_space_limits_remove_exception_details'|'member_suggestions_change_policy_details'|'microsoft_office_addin_change_policy_details'|'network_control_change_policy_details'|'paper_change_deployment_policy_details'|'paper_change_member_link_policy_details'|'paper_change_member_policy_details'|'paper_change_policy_details'|'paper_default_folder_policy_changed_details'|'paper_desktop_policy_changed_details'|'paper_enabled_users_group_addition_details'|'paper_enabled_users_group_removal_details'|'password_strength_requirements_change_policy_details'|'permanent_delete_change_policy_details'|'reseller_support_change_policy_details'|'rewind_policy_changed_details'|'sharing_change_folder_join_policy_details'|'sharing_change_link_policy_details'|'sharing_change_member_policy_details'|'showcase_change_download_policy_details'|'showcase_change_enabled_policy_details'|'showcase_change_external_sharing_policy_details'|'smarter_smart_sync_policy_changed_details'|'smart_sync_change_policy_details'|'smart_sync_not_opt_out_details'|'smart_sync_opt_out_details'|'sso_change_policy_details'|'team_extensions_policy_changed_details'|'team_selective_sync_policy_changed_details'|'team_sharing_whitelist_subjects_changed_details'|'tfa_add_exception_details'|'tfa_change_policy_details'|'tfa_remove_exception_details'|'two_account_change_policy_details'|'viewer_info_policy_changed_details'|'watermarking_policy_changed_details'|'web_sessions_change_active_session_limit_details'|'web_sessions_change_fixed_length_policy_details'|'web_sessions_change_idle_length_policy_details'|'team_merge_from_details'|'team_merge_to_details'|'team_profile_add_logo_details'|'team_profile_change_default_language_details'|'team_profile_change_logo_details'|'team_profile_change_name_details'|'team_profile_remove_logo_details'|'tfa_add_backup_phone_details'|'tfa_add_security_key_details'|'tfa_change_backup_phone_details'|'tfa_change_status_details'|'tfa_remove_backup_phone_details'|'tfa_remove_security_key_details'|'tfa_reset_details'|'changed_enterprise_admin_role_details'|'changed_enterprise_connected_team_status_details'|'ended_enterprise_admin_session_details'|'ended_enterprise_admin_session_deprecated_details'|'enterprise_settings_locking_details'|'guest_admin_change_status_details'|'started_enterprise_admin_session_details'|'team_merge_request_accepted_details'|'team_merge_request_accepted_shown_to_primary_team_details'|'team_merge_request_accepted_shown_to_secondary_team_details'|'team_merge_request_auto_canceled_details'|'team_merge_request_canceled_details'|'team_merge_request_canceled_shown_to_primary_team_details'|'team_merge_request_canceled_shown_to_secondary_team_details'|'team_merge_request_expired_details'|'team_merge_request_expired_shown_to_primary_team_details'|'team_merge_request_expired_shown_to_secondary_team_details'|'team_merge_request_rejected_shown_to_primary_team_details'|'team_merge_request_rejected_shown_to_secondary_team_details'|'team_merge_request_reminder_details'|'team_merge_request_reminder_shown_to_primary_team_details'|'team_merge_request_reminder_shown_to_secondary_team_details'|'team_merge_request_revoked_details'|'team_merge_request_sent_shown_to_primary_team_details'|'team_merge_request_sent_shown_to_secondary_team_details'|'missing_details'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -7625,8 +8954,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * account to team
  * @property {TeamLogAccountCaptureNotificationEmailsSentType}
  * [account_capture_notification_emails_sent] - Available if .tag is
- * account_capture_notification_emails_sent. (domains) Sent proactive account
- * capture email to all unmanaged members
+ * account_capture_notification_emails_sent. (domains) Sent account capture
+ * email to all unmanaged members
  * @property {TeamLogAccountCaptureRelinquishAccountType}
  * [account_capture_relinquish_account] - Available if .tag is
  * account_capture_relinquish_account. (domains) Account-captured user changed
@@ -7686,6 +9015,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileGetCopyReferenceType} [file_get_copy_reference] -
  * Available if .tag is file_get_copy_reference. (file_operations) Created copy
  * reference to file/folder
+ * @property {TeamLogFileLockingLockStatusChangedType}
+ * [file_locking_lock_status_changed] - Available if .tag is
+ * file_locking_lock_status_changed. (file_operations) Locked/unlocked editing
+ * for a file
  * @property {TeamLogFileMoveType} [file_move] - Available if .tag is file_move.
  * (file_operations) Moved files and/or folders
  * @property {TeamLogFilePermanentlyDeleteType} [file_permanently_delete] -
@@ -7705,6 +9038,19 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileSaveCopyReferenceType} [file_save_copy_reference] -
  * Available if .tag is file_save_copy_reference. (file_operations) Saved
  * file/folder using copy reference
+ * @property {TeamLogFolderOverviewDescriptionChangedType}
+ * [folder_overview_description_changed] - Available if .tag is
+ * folder_overview_description_changed. (file_operations) Updated folder
+ * overview
+ * @property {TeamLogFolderOverviewItemPinnedType} [folder_overview_item_pinned]
+ * - Available if .tag is folder_overview_item_pinned. (file_operations) Pinned
+ * item to folder overview
+ * @property {TeamLogFolderOverviewItemUnpinnedType}
+ * [folder_overview_item_unpinned] - Available if .tag is
+ * folder_overview_item_unpinned. (file_operations) Unpinned item from folder
+ * overview
+ * @property {TeamLogRewindFolderType} [rewind_folder] - Available if .tag is
+ * rewind_folder. (file_operations) Rewound a folder
  * @property {TeamLogFileRequestChangeType} [file_request_change] - Available if
  * .tag is file_request_change. (file_requests) Changed file request
  * @property {TeamLogFileRequestCloseType} [file_request_close] - Available if
@@ -7748,6 +9094,41 @@ is only present when needed to discriminate between multiple possible subtypes.
  * .tag is group_remove_member. (groups) Removed team members from group
  * @property {TeamLogGroupRenameType} [group_rename] - Available if .tag is
  * group_rename. (groups) Renamed group
+ * @property {TeamLogLegalHoldsActivateAHoldType} [legal_holds_activate_a_hold]
+ * - Available if .tag is legal_holds_activate_a_hold. (legal_holds) Activated a
+ * hold
+ * @property {TeamLogLegalHoldsAddMembersType} [legal_holds_add_members] -
+ * Available if .tag is legal_holds_add_members. (legal_holds) Added members to
+ * a hold
+ * @property {TeamLogLegalHoldsChangeHoldDetailsType}
+ * [legal_holds_change_hold_details] - Available if .tag is
+ * legal_holds_change_hold_details. (legal_holds) Edited details for a hold
+ * @property {TeamLogLegalHoldsChangeHoldNameType}
+ * [legal_holds_change_hold_name] - Available if .tag is
+ * legal_holds_change_hold_name. (legal_holds) Renamed a hold
+ * @property {TeamLogLegalHoldsExportAHoldType} [legal_holds_export_a_hold] -
+ * Available if .tag is legal_holds_export_a_hold. (legal_holds) Exported hold
+ * @property {TeamLogLegalHoldsExportCancelledType}
+ * [legal_holds_export_cancelled] - Available if .tag is
+ * legal_holds_export_cancelled. (legal_holds) Canceled export for a hold
+ * @property {TeamLogLegalHoldsExportDownloadedType}
+ * [legal_holds_export_downloaded] - Available if .tag is
+ * legal_holds_export_downloaded. (legal_holds) Downloaded export for a hold
+ * @property {TeamLogLegalHoldsExportRemovedType} [legal_holds_export_removed] -
+ * Available if .tag is legal_holds_export_removed. (legal_holds) Removed export
+ * for a hold
+ * @property {TeamLogLegalHoldsReleaseAHoldType} [legal_holds_release_a_hold] -
+ * Available if .tag is legal_holds_release_a_hold. (legal_holds) Released a
+ * hold
+ * @property {TeamLogLegalHoldsRemoveMembersType} [legal_holds_remove_members] -
+ * Available if .tag is legal_holds_remove_members. (legal_holds) Removed
+ * members from a hold
+ * @property {TeamLogLegalHoldsReportAHoldType} [legal_holds_report_a_hold] -
+ * Available if .tag is legal_holds_report_a_hold. (legal_holds) Created a
+ * summary report for a hold
+ * @property {TeamLogAccountLockOrUnlockedType} [account_lock_or_unlocked] -
+ * Available if .tag is account_lock_or_unlocked. (logins) Unlocked/locked
+ * account after failed sign in attempts
  * @property {TeamLogEmmErrorType} [emm_error] - Available if .tag is emm_error.
  * (logins) Failed to sign in via EMM (deprecated, replaced by 'Failed to sign
  * in')
@@ -7780,6 +9161,12 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSsoErrorType} [sso_error] - Available if .tag is sso_error.
  * (logins) Failed to sign in via SSO (deprecated, replaced by 'Failed to sign
  * in')
+ * @property {TeamLogCreateTeamInviteLinkType} [create_team_invite_link] -
+ * Available if .tag is create_team_invite_link. (members) Created team invite
+ * link
+ * @property {TeamLogDeleteTeamInviteLinkType} [delete_team_invite_link] -
+ * Available if .tag is delete_team_invite_link. (members) Deleted team invite
+ * link
  * @property {TeamLogMemberAddExternalIdType} [member_add_external_id] -
  * Available if .tag is member_add_external_id. (members) Added an external ID
  * for team member
@@ -7805,6 +9192,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMemberDeleteManualContactsType}
  * [member_delete_manual_contacts] - Available if .tag is
  * member_delete_manual_contacts. (members) Cleared manually added contacts
+ * @property {TeamLogMemberDeleteProfilePhotoType} [member_delete_profile_photo]
+ * - Available if .tag is member_delete_profile_photo. (members) Deleted team
+ * member profile photo
  * @property {TeamLogMemberPermanentlyDeleteAccountContentsType}
  * [member_permanently_delete_account_contents] - Available if .tag is
  * member_permanently_delete_account_contents. (members) Permanently deleted
@@ -7812,6 +9202,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogMemberRemoveExternalIdType} [member_remove_external_id] -
  * Available if .tag is member_remove_external_id. (members) Removed the
  * external ID for team member
+ * @property {TeamLogMemberSetProfilePhotoType} [member_set_profile_photo] -
+ * Available if .tag is member_set_profile_photo. (members) Set team member
+ * profile photo
  * @property {TeamLogMemberSpaceLimitsAddCustomQuotaType}
  * [member_space_limits_add_custom_quota] - Available if .tag is
  * member_space_limits_add_custom_quota. (members) Set custom member space limit
@@ -7832,12 +9225,45 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [member_transfer_account_contents] - Available if .tag is
  * member_transfer_account_contents. (members) Transferred contents of deleted
  * member account to another member
+ * @property {TeamLogPendingSecondaryEmailAddedType}
+ * [pending_secondary_email_added] - Available if .tag is
+ * pending_secondary_email_added. (members) Added pending secondary email
+ * @property {TeamLogSecondaryEmailDeletedType} [secondary_email_deleted] -
+ * Available if .tag is secondary_email_deleted. (members) Deleted secondary
+ * email
+ * @property {TeamLogSecondaryEmailVerifiedType} [secondary_email_verified] -
+ * Available if .tag is secondary_email_verified. (members) Verified secondary
+ * email
  * @property {TeamLogSecondaryMailsPolicyChangedType}
  * [secondary_mails_policy_changed] - Available if .tag is
  * secondary_mails_policy_changed. (members) Secondary mails policy changed
+ * @property {TeamLogBinderAddPageType} [binder_add_page] - Available if .tag is
+ * binder_add_page. (paper) Added Binder page (deprecated, replaced by 'Edited
+ * files')
+ * @property {TeamLogBinderAddSectionType} [binder_add_section] - Available if
+ * .tag is binder_add_section. (paper) Added Binder section (deprecated,
+ * replaced by 'Edited files')
+ * @property {TeamLogBinderRemovePageType} [binder_remove_page] - Available if
+ * .tag is binder_remove_page. (paper) Removed Binder page (deprecated, replaced
+ * by 'Edited files')
+ * @property {TeamLogBinderRemoveSectionType} [binder_remove_section] -
+ * Available if .tag is binder_remove_section. (paper) Removed Binder section
+ * (deprecated, replaced by 'Edited files')
+ * @property {TeamLogBinderRenamePageType} [binder_rename_page] - Available if
+ * .tag is binder_rename_page. (paper) Renamed Binder page (deprecated, replaced
+ * by 'Edited files')
+ * @property {TeamLogBinderRenameSectionType} [binder_rename_section] -
+ * Available if .tag is binder_rename_section. (paper) Renamed Binder section
+ * (deprecated, replaced by 'Edited files')
+ * @property {TeamLogBinderReorderPageType} [binder_reorder_page] - Available if
+ * .tag is binder_reorder_page. (paper) Reordered Binder page (deprecated,
+ * replaced by 'Edited files')
+ * @property {TeamLogBinderReorderSectionType} [binder_reorder_section] -
+ * Available if .tag is binder_reorder_section. (paper) Reordered Binder section
+ * (deprecated, replaced by 'Edited files')
  * @property {TeamLogPaperContentAddMemberType} [paper_content_add_member] -
- * Available if .tag is paper_content_add_member. (paper) Added team member to
- * Paper doc/folder
+ * Available if .tag is paper_content_add_member. (paper) Added users and/or
+ * groups to Paper doc/folder
  * @property {TeamLogPaperContentAddToFolderType} [paper_content_add_to_folder]
  * - Available if .tag is paper_content_add_to_folder. (paper) Added Paper
  * doc/folder to folder
@@ -7854,8 +9280,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * paper_content_remove_from_folder. (paper) Removed Paper doc/folder from
  * folder
  * @property {TeamLogPaperContentRemoveMemberType} [paper_content_remove_member]
- * - Available if .tag is paper_content_remove_member. (paper) Removed team
- * member from Paper doc/folder
+ * - Available if .tag is paper_content_remove_member. (paper) Removed users
+ * and/or groups from Paper doc/folder
  * @property {TeamLogPaperContentRenameType} [paper_content_rename] - Available
  * if .tag is paper_content_rename. (paper) Renamed Paper doc/folder
  * @property {TeamLogPaperContentRestoreType} [paper_content_restore] -
@@ -7865,8 +9291,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * if .tag is paper_doc_add_comment. (paper) Added Paper doc comment
  * @property {TeamLogPaperDocChangeMemberRoleType}
  * [paper_doc_change_member_role] - Available if .tag is
- * paper_doc_change_member_role. (paper) Changed team member permissions for
- * Paper doc
+ * paper_doc_change_member_role. (paper) Changed member permissions for Paper
+ * doc
  * @property {TeamLogPaperDocChangeSharingPolicyType}
  * [paper_doc_change_sharing_policy] - Available if .tag is
  * paper_doc_change_sharing_policy. (paper) Changed sharing setting for Paper
@@ -7890,7 +9316,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * .tag is paper_doc_followed. (paper) Followed Paper doc (deprecated, replaced
  * by 'Followed/unfollowed Paper doc')
  * @property {TeamLogPaperDocMentionType} [paper_doc_mention] - Available if
- * .tag is paper_doc_mention. (paper) Mentioned team member in Paper doc
+ * .tag is paper_doc_mention. (paper) Mentioned user in Paper doc
  * @property {TeamLogPaperDocOwnershipChangedType} [paper_doc_ownership_changed]
  * - Available if .tag is paper_doc_ownership_changed. (paper) Transferred
  * ownership of Paper doc
@@ -7905,8 +9331,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogPaperDocSlackShareType} [paper_doc_slack_share] - Available
  * if .tag is paper_doc_slack_share. (paper) Shared Paper doc via Slack
  * @property {TeamLogPaperDocTeamInviteType} [paper_doc_team_invite] - Available
- * if .tag is paper_doc_team_invite. (paper) Shared Paper doc with team member
- * (deprecated, no longer logged)
+ * if .tag is paper_doc_team_invite. (paper) Shared Paper doc with users and/or
+ * groups (deprecated, no longer logged)
  * @property {TeamLogPaperDocTrashedType} [paper_doc_trashed] - Available if
  * .tag is paper_doc_trashed. (paper) Deleted Paper doc
  * @property {TeamLogPaperDocUnresolveCommentType} [paper_doc_unresolve_comment]
@@ -7937,7 +9363,11 @@ is only present when needed to discriminate between multiple possible subtypes.
  * (deprecated, replaced by 'Followed/unfollowed Paper folder')
  * @property {TeamLogPaperFolderTeamInviteType} [paper_folder_team_invite] -
  * Available if .tag is paper_folder_team_invite. (paper) Shared Paper folder
- * with member (deprecated, no longer logged)
+ * with users and/or groups (deprecated, no longer logged)
+ * @property {TeamLogPaperPublishedLinkChangePermissionType}
+ * [paper_published_link_change_permission] - Available if .tag is
+ * paper_published_link_change_permission. (paper) Changed permissions for
+ * published doc
  * @property {TeamLogPaperPublishedLinkCreateType} [paper_published_link_create]
  * - Available if .tag is paper_published_link_create. (paper) Published doc
  * @property {TeamLogPaperPublishedLinkDisabledType}
@@ -7960,6 +9390,41 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogExportMembersReportType} [export_members_report] -
  * Available if .tag is export_members_report. (reports) Created member data
  * report
+ * @property {TeamLogExportMembersReportFailType} [export_members_report_fail] -
+ * Available if .tag is export_members_report_fail. (reports) Failed to create
+ * members data report
+ * @property {TeamLogNoExpirationLinkGenCreateReportType}
+ * [no_expiration_link_gen_create_report] - Available if .tag is
+ * no_expiration_link_gen_create_report. (reports) Report created: Links created
+ * with no expiration
+ * @property {TeamLogNoExpirationLinkGenReportFailedType}
+ * [no_expiration_link_gen_report_failed] - Available if .tag is
+ * no_expiration_link_gen_report_failed. (reports) Couldn't create report: Links
+ * created with no expiration
+ * @property {TeamLogNoPasswordLinkGenCreateReportType}
+ * [no_password_link_gen_create_report] - Available if .tag is
+ * no_password_link_gen_create_report. (reports) Report created: Links created
+ * without passwords
+ * @property {TeamLogNoPasswordLinkGenReportFailedType}
+ * [no_password_link_gen_report_failed] - Available if .tag is
+ * no_password_link_gen_report_failed. (reports) Couldn't create report: Links
+ * created without passwords
+ * @property {TeamLogNoPasswordLinkViewCreateReportType}
+ * [no_password_link_view_create_report] - Available if .tag is
+ * no_password_link_view_create_report. (reports) Report created: Views of links
+ * without passwords
+ * @property {TeamLogNoPasswordLinkViewReportFailedType}
+ * [no_password_link_view_report_failed] - Available if .tag is
+ * no_password_link_view_report_failed. (reports) Couldn't create report: Views
+ * of links without passwords
+ * @property {TeamLogOutdatedLinkViewCreateReportType}
+ * [outdated_link_view_create_report] - Available if .tag is
+ * outdated_link_view_create_report. (reports) Report created: Views of old
+ * links
+ * @property {TeamLogOutdatedLinkViewReportFailedType}
+ * [outdated_link_view_report_failed] - Available if .tag is
+ * outdated_link_view_report_failed. (reports) Couldn't create report: Views of
+ * old links
  * @property {TeamLogPaperAdminExportStartType} [paper_admin_export_start] -
  * Available if .tag is paper_admin_export_start. (reports) Exported all team
  * Paper docs
@@ -7976,6 +9441,20 @@ is only present when needed to discriminate between multiple possible subtypes.
  * report
  * @property {TeamLogCollectionShareType} [collection_share] - Available if .tag
  * is collection_share. (sharing) Shared album
+ * @property {TeamLogFileTransfersFileAddType} [file_transfers_file_add] -
+ * Available if .tag is file_transfers_file_add. (sharing) Transfer files added
+ * @property {TeamLogFileTransfersTransferDeleteType}
+ * [file_transfers_transfer_delete] - Available if .tag is
+ * file_transfers_transfer_delete. (sharing) Deleted transfer
+ * @property {TeamLogFileTransfersTransferDownloadType}
+ * [file_transfers_transfer_download] - Available if .tag is
+ * file_transfers_transfer_download. (sharing) Transfer downloaded
+ * @property {TeamLogFileTransfersTransferSendType}
+ * [file_transfers_transfer_send] - Available if .tag is
+ * file_transfers_transfer_send. (sharing) Sent transfer
+ * @property {TeamLogFileTransfersTransferViewType}
+ * [file_transfers_transfer_view] - Available if .tag is
+ * file_transfers_transfer_view. (sharing) Viewed transfer
  * @property {TeamLogNoteAclInviteOnlyType} [note_acl_invite_only] - Available
  * if .tag is note_acl_invite_only. (sharing) Changed Paper doc to invite-only
  * (deprecated, no longer logged)
@@ -8042,18 +9521,18 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSharedContentAddLinkExpiryType}
  * [shared_content_add_link_expiry] - Available if .tag is
  * shared_content_add_link_expiry. (sharing) Added expiration date to link for
- * shared file/folder
+ * shared file/folder (deprecated, no longer logged)
  * @property {TeamLogSharedContentAddLinkPasswordType}
  * [shared_content_add_link_password] - Available if .tag is
  * shared_content_add_link_password. (sharing) Added password to link for shared
- * file/folder
+ * file/folder (deprecated, no longer logged)
  * @property {TeamLogSharedContentAddMemberType} [shared_content_add_member] -
  * Available if .tag is shared_content_add_member. (sharing) Added users and/or
  * groups to shared file/folder
  * @property {TeamLogSharedContentChangeDownloadsPolicyType}
  * [shared_content_change_downloads_policy] - Available if .tag is
  * shared_content_change_downloads_policy. (sharing) Changed whether members can
- * download shared file/folder
+ * download shared file/folder (deprecated, no longer logged)
  * @property {TeamLogSharedContentChangeInviteeRoleType}
  * [shared_content_change_invitee_role] - Available if .tag is
  * shared_content_change_invitee_role. (sharing) Changed access type of invitee
@@ -8061,15 +9540,15 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSharedContentChangeLinkAudienceType}
  * [shared_content_change_link_audience] - Available if .tag is
  * shared_content_change_link_audience. (sharing) Changed link audience of
- * shared file/folder
+ * shared file/folder (deprecated, no longer logged)
  * @property {TeamLogSharedContentChangeLinkExpiryType}
  * [shared_content_change_link_expiry] - Available if .tag is
  * shared_content_change_link_expiry. (sharing) Changed link expiration of
- * shared file/folder
+ * shared file/folder (deprecated, no longer logged)
  * @property {TeamLogSharedContentChangeLinkPasswordType}
  * [shared_content_change_link_password] - Available if .tag is
  * shared_content_change_link_password. (sharing) Changed link password of
- * shared file/folder
+ * shared file/folder (deprecated, no longer logged)
  * @property {TeamLogSharedContentChangeMemberRoleType}
  * [shared_content_change_member_role] - Available if .tag is
  * shared_content_change_member_role. (sharing) Changed access type of shared
@@ -8098,11 +9577,11 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSharedContentRemoveLinkExpiryType}
  * [shared_content_remove_link_expiry] - Available if .tag is
  * shared_content_remove_link_expiry. (sharing) Removed link expiration date of
- * shared file/folder
+ * shared file/folder (deprecated, no longer logged)
  * @property {TeamLogSharedContentRemoveLinkPasswordType}
  * [shared_content_remove_link_password] - Available if .tag is
  * shared_content_remove_link_password. (sharing) Removed link password of
- * shared file/folder
+ * shared file/folder (deprecated, no longer logged)
  * @property {TeamLogSharedContentRemoveMemberType}
  * [shared_content_remove_member] - Available if .tag is
  * shared_content_remove_member. (sharing) Removed user/group from shared
@@ -8111,9 +9590,17 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [shared_content_request_access] - Available if .tag is
  * shared_content_request_access. (sharing) Requested access to shared
  * file/folder
+ * @property {TeamLogSharedContentRestoreInviteesType}
+ * [shared_content_restore_invitees] - Available if .tag is
+ * shared_content_restore_invitees. (sharing) Restored shared file/folder
+ * invitees
+ * @property {TeamLogSharedContentRestoreMemberType}
+ * [shared_content_restore_member] - Available if .tag is
+ * shared_content_restore_member. (sharing) Restored users and/or groups to
+ * membership of shared file/folder
  * @property {TeamLogSharedContentUnshareType} [shared_content_unshare] -
  * Available if .tag is shared_content_unshare. (sharing) Unshared file/folder
- * by clearing membership and turning off link
+ * by clearing membership
  * @property {TeamLogSharedContentViewType} [shared_content_view] - Available if
  * .tag is shared_content_view. (sharing) Previewed shared file/folder
  * @property {TeamLogSharedFolderChangeLinkPolicyType}
@@ -8170,6 +9657,40 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogSharedLinkRemoveExpiryType} [shared_link_remove_expiry] -
  * Available if .tag is shared_link_remove_expiry. (sharing) Removed shared link
  * expiration date
+ * @property {TeamLogSharedLinkSettingsAddExpirationType}
+ * [shared_link_settings_add_expiration] - Available if .tag is
+ * shared_link_settings_add_expiration. (sharing) Added an expiration date to
+ * the shared link
+ * @property {TeamLogSharedLinkSettingsAddPasswordType}
+ * [shared_link_settings_add_password] - Available if .tag is
+ * shared_link_settings_add_password. (sharing) Added a password to the shared
+ * link
+ * @property {TeamLogSharedLinkSettingsAllowDownloadDisabledType}
+ * [shared_link_settings_allow_download_disabled] - Available if .tag is
+ * shared_link_settings_allow_download_disabled. (sharing) Disabled downloads
+ * @property {TeamLogSharedLinkSettingsAllowDownloadEnabledType}
+ * [shared_link_settings_allow_download_enabled] - Available if .tag is
+ * shared_link_settings_allow_download_enabled. (sharing) Enabled downloads
+ * @property {TeamLogSharedLinkSettingsChangeAudienceType}
+ * [shared_link_settings_change_audience] - Available if .tag is
+ * shared_link_settings_change_audience. (sharing) Changed the audience of the
+ * shared link
+ * @property {TeamLogSharedLinkSettingsChangeExpirationType}
+ * [shared_link_settings_change_expiration] - Available if .tag is
+ * shared_link_settings_change_expiration. (sharing) Changed the expiration date
+ * of the shared link
+ * @property {TeamLogSharedLinkSettingsChangePasswordType}
+ * [shared_link_settings_change_password] - Available if .tag is
+ * shared_link_settings_change_password. (sharing) Changed the password of the
+ * shared link
+ * @property {TeamLogSharedLinkSettingsRemoveExpirationType}
+ * [shared_link_settings_remove_expiration] - Available if .tag is
+ * shared_link_settings_remove_expiration. (sharing) Removed the expiration date
+ * from the shared link
+ * @property {TeamLogSharedLinkSettingsRemovePasswordType}
+ * [shared_link_settings_remove_password] - Available if .tag is
+ * shared_link_settings_remove_password. (sharing) Removed the password from the
+ * shared link
  * @property {TeamLogSharedLinkShareType} [shared_link_share] - Available if
  * .tag is shared_link_share. (sharing) Added members as audience of shared link
  * @property {TeamLogSharedLinkViewType} [shared_link_view] - Available if .tag
@@ -8304,6 +9825,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [data_placement_restriction_satisfy_policy] - Available if .tag is
  * data_placement_restriction_satisfy_policy. (team_policies) Completed
  * restrictions on data center locations where team data resides
+ * @property {TeamLogDeviceApprovalsAddExceptionType}
+ * [device_approvals_add_exception] - Available if .tag is
+ * device_approvals_add_exception. (team_policies) Added members to device
+ * approvals exception list
  * @property {TeamLogDeviceApprovalsChangeDesktopPolicyType}
  * [device_approvals_change_desktop_policy] - Available if .tag is
  * device_approvals_change_desktop_policy. (team_policies) Set/removed limit on
@@ -8320,6 +9845,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [device_approvals_change_unlink_action] - Available if .tag is
  * device_approvals_change_unlink_action. (team_policies) Changed device
  * approvals setting when member unlinks approved device
+ * @property {TeamLogDeviceApprovalsRemoveExceptionType}
+ * [device_approvals_remove_exception] - Available if .tag is
+ * device_approvals_remove_exception. (team_policies) Removed members from
+ * device approvals exception list
  * @property {TeamLogDirectoryRestrictionsAddMembersType}
  * [directory_restrictions_add_members] - Available if .tag is
  * directory_restrictions_add_members. (team_policies) Added members to
@@ -8344,6 +9873,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogFileCommentsChangePolicyType} [file_comments_change_policy]
  * - Available if .tag is file_comments_change_policy. (team_policies)
  * Enabled/disabled commenting on team files
+ * @property {TeamLogFileLockingPolicyChangedType} [file_locking_policy_changed]
+ * - Available if .tag is file_locking_policy_changed. (team_policies) Changed
+ * file locking policy for team
  * @property {TeamLogFileRequestsChangePolicyType} [file_requests_change_policy]
  * - Available if .tag is file_requests_change_policy. (team_policies)
  * Enabled/disabled file requests
@@ -8355,6 +9887,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [file_requests_emails_restricted_to_team_only] - Available if .tag is
  * file_requests_emails_restricted_to_team_only. (team_policies) Enabled file
  * request emails for team (deprecated, no longer logged)
+ * @property {TeamLogFileTransfersPolicyChangedType}
+ * [file_transfers_policy_changed] - Available if .tag is
+ * file_transfers_policy_changed. (team_policies) Changed file transfers policy
+ * for team
  * @property {TeamLogGoogleSsoChangePolicyType} [google_sso_change_policy] -
  * Available if .tag is google_sso_change_policy. (team_policies)
  * Enabled/disabled Google single sign-on for team
@@ -8369,6 +9905,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [member_requests_change_policy] - Available if .tag is
  * member_requests_change_policy. (team_policies) Changed whether users can find
  * team when not invited
+ * @property {TeamLogMemberSendInvitePolicyChangedType}
+ * [member_send_invite_policy_changed] - Available if .tag is
+ * member_send_invite_policy_changed. (team_policies) Changed member send invite
+ * policy for team
  * @property {TeamLogMemberSpaceLimitsAddExceptionType}
  * [member_space_limits_add_exception] - Available if .tag is
  * member_space_limits_add_exception. (team_policies) Added members to member
@@ -8428,6 +9968,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [paper_enabled_users_group_removal] - Available if .tag is
  * paper_enabled_users_group_removal. (team_policies) Removed users from
  * Paper-enabled users list
+ * @property {TeamLogPasswordStrengthRequirementsChangePolicyType}
+ * [password_strength_requirements_change_policy] - Available if .tag is
+ * password_strength_requirements_change_policy. (team_policies) Changed team
+ * password strength requirements
  * @property {TeamLogPermanentDeleteChangePolicyType}
  * [permanent_delete_change_policy] - Available if .tag is
  * permanent_delete_change_policy. (team_policies) Enabled/disabled ability of
@@ -8436,6 +9980,9 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [reseller_support_change_policy] - Available if .tag is
  * reseller_support_change_policy. (team_policies) Enabled/disabled reseller
  * support
+ * @property {TeamLogRewindPolicyChangedType} [rewind_policy_changed] -
+ * Available if .tag is rewind_policy_changed. (team_policies) Changed Rewind
+ * policy for team
  * @property {TeamLogSharingChangeFolderJoinPolicyType}
  * [sharing_change_folder_join_policy] - Available if .tag is
  * sharing_change_folder_join_policy. (team_policies) Changed whether team
@@ -8460,6 +10007,10 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [showcase_change_external_sharing_policy] - Available if .tag is
  * showcase_change_external_sharing_policy. (team_policies) Enabled/disabled
  * sharing Dropbox Showcase externally for team
+ * @property {TeamLogSmarterSmartSyncPolicyChangedType}
+ * [smarter_smart_sync_policy_changed] - Available if .tag is
+ * smarter_smart_sync_policy_changed. (team_policies) Changed automatic Smart
+ * Sync setting for team
  * @property {TeamLogSmartSyncChangePolicyType} [smart_sync_change_policy] -
  * Available if .tag is smart_sync_change_policy. (team_policies) Changed
  * default Smart Sync setting for team members
@@ -8479,9 +10030,19 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [team_selective_sync_policy_changed] - Available if .tag is
  * team_selective_sync_policy_changed. (team_policies) Enabled/disabled Team
  * Selective Sync for team
+ * @property {TeamLogTeamSharingWhitelistSubjectsChangedType}
+ * [team_sharing_whitelist_subjects_changed] - Available if .tag is
+ * team_sharing_whitelist_subjects_changed. (team_policies) Edited the approved
+ * list for sharing externally
+ * @property {TeamLogTfaAddExceptionType} [tfa_add_exception] - Available if
+ * .tag is tfa_add_exception. (team_policies) Added members to two factor
+ * authentication exception list
  * @property {TeamLogTfaChangePolicyType} [tfa_change_policy] - Available if
  * .tag is tfa_change_policy. (team_policies) Changed two-step verification
  * setting for team
+ * @property {TeamLogTfaRemoveExceptionType} [tfa_remove_exception] - Available
+ * if .tag is tfa_remove_exception. (team_policies) Removed members from two
+ * factor authentication exception list
  * @property {TeamLogTwoAccountChangePolicyType} [two_account_change_policy] -
  * Available if .tag is two_account_change_policy. (team_policies)
  * Enabled/disabled option for members to link personal Dropbox account and team
@@ -8489,6 +10050,14 @@ is only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamLogViewerInfoPolicyChangedType} [viewer_info_policy_changed] -
  * Available if .tag is viewer_info_policy_changed. (team_policies) Changed team
  * policy for viewer info
+ * @property {TeamLogWatermarkingPolicyChangedType}
+ * [watermarking_policy_changed] - Available if .tag is
+ * watermarking_policy_changed. (team_policies) Changed watermarking policy for
+ * team
+ * @property {TeamLogWebSessionsChangeActiveSessionLimitType}
+ * [web_sessions_change_active_session_limit] - Available if .tag is
+ * web_sessions_change_active_session_limit. (team_policies) Changed limit on
+ * active sessions per member
  * @property {TeamLogWebSessionsChangeFixedLengthPolicyType}
  * [web_sessions_change_fixed_length_policy] - Available if .tag is
  * web_sessions_change_fixed_length_policy. (team_policies) Changed how long
@@ -8537,9 +10106,31 @@ is only present when needed to discriminate between multiple possible subtypes.
  * two-step verification
  * @property {TeamLogTfaResetType} [tfa_reset] - Available if .tag is tfa_reset.
  * (tfa) Reset two-step verification for team member
+ * @property {TeamLogChangedEnterpriseAdminRoleType}
+ * [changed_enterprise_admin_role] - Available if .tag is
+ * changed_enterprise_admin_role. (trusted_teams) Changed enterprise admin role
+ * @property {TeamLogChangedEnterpriseConnectedTeamStatusType}
+ * [changed_enterprise_connected_team_status] - Available if .tag is
+ * changed_enterprise_connected_team_status. (trusted_teams) Changed
+ * enterprise-connected team status
+ * @property {TeamLogEndedEnterpriseAdminSessionType}
+ * [ended_enterprise_admin_session] - Available if .tag is
+ * ended_enterprise_admin_session. (trusted_teams) Ended enterprise admin
+ * session
+ * @property {TeamLogEndedEnterpriseAdminSessionDeprecatedType}
+ * [ended_enterprise_admin_session_deprecated] - Available if .tag is
+ * ended_enterprise_admin_session_deprecated. (trusted_teams) Ended enterprise
+ * admin session (deprecated, replaced by 'Ended enterprise admin session')
+ * @property {TeamLogEnterpriseSettingsLockingType}
+ * [enterprise_settings_locking] - Available if .tag is
+ * enterprise_settings_locking. (trusted_teams) Changed who can update a setting
  * @property {TeamLogGuestAdminChangeStatusType} [guest_admin_change_status] -
  * Available if .tag is guest_admin_change_status. (trusted_teams) Changed guest
  * team admin status
+ * @property {TeamLogStartedEnterpriseAdminSessionType}
+ * [started_enterprise_admin_session] - Available if .tag is
+ * started_enterprise_admin_session. (trusted_teams) Started enterprise admin
+ * session
  * @property {TeamLogTeamMergeRequestAcceptedType} [team_merge_request_accepted]
  * - Available if .tag is team_merge_request_accepted. (trusted_teams) Accepted
  * a team merge request
@@ -8611,12 +10202,23 @@ is only present when needed to discriminate between multiple possible subtypes.
  * [team_merge_request_sent_shown_to_secondary_team] - Available if .tag is
  * team_merge_request_sent_shown_to_secondary_team. (trusted_teams) Requested to
  * merge your team into another Dropbox team
- * @property {('app_link_team'|'app_link_user'|'app_unlink_team'|'app_unlink_user'|'integration_connected'|'integration_disconnected'|'file_add_comment'|'file_change_comment_subscription'|'file_delete_comment'|'file_edit_comment'|'file_like_comment'|'file_resolve_comment'|'file_unlike_comment'|'file_unresolve_comment'|'device_change_ip_desktop'|'device_change_ip_mobile'|'device_change_ip_web'|'device_delete_on_unlink_fail'|'device_delete_on_unlink_success'|'device_link_fail'|'device_link_success'|'device_management_disabled'|'device_management_enabled'|'device_unlink'|'emm_refresh_auth_token'|'account_capture_change_availability'|'account_capture_migrate_account'|'account_capture_notification_emails_sent'|'account_capture_relinquish_account'|'disabled_domain_invites'|'domain_invites_approve_request_to_join_team'|'domain_invites_decline_request_to_join_team'|'domain_invites_email_existing_users'|'domain_invites_request_to_join_team'|'domain_invites_set_invite_new_user_pref_to_no'|'domain_invites_set_invite_new_user_pref_to_yes'|'domain_verification_add_domain_fail'|'domain_verification_add_domain_success'|'domain_verification_remove_domain'|'enabled_domain_invites'|'create_folder'|'file_add'|'file_copy'|'file_delete'|'file_download'|'file_edit'|'file_get_copy_reference'|'file_move'|'file_permanently_delete'|'file_preview'|'file_rename'|'file_restore'|'file_revert'|'file_rollback_changes'|'file_save_copy_reference'|'file_request_change'|'file_request_close'|'file_request_create'|'file_request_delete'|'file_request_receive_file'|'group_add_external_id'|'group_add_member'|'group_change_external_id'|'group_change_management_type'|'group_change_member_role'|'group_create'|'group_delete'|'group_description_updated'|'group_join_policy_updated'|'group_moved'|'group_remove_external_id'|'group_remove_member'|'group_rename'|'emm_error'|'guest_admin_signed_in_via_trusted_teams'|'guest_admin_signed_out_via_trusted_teams'|'login_fail'|'login_success'|'logout'|'reseller_support_session_end'|'reseller_support_session_start'|'sign_in_as_session_end'|'sign_in_as_session_start'|'sso_error'|'member_add_external_id'|'member_add_name'|'member_change_admin_role'|'member_change_email'|'member_change_external_id'|'member_change_membership_type'|'member_change_name'|'member_change_status'|'member_delete_manual_contacts'|'member_permanently_delete_account_contents'|'member_remove_external_id'|'member_space_limits_add_custom_quota'|'member_space_limits_change_custom_quota'|'member_space_limits_change_status'|'member_space_limits_remove_custom_quota'|'member_suggest'|'member_transfer_account_contents'|'secondary_mails_policy_changed'|'paper_content_add_member'|'paper_content_add_to_folder'|'paper_content_archive'|'paper_content_create'|'paper_content_permanently_delete'|'paper_content_remove_from_folder'|'paper_content_remove_member'|'paper_content_rename'|'paper_content_restore'|'paper_doc_add_comment'|'paper_doc_change_member_role'|'paper_doc_change_sharing_policy'|'paper_doc_change_subscription'|'paper_doc_deleted'|'paper_doc_delete_comment'|'paper_doc_download'|'paper_doc_edit'|'paper_doc_edit_comment'|'paper_doc_followed'|'paper_doc_mention'|'paper_doc_ownership_changed'|'paper_doc_request_access'|'paper_doc_resolve_comment'|'paper_doc_revert'|'paper_doc_slack_share'|'paper_doc_team_invite'|'paper_doc_trashed'|'paper_doc_unresolve_comment'|'paper_doc_untrashed'|'paper_doc_view'|'paper_external_view_allow'|'paper_external_view_default_team'|'paper_external_view_forbid'|'paper_folder_change_subscription'|'paper_folder_deleted'|'paper_folder_followed'|'paper_folder_team_invite'|'paper_published_link_create'|'paper_published_link_disabled'|'paper_published_link_view'|'password_change'|'password_reset'|'password_reset_all'|'emm_create_exceptions_report'|'emm_create_usage_report'|'export_members_report'|'paper_admin_export_start'|'smart_sync_create_admin_privilege_report'|'team_activity_create_report'|'team_activity_create_report_fail'|'collection_share'|'note_acl_invite_only'|'note_acl_link'|'note_acl_team_link'|'note_shared'|'note_share_receive'|'open_note_shared'|'sf_add_group'|'sf_allow_non_members_to_view_shared_links'|'sf_external_invite_warn'|'sf_fb_invite'|'sf_fb_invite_change_role'|'sf_fb_uninvite'|'sf_invite_group'|'sf_team_grant_access'|'sf_team_invite'|'sf_team_invite_change_role'|'sf_team_join'|'sf_team_join_from_oob_link'|'sf_team_uninvite'|'shared_content_add_invitees'|'shared_content_add_link_expiry'|'shared_content_add_link_password'|'shared_content_add_member'|'shared_content_change_downloads_policy'|'shared_content_change_invitee_role'|'shared_content_change_link_audience'|'shared_content_change_link_expiry'|'shared_content_change_link_password'|'shared_content_change_member_role'|'shared_content_change_viewer_info_policy'|'shared_content_claim_invitation'|'shared_content_copy'|'shared_content_download'|'shared_content_relinquish_membership'|'shared_content_remove_invitees'|'shared_content_remove_link_expiry'|'shared_content_remove_link_password'|'shared_content_remove_member'|'shared_content_request_access'|'shared_content_unshare'|'shared_content_view'|'shared_folder_change_link_policy'|'shared_folder_change_members_inheritance_policy'|'shared_folder_change_members_management_policy'|'shared_folder_change_members_policy'|'shared_folder_create'|'shared_folder_decline_invitation'|'shared_folder_mount'|'shared_folder_nest'|'shared_folder_transfer_ownership'|'shared_folder_unmount'|'shared_link_add_expiry'|'shared_link_change_expiry'|'shared_link_change_visibility'|'shared_link_copy'|'shared_link_create'|'shared_link_disable'|'shared_link_download'|'shared_link_remove_expiry'|'shared_link_share'|'shared_link_view'|'shared_note_opened'|'shmodel_group_share'|'showcase_access_granted'|'showcase_add_member'|'showcase_archived'|'showcase_created'|'showcase_delete_comment'|'showcase_edited'|'showcase_edit_comment'|'showcase_file_added'|'showcase_file_download'|'showcase_file_removed'|'showcase_file_view'|'showcase_permanently_deleted'|'showcase_post_comment'|'showcase_remove_member'|'showcase_renamed'|'showcase_request_access'|'showcase_resolve_comment'|'showcase_restored'|'showcase_trashed'|'showcase_trashed_deprecated'|'showcase_unresolve_comment'|'showcase_untrashed'|'showcase_untrashed_deprecated'|'showcase_view'|'sso_add_cert'|'sso_add_login_url'|'sso_add_logout_url'|'sso_change_cert'|'sso_change_login_url'|'sso_change_logout_url'|'sso_change_saml_identity_mode'|'sso_remove_cert'|'sso_remove_login_url'|'sso_remove_logout_url'|'team_folder_change_status'|'team_folder_create'|'team_folder_downgrade'|'team_folder_permanently_delete'|'team_folder_rename'|'team_selective_sync_settings_changed'|'account_capture_change_policy'|'allow_download_disabled'|'allow_download_enabled'|'camera_uploads_policy_changed'|'data_placement_restriction_change_policy'|'data_placement_restriction_satisfy_policy'|'device_approvals_change_desktop_policy'|'device_approvals_change_mobile_policy'|'device_approvals_change_overage_action'|'device_approvals_change_unlink_action'|'directory_restrictions_add_members'|'directory_restrictions_remove_members'|'emm_add_exception'|'emm_change_policy'|'emm_remove_exception'|'extended_version_history_change_policy'|'file_comments_change_policy'|'file_requests_change_policy'|'file_requests_emails_enabled'|'file_requests_emails_restricted_to_team_only'|'google_sso_change_policy'|'group_user_management_change_policy'|'integration_policy_changed'|'member_requests_change_policy'|'member_space_limits_add_exception'|'member_space_limits_change_caps_type_policy'|'member_space_limits_change_policy'|'member_space_limits_remove_exception'|'member_suggestions_change_policy'|'microsoft_office_addin_change_policy'|'network_control_change_policy'|'paper_change_deployment_policy'|'paper_change_member_link_policy'|'paper_change_member_policy'|'paper_change_policy'|'paper_default_folder_policy_changed'|'paper_desktop_policy_changed'|'paper_enabled_users_group_addition'|'paper_enabled_users_group_removal'|'permanent_delete_change_policy'|'reseller_support_change_policy'|'sharing_change_folder_join_policy'|'sharing_change_link_policy'|'sharing_change_member_policy'|'showcase_change_download_policy'|'showcase_change_enabled_policy'|'showcase_change_external_sharing_policy'|'smart_sync_change_policy'|'smart_sync_not_opt_out'|'smart_sync_opt_out'|'sso_change_policy'|'team_extensions_policy_changed'|'team_selective_sync_policy_changed'|'tfa_change_policy'|'two_account_change_policy'|'viewer_info_policy_changed'|'web_sessions_change_fixed_length_policy'|'web_sessions_change_idle_length_policy'|'team_merge_from'|'team_merge_to'|'team_profile_add_logo'|'team_profile_change_default_language'|'team_profile_change_logo'|'team_profile_change_name'|'team_profile_remove_logo'|'tfa_add_backup_phone'|'tfa_add_security_key'|'tfa_change_backup_phone'|'tfa_change_status'|'tfa_remove_backup_phone'|'tfa_remove_security_key'|'tfa_reset'|'guest_admin_change_status'|'team_merge_request_accepted'|'team_merge_request_accepted_shown_to_primary_team'|'team_merge_request_accepted_shown_to_secondary_team'|'team_merge_request_auto_canceled'|'team_merge_request_canceled'|'team_merge_request_canceled_shown_to_primary_team'|'team_merge_request_canceled_shown_to_secondary_team'|'team_merge_request_expired'|'team_merge_request_expired_shown_to_primary_team'|'team_merge_request_expired_shown_to_secondary_team'|'team_merge_request_rejected_shown_to_primary_team'|'team_merge_request_rejected_shown_to_secondary_team'|'team_merge_request_reminder'|'team_merge_request_reminder_shown_to_primary_team'|'team_merge_request_reminder_shown_to_secondary_team'|'team_merge_request_revoked'|'team_merge_request_sent_shown_to_primary_team'|'team_merge_request_sent_shown_to_secondary_team'|'other')} .tag - Tag identifying the union variant.
+ * @property {('app_link_team'|'app_link_user'|'app_unlink_team'|'app_unlink_user'|'integration_connected'|'integration_disconnected'|'file_add_comment'|'file_change_comment_subscription'|'file_delete_comment'|'file_edit_comment'|'file_like_comment'|'file_resolve_comment'|'file_unlike_comment'|'file_unresolve_comment'|'device_change_ip_desktop'|'device_change_ip_mobile'|'device_change_ip_web'|'device_delete_on_unlink_fail'|'device_delete_on_unlink_success'|'device_link_fail'|'device_link_success'|'device_management_disabled'|'device_management_enabled'|'device_unlink'|'emm_refresh_auth_token'|'account_capture_change_availability'|'account_capture_migrate_account'|'account_capture_notification_emails_sent'|'account_capture_relinquish_account'|'disabled_domain_invites'|'domain_invites_approve_request_to_join_team'|'domain_invites_decline_request_to_join_team'|'domain_invites_email_existing_users'|'domain_invites_request_to_join_team'|'domain_invites_set_invite_new_user_pref_to_no'|'domain_invites_set_invite_new_user_pref_to_yes'|'domain_verification_add_domain_fail'|'domain_verification_add_domain_success'|'domain_verification_remove_domain'|'enabled_domain_invites'|'create_folder'|'file_add'|'file_copy'|'file_delete'|'file_download'|'file_edit'|'file_get_copy_reference'|'file_locking_lock_status_changed'|'file_move'|'file_permanently_delete'|'file_preview'|'file_rename'|'file_restore'|'file_revert'|'file_rollback_changes'|'file_save_copy_reference'|'folder_overview_description_changed'|'folder_overview_item_pinned'|'folder_overview_item_unpinned'|'rewind_folder'|'file_request_change'|'file_request_close'|'file_request_create'|'file_request_delete'|'file_request_receive_file'|'group_add_external_id'|'group_add_member'|'group_change_external_id'|'group_change_management_type'|'group_change_member_role'|'group_create'|'group_delete'|'group_description_updated'|'group_join_policy_updated'|'group_moved'|'group_remove_external_id'|'group_remove_member'|'group_rename'|'legal_holds_activate_a_hold'|'legal_holds_add_members'|'legal_holds_change_hold_details'|'legal_holds_change_hold_name'|'legal_holds_export_a_hold'|'legal_holds_export_cancelled'|'legal_holds_export_downloaded'|'legal_holds_export_removed'|'legal_holds_release_a_hold'|'legal_holds_remove_members'|'legal_holds_report_a_hold'|'account_lock_or_unlocked'|'emm_error'|'guest_admin_signed_in_via_trusted_teams'|'guest_admin_signed_out_via_trusted_teams'|'login_fail'|'login_success'|'logout'|'reseller_support_session_end'|'reseller_support_session_start'|'sign_in_as_session_end'|'sign_in_as_session_start'|'sso_error'|'create_team_invite_link'|'delete_team_invite_link'|'member_add_external_id'|'member_add_name'|'member_change_admin_role'|'member_change_email'|'member_change_external_id'|'member_change_membership_type'|'member_change_name'|'member_change_status'|'member_delete_manual_contacts'|'member_delete_profile_photo'|'member_permanently_delete_account_contents'|'member_remove_external_id'|'member_set_profile_photo'|'member_space_limits_add_custom_quota'|'member_space_limits_change_custom_quota'|'member_space_limits_change_status'|'member_space_limits_remove_custom_quota'|'member_suggest'|'member_transfer_account_contents'|'pending_secondary_email_added'|'secondary_email_deleted'|'secondary_email_verified'|'secondary_mails_policy_changed'|'binder_add_page'|'binder_add_section'|'binder_remove_page'|'binder_remove_section'|'binder_rename_page'|'binder_rename_section'|'binder_reorder_page'|'binder_reorder_section'|'paper_content_add_member'|'paper_content_add_to_folder'|'paper_content_archive'|'paper_content_create'|'paper_content_permanently_delete'|'paper_content_remove_from_folder'|'paper_content_remove_member'|'paper_content_rename'|'paper_content_restore'|'paper_doc_add_comment'|'paper_doc_change_member_role'|'paper_doc_change_sharing_policy'|'paper_doc_change_subscription'|'paper_doc_deleted'|'paper_doc_delete_comment'|'paper_doc_download'|'paper_doc_edit'|'paper_doc_edit_comment'|'paper_doc_followed'|'paper_doc_mention'|'paper_doc_ownership_changed'|'paper_doc_request_access'|'paper_doc_resolve_comment'|'paper_doc_revert'|'paper_doc_slack_share'|'paper_doc_team_invite'|'paper_doc_trashed'|'paper_doc_unresolve_comment'|'paper_doc_untrashed'|'paper_doc_view'|'paper_external_view_allow'|'paper_external_view_default_team'|'paper_external_view_forbid'|'paper_folder_change_subscription'|'paper_folder_deleted'|'paper_folder_followed'|'paper_folder_team_invite'|'paper_published_link_change_permission'|'paper_published_link_create'|'paper_published_link_disabled'|'paper_published_link_view'|'password_change'|'password_reset'|'password_reset_all'|'emm_create_exceptions_report'|'emm_create_usage_report'|'export_members_report'|'export_members_report_fail'|'no_expiration_link_gen_create_report'|'no_expiration_link_gen_report_failed'|'no_password_link_gen_create_report'|'no_password_link_gen_report_failed'|'no_password_link_view_create_report'|'no_password_link_view_report_failed'|'outdated_link_view_create_report'|'outdated_link_view_report_failed'|'paper_admin_export_start'|'smart_sync_create_admin_privilege_report'|'team_activity_create_report'|'team_activity_create_report_fail'|'collection_share'|'file_transfers_file_add'|'file_transfers_transfer_delete'|'file_transfers_transfer_download'|'file_transfers_transfer_send'|'file_transfers_transfer_view'|'note_acl_invite_only'|'note_acl_link'|'note_acl_team_link'|'note_shared'|'note_share_receive'|'open_note_shared'|'sf_add_group'|'sf_allow_non_members_to_view_shared_links'|'sf_external_invite_warn'|'sf_fb_invite'|'sf_fb_invite_change_role'|'sf_fb_uninvite'|'sf_invite_group'|'sf_team_grant_access'|'sf_team_invite'|'sf_team_invite_change_role'|'sf_team_join'|'sf_team_join_from_oob_link'|'sf_team_uninvite'|'shared_content_add_invitees'|'shared_content_add_link_expiry'|'shared_content_add_link_password'|'shared_content_add_member'|'shared_content_change_downloads_policy'|'shared_content_change_invitee_role'|'shared_content_change_link_audience'|'shared_content_change_link_expiry'|'shared_content_change_link_password'|'shared_content_change_member_role'|'shared_content_change_viewer_info_policy'|'shared_content_claim_invitation'|'shared_content_copy'|'shared_content_download'|'shared_content_relinquish_membership'|'shared_content_remove_invitees'|'shared_content_remove_link_expiry'|'shared_content_remove_link_password'|'shared_content_remove_member'|'shared_content_request_access'|'shared_content_restore_invitees'|'shared_content_restore_member'|'shared_content_unshare'|'shared_content_view'|'shared_folder_change_link_policy'|'shared_folder_change_members_inheritance_policy'|'shared_folder_change_members_management_policy'|'shared_folder_change_members_policy'|'shared_folder_create'|'shared_folder_decline_invitation'|'shared_folder_mount'|'shared_folder_nest'|'shared_folder_transfer_ownership'|'shared_folder_unmount'|'shared_link_add_expiry'|'shared_link_change_expiry'|'shared_link_change_visibility'|'shared_link_copy'|'shared_link_create'|'shared_link_disable'|'shared_link_download'|'shared_link_remove_expiry'|'shared_link_settings_add_expiration'|'shared_link_settings_add_password'|'shared_link_settings_allow_download_disabled'|'shared_link_settings_allow_download_enabled'|'shared_link_settings_change_audience'|'shared_link_settings_change_expiration'|'shared_link_settings_change_password'|'shared_link_settings_remove_expiration'|'shared_link_settings_remove_password'|'shared_link_share'|'shared_link_view'|'shared_note_opened'|'shmodel_group_share'|'showcase_access_granted'|'showcase_add_member'|'showcase_archived'|'showcase_created'|'showcase_delete_comment'|'showcase_edited'|'showcase_edit_comment'|'showcase_file_added'|'showcase_file_download'|'showcase_file_removed'|'showcase_file_view'|'showcase_permanently_deleted'|'showcase_post_comment'|'showcase_remove_member'|'showcase_renamed'|'showcase_request_access'|'showcase_resolve_comment'|'showcase_restored'|'showcase_trashed'|'showcase_trashed_deprecated'|'showcase_unresolve_comment'|'showcase_untrashed'|'showcase_untrashed_deprecated'|'showcase_view'|'sso_add_cert'|'sso_add_login_url'|'sso_add_logout_url'|'sso_change_cert'|'sso_change_login_url'|'sso_change_logout_url'|'sso_change_saml_identity_mode'|'sso_remove_cert'|'sso_remove_login_url'|'sso_remove_logout_url'|'team_folder_change_status'|'team_folder_create'|'team_folder_downgrade'|'team_folder_permanently_delete'|'team_folder_rename'|'team_selective_sync_settings_changed'|'account_capture_change_policy'|'allow_download_disabled'|'allow_download_enabled'|'camera_uploads_policy_changed'|'data_placement_restriction_change_policy'|'data_placement_restriction_satisfy_policy'|'device_approvals_add_exception'|'device_approvals_change_desktop_policy'|'device_approvals_change_mobile_policy'|'device_approvals_change_overage_action'|'device_approvals_change_unlink_action'|'device_approvals_remove_exception'|'directory_restrictions_add_members'|'directory_restrictions_remove_members'|'emm_add_exception'|'emm_change_policy'|'emm_remove_exception'|'extended_version_history_change_policy'|'file_comments_change_policy'|'file_locking_policy_changed'|'file_requests_change_policy'|'file_requests_emails_enabled'|'file_requests_emails_restricted_to_team_only'|'file_transfers_policy_changed'|'google_sso_change_policy'|'group_user_management_change_policy'|'integration_policy_changed'|'member_requests_change_policy'|'member_send_invite_policy_changed'|'member_space_limits_add_exception'|'member_space_limits_change_caps_type_policy'|'member_space_limits_change_policy'|'member_space_limits_remove_exception'|'member_suggestions_change_policy'|'microsoft_office_addin_change_policy'|'network_control_change_policy'|'paper_change_deployment_policy'|'paper_change_member_link_policy'|'paper_change_member_policy'|'paper_change_policy'|'paper_default_folder_policy_changed'|'paper_desktop_policy_changed'|'paper_enabled_users_group_addition'|'paper_enabled_users_group_removal'|'password_strength_requirements_change_policy'|'permanent_delete_change_policy'|'reseller_support_change_policy'|'rewind_policy_changed'|'sharing_change_folder_join_policy'|'sharing_change_link_policy'|'sharing_change_member_policy'|'showcase_change_download_policy'|'showcase_change_enabled_policy'|'showcase_change_external_sharing_policy'|'smarter_smart_sync_policy_changed'|'smart_sync_change_policy'|'smart_sync_not_opt_out'|'smart_sync_opt_out'|'sso_change_policy'|'team_extensions_policy_changed'|'team_selective_sync_policy_changed'|'team_sharing_whitelist_subjects_changed'|'tfa_add_exception'|'tfa_change_policy'|'tfa_remove_exception'|'two_account_change_policy'|'viewer_info_policy_changed'|'watermarking_policy_changed'|'web_sessions_change_active_session_limit'|'web_sessions_change_fixed_length_policy'|'web_sessions_change_idle_length_policy'|'team_merge_from'|'team_merge_to'|'team_profile_add_logo'|'team_profile_change_default_language'|'team_profile_change_logo'|'team_profile_change_name'|'team_profile_remove_logo'|'tfa_add_backup_phone'|'tfa_add_security_key'|'tfa_change_backup_phone'|'tfa_change_status'|'tfa_remove_backup_phone'|'tfa_remove_security_key'|'tfa_reset'|'changed_enterprise_admin_role'|'changed_enterprise_connected_team_status'|'ended_enterprise_admin_session'|'ended_enterprise_admin_session_deprecated'|'enterprise_settings_locking'|'guest_admin_change_status'|'started_enterprise_admin_session'|'team_merge_request_accepted'|'team_merge_request_accepted_shown_to_primary_team'|'team_merge_request_accepted_shown_to_secondary_team'|'team_merge_request_auto_canceled'|'team_merge_request_canceled'|'team_merge_request_canceled_shown_to_primary_team'|'team_merge_request_canceled_shown_to_secondary_team'|'team_merge_request_expired'|'team_merge_request_expired_shown_to_primary_team'|'team_merge_request_expired_shown_to_secondary_team'|'team_merge_request_rejected_shown_to_primary_team'|'team_merge_request_rejected_shown_to_secondary_team'|'team_merge_request_reminder'|'team_merge_request_reminder_shown_to_primary_team'|'team_merge_request_reminder_shown_to_secondary_team'|'team_merge_request_revoked'|'team_merge_request_sent_shown_to_primary_team'|'team_merge_request_sent_shown_to_secondary_team'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
  * Created member data report.
  * @typedef {Object} TeamLogExportMembersReportDetails
+ */
+
+/**
+ * Failed to create members data report.
+ * @typedef {Object} TeamLogExportMembersReportFailDetails
+ * @property {TeamTeamReportFailureReason} failure_reason - Failure reason.
+ */
+
+/**
+ * @typedef {Object} TeamLogExportMembersReportFailType
+ * @property {string} description
  */
 
 /**
@@ -8657,6 +10259,39 @@ is only present when needed to discriminate between multiple possible subtypes.
  * the error. Might be missing due to historical data gap.
  * @property {string} [technical_error_message] - A technical explanation of the
  * error. This is relevant for some errors.
+ */
+
+/**
+ * @typedef {Object} TeamLogFedAdminRole
+ * @property {('not_enterprise_admin'|'enterprise_admin'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * More details about the organization or team.
+ * @typedef {Object} TeamLogFedExtraDetails
+ * @property {TeamLogTeamDetails} [team] - Available if .tag is team. More
+ * details about the team.
+ * @property {TeamLogOrganizationDetails} [organization] - Available if .tag is
+ * organization. More details about the organization.
+ * @property {('team'|'organization'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamLogFedHandshakeAction
+ * @property {('invited'|'accepted_invite'|'rejected_invite'|'canceled_invite'|'removed_team'|'invite_expired'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Additional information about the organization or connected team
+ * @typedef {Object} TeamLogFederationStatusChangeAdditionalInfo
+ * @property {TeamLogConnectedTeamName} [connected_team_name] - Available if
+ * .tag is connected_team_name. The name of the team.
+ * @property {TeamLogNonTrustedTeamDetails} [non_trusted_team_details] -
+ * Available if .tag is non_trusted_team_details. The email to which the request
+ * was sent.
+ * @property {TeamLogOrganizationName} [organization_name] - Available if .tag
+ * is organization_name. The name of the organization.
+ * @property {('connected_team_name'|'non_trusted_team_details'|'organization_name'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -8811,6 +10446,33 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Locked/unlocked editing for a file.
+ * @typedef {Object} TeamLogFileLockingLockStatusChangedDetails
+ * @property {TeamLogLockStatus} previous_value - Previous lock status of the
+ * file.
+ * @property {TeamLogLockStatus} new_value - New lock status of the file.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileLockingLockStatusChangedType
+ * @property {string} description
+ */
+
+/**
+ * Changed file locking policy for team.
+ * @typedef {Object} TeamLogFileLockingPolicyChangedDetails
+ * @property {TeamPoliciesFileLockingPolicyState} new_value - New file locking
+ * policy.
+ * @property {TeamPoliciesFileLockingPolicyState} previous_value - Previous file
+ * locking policy.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileLockingPolicyChangedType
+ * @property {string} description
+ */
+
+/**
  * File's logged information.
  * @typedef {Object} TeamLogFileLogInfo
  * @property {TeamLogPathLogInfo} path - Path relative to event context.
@@ -8818,6 +10480,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * historical data gap.
  * @property {string} [file_id] - Unique ID. Might be missing due to historical
  * data gap.
+ * @property {number} [file_size] - File or folder size in bytes.
  */
 
 /**
@@ -8840,6 +10503,7 @@ is only present when needed to discriminate between multiple possible subtypes.
  * historical data gap.
  * @property {string} [file_id] - Unique ID. Might be missing due to historical
  * data gap.
+ * @property {number} [file_size] - File or folder size in bytes.
  */
 
 /**
@@ -9061,6 +10725,80 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Transfer files added.
+ * @typedef {Object} TeamLogFileTransfersFileAddDetails
+ * @property {string} file_transfer_id - Transfer id.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileTransfersFileAddType
+ * @property {string} description
+ */
+
+/**
+ * File transfers policy
+ * @typedef {Object} TeamLogFileTransfersPolicy
+ * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Changed file transfers policy for team.
+ * @typedef {Object} TeamLogFileTransfersPolicyChangedDetails
+ * @property {TeamLogFileTransfersPolicy} new_value - New file transfers policy.
+ * @property {TeamLogFileTransfersPolicy} previous_value - Previous file
+ * transfers policy.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileTransfersPolicyChangedType
+ * @property {string} description
+ */
+
+/**
+ * Deleted transfer.
+ * @typedef {Object} TeamLogFileTransfersTransferDeleteDetails
+ * @property {string} file_transfer_id - Transfer id.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileTransfersTransferDeleteType
+ * @property {string} description
+ */
+
+/**
+ * Transfer downloaded.
+ * @typedef {Object} TeamLogFileTransfersTransferDownloadDetails
+ * @property {string} file_transfer_id - Transfer id.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileTransfersTransferDownloadType
+ * @property {string} description
+ */
+
+/**
+ * Sent transfer.
+ * @typedef {Object} TeamLogFileTransfersTransferSendDetails
+ * @property {string} file_transfer_id - Transfer id.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileTransfersTransferSendType
+ * @property {string} description
+ */
+
+/**
+ * Viewed transfer.
+ * @typedef {Object} TeamLogFileTransfersTransferViewDetails
+ * @property {string} file_transfer_id - Transfer id.
+ */
+
+/**
+ * @typedef {Object} TeamLogFileTransfersTransferViewType
+ * @property {string} description
+ */
+
+/**
  * Unliked file comment.
  * @typedef {Object} TeamLogFileUnlikeCommentDetails
  * @property {string} [comment_text] - Comment text. Might be missing due to
@@ -9092,6 +10830,48 @@ is only present when needed to discriminate between multiple possible subtypes.
  * historical data gap.
  * @property {string} [file_id] - Unique ID. Might be missing due to historical
  * data gap.
+ * @property {number} [file_size] - File or folder size in bytes.
+ * @property {number} [file_count] - Number of files within the folder.
+ */
+
+/**
+ * Updated folder overview.
+ * @typedef {Object} TeamLogFolderOverviewDescriptionChangedDetails
+ * @property {number} folder_overview_location_asset - Folder Overview location
+ * position in the Assets list.
+ */
+
+/**
+ * @typedef {Object} TeamLogFolderOverviewDescriptionChangedType
+ * @property {string} description
+ */
+
+/**
+ * Pinned item to folder overview.
+ * @typedef {Object} TeamLogFolderOverviewItemPinnedDetails
+ * @property {number} folder_overview_location_asset - Folder Overview location
+ * position in the Assets list.
+ * @property {Array.<number>} pinned_items_asset_indices - Pinned items
+ * positions in the Assets list.
+ */
+
+/**
+ * @typedef {Object} TeamLogFolderOverviewItemPinnedType
+ * @property {string} description
+ */
+
+/**
+ * Unpinned item from folder overview.
+ * @typedef {Object} TeamLogFolderOverviewItemUnpinnedDetails
+ * @property {number} folder_overview_location_asset - Folder Overview location
+ * position in the Assets list.
+ * @property {Array.<number>} pinned_items_asset_indices - Pinned items
+ * positions in the Assets list.
+ */
+
+/**
+ * @typedef {Object} TeamLogFolderOverviewItemUnpinnedType
+ * @property {string} description
  */
 
 /**
@@ -9445,14 +11225,33 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} TeamLogInviteMethod
+ * @property {('invite_link'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * Additional information relevant when a new member joins the team.
  * @typedef {Object} TeamLogJoinTeamDetails
  * @property {Array.<TeamLogUserLinkedAppLogInfo>} linked_apps - Linked
- * applications.
+ * applications. (Deprecated) Please use has_linked_apps boolean field instead.
  * @property {Array.<TeamLogLinkedDeviceLogInfo>} linked_devices - Linked
- * devices.
+ * devices. (Deprecated) Please use has_linked_devices boolean field instead.
  * @property {Array.<TeamLogFolderLogInfo>} linked_shared_folders - Linked
- * shared folders.
+ * shared folders. (Deprecated) Please use has_linked_shared_folders boolean
+ * field instead.
+ * @property {boolean} [was_linked_apps_truncated] - True if the linked_apps
+ * list was truncated to the maximum supported length (50).
+ * @property {boolean} [was_linked_devices_truncated] - True if the
+ * linked_devices list was truncated to the maximum supported length (50).
+ * @property {boolean} [was_linked_shared_folders_truncated] - True if the
+ * linked_shared_folders list was truncated to the maximum supported length
+ * (50).
+ * @property {boolean} [has_linked_apps] - True if the user had linked apps at
+ * event time.
+ * @property {boolean} [has_linked_devices] - True if the user had linked apps
+ * at event time.
+ * @property {boolean} [has_linked_shared_folders] - True if the user had linked
+ * shared folders at event time.
  */
 
 /**
@@ -9490,6 +11289,149 @@ possible subtypes.
  */
 
 /**
+ * Activated a hold.
+ * @typedef {Object} TeamLogLegalHoldsActivateAHoldDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ * @property {Timestamp} start_date - Hold start date.
+ * @property {Timestamp} [end_date] - Hold end date.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsActivateAHoldType
+ * @property {string} description
+ */
+
+/**
+ * Added members to a hold.
+ * @typedef {Object} TeamLogLegalHoldsAddMembersDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsAddMembersType
+ * @property {string} description
+ */
+
+/**
+ * Edited details for a hold.
+ * @typedef {Object} TeamLogLegalHoldsChangeHoldDetailsDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ * @property {string} previous_value - Previous details.
+ * @property {string} new_value - New details.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsChangeHoldDetailsType
+ * @property {string} description
+ */
+
+/**
+ * Renamed a hold.
+ * @typedef {Object} TeamLogLegalHoldsChangeHoldNameDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} previous_value - Previous Name.
+ * @property {string} new_value - New Name.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsChangeHoldNameType
+ * @property {string} description
+ */
+
+/**
+ * Exported hold.
+ * @typedef {Object} TeamLogLegalHoldsExportAHoldDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ * @property {string} [export_name] - Export name.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsExportAHoldType
+ * @property {string} description
+ */
+
+/**
+ * Canceled export for a hold.
+ * @typedef {Object} TeamLogLegalHoldsExportCancelledDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ * @property {string} export_name - Export name.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsExportCancelledType
+ * @property {string} description
+ */
+
+/**
+ * Downloaded export for a hold.
+ * @typedef {Object} TeamLogLegalHoldsExportDownloadedDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ * @property {string} export_name - Export name.
+ * @property {string} [part] - Part.
+ * @property {string} [file_name] - Filename.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsExportDownloadedType
+ * @property {string} description
+ */
+
+/**
+ * Removed export for a hold.
+ * @typedef {Object} TeamLogLegalHoldsExportRemovedDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ * @property {string} export_name - Export name.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsExportRemovedType
+ * @property {string} description
+ */
+
+/**
+ * Released a hold.
+ * @typedef {Object} TeamLogLegalHoldsReleaseAHoldDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsReleaseAHoldType
+ * @property {string} description
+ */
+
+/**
+ * Removed members from a hold.
+ * @typedef {Object} TeamLogLegalHoldsRemoveMembersDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsRemoveMembersType
+ * @property {string} description
+ */
+
+/**
+ * Created a summary report for a hold.
+ * @typedef {Object} TeamLogLegalHoldsReportAHoldDetails
+ * @property {string} legal_hold_id - Hold ID.
+ * @property {string} name - Hold name.
+ */
+
+/**
+ * @typedef {Object} TeamLogLegalHoldsReportAHoldType
+ * @property {string} description
+ */
+
+/**
  * The device sessions that user is linked to.
  * @typedef {Object} TeamLogLinkedDeviceLogInfo
  * @property {TeamLogMobileDeviceSessionLogInfo} [mobile_device_session] -
@@ -9502,6 +11444,12 @@ possible subtypes.
  * @property {TeamLogLegacyDeviceSessionLogInfo} [legacy_device_session] -
  * Available if .tag is legacy_device_session. legacy device session's details.
  * @property {('mobile_device_session'|'desktop_device_session'|'web_device_session'|'legacy_device_session'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * File lock status
+ * @typedef {Object} TeamLogLockStatus
+ * @property {('locked'|'unlocked'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -9520,7 +11468,7 @@ possible subtypes.
 
 /**
  * @typedef {Object} TeamLogLoginMethod
- * @property {('password'|'two_factor_authentication'|'saml'|'google_oauth'|'other')} .tag - Tag identifying the union variant.
+ * @property {('password'|'two_factor_authentication'|'saml'|'google_oauth'|'web_session'|'qr_code'|'apple_oauth'|'first_party_token_exchange'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -9660,6 +11608,16 @@ possible subtypes.
  */
 
 /**
+ * Deleted team member profile photo.
+ * @typedef {Object} TeamLogMemberDeleteProfilePhotoDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberDeleteProfilePhotoType
+ * @property {string} description
+ */
+
+/**
  * Permanently deleted contents of deleted team member account.
  * @typedef {Object} TeamLogMemberPermanentlyDeleteAccountContentsDetails
  */
@@ -9702,6 +11660,36 @@ possible subtypes.
 /**
  * @typedef {Object} TeamLogMemberRequestsPolicy
  * @property {('auto_accept'|'disabled'|'require_approval'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Policy for controlling whether team members can send team invites
+ * @typedef {Object} TeamLogMemberSendInvitePolicy
+ * @property {('disabled'|'specific_members'|'everyone'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Changed member send invite policy for team.
+ * @typedef {Object} TeamLogMemberSendInvitePolicyChangedDetails
+ * @property {TeamLogMemberSendInvitePolicy} new_value - New team member send
+ * invite policy.
+ * @property {TeamLogMemberSendInvitePolicy} previous_value - Previous team
+ * member send invite policy.
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberSendInvitePolicyChangedType
+ * @property {string} description
+ */
+
+/**
+ * Set team member profile photo.
+ * @typedef {Object} TeamLogMemberSetProfilePhotoDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogMemberSetProfilePhotoType
+ * @property {string} description
  */
 
 /**
@@ -9908,6 +11896,8 @@ is only present when needed to discriminate between multiple possible subtypes.
  * data gap.
  * @property {string} [relative_path] - A path relative to the specified
  * namespace ID. Might be missing due to historical data gap.
+ * @property {boolean} [is_shared_namespace] - True if the namespace is shared.
+ * Might be missing due to historical data gap.
  */
 
 /**
@@ -9931,6 +11921,75 @@ is only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * Report created: Links created with no expiration.
+ * @typedef {Object} TeamLogNoExpirationLinkGenCreateReportDetails
+ * @property {Timestamp} start_date - Report start date.
+ * @property {Timestamp} end_date - Report end date.
+ */
+
+/**
+ * @typedef {Object} TeamLogNoExpirationLinkGenCreateReportType
+ * @property {string} description
+ */
+
+/**
+ * Couldn't create report: Links created with no expiration.
+ * @typedef {Object} TeamLogNoExpirationLinkGenReportFailedDetails
+ * @property {TeamTeamReportFailureReason} failure_reason - Failure reason.
+ */
+
+/**
+ * @typedef {Object} TeamLogNoExpirationLinkGenReportFailedType
+ * @property {string} description
+ */
+
+/**
+ * Report created: Links created without passwords.
+ * @typedef {Object} TeamLogNoPasswordLinkGenCreateReportDetails
+ * @property {Timestamp} start_date - Report start date.
+ * @property {Timestamp} end_date - Report end date.
+ */
+
+/**
+ * @typedef {Object} TeamLogNoPasswordLinkGenCreateReportType
+ * @property {string} description
+ */
+
+/**
+ * Couldn't create report: Links created without passwords.
+ * @typedef {Object} TeamLogNoPasswordLinkGenReportFailedDetails
+ * @property {TeamTeamReportFailureReason} failure_reason - Failure reason.
+ */
+
+/**
+ * @typedef {Object} TeamLogNoPasswordLinkGenReportFailedType
+ * @property {string} description
+ */
+
+/**
+ * Report created: Views of links without passwords.
+ * @typedef {Object} TeamLogNoPasswordLinkViewCreateReportDetails
+ * @property {Timestamp} start_date - Report start date.
+ * @property {Timestamp} end_date - Report end date.
+ */
+
+/**
+ * @typedef {Object} TeamLogNoPasswordLinkViewCreateReportType
+ * @property {string} description
+ */
+
+/**
+ * Couldn't create report: Views of links without passwords.
+ * @typedef {Object} TeamLogNoPasswordLinkViewReportFailedDetails
+ * @property {TeamTeamReportFailureReason} failure_reason - Failure reason.
+ */
+
+/**
+ * @typedef {Object} TeamLogNoPasswordLinkViewReportFailedType
+ * @property {string} description
+ */
+
+/**
  * Non team member's logged information.
  * @typedef {Object} TeamLogNonTeamMemberLogInfo
 @property {'non_team_member'} [.tag] - Tag identifying this subtype variant.
@@ -9942,6 +12001,12 @@ subtypes.
  * to historical data gap.
  * @property {string} [email] - User email address. Might be missing due to
  * historical data gap.
+ */
+
+/**
+ * The email to which the request was sent
+ * @typedef {Object} TeamLogNonTrustedTeamDetails
+ * @property {string} team - The email to which the request was sent.
  */
 
 /**
@@ -10005,12 +12070,47 @@ subtypes.
  */
 
 /**
+ * More details about the organization.
+ * @typedef {Object} TeamLogOrganizationDetails
+ * @property {string} organization - The name of the organization.
+ */
+
+/**
+ * The name of the organization
+ * @typedef {Object} TeamLogOrganizationName
+ * @property {string} organization - The name of the organization.
+ */
+
+/**
  * The origin from which the actor performed the action.
  * @typedef {Object} TeamLogOriginLogInfo
  * @property {TeamLogAccessMethodLogInfo} access_method - The method that was
  * used to perform the action.
  * @property {TeamLogGeoLocationLogInfo} [geo_location] - Geographic location
  * details.
+ */
+
+/**
+ * Report created: Views of old links.
+ * @typedef {Object} TeamLogOutdatedLinkViewCreateReportDetails
+ * @property {Timestamp} start_date - Report start date.
+ * @property {Timestamp} end_date - Report end date.
+ */
+
+/**
+ * @typedef {Object} TeamLogOutdatedLinkViewCreateReportType
+ * @property {string} description
+ */
+
+/**
+ * Couldn't create report: Views of old links.
+ * @typedef {Object} TeamLogOutdatedLinkViewReportFailedDetails
+ * @property {TeamTeamReportFailureReason} failure_reason - Failure reason.
+ */
+
+/**
+ * @typedef {Object} TeamLogOutdatedLinkViewReportFailedType
+ * @property {string} description
  */
 
 /**
@@ -10085,7 +12185,7 @@ subtypes.
  */
 
 /**
- * Added team member to Paper doc/folder.
+ * Added users and/or groups to Paper doc/folder.
  * @typedef {Object} TeamLogPaperContentAddMemberDetails
  * @property {string} event_uuid - Event unique identifier.
  */
@@ -10147,9 +12247,9 @@ subtypes.
  * Removed Paper doc/folder from folder.
  * @typedef {Object} TeamLogPaperContentRemoveFromFolderDetails
  * @property {string} event_uuid - Event unique identifier.
- * @property {number} target_asset_index - Target asset position in the Assets
+ * @property {number} [target_asset_index] - Target asset position in the Assets
  * list.
- * @property {number} parent_asset_index - Parent asset position in the Assets
+ * @property {number} [parent_asset_index] - Parent asset position in the Assets
  * list.
  */
 
@@ -10159,7 +12259,7 @@ subtypes.
  */
 
 /**
- * Removed team member from Paper doc/folder.
+ * Removed users and/or groups from Paper doc/folder.
  * @typedef {Object} TeamLogPaperContentRemoveMemberDetails
  * @property {string} event_uuid - Event unique identifier.
  */
@@ -10244,7 +12344,7 @@ subtypes.
  */
 
 /**
- * Changed team member permissions for Paper doc.
+ * Changed member permissions for Paper doc.
  * @typedef {Object} TeamLogPaperDocChangeMemberRoleDetails
  * @property {string} event_uuid - Event unique identifier.
  * @property {TeamLogPaperAccessType} access_type - Paper doc access type.
@@ -10357,7 +12457,7 @@ subtypes.
  */
 
 /**
- * Mentioned team member in Paper doc.
+ * Mentioned user in Paper doc.
  * @typedef {Object} TeamLogPaperDocMentionDetails
  * @property {string} event_uuid - Event unique identifier.
  */
@@ -10427,7 +12527,7 @@ subtypes.
  */
 
 /**
- * Shared Paper doc with team member.
+ * Shared Paper doc with users and/or groups.
  * @typedef {Object} TeamLogPaperDocTeamInviteDetails
  * @property {string} event_uuid - Event unique identifier.
  */
@@ -10592,7 +12692,7 @@ subtypes.
  */
 
 /**
- * Shared Paper folder with member.
+ * Shared Paper folder with users and/or groups.
  * @typedef {Object} TeamLogPaperFolderTeamInviteDetails
  * @property {string} event_uuid - Event unique identifier.
  */
@@ -10606,6 +12706,19 @@ subtypes.
  * Policy for controlling if team members can share Paper documents externally.
  * @typedef {Object} TeamLogPaperMemberPolicy
  * @property {('anyone_with_link'|'only_team'|'team_and_explicitly_shared'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Changed permissions for published doc.
+ * @typedef {Object} TeamLogPaperPublishedLinkChangePermissionDetails
+ * @property {string} event_uuid - Event unique identifier.
+ * @property {string} new_permission_level - New permission level.
+ * @property {string} previous_permission_level - Previous permission level.
+ */
+
+/**
+ * @typedef {Object} TeamLogPaperPublishedLinkChangePermissionType
+ * @property {string} description
  */
 
 /**
@@ -10688,12 +12801,37 @@ subtypes.
  */
 
 /**
+ * Changed team password strength requirements.
+ * @typedef {Object} TeamLogPasswordStrengthRequirementsChangePolicyDetails
+ * @property {TeamPoliciesPasswordStrengthPolicy} previous_value - Old password
+ * strength policy.
+ * @property {TeamPoliciesPasswordStrengthPolicy} new_value - New password
+ * strength policy.
+ */
+
+/**
+ * @typedef {Object} TeamLogPasswordStrengthRequirementsChangePolicyType
+ * @property {string} description
+ */
+
+/**
  * Path's details.
  * @typedef {Object} TeamLogPathLogInfo
  * @property {TeamLogNamespaceRelativePathLogInfo} namespace_relative - Path
  * relative to the namespace containing the content.
  * @property {string} [contextual] - Fully qualified path relative to event's
  * context. Might be missing due to historical data gap.
+ */
+
+/**
+ * Added pending secondary email.
+ * @typedef {Object} TeamLogPendingSecondaryEmailAddedDetails
+ * @property {string} secondary_email - New pending secondary email.
+ */
+
+/**
+ * @typedef {Object} TeamLogPendingSecondaryEmailAddedType
+ * @property {string} description
  */
 
 /**
@@ -10750,7 +12888,7 @@ subtypes.
 /**
  * Quick action type.
  * @typedef {Object} TeamLogQuickActionType
- * @property {('delete_shared_link'|'reset_password'|'restore_file_or_folder'|'unlink_app'|'unlink_session'|'other')} .tag - Tag identifying the union variant.
+ * @property {('delete_shared_link'|'reset_password'|'restore_file_or_folder'|'unlink_app'|'unlink_device'|'unlink_session'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -10808,6 +12946,59 @@ subtypes.
 
 /**
  * @typedef {Object} TeamLogResellerSupportSessionStartType
+ * @property {string} description
+ */
+
+/**
+ * Rewound a folder.
+ * @typedef {Object} TeamLogRewindFolderDetails
+ * @property {Timestamp} rewind_folder_target_ts_ms - Folder was Rewound to this
+ * date.
+ */
+
+/**
+ * @typedef {Object} TeamLogRewindFolderType
+ * @property {string} description
+ */
+
+/**
+ * Policy for controlling whether team members can rewind
+ * @typedef {Object} TeamLogRewindPolicy
+ * @property {('admins_only'|'everyone'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Changed Rewind policy for team.
+ * @typedef {Object} TeamLogRewindPolicyChangedDetails
+ * @property {TeamLogRewindPolicy} new_value - New Dropbox Rewind policy.
+ * @property {TeamLogRewindPolicy} previous_value - Previous Dropbox Rewind
+ * policy.
+ */
+
+/**
+ * @typedef {Object} TeamLogRewindPolicyChangedType
+ * @property {string} description
+ */
+
+/**
+ * Deleted secondary email.
+ * @typedef {Object} TeamLogSecondaryEmailDeletedDetails
+ * @property {string} secondary_email - Deleted secondary email.
+ */
+
+/**
+ * @typedef {Object} TeamLogSecondaryEmailDeletedType
+ * @property {string} description
+ */
+
+/**
+ * Verified secondary email.
+ * @typedef {Object} TeamLogSecondaryEmailVerifiedDetails
+ * @property {string} secondary_email - Verified secondary email.
+ */
+
+/**
+ * @typedef {Object} TeamLogSecondaryEmailVerifiedType
  * @property {string} description
  */
 
@@ -11312,7 +13503,32 @@ variant.
  */
 
 /**
- * Unshared file/folder by clearing membership and turning off link.
+ * Restored shared file/folder invitees.
+ * @typedef {Object} TeamLogSharedContentRestoreInviteesDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {Array.<Object>} invitees - A list of invitees.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedContentRestoreInviteesType
+ * @property {string} description
+ */
+
+/**
+ * Restored users and/or groups to membership of shared file/folder.
+ * @typedef {Object} TeamLogSharedContentRestoreMemberDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedContentRestoreMemberType
+ * @property {string} description
+ */
+
+/**
+ * Unshared file/folder by clearing membership.
  * @typedef {Object} TeamLogSharedContentUnshareDetails
  */
 
@@ -11584,6 +13800,134 @@ variant.
  */
 
 /**
+ * Added an expiration date to the shared link.
+ * @typedef {Object} TeamLogSharedLinkSettingsAddExpirationDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} [shared_content_link] - Shared content link.
+ * @property {Timestamp} [new_value] - New shared content link expiration date.
+ * Might be missing due to historical data gap.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsAddExpirationType
+ * @property {string} description
+ */
+
+/**
+ * Added a password to the shared link.
+ * @typedef {Object} TeamLogSharedLinkSettingsAddPasswordDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} [shared_content_link] - Shared content link.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsAddPasswordType
+ * @property {string} description
+ */
+
+/**
+ * Disabled downloads.
+ * @typedef {Object} TeamLogSharedLinkSettingsAllowDownloadDisabledDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} [shared_content_link] - Shared content link.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsAllowDownloadDisabledType
+ * @property {string} description
+ */
+
+/**
+ * Enabled downloads.
+ * @typedef {Object} TeamLogSharedLinkSettingsAllowDownloadEnabledDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} [shared_content_link] - Shared content link.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsAllowDownloadEnabledType
+ * @property {string} description
+ */
+
+/**
+ * Changed the audience of the shared link.
+ * @typedef {Object} TeamLogSharedLinkSettingsChangeAudienceDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {SharingLinkAudience} new_value - New link audience value.
+ * @property {string} [shared_content_link] - Shared content link.
+ * @property {SharingLinkAudience} [previous_value] - Previous link audience
+ * value.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsChangeAudienceType
+ * @property {string} description
+ */
+
+/**
+ * Changed the expiration date of the shared link.
+ * @typedef {Object} TeamLogSharedLinkSettingsChangeExpirationDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} [shared_content_link] - Shared content link.
+ * @property {Timestamp} [new_value] - New shared content link expiration date.
+ * Might be missing due to historical data gap.
+ * @property {Timestamp} [previous_value] - Previous shared content link
+ * expiration date. Might be missing due to historical data gap.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsChangeExpirationType
+ * @property {string} description
+ */
+
+/**
+ * Changed the password of the shared link.
+ * @typedef {Object} TeamLogSharedLinkSettingsChangePasswordDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} [shared_content_link] - Shared content link.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsChangePasswordType
+ * @property {string} description
+ */
+
+/**
+ * Removed the expiration date from the shared link.
+ * @typedef {Object} TeamLogSharedLinkSettingsRemoveExpirationDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} [shared_content_link] - Shared content link.
+ * @property {Timestamp} [previous_value] - Previous shared link expiration
+ * date. Might be missing due to historical data gap.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsRemoveExpirationType
+ * @property {string} description
+ */
+
+/**
+ * Removed the password from the shared link.
+ * @typedef {Object} TeamLogSharedLinkSettingsRemovePasswordDetails
+ * @property {SharingAccessLevel} shared_content_access_level - Shared content
+ * access level.
+ * @property {string} [shared_content_link] - Shared content link.
+ */
+
+/**
+ * @typedef {Object} TeamLogSharedLinkSettingsRemovePasswordType
+ * @property {string} description
+ */
+
+/**
  * Added members as audience of shared link.
  * @typedef {Object} TeamLogSharedLinkShareDetails
  * @property
@@ -11688,7 +14032,7 @@ variant.
 /**
  * External sharing policy
  * @typedef {Object} TeamLogSharingMemberPolicy
- * @property {('allow'|'forbid'|'other')} .tag - Tag identifying the union variant.
+ * @property {('allow'|'forbid'|'forbid_with_exclusions'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -12116,6 +14460,20 @@ variant.
  */
 
 /**
+ * Changed automatic Smart Sync setting for team.
+ * @typedef {Object} TeamLogSmarterSmartSyncPolicyChangedDetails
+ * @property {TeamPoliciesSmarterSmartSyncPolicyState} previous_value - Previous
+ * automatic Smart Sync setting.
+ * @property {TeamPoliciesSmarterSmartSyncPolicyState} new_value - New automatic
+ * Smart Sync setting.
+ */
+
+/**
+ * @typedef {Object} TeamLogSmarterSmartSyncPolicyChangedType
+ * @property {string} description
+ */
+
+/**
  * Space limit alert policy
  * @typedef {Object} TeamLogSpaceCapsType
  * @property {('hard'|'off'|'soft'|'other')} .tag - Tag identifying the union variant.
@@ -12269,6 +14627,18 @@ variant.
  */
 
 /**
+ * Started enterprise admin session.
+ * @typedef {Object} TeamLogStartedEnterpriseAdminSessionDetails
+ * @property {TeamLogFedExtraDetails} federation_extra_details - More
+ * information about the organization or team.
+ */
+
+/**
+ * @typedef {Object} TeamLogStartedEnterpriseAdminSessionType
+ * @property {string} description
+ */
+
+/**
  * Created team activity report.
  * @typedef {Object} TeamLogTeamActivityCreateReportDetails
  * @property {Timestamp} start_date - Report start date.
@@ -12289,6 +14659,12 @@ variant.
 /**
  * @typedef {Object} TeamLogTeamActivityCreateReportType
  * @property {string} description
+ */
+
+/**
+ * More details about the team.
+ * @typedef {Object} TeamLogTeamDetails
+ * @property {string} team - The name of the team.
  */
 
 /**
@@ -12401,6 +14777,13 @@ variant.
  */
 
 /**
+ * Details about team invites
+ * @typedef {Object} TeamLogTeamInviteDetails
+ * @property {TeamLogInviteMethod} invite_method - How the user was invited to
+ * the team.
+ */
+
+/**
  * Team linked app
  * @typedef {Object} TeamLogTeamLinkedAppLogInfo
 @property {'team_linked_app'} [.tag] - Tag identifying this subtype variant.
@@ -12410,6 +14793,12 @@ subtypes.
  * historical data gap.
  * @property {string} [display_name] - App display name. Might be missing due to
  * historical data gap.
+ */
+
+/**
+ * Team's logged information.
+ * @typedef {Object} TeamLogTeamLogInfo
+ * @property {string} display_name - Team display name.
  */
 
 /**
@@ -12427,6 +14816,8 @@ subtypes.
  * @property {string} [team_member_id] - Team member ID. Might be missing due to
  * historical data gap.
  * @property {string} [member_external_id] - Team member external ID.
+ * @property {TeamLogTeamLogInfo} [team] - Details about this user&#x2019s team
+ * for enterprise event.
  */
 
 /**
@@ -12824,12 +15215,36 @@ subtypes.
  */
 
 /**
+ * Edited the approved list for sharing externally.
+ * @typedef {Object} TeamLogTeamSharingWhitelistSubjectsChangedDetails
+ * @property {Array.<string>} added_whitelist_subjects - Domains or emails added
+ * to the approved list for sharing externally.
+ * @property {Array.<string>} removed_whitelist_subjects - Domains or emails
+ * removed from the approved list for sharing externally.
+ */
+
+/**
+ * @typedef {Object} TeamLogTeamSharingWhitelistSubjectsChangedType
+ * @property {string} description
+ */
+
+/**
  * Added backup phone for two-step verification.
  * @typedef {Object} TeamLogTfaAddBackupPhoneDetails
  */
 
 /**
  * @typedef {Object} TeamLogTfaAddBackupPhoneType
+ * @property {string} description
+ */
+
+/**
+ * Added members to two factor authentication exception list.
+ * @typedef {Object} TeamLogTfaAddExceptionDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogTfaAddExceptionType
  * @property {string} description
  */
 
@@ -12903,6 +15318,16 @@ subtypes.
  */
 
 /**
+ * Removed members from two factor authentication exception list.
+ * @typedef {Object} TeamLogTfaRemoveExceptionDetails
+ */
+
+/**
+ * @typedef {Object} TeamLogTfaRemoveExceptionType
+ * @property {string} description
+ */
+
+/**
  * Removed security key for two-step verification.
  * @typedef {Object} TeamLogTfaRemoveSecurityKeyDetails
  */
@@ -12934,18 +15359,20 @@ subtypes.
 variant. This field is only present when needed to discriminate between multiple
 possible subtypes.
  * @property {TeamLogTrustedNonTeamMemberType} trusted_non_team_member_type -
- * Indicates the type of the trusted non team member user.
+ * Indicates the type of the member of a trusted team.
  * @property {string} [account_id] - User unique ID. Might be missing due to
  * historical data gap.
  * @property {string} [display_name] - User display name. Might be missing due
  * to historical data gap.
  * @property {string} [email] - User email address. Might be missing due to
  * historical data gap.
+ * @property {TeamLogTeamLogInfo} [team] - Details about this useru2019s trusted
+ * team.
  */
 
 /**
  * @typedef {Object} TeamLogTrustedNonTeamMemberType
- * @property {('multi_instance_admin'|'other')} .tag - Tag identifying the union variant.
+ * @property {('multi_instance_admin'|'enterprise_admin'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -13038,6 +15465,25 @@ possible subtypes.
  */
 
 /**
+ * Policy for controlling team access to watermarking feature
+ * @typedef {Object} TeamLogWatermarkingPolicy
+ * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Changed watermarking policy for team.
+ * @typedef {Object} TeamLogWatermarkingPolicyChangedDetails
+ * @property {TeamLogWatermarkingPolicy} new_value - New watermarking policy.
+ * @property {TeamLogWatermarkingPolicy} previous_value - Previous watermarking
+ * policy.
+ */
+
+/**
+ * @typedef {Object} TeamLogWatermarkingPolicyChangedType
+ * @property {string} description
+ */
+
+/**
  * Information on active web sessions
  * @typedef {Object} TeamLogWebDeviceSessionLogInfo
 @property {'web_device_session'} [.tag] - Tag identifying this subtype variant.
@@ -13064,6 +15510,20 @@ subtypes.
 only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [session_id] - Session ID. Might be missing due to
  * historical data gap.
+ */
+
+/**
+ * Changed limit on active sessions per member.
+ * @typedef {Object} TeamLogWebSessionsChangeActiveSessionLimitDetails
+ * @property {string} previous_value - Previous max number of concurrent active
+ * sessions policy.
+ * @property {string} new_value - New max number of concurrent active sessions
+ * policy.
+ */
+
+/**
+ * @typedef {Object} TeamLogWebSessionsChangeActiveSessionLimitType
+ * @property {string} description
  */
 
 /**
@@ -13121,6 +15581,11 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} TeamPoliciesFileLockingPolicyState
+ * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} TeamPoliciesGroupCreation
  * @property {('admins_and_members'|'admins_only')} .tag - Tag identifying the union variant.
  */
@@ -13148,6 +15613,11 @@ only present when needed to discriminate between multiple possible subtypes.
 /**
  * @typedef {Object} TeamPoliciesPaperEnabledPolicy
  * @property {('disabled'|'enabled'|'unspecified'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} TeamPoliciesPasswordControlMode
+ * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -13200,6 +15670,11 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * @typedef {Object} TeamPoliciesSmarterSmartSyncPolicyState
+ * @property {('disabled'|'enabled'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * @typedef {Object} TeamPoliciesSsoPolicy
  * @property {('disabled'|'optional'|'required'|'other')} .tag - Tag identifying the union variant.
  */
@@ -13237,7 +15712,7 @@ only present when needed to discriminate between multiple possible subtypes.
 
 /**
  * @typedef {Object} TeamPoliciesTwoStepVerificationState
- * @property {('required'|'optional'|'other')} .tag - Tag identifying the union variant.
+ * @property {('required'|'optional'|'disabled'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -13275,6 +15750,16 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {string} [team_member_id] - The user's unique team member id. This
  * field will only be present if the user is part of a team and is_teammate is
  * true.
+ */
+
+/**
+ * The value for UserFeature.file_locking.
+ * @typedef {Object} UsersFileLockingValue
+ * @property {boolean} [enabled] - Available if .tag is enabled. When this value
+ * is True, the user can lock files in shared directories. When the value is
+ * False the user can unlock the files they have locked or request to unlock
+ * files locked by others.
+ * @property {('enabled'|'other')} .tag - Tag identifying the union variant.
  */
 
 /**
@@ -13366,6 +15851,17 @@ only present when needed to discriminate between multiple possible subtypes.
  */
 
 /**
+ * The value for UserFeature.paper_as_files.
+ * @typedef {Object} UsersPaperAsFilesValue
+ * @property {boolean} [enabled] - Available if .tag is enabled. When this value
+ * is true, the user's Paper docs are accessible in Dropbox with the .paper
+ * extension and must be accessed via the /files endpoints.  When this value is
+ * false, the user's Paper docs are stored separate from Dropbox files and
+ * folders and should be accessed via the /paper endpoints.
+ * @property {('enabled'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
  * Space is allocated differently based on the type of account.
  * @typedef {Object} UsersSpaceAllocation
  * @property {UsersIndividualSpaceAllocation} [individual] - Available if .tag
@@ -13402,6 +15898,41 @@ only present when needed to discriminate between multiple possible subtypes.
  * @property {TeamCommonMemberSpaceLimitType} user_within_team_space_limit_type
  * - The type of the space limit imposed on the team member (off, alert_only,
  * stop_sync).
+ * @property {number} user_within_team_space_used_cached - An accurate cached
+ * calculation of a team member's total space usage (bytes).
+ */
+
+/**
+ * A set of features that a Dropbox User account may have configured.
+ * @typedef {Object} UsersUserFeature
+ * @property {('paper_as_files'|'file_locking'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * Values that correspond to entries in UserFeature.
+ * @typedef {Object} UsersUserFeatureValue
+ * @property {UsersPaperAsFilesValue} [paper_as_files] - Available if .tag is
+ * paper_as_files.
+ * @property {UsersFileLockingValue} [file_locking] - Available if .tag is
+ * file_locking.
+ * @property {('paper_as_files'|'file_locking'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} UsersUserFeaturesGetValuesBatchArg
+ * @property {Array.<UsersUserFeature>} features - A list of features in
+ * UserFeature. If the list is empty, this route will return
+ * UserFeaturesGetValuesBatchError.
+ */
+
+/**
+ * @typedef {Object} UsersUserFeaturesGetValuesBatchError
+ * @property {('empty_features_list'|'other')} .tag - Tag identifying the union variant.
+ */
+
+/**
+ * @typedef {Object} UsersUserFeaturesGetValuesBatchResult
+ * @property {Array.<UsersUserFeatureValue>} values
  */
 
 /**

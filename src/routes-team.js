@@ -214,6 +214,74 @@ routes.teamGroupsUpdate = function (arg) {
 };
 
 /**
+ * Creates new legal hold policy. Permission : Team member file access.
+ * @function DropboxTeam#teamLegalHoldsCreatePolicy
+ * @arg {TeamLegalHoldsPolicyCreateArg} arg - The request parameters.
+ * @returns {Promise.<Object, Error.<TeamLegalHoldsPolicyCreateError>>}
+ */
+routes.teamLegalHoldsCreatePolicy = function (arg) {
+  return this.request('team/legal_holds/create_policy', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Gets a legal hold by Id. Permission : Team member file access.
+ * @function DropboxTeam#teamLegalHoldsGetPolicy
+ * @arg {TeamLegalHoldsGetPolicyArg} arg - The request parameters.
+ * @returns {Promise.<Object, Error.<TeamLegalHoldsGetPolicyError>>}
+ */
+routes.teamLegalHoldsGetPolicy = function (arg) {
+  return this.request('team/legal_holds/get_policy', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * @function DropboxTeam#teamLegalHoldsListHeldRevisions
+ * @arg {TeamLegalHoldsListHeldRevisionsArg} arg - The request parameters.
+ * @returns {Promise.<TeamLegalHoldsListHeldRevisionResult, Error.<TeamLegalHoldsListHeldRevisionsError>>}
+ */
+routes.teamLegalHoldsListHeldRevisions = function (arg) {
+  return this.request('team/legal_holds/list_held_revisions', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * @function DropboxTeam#teamLegalHoldsListHeldRevisionsContinue
+ * @arg {TeamLegalHoldsListHeldRevisionsContinueArg} arg - The request parameters.
+ * @returns {Promise.<TeamLegalHoldsListHeldRevisionResult, Error.<TeamLegalHoldsListHeldRevisionsError>>}
+ */
+routes.teamLegalHoldsListHeldRevisionsContinue = function (arg) {
+  return this.request('team/legal_holds/list_held_revisions_continue', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Lists legal holds on a team. Permission : Team member file access.
+ * @function DropboxTeam#teamLegalHoldsListPolicies
+ * @arg {TeamLegalHoldsListPoliciesArg} arg - The request parameters.
+ * @returns {Promise.<TeamLegalHoldsListPoliciesResult, Error.<TeamLegalHoldsListPoliciesError>>}
+ */
+routes.teamLegalHoldsListPolicies = function (arg) {
+  return this.request('team/legal_holds/list_policies', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Releases a legal hold by Id. Permission : Team member file access.
+ * @function DropboxTeam#teamLegalHoldsReleasePolicy
+ * @arg {TeamLegalHoldsPolicyReleaseArg} arg - The request parameters.
+ * @returns {Promise.<void, Error.<TeamLegalHoldsPolicyReleaseError>>}
+ */
+routes.teamLegalHoldsReleasePolicy = function (arg) {
+  return this.request('team/legal_holds/release_policy', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Updates a legal hold. Permission : Team member file access.
+ * @function DropboxTeam#teamLegalHoldsUpdatePolicy
+ * @arg {TeamLegalHoldsPolicyUpdateArg} arg - The request parameters.
+ * @returns {Promise.<Object, Error.<TeamLegalHoldsPolicyUpdateError>>}
+ */
+routes.teamLegalHoldsUpdatePolicy = function (arg) {
+  return this.request('team/legal_holds/update_policy', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * List all linked applications of the team member. Note, this endpoint does not
  * list any team-linked applications.
  * @function DropboxTeam#teamLinkedAppsListMemberLinkedApps
@@ -372,6 +440,16 @@ routes.teamMembersAddJobStatusGet = function (arg) {
 };
 
 /**
+ * Deletes a team member's profile photo. Permission : Team member management.
+ * @function DropboxTeam#teamMembersDeleteProfilePhoto
+ * @arg {TeamMembersDeleteProfilePhotoArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamMemberInfo, Error.<TeamMembersDeleteProfilePhotoError>>}
+ */
+routes.teamMembersDeleteProfilePhoto = function (arg) {
+  return this.request('team/members/delete_profile_photo', arg, 'team', 'api', 'rpc');
+};
+
+/**
  * Returns information about multiple team members. Permission : Team
  * information This endpoint will return MembersGetInfoItem.id_not_found, for
  * IDs (or emails) that cannot be matched to a valid team member.
@@ -450,7 +528,7 @@ routes.teamMembersRecover = function (arg) {
  * still recoverable on your team will return with
  * MemberAddResult.user_already_on_team. Accounts can have their files
  * transferred via the admin console for a limited time, based on the version
- * history length associated with the team (120 days for most teams). This
+ * history length associated with the team (180 days for most teams). This
  * endpoint may initiate an asynchronous job. To obtain the final result of the
  * job, the client should periodically poll members/remove/job_status/get.
  * @function DropboxTeam#teamMembersRemove
@@ -470,6 +548,41 @@ routes.teamMembersRemove = function (arg) {
  */
 routes.teamMembersRemoveJobStatusGet = function (arg) {
   return this.request('team/members/remove/job_status/get', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Add secondary emails to users. Permission : Team member management. Emails
+ * that are on verified domains will be verified automatically. For each email
+ * address not on a verified domain a verification email will be sent.
+ * @function DropboxTeam#teamMembersSecondaryEmailsAdd
+ * @arg {TeamAddSecondaryEmailsArg} arg - The request parameters.
+ * @returns {Promise.<TeamAddSecondaryEmailsResult, Error.<TeamAddSecondaryEmailsError>>}
+ */
+routes.teamMembersSecondaryEmailsAdd = function (arg) {
+  return this.request('team/members/secondary_emails/add', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Delete secondary emails from users Permission : Team member management. Users
+ * will be notified of deletions of verified secondary emails at both the
+ * secondary email and their primary email.
+ * @function DropboxTeam#teamMembersSecondaryEmailsDelete
+ * @arg {TeamDeleteSecondaryEmailsArg} arg - The request parameters.
+ * @returns {Promise.<TeamDeleteSecondaryEmailsResult, Error.<void>>}
+ */
+routes.teamMembersSecondaryEmailsDelete = function (arg) {
+  return this.request('team/members/secondary_emails/delete', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Resend secondary email verification emails. Permission : Team member
+ * management.
+ * @function DropboxTeam#teamMembersSecondaryEmailsResendVerificationEmails
+ * @arg {TeamResendVerificationEmailArg} arg - The request parameters.
+ * @returns {Promise.<TeamResendVerificationEmailResult, Error.<void>>}
+ */
+routes.teamMembersSecondaryEmailsResendVerificationEmails = function (arg) {
+  return this.request('team/members/secondary_emails/resend_verification_emails', arg, 'team', 'api', 'rpc');
 };
 
 /**
@@ -502,6 +615,16 @@ routes.teamMembersSetAdminPermissions = function (arg) {
  */
 routes.teamMembersSetProfile = function (arg) {
   return this.request('team/members/set_profile', arg, 'team', 'api', 'rpc');
+};
+
+/**
+ * Updates a team member's profile photo. Permission : Team member management.
+ * @function DropboxTeam#teamMembersSetProfilePhoto
+ * @arg {TeamMembersSetProfilePhotoArg} arg - The request parameters.
+ * @returns {Promise.<TeamTeamMemberInfo, Error.<TeamMembersSetProfilePhotoError>>}
+ */
+routes.teamMembersSetProfilePhoto = function (arg) {
+  return this.request('team/members/set_profile_photo', arg, 'team', 'api', 'rpc');
 };
 
 /**
