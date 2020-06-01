@@ -89,7 +89,7 @@
     "pretty-bytes-cli": "^2.0.0",
     "prompt": "^1.0.0",
     "randomatic": "~>3.0.0",
-    "rollup": "^0.42.0",
+    "rollup": "^2.0.0",
     "rollup-endpoint": "^0.2.2",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.4.1",
