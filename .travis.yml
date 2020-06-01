@@ -7,4 +7,6 @@ node_js:
   - '4'
 git:
   submodules: false
+before_script:
+  - npm install -g npm@latest
 script: npm run size
