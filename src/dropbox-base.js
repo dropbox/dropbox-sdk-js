@@ -4,7 +4,11 @@ import { uploadRequest } from './upload-request';
 import { rpcRequest } from './rpc-request';
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
-const TokenExpirationBuffer = 300 * 10000;
+const TokenExpirationBuffer = 300 * 1000;
+const TokenAccessTypes = ['legacy', 'offline', 'online'];
+const GrantTypes = ['code', 'token'];
+const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
+const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
 /* eslint-disable */
 // Polyfill object.assign for legacy browsers
@@ -127,7 +131,7 @@ function parseBodyToType(res) {
  * @param expiresIn
  */
 function getTokenExpiresAt(expiresIn) {
-  return new Date(Date.now() + (expiresIn * 10000));
+  return new Date(Date.now() + (expiresIn * 1000));
 }
 
 export class DropboxBase {
@@ -239,7 +243,7 @@ export class DropboxBase {
    */
   getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = 'legacy') {
     const clientId = this.getClientId();
-    const baseUrl = 'https://www.dropbox.com/oauth2/authorize';
+    const baseUrl = BaseAuthorizeUrl;
 
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
@@ -247,10 +251,10 @@ export class DropboxBase {
     if (authType !== 'code' && !redirectUri) {
       throw new Error('A redirect uri is required.');
     }
-    if (!['code', 'token'].includes(authType)) {
+    if (!GrantTypes.includes(authType)) {
       throw new Error('Authorization type must be code or token');
     }
-    if (!['legacy', 'offline', 'online'].includes(tokenAccessType)) {
+    if (!TokenAccessTypes.includes(tokenAccessType)) {
       throw new Error('Token Access Type must be legacy, offline, or online');
     }
 
@@ -289,7 +293,8 @@ export class DropboxBase {
     if (!clientSecret) {
       throw new Error('A client secret is required. You can set the client id using .setClientSecret().');
     }
-    let path = 'https://api.dropboxapi.com/oauth2/token?grant_type=authorization_code';
+    let path = BaseTokenUrl;
+    path += '?grant_type=authorization_code';
     path += `&code=${code}`;
     path += `&client_id=${clientId}`;
     path += `&client_secret=${clientSecret}`;
@@ -348,7 +353,7 @@ export class DropboxBase {
    * @returns {Promise<[*, *]>}
    */
   refreshAccessToken() {
-    let refreshUrl = 'https://api.dropbox.com/oauth2/token';
+    let refreshUrl = BaseTokenUrl;
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
 
@@ -362,20 +367,10 @@ export class DropboxBase {
     headers['Content-Type'] = 'application/json';
     refreshUrl += `?grant_type=refresh_token&refresh_token=${this.getRefreshToken()}`;
     refreshUrl += `&client_id=${clientId}&client_secret=${clientSecret}`;
-    // const body = {
-    //   grant_type: 'refresh_token',
-    //   refresh_token: this.getRefreshToken(),
-    //   client_id: clientId,
-    //   client_secret: clientSecret,
-    // };
 
     const fetchOptions = {
       method: 'POST',
-      //body: JSON.stringify(body),
     };
-
-    // console.log("Refresh FetchOptions:" + JSON.stringify(fetchOptions));
-
 
     fetchOptions.headers = headers;
     return fetch(refreshUrl, fetchOptions)
