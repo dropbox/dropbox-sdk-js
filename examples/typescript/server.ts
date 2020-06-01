@@ -1,9 +1,9 @@
 import express = require('express');
 import fs = require('fs');
 import path = require('path');
+import {terser} from "rollup-plugin-terser";
 var rollup = require('rollup-endpoint');
 var babel = require('rollup-plugin-babel');
-var uglify = require('rollup-plugin-uglify');
 var replace = require('rollup-plugin-replace');
 var commonjs = require('rollup-plugin-commonjs');
 var nodeResolve = require('rollup-plugin-node-resolve');
@@ -40,7 +40,7 @@ const plugins = [
     'process.env.NODE_ENV': JSON.stringify(env)
   }),
   commonjs(),
-  uglify({
+  terser({
     compress: {
       pure_getters: true,
       unsafe: true,

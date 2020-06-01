@@ -30,33 +30,36 @@ function responseHandler(res, data) {
 }
 
 export function downloadRequest(fetch) {
-  return function downloadRequestWithFetch(path, args, auth, host, accessToken, options) {
-    if (auth !== 'user') {
-      throw new Error(`Unexpected auth type: ${auth}`);
-    }
+  return function downloadRequestWithFetch(path, args, auth, host, client, options) {
+    return client.checkAndRefreshAccessToken()
+      .then(() => {
+        if (auth !== 'user') {
+          throw new Error(`Unexpected auth type: ${auth}`);
+        }
 
-    const fetchOptions = {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Dropbox-API-Arg': httpHeaderSafeJson(args),
-      },
-    };
+        const fetchOptions = {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${client.getAccessToken()}`,
+            'Dropbox-API-Arg': httpHeaderSafeJson(args),
+          },
+        };
 
-    if (options) {
-      if (options.selectUser) {
-        fetchOptions.headers['Dropbox-API-Select-User'] = options.selectUser;
-      }
-      if (options.selectAdmin) {
-        fetchOptions.headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
-      }
-      if (options.pathRoot) {
-        fetchOptions.headers['Dropbox-API-Path-Root'] = options.pathRoot;
-      }
-    }
+        if (options) {
+          if (options.selectUser) {
+            fetchOptions.headers['Dropbox-API-Select-User'] = options.selectUser;
+          }
+          if (options.selectAdmin) {
+            fetchOptions.headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
+          }
+          if (options.pathRoot) {
+            fetchOptions.headers['Dropbox-API-Path-Root'] = options.pathRoot;
+          }
+        }
 
-
-    return fetch(getBaseURL(host) + path, fetchOptions)
+        return fetchOptions;
+      })
+      .then(fetchOptions => fetch(getBaseURL(host) + path, fetchOptions))
       .then(res => getDataFromConsumer(res).then(data => [res, data]))
       .then(([res, data]) => responseHandler(res, data));
   };

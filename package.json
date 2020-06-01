@@ -46,26 +46,20 @@
     "sdk",
     "client"
   ],
-  "repository": "https://github.com/dropbox/dropbox-sdk-js",
-  "bugs": "https://github.com/dropbox/dropbox-sdk-js/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dropbox/dropbox-sdk-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dropbox/dropbox-sdk-js/issues"
+  },
   "author": "Riley Tomasek",
   "contributors": [
-    {
-      "name": "James Sidhu",
-      "email": "james.thomas.sidhu@gmail.com"
-    },
-    {
-      "name": "John Vilk",
-      "email": "jvilk@cs.umass.edu"
-    },
-    {
-      "name": "Steve Klebanoff",
-      "email": "steve.klebanoff@gmail.com"
-    },
-    {
-      "name": "Bohdan Tereta",
-      "email": "Bohdan.Tereta@gmail.com"
-    }
+    "Brad Rogers <brad12rogers@gmail.com>",
+    "James Sidhu <james.thomas.sidhu@gmail.com>",
+    "John Vilk <jvilk@cs.umass.edu>",
+    "Steve Klebanoff <steve.klebanoff@gmail.com>",
+    "Bohdan Tereta <Bohdan.Tereta@gmail.com>"
   ],
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -103,12 +97,20 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-replace": "^1.1.1",
-    "rollup-plugin-uglify": "^2.0.1",
+    "rollup-plugin-server": "^0.7.0",
+    "rollup-plugin-terser": "^6.1.0",
     "rollup-watch": "^4.0.0",
     "sinon": "^2.3.2"
   },
   "dependencies": {
     "buffer": "^5.6.0",
     "moment": "^2.25.3"
-  }
+  },
+  "homepage": "https://github.com/dropbox/dropbox-sdk-js#readme",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "test"
+  },
+  "license": "MIT"
 }

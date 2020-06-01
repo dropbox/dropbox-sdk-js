@@ -3,6 +3,7 @@ import { assert } from 'chai';
 import FetchMock from 'fetch-mock';
 import isomorphicFetch from 'isomorphic-fetch'; // fetchMock needs this in scope to mock correctly.
 import { rpcRequest } from '../src/rpc-request';
+import {Dropbox} from "../src/dropbox";
 
 var exampleErr = {
   error_summary: 'other/...',
@@ -12,6 +13,17 @@ var exampleErr = {
 };
 
 describe('rpcRequest error', function () {
+
+  let client;
+  beforeEach(function() {
+    let config = {
+      clientId: "myclientId",
+      clientSecret: "myClientSecret",
+      accessToken: "mytoken",
+
+    }
+    client = new Dropbox(config);
+  })
 
   afterEach(function () {
     FetchMock.restore();
@@ -29,7 +41,7 @@ describe('rpcRequest error', function () {
       };
     }).catch(500);
 
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client)
       .then(function (data) {
         done(new Error('shouldn’t reach this callback'));
       })
@@ -50,7 +62,7 @@ describe('rpcRequest error', function () {
       };
     }).catch(500);
 
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client)
       .then(function (data) {
         done(new Error('shouldn’t reach this callback'));
       })

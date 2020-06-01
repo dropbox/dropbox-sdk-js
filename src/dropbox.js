@@ -16,6 +16,9 @@ import { DropboxBase } from './dropbox-base';
  * It specifies which user the team access token should be acting as.
  * @arg {String} [options.pathRoot] - root pass to access other namespaces
  * Use to access team folders for example
+ * @arg {String} [options.refreshToken] - A refresh token for retrieving access tokens
+ * @arg {Date} [options.AccessTokenExpiresAt] - Date of the current access token's
+ * expiration (if available)
  */
 export class Dropbox extends DropboxBase {
 

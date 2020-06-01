@@ -3,11 +3,11 @@ var path = require('path');
 var express = require('express');
 var rollup = require('rollup-endpoint');
 var babel = require('rollup-plugin-babel');
-var uglify = require('rollup-plugin-uglify');
 var replace = require('rollup-plugin-replace');
 var commonjs = require('rollup-plugin-commonjs');
 var nodeResolve = require('rollup-plugin-node-resolve');
 var rewrite = require('express-urlrewrite');
+var terser = require("rollup-plugin-terser").terser;
 
 var app = express();
 var port = process.env.PORT || 8080;
@@ -42,7 +42,7 @@ var plugins = [
     'process.env.NODE_ENV': JSON.stringify(env)
   }),
   commonjs(),
-  uglify({
+  terser({
     compress: {
       pure_getters: true,
       unsafe: true,

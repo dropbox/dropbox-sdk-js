@@ -4,7 +4,6 @@ const fs = require("fs");
 const path = require("path");
 var rollup = require('rollup-endpoint');
 var babel = require('rollup-plugin-babel');
-var uglify = require('rollup-plugin-uglify');
 var replace = require('rollup-plugin-replace');
 var commonjs = require('rollup-plugin-commonjs');
 var nodeResolve = require('rollup-plugin-node-resolve');
@@ -39,15 +38,7 @@ const plugins = [
     replace({
         'process.env.NODE_ENV': JSON.stringify(env)
     }),
-    commonjs(),
-    uglify({
-        compress: {
-            pure_getters: true,
-            unsafe: true,
-            unsafe_comps: true,
-            warnings: false,
-        }
-    })
+    commonjs()
 ];
 app.get('/__build__/Dropbox-sdk.min.js', rollup.serve({
     entry: path.resolve(__dirname, '../../src/index.js'),

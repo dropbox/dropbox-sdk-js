@@ -1,10 +1,10 @@
 import babel from 'rollup-plugin-babel';
-import uglify from 'rollup-plugin-uglify';
 import replace from 'rollup-plugin-replace';
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
+import {terser} from "rollup-plugin-terser";
 
 
 const env = process.env.NODE_ENV;
@@ -37,7 +37,7 @@ const config = {
 
 if (env === 'production') {
   config.plugins.push(
-    uglify({
+    terser({
       compress: {
         pure_getters: true,
         unsafe: true,

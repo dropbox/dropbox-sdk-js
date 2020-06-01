@@ -12,7 +12,6 @@ const hostname = 'localhost';
 const port = 3000;
 //const https = require('https');
 
-
 const config = {
   fetch: fetch,
   clientId: [clientId],
@@ -23,7 +22,7 @@ const Dropbox = require('dropbox').Dropbox;
 var dbx = new Dropbox(config);
 
 const redirectUri = `http://${hostname}:${port}/auth`;
-const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code');
+const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code', 'offline');
 
 app.get('/', (req, res) => {
   res.writeHead(302, { 'Location': authUrl });
@@ -33,7 +32,7 @@ app.get('/', (req, res) => {
 
 app.get('/auth', (req, res) => {
   let code = req.query.code;
-  console.log(code);
+  console.log('code:' + code);
   var options = Object.assign({
     code,
     redirectUri
@@ -42,7 +41,15 @@ app.get('/auth', (req, res) => {
 
   dbx.getAccessTokenFromCode(redirectUri, code)
     .then(function(token) {
-        console.log(token);
+        console.log('Token Result:' + JSON.stringify(token));
+        dbx.setRefreshToken(token.refreshToken);
+        dbx.usersGetCurrentAccount()
+          .then(function(response) {
+            console.log('response', response)
+          })
+          .catch(function(error) {
+            console.error(error);
+          });
     })
     .catch(function(error) {
         console.log(error);

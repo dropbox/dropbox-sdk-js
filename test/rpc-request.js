@@ -4,6 +4,7 @@ import { assert } from 'chai';
 import FetchMock from 'fetch-mock';
 import isomorphicFetch from 'isomorphic-fetch'; // fetchMock needs this in scope to mock correctly.
 import { rpcRequest } from '../src/rpc-request';
+import { Dropbox } from '../src/Dropbox';
 
 describe('rpcRequest', function () {
 
@@ -22,6 +23,17 @@ describe('rpcRequest', function () {
     ));
   });
 
+  let client;
+  beforeEach(function() {
+    let config = {
+      clientId: "myclientId",
+      clientSecret: "myClientSecret",
+      accessToken: "mytoken",
+
+    }
+    client = new Dropbox(config);
+  })
+
   afterEach(function () {
     FetchMock.restore();
   });
@@ -35,13 +47,13 @@ describe('rpcRequest', function () {
 
   it('returns a promise when given valid arguments', function () {
     assert.instanceOf(
-      rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken'),
+      rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client),
       Promise
     );
   });
 
   it('posts to the correct url once', function (done) {
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client)
       .then(res => {
         assert.equal(fetchMock.calls().matched.length, 1);
         assert.equal(fetchMock.lastUrl(), 'https://api.dropboxapi.com/2/files/list');
@@ -50,7 +62,7 @@ describe('rpcRequest', function () {
   });
 
   it('sets the request type to application/json', function (done) {
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client)
       .then((res) => {
         assert.equal(fetchMock.lastOptions().headers['Content-Type'], 'application/json');
         done();
@@ -58,24 +70,24 @@ describe('rpcRequest', function () {
   });
 
   it('sets the authorization header', function (done) {
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client)
       .then((res) => {
-        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
+        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer mytoken');
         done();
       });
   });
 
   it('sets the authorization and select user headers if selectUser set', function (done) {
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken', {selectUser: 'selectedUserId'})
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client, {selectUser: 'selectedUserId'})
       .then((res) => {
-        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer atoken');
+        assert.equal(fetchMock.lastOptions().headers['Authorization'], 'Bearer mytoken');
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Select-User'], 'selectedUserId');
         done();
       });
   });
 
   it('sets the request body', function (done) {
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client)
       .then((res) => {
         assert.equal(fetchMock.lastOptions().body, JSON.stringify({ foo: 'bar' }));
         done();
@@ -83,7 +95,7 @@ describe('rpcRequest', function () {
   });
 
   it('sets the request body to null if body isn\'t passed', function (done) {
-    rpcRequest(fetchMock)('files/list', undefined, 'user', 'api', 'atoken')
+    rpcRequest(fetchMock)('files/list', undefined, 'user', 'api', client)
       .then((res) => {
         assert.deepEqual(fetchMock.lastOptions().body, null);
         done();
@@ -91,7 +103,7 @@ describe('rpcRequest', function () {
   });
 
   it('sets Dropbox-Api-Path-Root header if pathRoot set', function (done) {
-    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', 'atoken', { pathRoot: 'selectedPathRoot' })
+    rpcRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', client, { pathRoot: 'selectedPathRoot' })
       .then((data) => {
         assert.equal(fetchMock.lastOptions().headers['Dropbox-API-Path-Root'], 'selectedPathRoot');
         done();
