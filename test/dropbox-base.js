@@ -101,26 +101,43 @@ describe('DropboxBase', function () {
       for (let redirectUri of ['', 'localhost']) {
         for (let state of ['', 'state']){
           for (let tokenAccessType of ['legacy', 'offline', 'online']){
-            var url = dbx.getAuthenticationUrl(redirectUri, state, 'code', tokenAccessType)
+            for (let scope of [null, ['files.metadata.read', 'files.metadata.write']]) {
+              for (let includeGrantedScopes of ['none', 'user', 'team']) {
 
-            assert(url.startsWith('https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID'));
+                var url = dbx.getAuthenticationUrl(redirectUri, state, 'code', tokenAccessType, scope, includeGrantedScopes);
 
-            if (redirectUri){
-              assert(url.includes('&redirect_uri=' + redirectUri));
-            }else{
-              assert(!url.includes('&redirect_uri='));
-            }
+                assert(url.startsWith('https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID'));
 
-            if(state){
-              assert(url.includes('&state=' + state));
-            }else{
-              assert(!url.includes('&state='));
-            }
+                if (redirectUri) {
+                  assert(url.includes('&redirect_uri=' + redirectUri));
+                } else {
+                  assert(!url.includes('&redirect_uri='));
+                }
 
-            if(tokenAccessType !== 'legacy'){
-              assert(url.includes('&token_access_type=' + tokenAccessType));
-            }else{
-              assert(!url.includes('&token_access_type='));
+                if (state) {
+                  assert(url.includes('&state=' + state));
+                } else {
+                  assert(!url.includes('&state='));
+                }
+
+                if (tokenAccessType !== 'legacy') {
+                  assert(url.includes('&token_access_type=' + tokenAccessType));
+                } else {
+                  assert(!url.includes('&token_access_type='));
+                }
+
+                if (scope) {
+                  assert(url.includes('&scope=' + scope.join(' ')));
+                } else {
+                  assert(!url.includes('&scope='));
+                }
+
+                if (includeGrantedScopes !== 'none') {
+                  assert(url.includes('&include_granted_scopes=' + includeGrantedScopes));
+                } else {
+                  assert(!url.includes('&include_granted_scopes='));
+                }
+              }
             }
           }
         }
