@@ -10,9 +10,15 @@ import {terser} from "rollup-plugin-terser";
 const env = process.env.NODE_ENV;
 
 const config = {
-  format: 'umd',
-  sourceMap: (env !== 'production'),
-  external: ['es6-promise/auto'],
+  output: {
+    format: 'umd',
+    sourcemap: (env !== 'production'),
+    globals: {
+      crypto: 'crypto'
+    },
+    exports: 'named',
+  },
+  external: ['es6-promise/auto', 'crypto'],
 
   plugins: [
     builtins(),
@@ -21,10 +27,15 @@ const config = {
       main: true,
       jsnext: true,
       browser: true,
+      preferBuiltins: true
     }),
     commonjs({
       // if false then skip sourceMap generation for CommonJS modules
       sourceMap: (env !== 'production'),  // Default: true
+      namedExports: {
+        'src/dropbox.js': ['Dropbox'],
+        'src/team/dropbox-team.js': ['DropboxTeam']
+      }
     }),
     babel({
       exclude: 'node_modules/**',

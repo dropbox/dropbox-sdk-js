@@ -31,3 +31,5 @@ export class Dropbox extends DropboxBase {
     return this.request('sharing/get_shared_link_file', arg, 'api', 'download');
   }
 }
+
+export default Dropbox;

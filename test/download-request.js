@@ -5,6 +5,7 @@ import { createReadStream } from 'fs';
 import isomorphicFetch from 'isomorphic-fetch'; // fetchMock needs this in scope to mock correctly.
 import { downloadRequest } from '../src/download-request';
 import {Dropbox} from "../src/dropbox";
+import {rpcRequest} from "../src/rpc-request";
 
 FetchMock.configure({sendAsJson: false});
 
@@ -12,7 +13,17 @@ describe('downloadRequest', function () {
 
   let fetchMock;
   beforeEach(function () {
-    fetchMock = FetchMock.sandbox().mock('*', new Response(
+    fetchMock = FetchMock.sandbox().mock('begin:https://api.dropboxapi.com/oauth2/token', new Response(
+      '{"access_token": "test", "expires_in": 14400}',
+      {
+        status: 200,
+        statusText: "OK",
+        headers: {
+          'Content-Type': 'application/json',
+          'dropbox-api-result': '{"test":"json"}'
+        }
+      }
+    )).mock('*', new Response(
       createReadStream(resolve(__dirname, './file.txt')),
       {
         status: 200,
@@ -45,6 +56,23 @@ describe('downloadRequest', function () {
       downloadRequest(fetchMock)('path', {}, 'user', 'content', client),
       Promise
     );
+  });
+
+  it('attempts to refresh if there is no valid access token', function(done) {
+    let refreshConfig = {
+      fetch: fetchMock,
+      clientId: "myclientId",
+      clientSecret: "myClientSecret",
+      refreshToken: "mytoken",
+
+    }
+    let refreshClient = new Dropbox(refreshConfig);
+    downloadRequest(fetchMock)('files/list', { foo: 'bar' }, 'user', 'api', refreshClient)
+      .then(res => {
+        assert.equal(fetchMock.calls().matched.length, 2);
+        assert.equal(fetchMock.lastUrl(), 'https://api.dropboxapi.com/2/files/list');
+        done();
+      }, done);
   });
 
   it('posts to the correct url', function (done) {

@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import { UPLOAD, DOWNLOAD, RPC } from './constants';
 import { downloadRequest } from './download-request';
 import { uploadRequest } from './upload-request';
@@ -5,6 +6,7 @@ import { rpcRequest } from './rpc-request';
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
+const PKCELength = 128;
 const TokenAccessTypes = ['legacy', 'offline', 'online'];
 const GrantTypes = ['code', 'token'];
 const IncludeGrantedScopes = ['none', 'user', 'team'];
@@ -233,6 +235,24 @@ export class DropboxBase {
     this.accessTokenExpiresAt = accessTokenExpiresAt;
   }
 
+  generatePKCECodes() {
+    let codeVerifier = crypto.randomBytes(PKCELength);
+    codeVerifier = codeVerifier.toString('base64')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '')
+      .substr(0, 128);
+    this.codeVerifier = codeVerifier;
+
+    const encoder = new TextEncoder();
+    const codeData = encoder.encode(codeVerifier);
+    let codeChallenge = crypto.createHash('sha256').update(codeData).digest();
+    codeChallenge = codeChallenge.toString('base64')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=/g, '');
+    this.codeChallenge = codeChallenge;
+  }
   /**
    * Get a URL that can be used to authenticate users for the Dropbox API.
    * @arg {String} redirectUri - A URL to redirect the user to after
@@ -242,7 +262,7 @@ export class DropboxBase {
    * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = 'legacy', scope = null, includeGrantedScopes = 'none') {
+  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = 'legacy', scope = null, includeGrantedScopes = 'none', usePKCE = false) {
     const clientId = this.getClientId();
     const baseUrl = BaseAuthorizeUrl;
 
@@ -287,6 +307,11 @@ export class DropboxBase {
     if (includeGrantedScopes !== 'none') {
       authUrl += `&include_granted_scopes=${includeGrantedScopes}`;
     }
+    if (usePKCE) {
+      this.generatePKCECodes();
+      authUrl += '&code_challenge_method=S256';
+      authUrl += `&code_challenge=${this.codeChallenge}`;
+    }
     return authUrl;
   }
 
@@ -303,14 +328,19 @@ export class DropboxBase {
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
     }
-    if (!clientSecret) {
-      throw new Error('A client secret is required. You can set the client id using .setClientSecret().');
-    }
     let path = BaseTokenUrl;
     path += '?grant_type=authorization_code';
     path += `&code=${code}`;
     path += `&client_id=${clientId}`;
-    path += `&client_secret=${clientSecret}`;
+
+    if (clientSecret) {
+      path += `&client_secret=${clientSecret}`;
+    } else {
+      if (!this.codeChallenge) {
+        throw new Error('You must use PKCE when generating the authorization URL to not include a client secret');
+      }
+      path += `&code_verifier=${this.codeVerifier}`;
+    }
     if (redirectUri) {
       path += `&redirect_uri=${redirectUri}`;
     }
@@ -351,7 +381,7 @@ export class DropboxBase {
    * @returns {Promise<[*, *]>}
    */
   checkAndRefreshAccessToken() {
-    const canRefresh = this.getRefreshToken() && this.getClientId() && this.getClientSecret();
+    const canRefresh = this.getRefreshToken() && this.getClientId();
     const needsRefresh = this.getAccessTokenExpiresAt() &&
             (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
     const needsToken = !this.getAccessToken();
@@ -373,9 +403,6 @@ export class DropboxBase {
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
     }
-    if (!clientSecret) {
-      throw new Error('A client secret is required. You can set the client id using .setClientSecret().');
-    }
     if (scope && !(scope instanceof Array)) {
       throw new Error('Scope must be an array of strings');
     }
@@ -383,8 +410,10 @@ export class DropboxBase {
     const headers = {};
     headers['Content-Type'] = 'application/json';
     refreshUrl += `?grant_type=refresh_token&refresh_token=${this.getRefreshToken()}`;
-    refreshUrl += `&client_id=${clientId}&client_secret=${clientSecret}`;
-
+    refreshUrl += `&client_id=${clientId}`;
+    if (clientSecret) {
+      refreshUrl += `&client_secret=${clientSecret}`;
+    }
     if (scope) {
       refreshUrl += `&scope=${scope.join(' ')}`;
     }
@@ -393,7 +422,7 @@ export class DropboxBase {
     };
 
     fetchOptions.headers = headers;
-    return fetch(refreshUrl, fetchOptions)
+    return this.fetch(refreshUrl, fetchOptions)
       .then(res => parseBodyToType(res))
       .then(([res, data]) => {
         // maintaining existing API for error codes not equal to 200 range
