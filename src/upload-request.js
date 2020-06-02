@@ -10,37 +10,41 @@ function parseBodyToType(res) {
 }
 
 export function uploadRequest(fetch) {
-  return function uploadRequestWithFetch(path, args, auth, host, accessToken, options) {
-    if (auth !== 'user') {
-      throw new Error(`Unexpected auth type: ${auth}`);
-    }
+  return function uploadRequestWithFetch(path, args, auth, host, client, options) {
+    return client.checkAndRefreshAccessToken()
+      .then(() => {
+        if (auth !== 'user') {
+          throw new Error(`Unexpected auth type: ${auth}`);
+        }
 
-    const { contents } = args;
-    delete args.contents;
+        const { contents } = args;
+        delete args.contents;
 
-    const fetchOptions = {
-      body: contents,
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/octet-stream',
-        'Dropbox-API-Arg': httpHeaderSafeJson(args),
-      },
-    };
+        const fetchOptions = {
+          body: contents,
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${client.getAccessToken()}`,
+            'Content-Type': 'application/octet-stream',
+            'Dropbox-API-Arg': httpHeaderSafeJson(args),
+          },
+        };
 
-    if (options) {
-      if (options.selectUser) {
-        fetchOptions.headers['Dropbox-API-Select-User'] = options.selectUser;
-      }
-      if (options.selectAdmin) {
-        fetchOptions.headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
-      }
-      if (options.pathRoot) {
-        fetchOptions.headers['Dropbox-API-Path-Root'] = options.pathRoot;
-      }
-    }
+        if (options) {
+          if (options.selectUser) {
+            fetchOptions.headers['Dropbox-API-Select-User'] = options.selectUser;
+          }
+          if (options.selectAdmin) {
+            fetchOptions.headers['Dropbox-API-Select-Admin'] = options.selectAdmin;
+          }
+          if (options.pathRoot) {
+            fetchOptions.headers['Dropbox-API-Path-Root'] = options.pathRoot;
+          }
+        }
 
-    return fetch(getBaseURL(host) + path, fetchOptions)
+        return fetchOptions;
+      })
+      .then(fetchOptions => fetch(getBaseURL(host) + path, fetchOptions))
       .then(res => parseBodyToType(res))
       .then(([res, data]) => {
         // maintaining existing API for error codes not equal to 200 range

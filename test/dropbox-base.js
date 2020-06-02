@@ -96,20 +96,35 @@ describe('DropboxBase', function () {
       );
     });
 
-    it('returns auth url with redirect uri', function () {
+    it('returns correct auth url with all combinations of valid input', function () {
       dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
-      assert.equal(
-        dbx.getAuthenticationUrl('redirect'),
-        'https://www.dropbox.com/oauth2/authorize?response_type=token&client_id=CLIENT_ID&redirect_uri=redirect'
-      );
-    });
+      for (let redirectUri of ['', 'localhost']) {
+        for (let state of ['', 'state']){
+          for (let tokenAccessType of ['legacy', 'offline', 'online']){
+            var url = dbx.getAuthenticationUrl(redirectUri, state, 'code', tokenAccessType)
 
-    it('returns auth url with redirect uri and state', function () {
-      dbx = new DropboxBase({ clientId: 'CLIENT_ID' });
-      assert.equal(
-        dbx.getAuthenticationUrl('redirect', 'state'),
-        'https://www.dropbox.com/oauth2/authorize?response_type=token&client_id=CLIENT_ID&redirect_uri=redirect&state=state'
-      );
+            assert(url.startsWith('https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID'));
+
+            if (redirectUri){
+              assert(url.includes('&redirect_uri=' + redirectUri));
+            }else{
+              assert(!url.includes('&redirect_uri='));
+            }
+
+            if(state){
+              assert(url.includes('&state=' + state));
+            }else{
+              assert(!url.includes('&state='));
+            }
+
+            if(tokenAccessType !== 'legacy'){
+              assert(url.includes('&token_access_type=' + tokenAccessType));
+            }else{
+              assert(!url.includes('&token_access_type='));
+            }
+          }
+        }
+      }
     });
   });
 

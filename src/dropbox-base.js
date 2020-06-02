@@ -3,6 +3,13 @@ import { downloadRequest } from './download-request';
 import { uploadRequest } from './upload-request';
 import { rpcRequest } from './rpc-request';
 
+// Expiration is 300 seconds but needs to be in milliseconds for Date object
+const TokenExpirationBuffer = 300 * 1000;
+const TokenAccessTypes = ['legacy', 'offline', 'online'];
+const GrantTypes = ['code', 'token'];
+const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
+const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
+
 /* eslint-disable */
 // Polyfill object.assign for legacy browsers
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
@@ -119,10 +126,20 @@ function parseBodyToType(res) {
   }).then(data => [res, data]);
 }
 
+/**
+ *
+ * @param expiresIn
+ */
+function getTokenExpiresAt(expiresIn) {
+  return new Date(Date.now() + (expiresIn * 1000));
+}
+
 export class DropboxBase {
   constructor(options) {
     options = options || {};
     this.accessToken = options.accessToken;
+    this.accessTokenExpiresAt = options.accessTokenExpiresAt;
+    this.refreshToken = options.refreshToken;
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
     this.selectUser = options.selectUser;
@@ -184,6 +201,38 @@ export class DropboxBase {
   }
 
   /**
+   * Gets the refresh token
+   * @returns {String} Refresh token
+   */
+  getRefreshToken() {
+    return this.refreshToken;
+  }
+
+  /**
+   * Sets the refresh token
+   * @param refreshToken - A refresh token
+   */
+  setRefreshToken(refreshToken) {
+    this.refreshToken = refreshToken;
+  }
+
+  /**
+   * Gets the access token's expiration date
+   * @returns {Date} date of token expiration
+   */
+  getAccessTokenExpiresAt() {
+    return this.accessTokenExpiresAt;
+  }
+
+  /**
+   * Sets the access token's expiration date
+   * @param accessTokenExpiresAt - new expiration date
+   */
+  setAccessTokenExpiresAt(accessTokenExpiresAt) {
+    this.accessTokenExpiresAt = accessTokenExpiresAt;
+  }
+
+  /**
    * Get a URL that can be used to authenticate users for the Dropbox API.
    * @arg {String} redirectUri - A URL to redirect the user to after
    * authenticating. This must be added to your app through the admin interface.
@@ -192,9 +241,9 @@ export class DropboxBase {
    * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state, authType = 'token') {
+  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = 'legacy') {
     const clientId = this.getClientId();
-    const baseUrl = 'https://www.dropbox.com/oauth2/authorize';
+    const baseUrl = BaseAuthorizeUrl;
 
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
@@ -202,8 +251,11 @@ export class DropboxBase {
     if (authType !== 'code' && !redirectUri) {
       throw new Error('A redirect uri is required.');
     }
-    if (!['code', 'token'].includes(authType)) {
+    if (!GrantTypes.includes(authType)) {
       throw new Error('Authorization type must be code or token');
+    }
+    if (!TokenAccessTypes.includes(tokenAccessType)) {
+      throw new Error('Token Access Type must be legacy, offline, or online');
     }
 
     let authUrl;
@@ -218,6 +270,9 @@ export class DropboxBase {
     }
     if (state) {
       authUrl += `&state=${state}`;
+    }
+    if (tokenAccessType !== 'legacy') {
+      authUrl += `&token_access_type=${tokenAccessType}`;
     }
     return authUrl;
   }
@@ -238,7 +293,8 @@ export class DropboxBase {
     if (!clientSecret) {
       throw new Error('A client secret is required. You can set the client id using .setClientSecret().');
     }
-    let path = 'https://api.dropboxapi.com/oauth2/token?grant_type=authorization_code';
+    let path = BaseTokenUrl;
+    path += '?grant_type=authorization_code';
     path += `&code=${code}`;
     path += `&client_id=${clientId}`;
     path += `&client_secret=${clientSecret}`;
@@ -265,7 +321,72 @@ export class DropboxBase {
             status: res.status,
           };
         }
+
+        if (data.refresh_token) {
+          return {
+            accessToken: data.access_token,
+            refreshToken: data.refresh_token,
+            accessTokenExpiresAt: getTokenExpiresAt(data.expires_in),
+          };
+        }
         return data.access_token;
+      });
+  }
+
+  /**
+   *
+   * @returns {Promise<[*, *]>}
+   */
+  checkAndRefreshAccessToken() {
+    const canRefresh = this.getRefreshToken() && this.getClientId() && this.getClientSecret();
+    const needsRefresh = this.getAccessTokenExpiresAt() &&
+            (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
+    const needsToken = !this.getAccessToken();
+    if ((needsRefresh || needsToken) && canRefresh) {
+      return this.refreshAccessToken();
+    }
+    return Promise.resolve();
+  }
+
+  /**
+   *
+   * @returns {Promise<[*, *]>}
+   */
+  refreshAccessToken() {
+    let refreshUrl = BaseTokenUrl;
+    const clientId = this.getClientId();
+    const clientSecret = this.getClientSecret();
+
+    if (!clientId) {
+      throw new Error('A client id is required. You can set the client id using .setClientId().');
+    }
+    if (!clientSecret) {
+      throw new Error('A client secret is required. You can set the client id using .setClientSecret().');
+    }
+    const headers = {};
+    headers['Content-Type'] = 'application/json';
+    refreshUrl += `?grant_type=refresh_token&refresh_token=${this.getRefreshToken()}`;
+    refreshUrl += `&client_id=${clientId}&client_secret=${clientSecret}`;
+
+    const fetchOptions = {
+      method: 'POST',
+    };
+
+    fetchOptions.headers = headers;
+    return fetch(refreshUrl, fetchOptions)
+      .then(res => parseBodyToType(res))
+      .then(([res, data]) => {
+        // maintaining existing API for error codes not equal to 200 range
+        if (!res.ok) {
+          // eslint-disable-next-line no-throw-literal
+          throw {
+            error: data,
+            response: res,
+            status: res.status,
+          };
+        }
+        this.setAccessToken(data.access_token);
+        this.setAccessTokenExpiresAt(getTokenExpiresAt(data.expires_in));
       });
   }
 
@@ -361,7 +482,7 @@ export class DropboxBase {
       clientSecret: this.getClientSecret(),
       pathRoot: this.pathRoot,
     };
-    return request(path, args, auth, host, this.getAccessToken(), options);
+    return request(path, args, auth, host, this, options);
   }
 
   setRpcRequest(newRpcRequest) {
