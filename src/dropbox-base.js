@@ -7,6 +7,7 @@ import { rpcRequest } from './rpc-request';
 const TokenExpirationBuffer = 300 * 1000;
 const TokenAccessTypes = ['legacy', 'offline', 'online'];
 const GrantTypes = ['code', 'token'];
+const IncludeGrantedScopes = ['none', 'user', 'team'];
 const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
 const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
@@ -241,7 +242,7 @@ export class DropboxBase {
    * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = 'legacy') {
+  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = 'legacy', scope = null, includeGrantedScopes = 'none') {
     const clientId = this.getClientId();
     const baseUrl = BaseAuthorizeUrl;
 
@@ -256,6 +257,12 @@ export class DropboxBase {
     }
     if (!TokenAccessTypes.includes(tokenAccessType)) {
       throw new Error('Token Access Type must be legacy, offline, or online');
+    }
+    if (scope && !(scope instanceof Array)) {
+      throw new Error('Scope must be an array of strings');
+    }
+    if (!IncludeGrantedScopes.includes(includeGrantedScopes)) {
+      throw new Error('includeGrantedScopes must be none, user, or team');
     }
 
     let authUrl;
@@ -273,6 +280,12 @@ export class DropboxBase {
     }
     if (tokenAccessType !== 'legacy') {
       authUrl += `&token_access_type=${tokenAccessType}`;
+    }
+    if (scope) {
+      authUrl += `&scope=${scope.join(' ')}`;
+    }
+    if (includeGrantedScopes !== 'none') {
+      authUrl += `&include_granted_scopes=${includeGrantedScopes}`;
     }
     return authUrl;
   }
@@ -352,7 +365,7 @@ export class DropboxBase {
    *
    * @returns {Promise<[*, *]>}
    */
-  refreshAccessToken() {
+  refreshAccessToken(scope = null) {
     let refreshUrl = BaseTokenUrl;
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
@@ -363,11 +376,18 @@ export class DropboxBase {
     if (!clientSecret) {
       throw new Error('A client secret is required. You can set the client id using .setClientSecret().');
     }
+    if (scope && !(scope instanceof Array)) {
+      throw new Error('Scope must be an array of strings');
+    }
+
     const headers = {};
     headers['Content-Type'] = 'application/json';
     refreshUrl += `?grant_type=refresh_token&refresh_token=${this.getRefreshToken()}`;
     refreshUrl += `&client_id=${clientId}&client_secret=${clientSecret}`;
 
+    if (scope) {
+      refreshUrl += `&scope=${scope.join(' ')}`;
+    }
     const fetchOptions = {
       method: 'POST',
     };
