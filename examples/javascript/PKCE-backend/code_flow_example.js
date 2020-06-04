@@ -13,15 +13,14 @@ const port = 3000;
 
 const config = {
   fetch: fetch,
-  clientId: [clientId],
-  clientSecret: [clientSecret]
+  clientId: [clientId]
 };
 
 const Dropbox = require('dropbox').Dropbox;
 var dbx = new Dropbox(config);
 
 const redirectUri = `http://${hostname}:${port}/auth`;
-const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', false);
+const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', true);
 
 app.get('/', (req, res) => {
   res.writeHead(302, { 'Location': authUrl });
