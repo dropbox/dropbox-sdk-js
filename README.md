@@ -45,7 +45,7 @@ Example Applications
 --------------------
 
 - [JavaScript](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript) - A set sample applications that demonstrate various functionalities
-- [Typescript](http://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/) - A set of sample applications the demonstrate various functionalities
+- [TypeScript](http://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/) - A set of sample applications the demonstrate various functionalities
 
 Contributing
 ------------
