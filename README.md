@@ -6,7 +6,7 @@ The Dropbox JavaScript SDK is a lightweight, promise based interface to the Drop
 
 It also requires that `fetch` be passed into the constructor; we advise using the [isomorphic-fetch](https://www.npmjs.com/package/isomorphic-fetch) library which supports fetch within both environments.
 
-A Javascript SDK for integrating with the Dropbox API v2. Node v6+. Documentation is available on [gh-pages](http://dropbox.github.io/dropbox-sdk-js/).
+A JavaScript SDK for integrating with the Dropbox API v2. Node v6+. Documentation is available on [gh-pages](http://dropbox.github.io/dropbox-sdk-js/).
 
 Installation
 ------------
@@ -44,8 +44,8 @@ You can also view our OAuth [guide](https://www.dropbox.com/lp/developers/refere
 Example Applications
 --------------------
 
-- [Javascript](http://github.com/dropbox/dropbox-sdk-python/tree/master/examples/) - A set sample applications that demonstrate various functionalities
-- [Typescript](http://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/) - A set of sample applications the demonstrate various functionalities
+- [JavaScript](https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript) - A set sample applications that demonstrate various functionalities
+- [TypeScript](http://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/) - A set of sample applications the demonstrate various functionalities
 
 Contributing
 ------------
