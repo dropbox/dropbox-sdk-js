@@ -16,7 +16,6 @@ const config = {
     globals: {
       crypto: 'crypto'
     },
-    exports: 'named',
   },
   external: ['es6-promise/auto', 'crypto'],
 
