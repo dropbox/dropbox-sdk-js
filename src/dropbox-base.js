@@ -1,8 +1,13 @@
-import * as crypto from 'crypto';
 import { UPLOAD, DOWNLOAD, RPC } from './constants';
 import { downloadRequest } from './download-request';
 import { uploadRequest } from './upload-request';
 import { rpcRequest } from './rpc-request';
+let crypto;
+try {
+  crypto = require('crypto');
+}catch(Exception){
+  crypto = window.crypto;
+}
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
