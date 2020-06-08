@@ -47,7 +47,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html">Global</a></li>
+					<li><a href="global.html#getTokenExpiresAt">getTokenExpiresAt</a></li>
 				</ul>
 			</li>
 			
@@ -666,6 +666,109 @@ endpoints
             
 <hr>
 <dt>
+    <h4 class="name" id="checkAndRefreshAccessToken"><span class="type-signature"></span>checkAndRefreshAccessToken()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#checkAndRefreshAccessToken">DropboxBase#checkAndRefreshAccessToken</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;*></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="getAccessToken"><span class="type-signature"></span>getAccessToken()</h4>
     
     
@@ -761,6 +864,117 @@ endpoints
     <dd>
         
 <span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="getAccessTokenExpiresAt"><span class="type-signature"></span>getAccessTokenExpiresAt()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Gets the access token's expiration date
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#getAccessTokenExpiresAt">DropboxBase#getAccessTokenExpiresAt</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    date of token expiration
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Date</span>
 
 
 
@@ -1418,6 +1632,220 @@ prevent cross site scripting attacks.</td>
             
 <hr>
 <dt>
+    <h4 class="name" id="getRefreshToken"><span class="type-signature"></span>getRefreshToken()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Gets the refresh token
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#getRefreshToken">DropboxBase#getRefreshToken</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Refresh token
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="refreshAccessToken"><span class="type-signature"></span>refreshAccessToken()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#refreshAccessToken">DropboxBase#refreshAccessToken</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;*></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="setAccessToken"><span class="type-signature"></span>setAccessToken(accessToken)</h4>
     
     
@@ -1567,6 +1995,137 @@ prevent cross site scripting attacks.</td>
 
 
         
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setAccessTokenExpiresAt"><span class="type-signature"></span>setAccessTokenExpiresAt(accessTokenExpiresAt)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sets the access token's expiration date
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>accessTokenExpiresAt</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">new expiration date</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#setAccessTokenExpiresAt">DropboxBase#setAccessTokenExpiresAt</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 </dd>
@@ -1881,6 +2440,137 @@ prevent cross site scripting attacks.</td>
 
 
         
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setRefreshToken"><span class="type-signature"></span>setRefreshToken(refreshToken)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sets the refresh token
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>refreshToken</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A refresh token</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#setRefreshToken">DropboxBase#setRefreshToken</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 </dd>
@@ -4731,6 +5421,1034 @@ management.
             
 <hr>
 <dt>
+    <h4 class="name" id="teamLegalHoldsCreatePolicy"><span class="type-signature"></span>teamLegalHoldsCreatePolicy(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Creates new legal hold policy. Permission : Team member file access.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLegalHoldsPolicyCreateArg">TeamLegalHoldsPolicyCreateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Object, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLegalHoldsPolicyCreateError">TeamLegalHoldsPolicyCreateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamLegalHoldsGetPolicy"><span class="type-signature"></span>teamLegalHoldsGetPolicy(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Gets a legal hold by Id. Permission : Team member file access.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLegalHoldsGetPolicyArg">TeamLegalHoldsGetPolicyArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Object, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLegalHoldsGetPolicyError">TeamLegalHoldsGetPolicyError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamLegalHoldsListHeldRevisions"><span class="type-signature"></span>teamLegalHoldsListHeldRevisions(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLegalHoldsListHeldRevisionsArg">TeamLegalHoldsListHeldRevisionsArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamLegalHoldsListHeldRevisionResult">TeamLegalHoldsListHeldRevisionResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLegalHoldsListHeldRevisionsError">TeamLegalHoldsListHeldRevisionsError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamLegalHoldsListHeldRevisionsContinue"><span class="type-signature"></span>teamLegalHoldsListHeldRevisionsContinue(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLegalHoldsListHeldRevisionsContinueArg">TeamLegalHoldsListHeldRevisionsContinueArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamLegalHoldsListHeldRevisionResult">TeamLegalHoldsListHeldRevisionResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLegalHoldsListHeldRevisionsError">TeamLegalHoldsListHeldRevisionsError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamLegalHoldsListPolicies"><span class="type-signature"></span>teamLegalHoldsListPolicies(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Lists legal holds on a team. Permission : Team member file access.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLegalHoldsListPoliciesArg">TeamLegalHoldsListPoliciesArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamLegalHoldsListPoliciesResult">TeamLegalHoldsListPoliciesResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLegalHoldsListPoliciesError">TeamLegalHoldsListPoliciesError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamLegalHoldsReleasePolicy"><span class="type-signature"></span>teamLegalHoldsReleasePolicy(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Releases a legal hold by Id. Permission : Team member file access.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLegalHoldsPolicyReleaseArg">TeamLegalHoldsPolicyReleaseArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLegalHoldsPolicyReleaseError">TeamLegalHoldsPolicyReleaseError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamLegalHoldsUpdatePolicy"><span class="type-signature"></span>teamLegalHoldsUpdatePolicy(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Updates a legal hold. Permission : Team member file access.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLegalHoldsPolicyUpdateArg">TeamLegalHoldsPolicyUpdateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;Object, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLegalHoldsPolicyUpdateError">TeamLegalHoldsPolicyUpdateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="teamLinkedAppsListMemberLinkedApps"><span class="type-signature"></span>teamLinkedAppsListMemberLinkedApps(arg)</h4>
     
     
@@ -5774,6 +7492,154 @@ status of the asynchronous request. Permission : Team member management.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#TeamMembersAddJobStatus">TeamMembersAddJobStatus</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersDeleteProfilePhoto"><span class="type-signature"></span>teamMembersDeleteProfilePhoto(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Deletes a team member's profile photo. Permission : Team member management.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersDeleteProfilePhotoArg">TeamMembersDeleteProfilePhotoArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamTeamMemberInfo">TeamTeamMemberInfo</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersDeleteProfilePhotoError">TeamMembersDeleteProfilePhotoError</a>>></span>
 
 
 
@@ -7743,7 +9609,7 @@ another account (whichever comes first). Calling members/add while a user is
 still recoverable on your team will return with
 MemberAddResult.user_already_on_team. Accounts can have their files
 transferred via the admin console for a limited time, based on the version
-history length associated with the team (120 days for most teams). This
+history length associated with the team (180 days for most teams). This
 endpoint may initiate an asynchronous job. To obtain the final result of the
 job, the client should periodically poll members/remove/job_status/get.
     </div>
@@ -8018,6 +9884,455 @@ status of the asynchronous request. Permission : Team member management.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#AsyncPollEmptyResult">AsyncPollEmptyResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersSecondaryEmailsAdd"><span class="type-signature"></span>teamMembersSecondaryEmailsAdd(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Add secondary emails to users. Permission : Team member management. Emails
+that are on verified domains will be verified automatically. For each email
+address not on a verified domain a verification email will be sent.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamAddSecondaryEmailsArg">TeamAddSecondaryEmailsArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamAddSecondaryEmailsResult">TeamAddSecondaryEmailsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamAddSecondaryEmailsError">TeamAddSecondaryEmailsError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersSecondaryEmailsDelete"><span class="type-signature"></span>teamMembersSecondaryEmailsDelete(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Delete secondary emails from users Permission : Team member management. Users
+will be notified of deletions of verified secondary emails at both the
+secondary email and their primary email.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamDeleteSecondaryEmailsArg">TeamDeleteSecondaryEmailsArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamDeleteSecondaryEmailsResult">TeamDeleteSecondaryEmailsResult</a>, <a href="global.html#Error">Error</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersSecondaryEmailsResendVerificationEmails"><span class="type-signature"></span>teamMembersSecondaryEmailsResendVerificationEmails(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Resend secondary email verification emails. Permission : Team member
+management.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamResendVerificationEmailArg">TeamResendVerificationEmailArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamResendVerificationEmailResult">TeamResendVerificationEmailResult</a>, <a href="global.html#Error">Error</a>.&lt;void>></span>
 
 
 
@@ -8464,6 +10779,154 @@ provided to identify the user account. No-op if team member is not pending.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#TeamTeamMemberInfo">TeamTeamMemberInfo</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersSetProfileError">TeamMembersSetProfileError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersSetProfilePhoto"><span class="type-signature"></span>teamMembersSetProfilePhoto(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Updates a team member's profile photo. Permission : Team member management.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersSetProfilePhotoArg">TeamMembersSetProfilePhotoArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#TeamTeamMemberInfo">TeamTeamMemberInfo</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersSetProfilePhotoError">TeamMembersSetProfilePhotoError</a>>></span>
 
 
 
@@ -11981,9 +14444,9 @@ used to make the call.
 
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a>
 	
-		on 2019-08-05T15:04:36-07:00
+		on 2020-06-08T11:39:42-05:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>

@@ -47,7 +47,7 @@
 			<li class="dropdown">
 				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
 				<ul class="dropdown-menu ">
-					<li><a href="global.html">Global</a></li>
+					<li><a href="global.html#getTokenExpiresAt">getTokenExpiresAt</a></li>
 				</ul>
 			</li>
 			
@@ -356,6 +356,75 @@ Use to access team folders for example</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>refreshToken</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A refresh token for retrieving access tokens</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>AccessTokenExpiresAt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Date of the current access token's
+expiration (if available)</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -453,6 +522,154 @@ Use to access team folders for example</td>
         <h3 class="subsection-title">Methods</h3>
 
         <dl>
+            
+<hr>
+<dt>
+    <h4 class="name" id="accountSetProfilePhoto"><span class="type-signature"></span>accountSetProfilePhoto(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sets a user's profile photo.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AccountSetProfilePhotoArg">AccountSetProfilePhotoArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#AccountSetProfilePhotoResult">AccountSetProfilePhotoResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#AccountSetProfilePhotoError">AccountSetProfilePhotoError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
             
 <hr>
 <dt>
@@ -897,6 +1114,1312 @@ Use to access team folders for example</td>
     <dd>
         
 <span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="checkAndRefreshAccessToken"><span class="type-signature"></span>checkAndRefreshAccessToken()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#checkAndRefreshAccessToken">DropboxBase#checkAndRefreshAccessToken</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;*></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="checkApp"><span class="type-signature"></span>checkApp(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This endpoint performs App Authentication, validating the supplied app key
+and secret, and returns the supplied string, to allow you to test your code
+and connection to the Dropbox API. It has no other effect. If you receive an
+HTTP 200 response with the supplied query, it indicates at least part of the
+Dropbox API infrastructure is working and that the app key and secret valid.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CheckEchoArg">CheckEchoArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#CheckEchoResult">CheckEchoResult</a>, <a href="global.html#Error">Error</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="checkUser"><span class="type-signature"></span>checkUser(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This endpoint performs User Authentication, validating the supplied access
+token, and returns the supplied string, to allow you to test your code and
+connection to the Dropbox API. It has no other effect. If you receive an HTTP
+200 response with the supplied query, it indicates at least part of the
+Dropbox API infrastructure is working and that the access token is valid.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CheckEchoArg">CheckEchoArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#CheckEchoResult">CheckEchoResult</a>, <a href="global.html#Error">Error</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="cloudDocsGetContent"><span class="type-signature"></span>cloudDocsGetContent(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Fetch the binary content of the requested document. This route requires Cloud
+Docs auth. Please make a request to cloud_docs/authorize and supply that
+token in the Authorization header.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CloudDocsGetContentArg">CloudDocsGetContentArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#CloudDocsCloudDocsAccessError">CloudDocsCloudDocsAccessError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="cloudDocsGetMetadata"><span class="type-signature"></span>cloudDocsGetMetadata(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Fetches metadata associated with a Cloud Doc and user. This route requires
+Cloud Docs auth. Please make a request to cloud_docs/authorize and supply
+that token in the Authorization header.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CloudDocsGetMetadataArg">CloudDocsGetMetadataArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#CloudDocsGetMetadataResult">CloudDocsGetMetadataResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#CloudDocsGetMetadataError">CloudDocsGetMetadataError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="cloudDocsLock"><span class="type-signature"></span>cloudDocsLock(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Lock a Cloud Doc. This route requires Cloud Docs auth. Please make a request
+to cloud_docs/authorize and supply that token in the Authorization header.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CloudDocsLockArg">CloudDocsLockArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#CloudDocsLockResult">CloudDocsLockResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#CloudDocsLockingError">CloudDocsLockingError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="cloudDocsRename"><span class="type-signature"></span>cloudDocsRename(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Update the title of a Cloud Doc. This route requires Cloud Docs auth. Please
+make a request to cloud_docs/authorize and supply that token in the
+Authorization header.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CloudDocsRenameArg">CloudDocsRenameArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#CloudDocsRenameResult">CloudDocsRenameResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#CloudDocsRenameError">CloudDocsRenameError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="cloudDocsUnlock"><span class="type-signature"></span>cloudDocsUnlock(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Unlock a Cloud Doc. This route requires Cloud Docs auth. Please make a
+request to cloud_docs/authorize and supply that token in the Authorization
+header.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CloudDocsUnlockArg">CloudDocsUnlockArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#CloudDocsUnlockResult">CloudDocsUnlockResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#CloudDocsLockingError">CloudDocsLockingError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="cloudDocsUpdateContent"><span class="type-signature"></span>cloudDocsUpdateContent(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Update the contents of a Cloud Doc. This should be called for files with a
+max size of 150MB. This route requires Cloud Docs auth. Please make a request
+to cloud_docs/authorize and supply that token in the Authorization header.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#CloudDocsUpdateContentArg">CloudDocsUpdateContentArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#CloudDocsUpdateContentResult">CloudDocsUpdateContentResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#CloudDocsUpdateContentError">CloudDocsUpdateContentError</a>>></span>
 
 
 
@@ -8159,6 +9682,154 @@ ExportInfo.export_as populated.
             
 <hr>
 <dt>
+    <h4 class="name" id="filesGetFileLockBatch"><span class="type-signature"></span>filesGetFileLockBatch(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Return the lock metadata for the given list of paths.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesLockFileBatchArg">FilesLockFileBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesLockFileBatchResult">FilesLockFileBatchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesLockFileError">FilesLockFileError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="filesGetMetadata"><span class="type-signature"></span>filesGetMetadata(arg)</h4>
     
     
@@ -9087,6 +10758,154 @@ than 20MB in size won't be converted to a thumbnail.
             
 <hr>
 <dt>
+    <h4 class="name" id="filesGetThumbnailV2"><span class="type-signature"></span>filesGetThumbnailV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get a thumbnail for a file.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesThumbnailV2Arg">FilesThumbnailV2Arg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesPreviewResult">FilesPreviewResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesThumbnailV2Error">FilesThumbnailV2Error</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="filesListFolder"><span class="type-signature"></span>filesListFolder(arg)</h4>
     
     
@@ -9863,6 +11682,157 @@ retrieve revisions for a given file across moves or renames.
             
 <hr>
 <dt>
+    <h4 class="name" id="filesLockFileBatch"><span class="type-signature"></span>filesLockFileBatch(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Lock the files at the given paths. A locked file will be writable only by the
+lock holder. A successful response indicates that the file has been locked.
+Returns a list of the locked file paths and their metadata after this
+operation.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesLockFileBatchArg">FilesLockFileBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesLockFileBatchResult">FilesLockFileBatchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesLockFileError">FilesLockFileError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="filesMove"><span class="type-signature"></span>filesMove(arg)</h4>
     
     
@@ -10030,10 +12000,8 @@ source path is a folder all its contents will be moved.
     
     <div class="description">
         Move multiple files or folders to different locations at once in the user's
-Dropbox. This route is 'all or nothing', which means if one entry fails, the
-whole transaction will abort. This route will return job ID immediately and
-do the async moving job in background. Please use move_batch/check to check
-the job status.
+Dropbox. This route will return job ID immediately and do the async moving
+job in background. Please use move_batch/check to check the job status.
     </div>
     
 
@@ -10113,6 +12081,15 @@ the job status.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -10262,6 +12239,15 @@ returns list of results for each entry.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -10480,11 +12466,12 @@ of results for each entry.
     
     <div class="description">
         Move multiple files or folders to different locations at once in the user's
-Dropbox. This route will replace move_batch. The main difference is this
-route will return status for each entry, while move_batch raises failure if
-any entry fails. This route will either finish synchronously, or return a job
-ID and do the async move job in background. Please use move_batch/check_v2 to
-check the job status.
+Dropbox. Note that we do not currently support case-only renaming. This route
+will replace move_batch. The main difference is this route will return status
+for each entry, while move_batch raises failure if any entry fails. This
+route will either finish synchronously, or return a job ID and do the async
+move job in background. Please use move_batch/check_v2 to check the job
+status.
     </div>
     
 
@@ -10633,7 +12620,8 @@ check the job status.
     
     <div class="description">
         Move a file or folder to a different location in the user's Dropbox. If the
-source path is a folder all its contents will be moved.
+source path is a folder all its contents will be moved. Note that we do not
+currently support case-only renaming.
     </div>
     
 
@@ -12377,6 +14365,15 @@ reflected in search results due to a short delay in indexing.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -12421,6 +14418,461 @@ reflected in search results due to a short delay in indexing.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#FilesSearchResult">FilesSearchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesSearchError">FilesSearchError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filesSearchContinueV2"><span class="type-signature"></span>filesSearchContinueV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Fetches the next page of search results returned from search_v2. Note:
+search_v2 along with search/continue_v2 can only be used to retrieve a
+maximum of 10,000 matches. Recent changes may not immediately be reflected in
+search results due to a short delay in indexing. Duplicate results may be
+returned across pages. Some results may not be returned.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesSearchV2ContinueArg">FilesSearchV2ContinueArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesSearchV2Result">FilesSearchV2Result</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesSearchError">FilesSearchError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filesSearchV2"><span class="type-signature"></span>filesSearchV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Searches for files and folders. Note: search_v2 along with search/continue_v2
+can only be used to retrieve a maximum of 10,000 matches. Recent changes may
+not immediately be reflected in search results due to a short delay in
+indexing. Duplicate results may be returned across pages. Some results may
+not be returned.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesSearchV2Arg">FilesSearchV2Arg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesSearchV2Result">FilesSearchV2Result</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesSearchError">FilesSearchError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="filesUnlockFileBatch"><span class="type-signature"></span>filesUnlockFileBatch(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Unlock the files at the given paths. A locked file can only be unlocked by
+the lock holder or, if a business account, a team admin. A successful
+response indicates that the file has been unlocked. Returns a list of the
+unlocked file paths and their metadata after this operation.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesUnlockFileBatchArg">FilesUnlockFileBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#FilesLockFileBatchResult">FilesLockFileBatchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#FilesLockFileError">FilesLockFileError</a>>></span>
 
 
 
@@ -13646,6 +16098,117 @@ https://www.dropbox.com/developers/reference/data-transport-limit.
             
 <hr>
 <dt>
+    <h4 class="name" id="getAccessTokenExpiresAt"><span class="type-signature"></span>getAccessTokenExpiresAt()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Gets the access token's expiration date
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#getAccessTokenExpiresAt">DropboxBase#getAccessTokenExpiresAt</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    date of token expiration
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Date</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="getAccessTokenFromCode"><span class="type-signature"></span>getAccessTokenFromCode(redirectUri, code)</h4>
     
     
@@ -14287,6 +16850,117 @@ prevent cross site scripting attacks.</td>
             
 <hr>
 <dt>
+    <h4 class="name" id="getRefreshToken"><span class="type-signature"></span>getRefreshToken()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Gets the refresh token
+    </div>
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#getRefreshToken">DropboxBase#getRefreshToken</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Refresh token
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="paperDocsArchive"><span class="type-signature"></span>paperDocsArchive(arg)</h4>
     
     
@@ -14295,8 +16969,15 @@ prevent cross site scripting attacks.</td>
 
     
     <div class="description">
-        Marks the given Paper doc as archived. Note: This action can be performed or
-undone by anyone with edit permissions to the doc.
+        Marks the given Paper doc as archived. This action can be performed or undone
+by anyone with edit permissions to the doc. Note that this endpoint will
+continue to work for content created by users on the older version of Paper.
+To check which version of Paper a user is on, use /users/features/get_values.
+If the paper_as_files feature is enabled, then the user is running the new
+version of Paper. This endpoint will be retired in September 2020. Refer to
+the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+more information.
     </div>
     
 
@@ -14376,6 +17057,15 @@ undone by anyone with edit permissions to the doc.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -14444,7 +17134,14 @@ undone by anyone with edit permissions to the doc.
 
     
     <div class="description">
-        Creates a new Paper doc with the provided content.
+        Creates a new Paper doc with the provided content. Note that this endpoint
+will continue to work for content created by users on the older version of
+Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. This endpoint will be retired
+in September 2020. Refer to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+more information.
     </div>
     
 
@@ -14524,6 +17221,15 @@ undone by anyone with edit permissions to the doc.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -14592,7 +17298,13 @@ undone by anyone with edit permissions to the doc.
 
     
     <div class="description">
-        Exports and downloads Paper doc either as HTML or markdown.
+        Exports and downloads Paper doc either as HTML or markdown. Note that this
+endpoint will continue to work for content created by users on the older
+version of Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. Refer to the Paper Migration
+Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+for migration information.
     </div>
     
 
@@ -14672,6 +17384,15 @@ undone by anyone with edit permissions to the doc.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -14743,7 +17464,13 @@ undone by anyone with edit permissions to the doc.
         Lists the users who are explicitly invited to the Paper folder in which the
 Paper doc is contained. For private folders all users (including owner)
 shared on the folder are listed and for team folders all non-team users
-shared on the folder are returned.
+shared on the folder are returned. Note that this endpoint will continue to
+work for content created by users on the older version of Paper. To check
+which version of Paper a user is on, use /users/features/get_values. If the
+paper_as_files feature is enabled, then the user is running the new version
+of Paper. Refer to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+migration information.
     </div>
     
 
@@ -14823,6 +17550,15 @@ shared on the folder are returned.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -14892,7 +17628,13 @@ shared on the folder are returned.
     
     <div class="description">
         Once a cursor has been retrieved from docs/folder_users/list, use this to
-paginate through all users on the Paper folder.
+paginate through all users on the Paper folder. Note that this endpoint will
+continue to work for content created by users on the older version of Paper.
+To check which version of Paper a user is on, use /users/features/get_values.
+If the paper_as_files feature is enabled, then the user is running the new
+version of Paper. Refer to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+migration information.
     </div>
     
 
@@ -14972,6 +17714,15 @@ paginate through all users on the Paper folder.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -15044,8 +17795,14 @@ paginate through all users on the Paper folder.
 folder sharing policy; permissions for subfolders are set by the top-level
 folder.   - full 'filepath', i.e. the list of folders (both folderId and
 folderName) from     the root folder to the folder directly containing the
-Paper doc.  Note: If the Paper doc is not in any folder (aka unfiled) the
-response will be empty.
+Paper doc.  If the Paper doc is not in any folder (aka unfiled) the response
+will be empty. Note that this endpoint will continue to work for content
+created by users on the older version of Paper. To check which version of
+Paper a user is on, use /users/features/get_values. If the paper_as_files
+feature is enabled, then the user is running the new version of Paper. Refer
+to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+migration information.
     </div>
     
 
@@ -15125,6 +17882,15 @@ response will be empty.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -15195,7 +17961,13 @@ response will be empty.
     <div class="description">
         Return the list of all Paper docs according to the argument specifications.
 To iterate over through the full pagination, pass the cursor to
-docs/list/continue.
+docs/list/continue. Note that this endpoint will continue to work for content
+created by users on the older version of Paper. To check which version of
+Paper a user is on, use /users/features/get_values. If the paper_as_files
+feature is enabled, then the user is running the new version of Paper. Refer
+to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+migration information.
     </div>
     
 
@@ -15275,6 +18047,15 @@ docs/list/continue.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -15344,7 +18125,13 @@ docs/list/continue.
     
     <div class="description">
         Once a cursor has been retrieved from docs/list, use this to paginate through
-all Paper doc.
+all Paper doc. Note that this endpoint will continue to work for content
+created by users on the older version of Paper. To check which version of
+Paper a user is on, use /users/features/get_values. If the paper_as_files
+feature is enabled, then the user is running the new version of Paper. Refer
+to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+migration information.
     </div>
     
 
@@ -15424,6 +18211,15 @@ all Paper doc.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -15493,8 +18289,13 @@ all Paper doc.
     
     <div class="description">
         Permanently deletes the given Paper doc. This operation is final as the doc
-cannot be recovered.  Note: This action can be performed only by the doc
-owner.
+cannot be recovered. This action can be performed only by the doc owner. Note
+that this endpoint will continue to work for content created by users on the
+older version of Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. Refer to the Paper Migration
+Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+for migration information.
     </div>
     
 
@@ -15574,6 +18375,15 @@ owner.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -15642,7 +18452,13 @@ owner.
 
     
     <div class="description">
-        Gets the default sharing policy for the given Paper doc.
+        Gets the default sharing policy for the given Paper doc. Note that this
+endpoint will continue to work for content created by users on the older
+version of Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. Refer to the Paper Migration
+Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+for migration information.
     </div>
     
 
@@ -15722,6 +18538,15 @@ owner.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -15792,9 +18617,15 @@ owner.
     <div class="description">
         Sets the default sharing policy for the given Paper doc. The default
 'team_sharing_policy' can be changed only by teams, omit this field for
-personal accounts.  Note: 'public_sharing_policy' cannot be set to the value
-'disabled' because this setting can be changed only via the team admin
-console.
+personal accounts. The 'public_sharing_policy' policy can't be set to the
+value 'disabled' because this setting can be changed only via the team admin
+console. Note that this endpoint will continue to work for content created by
+users on the older version of Paper. To check which version of Paper a user
+is on, use /users/features/get_values. If the paper_as_files feature is
+enabled, then the user is running the new version of Paper. Refer to the
+Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+migration information.
     </div>
     
 
@@ -15874,6 +18705,15 @@ console.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -15942,7 +18782,14 @@ console.
 
     
     <div class="description">
-        Updates an existing Paper doc with the provided content.
+        Updates an existing Paper doc with the provided content. Note that this
+endpoint will continue to work for content created by users on the older
+version of Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. This endpoint will be retired
+in September 2020. Refer to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+more information.
     </div>
     
 
@@ -16022,6 +18869,15 @@ console.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -16091,8 +18947,14 @@ console.
     
     <div class="description">
         Allows an owner or editor to add users to a Paper doc or change their
-permissions using their email address or Dropbox account ID.  Note: The Doc
-owner's permissions cannot be changed.
+permissions using their email address or Dropbox account ID. The doc owner's
+permissions cannot be changed. Note that this endpoint will continue to work
+for content created by users on the older version of Paper. To check which
+version of Paper a user is on, use /users/features/get_values. If the
+paper_as_files feature is enabled, then the user is running the new version
+of Paper. Refer to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+migration information.
     </div>
     
 
@@ -16172,6 +19034,15 @@ owner's permissions cannot be changed.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -16243,7 +19114,13 @@ owner's permissions cannot be changed.
         Lists all users who visited the Paper doc or users with explicit access. This
 call excludes users who have been removed. The list is sorted by the date of
 the visit or the share date. The list will include both users, the explicitly
-shared ones as well as those who came in using the Paper url link.
+shared ones as well as those who came in using the Paper url link. Note that
+this endpoint will continue to work for content created by users on the older
+version of Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. Refer to the Paper Migration
+Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+for migration information.
     </div>
     
 
@@ -16323,6 +19200,15 @@ shared ones as well as those who came in using the Paper url link.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -16392,7 +19278,13 @@ shared ones as well as those who came in using the Paper url link.
     
     <div class="description">
         Once a cursor has been retrieved from docs/users/list, use this to paginate
-through all users on the Paper doc.
+through all users on the Paper doc. Note that this endpoint will continue to
+work for content created by users on the older version of Paper. To check
+which version of Paper a user is on, use /users/features/get_values. If the
+paper_as_files feature is enabled, then the user is running the new version
+of Paper. Refer to the Paper Migration Guide
+https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
+migration information.
     </div>
     
 
@@ -16472,6 +19364,15 @@ through all users on the Paper doc.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -16541,7 +19442,13 @@ through all users on the Paper doc.
     
     <div class="description">
         Allows an owner or editor to remove users from a Paper doc using their email
-address or Dropbox account ID.  Note: Doc owner cannot be removed.
+address or Dropbox account ID. The doc owner cannot be removed. Note that
+this endpoint will continue to work for content created by users on the older
+version of Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. Refer to the Paper Migration
+Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+for migration information.
     </div>
     
 
@@ -16621,6 +19528,15 @@ address or Dropbox account ID.  Note: Doc owner cannot be removed.
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -16665,6 +19581,272 @@ address or Dropbox account ID.  Note: Doc owner cannot be removed.
     <dd>
         
 <span class="param-type">Promise.&lt;void, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperFoldersCreate"><span class="type-signature"></span>paperFoldersCreate(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Create a new Paper folder with the provided info. Note that this endpoint
+will continue to work for content created by users on the older version of
+Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. Refer to the Paper Migration
+Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+for migration information.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperPaperFolderCreateArg">PaperPaperFolderCreateArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#PaperPaperFolderCreateResult">PaperPaperFolderCreateResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#PaperPaperFolderCreateError">PaperPaperFolderCreateError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="refreshAccessToken"><span class="type-signature"></span>refreshAccessToken()</h4>
+    
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#refreshAccessToken">DropboxBase#refreshAccessToken</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;*></span>
 
 
 
@@ -16830,6 +20012,137 @@ address or Dropbox account ID.  Note: Doc owner cannot be removed.
 
 
         
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setAccessTokenExpiresAt"><span class="type-signature"></span>setAccessTokenExpiresAt(accessTokenExpiresAt)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sets the access token's expiration date
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>accessTokenExpiresAt</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">new expiration date</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#setAccessTokenExpiresAt">DropboxBase#setAccessTokenExpiresAt</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 </dd>
@@ -17144,6 +20457,137 @@ address or Dropbox account ID.  Note: Doc owner cannot be removed.
 
 
         
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="setRefreshToken"><span class="type-signature"></span>setRefreshToken(refreshToken)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sets the refresh token
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>refreshToken</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A refresh token</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+	<dt class="inherited-from method-doc-label method-doc-details-label">Inherited From:</dt>
+	<dd class="inherited-from">
+		<ul class="dummy">
+			<li>
+				<a href="DropboxBase.html#setRefreshToken">DropboxBase#setRefreshToken</a>
+			</li>
+		</ul>
+	</dd>
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 </dd>
@@ -23626,11 +27070,14 @@ AccessLevel.owner access to the shared folder to update its policies.
 
     
     <div class="description">
-        Retrieves team events. Events have a lifespan of two years. Events older than
-two years will not be returned. Many attributes note 'may be missing due to
-historical data gap'. Note that the file_operations category and & analogous
-paper events are not available on all Dropbox Business plans
-/business/plans-comparison. Use features/get_values
+        Retrieves team events. If the result's GetTeamEventsResult.has_more field is
+true, call get_events/continue with the returned cursor to retrieve more
+entries. If end_time is not specified in your request, you may use the
+returned cursor to poll get_events/continue for new events. Many attributes
+note 'may be missing due to historical data gap'. Note that the
+file_operations category and & analogous paper events are not available on
+all Dropbox Business plans /business/plans-comparison. Use
+features/get_values
 /developers/documentation/http/teams#team-features-get_values to check for
 this feature. Permission : Team Auditing.
     </div>
@@ -23905,6 +27352,154 @@ through all events. Permission : Team Auditing.
     <dd>
         
 <span class="param-type">Promise.&lt;<a href="global.html#TeamLogGetTeamEventsResult">TeamLogGetTeamEventsResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamLogGetTeamEventsContinueError">TeamLogGetTeamEventsContinueError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="usersFeaturesGetValues"><span class="type-signature"></span>usersFeaturesGetValues(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Get a list of feature values that may be configured for the current account.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#UsersUserFeaturesGetValuesBatchArg">UsersUserFeaturesGetValuesBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;<a href="global.html#UsersUserFeaturesGetValuesBatchResult">UsersUserFeaturesGetValuesBatchResult</a>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#UsersUserFeaturesGetValuesBatchError">UsersUserFeaturesGetValuesBatchError</a>>></span>
 
 
 
@@ -24558,9 +28153,9 @@ queried per request.
 
 
 <span class="jsdoc-message">
-	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a>
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a>
 	
-		on 2019-08-05T15:04:36-07:00
+		on 2020-06-08T11:39:42-05:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
