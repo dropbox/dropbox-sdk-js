@@ -378,7 +378,7 @@ export class DropboxBase {
 
   /**
    *
-   * @returns {Promise<[*, *]>}
+   * @returns {Promise<*>}
    */
   checkAndRefreshAccessToken() {
     const canRefresh = this.getRefreshToken() && this.getClientId();
@@ -393,7 +393,7 @@ export class DropboxBase {
 
   /**
    *
-   * @returns {Promise<[*, *]>}
+   * @returns {Promise<*>}
    */
   refreshAccessToken(scope = null) {
     let refreshUrl = BaseTokenUrl;
