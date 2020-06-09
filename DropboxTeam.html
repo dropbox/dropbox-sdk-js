@@ -673,6 +673,11 @@ endpoints
 <dd>
 
     
+    <div class="description">
+        Checks if a token is needed, can be refreshed and if the token is expired.
+If so, attempts to refresh access token
+    </div>
+    
 
     
 
@@ -1153,7 +1158,7 @@ authenticating. This must be added to your app through the admin interface.</td>
             
 <hr>
 <dt>
-    <h4 class="name" id="getAuthenticationUrl"><span class="type-signature"></span>getAuthenticationUrl(redirectUri [, state] [, authType])</h4>
+    <h4 class="name" id="getAuthenticationUrl"><span class="type-signature"></span>getAuthenticationUrl(redirectUri [, state] [, authType] [, tokenAccessType] [, scope] [, includeGrantedScopes] [, usePKCE])</h4>
     
     
 </dt>
@@ -1310,6 +1315,175 @@ prevent cross site scripting attacks.</td>
             
 
             <td class="description last">auth type, defaults to 'token', other option is 'code'</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>tokenAccessType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    legacy
+                
+                </td>
+            
+
+            <td class="description last">type of token to request.  From the following:
+legacy - creates one long-lived token with no expiration
+online - create one short-lived token with an expiration
+offline - create one short-lived token with an expiration with a refresh token</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;String></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">scopes to request for the grant</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>includeGrantedScopes</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    none
+                
+                </td>
+            
+
+            <td class="description last">whether or not to include previously granted scopes.
+From the following:
+user - include user scopes in the grant
+team - include team scopes in the grant
+Note: if this user has never linked the app, include_granted_scopes must be None</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>usePKCE</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    false
+                
+                </td>
+            
+
+            <td class="description last">Whether or not to use Sha256 based PKCE. PKCE should be only use on
+client apps which doesn't call your server. It is less secure than non-PKCE flow but
+can be used if you are unable to safely retrieve your app secret</td>
         </tr>
 
     
@@ -1743,19 +1917,82 @@ prevent cross site scripting attacks.</td>
             
 <hr>
 <dt>
-    <h4 class="name" id="refreshAccessToken"><span class="type-signature"></span>refreshAccessToken()</h4>
+    <h4 class="name" id="refreshAccessToken"><span class="type-signature"></span>refreshAccessToken(scope)</h4>
     
     
 </dt>
 <dd>
 
     
-
+    <div class="description">
+        Refreshes the access token using the refresh token, if available
+    </div>
     
 
     
 
     
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>scope</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">List</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">a subset of scopes from the original
+refresh to acquire with an access token</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
     
 
     
@@ -14446,7 +14683,7 @@ used to make the call.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a>
 	
-		on 2020-06-08T12:03:20-05:00
+		on 2020-06-09T13:33:40-05:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
