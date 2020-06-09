@@ -13,7 +13,6 @@ import { routes } from '../routes-team';
  * authentication URL.
  */
 export class DropboxTeam extends DropboxBase {
-
   constructor(options) {
     super(options);
     Object.assign(this, routes);

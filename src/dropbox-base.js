@@ -2,10 +2,11 @@ import { UPLOAD, DOWNLOAD, RPC } from './constants';
 import { downloadRequest } from './download-request';
 import { uploadRequest } from './upload-request';
 import { rpcRequest } from './rpc-request';
+
 let crypto;
 try {
-  crypto = require('crypto');
-}catch(Exception){
+  crypto = require('crypto'); // eslint-disable-line global-require
+} catch (Exception) {
   crypto = window.crypto;
 }
 
@@ -269,8 +270,9 @@ export class DropboxBase {
    * legacy - creates one long-lived token with no expiration
    * online - create one short-lived token with an expiration
    * offline - create one short-lived token with an expiration with a refresh token
-   * @arg {} [scope] - scopes to request for the grant
-   * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.  From the following:
+   * @arg {Array<String>>} [scope] - scopes to request for the grant
+   * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.
+   * From the following:
    * user - include user scopes in the grant
    * team - include team scopes in the grant
    * Note: if this user has never linked the app, include_granted_scopes must be None
@@ -394,7 +396,8 @@ export class DropboxBase {
   }
 
   /**
-   * Checks if a token is needed, can be refreshed and if the token is expired.  If so, attempts to refresh access token
+   * Checks if a token is needed, can be refreshed and if the token is expired.
+   * If so, attempts to refresh access token
    * @returns {Promise<*>}
    */
   checkAndRefreshAccessToken() {
@@ -410,7 +413,8 @@ export class DropboxBase {
 
   /**
    * Refreshes the access token using the refresh token, if available
-   * @arg {List} scope - a subset of scopes from the original refresh to acquire with an access token
+   * @arg {List} scope - a subset of scopes from the original
+   * refresh to acquire with an access token
    * @returns {Promise<*>}
    */
   refreshAccessToken(scope = null) {
@@ -584,5 +588,4 @@ export class DropboxBase {
     }
     return this.uploadRequest;
   }
-
 }

@@ -21,7 +21,6 @@ import { DropboxBase } from './dropbox-base';
  * expiration (if available)
  */
 export class Dropbox extends DropboxBase {
-
   constructor(options) {
     super(options);
     Object.assign(this, routes);
