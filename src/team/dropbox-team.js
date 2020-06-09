@@ -34,5 +34,3 @@ export class DropboxTeam extends DropboxBase {
     });
   }
 }
-
-export default DropboxTeam;

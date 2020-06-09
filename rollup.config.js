@@ -16,7 +16,6 @@ const config = {
     globals: {
       crypto: 'crypto'
     },
-    exports: 'named',
   },
   external: ['es6-promise/auto', 'crypto'],
 
@@ -32,10 +31,6 @@ const config = {
     commonjs({
       // if false then skip sourceMap generation for CommonJS modules
       sourceMap: (env !== 'production'),  // Default: true
-      namedExports: {
-        'src/dropbox.js': ['Dropbox'],
-        'src/team/dropbox-team.js': ['DropboxTeam']
-      }
     }),
     babel({
       exclude: 'node_modules/**',

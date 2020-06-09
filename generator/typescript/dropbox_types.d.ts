@@ -4,6 +4,12 @@ declare module DropboxTypes {
     accessToken?: string;
     // The client id for your app. Used to create authentication URL.
     clientId?: string;
+    // The client secret for your app.  Used for refreshing token and app auth
+    clientSecret?: string;
+    // The date the access token expires at.
+    accessTokenExpiresAt?: Date;
+    //The refresh token for refreshing and acquiring access tokens
+    refreshToken?: string;
     // Select user is only used by team endpoints. It specifies which user the team access token should be acting as.
     selectUser?: string;
     // Root path used to access namespaces different from home namespace (team folders etc)
@@ -40,7 +46,7 @@ declare module DropboxTypes {
      * @param state State that will be returned in the redirect URL to help
      *   prevent cross site scripting attacks.
      */
-    getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code'): string;
+    getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: 'legacy'|'offline'|'online', scope?: Array<String>,includeGrantedScopes?: 'none'|'user'|'team', usePKCE?: boolean): string;
 
     /**
      * Get the client id
@@ -64,6 +70,37 @@ declare module DropboxTypes {
      * @param clientSecret Your app's client secret.
      */
     setClientSecret(clientSecret: string): void;
+
+    /**
+     * Gets the refresh token
+     * @returns {String} Refresh token
+     */
+    getRefreshToken(): string;
+
+    /**
+     * Sets the refresh token
+     * @param refreshToken - A refresh token
+     */
+    setRefreshToken(refreshToken: string): void;
+
+    /**
+     * Gets the access token's expiration date
+     * @returns {Date} date of token expiration
+     */
+    getAccessTokenExpiresAt(): Date;
+
+    /**
+     * Sets the access token's expiration date
+     * @param accessTokenExpiresAt - new expiration date
+     */
+    setAccessTokenExpiresAt(accessTokenExpiresAt: Date): void;
+
+    /**
+     * Refreshes the access token using the refresh token, if available
+     * @arg {Array<String>} scope - a subset of scopes from the original refresh to acquire with an access token
+     * @returns {Promise<*>}
+     */
+    refreshAccessToken(scope: Array<String>): Promise<any>;
   }
 
 
@@ -78,7 +115,7 @@ declare module DropboxTypes {
     // User-friendly error message.
     user_message: UserMessage;
   }
-  
+
   /**
    * User-friendly error message.
    */
@@ -88,8 +125,8 @@ declare module DropboxTypes {
     // The locale of the message.
     locale: string;
   }
-  
-  
+
+
   type Timestamp = string;
 
   namespace account {

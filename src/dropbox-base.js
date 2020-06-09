@@ -1,8 +1,13 @@
-import * as crypto from 'crypto';
 import { UPLOAD, DOWNLOAD, RPC } from './constants';
 import { downloadRequest } from './download-request';
 import { uploadRequest } from './upload-request';
 import { rpcRequest } from './rpc-request';
+let crypto;
+try {
+  crypto = require('crypto');
+}catch(Exception){
+  crypto = window.crypto;
+}
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -260,6 +265,18 @@ export class DropboxBase {
    * @arg {String} [state] - State that will be returned in the redirect URL to help
    * prevent cross site scripting attacks.
    * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
+   * @arg {String} [tokenAccessType] - type of token to request.  From the following:
+   * legacy - creates one long-lived token with no expiration
+   * online - create one short-lived token with an expiration
+   * offline - create one short-lived token with an expiration with a refresh token
+   * @arg {} [scope] - scopes to request for the grant
+   * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.  From the following:
+   * user - include user scopes in the grant
+   * team - include team scopes in the grant
+   * Note: if this user has never linked the app, include_granted_scopes must be None
+   * @arg {boolean} [usePKCE] - Whether or not to use Sha256 based PKCE. PKCE should be only use on
+   * client apps which doesn't call your server. It is less secure than non-PKCE flow but
+   * can be used if you are unable to safely retrieve your app secret
    * @returns {String} Url to send user to for Dropbox API authentication
    */
   getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = 'legacy', scope = null, includeGrantedScopes = 'none', usePKCE = false) {
@@ -377,7 +394,7 @@ export class DropboxBase {
   }
 
   /**
-   *
+   * Checks if a token is needed, can be refreshed and if the token is expired.  If so, attempts to refresh access token
    * @returns {Promise<*>}
    */
   checkAndRefreshAccessToken() {
@@ -392,7 +409,8 @@ export class DropboxBase {
   }
 
   /**
-   *
+   * Refreshes the access token using the refresh token, if available
+   * @arg {List} scope - a subset of scopes from the original refresh to acquire with an access token
    * @returns {Promise<*>}
    */
   refreshAccessToken(scope = null) {
