@@ -63,6 +63,9 @@ if (isAuthenticated()) {
         .then(function (response) {
         renderItems(response.entries);
     })
+        // NOTE: Need to explicitly specify type of error here, since TypeScript cannot infer it.
+        // The type is mentioned in the TSDoc for filesListFolder, so hovering over filesListFolder
+        // in a TS-equipped editor (e.g., Visual Studio Code) will show you that documentation.
         .catch(function (error) {
         console.error(error);
     });
@@ -71,7 +74,7 @@ else {
     showPageSection('pre-auth-section');
     // Set the login anchors href using dbx.getAuthenticationUrl()
     var dbx = new Dropbox.Dropbox({ clientId: CLIENT_ID });
-    var authUrl = dbx.getAuthenticationUrl('http://localhost:8081/auth');
+    var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/auth');
     document.getElementById('authlink').href = authUrl;
 }
 //# sourceMappingURL=auth.js.map
