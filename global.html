@@ -34193,6 +34193,9 @@ for more information.</td>
 <span class="param-type">'unsupported_content_type'</span>
 |
 
+<span class="param-type">'locked'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -35458,6 +35461,129 @@ the Dropbox server try to autorename that file to avoid the conflict.</td>
             <td class="description last">Allow moves by owner even if
 it would result in an ownership transfer for the content being moved. This
 does not apply to copies.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesMoveIntoVaultError">
+    <h4 id="FilesMoveIntoVaultError">FilesMoveIntoVaultError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'is_shared_folder'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -37155,6 +37281,40 @@ from_lookup.</td>
 
         <tr>
             
+                <td class="name"><code>cant_move_into_vault</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesMoveIntoVaultError">FilesMoveIntoVaultError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is cant_move_into_vault. Some content cannot be moved into Vault under
+certain circumstances, see detailed error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>.tag</code></td>
             
 
@@ -37195,6 +37355,9 @@ from_lookup.</td>
 |
 
 <span class="param-type">'cant_move_shared_folder'</span>
+|
+
+<span class="param-type">'cant_move_into_vault'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -38940,6 +39103,40 @@ from_lookup.</td>
 
         <tr>
             
+                <td class="name"><code>cant_move_into_vault</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesMoveIntoVaultError">FilesMoveIntoVaultError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is cant_move_into_vault. Some content cannot be moved into Vault under
+certain circumstances, see detailed error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>.tag</code></td>
             
 
@@ -38980,6 +39177,9 @@ from_lookup.</td>
 |
 
 <span class="param-type">'cant_move_shared_folder'</span>
+|
+
+<span class="param-type">'cant_move_into_vault'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -41183,6 +41383,9 @@ invalid_argument.</td>
 <span class="param-type">'invalid_argument'</span>
 |
 
+<span class="param-type">'internal_error'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -41351,6 +41554,127 @@ invalid_argument.</td>
             
 
             <td class="description last">The metadata for the matched file or folder.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesSearchMatchFieldOptions">
+    <h4 id="FilesSearchMatchFieldOptions">FilesSearchMatchFieldOptions</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>include_highlights</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Whether to include highlight span
+from file title.</td>
         </tr>
 
     
@@ -41642,7 +41966,7 @@ folder.</td>
             
 
             <td class="description last">The list of
-HighlightSpan determines which parts of the result should be highlighted.</td>
+HighlightSpan determines which parts of the file title should be highlighted.</td>
         </tr>
 
     
@@ -42400,6 +42724,39 @@ results.</td>
 
         <tr>
             
+                <td class="name"><code>match_field_options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesSearchMatchFieldOptions">FilesSearchMatchFieldOptions</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Options for
+search results match fields.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>include_highlights</code></td>
             
 
@@ -42423,7 +42780,8 @@ results.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Deprecated and moved this option to
+SearchMatchFieldOptions.</td>
         </tr>
 
     
@@ -58075,6 +58433,9 @@ reached.</td>
 |
 
 <span class="param-type">'no_permission'</span>
+|
+
+<span class="param-type">'invalid_shared_folder'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -83664,6 +84025,9 @@ existing shared folder.</td>
 <span class="param-type">'inside_osx_package'</span>
 |
 
+<span class="param-type">'is_vault'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -87610,6 +87974,320 @@ settings.
 |
 
 <span class="param-type">'shared_folder_only'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="StoneFixturesEmptyContainer">
+    <h4 id="StoneFixturesEmptyContainer">StoneFixturesEmptyContainer</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        This struct left intentionally empty
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="StoneFixturesMixedInternalOnlyContainer">
+    <h4 id="StoneFixturesMixedInternalOnlyContainer">StoneFixturesMixedInternalOnlyContainer</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>public_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="StoneFixturesMixedInternalOnlyEnum">
+    <h4 id="StoneFixturesMixedInternalOnlyEnum">StoneFixturesMixedInternalOnlyEnum</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'public'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -102908,7 +103586,8 @@ https://www.dropbox.com/developers/reference/content-hash page.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Team members IDs and number of
+permanetly deleted members under hold.</td>
         </tr>
 
     
@@ -102938,7 +103617,7 @@ https://www.dropbox.com/developers/reference/content-hash page.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The current state of the hold.</td>
         </tr>
 
     
@@ -102968,7 +103647,7 @@ https://www.dropbox.com/developers/reference/content-hash page.</td>
 
             
 
-            <td class="description last">start date of the legal hold policy.</td>
+            <td class="description last">Start date of the legal hold policy.</td>
         </tr>
 
     
@@ -103065,7 +103744,7 @@ was activated.</td>
 
             
 
-            <td class="description last">end date of the legal hold policy.</td>
+            <td class="description last">End date of the legal hold policy.</td>
         </tr>
 
     
@@ -103568,7 +104247,8 @@ was activated.</td>
 
             
 
-            <td class="description last">Entries list.</td>
+            <td class="description last">List of file
+entries that under the hold.</td>
         </tr>
 
     
@@ -103598,7 +104278,9 @@ was activated.</td>
 
             
 
-            <td class="description last">Has more.</td>
+            <td class="description last">True if there are more file entries that
+haven't been returned. You can retrieve them with a call to
+/legal_holds/list_held_revisions_continue.</td>
         </tr>
 
     
@@ -103630,7 +104312,10 @@ was activated.</td>
 
             
 
-            <td class="description last">List held revisions cursor.</td>
+            <td class="description last">The cursor idicates where to continue reading
+file metadata entries for the next API call. When there are no more entries,
+the cursor will return none. Pass the cursor into
+/2/team/legal_holds/list_held_revisions/continue.</td>
         </tr>
 
     
@@ -103910,7 +104595,9 @@ was activated.</td>
 
             
 
-            <td class="description last">cursor of list held revisions.</td>
+            <td class="description last">The cursor idicates where to continue reading
+file metadata entries for the next API call. When there are no more entries,
+the cursor will return none.</td>
         </tr>
 
     
@@ -104702,7 +105389,8 @@ released.</td>
 
             
 
-            <td class="description last">List of team members added to the hold.</td>
+            <td class="description last">List of team member IDs added to the
+hold.</td>
         </tr>
 
     
@@ -105335,37 +106023,6 @@ released.</td>
 
         <tr>
             
-                <td class="name"><code>members</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;Object></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">List of team members to apply the policy
-on.</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>name</code></td>
             
 
@@ -105424,6 +106081,39 @@ on.</td>
             
 
             <td class="description last">Policy new description.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>members</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">List of team member IDs to apply the
+policy on.</td>
         </tr>
 
     
@@ -117932,6 +118622,274 @@ state.</td>
             
 
             <td class="description last">The name of the team.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogContentAdministrationPolicyChangedDetails">
+    <h4 id="TeamLogContentAdministrationPolicyChangedDetails">TeamLogContentAdministrationPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed content management setting.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New content administration policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous content administration policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogContentAdministrationPolicyChangedType">
+    <h4 id="TeamLogContentAdministrationPolicyChangedType">TeamLogContentAdministrationPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -136532,6 +137490,72 @@ export_members_report_fail_details.</td>
 
         <tr>
             
+                <td class="name"><code>external_sharing_create_report_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalSharingCreateReportDetails">TeamLogExternalSharingCreateReportDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+external_sharing_create_report_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>external_sharing_report_failed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalSharingReportFailedDetails">TeamLogExternalSharingReportFailedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+external_sharing_report_failed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>no_expiration_link_gen_create_report_details</code></td>
             
 
@@ -140977,6 +142001,39 @@ camera_uploads_policy_changed_details.</td>
 
         <tr>
             
+                <td class="name"><code>content_administration_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogContentAdministrationPolicyChangedDetails">TeamLogContentAdministrationPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+content_administration_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>data_placement_restriction_change_policy_details</code></td>
             
 
@@ -142418,6 +143475,39 @@ reseller_support_change_policy_details.</td>
             
 
             <td class="description last">- Available if .tag is rewind_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>send_for_signature_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSendForSignaturePolicyChangedDetails">TeamLogSendForSignaturePolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+send_for_signature_policy_changed_details.</td>
         </tr>
 
     
@@ -145046,6 +146136,12 @@ to an internal error.</td>
 <span class="param-type">'export_members_report_fail_details'</span>
 |
 
+<span class="param-type">'external_sharing_create_report_details'</span>
+|
+
+<span class="param-type">'external_sharing_report_failed_details'</span>
+|
+
 <span class="param-type">'no_expiration_link_gen_create_report_details'</span>
 |
 
@@ -145454,6 +146550,9 @@ to an internal error.</td>
 <span class="param-type">'camera_uploads_policy_changed_details'</span>
 |
 
+<span class="param-type">'content_administration_policy_changed_details'</span>
+|
+
 <span class="param-type">'data_placement_restriction_change_policy_details'</span>
 |
 
@@ -145584,6 +146683,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'rewind_policy_changed_details'</span>
+|
+
+<span class="param-type">'send_for_signature_policy_changed_details'</span>
 |
 
 <span class="param-type">'sharing_change_folder_join_policy_details'</span>
@@ -145852,7 +146954,7 @@ to an internal error.</td>
 <dd>
     
     <div class="description">
-        The type of the event.
+        The type of the event with description.
     </div>
     
 
@@ -151947,6 +153049,74 @@ members data report</td>
 
         <tr>
             
+                <td class="name"><code>external_sharing_create_report</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalSharingCreateReportType">TeamLogExternalSharingCreateReportType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+external_sharing_create_report. (reports) Report created: Data shared outside
+the team</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>external_sharing_report_failed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalSharingReportFailedType">TeamLogExternalSharingReportFailedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+external_sharing_report_failed. (reports) Couldn't create report: Data shared
+outside the team</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>no_expiration_link_gen_create_report</code></td>
             
 
@@ -156501,6 +157671,40 @@ for team</td>
 
         <tr>
             
+                <td class="name"><code>content_administration_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogContentAdministrationPolicyChangedType">TeamLogContentAdministrationPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+content_administration_policy_changed. (team_policies) Changed content
+management setting</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>data_placement_restriction_change_policy</code></td>
             
 
@@ -157984,6 +159188,40 @@ support</td>
             
 
             <td class="description last">Available if .tag is rewind_policy_changed. (team_policies) Changed Rewind
+policy for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>send_for_signature_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSendForSignaturePolicyChangedType">TeamLogSendForSignaturePolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+send_for_signature_policy_changed. (team_policies) Changed send for signature
 policy for team</td>
         </tr>
 
@@ -160634,6 +161872,12 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'export_members_report_fail'</span>
 |
 
+<span class="param-type">'external_sharing_create_report'</span>
+|
+
+<span class="param-type">'external_sharing_report_failed'</span>
+|
+
 <span class="param-type">'no_expiration_link_gen_create_report'</span>
 |
 
@@ -161042,6 +162286,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'camera_uploads_policy_changed'</span>
 |
 
+<span class="param-type">'content_administration_policy_changed'</span>
+|
+
 <span class="param-type">'data_placement_restriction_change_policy'</span>
 |
 
@@ -161172,6 +162419,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'rewind_policy_changed'</span>
+|
+
+<span class="param-type">'send_for_signature_policy_changed'</span>
 |
 
 <span class="param-type">'sharing_change_folder_join_policy'</span>
@@ -161373,6 +162623,1414 @@ merge your team into another Dropbox team</td>
 
                 
                 </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogEventTypeArg">
+    <h4 id="TeamLogEventTypeArg">TeamLogEventTypeArg</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The type of the event.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'app_link_team'</span>
+|
+
+<span class="param-type">'app_link_user'</span>
+|
+
+<span class="param-type">'app_unlink_team'</span>
+|
+
+<span class="param-type">'app_unlink_user'</span>
+|
+
+<span class="param-type">'integration_connected'</span>
+|
+
+<span class="param-type">'integration_disconnected'</span>
+|
+
+<span class="param-type">'file_add_comment'</span>
+|
+
+<span class="param-type">'file_change_comment_subscription'</span>
+|
+
+<span class="param-type">'file_delete_comment'</span>
+|
+
+<span class="param-type">'file_edit_comment'</span>
+|
+
+<span class="param-type">'file_like_comment'</span>
+|
+
+<span class="param-type">'file_resolve_comment'</span>
+|
+
+<span class="param-type">'file_unlike_comment'</span>
+|
+
+<span class="param-type">'file_unresolve_comment'</span>
+|
+
+<span class="param-type">'device_change_ip_desktop'</span>
+|
+
+<span class="param-type">'device_change_ip_mobile'</span>
+|
+
+<span class="param-type">'device_change_ip_web'</span>
+|
+
+<span class="param-type">'device_delete_on_unlink_fail'</span>
+|
+
+<span class="param-type">'device_delete_on_unlink_success'</span>
+|
+
+<span class="param-type">'device_link_fail'</span>
+|
+
+<span class="param-type">'device_link_success'</span>
+|
+
+<span class="param-type">'device_management_disabled'</span>
+|
+
+<span class="param-type">'device_management_enabled'</span>
+|
+
+<span class="param-type">'device_unlink'</span>
+|
+
+<span class="param-type">'emm_refresh_auth_token'</span>
+|
+
+<span class="param-type">'account_capture_change_availability'</span>
+|
+
+<span class="param-type">'account_capture_migrate_account'</span>
+|
+
+<span class="param-type">'account_capture_notification_emails_sent'</span>
+|
+
+<span class="param-type">'account_capture_relinquish_account'</span>
+|
+
+<span class="param-type">'disabled_domain_invites'</span>
+|
+
+<span class="param-type">'domain_invites_approve_request_to_join_team'</span>
+|
+
+<span class="param-type">'domain_invites_decline_request_to_join_team'</span>
+|
+
+<span class="param-type">'domain_invites_email_existing_users'</span>
+|
+
+<span class="param-type">'domain_invites_request_to_join_team'</span>
+|
+
+<span class="param-type">'domain_invites_set_invite_new_user_pref_to_no'</span>
+|
+
+<span class="param-type">'domain_invites_set_invite_new_user_pref_to_yes'</span>
+|
+
+<span class="param-type">'domain_verification_add_domain_fail'</span>
+|
+
+<span class="param-type">'domain_verification_add_domain_success'</span>
+|
+
+<span class="param-type">'domain_verification_remove_domain'</span>
+|
+
+<span class="param-type">'enabled_domain_invites'</span>
+|
+
+<span class="param-type">'create_folder'</span>
+|
+
+<span class="param-type">'file_add'</span>
+|
+
+<span class="param-type">'file_copy'</span>
+|
+
+<span class="param-type">'file_delete'</span>
+|
+
+<span class="param-type">'file_download'</span>
+|
+
+<span class="param-type">'file_edit'</span>
+|
+
+<span class="param-type">'file_get_copy_reference'</span>
+|
+
+<span class="param-type">'file_locking_lock_status_changed'</span>
+|
+
+<span class="param-type">'file_move'</span>
+|
+
+<span class="param-type">'file_permanently_delete'</span>
+|
+
+<span class="param-type">'file_preview'</span>
+|
+
+<span class="param-type">'file_rename'</span>
+|
+
+<span class="param-type">'file_restore'</span>
+|
+
+<span class="param-type">'file_revert'</span>
+|
+
+<span class="param-type">'file_rollback_changes'</span>
+|
+
+<span class="param-type">'file_save_copy_reference'</span>
+|
+
+<span class="param-type">'folder_overview_description_changed'</span>
+|
+
+<span class="param-type">'folder_overview_item_pinned'</span>
+|
+
+<span class="param-type">'folder_overview_item_unpinned'</span>
+|
+
+<span class="param-type">'rewind_folder'</span>
+|
+
+<span class="param-type">'file_request_change'</span>
+|
+
+<span class="param-type">'file_request_close'</span>
+|
+
+<span class="param-type">'file_request_create'</span>
+|
+
+<span class="param-type">'file_request_delete'</span>
+|
+
+<span class="param-type">'file_request_receive_file'</span>
+|
+
+<span class="param-type">'group_add_external_id'</span>
+|
+
+<span class="param-type">'group_add_member'</span>
+|
+
+<span class="param-type">'group_change_external_id'</span>
+|
+
+<span class="param-type">'group_change_management_type'</span>
+|
+
+<span class="param-type">'group_change_member_role'</span>
+|
+
+<span class="param-type">'group_create'</span>
+|
+
+<span class="param-type">'group_delete'</span>
+|
+
+<span class="param-type">'group_description_updated'</span>
+|
+
+<span class="param-type">'group_join_policy_updated'</span>
+|
+
+<span class="param-type">'group_moved'</span>
+|
+
+<span class="param-type">'group_remove_external_id'</span>
+|
+
+<span class="param-type">'group_remove_member'</span>
+|
+
+<span class="param-type">'group_rename'</span>
+|
+
+<span class="param-type">'legal_holds_activate_a_hold'</span>
+|
+
+<span class="param-type">'legal_holds_add_members'</span>
+|
+
+<span class="param-type">'legal_holds_change_hold_details'</span>
+|
+
+<span class="param-type">'legal_holds_change_hold_name'</span>
+|
+
+<span class="param-type">'legal_holds_export_a_hold'</span>
+|
+
+<span class="param-type">'legal_holds_export_cancelled'</span>
+|
+
+<span class="param-type">'legal_holds_export_downloaded'</span>
+|
+
+<span class="param-type">'legal_holds_export_removed'</span>
+|
+
+<span class="param-type">'legal_holds_release_a_hold'</span>
+|
+
+<span class="param-type">'legal_holds_remove_members'</span>
+|
+
+<span class="param-type">'legal_holds_report_a_hold'</span>
+|
+
+<span class="param-type">'account_lock_or_unlocked'</span>
+|
+
+<span class="param-type">'emm_error'</span>
+|
+
+<span class="param-type">'guest_admin_signed_in_via_trusted_teams'</span>
+|
+
+<span class="param-type">'guest_admin_signed_out_via_trusted_teams'</span>
+|
+
+<span class="param-type">'login_fail'</span>
+|
+
+<span class="param-type">'login_success'</span>
+|
+
+<span class="param-type">'logout'</span>
+|
+
+<span class="param-type">'reseller_support_session_end'</span>
+|
+
+<span class="param-type">'reseller_support_session_start'</span>
+|
+
+<span class="param-type">'sign_in_as_session_end'</span>
+|
+
+<span class="param-type">'sign_in_as_session_start'</span>
+|
+
+<span class="param-type">'sso_error'</span>
+|
+
+<span class="param-type">'create_team_invite_link'</span>
+|
+
+<span class="param-type">'delete_team_invite_link'</span>
+|
+
+<span class="param-type">'member_add_external_id'</span>
+|
+
+<span class="param-type">'member_add_name'</span>
+|
+
+<span class="param-type">'member_change_admin_role'</span>
+|
+
+<span class="param-type">'member_change_email'</span>
+|
+
+<span class="param-type">'member_change_external_id'</span>
+|
+
+<span class="param-type">'member_change_membership_type'</span>
+|
+
+<span class="param-type">'member_change_name'</span>
+|
+
+<span class="param-type">'member_change_status'</span>
+|
+
+<span class="param-type">'member_delete_manual_contacts'</span>
+|
+
+<span class="param-type">'member_delete_profile_photo'</span>
+|
+
+<span class="param-type">'member_permanently_delete_account_contents'</span>
+|
+
+<span class="param-type">'member_remove_external_id'</span>
+|
+
+<span class="param-type">'member_set_profile_photo'</span>
+|
+
+<span class="param-type">'member_space_limits_add_custom_quota'</span>
+|
+
+<span class="param-type">'member_space_limits_change_custom_quota'</span>
+|
+
+<span class="param-type">'member_space_limits_change_status'</span>
+|
+
+<span class="param-type">'member_space_limits_remove_custom_quota'</span>
+|
+
+<span class="param-type">'member_suggest'</span>
+|
+
+<span class="param-type">'member_transfer_account_contents'</span>
+|
+
+<span class="param-type">'pending_secondary_email_added'</span>
+|
+
+<span class="param-type">'secondary_email_deleted'</span>
+|
+
+<span class="param-type">'secondary_email_verified'</span>
+|
+
+<span class="param-type">'secondary_mails_policy_changed'</span>
+|
+
+<span class="param-type">'binder_add_page'</span>
+|
+
+<span class="param-type">'binder_add_section'</span>
+|
+
+<span class="param-type">'binder_remove_page'</span>
+|
+
+<span class="param-type">'binder_remove_section'</span>
+|
+
+<span class="param-type">'binder_rename_page'</span>
+|
+
+<span class="param-type">'binder_rename_section'</span>
+|
+
+<span class="param-type">'binder_reorder_page'</span>
+|
+
+<span class="param-type">'binder_reorder_section'</span>
+|
+
+<span class="param-type">'paper_content_add_member'</span>
+|
+
+<span class="param-type">'paper_content_add_to_folder'</span>
+|
+
+<span class="param-type">'paper_content_archive'</span>
+|
+
+<span class="param-type">'paper_content_create'</span>
+|
+
+<span class="param-type">'paper_content_permanently_delete'</span>
+|
+
+<span class="param-type">'paper_content_remove_from_folder'</span>
+|
+
+<span class="param-type">'paper_content_remove_member'</span>
+|
+
+<span class="param-type">'paper_content_rename'</span>
+|
+
+<span class="param-type">'paper_content_restore'</span>
+|
+
+<span class="param-type">'paper_doc_add_comment'</span>
+|
+
+<span class="param-type">'paper_doc_change_member_role'</span>
+|
+
+<span class="param-type">'paper_doc_change_sharing_policy'</span>
+|
+
+<span class="param-type">'paper_doc_change_subscription'</span>
+|
+
+<span class="param-type">'paper_doc_deleted'</span>
+|
+
+<span class="param-type">'paper_doc_delete_comment'</span>
+|
+
+<span class="param-type">'paper_doc_download'</span>
+|
+
+<span class="param-type">'paper_doc_edit'</span>
+|
+
+<span class="param-type">'paper_doc_edit_comment'</span>
+|
+
+<span class="param-type">'paper_doc_followed'</span>
+|
+
+<span class="param-type">'paper_doc_mention'</span>
+|
+
+<span class="param-type">'paper_doc_ownership_changed'</span>
+|
+
+<span class="param-type">'paper_doc_request_access'</span>
+|
+
+<span class="param-type">'paper_doc_resolve_comment'</span>
+|
+
+<span class="param-type">'paper_doc_revert'</span>
+|
+
+<span class="param-type">'paper_doc_slack_share'</span>
+|
+
+<span class="param-type">'paper_doc_team_invite'</span>
+|
+
+<span class="param-type">'paper_doc_trashed'</span>
+|
+
+<span class="param-type">'paper_doc_unresolve_comment'</span>
+|
+
+<span class="param-type">'paper_doc_untrashed'</span>
+|
+
+<span class="param-type">'paper_doc_view'</span>
+|
+
+<span class="param-type">'paper_external_view_allow'</span>
+|
+
+<span class="param-type">'paper_external_view_default_team'</span>
+|
+
+<span class="param-type">'paper_external_view_forbid'</span>
+|
+
+<span class="param-type">'paper_folder_change_subscription'</span>
+|
+
+<span class="param-type">'paper_folder_deleted'</span>
+|
+
+<span class="param-type">'paper_folder_followed'</span>
+|
+
+<span class="param-type">'paper_folder_team_invite'</span>
+|
+
+<span class="param-type">'paper_published_link_change_permission'</span>
+|
+
+<span class="param-type">'paper_published_link_create'</span>
+|
+
+<span class="param-type">'paper_published_link_disabled'</span>
+|
+
+<span class="param-type">'paper_published_link_view'</span>
+|
+
+<span class="param-type">'password_change'</span>
+|
+
+<span class="param-type">'password_reset'</span>
+|
+
+<span class="param-type">'password_reset_all'</span>
+|
+
+<span class="param-type">'emm_create_exceptions_report'</span>
+|
+
+<span class="param-type">'emm_create_usage_report'</span>
+|
+
+<span class="param-type">'export_members_report'</span>
+|
+
+<span class="param-type">'export_members_report_fail'</span>
+|
+
+<span class="param-type">'external_sharing_create_report'</span>
+|
+
+<span class="param-type">'external_sharing_report_failed'</span>
+|
+
+<span class="param-type">'no_expiration_link_gen_create_report'</span>
+|
+
+<span class="param-type">'no_expiration_link_gen_report_failed'</span>
+|
+
+<span class="param-type">'no_password_link_gen_create_report'</span>
+|
+
+<span class="param-type">'no_password_link_gen_report_failed'</span>
+|
+
+<span class="param-type">'no_password_link_view_create_report'</span>
+|
+
+<span class="param-type">'no_password_link_view_report_failed'</span>
+|
+
+<span class="param-type">'outdated_link_view_create_report'</span>
+|
+
+<span class="param-type">'outdated_link_view_report_failed'</span>
+|
+
+<span class="param-type">'paper_admin_export_start'</span>
+|
+
+<span class="param-type">'smart_sync_create_admin_privilege_report'</span>
+|
+
+<span class="param-type">'team_activity_create_report'</span>
+|
+
+<span class="param-type">'team_activity_create_report_fail'</span>
+|
+
+<span class="param-type">'collection_share'</span>
+|
+
+<span class="param-type">'file_transfers_file_add'</span>
+|
+
+<span class="param-type">'file_transfers_transfer_delete'</span>
+|
+
+<span class="param-type">'file_transfers_transfer_download'</span>
+|
+
+<span class="param-type">'file_transfers_transfer_send'</span>
+|
+
+<span class="param-type">'file_transfers_transfer_view'</span>
+|
+
+<span class="param-type">'note_acl_invite_only'</span>
+|
+
+<span class="param-type">'note_acl_link'</span>
+|
+
+<span class="param-type">'note_acl_team_link'</span>
+|
+
+<span class="param-type">'note_shared'</span>
+|
+
+<span class="param-type">'note_share_receive'</span>
+|
+
+<span class="param-type">'open_note_shared'</span>
+|
+
+<span class="param-type">'sf_add_group'</span>
+|
+
+<span class="param-type">'sf_allow_non_members_to_view_shared_links'</span>
+|
+
+<span class="param-type">'sf_external_invite_warn'</span>
+|
+
+<span class="param-type">'sf_fb_invite'</span>
+|
+
+<span class="param-type">'sf_fb_invite_change_role'</span>
+|
+
+<span class="param-type">'sf_fb_uninvite'</span>
+|
+
+<span class="param-type">'sf_invite_group'</span>
+|
+
+<span class="param-type">'sf_team_grant_access'</span>
+|
+
+<span class="param-type">'sf_team_invite'</span>
+|
+
+<span class="param-type">'sf_team_invite_change_role'</span>
+|
+
+<span class="param-type">'sf_team_join'</span>
+|
+
+<span class="param-type">'sf_team_join_from_oob_link'</span>
+|
+
+<span class="param-type">'sf_team_uninvite'</span>
+|
+
+<span class="param-type">'shared_content_add_invitees'</span>
+|
+
+<span class="param-type">'shared_content_add_link_expiry'</span>
+|
+
+<span class="param-type">'shared_content_add_link_password'</span>
+|
+
+<span class="param-type">'shared_content_add_member'</span>
+|
+
+<span class="param-type">'shared_content_change_downloads_policy'</span>
+|
+
+<span class="param-type">'shared_content_change_invitee_role'</span>
+|
+
+<span class="param-type">'shared_content_change_link_audience'</span>
+|
+
+<span class="param-type">'shared_content_change_link_expiry'</span>
+|
+
+<span class="param-type">'shared_content_change_link_password'</span>
+|
+
+<span class="param-type">'shared_content_change_member_role'</span>
+|
+
+<span class="param-type">'shared_content_change_viewer_info_policy'</span>
+|
+
+<span class="param-type">'shared_content_claim_invitation'</span>
+|
+
+<span class="param-type">'shared_content_copy'</span>
+|
+
+<span class="param-type">'shared_content_download'</span>
+|
+
+<span class="param-type">'shared_content_relinquish_membership'</span>
+|
+
+<span class="param-type">'shared_content_remove_invitees'</span>
+|
+
+<span class="param-type">'shared_content_remove_link_expiry'</span>
+|
+
+<span class="param-type">'shared_content_remove_link_password'</span>
+|
+
+<span class="param-type">'shared_content_remove_member'</span>
+|
+
+<span class="param-type">'shared_content_request_access'</span>
+|
+
+<span class="param-type">'shared_content_restore_invitees'</span>
+|
+
+<span class="param-type">'shared_content_restore_member'</span>
+|
+
+<span class="param-type">'shared_content_unshare'</span>
+|
+
+<span class="param-type">'shared_content_view'</span>
+|
+
+<span class="param-type">'shared_folder_change_link_policy'</span>
+|
+
+<span class="param-type">'shared_folder_change_members_inheritance_policy'</span>
+|
+
+<span class="param-type">'shared_folder_change_members_management_policy'</span>
+|
+
+<span class="param-type">'shared_folder_change_members_policy'</span>
+|
+
+<span class="param-type">'shared_folder_create'</span>
+|
+
+<span class="param-type">'shared_folder_decline_invitation'</span>
+|
+
+<span class="param-type">'shared_folder_mount'</span>
+|
+
+<span class="param-type">'shared_folder_nest'</span>
+|
+
+<span class="param-type">'shared_folder_transfer_ownership'</span>
+|
+
+<span class="param-type">'shared_folder_unmount'</span>
+|
+
+<span class="param-type">'shared_link_add_expiry'</span>
+|
+
+<span class="param-type">'shared_link_change_expiry'</span>
+|
+
+<span class="param-type">'shared_link_change_visibility'</span>
+|
+
+<span class="param-type">'shared_link_copy'</span>
+|
+
+<span class="param-type">'shared_link_create'</span>
+|
+
+<span class="param-type">'shared_link_disable'</span>
+|
+
+<span class="param-type">'shared_link_download'</span>
+|
+
+<span class="param-type">'shared_link_remove_expiry'</span>
+|
+
+<span class="param-type">'shared_link_settings_add_expiration'</span>
+|
+
+<span class="param-type">'shared_link_settings_add_password'</span>
+|
+
+<span class="param-type">'shared_link_settings_allow_download_disabled'</span>
+|
+
+<span class="param-type">'shared_link_settings_allow_download_enabled'</span>
+|
+
+<span class="param-type">'shared_link_settings_change_audience'</span>
+|
+
+<span class="param-type">'shared_link_settings_change_expiration'</span>
+|
+
+<span class="param-type">'shared_link_settings_change_password'</span>
+|
+
+<span class="param-type">'shared_link_settings_remove_expiration'</span>
+|
+
+<span class="param-type">'shared_link_settings_remove_password'</span>
+|
+
+<span class="param-type">'shared_link_share'</span>
+|
+
+<span class="param-type">'shared_link_view'</span>
+|
+
+<span class="param-type">'shared_note_opened'</span>
+|
+
+<span class="param-type">'shmodel_group_share'</span>
+|
+
+<span class="param-type">'showcase_access_granted'</span>
+|
+
+<span class="param-type">'showcase_add_member'</span>
+|
+
+<span class="param-type">'showcase_archived'</span>
+|
+
+<span class="param-type">'showcase_created'</span>
+|
+
+<span class="param-type">'showcase_delete_comment'</span>
+|
+
+<span class="param-type">'showcase_edited'</span>
+|
+
+<span class="param-type">'showcase_edit_comment'</span>
+|
+
+<span class="param-type">'showcase_file_added'</span>
+|
+
+<span class="param-type">'showcase_file_download'</span>
+|
+
+<span class="param-type">'showcase_file_removed'</span>
+|
+
+<span class="param-type">'showcase_file_view'</span>
+|
+
+<span class="param-type">'showcase_permanently_deleted'</span>
+|
+
+<span class="param-type">'showcase_post_comment'</span>
+|
+
+<span class="param-type">'showcase_remove_member'</span>
+|
+
+<span class="param-type">'showcase_renamed'</span>
+|
+
+<span class="param-type">'showcase_request_access'</span>
+|
+
+<span class="param-type">'showcase_resolve_comment'</span>
+|
+
+<span class="param-type">'showcase_restored'</span>
+|
+
+<span class="param-type">'showcase_trashed'</span>
+|
+
+<span class="param-type">'showcase_trashed_deprecated'</span>
+|
+
+<span class="param-type">'showcase_unresolve_comment'</span>
+|
+
+<span class="param-type">'showcase_untrashed'</span>
+|
+
+<span class="param-type">'showcase_untrashed_deprecated'</span>
+|
+
+<span class="param-type">'showcase_view'</span>
+|
+
+<span class="param-type">'sso_add_cert'</span>
+|
+
+<span class="param-type">'sso_add_login_url'</span>
+|
+
+<span class="param-type">'sso_add_logout_url'</span>
+|
+
+<span class="param-type">'sso_change_cert'</span>
+|
+
+<span class="param-type">'sso_change_login_url'</span>
+|
+
+<span class="param-type">'sso_change_logout_url'</span>
+|
+
+<span class="param-type">'sso_change_saml_identity_mode'</span>
+|
+
+<span class="param-type">'sso_remove_cert'</span>
+|
+
+<span class="param-type">'sso_remove_login_url'</span>
+|
+
+<span class="param-type">'sso_remove_logout_url'</span>
+|
+
+<span class="param-type">'team_folder_change_status'</span>
+|
+
+<span class="param-type">'team_folder_create'</span>
+|
+
+<span class="param-type">'team_folder_downgrade'</span>
+|
+
+<span class="param-type">'team_folder_permanently_delete'</span>
+|
+
+<span class="param-type">'team_folder_rename'</span>
+|
+
+<span class="param-type">'team_selective_sync_settings_changed'</span>
+|
+
+<span class="param-type">'account_capture_change_policy'</span>
+|
+
+<span class="param-type">'allow_download_disabled'</span>
+|
+
+<span class="param-type">'allow_download_enabled'</span>
+|
+
+<span class="param-type">'camera_uploads_policy_changed'</span>
+|
+
+<span class="param-type">'content_administration_policy_changed'</span>
+|
+
+<span class="param-type">'data_placement_restriction_change_policy'</span>
+|
+
+<span class="param-type">'data_placement_restriction_satisfy_policy'</span>
+|
+
+<span class="param-type">'device_approvals_add_exception'</span>
+|
+
+<span class="param-type">'device_approvals_change_desktop_policy'</span>
+|
+
+<span class="param-type">'device_approvals_change_mobile_policy'</span>
+|
+
+<span class="param-type">'device_approvals_change_overage_action'</span>
+|
+
+<span class="param-type">'device_approvals_change_unlink_action'</span>
+|
+
+<span class="param-type">'device_approvals_remove_exception'</span>
+|
+
+<span class="param-type">'directory_restrictions_add_members'</span>
+|
+
+<span class="param-type">'directory_restrictions_remove_members'</span>
+|
+
+<span class="param-type">'emm_add_exception'</span>
+|
+
+<span class="param-type">'emm_change_policy'</span>
+|
+
+<span class="param-type">'emm_remove_exception'</span>
+|
+
+<span class="param-type">'extended_version_history_change_policy'</span>
+|
+
+<span class="param-type">'file_comments_change_policy'</span>
+|
+
+<span class="param-type">'file_locking_policy_changed'</span>
+|
+
+<span class="param-type">'file_requests_change_policy'</span>
+|
+
+<span class="param-type">'file_requests_emails_enabled'</span>
+|
+
+<span class="param-type">'file_requests_emails_restricted_to_team_only'</span>
+|
+
+<span class="param-type">'file_transfers_policy_changed'</span>
+|
+
+<span class="param-type">'google_sso_change_policy'</span>
+|
+
+<span class="param-type">'group_user_management_change_policy'</span>
+|
+
+<span class="param-type">'integration_policy_changed'</span>
+|
+
+<span class="param-type">'member_requests_change_policy'</span>
+|
+
+<span class="param-type">'member_send_invite_policy_changed'</span>
+|
+
+<span class="param-type">'member_space_limits_add_exception'</span>
+|
+
+<span class="param-type">'member_space_limits_change_caps_type_policy'</span>
+|
+
+<span class="param-type">'member_space_limits_change_policy'</span>
+|
+
+<span class="param-type">'member_space_limits_remove_exception'</span>
+|
+
+<span class="param-type">'member_suggestions_change_policy'</span>
+|
+
+<span class="param-type">'microsoft_office_addin_change_policy'</span>
+|
+
+<span class="param-type">'network_control_change_policy'</span>
+|
+
+<span class="param-type">'paper_change_deployment_policy'</span>
+|
+
+<span class="param-type">'paper_change_member_link_policy'</span>
+|
+
+<span class="param-type">'paper_change_member_policy'</span>
+|
+
+<span class="param-type">'paper_change_policy'</span>
+|
+
+<span class="param-type">'paper_default_folder_policy_changed'</span>
+|
+
+<span class="param-type">'paper_desktop_policy_changed'</span>
+|
+
+<span class="param-type">'paper_enabled_users_group_addition'</span>
+|
+
+<span class="param-type">'paper_enabled_users_group_removal'</span>
+|
+
+<span class="param-type">'password_strength_requirements_change_policy'</span>
+|
+
+<span class="param-type">'permanent_delete_change_policy'</span>
+|
+
+<span class="param-type">'reseller_support_change_policy'</span>
+|
+
+<span class="param-type">'rewind_policy_changed'</span>
+|
+
+<span class="param-type">'send_for_signature_policy_changed'</span>
+|
+
+<span class="param-type">'sharing_change_folder_join_policy'</span>
+|
+
+<span class="param-type">'sharing_change_link_policy'</span>
+|
+
+<span class="param-type">'sharing_change_member_policy'</span>
+|
+
+<span class="param-type">'showcase_change_download_policy'</span>
+|
+
+<span class="param-type">'showcase_change_enabled_policy'</span>
+|
+
+<span class="param-type">'showcase_change_external_sharing_policy'</span>
+|
+
+<span class="param-type">'smarter_smart_sync_policy_changed'</span>
+|
+
+<span class="param-type">'smart_sync_change_policy'</span>
+|
+
+<span class="param-type">'smart_sync_not_opt_out'</span>
+|
+
+<span class="param-type">'smart_sync_opt_out'</span>
+|
+
+<span class="param-type">'sso_change_policy'</span>
+|
+
+<span class="param-type">'team_extensions_policy_changed'</span>
+|
+
+<span class="param-type">'team_selective_sync_policy_changed'</span>
+|
+
+<span class="param-type">'team_sharing_whitelist_subjects_changed'</span>
+|
+
+<span class="param-type">'tfa_add_exception'</span>
+|
+
+<span class="param-type">'tfa_change_policy'</span>
+|
+
+<span class="param-type">'tfa_remove_exception'</span>
+|
+
+<span class="param-type">'two_account_change_policy'</span>
+|
+
+<span class="param-type">'viewer_info_policy_changed'</span>
+|
+
+<span class="param-type">'watermarking_policy_changed'</span>
+|
+
+<span class="param-type">'web_sessions_change_active_session_limit'</span>
+|
+
+<span class="param-type">'web_sessions_change_fixed_length_policy'</span>
+|
+
+<span class="param-type">'web_sessions_change_idle_length_policy'</span>
+|
+
+<span class="param-type">'team_merge_from'</span>
+|
+
+<span class="param-type">'team_merge_to'</span>
+|
+
+<span class="param-type">'team_profile_add_logo'</span>
+|
+
+<span class="param-type">'team_profile_change_default_language'</span>
+|
+
+<span class="param-type">'team_profile_change_logo'</span>
+|
+
+<span class="param-type">'team_profile_change_name'</span>
+|
+
+<span class="param-type">'team_profile_remove_logo'</span>
+|
+
+<span class="param-type">'tfa_add_backup_phone'</span>
+|
+
+<span class="param-type">'tfa_add_security_key'</span>
+|
+
+<span class="param-type">'tfa_change_backup_phone'</span>
+|
+
+<span class="param-type">'tfa_change_status'</span>
+|
+
+<span class="param-type">'tfa_remove_backup_phone'</span>
+|
+
+<span class="param-type">'tfa_remove_security_key'</span>
+|
+
+<span class="param-type">'tfa_reset'</span>
+|
+
+<span class="param-type">'changed_enterprise_admin_role'</span>
+|
+
+<span class="param-type">'changed_enterprise_connected_team_status'</span>
+|
+
+<span class="param-type">'ended_enterprise_admin_session'</span>
+|
+
+<span class="param-type">'ended_enterprise_admin_session_deprecated'</span>
+|
+
+<span class="param-type">'enterprise_settings_locking'</span>
+|
+
+<span class="param-type">'guest_admin_change_status'</span>
+|
+
+<span class="param-type">'started_enterprise_admin_session'</span>
+|
+
+<span class="param-type">'team_merge_request_accepted'</span>
+|
+
+<span class="param-type">'team_merge_request_accepted_shown_to_primary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_accepted_shown_to_secondary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_auto_canceled'</span>
+|
+
+<span class="param-type">'team_merge_request_canceled'</span>
+|
+
+<span class="param-type">'team_merge_request_canceled_shown_to_primary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_canceled_shown_to_secondary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_expired'</span>
+|
+
+<span class="param-type">'team_merge_request_expired_shown_to_primary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_expired_shown_to_secondary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_rejected_shown_to_primary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_rejected_shown_to_secondary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_reminder'</span>
+|
+
+<span class="param-type">'team_merge_request_reminder_shown_to_primary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_reminder_shown_to_secondary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_revoked'</span>
+|
+
+<span class="param-type">'team_merge_request_sent_shown_to_primary_team'</span>
+|
+
+<span class="param-type">'team_merge_request_sent_shown_to_secondary_team'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
             
 
             
@@ -162231,6 +164889,441 @@ extended version history policy. Might be missing due to historical data gap.</t
             
 
             <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogExternalSharingCreateReportDetails">
+    <h4 id="TeamLogExternalSharingCreateReportDetails">TeamLogExternalSharingCreateReportDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Report created: Data shared outside the team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogExternalSharingCreateReportType">
+    <h4 id="TeamLogExternalSharingCreateReportType">TeamLogExternalSharingCreateReportType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogExternalSharingReportFailedDetails">
+    <h4 id="TeamLogExternalSharingReportFailedDetails">TeamLogExternalSharingReportFailedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Couldn't create report: Data shared outside the team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>failure_reason</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamTeamReportFailureReason">TeamTeamReportFailureReason</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Failure reason.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogExternalSharingReportFailedType">
+    <h4 id="TeamLogExternalSharingReportFailedType">TeamLogExternalSharingReportFailedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -175539,8 +178632,8 @@ should fetch again using get_events/continue.</td>
 
             
 
-            <td class="description last">Filter the events by account ID. Return ony
-events with this account_id as either Actor, Context, or Participants.</td>
+            <td class="description last">Filter the events by account ID. Return
+only events with this account_id as either Actor, Context, or Participants.</td>
         </tr>
 
     
@@ -175605,7 +178698,42 @@ events with this account_id as either Actor, Context, or Participants.</td>
             
 
             <td class="description last">Filter the returned events to a
-single category.</td>
+single category. Note that category shouldn't be provided together with
+event_type.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>event_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogEventTypeArg">TeamLogEventTypeArg</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Filter the returned events to
+a single event type. Note that event_type shouldn't be provided together with
+category.</td>
         </tr>
 
     
@@ -176019,6 +179147,9 @@ cursor. This should be used as a resumption point when calling
 |
 
 <span class="param-type">'invalid_time_range'</span>
+|
+
+<span class="param-type">'invalid_filters'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -182563,6 +185694,12 @@ policy.</td>
 <span class="param-type">'invite_link'</span>
 |
 
+<span class="param-type">'auto_approve'</span>
+|
+
+<span class="param-type">'moved_from_another_team'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -182802,8 +185939,8 @@ field instead.</td>
 
             
 
-            <td class="description last">True if the linked_apps
-list was truncated to the maximum supported length (50).</td>
+            <td class="description last">(Deprecated) True if the
+linked_apps list was truncated to the maximum supported length (50).</td>
         </tr>
 
     
@@ -182835,7 +185972,7 @@ list was truncated to the maximum supported length (50).</td>
 
             
 
-            <td class="description last">True if the
+            <td class="description last">(Deprecated) True if the
 linked_devices list was truncated to the maximum supported length (50).</td>
         </tr>
 
@@ -182868,9 +186005,9 @@ linked_devices list was truncated to the maximum supported length (50).</td>
 
             
 
-            <td class="description last">True if the
-linked_shared_folders list was truncated to the maximum supported length
-(50).</td>
+            <td class="description last">(Deprecated) True
+if the linked_shared_folders list was truncated to the maximum supported
+length (50).</td>
         </tr>
 
     
@@ -190233,6 +193370,72 @@ the action taken that caused status change.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>new_team</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The user's new team name. This field is
+relevant when the user is transferred off the team.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_team</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The user's previous team name. This
+field is relevant when the user is transferred onto the team.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -194339,6 +197542,9 @@ status.</td>
 |
 
 <span class="param-type">'removed'</span>
+|
+
+<span class="param-type">'moved_to_another_team'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -220776,6 +223982,406 @@ was sent to.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogSendForSignaturePolicy">
+    <h4 id="TeamLogSendForSignaturePolicy">TeamLogSendForSignaturePolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling team access to send for signature feature
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSendForSignaturePolicyChangedDetails">
+    <h4 id="TeamLogSendForSignaturePolicyChangedDetails">TeamLogSendForSignaturePolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed send for signature policy for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSendForSignaturePolicy">TeamLogSendForSignaturePolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New send for signature
+policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSendForSignaturePolicy">TeamLogSendForSignaturePolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous send for
+signature policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSendForSignaturePolicyChangedType">
+    <h4 id="TeamLogSendForSignaturePolicyChangedType">TeamLogSendForSignaturePolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogSessionLogInfo">
     <h4 id="TeamLogSessionLogInfo">TeamLogSessionLogInfo</h4>
 
@@ -239580,6 +243186,9 @@ historical data gap.</td>
             <td class="type">
             
                 
+<span class="param-type">'no_one'</span>
+|
+
 <span class="param-type">'password'</span>
 |
 
@@ -257571,10 +261180,10 @@ for enterprise event.</td>
             <td class="type">
             
                 
-<span class="param-type">'free'</span>
+<span class="param-type">'full'</span>
 |
 
-<span class="param-type">'full'</span>
+<span class="param-type">'free'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -277761,11 +281370,11 @@ keep the account the argument wipe_data should be set to false.</td>
             
 
             <td class="description last">If provided, allows removed users to
-keep access to folders already explicitly shared with them (not via a group)
-when they are downgraded to a Basic account. Users will not retain access to
-folders that do not allow external sharing. In order to keep the sharing
-relationships, the arguments wipe_data should be set to false and
-keep_account should be set to true.</td>
+keep access to Dropbox folders (not Dropbox Paper folders) already explicitly
+shared with them (not via a group) when they are downgraded to a Basic
+account. Users will not retain access to folders that do not allow external
+sharing. In order to keep the sharing relationships, the arguments wipe_data
+should be set to false and keep_account should be set to true.</td>
         </tr>
 
     
@@ -286265,8 +289874,9 @@ device.</td>
 
             
 
-            <td class="description last">Whether to keep the application
-dedicated folder (in case the application uses  one).</td>
+            <td class="description last">This flag is not longer supported, the
+application dedicated folder (in case the application uses  one) will be
+kept.</td>
         </tr>
 
     
@@ -286747,6 +290357,9 @@ dedicated folder (in case the application uses  one).</td>
 |
 
 <span class="param-type">'member_not_found'</span>
+|
+
+<span class="param-type">'app_folder_removal_not_supported'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -300803,7 +304416,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a>
 	
-		on 2020-06-09T13:33:39-05:00
+		on 2020-06-29T18:21:41-07:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
