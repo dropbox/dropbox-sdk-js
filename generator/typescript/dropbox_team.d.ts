@@ -212,7 +212,8 @@ declare module DropboxTypes {
     public teamGroupsUpdate(arg: team.GroupUpdateArgs): Promise<team.GroupFullInfo>;
 
     /**
-     * Creates new legal hold policy. Permission : Team member file access.
+     * Creates new legal hold policy. Note: Legal Holds is a paid add-on. Not
+     * all teams have the feature. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsPolicyCreateError>.
@@ -221,7 +222,8 @@ declare module DropboxTypes {
     public teamLegalHoldsCreatePolicy(arg: team.LegalHoldsPolicyCreateArg): Promise<team.LegalHoldsPolicyCreateResult>;
 
     /**
-     * Gets a legal hold by Id. Permission : Team member file access.
+     * Gets a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
+     * teams have the feature. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsGetPolicyError>.
@@ -230,6 +232,10 @@ declare module DropboxTypes {
     public teamLegalHoldsGetPolicy(arg: team.LegalHoldsGetPolicyArg): Promise<team.LegalHoldsGetPolicyResult>;
 
     /**
+     * List the file metadata that's under the hold. Note: Legal Holds is a paid
+     * add-on. Not all teams have the feature. Permission : Team member file
+     * access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsListHeldRevisionsError>.
      * @param arg The request parameters.
@@ -237,6 +243,10 @@ declare module DropboxTypes {
     public teamLegalHoldsListHeldRevisions(arg: team.LegalHoldsListHeldRevisionsArg): Promise<team.LegalHoldsListHeldRevisionResult>;
 
     /**
+     * Continue listing the file metadata that's under the hold. Note: Legal
+     * Holds is a paid add-on. Not all teams have the feature. Permission : Team
+     * member file access.
+     *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsListHeldRevisionsError>.
      * @param arg The request parameters.
@@ -244,7 +254,8 @@ declare module DropboxTypes {
     public teamLegalHoldsListHeldRevisionsContinue(arg: team.LegalHoldsListHeldRevisionsContinueArg): Promise<team.LegalHoldsListHeldRevisionResult>;
 
     /**
-     * Lists legal holds on a team. Permission : Team member file access.
+     * Lists legal holds on a team. Note: Legal Holds is a paid add-on. Not all
+     * teams have the feature. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsListPoliciesError>.
@@ -253,7 +264,8 @@ declare module DropboxTypes {
     public teamLegalHoldsListPolicies(arg: team.LegalHoldsListPoliciesArg): Promise<team.LegalHoldsListPoliciesResult>;
 
     /**
-     * Releases a legal hold by Id. Permission : Team member file access.
+     * Releases a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
+     * teams have the feature. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsPolicyReleaseError>.
@@ -262,7 +274,8 @@ declare module DropboxTypes {
     public teamLegalHoldsReleasePolicy(arg: team.LegalHoldsPolicyReleaseArg): Promise<void>;
 
     /**
-     * Updates a legal hold. Permission : Team member file access.
+     * Updates a legal hold. Note: Legal Holds is a paid add-on. Not all teams
+     * have the feature. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.LegalHoldsPolicyUpdateError>.

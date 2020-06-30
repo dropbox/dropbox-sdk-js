@@ -214,7 +214,8 @@ routes.teamGroupsUpdate = function (arg) {
 };
 
 /**
- * Creates new legal hold policy. Permission : Team member file access.
+ * Creates new legal hold policy. Note: Legal Holds is a paid add-on. Not all
+ * teams have the feature. Permission : Team member file access.
  * @function DropboxTeam#teamLegalHoldsCreatePolicy
  * @arg {TeamLegalHoldsPolicyCreateArg} arg - The request parameters.
  * @returns {Promise.<Object, Error.<TeamLegalHoldsPolicyCreateError>>}
@@ -224,7 +225,8 @@ routes.teamLegalHoldsCreatePolicy = function (arg) {
 };
 
 /**
- * Gets a legal hold by Id. Permission : Team member file access.
+ * Gets a legal hold by Id. Note: Legal Holds is a paid add-on. Not all teams
+ * have the feature. Permission : Team member file access.
  * @function DropboxTeam#teamLegalHoldsGetPolicy
  * @arg {TeamLegalHoldsGetPolicyArg} arg - The request parameters.
  * @returns {Promise.<Object, Error.<TeamLegalHoldsGetPolicyError>>}
@@ -234,6 +236,8 @@ routes.teamLegalHoldsGetPolicy = function (arg) {
 };
 
 /**
+ * List the file metadata that's under the hold. Note: Legal Holds is a paid
+ * add-on. Not all teams have the feature. Permission : Team member file access.
  * @function DropboxTeam#teamLegalHoldsListHeldRevisions
  * @arg {TeamLegalHoldsListHeldRevisionsArg} arg - The request parameters.
  * @returns {Promise.<TeamLegalHoldsListHeldRevisionResult, Error.<TeamLegalHoldsListHeldRevisionsError>>}
@@ -243,6 +247,9 @@ routes.teamLegalHoldsListHeldRevisions = function (arg) {
 };
 
 /**
+ * Continue listing the file metadata that's under the hold. Note: Legal Holds
+ * is a paid add-on. Not all teams have the feature. Permission : Team member
+ * file access.
  * @function DropboxTeam#teamLegalHoldsListHeldRevisionsContinue
  * @arg {TeamLegalHoldsListHeldRevisionsContinueArg} arg - The request parameters.
  * @returns {Promise.<TeamLegalHoldsListHeldRevisionResult, Error.<TeamLegalHoldsListHeldRevisionsError>>}
@@ -252,7 +259,8 @@ routes.teamLegalHoldsListHeldRevisionsContinue = function (arg) {
 };
 
 /**
- * Lists legal holds on a team. Permission : Team member file access.
+ * Lists legal holds on a team. Note: Legal Holds is a paid add-on. Not all
+ * teams have the feature. Permission : Team member file access.
  * @function DropboxTeam#teamLegalHoldsListPolicies
  * @arg {TeamLegalHoldsListPoliciesArg} arg - The request parameters.
  * @returns {Promise.<TeamLegalHoldsListPoliciesResult, Error.<TeamLegalHoldsListPoliciesError>>}
@@ -262,7 +270,8 @@ routes.teamLegalHoldsListPolicies = function (arg) {
 };
 
 /**
- * Releases a legal hold by Id. Permission : Team member file access.
+ * Releases a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
+ * teams have the feature. Permission : Team member file access.
  * @function DropboxTeam#teamLegalHoldsReleasePolicy
  * @arg {TeamLegalHoldsPolicyReleaseArg} arg - The request parameters.
  * @returns {Promise.<void, Error.<TeamLegalHoldsPolicyReleaseError>>}
@@ -272,7 +281,8 @@ routes.teamLegalHoldsReleasePolicy = function (arg) {
 };
 
 /**
- * Updates a legal hold. Permission : Team member file access.
+ * Updates a legal hold. Note: Legal Holds is a paid add-on. Not all teams have
+ * the feature. Permission : Team member file access.
  * @function DropboxTeam#teamLegalHoldsUpdatePolicy
  * @arg {TeamLegalHoldsPolicyUpdateArg} arg - The request parameters.
  * @returns {Promise.<Object, Error.<TeamLegalHoldsPolicyUpdateError>>}

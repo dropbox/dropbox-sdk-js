@@ -760,7 +760,7 @@ routes.filesGetTemporaryLink = function (arg) {
  * POST request on the temporary upload link must have its Content-Type set to
  * "application/octet-stream".  Example temporary upload link consumption
  * request:  curl -X POST
- * https://dl.dropboxusercontent.com/apitul/1/bNi2uIYF51cVBND --header
+ * https://content.dropboxapi.com/apitul/1/bNi2uIYF51cVBND --header
  * "Content-Type: application/octet-stream" --data-binary @local_file.txt  A
  * successful temporary upload link consumption request returns the content hash
  * of the uploaded data in JSON format.  Example succesful temporary upload link
@@ -1097,8 +1097,9 @@ routes.filesSaveUrlCheckJobStatus = function (arg) {
 };
 
 /**
- * Searches for files and folders. Note: Recent changes may not immediately be
- * reflected in search results due to a short delay in indexing.
+ * Searches for files and folders. Note: Recent changes will be reflected in
+ * search results within a few seconds and older revisions of existing files may
+ * still match your query for up to a few days.
  * @function Dropbox#filesSearch
  * @deprecated
  * @arg {FilesSearchArg} arg - The request parameters.

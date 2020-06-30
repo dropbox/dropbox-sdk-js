@@ -270,7 +270,7 @@ export class DropboxBase {
    * legacy - creates one long-lived token with no expiration
    * online - create one short-lived token with an expiration
    * offline - create one short-lived token with an expiration with a refresh token
-   * @arg {Array<String>>} [scope] - scopes to request for the grant
+   * @arg {Array<String>} [scope] - scopes to request for the grant
    * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.
    * From the following:
    * user - include user scopes in the grant
