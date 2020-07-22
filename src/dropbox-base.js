@@ -12,9 +12,9 @@ try {
 
 let Encoder;
 try {
-  util = require('util');
+  const util = require('util'); // eslint-disable-line global-require
   Encoder = util.TextEncoder;
-} catch(Exception) {
+} catch (Exception) {
   Encoder = TextEncoder;
 }
 
