@@ -1,26 +1,31 @@
-var DropboxTeam = require('../../../lib/dropbox').DropboxTeam;
+const prompt = require('prompt');
 
-var prompt = require('prompt');
+// This dependency exposes the `fetch` function globally which dropbox-sdk-js depends on.
+// Make sure to require it before requiring the dropbox lib otherwise an error will be
+// thrown immediately.
+require('isomorphic-fetch');
+
+const { DropboxTeam } = require('dropbox');
 
 prompt.start();
 
 prompt.get({
   properties: {
     accessToken: {
-      description: 'Please enter an API V2 team access token'
+      description: 'Please enter an API V2 team access token',
     },
     userId: {
-      description: 'Please enter the id of the user you would like to act as'
-    }
-  }
-}, function (error, result) {
-  var dbx = new DropboxTeam({ accessToken: result.accessToken });
-  var dbxUser = dbx.actAsUser(result.userId);
+      description: 'Please enter the id of the user you would like to act as',
+    },
+  },
+}, (error, result) => {
+  const dbx = new DropboxTeam({ accessToken: result.accessToken });
+  const dbxUser = dbx.actAsUser(result.userId);
   dbxUser.filesListFolder({ path: '' })
-    .then(function (response) {
+    .then((response) => {
       console.log(response);
     })
-    .catch(function (err) {
+    .catch((err) => {
       console.log(err);
     });
 });
