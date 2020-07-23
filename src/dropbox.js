@@ -1,3 +1,4 @@
+import { Writable } from 'stream';
 import { routes } from './routes';
 import { DropboxBase } from './dropbox-base';
 
@@ -26,7 +27,52 @@ export class Dropbox extends DropboxBase {
     Object.assign(this, routes);
   }
 
-  filesGetSharedLinkFile(arg) {
-    return this.request('sharing/get_shared_link_file', arg, 'api', 'download');
+  /**
+   *
+   * @param {FilesCommitInfo} args
+   * @param {ReadableStream} stream
+   * @return {Promise<FileMetadata>}
+   */
+  filesUploadFromReadStream(args, stream) {
+    let uploaded = 0;
+    return new Promise((resolve, reject) => {
+      this.filesUploadSessionStart({ close: false })
+        .then(res => res.session_id, reject)
+        .then((sessionId) => {
+          const writable = new Writable({
+            write: (chunk, encoding, next) => {
+              this.filesUploadSessionAppendV2({
+                contents: chunk,
+                cursor: {
+                  sessionId,
+                  offset: uploaded,
+                },
+              }).then(() => {
+                uploaded += chunk.length;
+                next();
+              }, reject);
+            },
+            final: () => {
+              this.filesUploadSessionFinish({
+                cursor: {
+                  sessionId,
+                  offset: uploaded,
+                },
+                commit: {
+                  path: args.path,
+                  mode: args.mode,
+                  autorename: args.autorename,
+                  mute: args.mute,
+                },
+                contents: '',
+              }).then(resolve, reject);
+            },
+          });
+          writable.setDefaultEncoding('binary');
+          stream.pipe(writable);
+        });
+    });
   }
+
+
 }

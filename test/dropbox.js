@@ -5,12 +5,13 @@ import fetch from 'isomorphic-fetch';
 import { RPC } from '../src/constants';
 import { Dropbox } from '../src/dropbox';
 
-describe('Dropbox', function () {
-  var dbx;
-  describe('api method', function () {
-    it('filesListFolder calls Dropbox.request', function () {
-      var requestSpy;
-      dbx = new Dropbox({fetch});
+describe('Dropbox', () => {
+  /** @type {Dropbox} */
+  let dbx;
+  describe('api method', () => {
+    it('filesListFolder calls Dropbox.request', () => {
+      let requestSpy;
+      dbx = new Dropbox();
       requestSpy = sinon.spy(dbx, 'request');
       dbx.filesListFolder({});
       assert(requestSpy.calledOnce);
@@ -21,4 +22,27 @@ describe('Dropbox', function () {
       assert.equal(RPC, dbx.request.getCall(0).args[4]);
     });
   });
+
+  // describe('Upload from read stream', () => {
+  //   let readStream;
+  //   /** @type {FilesCommitInfo} */
+  //   const fileCommitInfo = {
+  //     mode: 'add',
+  //     path: '/fileFromStream',
+  //     contents: null,
+  //     mute: true,
+  //     autorename: true,
+  //   };
+  //
+  //   before(() => {
+  //     readStream = fs.createReadStream(__filename);
+  //   });
+  //
+  //   it('should be able to upload from stream', (done) => {
+  //     dbx.filesUploadFromReadStream(fileCommitInfo, readStream).then((fileMetada) => {
+  //       console.log(fileMetada);
+  //       done();
+  //     }, console.error);
+  //   });
+  // });
 });
