@@ -28,7 +28,6 @@
   },
   "files": [
     "*.md",
-    "docs",
     "dist",
     "lib",
     "es",
