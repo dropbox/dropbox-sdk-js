@@ -14,6 +14,8 @@ export interface DropboxAuthOptions {
   clientId?: string;
   // The client secret for your app. Used for refresh and token exchange.
   clientSecret?: string;
+  // The fetch library for making requests.
+  fetch?: Function;
 }
 
 export class DropboxAuth {
@@ -149,6 +151,8 @@ export interface DropboxOptions {
   clientId?: string;
   // The client secret for your app. Used for refresh and token exchange.
   clientSecret?: string;
+  // The fetch library for making requests.
+  fetch?: Function;
 }
 
 export class Dropbox {

@@ -28,6 +28,7 @@ const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
  * @class DropboxAuth
  * @classdesc The DropboxAuth class that provides methods to manage, acquire, and refresh tokens.
  * @arg {Object} options
+ * @arg {Function} [options.fetch] - fetch library for making requests.
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
  * @arg {Date} [options.AccessTokenExpiresAt] - Date of the current access token's
@@ -42,6 +43,7 @@ export default class DropboxAuth {
   constructor(options) {
     options = options || {};
 
+    this.fetch = options.fetch || fetch;
     this.accessToken = options.accessToken;
     this.accessTokenExpiresAt = options.accessTokenExpiresAt;
     this.refreshToken = options.refreshToken;
@@ -317,7 +319,7 @@ export default class DropboxAuth {
 
     fetchOptions.headers = headers;
 
-    return fetch(refreshUrl, fetchOptions)
+    return this.fetch(refreshUrl, fetchOptions)
       .then((res) => parseResponse(res))
       .then((res) => {
         this.setAccessToken(res.access_token);

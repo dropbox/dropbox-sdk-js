@@ -24,6 +24,7 @@ try {
  * @classdesc The Dropbox SDK class that provides methods to read, write and
  * create files or folders in a user or team's Dropbox.
  * @arg {Object} options
+ * @arg {Function} [options.fetch] - fetch library for making requests.
  * @arg {String} [options.selectUser] - Select user is only used for team functionality.
  * It specifies which user the team access token should be acting as.
  * @arg {String} [options.pathRoot] - root path to access other namespaces
@@ -52,6 +53,7 @@ export default class Dropbox {
       this.auth = new DropboxAuth(options);
     }
 
+    this.fetch = options.fetch || fetch;
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.pathRoot = options.pathRoot;
@@ -107,7 +109,7 @@ export default class Dropbox {
         this.setCommonHeaders(fetchOptions);
         return fetchOptions;
       })
-      .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(getBaseURL(host) + path, fetchOptions))
       .then((res) => parseResponse(res));
   }
 
@@ -158,7 +160,7 @@ export default class Dropbox {
 
         return fetchOptions;
       })
-      .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(getBaseURL(host) + path, fetchOptions))
       .then((res) => parseResponse(res));
   }
 

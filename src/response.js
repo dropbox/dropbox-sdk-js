@@ -1,3 +1,5 @@
+import { isWindowOrWorker } from './utils';
+
 export class DropboxResponse {
   constructor(status, headers, result) {
     this.status = status;
@@ -21,9 +23,13 @@ export function parseDownloadResponse(res) {
     if (!res.ok) {
       res.text()
         .then((data) => resolve(data));
+    } else if (isWindowOrWorker()) {
+      res.blob()
+        .then((data) => resolve(data));
+    } else {
+      res.buffer()
+        .then((data) => resolve(data));
     }
-    res.buffer()
-      .then((data) => resolve(data));
   })
     .then((data) => {
       let result;
@@ -32,7 +38,12 @@ export function parseDownloadResponse(res) {
         result = data;
       } else {
         result = JSON.parse(res.headers.get('dropbox-api-result'));
-        result.fileBinary = data;
+
+        if (isWindowOrWorker()) {
+          result.fileBlob = data;
+        } else {
+          result.fileBinary = data;
+        }
       }
 
       return new DropboxResponse(res.status, res.headers, result);

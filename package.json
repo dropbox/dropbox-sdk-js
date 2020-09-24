@@ -1,6 +1,7 @@
 {
-  "name": "dropbox-sdk-js",
+  "name": "dropbox",
   "version": "6.0.0",
+  "registry": "npm",
   "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
   "main": "cjs/index.js",
   "browser": "dist/Dropbox-sdk.min.js",
@@ -53,12 +54,11 @@
   },
   "license": "MIT",
   "directories": {
-    "doc": "docs",
     "example": "examples",
     "test": "test"
   },
   "engines": {
-    "node": ">=0.10"
+    "node": ">=0.10.3"
   },
   "contributors": [
     "Brad Rogers <brad12rogers@gmail.com>",

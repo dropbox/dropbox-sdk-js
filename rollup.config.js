@@ -17,6 +17,7 @@ import { terser } from 'rollup-plugin-terser';
 const config = {
   output: {
     format: 'umd',
+    sourcemap: (process.env.BUNDLE_TYPE !== 'minified'),
     globals: {
       crypto: 'crypto',
     },

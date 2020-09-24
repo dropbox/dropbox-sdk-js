@@ -10,7 +10,7 @@ We made the decision to unify the Dropbox and DropboxTeam objects to further sim
 
 ```
 var dbx = new DropboxTeam({
-    access_token: 'my_token'
+    accessToken: 'my_token'
 });
 ```
 
@@ -18,15 +18,15 @@ Can be rewritten as:
 
 ```
 var dbx = new Dropbox({
-    access_token: 'my_token'
+    accessToken: 'my_token'
 });
 ```
 
-Additionally, when using features like assume user, they are not set as a part of the constructor rather than creating a new client. Logic like this:
+Additionally, when using features like assume user, select admin, or path root they are not set as a part of the constructor rather than creating a new client. Logic like this:
 
 ```
 var dbx = new DropboxTeam({
-    access_token: 'my_token'
+    accessToken: 'my_token'
 });
 var dbx_user = dbx.actAsUser(user_id);
 dbx_user.usersGetCurrentAccount();
@@ -36,8 +36,8 @@ Can be rewritten as:
 
 ```
 var dbx = new Dropbox({
-    access_token: 'my_token'
-    user_id: 'my_user_id'
+    accessToken: 'my_token'
+    selectUser: 'my_user_id'
 });
 dbx.usersGetcurrentAccount();
 ```
