@@ -15,12 +15,12 @@ const config = {
   clientSecret: 'f0i5w4e6mlbbme5',
 };
 
-const { Dropbox } = require('../../../cjs/dropbox'); // eslint-disable-line import/no-unresolved
+const { Dropbox } = require('dropbox'); // eslint-disable-line import/no-unresolved
 
 const dbx = new Dropbox(config);
 
 const redirectUri = `http://${hostname}:${port}/auth`;
-const authUrl = dbx.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', false);
+const authUrl = dbx.auth.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', false);
 
 app.get('/', (req, res) => {
   res.writeHead(302, { Location: authUrl });
@@ -31,10 +31,10 @@ app.get('/auth', (req, res) => { // eslint-disable-line no-unused-vars
   const { code } = req.query;
   console.log(`code:${code}`);
 
-  dbx.getAccessTokenFromCode(redirectUri, code)
+  dbx.auth.getAccessTokenFromCode(redirectUri, code)
     .then((token) => {
       console.log(`Token Result:${JSON.stringify(token)}`);
-      dbx.setRefreshToken(token.refreshToken);
+      dbx.auth.setRefreshToken(token.refreshToken);
       dbx.usersGetCurrentAccount()
         .then((response) => {
           console.log('response', response);

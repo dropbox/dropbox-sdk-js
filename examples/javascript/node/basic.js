@@ -1,5 +1,5 @@
 const prompt = require('prompt');
-const { Dropbox } = require('../../../cjs/dropbox'); // eslint-disable-line import/no-unresolved
+const { Dropbox } = require('dropbox'); // eslint-disable-line import/no-unresolved
 
 prompt.start();
 

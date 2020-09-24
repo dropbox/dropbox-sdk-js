@@ -1,5 +1,5 @@
 const prompt = require('prompt');
-const { DropboxTeam } = require('../../../cjs/dropbox'); // eslint-disable-line import/no-unresolved
+const { Dropbox} = require('dropbox'); // eslint-disable-line import/no-unresolved
 
 prompt.start();
 
@@ -13,9 +13,8 @@ prompt.get({
     },
   },
 }, (error, result) => {
-  const dbx = new DropboxTeam({ accessToken: result.accessToken });
-  const dbxUser = dbx.actAsUser(result.userId);
-  dbxUser.filesListFolder({ path: '' })
+  const dbx = new Dropbox({ accessToken: result.accessToken, selectUser: result.userId });
+  dbx.filesListFolder({ path: '' })
     .then((response) => {
       console.log(response);
     })
