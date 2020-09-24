@@ -1,0 +1,28 @@
+name: Publish to NPM
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          registry-url: https://npm.pkg.github.com/
+          node-version: 14
+      - name: Build Package
+        run: |
+          npm install
+          npm build
+      - name: Build Documentation
+        run: npm run generate-docs
+      - name: Push Documentation
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.GH_PAGES_PUBLISH_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: docs # The folder the action should deploy.

@@ -1,20 +1,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
-const DropboxTeam = require("../../../src/team");
+const dropbox_1 = require("dropbox");
 const prompt = require('prompt');
 prompt.start();
 prompt.get({
     properties: {
         accessToken: {
-            description: 'Please enter an API V2 team access token'
-        }
-    }
-}, function (error, result) {
-    var dbx = new DropboxTeam({ accessToken: result.accessToken });
+            description: 'Please enter an API V2 team access token',
+        },
+    },
+}, (error, result) => {
+    const dbx = new dropbox_1.Dropbox({ accessToken: result.accessToken });
     dbx.teamDevicesListTeamDevices({})
-        .then(function (response) {
+        .then((response) => {
         console.log('Devices', response);
     })
-        .catch(function (err) {
+        .catch((err) => {
         console.log(err);
     });
 });

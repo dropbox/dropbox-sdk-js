@@ -47,11 +47,10 @@
     function listFiles() {
       var ACCESS_TOKEN = document.getElementById('access-token').value;
       var USER_ID = document.getElementById('user-id').value;
-      var dbxTeam = new DropboxTeam({ accessToken: ACCESS_TOKEN });
-      var dbx = dbxTeam.actAsUser(USER_ID);
+      var dbxTeam = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN , assumeUser: USER_ID});
       dbx.filesListFolder({path: ''})
         .then(function(response) {
-          displayFiles(response.entries);
+          displayFiles(response.result.entries);
           console.log(response);
         })
         .catch(function(error) {

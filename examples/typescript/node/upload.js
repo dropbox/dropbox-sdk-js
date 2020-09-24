@@ -1,5 +1,5 @@
 Object.defineProperty(exports, "__esModule", { value: true });
-const Dropbox = require("../../../");
+const dropbox_1 = require("dropbox");
 const fs = require("fs");
 const path = require("path");
 const prompt = require('prompt');
@@ -7,22 +7,22 @@ prompt.start();
 prompt.get({
     properties: {
         accessToken: {
-            description: 'Please enter an API V2 access token'
-        }
-    }
-}, function (error, result) {
-    var dbx = new Dropbox.Dropbox({ accessToken: result.accessToken });
-    fs.readFile(path.join(__dirname, '/basic.js'), 'utf8', function (err, contents) {
+            description: 'Please enter an API V2 access token',
+        },
+    },
+}, (error, result) => {
+    const dbx = new dropbox_1.Dropbox({ accessToken: result.accessToken });
+    fs.readFile(path.join(__dirname, '/basic.js'), 'utf8', (err, contents) => {
         if (err) {
             console.log('Error: ', err);
         }
         // This uploads basic.js to the root of your dropbox
-        dbx.filesUpload({ path: '/basic.js', contents: contents })
-            .then(function (response) {
+        dbx.filesUpload({ path: '/basic.js', contents })
+            .then((response) => {
             console.log(response);
         })
-            .catch(function (err) {
-            console.log(err);
+            .catch((uploadErr) => {
+            console.log(uploadErr);
         });
     });
 });

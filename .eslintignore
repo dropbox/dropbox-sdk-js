@@ -1,3 +1,12 @@
-src/types.js
-src/routes.js
-src/routes-team.js
+lib/types.js
+lib/routes.js
+types/dropbox_types.d.ts
+types/index.d.ts
+test/types/types_test.js
+test/types/types_test.js.map
+docs/**
+dist/
+es/
+cjs/
+examples/typescript/**/*.js
+examples/typescript/**/*.js.map

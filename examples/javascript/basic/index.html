@@ -50,12 +50,10 @@
 
       var ACCESS_TOKEN = document.getElementById('access-token').value;
       var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
-      console.log('dbx', dbx)
       dbx.filesListFolder({path: ''})
         .then(function(response) {
           console.log('response', response)
-          displayFiles(response.entries);
-          console.log(response);
+          displayFiles(response.result.entries);
         })
         .catch(function(error) {
           console.error(error);

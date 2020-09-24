@@ -43,7 +43,7 @@ def main():
         specs = args.spec
     else:
         # If no specs were specified, default to the spec submodule.
-        specs = glob.glob('spec/*.stone')  # Arbitrary sorting
+        specs = glob.glob('dropbox-api-spec/*.stone')  # Arbitrary sorting
         specs.sort()
 
     specs = [os.path.join(os.getcwd(), s) for s in specs]
@@ -53,13 +53,19 @@ def main():
         stone_path = args.stone
 
     dropbox_pkg_path = os.path.abspath(
-        os.path.join(os.path.dirname(sys.argv[0]), '../src'))
+        os.path.join(os.path.dirname(sys.argv[0]), '../lib'))
     if verbose:
         print('Dropbox package path: %s' % dropbox_pkg_path)
+
     typescript_template_path = os.path.abspath(
         os.path.join(os.path.dirname(sys.argv[0]), 'typescript'))
     if verbose:
         print('TypeScript template path: %s' % typescript_template_path)
+
+    types_template_path = os.path.abspath(
+        os.path.join(os.path.dirname(sys.argv[0]), '../types'))
+    if verbose:
+        print('Types template path: %s' % types_template_path)
 
     upload_arg = {
         "match": ["style", "upload"],
@@ -80,16 +86,8 @@ def main():
         print('Generating JS client routes for user routes')
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
-         specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style', '-a', 'auth'] +
+         specs + ['-a', 'host', '-a', 'style', '-a', 'auth'] +
          ['--', 'routes.js', '-c', 'Dropbox']),
-        cwd=stone_path)
-
-    if verbose:
-        print('Generating JS client routes for team routes')
-    subprocess.check_output(
-        (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
-         specs + ['-w', 'team', '-f', 'style!="upload" and style!="download"'] +
-         ['-a', 'host', '-a', 'style', '-a', 'auth'] + ['--', 'routes-team.js', '-c', 'DropboxTeam']),
         cwd=stone_path)
 
     if verbose:
@@ -97,24 +95,30 @@ def main():
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'tsd_types', typescript_template_path] +
          specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
-         ['--', 'dropbox_types.d.tstemplate', 'dropbox_types.d.ts', '-e', json.dumps(upload_arg)]),
+         ['--', 'dropbox_types.d.tstemplate', 'dropbox_types.d.ts', '-e', json.dumps(upload_arg), '--export-namespaces']),
         cwd=stone_path)
 
     if verbose:
         print('Generating TSD client routes for user routes')
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'tsd_client', typescript_template_path] +
-         specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
-         ['--', 'dropbox.d.tstemplate', 'dropbox.d.ts']),
+         specs + ['-a', 'host', '-a', 'style'] +
+         ['--', 'index.d.tstemplate', 'index.d.ts']),
         cwd=stone_path)
 
+    typescript_generated_files = glob.glob('typescript/*.d.ts')
+    typescript_generated_files.sort()
+    typescript_generated_files = [os.path.join(os.getcwd(), f) for f in typescript_generated_files]
     if verbose:
-        print('Generating TSD client routes for team routes')
-    subprocess.check_output(
-        (['python', '-m', 'stone.cli', 'tsd_client', typescript_template_path] +
-         specs + ['-w', 'team', '-f', 'style!="upload" and style!="download"'] +
-         ['-a', 'host', '-a', 'style'] + ['--', 'dropbox_team.d.tstemplate', 'dropbox_team.d.ts']),
-        cwd=stone_path)
+        print('TypeScript generated files: %s' % typescript_generated_files)
+
+    if verbose:
+        print('Moving TSD routes and types to types/')
+    for file in typescript_generated_files:
+        subprocess.check_output(
+            (['mv', file , types_template_path]),
+            cwd=typescript_template_path
+        )
 
 if __name__ == '__main__':
     main()

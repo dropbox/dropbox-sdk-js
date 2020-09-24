@@ -1,47 +1,33 @@
 import babel from 'rollup-plugin-babel';
-import replace from 'rollup-plugin-replace';
-import commonjs from 'rollup-plugin-commonjs';
-import resolve from 'rollup-plugin-node-resolve';
-import builtins from 'rollup-plugin-node-builtins';
-import globals from 'rollup-plugin-node-globals';
-import {terser} from "rollup-plugin-terser";
+import { terser } from 'rollup-plugin-terser';
 
-
-const env = process.env.NODE_ENV;
+/**
+ * We use rollup for the UMD build.
+ * Rollup is only needed for this because UMD is the
+ * only build configuration that requires us to bundle
+ * all assets into a single file.
+ *
+ * We also only publish a minified bundle for UMD.
+ * We use a flag of BUNDLE_TYPE set by cross-env to control
+ * whether or not we minify the bundle.  We use terser to
+ * do the actual minification and it is only added when the
+ * BUNDLE_TYPE = minified (BUNDLE_TYPE=normal for basic UMD)
+ */
 
 const config = {
   output: {
     format: 'umd',
-    sourcemap: (env !== 'production'),
     globals: {
-      crypto: 'crypto'
+      crypto: 'crypto',
     },
   },
   external: ['es6-promise/auto', 'crypto'],
-
   plugins: [
-    builtins(),
-    globals(),
-    resolve({
-      main: true,
-      jsnext: true,
-      browser: true,
-      preferBuiltins: true
-    }),
-    commonjs({
-      // if false then skip sourceMap generation for CommonJS modules
-      sourceMap: (env !== 'production'),  // Default: true
-    }),
-    babel({
-      exclude: 'node_modules/**',
-    }),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify(env),
-    }),
+    babel(),
   ],
 };
 
-if (env === 'production') {
+if (process.env.BUNDLE_TYPE === 'minified') {
   config.plugins.push(
     terser({
       compress: {
@@ -49,9 +35,9 @@ if (env === 'production') {
         unsafe: true,
         unsafe_comps: true,
         warnings: false,
-      }
-    })
+      },
+    }),
   );
 }
 
-export default config
+export default config;

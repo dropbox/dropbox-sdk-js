@@ -2,16 +2,28 @@
   "name": "dropbox-ts-examples",
   "version": "1.0.0",
   "description": "Dropbox TypeScript SDK Examples",
-  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "build": "tsc -p tsconfig.json && tsc -p tsconfig.node.json"
+    "build": "tsc -p tsconfig.json"
   },
-  "author": "John Vilk <jvilk@cs.umass.edu>",
+  "contributors": [
+    "Brad Rogers <brad12rogers@gmail.com>",
+    "Andrew Lawson <alawson@dropbox.com>",
+    "John Vilk <jvilk@cs.umass.edu>"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dropbox/dropbox-sdk-js.git"
+  },
+  "dependencies": {
+    "dropbox": "file:../../"
+  },
   "devDependencies": {
-    "@types/express": "^4.0.35",
-    "@types/node": "^6.0.38",
-    "@types/webpack": "^2.2.11",
-    "typescript": "^2.0.2"
+    "@types/express": "^4.17.8",
+    "@types/node": "^14.11.2",
+    "typescript": "^4.0.3"
   }
 }

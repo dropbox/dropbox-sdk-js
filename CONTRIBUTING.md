@@ -1,68 +1,62 @@
-# Contributing to Dropbox JavaScript SDK
+# Contributing to the Dropbox SDK for Javascript
+We value and rely on the feedback from our community. This comes in the form of bug reports, feature requests, and general guidance. We welcome your issues and pull requests and try our hardest to be timely in both response and resolution. Please read through this document before submitting issues or pull requests to ensure we have the necessary information to help you resolve your issue.
 
-## How to contribute
+## Filing Bug Reports
+You can file a bug report on the [GitHub Issues][issues] page.
 
-### Improve documentation
+1. Search through existing issues to ensure that your issue has not been reported. If it is a common issue, there is likely already an issue.
 
-Typo corrections, error fixes, better explanations, more examples, etc are
-all extremely helpful and will be much appreciated.
+2. Please ensure you are using the latest version of the SDK. While this may be a valid issue, we only will fix bugs affecting the latest version and your bug may have been fixed in a newer version.
 
-### Improve issues
+3. Provide as much information as you can regarding the language version, SDK version, and any other relevant information about your environment so we can help resolve the issue as quickly as possible.
 
-Some issues are created missing information, missing reproduction steps,
-a result of other third party code or are just invalid. Helping to clean
-up issues saves a lot of time and leads to things getting fixed faster.
+## Submitting Pull Requests
 
-### Write code
+We are more than happy to recieve pull requests helping us improve the state of our SDK. You can open a new pull request on the [GitHub Pull Requests][pr] page.
 
-Bug fixes, code improvements and better tests are always welcome. Please
-see the steps below to get up and running. Please open an issue if you are
-considering opening a pull request for new functionality.
+1. Please ensure that you have read the [License][license], [Code of Conduct][coc] and have signed the [Contributing License Agreement (CLA)][cla].
 
-> Note that `/src/routes.js` is a generated file and cannot be updated by
-> changes to this repository
+2. Please add tests confirming the new functionality works. Pull requests will not be merged without passing continuous integration tests unless the pull requests aims to fix existing issues with these tests.
 
-#### Development environment
+3. If the pull request is modifying typescript definitions, please remember to change the template found under `generator/typescript` and run the generation instead of manually changing types.  If there is an issue with the generation, please file an issue.
 
-You will need [Node.js](https://nodejs.org/en/) and
-[npm](https://www.npmjs.com/) installed on your machine. Run the following
-commands to setup a local development environment:
+## Updating Generated Code
 
-```console
-$ git clone https://github.com/dropbox/dropbox-sdk-js && cd $_
-$ npm install && npm start
+Generated code can be updated by running the following commands:
+
+```
+$ git submodule init
+$ git submodule update --remote --recursive
+$ cd generator/stone
+$ python setup.py install
+$ cd ..
+$ python generate_routes.py
 ```
 
-The development/examples server is now live at <http://0.0.0.0:8080/>.
+This will generate typescript definitions and route code.
 
-You can now make changes to `src/` files and they will be recompiled and
-used by the development/examples server.
+## Testing the Code
 
-#### Tests
-The following command runs the test suite:
-```console
+Tests live under the `test/` folder and are then broken down into the type of test it is.  To run both the unit tests and the typescript tests, you can use:
+
+```
 $ npm test
 ```
 
-## Submitting an issue
-- Search the issue tracker before opening an issue.
-- Ensure you're using the latest version.
-- Use a clear and descriptive title.
-- Include as much information as possible: Steps to reproduce the issue,
-  error message, Node.js version, operating system, etc.
-- The more time you put into an issue, the more we will.
-- The best issue report is a failing test proving it.
+If you would like to run the integration tests locally, you can run: 
 
-## Submitting a pull request
-- Non-trivial changes are often best discussed in an issue first, to
-  prevent you from doing unnecessary work.
-- New features should be accompanied with tests and documentation.
-- Don't include unrelated changes.
-- Lint and test before submitting the pull request by running `$ npm test`.
-- Make the pull request from a topic branch, not master.
-- Use a clear and descriptive title for the pull request and commits.
-- Write a convincing description of why we should land your pull request.
-  It's your job to convince us. Answer "why" it's needed and provide
-  use-cases.
-- You might be asked to do changes to your pull request. There's never
-  a need to open another pull request. Just update the existing one.
+```
+export DROPBOX_TOKEN={fill in user token}
+export DROPBOX_TEAM_TOKEN={fill in team token}
+export DROPBOX_USER_ID={fill in assume user id}
+export DROPBOX_SHARED_LINK={fill in shared link}
+$ npm run test:integration
+```
+
+Note: If you do not have all of these tokens available, we run integration tests as a part of pull request validation and you are able to rely on those if you are unable to obtain yourself.
+
+[issues]: https://github.com/dropbox/dropbox-sdk-js/issues
+[pr]: https://github.com/dropbox/dropbox-sdk-js/pulls
+[coc]: https://github.com/dropbox/dropbox-sdk-js/blob/master/CODE_OF_CONDUCT.md
+[license]: https://github.com/dropbox/dropbox-sdk-js/blob/master/LICENSE
+[cla]: https://opensource.dropbox.com/cla/

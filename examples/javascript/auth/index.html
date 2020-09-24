@@ -42,7 +42,6 @@
 
   <script>
     var CLIENT_ID = '42zjexze6mfpf7x';
-
     // Parses the url and gets the access token if it is in the urls hash
     function getAccessTokenFromUrl() {
      return utils.parseQueryString(window.location.hash).access_token;
@@ -78,7 +77,7 @@
       var dbx = new Dropbox.Dropbox({ accessToken: getAccessTokenFromUrl() });
       dbx.filesListFolder({path: ''})
         .then(function(response) {
-          renderItems(response.entries);
+          renderItems(response.result.entries);
         })
         .catch(function(error) {
           console.error(error);
@@ -88,7 +87,7 @@
 
       // Set the login anchors href using dbx.getAuthenticationUrl()
       var dbx = new Dropbox.Dropbox({ clientId: CLIENT_ID });
-      var authUrl = dbx.getAuthenticationUrl('http://localhost:8080/auth');
+      var authUrl = dbx.auth.getAuthenticationUrl('http://localhost:8080/auth');
       document.getElementById('authlink').href = authUrl;
     }
   </script>
