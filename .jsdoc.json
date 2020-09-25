@@ -1,0 +1,15 @@
+{
+  "source": {
+    "include": ["./src", "./lib"]
+  },
+  "opts": {
+    "template": "./node_modules/ink-docstrap/template",
+    "destination": "docs",
+    "readme": "./README.md",
+    "recurse": true
+  },
+  "templates": {
+    "systemName": "Dropbox Node SDK",
+    "theme": "cosmo"
+  }
+}

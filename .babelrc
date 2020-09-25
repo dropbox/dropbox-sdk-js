@@ -1,35 +1,25 @@
 {
+  "presets": ["@babel/preset-env"],
   "env": {
-    "testing": {
-      "presets": ["latest"]
+    "coverage": {
+      "plugins": ["istanbul"]
     },
     "commonjs": {
       "presets": [[
-        "latest", {
-          "es2015": {
-            "modules": false
-          },
-          "es2016": false,
-          "es2017": false
+        "@babel/preset-env", {
+          "modules": "cjs"
         }
       ]],
       "plugins": [
-        ["transform-es2015-modules-commonjs", { "noInterop": true }, "external-helpers"]
+        ["transform-es2015-modules-commonjs", { "noInterop": true }]
       ]
     },
     "es": {
       "presets": [[
-        "latest", {
-          "es2015": {
-            "modules": false
-          },
-          "es2016": false,
-          "es2017": false
+        "@babel/preset-env", {
+          "modules": false
         }
-      ]],
-      "plugins": [
-        ["external-helpers"]
-      ]
+      ]]
     }
   }
 }

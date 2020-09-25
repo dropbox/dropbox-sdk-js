@@ -6,6 +6,5 @@ To run the examples in your development environment:
 2. Run `npm install` in the root of the repository
 3. `cd` into this directory
 4. Run `npm install`
-3. From this directory, start the development server with
-   `npm start`
-4. Point your browser to <http://0.0.0.0:8081/>
+3. From this directory, run the example you want
+e.g. `node node/basic.js`

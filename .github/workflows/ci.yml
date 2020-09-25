@@ -1,0 +1,62 @@
+name: CI
+on:
+  pull_request:
+
+jobs:
+  CI:
+    continue-on-error: true
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: [10, 11, 12, 13, 14]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install SDK
+        run: |
+          npm install
+      - name: Run Build
+        run: |
+          npm run build
+      - name: Run Examples Builds
+        run: |
+          cd examples/typescript/
+          npm install
+          npm run build
+          cd ../..
+      - name: Run Linter
+        run: |
+          npm run lint
+      - name: Run Unit Tests
+        run: |
+          npm run test:unit
+      - name: Run TypeScipt Tests
+        run: |
+          npm run test:typescript
+  Integration:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: [14] # Can only be ran on 14 because it relies on fs/promises
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.1.1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install SDK
+        run: |
+          npm install
+      - name: Run Integration Tests
+        env:
+          DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
+          DROPBOX_TEAM_TOKEN: ${{ secrets.DROPBOX_TEAM_TOKEN }}
+          DROPBOX_USER_ID: ${{ secrets.DROPBOX_USER_ID }}
+          DROPBOX_SHARED_LINK: ${{ secrets.DROPBOX_SHARED_LINK }}
+        run: |
+          npm run test:integration

@@ -1,0 +1,8 @@
+{
+    "all": true,
+    "include": [
+        "src/*.js",
+        "lib/*.js"
+    ],
+    "require": ["@babel/register"]
+}

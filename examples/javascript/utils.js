@@ -1,7 +1,7 @@
-(function(window){
+(function (window) {
   window.utils = {
-    parseQueryString: function(str) {
-      var ret = Object.create(null);
+    parseQueryString(str) {
+      const ret = Object.create(null);
 
       if (typeof str !== 'string') {
         return ret;
@@ -13,12 +13,12 @@
         return ret;
       }
 
-      str.split('&').forEach(function (param) {
-        var parts = param.replace(/\+/g, ' ').split('=');
+      str.split('&').forEach((param) => {
+        const parts = param.replace(/\+/g, ' ').split('=');
         // Firefox (pre 40) decodes `%3D` to `=`
         // https://github.com/sindresorhus/query-string/pull/37
-        var key = parts.shift();
-        var val = parts.length > 0 ? parts.join('=') : undefined;
+        let key = parts.shift();
+        let val = parts.length > 0 ? parts.join('=') : undefined;
 
         key = decodeURIComponent(key);
 
@@ -36,6 +36,6 @@
       });
 
       return ret;
-    }
+    },
   };
-})(window);
+}(window));
