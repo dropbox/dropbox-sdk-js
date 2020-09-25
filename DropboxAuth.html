@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Dropbox Node SDK Index</title>
+	<title>Dropbox Node SDK Class: DropboxAuth</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -72,76 +72,406 @@
 		<div id="main">
 			
 
+	<h1 class="page-title">Class: DropboxAuth</h1>
+<section>
+
+<header>
+    
+        <h2>
+        DropboxAuth
+        </h2>
+        
+            <div class="class-description">The DropboxAuth class that provides methods to manage, acquire, and refresh tokens.</div>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+<hr>
+<dt>
+    <h4 class="name" id="DropboxAuth"><span class="type-signature"></span>new DropboxAuth(options)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                <h6 class="method-params-label method-subparams-label">Properties</h6>
+                
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fetch</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">fetch library for making requests.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>accessToken</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">An access token for making authenticated
+requests.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>AccessTokenExpiresAt</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Date of the current access token's
+expiration (if available)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>refreshToken</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A refresh token for retrieving access tokens</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>clientId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The client id for your app. Used to create
+authentication URL.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>clientSecret</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The client secret for your app. Used to create
+authentication URL and refresh access tokens.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
 	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
 	
 
 
 
-
-
-
-
-
-
-
-
-	
 	
 
+	
+
+	
+
+	
+</dl>
 
 
+    
 
+    
 
-    <section class="readme-section">
-        <article><p><a href="https://github.com/dropbox/dropbox-sdk-js"><img src="https://cfl.dropboxstatic.com/static/images/sdk/javascript_banner.png" alt="Logo"></a></p>
-<p><a href="https://www.npmjs.com/package/dropbox"><img src="https://img.shields.io/node/v/dropbox" alt="node-current"></a>
-<a href="https://www.npmjs.com/package/dropbox"><img src="https://img.shields.io/npm/v/dropbox" alt="npm"></a>
-<a href="https://codecov.io/gh/dropbox/dropbox-sdk-js"><img src="https://codecov.io/gh/dropbox/dropbox-sdk-js/branch/master/graph/badge.svg" alt="codecov"></a></p>
-<p>The offical Dropbox SDK for Javascript.</p>
-<p>Documentation can be found on <a href="https://dropbox.github.io/dropbox-sdk-js/">GitHub Pages</a></p>
-<h2>Installation</h2>
-<p>Create an app via the <a href="https://dropbox.com/developers/apps">Developer Console</a></p>
-<p>Install via <a href="https://www.npmjs.com/">npm</a></p>
-<pre class="prettyprint source"><code>$ npm install --save dropbox
-</code></pre>
-<p>Install from source:</p>
-<pre class="prettyprint source"><code>$ git clone https://github.com/dropbox/dropbox-sdk-js.git
-$ cd dropbox-sdk-js
-$ npm install
-</code></pre>
-<p>After installation, follow one of our <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples">Examples</a> or read the <a href="https://dropbox.github.io/dropbox-sdk-js/">Documentation</a>.</p>
-<p>You can also view our <a href="https://www.dropbox.com/lp/developers/reference/oauth-guide">OAuth guide</a>.</p>
-<h2>Examples</h2>
-<p>We provide <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples">Examples</a> to help get you started with a lot of the basic functionality in the SDK.  We provide most examples in both Javascript and Typescript with some having a Node equivalent.</p>
-<ul>
-<li>
-<p><strong>OAuth</strong></p>
-<ul>
-<li>Auth - [ <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/auth">JS</a> ] - A simple auth example to get an access token and list the files in the root of your Dropbox account.</li>
-<li>Simple Backend [ <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/simple-backend">JS</a> ] - A simple example of a node backend doing a multi-step auth flow for Short Lived Tokens.</li>
-<li>PKCE Backend [ <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/PKCE-backend">JS</a> ] - A simple example of a node backend doing a multi-step auth flow using PKCE and Short Lived Tokens.</li>
-</ul>
-</li>
-<li>
-<p><strong>Other Examples</strong></p>
-<ul>
-<li>Basic - [ <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/node">TS</a>, <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/basic">JS</a> ] - A simple example that takes in a token and fetches files from your Dropbox account.</li>
-<li>Download - [ <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/node">TS</a>, <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/download">JS</a> ] - An example showing how to download a shared file.</li>
-<li>Team As User - [ <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/node">TS</a>, <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/team-as-user">JS</a> ] - An example showing how to act as a user.</li>
-<li>Team - [ <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/node">TS</a>, <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/team">JS</a> ] - An example showing how to use the team functionality and list team devices.</li>
-<li>Upload [ <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/typescript/node">TS</a>, <a href="https://github.com/dropbox/dropbox-sdk-js/tree/master/examples/javascript/upload">JS</a> ] - An example showing how to upload a file to Dropbox.</li>
-</ul>
-</li>
-</ul>
-<h2>Getting Help</h2>
-<p>If you find a bug, please see <a href="https://github.com/dropbox/dropbox-sdk-js/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> for information on how to report it.</p>
-<p>If you need help that is not specific to this SDK, please reach out to <a href="https://www.dropbox.com/developers/contact">Dropbox Support</a>.</p>
-<h2>License</h2>
-<p>This SDK is distributed under the MIT license, please see <a href="https://github.com/dropbox/dropbox-sdk-js/blob/master/LICENSE">LICENSE</a> for more information.</p></article>
-    </section>
+    
 
+    
 
+    
 
+    
+
+    
+</dd>
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
