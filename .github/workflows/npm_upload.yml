@@ -19,7 +19,7 @@ jobs:
       - name: Build Package
         run: |
           npm install
-          npm build
+          npm run build
       - name: NPM Publish
         uses: JS-DevTools/npm-publish@v1
         with:

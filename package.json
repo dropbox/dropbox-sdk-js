@@ -29,13 +29,15 @@
   },
   "files": [
     "*.md",
-    "dist",
-    "lib",
-    "es",
+    "LICENSE",
+    ".jsdoc.json",
+    "rollup.config.js",
     "generator",
     "src",
-    ".jsdoc.json",
-    "*.config.js"
+    "lib",
+    "dist",
+    "es",
+    "cjs"
   ],
   "keywords": [
     "dropbox",
