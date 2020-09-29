@@ -104,6 +104,4 @@ console.log(response.status);
 console.log(response.headers);
 ```
 
-## 5. Errors
-
 [contributing]: https://github.com/dropbox/dropbox-sdk-js/blob/master/CONTRIBUTING.md
