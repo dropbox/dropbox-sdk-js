@@ -36,7 +36,7 @@ Can be rewritten as:
 
 ```
 var dbx = new Dropbox({
-    accessToken: 'my_token'
+    accessToken: 'my_token',
     selectUser: 'my_user_id'
 });
 dbx.usersGetcurrentAccount();
@@ -79,5 +79,31 @@ Would become:
 ```
 const result: Dropbox.users.FullAccount dbx.usersGetCurrentAccount();
 ```
+
+## 4. Updating the Response object
+
+We have wrapped the raw responses into the `DropboxResponse` object in order to expose more information out to users.  This change looks like:
+
+```
+var response = dbx.usersGetcurrentAccount();
+console.log(response.fileBlob); //or fileBinary if using workers
+```
+
+Would become:
+
+```
+var response = dbx.usersGetcurrentAccount();
+console.log(response.result.fileBlob); //or fileBinary if using workers
+```
+
+This also exposes the other components of the response like the status and headers which was not previously available.
+
+```
+var response = dbx.usersGetcurrentAccount();
+console.log(response.status);
+console.log(response.headers);
+```
+
+## 5. Errors
 
 [contributing]: https://github.com/dropbox/dropbox-sdk-js/blob/master/CONTRIBUTING.md
