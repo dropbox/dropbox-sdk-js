@@ -5,7 +5,7 @@ let fetch;
 try {
   fetch = require('node-fetch'); // eslint-disable-line global-require
 } catch (Exception) {
-  fetch = window.fetch;
+  fetch = window.fetch.bind(window);
 }
 
 let crypto;
