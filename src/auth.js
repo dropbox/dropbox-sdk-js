@@ -322,8 +322,8 @@ export default class DropboxAuth {
     return this.fetch(refreshUrl, fetchOptions)
       .then((res) => parseResponse(res))
       .then((res) => {
-        this.setAccessToken(res.access_token);
-        this.setAccessTokenExpiresAt(getTokenExpiresAtDate(res.expires_in));
+        this.setAccessToken(res.result.access_token);
+        this.setAccessTokenExpiresAt(getTokenExpiresAtDate(res.result.expires_in));
       });
   }
 
