@@ -11,7 +11,7 @@ export class DropboxResponse {
 export function parseResponse(res) {
   const clone = res.clone();
 
-  if(!res.ok) {
+  if (!res.ok) {
     res.text()
       .then((data) => {
         // eslint-disable-next-line no-throw-literal
