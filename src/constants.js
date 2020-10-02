@@ -5,4 +5,4 @@ export const DOWNLOAD = 'download';
 export const APP_AUTH = 'app';
 export const USER_AUTH = 'user';
 export const TEAM_AUTH = 'team';
-export const NO_AUTH = 'no_auth';
+export const NO_AUTH = 'noauth';

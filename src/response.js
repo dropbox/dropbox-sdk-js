@@ -11,6 +11,18 @@ export class DropboxResponse {
 export function parseResponse(res) {
   const clone = res.clone();
 
+  if (!res.ok) {
+    res.text()
+      .then((data) => {
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          error: data,
+          response: res,
+          status: res.status,
+        };
+      });
+  }
+
   return res.json()
     .catch(() => {
       clone.text();
@@ -35,7 +47,12 @@ export function parseDownloadResponse(res) {
       let result;
 
       if (!res.ok) {
-        result = data;
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          error: data,
+          response: res,
+          status: res.status,
+        };
       } else {
         result = JSON.parse(res.headers.get('dropbox-api-result'));
 
