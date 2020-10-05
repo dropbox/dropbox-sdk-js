@@ -19,6 +19,10 @@ try {
   fetch = window.fetch.bind(window);
 }
 
+const b64 = typeof btoa === 'undefined' 
+  ? str => Buffer.from(str).toString('base64') 
+  : btoa
+
 /**
  * @class Dropbox
  * @classdesc The Dropbox SDK class that provides methods to read, write and
@@ -93,7 +97,7 @@ export default class Dropbox {
             if (!this.auth.clientId || !this.auth.clientSecret) {
               throw new Error('A client id and secret is required for this function');
             }
-            authHeader = Buffer.from(`${this.auth.clientId}:${this.auth.clientSecret}`).toString('base64');
+            authHeader = b64(`${this.auth.clientId}:${this.auth.clientSecret}`);
             fetchOptions.headers.Authorization = `Basic ${authHeader}`;
             break;
           case TEAM_AUTH:
