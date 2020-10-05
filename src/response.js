@@ -1,4 +1,4 @@
-import { isWindowOrWorker } from './utils';
+import { isWindowOrWorker } from './utils.js';
 
 export class DropboxResponse {
   constructor(status, headers, result) {
