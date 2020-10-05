@@ -848,8 +848,8 @@
        */
       queries: Array<PropertiesSearchQuery>;
       /**
-       * Defaults to TagRef(Union(u'TemplateFilter', [UnionField(u'filter_none',
-       * Void, False, None)]), u'filter_none').
+       * Defaults to TagRef(Union('TemplateFilter', [UnionField('filter_none',
+       * Void, False, None)]), 'filter_none').
        */
       template_filter?: TemplateFilter;
     }
@@ -930,9 +930,9 @@
        */
       mode: PropertiesSearchMode;
       /**
-       * Defaults to TagRef(Union(u'LogicalOperator',
-       * [UnionField(u'or_operator', Void, False, None), UnionField(u'other',
-       * Void, True, None)]), u'or_operator').
+       * Defaults to TagRef(Union('LogicalOperator', [UnionField('or_operator',
+       * Void, False, None), UnionField('other', Void, True, None)]),
+       * 'or_operator').
        */
       logical_operator?: LogicalOperator;
     }
@@ -1581,10 +1581,10 @@
        */
       destination?: files.Path;
       /**
-       * Defaults to TagRef(Union(u'UpdateFileRequestDeadline',
-       * [UnionField(u'no_update', Void, False, None), UnionField(u'update',
-       * Nullable, False, None), UnionField(u'other', Void, True, None)]),
-       * u'no_update').
+       * Defaults to TagRef(Union('UpdateFileRequestDeadline',
+       * [UnionField('no_update', Void, False, None), UnionField('update',
+       * Nullable, False, None), UnionField('other', Void, True, None)]),
+       * 'no_update').
        */
       deadline?: UpdateFileRequestDeadline;
       /**
@@ -1658,9 +1658,9 @@
        */
       path: WritePathOrId;
       /**
-       * Defaults to TagRef(Union(u'WriteMode', [UnionField(u'add', Void, False,
-       * None), UnionField(u'overwrite', Void, False, None),
-       * UnionField(u'update', Alias(u'Rev', String), False, None)]), u'add').
+       * Defaults to TagRef(Union('WriteMode', [UnionField('add', Void, False,
+       * None), UnionField('overwrite', Void, False, None), UnionField('update',
+       * Alias('Rev', String), False, None)]), 'add').
        */
       mode?: WriteMode;
       /**
@@ -2821,9 +2821,9 @@
        */
       path: PathOrId;
       /**
-       * Defaults to TagRef(Union(u'ListRevisionsMode', [UnionField(u'path',
-       * Void, False, None), UnionField(u'id', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'path').
+       * Defaults to TagRef(Union('ListRevisionsMode', [UnionField('path', Void,
+       * False, None), UnionField('id', Void, False, None), UnionField('other',
+       * Void, True, None)]), 'path').
        */
       mode?: ListRevisionsMode;
       /**
@@ -3779,9 +3779,9 @@
        */
       max_results?: number;
       /**
-       * Defaults to TagRef(Union(u'SearchMode', [UnionField(u'filename', Void,
-       * False, None), UnionField(u'filename_and_content', Void, False, None),
-       * UnionField(u'deleted_filename', Void, False, None)]), u'filename').
+       * Defaults to TagRef(Union('SearchMode', [UnionField('filename', Void,
+       * False, None), UnionField('filename_and_content', Void, False, None),
+       * UnionField('deleted_filename', Void, False, None)]), 'filename').
        */
       mode?: SearchMode;
     }
@@ -3899,9 +3899,9 @@
        */
       max_results?: number;
       /**
-       * Defaults to TagRef(Union(u'FileStatus', [UnionField(u'active', Void,
-       * False, None), UnionField(u'deleted', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'active').
+       * Defaults to TagRef(Union('FileStatus', [UnionField('active', Void,
+       * False, None), UnionField('deleted', Void, False, None),
+       * UnionField('other', Void, True, None)]), 'active').
        */
       file_status?: FileStatus;
       /**
@@ -4131,24 +4131,24 @@
        */
       path: ReadPath;
       /**
-       * Defaults to TagRef(Union(u'ThumbnailFormat', [UnionField(u'jpeg', Void,
-       * False, None), UnionField(u'png', Void, False, None)]), u'jpeg').
+       * Defaults to TagRef(Union('ThumbnailFormat', [UnionField('jpeg', Void,
+       * False, None), UnionField('png', Void, False, None)]), 'jpeg').
        */
       format?: ThumbnailFormat;
       /**
-       * Defaults to TagRef(Union(u'ThumbnailSize', [UnionField(u'w32h32', Void,
-       * False, None), UnionField(u'w64h64', Void, False, None),
-       * UnionField(u'w128h128', Void, False, None), UnionField(u'w256h256',
-       * Void, False, None), UnionField(u'w480h320', Void, False, None),
-       * UnionField(u'w640h480', Void, False, None), UnionField(u'w960h640',
-       * Void, False, None), UnionField(u'w1024h768', Void, False, None),
-       * UnionField(u'w2048h1536', Void, False, None)]), u'w64h64').
+       * Defaults to TagRef(Union('ThumbnailSize', [UnionField('w32h32', Void,
+       * False, None), UnionField('w64h64', Void, False, None),
+       * UnionField('w128h128', Void, False, None), UnionField('w256h256', Void,
+       * False, None), UnionField('w480h320', Void, False, None),
+       * UnionField('w640h480', Void, False, None), UnionField('w960h640', Void,
+       * False, None), UnionField('w1024h768', Void, False, None),
+       * UnionField('w2048h1536', Void, False, None)]), 'w64h64').
        */
       size?: ThumbnailSize;
       /**
-       * Defaults to TagRef(Union(u'ThumbnailMode', [UnionField(u'strict', Void,
-       * False, None), UnionField(u'bestfit', Void, False, None),
-       * UnionField(u'fitone_bestfit', Void, False, None)]), u'strict').
+       * Defaults to TagRef(Union('ThumbnailMode', [UnionField('strict', Void,
+       * False, None), UnionField('bestfit', Void, False, None),
+       * UnionField('fitone_bestfit', Void, False, None)]), 'strict').
        */
       mode?: ThumbnailMode;
     }
@@ -4290,24 +4290,24 @@
        */
       resource: PathOrLink;
       /**
-       * Defaults to TagRef(Union(u'ThumbnailFormat', [UnionField(u'jpeg', Void,
-       * False, None), UnionField(u'png', Void, False, None)]), u'jpeg').
+       * Defaults to TagRef(Union('ThumbnailFormat', [UnionField('jpeg', Void,
+       * False, None), UnionField('png', Void, False, None)]), 'jpeg').
        */
       format?: ThumbnailFormat;
       /**
-       * Defaults to TagRef(Union(u'ThumbnailSize', [UnionField(u'w32h32', Void,
-       * False, None), UnionField(u'w64h64', Void, False, None),
-       * UnionField(u'w128h128', Void, False, None), UnionField(u'w256h256',
-       * Void, False, None), UnionField(u'w480h320', Void, False, None),
-       * UnionField(u'w640h480', Void, False, None), UnionField(u'w960h640',
-       * Void, False, None), UnionField(u'w1024h768', Void, False, None),
-       * UnionField(u'w2048h1536', Void, False, None)]), u'w64h64').
+       * Defaults to TagRef(Union('ThumbnailSize', [UnionField('w32h32', Void,
+       * False, None), UnionField('w64h64', Void, False, None),
+       * UnionField('w128h128', Void, False, None), UnionField('w256h256', Void,
+       * False, None), UnionField('w480h320', Void, False, None),
+       * UnionField('w640h480', Void, False, None), UnionField('w960h640', Void,
+       * False, None), UnionField('w1024h768', Void, False, None),
+       * UnionField('w2048h1536', Void, False, None)]), 'w64h64').
        */
       size?: ThumbnailSize;
       /**
-       * Defaults to TagRef(Union(u'ThumbnailMode', [UnionField(u'strict', Void,
-       * False, None), UnionField(u'bestfit', Void, False, None),
-       * UnionField(u'fitone_bestfit', Void, False, None)]), u'strict').
+       * Defaults to TagRef(Union('ThumbnailMode', [UnionField('strict', Void,
+       * False, None), UnionField('bestfit', Void, False, None),
+       * UnionField('fitone_bestfit', Void, False, None)]), 'strict').
        */
       mode?: ThumbnailMode;
     }
@@ -4838,10 +4838,9 @@
   export namespace paper {
     export interface AddMember {
       /**
-       * Defaults to TagRef(Union(u'PaperDocPermissionLevel',
-       * [UnionField(u'edit', Void, False, None),
-       * UnionField(u'view_and_comment', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'edit').
+       * Defaults to TagRef(Union('PaperDocPermissionLevel', [UnionField('edit',
+       * Void, False, None), UnionField('view_and_comment', Void, False, None),
+       * UnionField('other', Void, True, None)]), 'edit').
        */
       permission_level?: PaperDocPermissionLevel;
       /**
@@ -5166,24 +5165,24 @@
 
     export interface ListPaperDocsArgs {
       /**
-       * Defaults to TagRef(Union(u'ListPaperDocsFilterBy',
-       * [UnionField(u'docs_accessed', Void, False, None),
-       * UnionField(u'docs_created', Void, False, None), UnionField(u'other',
-       * Void, True, None)]), u'docs_accessed').
+       * Defaults to TagRef(Union('ListPaperDocsFilterBy',
+       * [UnionField('docs_accessed', Void, False, None),
+       * UnionField('docs_created', Void, False, None), UnionField('other',
+       * Void, True, None)]), 'docs_accessed').
        */
       filter_by?: ListPaperDocsFilterBy;
       /**
-       * Defaults to TagRef(Union(u'ListPaperDocsSortBy',
-       * [UnionField(u'accessed', Void, False, None), UnionField(u'modified',
-       * Void, False, None), UnionField(u'created', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'accessed').
+       * Defaults to TagRef(Union('ListPaperDocsSortBy', [UnionField('accessed',
+       * Void, False, None), UnionField('modified', Void, False, None),
+       * UnionField('created', Void, False, None), UnionField('other', Void,
+       * True, None)]), 'accessed').
        */
       sort_by?: ListPaperDocsSortBy;
       /**
-       * Defaults to TagRef(Union(u'ListPaperDocsSortOrder',
-       * [UnionField(u'ascending', Void, False, None), UnionField(u'descending',
-       * Void, False, None), UnionField(u'other', Void, True, None)]),
-       * u'ascending').
+       * Defaults to TagRef(Union('ListPaperDocsSortOrder',
+       * [UnionField('ascending', Void, False, None), UnionField('descending',
+       * Void, False, None), UnionField('other', Void, True, None)]),
+       * 'ascending').
        */
       sort_order?: ListPaperDocsSortOrder;
       /**
@@ -5348,9 +5347,9 @@
        */
       limit?: number;
       /**
-       * Defaults to TagRef(Union(u'UserOnPaperDocFilter',
-       * [UnionField(u'visited', Void, False, None), UnionField(u'shared', Void,
-       * False, None), UnionField(u'other', Void, True, None)]), u'shared').
+       * Defaults to TagRef(Union('UserOnPaperDocFilter', [UnionField('visited',
+       * Void, False, None), UnionField('shared', Void, False, None),
+       * UnionField('other', Void, True, None)]), 'shared').
        */
       filter_by?: UserOnPaperDocFilter;
     }
@@ -5992,11 +5991,11 @@
        */
       quiet?: boolean;
       /**
-       * Defaults to TagRef(Union(u'AccessLevel', [UnionField(u'owner', Void,
-       * False, None), UnionField(u'editor', Void, False, None),
-       * UnionField(u'viewer', Void, False, None),
-       * UnionField(u'viewer_no_comment', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'viewer').
+       * Defaults to TagRef(Union('AccessLevel', [UnionField('owner', Void,
+       * False, None), UnionField('editor', Void, False, None),
+       * UnionField('viewer', Void, False, None),
+       * UnionField('viewer_no_comment', Void, False, None), UnionField('other',
+       * Void, True, None)]), 'viewer').
        */
       access_level?: AccessLevel;
       /**
@@ -6174,11 +6173,11 @@
        */
       member: MemberSelector;
       /**
-       * Defaults to TagRef(Union(u'AccessLevel', [UnionField(u'owner', Void,
-       * False, None), UnionField(u'editor', Void, False, None),
-       * UnionField(u'viewer', Void, False, None),
-       * UnionField(u'viewer_no_comment', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'viewer').
+       * Defaults to TagRef(Union('AccessLevel', [UnionField('owner', Void,
+       * False, None), UnionField('editor', Void, False, None),
+       * UnionField('viewer', Void, False, None),
+       * UnionField('viewer_no_comment', Void, False, None), UnionField('other',
+       * Void, True, None)]), 'viewer').
        */
       access_level?: AccessLevel;
     }
@@ -8538,9 +8537,9 @@
 
     export interface SetAccessInheritanceArg {
       /**
-       * Defaults to TagRef(Union(u'AccessInheritance', [UnionField(u'inherit',
-       * Void, False, None), UnionField(u'no_inherit', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'inherit').
+       * Defaults to TagRef(Union('AccessInheritance', [UnionField('inherit',
+       * Void, False, None), UnionField('no_inherit', Void, False, None),
+       * UnionField('other', Void, True, None)]), 'inherit').
        */
       access_inheritance?: AccessInheritance;
       /**
@@ -8614,9 +8613,9 @@
        */
       viewer_info_policy?: ViewerInfoPolicy;
       /**
-       * Defaults to TagRef(Union(u'AccessInheritance', [UnionField(u'inherit',
-       * Void, False, None), UnionField(u'no_inherit', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'inherit').
+       * Defaults to TagRef(Union('AccessInheritance', [UnionField('inherit',
+       * Void, False, None), UnionField('no_inherit', Void, False, None),
+       * UnionField('other', Void, True, None)]), 'inherit').
        */
       access_inheritance?: AccessInheritance;
     }
@@ -9075,9 +9074,9 @@
        */
       time_invited: common.DropboxTimestamp;
       /**
-       * Defaults to TagRef(Union(u'AccessInheritance', [UnionField(u'inherit',
-       * Void, False, None), UnionField(u'no_inherit', Void, False, None),
-       * UnionField(u'other', Void, True, None)]), u'inherit').
+       * Defaults to TagRef(Union('AccessInheritance', [UnionField('inherit',
+       * Void, False, None), UnionField('no_inherit', Void, False, None),
+       * UnionField('other', Void, True, None)]), 'inherit').
        */
       access_inheritance?: AccessInheritance;
     }
@@ -12176,10 +12175,10 @@
        */
       send_welcome_email?: boolean;
       /**
-       * Defaults to TagRef(Union(u'AdminTier', [UnionField(u'team_admin', Void,
-       * False, None), UnionField(u'user_management_admin', Void, False, None),
-       * UnionField(u'support_admin', Void, False, None),
-       * UnionField(u'member_only', Void, False, None)]), u'member_only').
+       * Defaults to TagRef(Union('AdminTier', [UnionField('team_admin', Void,
+       * False, None), UnionField('user_management_admin', Void, False, None),
+       * UnionField('support_admin', Void, False, None),
+       * UnionField('member_only', Void, False, None)]), 'member_only').
        */
       role?: AdminTier;
       /**
