@@ -19,9 +19,9 @@ try {
   fetch = window.fetch.bind(window);
 }
 
-const b64 = typeof btoa === 'undefined' 
-  ? str => Buffer.from(str).toString('base64') 
-  : btoa
+const b64 = typeof btoa === 'undefined'
+  ? (str) => Buffer.from(str).toString('base64')
+  : btoa;
 
 /**
  * @class Dropbox
