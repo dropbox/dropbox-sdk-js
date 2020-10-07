@@ -2,6 +2,18 @@
 
 This document is designed to show you how to upgrade to the latest version of the SDK accomodating any breaking changes introduced by major version updates.  If you find any issues with either this guide on upgrading or the changes introduced in the new version, please see [CONTRIBUTING.md][contributing]
 
+# Upgrading from v6.X.X to v7.0.0
+
+## 1. Fixing the Typescript argument parameter bug ([#41](https://github.com/dropbox/dropbox-sdk-js/issues/41))
+
+We noticed a long lasting bug where the Typescript definitions of routes with no arg would require a `void` argument.  This required users to make calls like this:
+
+```
+var result = dbx.usersGetCurrentAccount(null);
+```
+
+We have since fixed this to no longer require the null parameter.
+
 # Upgrading from v5.X.X to v6.0.0
 
 ## 1. Unifying Dropbox and DropboxTeam

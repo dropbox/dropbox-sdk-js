@@ -188,9 +188,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
-     * @param arg The request parameters.
      */
-    public authTokenRevoke(arg: void): Promise<void>;
+    public authTokenRevoke(): Promise<void>;
 
     /**
      * This endpoint performs App Authentication, validating the supplied app
@@ -227,9 +226,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
-     * @param arg The request parameters.
      */
-    public contactsDeleteManualContacts(arg: void): Promise<void>;
+    public contactsDeleteManualContacts(): Promise<void>;
 
     /**
      * Removes manually added contacts from the given list.
@@ -357,9 +355,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
-     * @param arg The request parameters.
      */
-    public filePropertiesTemplatesListForTeam(arg: void): Promise<file_properties.ListTemplateResult>;
+    public filePropertiesTemplatesListForTeam(): Promise<file_properties.ListTemplateResult>;
 
     /**
      * Get the template identifiers for a team. To get the schema of each
@@ -368,9 +365,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
-     * @param arg The request parameters.
      */
-    public filePropertiesTemplatesListForUser(arg: void): Promise<file_properties.ListTemplateResult>;
+    public filePropertiesTemplatesListForUser(): Promise<file_properties.ListTemplateResult>;
 
     /**
      * Permanently removes the specified template created from
@@ -423,9 +419,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<file_requests.CountFileRequestsError>.
-     * @param arg The request parameters.
      */
-    public fileRequestsCount(arg: void): Promise<file_requests.CountFileRequestsResult>;
+    public fileRequestsCount(): Promise<file_requests.CountFileRequestsResult>;
 
     /**
      * Creates a file request for this user.
@@ -450,9 +445,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<file_requests.DeleteAllClosedFileRequestsError>.
-     * @param arg The request parameters.
      */
-    public fileRequestsDeleteAllClosed(arg: void): Promise<file_requests.DeleteAllClosedFileRequestsResult>;
+    public fileRequestsDeleteAllClosed(): Promise<file_requests.DeleteAllClosedFileRequestsResult>;
 
     /**
      * Returns the specified file request.
@@ -481,9 +475,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<file_requests.ListFileRequestsError>.
-     * @param arg The request parameters.
      */
-    public fileRequestsList(arg: void): Promise<file_requests.ListFileRequestsResult>;
+    public fileRequestsList(): Promise<file_requests.ListFileRequestsResult>;
 
     /**
      * Once a cursor has been retrieved from listV2(), use this to paginate
@@ -1077,9 +1070,8 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @deprecated
-     * @param arg The request parameters.
      */
-    public filesPropertiesTemplateList(arg: void): Promise<file_properties.ListTemplateResult>;
+    public filesPropertiesTemplateList(): Promise<file_properties.ListTemplateResult>;
 
     /**
      * When an error occurs, the route rejects the promise with type
@@ -2132,9 +2124,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
-     * @param arg The request parameters.
      */
-    public teamGetInfo(arg: void): Promise<team.TeamGetInfoResult>;
+    public teamGetInfo(): Promise<team.TeamGetInfoResult>;
 
     /**
      * Creates a new, empty group, with a requested name. Permission : Team
@@ -2733,9 +2724,8 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
      * @deprecated
-     * @param arg The request parameters.
      */
-    public teamPropertiesTemplateList(arg: void): Promise<file_properties.ListTemplateResult>;
+    public teamPropertiesTemplateList(): Promise<file_properties.ListTemplateResult>;
 
     /**
      * Permission : Team member file access.
@@ -2888,9 +2878,8 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.TokenGetAuthenticatedAdminError>.
-     * @param arg The request parameters.
      */
-    public teamTokenGetAuthenticatedAdmin(arg: void): Promise<team.TokenGetAuthenticatedAdminResult>;
+    public teamTokenGetAuthenticatedAdmin(): Promise<team.TokenGetAuthenticatedAdminResult>;
 
     /**
      * Retrieves team events. If the result's GetTeamEventsResult.has_more field
@@ -2954,17 +2943,15 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
-     * @param arg The request parameters.
      */
-    public usersGetCurrentAccount(arg: void): Promise<users.FullAccount>;
+    public usersGetCurrentAccount(): Promise<users.FullAccount>;
 
     /**
      * Get the space usage information for the current user's account.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
-     * @param arg The request parameters.
      */
-    public usersGetSpaceUsage(arg: void): Promise<users.SpaceUsage>;
+    public usersGetSpaceUsage(): Promise<users.SpaceUsage>;
 }
 
