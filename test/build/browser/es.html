@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      window.onerror = function(e, url, line){
+        console.error(e);
+        document.getElementById("result").textContent = "Failure";
+        return true; 
+      }
+    </script>
+
+    <script type="module">
+      import { Dropbox, DropboxAuth } from 'https://cdn.jsdelivr.net/npm/dropbox@7.0.0/es/index.js'
+      const dbx = new Dropbox();
+      const dbxAuth = new DropboxAuth();
+      document.getElementById("result").textContent = "Success";
+      document.getElementById("dropboxConstructor").textContent = Dropbox;
+    </script>
+
+  </head>
+  <body>
+    <h1 id="result">No Execution</h1>
+    <span id="dropboxConstructor"></span>
+  </body>
+</html>
+
