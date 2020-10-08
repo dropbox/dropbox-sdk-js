@@ -37,6 +37,11 @@ jobs:
       - name: Run TypeScipt Tests
         run: |
           npm run test:typescript
+      - name: Run Build Tests
+        run: |
+          npm run clean
+          npm run build
+          npm run test:build
   Integration:
     runs-on: ${{ matrix.os }}
     strategy:
