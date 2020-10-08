@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/dropbox/dist/Dropbox-sdk.js"></script> -->
+  </head>
+  <body>
+      <ul>
+          <li id="test_constructors">
+            <h1 id="test_constructors__result">No Execution</h1>
+            <button id="test_constructors__run" onclick=test_constructors()>Run Test</button>
+            <script type="module">
+                function test_constructors(){
+                  import { Dropbox, DropboxAuth } from 'sdkscript';
+                    var dbx = new Dropbox.Dropbox();
+                    var dbxAuth = new Dropbox.DropboxAuth();
+                    var resultElement = document.getElementById("test_constructors__result");
+                    resultElement.innerHTML = "Success";
+                }
+            </script>
+          </li>
+      </ul>
+  </body>
+</html>
+
+
+
