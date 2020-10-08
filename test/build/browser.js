@@ -21,8 +21,8 @@ const executeTest = (testContainer) => {
 };
 
 describe('ES Build', () => {
-  let html; let dom; let
-    document;
+  let html; let dom; // let
+  // document;
 
   before((done) => {
     const importPath = path.resolve(__dirname, '../../es/index.js');
@@ -41,7 +41,7 @@ describe('ES Build', () => {
       resources: 'usable',
     });
     dom.window.onload = () => {
-      document = dom.window.document;
+      // document = dom.window.document;
       done();
     };
   });
@@ -49,7 +49,7 @@ describe('ES Build', () => {
   // Broken until JSDOM supports <script type="module">
   // https://github.com/jsdom/jsdom/issues/2475
   it('test_constructors', (done) => {
-    //const testContainer = document.getElementById('test_constructors');
+    // const testContainer = document.getElementById('test_constructors');
     // const result = executeTest(testContainer);
     const result = 'Success'; // Should be removed in favor of above once issue is resolved
     chai.assert.equal(result, 'Success');
