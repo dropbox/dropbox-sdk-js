@@ -21,7 +21,7 @@
     "test:typescript": "tsc --build test/types",
     "test:integration": "mocha --timeout 10000 --require @babel/register test/integration/**/*.js",
     "test:unit": "mocha --require @babel/register test/unit/**/*.js",
-    "test:build": "mocha --timeout 100000 --require @babel/register test/build/**/*.js",
+    "test:build": "mocha --timeout 100000 --require @babel/register test/build/*.js",
     "report": "nyc report --reporter=lcov --reporter=text",
     "clean": "rm -rf dist es cjs",
     "generate-docs": "jsdoc -c ./.jsdoc.json",

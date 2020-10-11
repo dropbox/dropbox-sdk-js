@@ -4,9 +4,11 @@ types/dropbox_types.d.ts
 types/index.d.ts
 test/types/types_test.js
 test/types/types_test.js.map
+test/build/node/**
 docs/**
 dist/
 es/
 cjs/
 examples/typescript/**/*.js
 examples/typescript/**/*.js.map
+**/node_modules/**
