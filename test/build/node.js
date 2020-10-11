@@ -17,21 +17,10 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("var dropbox = require('dropbox')", (done) => {
+    it("Require", (done) => {
       exec(`cd ${dirPath} && npm run test:require`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
-          done(error);
-        } else {
-          done();
-        }
-      });
-    });
-
-    it("import dropbox from 'dropbox'", (done) => {
-      exec(`cd ${dirPath} && npm run test:import`, (error, stdout, stderr) => {
-        if (error) {
-          console.errlogor(stdout);
           done(error);
         } else {
           done();
@@ -54,7 +43,7 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("import dropbox from 'dropbox'", (done) => {
+    it("Import", (done) => {
       exec(`cd ${dirPath} && npm run test:import`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
@@ -65,7 +54,7 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("import { Dropbox, DropboxAuth } from 'dropbox'", (done) => {
+    it("Named Import", (done) => {
       exec(`cd ${dirPath} && npm run test:namedImport`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
@@ -91,7 +80,7 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("import dropbox from 'dropbox'", (done) => {
+    it("Import", (done) => {
       exec(`cd ${dirPath} && npm run test:import`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
@@ -102,7 +91,7 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("import { Dropbox, DropboxAuth } from 'dropbox'", (done) => {
+    it("Named Import", (done) => {
       exec(`cd ${dirPath} && npm run test:namedImport`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
@@ -128,21 +117,10 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("const dropbox = require('dropbox')", (done) => {
+    it("Require", (done) => {
       exec(`cd ${dirPath} && npm run test:require`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
-          done(error);
-        } else {
-          done();
-        }
-      });
-    });
-
-    it("import dropbox from 'dropbox'", (done) => {
-      exec(`cd ${dirPath} && npm run test:import`, (error, stdout, stderr) => {
-        if (error) {
-          console.errlogor(stdout);
           done(error);
         } else {
           done();

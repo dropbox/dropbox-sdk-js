@@ -5,8 +5,7 @@
     "type": "module",
     "scripts": {
         "build": "tsc -p tsconfig.json",
-        "test:require": "node require.js",
-        "test:import": "node import.js"
+        "test:require": "node require.js"
     },
     "devDependencies": {
         "dropbox": "file:../../../../",

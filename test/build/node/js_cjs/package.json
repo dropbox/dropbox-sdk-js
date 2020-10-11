@@ -3,8 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "test:require": "node require.js",
-        "test:import": "node import.js"
+        "test:require": "node require.js"
     },
     "devDependencies": {
         "dropbox": "file:../../../../"
