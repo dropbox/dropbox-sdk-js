@@ -34849,10 +34849,7 @@ destination.</td>
 
             
 
-            <td class="description last">If true, copy will copy contents in
-shared folder, otherwise RelocationError.cant_copy_shared_folder will be
-returned if from_path contains shared folder. This field is always true for
-move.</td>
+            <td class="description last">This flag has no effect.</td>
         </tr>
 
     
@@ -35073,10 +35070,7 @@ the Dropbox server try to autorename that file to avoid the conflict.</td>
 
             
 
-            <td class="description last">If true, copy_batch will copy
-contents in shared folder, otherwise RelocationError.cant_copy_shared_folder
-will be returned if RelocationPath.from_path contains shared folder. This
-field is always true for move_batch.</td>
+            <td class="description last">This flag has no effect.</td>
         </tr>
 
     
@@ -82203,6 +82197,9 @@ existing shared folder.</td>
 <span class="param-type">'is_vault'</span>
 |
 
+<span class="param-type">'is_family'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -116729,6 +116726,409 @@ state.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogComputerBackupPolicy">
+    <h4 id="TeamLogComputerBackupPolicy">TeamLogComputerBackupPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling team access to computer backup feature
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'default'</span>
+|
+
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogComputerBackupPolicyChangedDetails">
+    <h4 id="TeamLogComputerBackupPolicyChangedDetails">TeamLogComputerBackupPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed computer backup policy for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogComputerBackupPolicy">TeamLogComputerBackupPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New computer backup
+policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogComputerBackupPolicy">TeamLogComputerBackupPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous computer
+backup policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogComputerBackupPolicyChangedType">
+    <h4 id="TeamLogComputerBackupPolicyChangedType">TeamLogComputerBackupPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogConnectedTeamName">
     <h4 id="TeamLogConnectedTeamName">TeamLogConnectedTeamName</h4>
 
@@ -140772,6 +141172,39 @@ camera_uploads_policy_changed_details.</td>
 
         <tr>
             
+                <td class="name"><code>computer_backup_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogComputerBackupPolicyChangedDetails">TeamLogComputerBackupPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+computer_backup_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>content_administration_policy_changed_details</code></td>
             
 
@@ -145346,6 +145779,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'camera_uploads_policy_changed_details'</span>
+|
+
+<span class="param-type">'computer_backup_policy_changed_details'</span>
 |
 
 <span class="param-type">'content_administration_policy_changed_details'</span>
@@ -156768,6 +157204,40 @@ for team</td>
 
         <tr>
             
+                <td class="name"><code>computer_backup_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogComputerBackupPolicyChangedType">TeamLogComputerBackupPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+computer_backup_policy_changed. (team_policies) Changed computer backup
+policy for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>content_administration_policy_changed</code></td>
             
 
@@ -161410,6 +161880,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'camera_uploads_policy_changed'</span>
 |
 
+<span class="param-type">'computer_backup_policy_changed'</span>
+|
+
 <span class="param-type">'content_administration_policy_changed'</span>
 |
 
@@ -162849,6 +163322,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'camera_uploads_policy_changed'</span>
+|
+
+<span class="param-type">'computer_backup_policy_changed'</span>
 |
 
 <span class="param-type">'content_administration_policy_changed'</span>
@@ -286786,6 +287262,135 @@ the ID of the owning team member. Otherwise, this field is not present.</td>
             
                 
 <hr>
+<dt class="name" id="TeamPoliciesComputerBackupPolicyState">
+    <h4 id="TeamPoliciesComputerBackupPolicyState">TeamPoliciesComputerBackupPolicyState</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'default'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamPoliciesEmmState">
     <h4 id="TeamPoliciesEmmState">TeamPoliciesEmmState</h4>
 
@@ -306637,7 +307242,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2020-10-12T17:02:25+00:00
+		on 2020-10-12T22:01:47+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
