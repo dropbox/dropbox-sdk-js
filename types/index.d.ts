@@ -560,13 +560,9 @@ export class Dropbox {
 
     /**
      * Copy multiple files or folders to different locations at once in the
-     * user's Dropbox. If RelocationBatchArg.allow_shared_folder is false, this
-     * route is atomic. If one entry fails, the whole transaction will abort. If
-     * RelocationBatchArg.allow_shared_folder is true, atomicity is not
-     * guaranteed, but it allows you to copy the contents of shared folders to
-     * new locations. This route will return job ID immediately and do the async
-     * copy job in background. Please use copyBatchCheck() to check the job
-     * status.
+     * user's Dropbox. This route will return job ID immediately and do the
+     * async copy job in background. Please use copyBatchCheck() to check the
+     * job status.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<void>.
@@ -1025,8 +1021,10 @@ export class Dropbox {
 
     /**
      * Permanently delete the file or folder at a given path (see
-     * https://www.dropbox.com/en/help/40). Note: This endpoint is only
-     * available for Dropbox Business apps.
+     * https://www.dropbox.com/en/help/40). If the given file or folder is not
+     * yet deleted, this route will first delete it. It is possible for this
+     * route to successfully delete, then fail to permanently delete. Note: This
+     * endpoint is only available for Dropbox Business apps.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<files.DeleteError>.
