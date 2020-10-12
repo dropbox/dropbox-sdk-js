@@ -41,7 +41,7 @@ export class DropboxAuth {
    *   This must be added to your app through the admin interface.
    * @param code An OAuth2 code.
    */
-  getAccessTokenFromCode(redirectUri: string, code: string): Promise<string>;
+  getAccessTokenFromCode(redirectUri: string, code: string): Promise<DropboxResponse<String>>;
 
   /**
    * Get a URL that can be used to authenticate users for the Dropbox API.
@@ -153,6 +153,13 @@ export interface DropboxOptions {
   clientSecret?: string;
   // The fetch library for making requests.
   fetch?: Function;
+}
+
+export class DropboxResponse<T> {
+  /**
+   * The response class of all successful API calls using the Dropbox SDK.
+   */
+  constructor(status: number, headers: Headers, result: T);
 }
 
 export class Dropbox {
