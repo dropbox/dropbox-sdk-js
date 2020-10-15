@@ -10,3 +10,4 @@ es/
 cjs/
 examples/typescript/**/*.js
 examples/typescript/**/*.js.map
+**/node_modules/**/*
