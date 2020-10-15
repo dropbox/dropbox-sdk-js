@@ -161,7 +161,7 @@ export default class DropboxAuth {
    * prevent cross site scripting attacks.
    * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
    * @arg {String} [tokenAccessType] - type of token to request.  From the following:
-   * '' - creates a token with the app default (either legacy or online)
+   * null - creates a token with the app default (either legacy or online)
    * legacy - creates one long-lived token with no expiration
    * online - create one short-lived token with an expiration
    * offline - create one short-lived token with an expiration with a refresh token
@@ -176,7 +176,7 @@ export default class DropboxAuth {
    * can be used if you are unable to safely retrieve your app secret
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = '', scope = null, includeGrantedScopes = 'none', usePKCE = false) {
+  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = null, scope = null, includeGrantedScopes = 'none', usePKCE = false) {
     const clientId = this.getClientId();
     const baseUrl = BaseAuthorizeUrl;
 
@@ -189,7 +189,7 @@ export default class DropboxAuth {
     if (!GrantTypes.includes(authType)) {
       throw new Error('Authorization type must be code or token');
     }
-    if (!TokenAccessTypes.includes(tokenAccessType) && tokenAccessType !== '') {
+    if (!TokenAccessTypes.includes(tokenAccessType) && tokenAccessType !== null) {
       throw new Error('Token Access Type must be legacy, offline, or online');
     }
     if (scope && !(scope instanceof Array)) {
@@ -212,7 +212,7 @@ export default class DropboxAuth {
     if (state) {
       authUrl += `&state=${state}`;
     }
-    if (tokenAccessType !== '') {
+    if (tokenAccessType !== null) {
       authUrl += `&token_access_type=${tokenAccessType}`;
     }
     if (scope) {
