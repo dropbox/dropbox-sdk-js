@@ -52,11 +52,7 @@ export class DropboxAuth {
    * prevent cross site scripting attacks.
    * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
    * @arg {String} [tokenAccessType] - type of token to request.  From the following:
-<<<<<<< HEAD
    * null - creates a token with the app default (either legacy or online)
-=======
-   * '' - creates a token with the app default (either legacy or online)
->>>>>>> Fix default in getAuthenticationUrl to pass `legacy` if requested
    * legacy - creates one long-lived token with no expiration
    * online - create one short-lived token with an expiration
    * offline - create one short-lived token with an expiration with a refresh token
@@ -71,11 +67,7 @@ export class DropboxAuth {
    * can be used if you are unable to safely retrieve your app secret
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-<<<<<<< HEAD
   getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): string;
-=======
-  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: '' | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): string;
->>>>>>> Fix default in getAuthenticationUrl to pass `legacy` if requested
 
   /**
    * Get the client id
