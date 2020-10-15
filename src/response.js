@@ -12,7 +12,7 @@ export function parseResponse(res) {
   const clone = res.clone();
 
   if (!res.ok) {
-    res.text()
+    return res.text()
       .then((data) => {
         // eslint-disable-next-line no-throw-literal
         throw {
