@@ -11,4 +11,8 @@ es/
 cjs/
 examples/typescript/**/*.js
 examples/typescript/**/*.js.map
+<<<<<<< HEAD
 **/node_modules/**
+=======
+**/node_modules/**/*
+>>>>>>> Fix default in getAuthenticationUrl to pass `legacy` if requested
