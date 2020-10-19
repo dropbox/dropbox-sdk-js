@@ -1,4 +1,4 @@
-import * as dropbox from 'dropbox';
+import dropbox from 'dropbox';
 
 const dbx: dropbox.Dropbox = new dropbox.Dropbox();
 const dbxAuth: dropbox.DropboxAuth = new dropbox.DropboxAuth();
