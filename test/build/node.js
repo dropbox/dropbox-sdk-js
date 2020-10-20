@@ -17,7 +17,7 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("Require", (done) => {
+    it('Require', (done) => {
       exec(`cd ${dirPath} && npm run test:require`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
@@ -43,7 +43,7 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("Import", (done) => {
+    it('Import', (done) => {
       exec(`cd ${dirPath} && npm run test:import`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
@@ -81,7 +81,7 @@ describe('Node Definitions', () => {
       });
     });
 
-    it("Import", (done) => {
+    it('Import', (done) => {
       exec(`cd ${dirPath} && npm run test:import`, (error, stdout, stderr) => {
         if (error) {
           console.log(stdout);
