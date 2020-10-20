@@ -38,6 +38,7 @@ jobs:
         run: |
           npm run test:typescript
       - name: Run Build Tests
+        if: ${{ matrix.node }} >= 12 # "type" = "module" was introduced in node v12 so lower versions will fail ESM tests
         run: |
           npm run clean
           npm run build
