@@ -189,7 +189,7 @@ export default class DropboxAuth {
     if (!GrantTypes.includes(authType)) {
       throw new Error('Authorization type must be code or token');
     }
-    if (!TokenAccessTypes.includes(tokenAccessType) && tokenAccessType !== null) {
+    if (tokenAccessType && !TokenAccessTypes.includes(tokenAccessType)) {
       throw new Error('Token Access Type must be legacy, offline, or online');
     }
     if (scope && !(scope instanceof Array)) {
@@ -212,7 +212,7 @@ export default class DropboxAuth {
     if (state) {
       authUrl += `&state=${state}`;
     }
-    if (tokenAccessType !== null) {
+    if (tokenAccessType) {
       authUrl += `&token_access_type=${tokenAccessType}`;
     }
     if (scope) {
