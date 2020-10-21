@@ -70,7 +70,7 @@ describe('DropboxAuth', () => {
       const dbx = new Dropbox({ clientId: 'CLIENT_ID' });
       for (const redirectUri of ['', 'localhost']) {
         for (const state of ['', 'state']) {
-          for (const tokenAccessType of ['', 'legacy', 'offline', 'online']) {
+          for (const tokenAccessType of [null, 'legacy', 'offline', 'online']) {
             for (const scope of [null, ['files.metadata.read', 'files.metadata.write']]) {
               for (const includeGrantedScopes of ['none', 'user', 'team']) {
                 const url = dbx.auth.getAuthenticationUrl(redirectUri, state, 'code', tokenAccessType, scope, includeGrantedScopes);
@@ -89,7 +89,7 @@ describe('DropboxAuth', () => {
                   chai.assert(!url.includes('&state='));
                 }
 
-                if (tokenAccessType !== '') {
+                if (tokenAccessType) {
                   chai.assert(url.includes(`&token_access_type=${tokenAccessType}`));
                 } else {
                   chai.assert(!url.includes('&token_access_type='));
