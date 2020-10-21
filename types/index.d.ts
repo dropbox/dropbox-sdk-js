@@ -168,13 +168,12 @@ export class Dropbox {
    * create files or folders in a user or team's Dropbox.
    */
   constructor();
-  
+
   /**
    * The Dropbox SDK class that provides methods to read, write and
    * create files or folders in a user or team's Dropbox.
    */
   constructor(options: DropboxOptions);
-
 
 
     /**
@@ -2753,6 +2752,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public teamReportsGetActivity(arg: team.DateRange): Promise<team.GetActivityReport>;
@@ -2762,6 +2762,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public teamReportsGetDevices(arg: team.DateRange): Promise<team.GetDevicesReport>;
@@ -2771,6 +2772,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public teamReportsGetMembership(arg: team.DateRange): Promise<team.GetMembershipReport>;
@@ -2780,6 +2782,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public teamReportsGetStorage(arg: team.DateRange): Promise<team.GetStorageReport>;
