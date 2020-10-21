@@ -1,0 +1,13 @@
+{
+    "name": "cjs_build_test",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "scripts": {
+        "test:import": "node import.js",
+        "test:namedImport": "node namedImport.js"
+    },
+    "devDependencies": {
+        "dropbox": "file:../../../../"
+    }
+}

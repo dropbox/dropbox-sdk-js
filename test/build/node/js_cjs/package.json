@@ -1,0 +1,11 @@
+{
+    "name": "cjs_build_test",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "test:require": "node require.js"
+    },
+    "devDependencies": {
+        "dropbox": "file:../../../../"
+    }
+}

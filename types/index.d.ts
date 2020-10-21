@@ -160,6 +160,12 @@ export class Dropbox {
    * The Dropbox SDK class that provides methods to read, write and
    * create files or folders in a user or team's Dropbox.
    */
+  constructor();
+  
+  /**
+   * The Dropbox SDK class that provides methods to read, write and
+   * create files or folders in a user or team's Dropbox.
+   */
   constructor(options: DropboxOptions);
 
 
