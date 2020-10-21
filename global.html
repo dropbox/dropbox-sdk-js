@@ -40022,6 +40022,142 @@ from file title.</td>
             
                 
 <hr>
+<dt class="name" id="FilesSearchMatchTypeV2">
+    <h4 id="FilesSearchMatchTypeV2">FilesSearchMatchTypeV2</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Indicates what type of match was found for a given item.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'filename'</span>
+|
+
+<span class="param-type">'file_content'</span>
+|
+
+<span class="param-type">'filename_and_content'</span>
+|
+
+<span class="param-type">'image_content'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="FilesSearchMatchV2">
     <h4 id="FilesSearchMatchV2">FilesSearchMatchV2</h4>
 
@@ -40100,6 +40236,38 @@ from file title.</td>
 
             <td class="description last">The metadata for the matched file or
 folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>match_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesSearchMatchTypeV2">FilesSearchMatchTypeV2</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The type of the match.</td>
         </tr>
 
     
@@ -40427,6 +40595,39 @@ return.</td>
 
         <tr>
             
+                <td class="name"><code>order_by</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesSearchOrderBy">FilesSearchOrderBy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Specified property of the order
+of search results. By default, results are sorted by relevance.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>file_status</code></td>
             
 
@@ -40549,6 +40750,132 @@ extensions specified. Only supported for active file search.</td>
 
             <td class="description last">Restricts search to
 only the file categories specified. Only supported for active file search.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesSearchOrderBy">
+    <h4 id="FilesSearchOrderBy">FilesSearchOrderBy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'relevance'</span>
+|
+
+<span class="param-type">'last_modified_time'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -40939,6 +41266,8 @@ search results match fields.</td>
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
                 </td>
@@ -40946,8 +41275,8 @@ search results match fields.</td>
 
             
 
-            <td class="description last">Deprecated and moved this option to
-SearchMatchFieldOptions.</td>
+            <td class="description last">Deprecated and moved this option
+to SearchMatchFieldOptions.</td>
         </tr>
 
     
@@ -143078,6 +143407,39 @@ smart_sync_change_policy_details.</td>
 
         <tr>
             
+                <td class="name"><code>team_branding_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamBrandingPolicyChangedDetails">TeamLogTeamBrandingPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_branding_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>team_extensions_policy_changed_details</code></td>
             
 
@@ -145953,6 +146315,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'sso_change_policy_details'</span>
+|
+
+<span class="param-type">'team_branding_policy_changed_details'</span>
 |
 
 <span class="param-type">'team_extensions_policy_changed_details'</span>
@@ -159167,6 +159532,40 @@ team</td>
 
         <tr>
             
+                <td class="name"><code>team_branding_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamBrandingPolicyChangedType">TeamLogTeamBrandingPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_branding_policy_changed. (team_policies) Changed team branding policy
+for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>team_extensions_policy_changed</code></td>
             
 
@@ -162054,6 +162453,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'sso_change_policy'</span>
 |
 
+<span class="param-type">'team_branding_policy_changed'</span>
+|
+
 <span class="param-type">'team_extensions_policy_changed'</span>
 |
 
@@ -163496,6 +163898,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'sso_change_policy'</span>
+|
+
+<span class="param-type">'team_branding_policy_changed'</span>
 |
 
 <span class="param-type">'team_extensions_policy_changed'</span>
@@ -260708,6 +261113,405 @@ information about the organization or team.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogTeamBrandingPolicy">
+    <h4 id="TeamLogTeamBrandingPolicy">TeamLogTeamBrandingPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling team access to setting up branding feature
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamBrandingPolicyChangedDetails">
+    <h4 id="TeamLogTeamBrandingPolicyChangedDetails">TeamLogTeamBrandingPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed team branding policy for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamBrandingPolicy">TeamLogTeamBrandingPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New team branding policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamBrandingPolicy">TeamLogTeamBrandingPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous team branding
+policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamBrandingPolicyChangedType">
+    <h4 id="TeamLogTeamBrandingPolicyChangedType">TeamLogTeamBrandingPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogTeamDetails">
     <h4 id="TeamLogTeamDetails">TeamLogTeamDetails</h4>
 
@@ -307242,7 +308046,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2020-10-21T00:20:04+00:00
+		on 2020-10-21T18:14:10+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
