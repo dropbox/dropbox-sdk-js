@@ -87,7 +87,7 @@ def main():
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-a', 'host', '-a', 'style', '-a', 'auth'] +
-         ['--', 'routes.js', '-c', 'Dropbox']),
+         ['--', 'routes.js', '-c', 'Dropbox', '--wrap-response-in', 'DropboxResponse']),
         cwd=stone_path)
 
     if verbose:
@@ -103,7 +103,7 @@ def main():
     subprocess.check_output(
         (['python', '-m', 'stone.cli', 'tsd_client', typescript_template_path] +
          specs + ['-a', 'host', '-a', 'style'] +
-         ['--', 'index.d.tstemplate', 'index.d.ts']),
+         ['--', 'index.d.tstemplate', 'index.d.ts', '--wrap-response-in', 'DropboxResponse']),
         cwd=stone_path)
 
     typescript_generated_files = glob.glob('typescript/*.d.ts')
