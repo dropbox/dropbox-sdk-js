@@ -8,24 +8,30 @@ export class DropboxResponse {
   }
 }
 
+export class DropboxError extends Error {
+  constructor(status, headers, error) {
+    this.status = status;
+    this.headers = headers;
+    this.error = error;
+  }
+}
+
 function throwIfError(res) {
   const clone = res.clone();
   if (!res.ok) {
     return res.json()
       .then((data) => {
-        // eslint-disable-next-line no-throw-literal
-        throw {
+        throw new DropboxError({
           error: data,
-          response: res,
+          headers: res.headers,
           status: res.status,
-        };
+        });
       }, () => {
-        // eslint-disable-next-line no-throw-literal
-        throw {
+        throw new DropboxError({
           error: clone.text(),
-          response: res,
+          headers: res.headers,
           status: res.status,
-        };
+        });
       });
   }
   return Promise.resolve();
