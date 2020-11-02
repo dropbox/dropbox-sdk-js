@@ -73,4 +73,3 @@ dropbox.usersGetCurrentAccount()
     error.error;
   });
 dropbox2.usersGetCurrentAccount();
-
