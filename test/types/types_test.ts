@@ -61,5 +61,15 @@ const dropbox2 = new Dropbox.Dropbox({
   pathRoot: '',
 });
 
-dropbox.usersGetCurrentAccount();
+dropbox.usersGetCurrentAccount()
+  .then((response: Dropbox.DropboxResponse<Dropbox.users.FullAccount>) => {
+    response.status;
+    response.result;
+    response.headers;
+  })
+  .catch((error) => {
+    error.status;
+    error.headers;
+    error.error;
+  });
 dropbox2.usersGetCurrentAccount();
