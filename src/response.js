@@ -12,11 +12,11 @@ export function parseResponse(res) {
   const clone = res.clone();
 
   if (!res.ok) {
-    return res.text()
-      .then((data) => {
+    return res.json()
+      .then((data, error) => {
         // eslint-disable-next-line no-throw-literal
         throw {
-          error: data,
+          error: error ? clone.text() : data,
           response: res,
           status: res.status,
         };
@@ -33,7 +33,7 @@ export function parseResponse(res) {
 export function parseDownloadResponse(res) {
   return new Promise((resolve) => {
     if (!res.ok) {
-      res.text()
+      res.json()
         .then((data) => resolve(data));
     } else if (isWindowOrWorker()) {
       res.blob()
