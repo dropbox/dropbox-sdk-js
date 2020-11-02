@@ -17,18 +17,18 @@ export class DropboxError extends Error {
 }
 
 function throwIfError(res) {
-  const clone = res.clone();
   if (!res.ok) {
-    return res.json()
+    return res.text()
       .then((data) => {
+        let error_object;
+        try{
+          error_object = JSON.parse(data);
+        }catch(error){
+          error_object = data;
+        }
+
         throw new DropboxError({
-          error: data,
-          headers: res.headers,
-          status: res.status,
-        });
-      }, () => {
-        throw new DropboxError({
-          error: clone.text(),
+          error: error_object,
           headers: res.headers,
           status: res.status,
         });
@@ -38,12 +38,17 @@ function throwIfError(res) {
 }
 
 export function parseResponse(res) {
-  const clone = res.clone();
+  return throwIfError(res).then(() => res.text()
+    .then((data) => {
+      let response_object;
+        try{
+          response_object = JSON.parse(data);
+        }catch(error){
+          response_object = data;
+        }
 
-  return throwIfError(res).then(() => res.json()
-    .then(
-      (data) => new DropboxResponse(res.status, res.headers, data),
-      () => clone.text(),
+        return new DropboxResponse(res.status, res.headers, response_object)
+    }
     ));
 }
 
