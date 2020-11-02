@@ -55,5 +55,15 @@ var dropbox2 = new Dropbox.Dropbox({
     selectAdmin: '',
     pathRoot: '',
 });
-dropbox.usersGetCurrentAccount();
+dropbox.usersGetCurrentAccount()
+    .then(function (response) {
+    response.status;
+    response.result;
+    response.headers;
+})
+    .catch(function (error) {
+    error.status;
+    error.headers;
+    error.error;
+});
 dropbox2.usersGetCurrentAccount();

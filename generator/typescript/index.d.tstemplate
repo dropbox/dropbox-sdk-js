@@ -162,6 +162,21 @@ export class DropboxResponse<T> {
    * The response class of all successful API calls using the Dropbox SDK.
    */
   constructor(status: number, headers: Headers, result: T);
+
+  /**
+   * HTTP Status code of the call
+   */
+  status: number;
+
+  /**
+   * Headers returned from the call
+   */
+  headers: Headers;
+
+  /**
+   * Serialized Result of the call
+   */
+  result: T;
 }
 
 export class Dropbox {
