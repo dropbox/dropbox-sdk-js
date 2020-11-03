@@ -1,4 +1,5 @@
 import { isWindowOrWorker } from './utils.js';
+import { DropboxError } from './error.js';
 
 export class DropboxResponse {
   constructor(status, headers, result) {
@@ -8,37 +9,29 @@ export class DropboxResponse {
   }
 }
 
-export class DropboxError extends Error {
-  constructor(status, headers, error) {
-    this.status = status;
-    this.headers = headers;
-    this.error = error;
-  }
-}
+function throwAsError(res) {
+  return res.text()
+    .then((data) => {
+      let error_object;
+      try{
+        error_object = JSON.parse(data);
+      }catch(error){
+        error_object = data;
+      }
 
-function throwIfError(res) {
-  if (!res.ok) {
-    return res.text()
-      .then((data) => {
-        let error_object;
-        try{
-          error_object = JSON.parse(data);
-        }catch(error){
-          error_object = data;
-        }
-
-        throw new DropboxError({
-          error: error_object,
-          headers: res.headers,
-          status: res.status,
-        });
+      throw new DropboxError({
+        error: error_object,
+        headers: res.headers,
+        status: res.status,
       });
-  }
-  return Promise.resolve();
+    });
 }
 
 export function parseResponse(res) {
-  return throwIfError(res).then(() => res.text()
+  if(!res.ok){
+    return throwAsError(res);
+  }
+  return res.text()
     .then((data) => {
       let response_object;
         try{
@@ -49,17 +42,20 @@ export function parseResponse(res) {
 
         return new DropboxResponse(res.status, res.headers, response_object)
     }
-    ));
+    );
 }
 
 export function parseDownloadResponse(res) {
-  return throwIfError(res).then(() => new Promise((resolve) => {
+  if(!res.ok){
+    return throwAsError(res);
+  }
+  return new Promise((resolve) => {
     if (isWindowOrWorker()) {
       res.blob().then((data) => resolve(data));
     } else {
       res.buffer().then((data) => resolve(data));
     }
-  })).then((data) => {
+  }).then((data) => {
     const result = JSON.parse(res.headers.get('dropbox-api-result'));
 
     if (isWindowOrWorker()) {
