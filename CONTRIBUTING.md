@@ -57,6 +57,6 @@ Note: If you do not have all of these tokens available, we run integration tests
 
 [issues]: https://github.com/dropbox/dropbox-sdk-js/issues
 [pr]: https://github.com/dropbox/dropbox-sdk-js/pulls
-[coc]: https://github.com/dropbox/dropbox-sdk-js/blob/master/CODE_OF_CONDUCT.md
-[license]: https://github.com/dropbox/dropbox-sdk-js/blob/master/LICENSE
+[coc]: https://github.com/dropbox/dropbox-sdk-js/blob/main/CODE_OF_CONDUCT.md
+[license]: https://github.com/dropbox/dropbox-sdk-js/blob/main/LICENSE
 [cla]: https://opensource.dropbox.com/cla/

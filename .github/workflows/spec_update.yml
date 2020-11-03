@@ -73,7 +73,7 @@ jobs:
           title: 'Automated Spec Update'
           body: |
             ${{ steps.git-diff.outputs.commit}}
-          base: 'master'
+          base: 'main'
           team-reviewers: |
             owners
             maintainers

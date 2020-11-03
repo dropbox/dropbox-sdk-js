@@ -122,4 +122,4 @@ Previously we have provided guidance to SDK users that they should not rely on t
 
 As a result, you should not pass in your own `fetch` to the Dropbox constructor unless you have a specific reason to do so (mocking, etc). Note that if you opt to pass in fetch to support your use case, you may need to bind your fetch to the appropriate context e.g. `fetch.bind(your_context)`.
 
-[contributing]: https://github.com/dropbox/dropbox-sdk-js/blob/master/CONTRIBUTING.md
+[contributing]: https://github.com/dropbox/dropbox-sdk-js/blob/main/CONTRIBUTING.md
