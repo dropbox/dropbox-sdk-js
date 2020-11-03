@@ -21,7 +21,10 @@ describe('Dropbox', () => {
     it('calls the correct request method', () => {
       const dbx = new Dropbox();
       const rpcSpy = sinon.spy(dbx, 'rpcRequest');
-      dbx.request('path', {}, USER_AUTH, 'api', RPC);
+      dbx.request('path', {}, USER_AUTH, 'api', RPC)
+        .catch((error) => {
+          // catch so there aren't any unhandled promise rejections
+        });
       chai.assert.isTrue(rpcSpy.calledOnce);
       chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);

@@ -1,5 +1,5 @@
 import { isWindowOrWorker } from './utils.js';
-import { DropboxError } from './error.js';
+import { DropboxResponseError } from './error.js';
 
 export class DropboxResponse {
   constructor(status, headers, result) {
@@ -12,41 +12,36 @@ export class DropboxResponse {
 function throwAsError(res) {
   return res.text()
     .then((data) => {
-      let error_object;
-      try{
-        error_object = JSON.parse(data);
-      }catch(error){
-        error_object = data;
+      let errorObject;
+      try {
+        errorObject = JSON.parse(data);
+      } catch (error) {
+        errorObject = data;
       }
 
-      throw new DropboxError({
-        error: error_object,
-        headers: res.headers,
-        status: res.status,
-      });
+      throw new DropboxResponseError(errorObject, res.headers, res.status);
     });
 }
 
 export function parseResponse(res) {
-  if(!res.ok){
+  if (!res.ok) {
     return throwAsError(res);
   }
   return res.text()
     .then((data) => {
-      let response_object;
-        try{
-          response_object = JSON.parse(data);
-        }catch(error){
-          response_object = data;
-        }
+      let responseObject;
+      try {
+        responseObject = JSON.parse(data);
+      } catch (error) {
+        responseObject = data;
+      }
 
-        return new DropboxResponse(res.status, res.headers, response_object)
-    }
-    );
+      return new DropboxResponse(res.status, res.headers, responseObject);
+    });
 }
 
 export function parseDownloadResponse(res) {
-  if(!res.ok){
+  if (!res.ok) {
     return throwAsError(res);
   }
   return new Promise((resolve) => {
