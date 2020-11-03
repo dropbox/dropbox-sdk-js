@@ -19,7 +19,7 @@ function throwAsError(res) {
         errorObject = data;
       }
 
-      throw new DropboxResponseError(errorObject, res.headers, res.status);
+      throw new DropboxResponseError(res.status, res.headers, errorObject);
     });
 }
 
