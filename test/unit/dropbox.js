@@ -3,6 +3,7 @@ import sinon from 'sinon';
 
 import { RPC, USER_AUTH } from '../../src/constants.js';
 import { Dropbox } from '../../index.js';
+import { fail } from 'assert';
 
 describe('Dropbox', () => {
   describe('selectUser', () => {
@@ -23,7 +24,7 @@ describe('Dropbox', () => {
       const rpcSpy = sinon.spy(dbx, 'rpcRequest');
       dbx.request('path', {}, USER_AUTH, 'api', RPC)
         .catch((error) => {
-          // catch so there aren't any unhandled promise rejections
+          fail(error);
         });
       chai.assert.isTrue(rpcSpy.calledOnce);
       chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
