@@ -23,6 +23,10 @@ const b64 = typeof btoa === 'undefined'
   ? (str) => Buffer.from(str).toString('base64')
   : btoa;
 
+function isAxios(func) {
+    return !(typeof func.post === 'undefined');
+}
+
 /**
  * @class Dropbox
  * @classdesc The Dropbox SDK class that provides methods to read, write and
@@ -83,12 +87,21 @@ export default class Dropbox {
       .then(() => {
         const fetchOptions = {
           method: 'POST',
-          body: (body) ? JSON.stringify(body) : null,
           headers: {},
         };
 
+
         if (body) {
           fetchOptions.headers['Content-Type'] = 'application/json';
+          if(isAxios(this.fetch)){
+            fetchOptions.data = body;
+          }else{
+            fetchOptions.body = JSON.stringify(body);
+          }
+        }
+
+        if(isAxios(this.fetch)){
+          fetchOptions.url = getBaseURL(host) + path
         }
 
         let authHeader;
@@ -113,7 +126,7 @@ export default class Dropbox {
         this.setCommonHeaders(fetchOptions);
         return fetchOptions;
       })
-      .then((fetchOptions) => this.fetch(getBaseURL(host) + path, fetchOptions))
+      .then((fetchOptions) => isAxios(this.fetch) ? this.fetch(fetchOptions) : this.fetch(getBaseURL(host) + path, fetchOptions))
       .then((res) => parseResponse(res));
   }
 
