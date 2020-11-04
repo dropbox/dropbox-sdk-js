@@ -1,9 +1,9 @@
 import chai from 'chai';
 import sinon from 'sinon';
 
+import { fail } from 'assert';
 import { RPC, USER_AUTH } from '../../src/constants.js';
 import { Dropbox } from '../../index.js';
-import { fail } from 'assert';
 
 describe('Dropbox', () => {
   describe('selectUser', () => {
