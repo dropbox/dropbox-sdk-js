@@ -276,7 +276,10 @@ export default class DropboxAuth {
 
     return (isAxios(this.fetch) ? this.fetch(fetchOptions)
       : this.fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => parseResponse(res));
+      .then((res) => parseResponse(res))
+      // Axios rejects the promise when request is failed
+      // but we still want to parse it as a response
+      .catch((error) => (error.isAxiosError ? parseResponse(error) : error));
   }
 
   /**
@@ -339,7 +342,10 @@ export default class DropboxAuth {
       .then((res) => {
         this.setAccessToken(res.result.access_token);
         this.setAccessTokenExpiresAt(getTokenExpiresAtDate(res.result.expires_in));
-      });
+      })
+      // Axios rejects the promise when request is failed
+      // but we still want to parse it as a response
+      .catch((error) => (error.isAxiosError ? parseResponse(error) : error));
   }
 
   /**
