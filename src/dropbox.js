@@ -101,7 +101,7 @@ export default class Dropbox {
         }
 
         if(isAxios(this.fetch)){
-          fetchOptions.url = getBaseURL(host) + path
+          fetchOptions.url = getBaseURL(host) + path;
         }
 
         let authHeader;
@@ -127,7 +127,9 @@ export default class Dropbox {
         return fetchOptions;
       })
       .then((fetchOptions) => isAxios(this.fetch) ? this.fetch(fetchOptions) : this.fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => parseResponse(res));
+      .then((res) => parseResponse(res))
+      // Axios rejects the promise when request is failed but we still want to parse it as a response
+      .catch((error) => error.isAxiosError ? parseResponse(error) : error);
   }
 
   downloadRequest(path, args, auth, host) {
@@ -145,12 +147,19 @@ export default class Dropbox {
           },
         };
 
+        if(isAxios(this.fetch)){
+          fetchOptions.url = getBaseURL(host) + path;
+          fetchOptions.headers['Content-Type'] = 'text/plain';
+        }
+
         this.setCommonHeaders(fetchOptions);
 
         return fetchOptions;
       })
-      .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => parseDownloadResponse(res));
+      .then((fetchOptions) => isAxios(this.fetch) ? this.fetch(fetchOptions) : this.fetch(getBaseURL(host) + path, fetchOptions))
+      .then((res) => parseDownloadResponse(res))
+      // Axios rejects the promise when request is failed but we still want to parse it as a response
+      .catch((error) => error.isAxiosError ? parseDownloadResponse(error) : error);
   }
 
   uploadRequest(path, args, auth, host) {
@@ -173,12 +182,18 @@ export default class Dropbox {
           },
         };
 
+        if(isAxios(this.fetch)){
+          fetchOptions.url = getBaseURL(host) + path;
+        }
+
         this.setCommonHeaders(fetchOptions);
 
         return fetchOptions;
       })
-      .then((fetchOptions) => this.fetch(getBaseURL(host) + path, fetchOptions))
-      .then((res) => parseResponse(res));
+      .then((fetchOptions) => isAxios(this.fetch) ? this.fetch(fetchOptions) : this.fetch(getBaseURL(host) + path, fetchOptions))
+      .then((res) => parseResponse(res))
+      // Axios rejects the promise when request is failed but we still want to parse it as a response
+      .catch((error) => error.isAxiosError ? parseResponse(error) : error);
   }
 
   setCommonHeaders(options) {

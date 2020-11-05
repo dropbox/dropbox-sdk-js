@@ -105,5 +105,8 @@
   },
   "dependencies": {
     "node-fetch": "^2.6.1"
+  },
+  "peerDependencies": {
+    "axios": "^0.21.0"
   }
 }
