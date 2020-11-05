@@ -270,11 +270,12 @@ export default class DropboxAuth {
       },
     };
 
-    if(isAxios(this.fetch)){
+    if (isAxios(this.fetch)) {
       fetchOptions.url = getBaseURL(host) + path;
     }
 
-    return (isAxios(this.fetch) ? this.fetch(fetchOptions) : this.fetch(getBaseURL(host) + path, fetchOptions))
+    return (isAxios(this.fetch) ? this.fetch(fetchOptions)
+      : this.fetch(getBaseURL(host) + path, fetchOptions))
       .then((res) => parseResponse(res));
   }
 
@@ -326,13 +327,14 @@ export default class DropboxAuth {
       method: 'POST',
     };
 
-    if(isAxios(this.fetch)){
-      fetchOptions.url = getBaseURL(host) + path;
+    if (isAxios(this.fetch)) {
+      fetchOptions.url = refreshUrl;
     }
 
     fetchOptions.headers = headers;
 
-    return (isAxios(this.fetch) ? this.fetch(fetchOptions) : this.fetch(getBaseURL(host) + path, fetchOptions))
+    return (isAxios(this.fetch) ? this.fetch(fetchOptions)
+      : this.fetch(refreshUrl, fetchOptions))
       .then((res) => parseResponse(res))
       .then((res) => {
         this.setAccessToken(res.result.access_token);

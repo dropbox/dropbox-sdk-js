@@ -11,10 +11,10 @@ prompt.get({
     },
   },
 }, (error, result) => {
-  const dbx = new Dropbox({ 
+  const dbx = new Dropbox({
     accessToken: result.accessToken,
-    fetch: axios
-});
+    fetch: axios,
+  });
   dbx.filesListFolder({ path: '/Many' })
     .then((response) => {
       console.log(response);
