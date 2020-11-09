@@ -2,17 +2,17 @@ import { getTokenExpiresAtDate } from './utils.js';
 import { parseResponse } from './response.js';
 
 let fetch;
-try {
-  fetch = require('node-fetch'); // eslint-disable-line global-require
-} catch (Exception) {
+if (window) {
   fetch = window.fetch.bind(window);
+} else {
+  fetch = require('node-fetch'); // eslint-disable-line global-require
 }
 
 let crypto;
-try {
-  crypto = require('crypto'); // eslint-disable-line global-require
-} catch (Exception) {
+if (window) {
   crypto = window.crypto || window.msCrypto; // for IE11
+} else {
+  crypto = require('crypto'); // eslint-disable-line global-require
 }
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
