@@ -2,14 +2,14 @@ import { getTokenExpiresAtDate } from './utils.js';
 import { parseResponse } from './response.js';
 
 let fetch;
-if (window) {
+if (typeof window !== 'undefined') {
   fetch = window.fetch.bind(window);
 } else {
   fetch = require('node-fetch'); // eslint-disable-line global-require
 }
 
 let crypto;
-if (window) {
+if (typeof window !== 'undefined') {
   crypto = window.crypto || window.msCrypto; // for IE11
 } else {
   crypto = require('crypto'); // eslint-disable-line global-require
