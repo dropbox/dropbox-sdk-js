@@ -46134,6 +46134,15 @@ invalid. The file has uploaded without property groups.</td>
 <span class="param-type">'too_many_write_operations'</span>
 |
 
+<span class="param-type">'concurrent_session_data_not_allowed'</span>
+|
+
+<span class="param-type">'concurrent_session_not_closed'</span>
+|
+
+<span class="param-type">'concurrent_session_missing_data'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -46311,6 +46320,12 @@ response, e.g. due to a network error.</td>
 |
 
 <span class="param-type">'too_large'</span>
+|
+
+<span class="param-type">'concurrent_session_invalid_offset'</span>
+|
+
+<span class="param-type">'concurrent_session_invalid_data_size'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -46542,6 +46557,8 @@ collected.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -46568,6 +46585,12 @@ collected.</td>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
@@ -46592,12 +46615,177 @@ collected.</td>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last">If true, the current session will be closed, at
 which point you won't be able to call upload_session/append:2 anymore with
 the current session.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>session_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesUploadSessionType">FilesUploadSessionType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Type of upload session
+you want to start. If not specified, default is UploadSessionType.sequential.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesUploadSessionStartError">
+    <h4 id="FilesUploadSessionStartError">FilesUploadSessionStartError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'concurrent_session_data_not_allowed'</span>
+|
+
+<span class="param-type">'concurrent_session_close_not_allowed'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -46719,6 +46907,132 @@ the current session.</td>
 
             <td class="description last">A unique identifier for the upload session.
 Pass this to upload_session/append:2 and upload_session/finish.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesUploadSessionType">
+    <h4 id="FilesUploadSessionType">FilesUploadSessionType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'sequential'</span>
+|
+
+<span class="param-type">'concurrent'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -110431,6 +110745,553 @@ reseller. Action done by reseller.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogAdminAlertingAlertConfiguration">
+    <h4 id="TeamLogAdminAlertingAlertConfiguration">TeamLogAdminAlertingAlertConfiguration</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Alert configurations
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingAlertStatePolicy">TeamLogAdminAlertingAlertStatePolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert state.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertingAlertStatePolicy">
+    <h4 id="TeamLogAdminAlertingAlertStatePolicy">TeamLogAdminAlertingAlertStatePolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling whether an alert can be triggered or not
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'off'</span>
+|
+
+<span class="param-type">'on'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertingChangedAlertConfigDetails">
+    <h4 id="TeamLogAdminAlertingChangedAlertConfigDetails">TeamLogAdminAlertingChangedAlertConfigDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed an alert setting.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert Name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_alert_config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingAlertConfiguration">TeamLogAdminAlertingAlertConfiguration</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous alert configuration.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_alert_config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingAlertConfiguration">TeamLogAdminAlertingAlertConfiguration</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New
+alert configuration.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertingChangedAlertConfigType">
+    <h4 id="TeamLogAdminAlertingChangedAlertConfigType">TeamLogAdminAlertingChangedAlertConfigType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogAdminRole">
     <h4 id="TeamLogAdminRole">TeamLogAdminRole</h4>
 
@@ -131300,6 +132161,9 @@ state.</td>
             <td class="type">
             
                 
+<span class="param-type">'admin_alerting'</span>
+|
+
 <span class="param-type">'apps'</span>
 |
 
@@ -131479,6 +132343,39 @@ state.</td>
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>admin_alerting_changed_alert_config_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingChangedAlertConfigDetails">TeamLogAdminAlertingChangedAlertConfigDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+admin_alerting_changed_alert_config_details.</td>
+        </tr>
+
     
 
         <tr>
@@ -135384,6 +136281,39 @@ member_change_membership_type_details.</td>
             
 
             <td class="description last">Available if .tag is member_change_name_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>member_change_reseller_role_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogMemberChangeResellerRoleDetails">TeamLogMemberChangeResellerRoleDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+member_change_reseller_role_details.</td>
         </tr>
 
     
@@ -144748,6 +145678,39 @@ if .tag is team_merge_from_details.</td>
 
         <tr>
             
+                <td class="name"><code>team_profile_add_background_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamProfileAddBackgroundDetails">TeamLogTeamProfileAddBackgroundDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_profile_add_background_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>team_profile_add_logo_details</code></td>
             
 
@@ -144774,6 +145737,39 @@ if .tag is team_merge_from_details.</td>
             
 
             <td class="description last">- Available if .tag is team_profile_add_logo_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>team_profile_change_background_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamProfileChangeBackgroundDetails">TeamLogTeamProfileChangeBackgroundDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_profile_change_background_details.</td>
         </tr>
 
     
@@ -144873,6 +145869,39 @@ team_profile_change_logo_details.</td>
 
             <td class="description last">Available if .tag is
 team_profile_change_name_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>team_profile_remove_background_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamProfileRemoveBackgroundDetails">TeamLogTeamProfileRemoveBackgroundDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_profile_remove_background_details.</td>
         </tr>
 
     
@@ -146005,6 +147034,9 @@ to an internal error.</td>
             <td class="type">
             
                 
+<span class="param-type">'admin_alerting_changed_alert_config_details'</span>
+|
+
 <span class="param-type">'app_link_team_details'</span>
 |
 
@@ -146360,6 +147392,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'member_change_name_details'</span>
+|
+
+<span class="param-type">'member_change_reseller_role_details'</span>
 |
 
 <span class="param-type">'member_change_status_details'</span>
@@ -147220,7 +148255,13 @@ to an internal error.</td>
 <span class="param-type">'team_merge_to_details'</span>
 |
 
+<span class="param-type">'team_profile_add_background_details'</span>
+|
+
 <span class="param-type">'team_profile_add_logo_details'</span>
+|
+
+<span class="param-type">'team_profile_change_background_details'</span>
 |
 
 <span class="param-type">'team_profile_change_default_language_details'</span>
@@ -147230,6 +148271,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'team_profile_change_name_details'</span>
+|
+
+<span class="param-type">'team_profile_remove_background_details'</span>
 |
 
 <span class="param-type">'team_profile_remove_logo_details'</span>
@@ -147456,6 +148500,40 @@ to an internal error.</td>
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>admin_alerting_changed_alert_config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingChangedAlertConfigType">TeamLogAdminAlertingChangedAlertConfigType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+admin_alerting_changed_alert_config. (admin_alerting) Changed an alert
+setting</td>
+        </tr>
+
     
 
         <tr>
@@ -151409,6 +152487,39 @@ member_change_membership_type. (members) Changed membership type
 
             <td class="description last">Available if
 .tag is member_change_name. (members) Changed team member name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>member_change_reseller_role</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogMemberChangeResellerRoleType">TeamLogMemberChangeResellerRoleType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">- Available if .tag is member_change_reseller_role. (members) Changed team
+member reseller role</td>
         </tr>
 
     
@@ -160998,6 +162109,39 @@ team_merge_to. (team_profile) Merged this team into another team</td>
 
         <tr>
             
+                <td class="name"><code>team_profile_add_background</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamProfileAddBackgroundType">TeamLogTeamProfileAddBackgroundType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">- Available if .tag is team_profile_add_background. (team_profile) Added team
+background to display on shared link headers</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>team_profile_add_logo</code></td>
             
 
@@ -161026,6 +162170,40 @@ team_merge_to. (team_profile) Merged this team into another team</td>
             <td class="description last">Available
 if .tag is team_profile_add_logo. (team_profile) Added team logo to display
 on shared link headers</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>team_profile_change_background</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamProfileChangeBackgroundType">TeamLogTeamProfileChangeBackgroundType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_profile_change_background. (team_profile) Changed team background
+displayed on shared link headers</td>
         </tr>
 
     
@@ -161126,6 +162304,40 @@ logo displayed on shared link headers</td>
 
             <td class="description last">Available if .tag is team_profile_change_name. (team_profile) Changed team
 name</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>team_profile_remove_background</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamProfileRemoveBackgroundType">TeamLogTeamProfileRemoveBackgroundType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+team_profile_remove_background. (team_profile) Removed team background
+displayed on shared link headers</td>
         </tr>
 
     
@@ -162251,6 +163463,9 @@ merge your team into another Dropbox team</td>
             <td class="type">
             
                 
+<span class="param-type">'admin_alerting_changed_alert_config'</span>
+|
+
 <span class="param-type">'app_link_team'</span>
 |
 
@@ -162606,6 +163821,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'member_change_name'</span>
+|
+
+<span class="param-type">'member_change_reseller_role'</span>
 |
 
 <span class="param-type">'member_change_status'</span>
@@ -163466,7 +164684,13 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'team_merge_to'</span>
 |
 
+<span class="param-type">'team_profile_add_background'</span>
+|
+
 <span class="param-type">'team_profile_add_logo'</span>
+|
+
+<span class="param-type">'team_profile_change_background'</span>
 |
 
 <span class="param-type">'team_profile_change_default_language'</span>
@@ -163476,6 +164700,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'team_profile_change_name'</span>
+|
+
+<span class="param-type">'team_profile_remove_background'</span>
 |
 
 <span class="param-type">'team_profile_remove_logo'</span>
@@ -163707,6 +164934,9 @@ merge your team into another Dropbox team</td>
             <td class="type">
             
                 
+<span class="param-type">'admin_alerting_changed_alert_config'</span>
+|
+
 <span class="param-type">'app_link_team'</span>
 |
 
@@ -164062,6 +165292,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'member_change_name'</span>
+|
+
+<span class="param-type">'member_change_reseller_role'</span>
 |
 
 <span class="param-type">'member_change_status'</span>
@@ -164922,7 +166155,13 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'team_merge_to'</span>
 |
 
+<span class="param-type">'team_profile_add_background'</span>
+|
+
 <span class="param-type">'team_profile_add_logo'</span>
+|
+
+<span class="param-type">'team_profile_change_background'</span>
 |
 
 <span class="param-type">'team_profile_change_default_language'</span>
@@ -164932,6 +166171,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'team_profile_change_name'</span>
+|
+
+<span class="param-type">'team_profile_remove_background'</span>
 |
 
 <span class="param-type">'team_profile_remove_logo'</span>
@@ -182809,6 +184051,38 @@ sign-on policy. Might be missing due to historical data gap.</td>
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>reason</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Reason.</td>
+        </tr>
+
+    
     </tbody>
 </table>
 </dl>
@@ -196337,6 +197611,277 @@ Might be missing due to historical data gap.</td>
 <hr>
 <dt class="name" id="TeamLogMemberChangeNameType">
     <h4 id="TeamLogMemberChangeNameType">TeamLogMemberChangeNameType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogMemberChangeResellerRoleDetails">
+    <h4 id="TeamLogMemberChangeResellerRoleDetails">TeamLogMemberChangeResellerRoleDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed team member reseller role.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogResellerRole">TeamLogResellerRole</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New reseller role. This field is
+relevant when the reseller role is changed.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogResellerRole">TeamLogResellerRole</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous reseller role. This
+field is relevant when the reseller role is changed or when the reseller role
+is removed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogMemberChangeResellerRoleType">
+    <h4 id="TeamLogMemberChangeResellerRoleType">TeamLogMemberChangeResellerRoleType</h4>
 
     
 </dt>
@@ -224429,6 +225974,132 @@ Assets list.</td>
             
 
             <td class="description last">Reseller email.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogResellerRole">
+    <h4 id="TeamLogResellerRole">TeamLogResellerRole</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'not_reseller'</span>
+|
+
+<span class="param-type">'reseller_admin'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -271636,6 +273307,197 @@ into.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogTeamProfileAddBackgroundDetails">
+    <h4 id="TeamLogTeamProfileAddBackgroundDetails">TeamLogTeamProfileAddBackgroundDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Added team background to display on shared link headers.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamProfileAddBackgroundType">
+    <h4 id="TeamLogTeamProfileAddBackgroundType">TeamLogTeamProfileAddBackgroundType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogTeamProfileAddLogoDetails">
     <h4 id="TeamLogTeamProfileAddLogoDetails">TeamLogTeamProfileAddLogoDetails</h4>
 
@@ -271709,6 +273571,197 @@ into.</td>
 <hr>
 <dt class="name" id="TeamLogTeamProfileAddLogoType">
     <h4 id="TeamLogTeamProfileAddLogoType">TeamLogTeamProfileAddLogoType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamProfileChangeBackgroundDetails">
+    <h4 id="TeamLogTeamProfileChangeBackgroundDetails">TeamLogTeamProfileChangeBackgroundDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed team background displayed on shared link headers.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamProfileChangeBackgroundType">
+    <h4 id="TeamLogTeamProfileChangeBackgroundType">TeamLogTeamProfileChangeBackgroundType</h4>
 
     
 </dt>
@@ -272453,6 +274506,197 @@ missing due to historical data gap.</td>
 <hr>
 <dt class="name" id="TeamLogTeamProfileChangeNameType">
     <h4 id="TeamLogTeamProfileChangeNameType">TeamLogTeamProfileChangeNameType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamProfileRemoveBackgroundDetails">
+    <h4 id="TeamLogTeamProfileRemoveBackgroundDetails">TeamLogTeamProfileRemoveBackgroundDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Removed team background displayed on shared link headers.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamProfileRemoveBackgroundType">
+    <h4 id="TeamLogTeamProfileRemoveBackgroundType">TeamLogTeamProfileRemoveBackgroundType</h4>
 
     
 </dt>
@@ -309023,7 +311267,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2020-11-09T18:40:46+00:00
+		on 2020-11-10T18:04:42+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
