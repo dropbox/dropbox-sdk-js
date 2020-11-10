@@ -61,6 +61,8 @@ jobs:
           cd ..
           python generate_routes.py
           cd ..
+          git add generator/stone
+          git add generator/dropbox-api-spec
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3.4.1
         if: steps.git-diff-num.outputs.num-diff != 0
