@@ -13,10 +13,10 @@ import { getBaseURL, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
 
 let fetch;
-try {
-  fetch = require('node-fetch'); // eslint-disable-line global-require
-} catch (Exception) {
+if (typeof window !== 'undefined') {
   fetch = window.fetch.bind(window);
+} else {
+  fetch = require('node-fetch'); // eslint-disable-line global-require
 }
 
 const b64 = typeof btoa === 'undefined'
