@@ -24,6 +24,10 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
 const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
 const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
+function isAxios(func) {
+  return !(typeof func.post === 'undefined');
+}
+
 /**
  * @class DropboxAuth
  * @classdesc The DropboxAuth class that provides methods to manage, acquire, and refresh tokens.
@@ -266,8 +270,16 @@ export default class DropboxAuth {
       },
     };
 
-    return this.fetch(path, fetchOptions)
-      .then((res) => parseResponse(res));
+    if (isAxios(this.fetch)) {
+      fetchOptions.url = getBaseURL(host) + path;
+    }
+
+    return (isAxios(this.fetch) ? this.fetch(fetchOptions)
+      : this.fetch(getBaseURL(host) + path, fetchOptions))
+      .then((res) => parseResponse(res))
+      // Axios rejects the promise when request is failed
+      // but we still want to parse it as a response
+      .catch((error) => (error.isAxiosError ? parseResponse(error) : error));
   }
 
   /**
@@ -318,14 +330,22 @@ export default class DropboxAuth {
       method: 'POST',
     };
 
+    if (isAxios(this.fetch)) {
+      fetchOptions.url = refreshUrl;
+    }
+
     fetchOptions.headers = headers;
 
-    return this.fetch(refreshUrl, fetchOptions)
+    return (isAxios(this.fetch) ? this.fetch(fetchOptions)
+      : this.fetch(refreshUrl, fetchOptions))
       .then((res) => parseResponse(res))
       .then((res) => {
         this.setAccessToken(res.result.access_token);
         this.setAccessTokenExpiresAt(getTokenExpiresAtDate(res.result.expires_in));
-      });
+      })
+      // Axios rejects the promise when request is failed
+      // but we still want to parse it as a response
+      .catch((error) => (error.isAxiosError ? parseResponse(error) : error));
   }
 
   /**

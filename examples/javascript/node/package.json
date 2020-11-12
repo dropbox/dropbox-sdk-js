@@ -2,6 +2,7 @@
   "name": "js-node-examples",
   "version": "1.0.0",
   "dependencies": {
-    "dropbox": "file:../../../"
+    "dropbox": "file:../../../",
+    "axios": "^0.21.0"
   }
 }

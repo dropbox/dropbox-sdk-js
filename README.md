@@ -41,6 +41,7 @@ We provide [Examples][examples] to help get you started with a lot of the basic 
 
 - **Other Examples**
     - Basic - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/node), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/basic) ] - A simple example that takes in a token and fetches files from your Dropbox account.
+    - Basic w/ Axios - [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/node) ] - A simple example that shows how to use Axios as the HTTP request library
     - Download - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/node), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/download) ] - An example showing how to download a shared file.
     - Team As User - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/node), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/team-as-user) ] - An example showing how to act as a user.
     - Team - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/node), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/team) ] - An example showing how to use the team functionality and list team devices.

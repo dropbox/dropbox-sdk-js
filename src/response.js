@@ -9,7 +9,20 @@ export class DropboxResponse {
   }
 }
 
+function isAxios(res) {
+  return res.statusText;
+}
+
+function isResponseOk(res) {
+  return isAxios(res) ? res.statusText === 'OK' : res.ok;
+}
+
 function throwAsError(res) {
+  if (isAxios) {
+    return Promise.reject(new DropboxResponseError(
+      res.response.status, res.response.headers, res.response.data,
+    ));
+  }
   return res.text()
     .then((data) => {
       let errorObject;
@@ -24,8 +37,12 @@ function throwAsError(res) {
 }
 
 export function parseResponse(res) {
-  if (!res.ok) {
+  if (!isResponseOk(res)) {
     return throwAsError(res);
+  }
+
+  if (isAxios) {
+    return Promise.resolve(new DropboxResponse(res.status, res.headers, res.data));
   }
   return res.text()
     .then((data) => {
@@ -41,17 +58,25 @@ export function parseResponse(res) {
 }
 
 export function parseDownloadResponse(res) {
-  if (!res.ok) {
+  if (!isResponseOk(res)) {
     return throwAsError(res);
   }
+
   return new Promise((resolve) => {
-    if (isWindowOrWorker()) {
+    if (isAxios(res)) {
+      resolve(res.data);
+    } else if (isWindowOrWorker()) {
       res.blob().then((data) => resolve(data));
     } else {
       res.buffer().then((data) => resolve(data));
     }
   }).then((data) => {
-    const result = JSON.parse(res.headers.get('dropbox-api-result'));
+    let result;
+    if (isAxios(res)) {
+      result = JSON.parse(res.headers['dropbox-api-result']);
+    } else {
+      result = JSON.parse(res.headers.get('dropbox-api-result'));
+    }
 
     if (isWindowOrWorker()) {
       result.fileBlob = data;
