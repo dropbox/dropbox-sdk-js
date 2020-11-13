@@ -4,7 +4,7 @@ This document is designed to show you how to upgrade to the latest version of th
 
 # Upgrading from v7.X.X to v8.0.0
 
-## 1. Throwing Errors as `DropboxError` rather than  a literal object
+## 1. Throwing Errors as `DropboxResponseError` rather than  a literal object
 
 We have created a new Error class called `DropboxResponseError` which contains the same members as the literal that was thrown, but in a cleaner format. It also allows you to leverage the fact this class now extends the builtin `Error` class.
 
