@@ -277,8 +277,7 @@ export default class DropboxAuth {
    */
   checkAndRefreshAccessToken() {
     const canRefresh = this.getRefreshToken() && this.getClientId();
-    const needsRefresh = this.getAccessTokenExpiresAt()
-      && (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
+    const needsRefresh = !this.getAccessTokenExpiresAt() || (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
     const needsToken = !this.getAccessToken();
     if ((needsRefresh || needsToken) && canRefresh) {
       return this.refreshAccessToken();
