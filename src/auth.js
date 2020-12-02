@@ -234,7 +234,7 @@ export default class DropboxAuth {
    * @arg {String} redirectUri - A URL to redirect the user to after
    * authenticating. This must be added to your app through the admin interface.
    * @arg {String} code - An OAuth2 code.
-   * @returns {Object} - An object containing the token, expiration, refresh, and scope (if applicable)
+   * @returns {Object} An object containing the token and related info (if applicable)
   */
   getAccessTokenFromCode(redirectUri, code) {
     const clientId = this.getClientId();
