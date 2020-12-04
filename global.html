@@ -5725,8 +5725,8 @@ namespace.).</td>
             
 
             <td class="description last">Available if .tag is invalid_root. The root namespace id in
-Dropbox-API-Path-Root header is not valid. The value of this error is use's
-latest root info.</td>
+Dropbox-API-Path-Root header is not valid. The value of this error is the
+user's latest root info.</td>
         </tr>
 
     
@@ -110769,6 +110769,148 @@ reseller. Action done by reseller.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogAdminAlertCategoryEnum">
+    <h4 id="TeamLogAdminAlertCategoryEnum">TeamLogAdminAlertCategoryEnum</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Alert category
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'account_takeover'</span>
+|
+
+<span class="param-type">'data_loss_protection'</span>
+|
+
+<span class="param-type">'malware_sharing'</span>
+|
+
+<span class="param-type">'massive_file_operation'</span>
+|
+
+<span class="param-type">'na'</span>
+|
+
+<span class="param-type">'threat_management'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogAdminAlertingAlertConfiguration">
     <h4 id="TeamLogAdminAlertingAlertConfiguration">TeamLogAdminAlertingAlertConfiguration</h4>
 
@@ -111265,6 +111407,461 @@ alert configuration.</td>
             
 
             <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertingTriggeredAlertDetails">
+    <h4 id="TeamLogAdminAlertingTriggeredAlertDetails">TeamLogAdminAlertingTriggeredAlertDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Triggered security alert.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_severity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertSeverityEnum">TeamLogAdminAlertSeverityEnum</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert severity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertCategoryEnum">TeamLogAdminAlertCategoryEnum</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert category.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_instance_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert ID.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertingTriggeredAlertType">
+    <h4 id="TeamLogAdminAlertingTriggeredAlertType">TeamLogAdminAlertingTriggeredAlertType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertSeverityEnum">
+    <h4 id="TeamLogAdminAlertSeverityEnum">TeamLogAdminAlertSeverityEnum</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Alert severity
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'high'</span>
+|
+
+<span class="param-type">'info'</span>
+|
+
+<span class="param-type">'low'</span>
+|
+
+<span class="param-type">'medium'</span>
+|
+
+<span class="param-type">'na'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -132839,6 +133436,39 @@ admin_alerting_changed_alert_config_details.</td>
 
         <tr>
             
+                <td class="name"><code>admin_alerting_triggered_alert_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingTriggeredAlertDetails">TeamLogAdminAlertingTriggeredAlertDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+admin_alerting_triggered_alert_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>app_link_team_details</code></td>
             
 
@@ -133328,6 +133958,39 @@ governance_policy_add_folders_details.</td>
 
         <tr>
             
+                <td class="name"><code>governance_policy_add_folder_failed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyAddFolderFailedDetails">TeamLogGovernancePolicyAddFolderFailedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_add_folder_failed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>governance_policy_create_details</code></td>
             
 
@@ -133460,6 +134123,72 @@ governance_policy_edit_duration_details.</td>
 
         <tr>
             
+                <td class="name"><code>governance_policy_export_created_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyExportCreatedDetails">TeamLogGovernancePolicyExportCreatedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_export_created_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_export_removed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyExportRemovedDetails">TeamLogGovernancePolicyExportRemovedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_export_removed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>governance_policy_remove_folders_details</code></td>
             
 
@@ -133487,6 +134216,72 @@ governance_policy_edit_duration_details.</td>
 
             <td class="description last">Available if .tag is
 governance_policy_remove_folders_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_report_created_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyReportCreatedDetails">TeamLogGovernancePolicyReportCreatedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_report_created_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_zip_part_downloaded_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyZipPartDownloadedDetails">TeamLogGovernancePolicyZipPartDownloadedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_zip_part_downloaded_details.</td>
         </tr>
 
     
@@ -147562,6 +148357,9 @@ to an internal error.</td>
 <span class="param-type">'admin_alerting_changed_alert_config_details'</span>
 |
 
+<span class="param-type">'admin_alerting_triggered_alert_details'</span>
+|
+
 <span class="param-type">'app_link_team_details'</span>
 |
 
@@ -147607,6 +148405,9 @@ to an internal error.</td>
 <span class="param-type">'governance_policy_add_folders_details'</span>
 |
 
+<span class="param-type">'governance_policy_add_folder_failed_details'</span>
+|
+
 <span class="param-type">'governance_policy_create_details'</span>
 |
 
@@ -147619,7 +148420,19 @@ to an internal error.</td>
 <span class="param-type">'governance_policy_edit_duration_details'</span>
 |
 
+<span class="param-type">'governance_policy_export_created_details'</span>
+|
+
+<span class="param-type">'governance_policy_export_removed_details'</span>
+|
+
 <span class="param-type">'governance_policy_remove_folders_details'</span>
+|
+
+<span class="param-type">'governance_policy_report_created_details'</span>
+|
+
+<span class="param-type">'governance_policy_zip_part_downloaded_details'</span>
 |
 
 <span class="param-type">'legal_holds_activate_a_hold_details'</span>
@@ -149069,6 +149882,39 @@ setting</td>
 
         <tr>
             
+                <td class="name"><code>admin_alerting_triggered_alert</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingTriggeredAlertType">TeamLogAdminAlertingTriggeredAlertType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+admin_alerting_triggered_alert. (admin_alerting) Triggered security alert</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>app_link_team</code></td>
             
 
@@ -149567,6 +150413,40 @@ governance_policy_add_folders. (data_governance) Added folders to policy</td>
 
         <tr>
             
+                <td class="name"><code>governance_policy_add_folder_failed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyAddFolderFailedType">TeamLogGovernancePolicyAddFolderFailedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_add_folder_failed. (data_governance) Couldn't add a folder
+to a policy</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>governance_policy_create</code></td>
             
 
@@ -149699,6 +150579,72 @@ governance_policy_edit_duration. (data_governance) Changed policy duration</td>
 
         <tr>
             
+                <td class="name"><code>governance_policy_export_created</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyExportCreatedType">TeamLogGovernancePolicyExportCreatedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_export_created. (data_governance) Created a policy download</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_export_removed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyExportRemovedType">TeamLogGovernancePolicyExportRemovedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_export_removed. (data_governance) Removed a policy download</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>governance_policy_remove_folders</code></td>
             
 
@@ -149727,6 +150673,74 @@ governance_policy_edit_duration. (data_governance) Changed policy duration</td>
             <td class="description last">Available if .tag is
 governance_policy_remove_folders. (data_governance) Removed folders from
 policy</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_report_created</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyReportCreatedType">TeamLogGovernancePolicyReportCreatedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_report_created. (data_governance) Created a summary report
+for a policy</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_zip_part_downloaded</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyZipPartDownloadedType">TeamLogGovernancePolicyZipPartDownloadedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_zip_part_downloaded. (data_governance) Downloaded content
+from a policy</td>
         </tr>
 
     
@@ -164064,6 +165078,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'admin_alerting_changed_alert_config'</span>
 |
 
+<span class="param-type">'admin_alerting_triggered_alert'</span>
+|
+
 <span class="param-type">'app_link_team'</span>
 |
 
@@ -164109,6 +165126,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'governance_policy_add_folders'</span>
 |
 
+<span class="param-type">'governance_policy_add_folder_failed'</span>
+|
+
 <span class="param-type">'governance_policy_create'</span>
 |
 
@@ -164121,7 +165141,19 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'governance_policy_edit_duration'</span>
 |
 
+<span class="param-type">'governance_policy_export_created'</span>
+|
+
+<span class="param-type">'governance_policy_export_removed'</span>
+|
+
 <span class="param-type">'governance_policy_remove_folders'</span>
+|
+
+<span class="param-type">'governance_policy_report_created'</span>
+|
+
+<span class="param-type">'governance_policy_zip_part_downloaded'</span>
 |
 
 <span class="param-type">'legal_holds_activate_a_hold'</span>
@@ -165541,6 +166573,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'admin_alerting_changed_alert_config'</span>
 |
 
+<span class="param-type">'admin_alerting_triggered_alert'</span>
+|
+
 <span class="param-type">'app_link_team'</span>
 |
 
@@ -165586,6 +166621,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'governance_policy_add_folders'</span>
 |
 
+<span class="param-type">'governance_policy_add_folder_failed'</span>
+|
+
 <span class="param-type">'governance_policy_create'</span>
 |
 
@@ -165598,7 +166636,19 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'governance_policy_edit_duration'</span>
 |
 
+<span class="param-type">'governance_policy_export_created'</span>
+|
+
+<span class="param-type">'governance_policy_export_removed'</span>
+|
+
 <span class="param-type">'governance_policy_remove_folders'</span>
+|
+
+<span class="param-type">'governance_policy_report_created'</span>
+|
+
+<span class="param-type">'governance_policy_zip_part_downloaded'</span>
 |
 
 <span class="param-type">'legal_holds_activate_a_hold'</span>
@@ -182669,6 +183719,382 @@ sign-on policy. Might be missing due to historical data gap.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogGovernancePolicyAddFolderFailedDetails">
+    <h4 id="TeamLogGovernancePolicyAddFolderFailedDetails">TeamLogGovernancePolicyAddFolderFailedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Couldn't add a folder to a policy.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy ID.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>folder</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Folder.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>policy_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPolicyType">TeamLogPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy type.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>reason</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Reason.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyAddFolderFailedType">
+    <h4 id="TeamLogGovernancePolicyAddFolderFailedType">TeamLogGovernancePolicyAddFolderFailedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogGovernancePolicyAddFoldersDetails">
     <h4 id="TeamLogGovernancePolicyAddFoldersDetails">TeamLogGovernancePolicyAddFoldersDetails</h4>
 
@@ -184483,6 +185909,694 @@ sign-on policy. Might be missing due to historical data gap.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogGovernancePolicyExportCreatedDetails">
+    <h4 id="TeamLogGovernancePolicyExportCreatedDetails">TeamLogGovernancePolicyExportCreatedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Created a policy download.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy ID.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>export_name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Export name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>policy_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPolicyType">TeamLogPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy type.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyExportCreatedType">
+    <h4 id="TeamLogGovernancePolicyExportCreatedType">TeamLogGovernancePolicyExportCreatedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyExportRemovedDetails">
+    <h4 id="TeamLogGovernancePolicyExportRemovedDetails">TeamLogGovernancePolicyExportRemovedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Removed a policy download.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy ID.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>export_name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Export name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>policy_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPolicyType">TeamLogPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy type.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyExportRemovedType">
+    <h4 id="TeamLogGovernancePolicyExportRemovedType">TeamLogGovernancePolicyExportRemovedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogGovernancePolicyRemoveFoldersDetails">
     <h4 id="TeamLogGovernancePolicyRemoveFoldersDetails">TeamLogGovernancePolicyRemoveFoldersDetails</h4>
 
@@ -184743,6 +186857,696 @@ sign-on policy. Might be missing due to historical data gap.</td>
 <hr>
 <dt class="name" id="TeamLogGovernancePolicyRemoveFoldersType">
     <h4 id="TeamLogGovernancePolicyRemoveFoldersType">TeamLogGovernancePolicyRemoveFoldersType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyReportCreatedDetails">
+    <h4 id="TeamLogGovernancePolicyReportCreatedDetails">TeamLogGovernancePolicyReportCreatedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Created a summary report for a policy.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy ID.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>policy_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPolicyType">TeamLogPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy type.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyReportCreatedType">
+    <h4 id="TeamLogGovernancePolicyReportCreatedType">TeamLogGovernancePolicyReportCreatedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyZipPartDownloadedDetails">
+    <h4 id="TeamLogGovernancePolicyZipPartDownloadedDetails">TeamLogGovernancePolicyZipPartDownloadedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Downloaded content from a policy.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy ID.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>export_name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Export name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>policy_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPolicyType">TeamLogPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy type.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>part</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Part.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyZipPartDownloadedType">
+    <h4 id="TeamLogGovernancePolicyZipPartDownloadedType">TeamLogGovernancePolicyZipPartDownloadedType</h4>
 
     
 </dt>
@@ -311877,7 +314681,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2020-12-04T00:32:14+00:00
+		on 2020-12-04T00:52:56+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
