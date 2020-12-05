@@ -15,6 +15,15 @@ if (typeof window !== 'undefined') {
   crypto = require('crypto'); // eslint-disable-line global-require
 }
 
+let Encoder;
+try {
+  util = require('util'); // eslint-disable-line global-require
+  Encoder = util.TextEncoder;
+} catch (e) {
+  console.log(e);
+  Encoder = TextEncoder;
+}
+
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
 const PKCELength = 128;
@@ -136,7 +145,8 @@ export default class DropboxAuth {
 
   generatePKCECodes() {
     let codeVerifier = crypto.randomBytes(PKCELength);
-    codeVerifier = codeVerifier.toString('base64')
+    codeVerifier = codeVerifier
+      .toString('base64')
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=/g, '')
@@ -145,8 +155,12 @@ export default class DropboxAuth {
 
     const encoder = new TextEncoder();
     const codeData = encoder.encode(codeVerifier);
-    let codeChallenge = crypto.createHash('sha256').update(codeData).digest();
-    codeChallenge = codeChallenge.toString('base64')
+    let codeChallenge = crypto
+      .createHash('sha256')
+      .update(codeData)
+      .digest();
+    codeChallenge = codeChallenge
+      .toString('base64')
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
       .replace(/=/g, '');
@@ -176,7 +190,15 @@ export default class DropboxAuth {
    * can be used if you are unable to safely retrieve your app secret
    * @returns {String} Url to send user to for Dropbox API authentication
    */
-  getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = null, scope = null, includeGrantedScopes = 'none', usePKCE = false) {
+  getAuthenticationUrl(
+    redirectUri,
+    state,
+    authType = 'token',
+    tokenAccessType = null,
+    scope = null,
+    includeGrantedScopes = 'none',
+    usePKCE = false,
+  ) {
     const clientId = this.getClientId();
     const baseUrl = BaseAuthorizeUrl;
 
@@ -235,7 +257,7 @@ export default class DropboxAuth {
    * authenticating. This must be added to your app through the admin interface.
    * @arg {String} code - An OAuth2 code.
    * @returns {Object} An object containing the token and related info (if applicable)
-  */
+   */
   getAccessTokenFromCode(redirectUri, code) {
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
@@ -252,7 +274,9 @@ export default class DropboxAuth {
       path += `&client_secret=${clientSecret}`;
     } else {
       if (!this.codeChallenge) {
-        throw new Error('You must use PKCE when generating the authorization URL to not include a client secret');
+        throw new Error(
+          'You must use PKCE when generating the authorization URL to not include a client secret',
+        );
       }
       path += `&code_verifier=${this.codeVerifier}`;
     }
@@ -267,8 +291,7 @@ export default class DropboxAuth {
       },
     };
 
-    return this.fetch(path, fetchOptions)
-      .then((res) => parseResponse(res));
+    return this.fetch(path, fetchOptions).then((res) => parseResponse(res));
   }
 
   /**
@@ -279,7 +302,7 @@ export default class DropboxAuth {
   checkAndRefreshAccessToken() {
     const canRefresh = this.getRefreshToken() && this.getClientId();
     const needsRefresh = !this.getAccessTokenExpiresAt()
-      || (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
+      || new Date(Date.now() + TokenExpirationBuffer) >= this.getAccessTokenExpiresAt();
     const needsToken = !this.getAccessToken();
     if ((needsRefresh || needsToken) && canRefresh) {
       return this.refreshAccessToken();
@@ -342,9 +365,12 @@ export default class DropboxAuth {
     const browser = window.open(url, '_blank');
 
     function onLoadError(event) {
-      if (event.code !== -999) { // Workaround to fix wrong behavior on cordova-plugin-inappbrowser
+      if (event.code !== -999) {
+        // Workaround to fix wrong behavior on cordova-plugin-inappbrowser
         // Try to avoid a browser crash on browser.close().
-        window.setTimeout(() => { browser.close(); }, 10);
+        window.setTimeout(() => {
+          browser.close();
+        }, 10);
         errorCallback();
       }
     }
@@ -355,7 +381,9 @@ export default class DropboxAuth {
 
       if (errorIndex > -1) {
         // Try to avoid a browser crash on browser.close().
-        window.setTimeout(() => { browser.close(); }, 10);
+        window.setTimeout(() => {
+          browser.close();
+        }, 10);
         errorCallback();
       } else {
         const tokenLabel = '#access_token=';
@@ -364,7 +392,9 @@ export default class DropboxAuth {
         if (tokenIndex > -1) {
           tokenIndex += tokenLabel.length;
           // Try to avoid a browser crash on browser.close().
-          window.setTimeout(() => { browser.close(); }, 10);
+          window.setTimeout(() => {
+            browser.close();
+          }, 10);
 
           const accessToken = event.url.substring(tokenIndex, tokenTypeIndex);
           successCallback(accessToken);
