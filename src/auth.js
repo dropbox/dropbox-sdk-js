@@ -153,7 +153,7 @@ export default class DropboxAuth {
       .substr(0, 128);
     this.codeVerifier = codeVerifier;
 
-    const encoder = new TextEncoder();
+    const encoder = new Encoder();
     const codeData = encoder.encode(codeVerifier);
     let codeChallenge = crypto
       .createHash('sha256')
