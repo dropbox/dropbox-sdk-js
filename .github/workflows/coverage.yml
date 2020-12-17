@@ -40,9 +40,18 @@ jobs:
           npm install
       - name: Generate Integration Test Coverage
         env:
-          DROPBOX_TOKEN: ${{ secrets.DROPBOX_TOKEN }}
-          DROPBOX_TEAM_TOKEN: ${{ secrets.DROPBOX_TEAM_TOKEN }}
-          DROPBOX_USER_ID: ${{ secrets.DROPBOX_USER_ID }}
+          LEGACY_USER_DROPBOX_TOKEN: ${{ secrets.LEGACY_USER_DROPBOX_TOKEN }}
+          LEGACY_USER_CLIENT_ID: ${{ secrets.LEGACY_USER_CLIENT_ID }}
+          LEGACY_USER_CLIENT_SECRET: ${{ secrets.LEGACY_USER_CLIENT_SECRET }}
+          LEGACY_USER_REFRESH_TOKEN: ${{ secrets.LEGACY_USER_REFRESH_TOKEN }}
+          SCOPED_USER_DROPBOX_TOKEN: ${{ secrets.SCOPED_USER_DROPBOX_TOKEN }}
+          SCOPED_USER_CLIENT_ID: ${{ secrets.SCOPED_USER_CLIENT_ID }}
+          SCOPED_USER_CLIENT_SECRET: ${{ secrets.SCOPED_USER_CLIENT_SECRET }}
+          SCOPED_USER_REFRESH_TOKEN: ${{ secrets.SCOPED_USER_REFRESH_TOKEN }}
+          SCOPED_TEAM_DROPBOX_TOKEN: ${{ secrets.SCOPED_TEAM_DROPBOX_TOKEN }}
+          SCOPED_TEAM_CLIENT_ID: ${{ secrets.SCOPED_TEAM_CLIENT_ID }}
+          SCOPED_TEAM_CLIENT_SECRET: ${{ secrets.SCOPED_TEAM_CLIENT_SECRET }}
+          SCOPED_TEAM_REFRESH_TOKEN: ${{ secrets.SCOPED_TEAM_REFRESH_TOKEN }}
           DROPBOX_SHARED_LINK: ${{ secrets.DROPBOX_SHARED_LINK }}
         run: |
           npm run coverage:integration
