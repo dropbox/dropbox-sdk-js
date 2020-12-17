@@ -57,13 +57,13 @@ var dropbox2 = new Dropbox.Dropbox({
 });
 dropbox.usersGetCurrentAccount()
     .then(function (response) {
-    response.status;
-    response.result;
-    response.headers;
+    var status = response.status;
+    var result = response.result;
+    var headers = response.headers;
 })
     .catch(function (error) {
-    error.status;
-    error.headers;
-    error.error;
+    var status = error.status;
+    var headers = error.headers;
+    var errorObject = error.error;
 });
 dropbox2.usersGetCurrentAccount();

@@ -5,6 +5,7 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
+import { Headers } from 'node-fetch';
 import * as Dropbox from '../../types/index'; // eslint-disable-line
 
 // Check DropboxAuth Constructor and Methods
@@ -63,13 +64,13 @@ const dropbox2 = new Dropbox.Dropbox({
 
 dropbox.usersGetCurrentAccount()
   .then((response: Dropbox.DropboxResponse<Dropbox.users.FullAccount>) => {
-    response.status;
-    response.result;
-    response.headers;
+    const { status } = response;
+    const { result } = response;
+    const { headers } = response;
   })
-  .catch((error) => {
-    error.status;
-    error.headers;
-    error.error;
+  .catch((error: Dropbox.DropboxResponseError<Dropbox.users.GetAccountError>) => {
+    const { status } = error;
+    const { headers } = error;
+    const errorObject: Dropbox.users.GetAccountError = error.error;
   });
 dropbox2.usersGetCurrentAccount();

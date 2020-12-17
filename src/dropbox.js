@@ -13,10 +13,10 @@ import { getBaseURL, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
 
 let fetch;
-try {
-  fetch = require('node-fetch'); // eslint-disable-line global-require
-} catch (Exception) {
+if (typeof window !== 'undefined') {
   fetch = window.fetch.bind(window);
+} else {
+  fetch = require('node-fetch'); // eslint-disable-line global-require
 }
 
 const b64 = typeof btoa === 'undefined'
@@ -39,7 +39,7 @@ const b64 = typeof btoa === 'undefined'
  * If this is set, the remaining parameters will be ignored.
  * @arg {String} [options.accessToken] - An access token for making authenticated
  * requests.
- * @arg {Date} [options.AccessTokenExpiresAt] - Date of the current access token's
+ * @arg {Date} [options.accessTokenExpiresAt] - Date of the current access token's
  * expiration (if available)
  * @arg {String} [options.refreshToken] - A refresh token for retrieving access tokens
  * @arg {String} [options.clientId] - The client id for your app. Used to create
