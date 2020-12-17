@@ -22,7 +22,8 @@ const executeTest = (testContainer) => {
 
 describe('Browser Definitions', () => {
   describe('ES Build', () => {
-    let html; let dom; // let
+    let html;
+    let dom; // let
     // document;
 
     before((done) => {
@@ -59,8 +60,9 @@ describe('Browser Definitions', () => {
   });
 
   describe('UMD Build', () => {
-    let html; let dom; let
-      document;
+    let html;
+    let dom;
+    let document;
 
     before((done) => {
       const importPath = path.resolve(__dirname, '../../dist/Dropbox-sdk.js');
@@ -78,6 +80,13 @@ describe('Browser Definitions', () => {
         runScripts: 'dangerously',
         resources: 'usable',
       });
+
+      if (typeof dom.window.TextEncoder === 'undefined') {
+        const { TextEncoder, TextDecoder } = require('util'); // eslint-disable-line global-require
+        dom.window.TextEncoder = TextEncoder;
+        dom.window.TextDecoder = TextDecoder;
+      }
+
       dom.window.onload = () => {
         document = dom.window.document;
         done();
@@ -93,8 +102,9 @@ describe('Browser Definitions', () => {
   });
 
   describe('UMD Min Build', () => {
-    let html; let dom; let
-      document;
+    let html;
+    let dom;
+    let document;
 
     before((done) => {
       const importPath = path.resolve(__dirname, '../../dist/Dropbox-sdk.min.js');
@@ -112,6 +122,13 @@ describe('Browser Definitions', () => {
         runScripts: 'dangerously',
         resources: 'usable',
       });
+
+      if (typeof dom.window.TextEncoder === 'undefined') {
+        const { TextEncoder, TextDecoder } = require('util'); // eslint-disable-line global-require
+        dom.window.TextEncoder = TextEncoder;
+        dom.window.TextDecoder = TextDecoder;
+      }
+
       dom.window.onload = () => {
         document = dom.window.document;
         done();
