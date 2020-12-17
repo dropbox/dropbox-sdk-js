@@ -6,8 +6,7 @@ import path from 'path';
 
 const SDK_IMPORT_HOLDER = 'sdkscript';
 
-const setImport = (rawHTML, importPath) =>
-  rawHTML.replace(SDK_IMPORT_HOLDER, `file://${importPath}`);
+const setImport = (rawHTML, importPath) => rawHTML.replace(SDK_IMPORT_HOLDER, `file://${importPath}`);
 
 const executeTest = (testContainer) => {
   const children = testContainer.childNodes;
@@ -83,7 +82,7 @@ describe('Browser Definitions', () => {
       });
 
       if (typeof dom.window.TextEncoder === 'undefined') {
-        const { TextEncoder, TextDecoder } = require('util');
+        const { TextEncoder, TextDecoder } = require('util'); // eslint-disable-line global-require
         dom.window.TextEncoder = TextEncoder;
         dom.window.TextDecoder = TextDecoder;
       }
@@ -125,7 +124,7 @@ describe('Browser Definitions', () => {
       });
 
       if (typeof dom.window.TextEncoder === 'undefined') {
-        const { TextEncoder, TextDecoder } = require('util');
+        const { TextEncoder, TextDecoder } = require('util'); // eslint-disable-line global-require
         dom.window.TextEncoder = TextEncoder;
         dom.window.TextDecoder = TextDecoder;
       }

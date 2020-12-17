@@ -16,7 +16,7 @@ try {
 }
 
 if (typeof TextEncoder === 'undefined') {
-  const { TextEncoder } = require('util'); // eslint-disable-line global-require
+  TextEncoder = require('util').TextEncoder; // eslint-disable-line global-require
 }
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
@@ -285,7 +285,7 @@ export default class DropboxAuth {
       },
     };
 
-    return this.fetch(path, fetchOptions).then(res => parseResponse(res));
+    return this.fetch(path, fetchOptions).then((res) => parseResponse(res));
   }
 
   /**
@@ -340,7 +340,7 @@ export default class DropboxAuth {
     fetchOptions.headers = headers;
 
     return this.fetch(refreshUrl, fetchOptions)
-      .then(res => parseResponse(res))
+      .then((res) => parseResponse(res))
       .then((res) => {
         this.setAccessToken(res.result.access_token);
         this.setAccessTokenExpiresAt(getTokenExpiresAtDate(res.result.expires_in));
