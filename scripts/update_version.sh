@@ -7,7 +7,7 @@ else
     set -ex
     NEW_VERSION=$1
 
-    git checkout master
+    git checkout main
     git reset --hard HEAD
 
     git tag "v${NEW_VERSION}" -m "${NEW_VERSION} release"

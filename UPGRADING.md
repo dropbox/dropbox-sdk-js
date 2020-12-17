@@ -2,6 +2,12 @@
 
 This document is designed to show you how to upgrade to the latest version of the SDK accomodating any breaking changes introduced by major version updates.  If you find any issues with either this guide on upgrading or the changes introduced in the new version, please see [CONTRIBUTING.md][contributing]
 
+# Upgrading from v7.X.X to v8.0.0
+
+## 1. Throwing Errors as `DropboxResponseError` rather than  a literal object
+
+We have created a new Error class called `DropboxResponseError` which contains the same members as the literal that was thrown, but in a cleaner format. It also allows you to leverage the fact this class now extends the builtin `Error` class.
+
 # Upgrading from v6.X.X to v7.0.0
 
 ## 1. Fixing the Typescript argument parameter bug ([#41](https://github.com/dropbox/dropbox-sdk-js/issues/41))
@@ -122,4 +128,4 @@ Previously we have provided guidance to SDK users that they should not rely on t
 
 As a result, you should not pass in your own `fetch` to the Dropbox constructor unless you have a specific reason to do so (mocking, etc). Note that if you opt to pass in fetch to support your use case, you may need to bind your fetch to the appropriate context e.g. `fetch.bind(your_context)`.
 
-[contributing]: https://github.com/dropbox/dropbox-sdk-js/blob/master/CONTRIBUTING.md
+[contributing]: https://github.com/dropbox/dropbox-sdk-js/blob/main/CONTRIBUTING.md

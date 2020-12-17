@@ -41,8 +41,9 @@ export class DropboxAuth {
    * @param redirectUri A URL to redirect the user to after authenticating.
    *   This must be added to your app through the admin interface.
    * @param code An OAuth2 code.
+   * @returns {Object} An object containing the token and related info (if applicable)
    */
-  getAccessTokenFromCode(redirectUri: string, code: string): Promise<DropboxResponse<string>>;
+  getAccessTokenFromCode(redirectUri: string, code: string): Promise<DropboxResponse<object>>;
 
   /**
    * Get a URL that can be used to authenticate users for the Dropbox API.
@@ -155,6 +156,28 @@ export interface DropboxOptions {
   clientSecret?: string;
   // The fetch library for making requests.
   fetch?: Function;
+}
+
+export class DropboxResponseError<T> {
+  /**
+   * The response class of HTTP errors from API calls using the Dropbox SDK.
+   */
+  constructor(status: number, headers: Headers, error: T);
+
+  /**
+   * HTTP Status code of the call
+   */
+  status: number;
+
+  /**
+   * Headers returned from the call
+   */
+  headers: Headers;
+
+  /**
+   * Serialized Error of the call
+   */
+  error: T;
 }
 
 export class DropboxResponse<T> {
@@ -1301,10 +1324,25 @@ export class Dropbox {
      * this endpoint will count as data transport calls for any Dropbox Business
      * teams with a limit on the number of data transport calls allowed per
      * month. For more information, see the [Data transport limit page]{@link
-     * https://www.dropbox.com/developers/reference/data-transport-limit}.
+     * https://www.dropbox.com/developers/reference/data-transport-limit}. By
+     * default, upload sessions require you to send content of the file in
+     * sequential order via consecutive uploadSessionStart(),
+     * uploadSessionAppendV2(), uploadSessionFinish() calls. For better
+     * performance, you can instead optionally use a
+     * UploadSessionType.concurrent upload session. To start a new concurrent
+     * session, set UploadSessionStartArg.session_type to
+     * UploadSessionType.concurrent. After that, you can send file data in
+     * concurrent uploadSessionAppendV2() requests. Finally finish the session
+     * with uploadSessionFinish(). There are couple of constraints with
+     * concurrent sessions to make them work. You can not send data with
+     * uploadSessionStart() or uploadSessionFinish() call, only with
+     * uploadSessionAppendV2() call. Also data uploaded in
+     * uploadSessionAppendV2() call must be multiple of 4194304 bytes (except
+     * for last uploadSessionAppendV2() with UploadSessionStartArg.close to
+     * true, that may contain any remaining data).
      *
      * When an error occurs, the route rejects the promise with type
-     * Error<void>.
+     * Error<files.UploadSessionStartError>.
      * @param arg The request parameters.
      */
     public filesUploadSessionStart(arg: files.UploadSessionStartArg): Promise<DropboxResponse<files.UploadSessionStartResult>>;

@@ -1,6 +1,7 @@
 import chai from 'chai';
 import sinon from 'sinon';
 
+import { fail } from 'assert';
 import { RPC, USER_AUTH } from '../../src/constants.js';
 import { Dropbox } from '../../index.js';
 
@@ -21,7 +22,10 @@ describe('Dropbox', () => {
     it('calls the correct request method', () => {
       const dbx = new Dropbox();
       const rpcSpy = sinon.spy(dbx, 'rpcRequest');
-      dbx.request('path', {}, USER_AUTH, 'api', RPC);
+      dbx.request('path', {}, USER_AUTH, 'api', RPC)
+        .catch((error) => {
+          fail(error);
+        });
       chai.assert.isTrue(rpcSpy.calledOnce);
       chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);

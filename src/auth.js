@@ -2,17 +2,17 @@ import { getTokenExpiresAtDate } from './utils.js';
 import { parseResponse } from './response.js';
 
 let fetch;
-try {
-  fetch = require('node-fetch'); // eslint-disable-line global-require
-} catch (Exception) {
+if (typeof window !== 'undefined') {
   fetch = window.fetch.bind(window);
+} else {
+  fetch = require('node-fetch'); // eslint-disable-line global-require
 }
 
 let crypto;
-try {
-  crypto = require('crypto'); // eslint-disable-line global-require
-} catch (Exception) {
+if (typeof window !== 'undefined') {
   crypto = window.crypto || window.msCrypto; // for IE11
+} else {
+  crypto = require('crypto'); // eslint-disable-line global-require
 }
 
 if (typeof TextEncoder === 'undefined') {
@@ -251,7 +251,8 @@ export default class DropboxAuth {
    * @arg {String} redirectUri - A URL to redirect the user to after
    * authenticating. This must be added to your app through the admin interface.
    * @arg {String} code - An OAuth2 code.
-   */
+   * @returns {Object} An object containing the token and related info (if applicable)
+  */
   getAccessTokenFromCode(redirectUri, code) {
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
@@ -295,9 +296,8 @@ export default class DropboxAuth {
    */
   checkAndRefreshAccessToken() {
     const canRefresh = this.getRefreshToken() && this.getClientId();
-    const needsRefresh =
-      this.getAccessTokenExpiresAt() &&
-      new Date(Date.now() + TokenExpirationBuffer) >= this.getAccessTokenExpiresAt();
+    const needsRefresh = !this.getAccessTokenExpiresAt()
+      || (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
     const needsToken = !this.getAccessToken();
     if ((needsRefresh || needsToken) && canRefresh) {
       return this.refreshAccessToken();
