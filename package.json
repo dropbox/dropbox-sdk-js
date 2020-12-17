@@ -83,6 +83,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "cross-env": "^7.0.2",
     "eslint": "^7.9.0",
     "eslint-config-airbnb-base": "^14.2.0",
