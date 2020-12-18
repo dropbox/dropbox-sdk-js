@@ -1,4 +1,6 @@
+import { fail } from 'assert';
 import chai from 'chai';
+import sinon from 'sinon';
 
 import { Dropbox, DropboxAuth } from '../../index.js';
 
@@ -111,6 +113,234 @@ describe('DropboxAuth', () => {
           }
         }
       }
+    });
+  });
+
+  describe('clientSecret', () => {
+    it('can be set in the constructor', () => {
+      const dbx = new Dropbox({ clientSecret: 'foo' });
+      chai.assert.equal(dbx.auth.getClientSecret(), 'foo');
+    });
+
+    it('is undefined if not set in constructor', () => {
+      const dbx = new Dropbox();
+      chai.assert.equal(dbx.auth.getClientSecret(), undefined);
+    });
+
+    it('can be set after being instantiated', () => {
+      const dbx = new Dropbox();
+      dbx.auth.setClientSecret('foo');
+      chai.assert.equal(dbx.auth.getClientSecret(), 'foo');
+    });
+  });
+
+  describe('refreshToken', () => {
+    it('can be set in the constructor', () => {
+      const dbxAuth = new DropboxAuth({ refreshToken: 'foo' });
+      chai.assert.equal(dbxAuth.getRefreshToken(), 'foo');
+    });
+
+    it('is undefined if not set in constructor', () => {
+      const dbxAuth = new DropboxAuth();
+      chai.assert.equal(dbxAuth.getRefreshToken(), undefined);
+    });
+
+    it('can be set after being instantiated', () => {
+      const dbxAuth = new DropboxAuth();
+      dbxAuth.setRefreshToken('foo');
+      chai.assert.equal(dbxAuth.getRefreshToken(), 'foo');
+    });
+  });
+
+  describe('accessTokenExpiresAt', () => {
+    it('can be set in the constructor', () => {
+      const date = new Date(2020, 11, 30);
+      const dbxAuth = new DropboxAuth({ accessTokenExpiresAt: date });
+      chai.assert.equal(dbxAuth.getAccessTokenExpiresAt(), date);
+    });
+
+    it('is undefined if not set in constructor', () => {
+      const dbxAuth = new DropboxAuth();
+      chai.assert.equal(dbxAuth.getAccessTokenExpiresAt(), undefined);
+    });
+
+    it('can be set after being instantiated', () => {
+      const dbxAuth = new DropboxAuth();
+      const date = new Date(2020, 11, 30);
+      dbxAuth.setAccessTokenExpiresAt(date);
+      chai.assert.equal(dbxAuth.getAccessTokenExpiresAt(), date);
+    });
+  });
+
+  describe('generatePKCECodes', () => {
+    it('saves a new code verifier on Auth obj', () => {
+      const dbxAuth = new DropboxAuth();
+      chai.assert.equal(dbxAuth.codeVerifier, undefined);
+      dbxAuth.generatePKCECodes();
+      chai.assert.isTrue(!!dbxAuth.codeVerifier);
+    });
+
+    it('creates a code verifier of the correct length', () => {
+      const dbxAuth = new DropboxAuth();
+      dbxAuth.generatePKCECodes();
+      chai.assert.equal(dbxAuth.codeVerifier.length, 128);
+    });
+
+    it('saves a new code challenge on Auth obj', () => {
+      const dbxAuth = new DropboxAuth();
+      chai.assert.equal(dbxAuth.codeChallenge, undefined);
+      dbxAuth.generatePKCECodes();
+      chai.assert.isTrue(!!dbxAuth.codeChallenge);
+    });
+
+    it('gets called when using PKCE flow', () => {
+      const dbxAuth = new DropboxAuth({ clientId: 'foo' });
+      const pkceSpy = sinon.spy(dbxAuth, 'generatePKCECodes');
+      dbxAuth.getAuthenticationUrl('test', null, undefined, undefined, undefined, undefined, true);
+      chai.assert.isTrue(pkceSpy.calledOnce);
+    });
+  });
+
+  describe('getAccessTokenFromCode', () => {
+    it('throws an error without a clientID', () => {
+      const dbxAuth = new DropboxAuth();
+      chai.assert.throws(
+        DropboxAuth.prototype.getAccessTokenFromCode.bind(dbxAuth, 'foo', 'bar'),
+        Error,
+        'A client id is required. You can set the client id using .setClientId().',
+      );
+    });
+
+    it('throws an error when not provided a client secret or code challenge', () => {
+      const dbxAuth = new DropboxAuth({ clientId: 'foo' });
+      chai.assert.throws(
+        DropboxAuth.prototype.getAccessTokenFromCode.bind(dbxAuth, 'foo', 'bar'),
+        Error,
+        'You must use PKCE when generating the authorization URL to not include a client secret',
+      );
+    });
+
+    it('sets the right path for fetch request', () => {
+      const dbxAuth = new DropboxAuth({
+        clientId: 'foo',
+        clientSecret: 'bar',
+      });
+
+      const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+      dbxAuth.getAccessTokenFromCode('foo', 'bar');
+      const path = dbxAuth.fetch.getCall(0).args[0];
+      chai.assert.isTrue(fetchSpy.calledOnce);
+      chai.assert.equal('https://api.dropboxapi.com/oauth2/token?grant_type=authorization_code&code=bar&client_id=foo&client_secret=bar&redirect_uri=foo', path);
+    });
+
+    it('sets the right path without a redirect uri', () => {
+      const dbxAuth = new DropboxAuth({
+        clientId: 'foo',
+        clientSecret: 'bar',
+      });
+
+      const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+      dbxAuth.getAccessTokenFromCode(undefined, 'bar');
+      const path = dbxAuth.fetch.getCall(0).args[0];
+      chai.assert.isTrue(fetchSpy.calledOnce);
+      chai.assert.equal('https://api.dropboxapi.com/oauth2/token?grant_type=authorization_code&code=bar&client_id=foo&client_secret=bar', path);
+    });
+
+    it('sets the correct headers for fetch request', () => {
+      const dbxAuth = new DropboxAuth({
+        clientId: 'foo',
+        clientSecret: 'bar',
+      });
+
+      const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+      dbxAuth.getAccessTokenFromCode('foo', 'bar');
+      const { headers } = dbxAuth.fetch.getCall(0).args[1];
+      chai.assert.isTrue(fetchSpy.calledOnce);
+      chai.assert.equal(headers['Content-Type'], 'application/x-www-form-urlencoded');
+    });
+  });
+
+  describe('checkAndRefreshAccessToken', () => {
+    it('does not refresh without refresh token or clientId', () => {
+      const dbxAuth = new DropboxAuth();
+      const refreshSpy = sinon.spy(dbxAuth, 'refreshAccessToken');
+      dbxAuth.checkAndRefreshAccessToken();
+      chai.assert.isTrue(refreshSpy.notCalled);
+    });
+
+    it('doesn\'t refresh token when not past expiration time', () => {
+      const currentDate = new Date();
+      const dbxAuth = new DropboxAuth({
+        accessTokenExpiresAt: currentDate.setHours(currentDate.getHours() + 2),
+      });
+      const refreshSpy = sinon.spy(dbxAuth, 'refreshAccessToken');
+      dbxAuth.checkAndRefreshAccessToken();
+      chai.assert.isTrue(refreshSpy.notCalled);
+    });
+
+    it('refreshes token when past expiration', () => {
+      const dbxAuth = new DropboxAuth({
+        accessTokenExpiresAt: new Date(2019, 11, 19),
+        clientId: '123',
+        refreshToken: 'foo',
+      });
+
+      const refreshSpy = sinon.spy(dbxAuth, 'refreshAccessToken');
+      dbxAuth.checkAndRefreshAccessToken();
+      chai.assert.isTrue(refreshSpy.calledOnce);
+    });
+  });
+
+  describe('refreshAccessToken', () => {
+    it('throws an error when not provided with a clientId', () => {
+      const dbxAuth = new DropboxAuth();
+      chai.assert.throws(
+        DropboxAuth.prototype.refreshAccessToken.bind(dbxAuth),
+        Error,
+        'A client id is required. You can set the client id using .setClientId().',
+      );
+    });
+
+    it('throws an error when provided an argument that is not a list', () => {
+      const dbxAuth = new DropboxAuth({ clientId: 'foo' });
+      chai.assert.throws(
+        DropboxAuth.prototype.refreshAccessToken.bind(dbxAuth, 'not a list'),
+        Error,
+        'Scope must be an array of strings',
+      );
+    });
+
+    const testRefreshUrl = 'https://api.dropboxapi.com/oauth2/token?grant_type=refresh_token&refresh_token=undefined&client_id=foo&client_secret=bar';
+
+    it('sets the correct refresh url (no scope passed)', () => {
+      const dbxAuth = new DropboxAuth({
+        clientId: 'foo',
+        clientSecret: 'bar',
+      });
+
+      const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+      dbxAuth.refreshAccessToken();
+      chai.assert.isTrue(fetchSpy.calledOnce);
+      const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
+      const { headers } = dbxAuth.fetch.getCall(0).args[1];
+      chai.assert.equal(refreshUrl, testRefreshUrl);
+      chai.assert.equal(headers['Content-Type'], 'application/json');
+    });
+
+    it('sets the correct refresh url (scope passed)', () => {
+      const dbxAuth = new DropboxAuth({
+        clientId: 'foo',
+        clientSecret: 'bar',
+      });
+
+      const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+      dbxAuth.refreshAccessToken(['files.metadata.read']);
+      chai.assert.isTrue(fetchSpy.calledOnce);
+      const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
+      const { headers } = dbxAuth.fetch.getCall(0).args[1];
+      const testScopeUrl = `${testRefreshUrl}&scope=files.metadata.read`;
+      chai.assert.equal(refreshUrl, testScopeUrl);
+      chai.assert.equal(headers['Content-Type'], 'application/json');
     });
   });
 });
