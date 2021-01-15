@@ -1,15 +1,19 @@
-import { getTokenExpiresAtDate } from './utils.js';
+import {
+  getTokenExpiresAtDate,
+  isBrowserEnv,
+  createBrowserSafeString,
+} from './utils.js';
 import { parseResponse } from './response.js';
 
 let fetch;
-if (typeof window !== 'undefined') {
+if (isBrowserEnv()) {
   fetch = window.fetch.bind(window);
 } else {
   fetch = require('node-fetch'); // eslint-disable-line global-require
 }
 
 let crypto;
-if (typeof window !== 'undefined') {
+if (isBrowserEnv()) {
   crypto = window.crypto || window.msCrypto; // for IE11
 } else {
   crypto = require('crypto'); // eslint-disable-line global-require
@@ -142,22 +146,34 @@ export default class DropboxAuth {
   }
 
   generatePKCECodes() {
-    let codeVerifier = crypto.randomBytes(PKCELength);
-    codeVerifier = codeVerifier.toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '')
-      .substr(0, 128);
+    let codeVerifier;
+    if (isBrowserEnv()) {
+      const array = new Uint8Array(PKCELength);
+      const randomValueArray = crypto.getRandomValues(array);
+      const base64String = btoa(randomValueArray);
+      codeVerifier = createBrowserSafeString(base64String).substr(0, 128);
+    } else {
+      const randomBytes = crypto.randomBytes(PKCELength);
+      codeVerifier = createBrowserSafeString(randomBytes).substr(0, 128);
+    }
     this.codeVerifier = codeVerifier;
 
     const encoder = new Encoder();
     const codeData = encoder.encode(codeVerifier);
-    let codeChallenge = crypto.createHash('sha256').update(codeData).digest();
-    codeChallenge = codeChallenge.toString('base64')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '');
+    let codeChallenge;
+    if (isBrowserEnv()) {
+      return crypto.subtle.digest('SHA-256', codeData)
+        .then((digestedHash) => {
+          const typedArray = new Uint8Array(digestedHash);
+          const base64String = btoa(typedArray);
+          codeChallenge = createBrowserSafeString(base64String).substr(0, 128);
+          this.codeChallenge = codeChallenge;
+        });
+    }
+    const digestedHash = crypto.createHash('sha256').update(codeData).digest();
+    codeChallenge = createBrowserSafeString(digestedHash);
     this.codeChallenge = codeChallenge;
+    return Promise.resolve();
   }
 
   /**
@@ -181,7 +197,8 @@ export default class DropboxAuth {
    * @arg {boolean} [usePKCE] - Whether or not to use Sha256 based PKCE. PKCE should be only use on
    * client apps which doesn't call your server. It is less secure than non-PKCE flow but
    * can be used if you are unable to safely retrieve your app secret
-   * @returns {String} Url to send user to for Dropbox API authentication
+   * @returns {Promise<String>} - Url to send user to for Dropbox API authentication
+   * returned in a promise
    */
   getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = null, scope = null, includeGrantedScopes = 'none', usePKCE = false) {
     const clientId = this.getClientId();
@@ -229,11 +246,14 @@ export default class DropboxAuth {
       authUrl += `&include_granted_scopes=${includeGrantedScopes}`;
     }
     if (usePKCE) {
-      this.generatePKCECodes();
-      authUrl += '&code_challenge_method=S256';
-      authUrl += `&code_challenge=${this.codeChallenge}`;
+      return this.generatePKCECodes()
+        .then(() => {
+          authUrl += '&code_challenge_method=S256';
+          authUrl += `&code_challenge=${this.codeChallenge}`;
+          return authUrl;
+        });
     }
-    return authUrl;
+    return Promise.resolve(authUrl);
   }
 
   /**
@@ -273,7 +293,6 @@ export default class DropboxAuth {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     };
-
     return this.fetch(path, fetchOptions)
       .then((res) => parseResponse(res));
   }
@@ -343,54 +362,56 @@ export default class DropboxAuth {
    */
   authenticateWithCordova(successCallback, errorCallback) {
     const redirectUrl = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
-    const url = this.getAuthenticationUrl(redirectUrl);
+    this.getAuthenticationUrl(redirectUrl)
+      .then((url) => {
+        let removed = false;
+        const browser = window.open(url, '_blank');
 
-    let removed = false;
-    const browser = window.open(url, '_blank');
-
-    function onLoadError(event) {
-      if (event.code !== -999) { // Workaround to fix wrong behavior on cordova-plugin-inappbrowser
-        // Try to avoid a browser crash on browser.close().
-        window.setTimeout(() => { browser.close(); }, 10);
-        errorCallback();
-      }
-    }
-
-    function onLoadStop(event) {
-      const errorLabel = '&error=';
-      const errorIndex = event.url.indexOf(errorLabel);
-
-      if (errorIndex > -1) {
-        // Try to avoid a browser crash on browser.close().
-        window.setTimeout(() => { browser.close(); }, 10);
-        errorCallback();
-      } else {
-        const tokenLabel = '#access_token=';
-        let tokenIndex = event.url.indexOf(tokenLabel);
-        const tokenTypeIndex = event.url.indexOf('&token_type=');
-        if (tokenIndex > -1) {
-          tokenIndex += tokenLabel.length;
-          // Try to avoid a browser crash on browser.close().
-          window.setTimeout(() => { browser.close(); }, 10);
-
-          const accessToken = event.url.substring(tokenIndex, tokenTypeIndex);
-          successCallback(accessToken);
+        function onLoadError(event) {
+          // Workaround to fix wrong behavior on cordova-plugin-inappbrowser
+          if (event.code !== -999) {
+            // Try to avoid a browser crash on browser.close().
+            window.setTimeout(() => { browser.close(); }, 10);
+            errorCallback();
+          }
         }
-      }
-    }
 
-    function onExit() {
-      if (removed) {
-        return;
-      }
-      browser.removeEventListener('loaderror', onLoadError);
-      browser.removeEventListener('loadstop', onLoadStop);
-      browser.removeEventListener('exit', onExit);
-      removed = true;
-    }
+        function onLoadStop(event) {
+          const errorLabel = '&error=';
+          const errorIndex = event.url.indexOf(errorLabel);
 
-    browser.addEventListener('loaderror', onLoadError);
-    browser.addEventListener('loadstop', onLoadStop);
-    browser.addEventListener('exit', onExit);
+          if (errorIndex > -1) {
+            // Try to avoid a browser crash on browser.close().
+            window.setTimeout(() => { browser.close(); }, 10);
+            errorCallback();
+          } else {
+            const tokenLabel = '#access_token=';
+            let tokenIndex = event.url.indexOf(tokenLabel);
+            const tokenTypeIndex = event.url.indexOf('&token_type=');
+            if (tokenIndex > -1) {
+              tokenIndex += tokenLabel.length;
+              // Try to avoid a browser crash on browser.close().
+              window.setTimeout(() => { browser.close(); }, 10);
+
+              const accessToken = event.url.substring(tokenIndex, tokenTypeIndex);
+              successCallback(accessToken);
+            }
+          }
+        }
+
+        function onExit() {
+          if (removed) {
+            return;
+          }
+          browser.removeEventListener('loaderror', onLoadError);
+          browser.removeEventListener('loadstop', onLoadStop);
+          browser.removeEventListener('exit', onExit);
+          removed = true;
+        }
+
+        browser.addEventListener('loaderror', onLoadError);
+        browser.addEventListener('loadstop', onLoadStop);
+        browser.addEventListener('exit', onExit);
+      });
   }
 }
