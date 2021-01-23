@@ -2774,7 +2774,8 @@ export class Dropbox {
     public teamPropertiesTemplateAdd(arg: file_properties.AddTemplateArg): Promise<DropboxResponse<file_properties.AddTemplateResult>>;
 
     /**
-     * Permission : Team member file access.
+     * Permission : Team member file access. The scope for the route is
+     * files.team_metadata.write.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.
@@ -2784,7 +2785,8 @@ export class Dropbox {
     public teamPropertiesTemplateGet(arg: file_properties.GetTemplateArg): Promise<DropboxResponse<file_properties.GetTemplateResult>>;
 
     /**
-     * Permission : Team member file access.
+     * Permission : Team member file access. The scope for the route is
+     * files.team_metadata.write.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<file_properties.TemplateError>.

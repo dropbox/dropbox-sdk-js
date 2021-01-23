@@ -4000,8 +4000,7 @@
     export interface SearchV2Arg {
       /**
        * The string to search for. May match across multiple fields based on the
-       * request arguments. Query string may be rewritten to improve relevance
-       * of results.
+       * request arguments.
        */
       query: string;
       /**
@@ -11923,6 +11922,13 @@
     }
 
     /**
+     * Temporary infrastructure failure, please retry.
+     */
+    export interface LegalHoldsPolicyUpdateErrorTransientError {
+      '.tag': 'transient_error';
+    }
+
+    /**
      * Trying to release an inactive legal hold.
      */
     export interface LegalHoldsPolicyUpdateErrorInactiveLegalHold {
@@ -11972,7 +11978,7 @@
       '.tag': 'legal_hold_policy_not_found';
     }
 
-    export type LegalHoldsPolicyUpdateError = LegalHoldsError | LegalHoldsPolicyUpdateErrorInactiveLegalHold | LegalHoldsPolicyUpdateErrorLegalHoldPerformingAnotherOperation | LegalHoldsPolicyUpdateErrorInvalidMembers | LegalHoldsPolicyUpdateErrorNumberOfUsersOnHoldIsGreaterThanHoldLimitation | LegalHoldsPolicyUpdateErrorEmptyMembersList | LegalHoldsPolicyUpdateErrorNameMustBeUnique | LegalHoldsPolicyUpdateErrorLegalHoldPolicyNotFound;
+    export type LegalHoldsPolicyUpdateError = LegalHoldsError | LegalHoldsPolicyUpdateErrorTransientError | LegalHoldsPolicyUpdateErrorInactiveLegalHold | LegalHoldsPolicyUpdateErrorLegalHoldPerformingAnotherOperation | LegalHoldsPolicyUpdateErrorInvalidMembers | LegalHoldsPolicyUpdateErrorNumberOfUsersOnHoldIsGreaterThanHoldLimitation | LegalHoldsPolicyUpdateErrorEmptyMembersList | LegalHoldsPolicyUpdateErrorNameMustBeUnique | LegalHoldsPolicyUpdateErrorLegalHoldPolicyNotFound;
 
     export interface ListMemberAppsArg {
       /**
@@ -15110,11 +15116,11 @@
      */
     export interface AppLogInfo {
       /**
-       * App unique ID. Might be missing due to historical data gap.
+       * App unique ID.
        */
       app_id?: AppId;
       /**
-       * App display name. Might be missing due to historical data gap.
+       * App display name.
        */
       display_name?: string;
     }
@@ -15824,7 +15830,7 @@
      */
     export interface DesktopDeviceSessionLogInfo extends DeviceSessionLogInfo {
       /**
-       * Desktop session unique id. Might be missing due to historical data gap.
+       * Desktop session unique id.
        */
       session_info?: DesktopSessionLogInfo;
       /**
@@ -16042,7 +16048,7 @@
      */
     export interface DeviceDeleteOnUnlinkFailDetails {
       /**
-       * Session unique id. Might be missing due to historical data gap.
+       * Session unique id.
        */
       session_info?: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
       /**
@@ -16064,7 +16070,7 @@
      */
     export interface DeviceDeleteOnUnlinkSuccessDetails {
       /**
-       * Session unique id. Might be missing due to historical data gap.
+       * Session unique id.
        */
       session_info?: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
       /**
@@ -16134,18 +16140,15 @@
      */
     export interface DeviceSessionLogInfo {
       /**
-       * The IP address of the last activity from this session. Might be missing
-       * due to historical data gap.
+       * The IP address of the last activity from this session.
        */
       ip_address?: IpAddress;
       /**
-       * The time this session was created. Might be missing due to historical
-       * data gap.
+       * The time this session was created.
        */
       created?: common.DropboxTimestamp;
       /**
-       * The time of the last activity from this session. Might be missing due
-       * to historical data gap.
+       * The time of the last activity from this session.
        */
       updated?: common.DropboxTimestamp;
     }
@@ -25245,8 +25248,7 @@
      */
     export interface FailureDetailsLogInfo {
       /**
-       * A user friendly explanation of the error. Might be missing due to
-       * historical data gap.
+       * A user friendly explanation of the error.
        */
       user_friendly_message?: string;
       /**
@@ -25357,7 +25359,7 @@
      */
     export interface FileAddCommentDetails {
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -25467,7 +25469,7 @@
      */
     export interface FileDeleteCommentDetails {
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -25501,7 +25503,7 @@
      */
     export interface FileEditCommentDetails {
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
       /**
@@ -25539,7 +25541,7 @@
      */
     export interface FileLikeCommentDetails {
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -25613,11 +25615,11 @@
        */
       path: PathLogInfo;
       /**
-       * Display name. Might be missing due to historical data gap.
+       * Display name.
        */
       display_name?: string;
       /**
-       * Unique ID. Might be missing due to historical data gap.
+       * Unique ID.
        */
       file_id?: string;
       /**
@@ -25730,8 +25732,7 @@
        */
       deadline?: common.DropboxTimestamp;
       /**
-       * If set, allow uploads after the deadline has passed. Might be missing
-       * due to historical data gap.
+       * If set, allow uploads after the deadline has passed.
        */
       allow_late_uploads?: string;
     }
@@ -25764,7 +25765,7 @@
        */
       asset_index: number;
       /**
-       * File request deadline. Might be missing due to historical data gap.
+       * File request deadline.
        */
       deadline?: FileRequestDeadline;
     }
@@ -25786,13 +25787,11 @@
        */
       submitted_file_names: Array<string>;
       /**
-       * The name as provided by the submitter. Might be missing due to
-       * historical data gap.
+       * The name as provided by the submitter.
        */
       submitter_name?: common.DisplayNameLegacy;
       /**
-       * The email as provided by the submitter. Might be missing due to
-       * historical data gap.
+       * The email as provided by the submitter.
        */
       submitter_email?: EmailAddress;
     }
@@ -25862,7 +25861,7 @@
      */
     export interface FileResolveCommentDetails {
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -26025,7 +26024,7 @@
      */
     export interface FileUnlikeCommentDetails {
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -26039,7 +26038,7 @@
      */
     export interface FileUnresolveCommentDetails {
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -26673,7 +26672,7 @@
      */
     export interface GroupCreateDetails {
       /**
-       * Is company managed group. Might be missing due to historical data gap.
+       * Is company managed group.
        */
       is_company_managed?: boolean;
       /**
@@ -26691,7 +26690,7 @@
      */
     export interface GroupDeleteDetails {
       /**
-       * Is company managed group. Might be missing due to historical data gap.
+       * Is company managed group.
        */
       is_company_managed?: boolean;
     }
@@ -26729,7 +26728,7 @@
      */
     export interface GroupJoinPolicyUpdatedDetails {
       /**
-       * Is company managed group. Might be missing due to historical data gap.
+       * Is company managed group.
        */
       is_company_managed?: boolean;
       /**
@@ -26747,8 +26746,7 @@
      */
     export interface GroupLogInfo {
       /**
-       * The unique id of this group. Might be missing due to historical data
-       * gap.
+       * The unique id of this group.
        */
       group_id?: team_common.GroupId;
       /**
@@ -26756,7 +26754,7 @@
        */
       display_name: string;
       /**
-       * External group ID. Might be missing due to historical data gap.
+       * External group ID.
        */
       external_id?: team_common.GroupExternalId;
     }
@@ -27059,7 +27057,7 @@
      */
     export interface LegacyDeviceSessionLogInfo extends DeviceSessionLogInfo {
       /**
-       * Session unique id. Might be missing due to historical data gap.
+       * Session unique id.
        */
       session_info?: WebSessionLogInfoReference|DesktopSessionLogInfoReference|MobileSessionLogInfoReference|SessionLogInfoReference;
       /**
@@ -28090,7 +28088,7 @@
      */
     export interface MobileDeviceSessionLogInfo extends DeviceSessionLogInfo {
       /**
-       * Mobile session unique id. Might be missing due to historical data gap.
+       * Mobile session unique id.
        */
       session_info?: MobileSessionLogInfo;
       /**
@@ -28150,17 +28148,15 @@
      */
     export interface NamespaceRelativePathLogInfo {
       /**
-       * Namespace ID. Might be missing due to historical data gap.
+       * Namespace ID.
        */
       ns_id?: NamespaceId;
       /**
-       * A path relative to the specified namespace ID. Might be missing due to
-       * historical data gap.
+       * A path relative to the specified namespace ID.
        */
       relative_path?: FilePath;
       /**
-       * True if the namespace is shared. Might be missing due to historical
-       * data gap.
+       * True if the namespace is shared.
        */
       is_shared_namespace?: boolean;
     }
@@ -28773,7 +28769,7 @@
        */
       event_uuid: string;
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -28809,12 +28805,11 @@
        */
       event_uuid: string;
       /**
-       * Sharing policy with external users. Might be missing due to historical
-       * data gap.
+       * Sharing policy with external users.
        */
       public_sharing_policy?: string;
       /**
-       * Sharing policy with team. Might be missing due to historical data gap.
+       * Sharing policy with team.
        */
       team_sharing_policy?: string;
     }
@@ -28855,7 +28850,7 @@
        */
       event_uuid: string;
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -28905,7 +28900,7 @@
        */
       event_uuid: string;
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -29001,7 +28996,7 @@
        */
       event_uuid: string;
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -29075,7 +29070,7 @@
        */
       event_uuid: string;
       /**
-       * Comment text. Might be missing due to historical data gap.
+       * Comment text.
        */
       comment_text?: string;
     }
@@ -29470,8 +29465,7 @@
      */
     export interface PathLogInfo {
       /**
-       * Fully qualified path relative to event's context. Might be missing due
-       * to historical data gap.
+       * Fully qualified path relative to event's context.
        */
       contextual?: FilePath;
       /**
@@ -29535,6 +29529,10 @@
 
     export type PlacementRestriction = PlacementRestrictionAustraliaOnly | PlacementRestrictionEuropeOnly | PlacementRestrictionJapanOnly | PlacementRestrictionNone | PlacementRestrictionOther;
 
+    export interface PolicyTypeDisposition {
+      '.tag': 'disposition';
+    }
+
     export interface PolicyTypeRetention {
       '.tag': 'retention';
     }
@@ -29543,7 +29541,7 @@
       '.tag': 'other';
     }
 
-    export type PolicyType = PolicyTypeRetention | PolicyTypeOther;
+    export type PolicyType = PolicyTypeDisposition | PolicyTypeRetention | PolicyTypeOther;
 
     /**
      * Team merge request acceptance details shown to the primary team
@@ -29930,7 +29928,7 @@
      */
     export interface SessionLogInfo {
       /**
-       * Session ID. Might be missing due to historical data gap.
+       * Session ID.
        */
       session_id?: common.SessionId;
     }
@@ -29959,7 +29957,7 @@
        */
       original_folder_name: string;
       /**
-       * Sharing permission. Might be missing due to historical data gap.
+       * Sharing permission.
        */
       sharing_permission?: string;
       /**
@@ -29985,7 +29983,7 @@
        */
       original_folder_name: string;
       /**
-       * Shared folder type. Might be missing due to historical data gap.
+       * Shared folder type.
        */
       shared_folder_type?: string;
     }
@@ -30007,12 +30005,11 @@
        */
       original_folder_name: string;
       /**
-       * New sharing permission. Might be missing due to historical data gap.
+       * New sharing permission.
        */
       new_sharing_permission?: string;
       /**
-       * Previous sharing permission. Might be missing due to historical data
-       * gap.
+       * Previous sharing permission.
        */
       previous_sharing_permission?: string;
     }
@@ -30034,12 +30031,11 @@
        */
       original_folder_name: string;
       /**
-       * Previous sharing permission. Might be missing due to historical data
-       * gap.
+       * Previous sharing permission.
        */
       previous_sharing_permission?: string;
       /**
-       * New sharing permission. Might be missing due to historical data gap.
+       * New sharing permission.
        */
       new_sharing_permission?: string;
     }
@@ -30061,7 +30057,7 @@
        */
       original_folder_name: string;
       /**
-       * Sharing permission. Might be missing due to historical data gap.
+       * Sharing permission.
        */
       sharing_permission?: string;
     }
@@ -30133,12 +30129,11 @@
        */
       original_folder_name: string;
       /**
-       * New sharing permission. Might be missing due to historical data gap.
+       * New sharing permission.
        */
       new_sharing_permission?: string;
       /**
-       * Previous sharing permission. Might be missing due to historical data
-       * gap.
+       * Previous sharing permission.
        */
       previous_sharing_permission?: string;
     }
@@ -30160,7 +30155,7 @@
        */
       original_folder_name: string;
       /**
-       * Sharing permission. Might be missing due to historical data gap.
+       * Sharing permission.
        */
       sharing_permission?: string;
     }
@@ -30200,7 +30195,7 @@
        */
       token_key?: string;
       /**
-       * Sharing permission. Might be missing due to historical data gap.
+       * Sharing permission.
        */
       sharing_permission?: string;
     }
@@ -30404,7 +30399,7 @@
        */
       new_value: sharing.ViewerInfoPolicy;
       /**
-       * Previous view info policy. Might be missing due to historical data gap.
+       * Previous view info policy.
        */
       previous_value?: sharing.ViewerInfoPolicy;
     }
@@ -30697,7 +30692,7 @@
      */
     export interface SharedFolderCreateDetails {
       /**
-       * Target namespace ID. Might be missing due to historical data gap.
+       * Target namespace ID.
        */
       target_ns_id?: NamespaceId;
     }
@@ -30748,20 +30743,19 @@
      */
     export interface SharedFolderNestDetails {
       /**
-       * Previous parent namespace ID. Might be missing due to historical data
-       * gap.
+       * Previous parent namespace ID.
        */
       previous_parent_ns_id?: NamespaceId;
       /**
-       * New parent namespace ID. Might be missing due to historical data gap.
+       * New parent namespace ID.
        */
       new_parent_ns_id?: NamespaceId;
       /**
-       * Previous namespace path. Might be missing due to historical data gap.
+       * Previous namespace path.
        */
       previous_ns_path?: FilePath;
       /**
-       * New namespace path. Might be missing due to historical data gap.
+       * New namespace path.
        */
       new_ns_path?: FilePath;
     }
@@ -32026,8 +32020,7 @@
      */
     export interface SsoAddLogoutUrlDetails {
       /**
-       * New single sign-on logout URL. Might be missing due to historical data
-       * gap.
+       * New single sign-on logout URL.
        */
       new_value?: string;
     }
@@ -32083,8 +32076,7 @@
        */
       previous_value?: string;
       /**
-       * New single sign-on logout URL. Might be missing due to historical data
-       * gap.
+       * New single sign-on logout URL.
        */
       new_value?: string;
     }
@@ -32482,7 +32474,7 @@
      */
     export interface TeamMemberLogInfo extends UserLogInfo {
       /**
-       * Team member ID. Might be missing due to historical data gap.
+       * Team member ID.
        */
       team_member_id?: team_common.TeamMemberId;
       /**
@@ -33437,15 +33429,15 @@
      */
     export interface UserLogInfo {
       /**
-       * User unique ID. Might be missing due to historical data gap.
+       * User unique ID.
        */
       account_id?: users_common.AccountId;
       /**
-       * User display name. Might be missing due to historical data gap.
+       * User display name.
        */
       display_name?: common.DisplayNameLegacy;
       /**
-       * User email address. Might be missing due to historical data gap.
+       * User email address.
        */
       email?: EmailAddress;
     }
@@ -33556,7 +33548,7 @@
      */
     export interface WebDeviceSessionLogInfo extends DeviceSessionLogInfo {
       /**
-       * Web session unique id. Might be missing due to historical data gap.
+       * Web session unique id.
        */
       session_info?: WebSessionLogInfo;
       /**
