@@ -2,6 +2,24 @@
 
 This document is designed to show you how to upgrade to the latest version of the SDK accomodating any breaking changes introduced by major version updates.  If you find any issues with either this guide on upgrading or the changes introduced in the new version, please see [CONTRIBUTING.md][contributing]
 
+# Upgrading from v8.X.X to v9.0.0
+
+## 1. Unblocking browser PKCE flow
+
+Previously, there was an issue in which Node and the Browser use different processes to generate the `codeVerifier` and `codeChallenge`. In order to remedy this, both `generatePKCECodes` and `getAuthenticationUrl` now return promises due to the how the browser digests hashes.
+
+Previous Implementation(synchronous):
+```
+var authUrl = dbxAuth.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', false)
+// logic for navigating to authUrl
+```
+New Implementation(async):
+```
+dbxAuth.getAuthenticationUrl(redirectUri, null, 'code', 'offline', null, 'none', false)
+    .then((authUrl) => {
+        // logic for navigating to authUrl
+    });
+```
 # Upgrading from v7.X.X to v8.0.0
 
 ## 1. Throwing Errors as `DropboxResponseError` rather than  a literal object

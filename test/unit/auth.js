@@ -1,9 +1,9 @@
-import { fail } from 'assert';
 import chai from 'chai';
 import sinon from 'sinon';
-
+import chaiAsPromised from 'chai-as-promised';
 import { Dropbox, DropboxAuth } from '../../index.js';
 
+chai.use(chaiAsPromised);
 describe('DropboxAuth', () => {
   describe('accessToken', () => {
     it('can be set in the constructor', () => {
@@ -62,58 +62,68 @@ describe('DropboxAuth', () => {
 
     it('throws an error if the redirect url isn\'t set and type is code', () => {
       const dbx = new Dropbox({ clientId: 'CLIENT_ID' });
-      chai.assert.equal(
+      return chai.expect(
         dbx.auth.getAuthenticationUrl('', null, 'code'),
-        'https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID',
-      );
+      ).to.eventually.deep.equal('https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID');
     });
 
-    it('returns correct auth url with all combinations of valid input', () => {
-      const dbx = new Dropbox({ clientId: 'CLIENT_ID' });
-      for (const redirectUri of ['', 'localhost']) {
-        for (const state of ['', 'state']) {
-          for (const tokenAccessType of [null, 'legacy', 'offline', 'online']) {
-            for (const scope of [null, ['files.metadata.read', 'files.metadata.write']]) {
-              for (const includeGrantedScopes of ['none', 'user', 'team']) {
-                const url = dbx.auth.getAuthenticationUrl(redirectUri, state, 'code', tokenAccessType, scope, includeGrantedScopes);
+    const dbx = new Dropbox({ clientId: 'CLIENT_ID' });
+    for (const redirectUri of ['', 'localhost']) {
+      for (const state of ['', 'state']) {
+        for (const tokenAccessType of [null, 'legacy', 'offline', 'online']) {
+          for (const scope of [null, ['files.metadata.read', 'files.metadata.write']]) {
+            for (const includeGrantedScopes of ['none', 'user', 'team']) {
+              const input = {
+                redirectUri,
+                state,
+                tokenAccessType,
+                scope,
+                includeGrantedScopes,
+              };
+              it(`returns correct auth url with all combinations of valid input. redirectUri: ${redirectUri}, state: ${state}, 
+                tokenAccessType: ${tokenAccessType}, scope: ${scope}, includeGrantedScopes: ${includeGrantedScopes}`, (done) => {
+                dbx.auth.getAuthenticationUrl(redirectUri, state, 'code', tokenAccessType, scope, includeGrantedScopes) // eslint-disable-line no-await-in-loop
+                  .then((url) => {
+                    chai.assert(url.startsWith('https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID'));
 
-                chai.assert(url.startsWith('https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID'));
+                    if (redirectUri) {
+                      chai.assert(url.includes(`&redirect_uri=${redirectUri}`));
+                    } else {
+                      chai.assert(!url.includes('&redirect_uri='));
+                    }
 
-                if (redirectUri) {
-                  chai.assert(url.includes(`&redirect_uri=${redirectUri}`));
-                } else {
-                  chai.assert(!url.includes('&redirect_uri='));
-                }
+                    if (state) {
+                      chai.assert(url.includes(`&state=${state}`));
+                    } else {
+                      chai.assert(!url.includes('&state='));
+                    }
 
-                if (state) {
-                  chai.assert(url.includes(`&state=${state}`));
-                } else {
-                  chai.assert(!url.includes('&state='));
-                }
+                    if (tokenAccessType) {
+                      chai.assert(url.includes(`&token_access_type=${tokenAccessType}`));
+                    } else {
+                      chai.assert(!url.includes('&token_access_type='));
+                    }
 
-                if (tokenAccessType) {
-                  chai.assert(url.includes(`&token_access_type=${tokenAccessType}`));
-                } else {
-                  chai.assert(!url.includes('&token_access_type='));
-                }
+                    if (scope) {
+                      chai.assert(url.includes(`&scope=${scope.join(' ')}`));
+                    } else {
+                      chai.assert(!url.includes('&scope='));
+                    }
 
-                if (scope) {
-                  chai.assert(url.includes(`&scope=${scope.join(' ')}`));
-                } else {
-                  chai.assert(!url.includes('&scope='));
-                }
-
-                if (includeGrantedScopes !== 'none') {
-                  chai.assert(url.includes(`&include_granted_scopes=${includeGrantedScopes}`));
-                } else {
-                  chai.assert(!url.includes('&include_granted_scopes='));
-                }
-              }
+                    if (includeGrantedScopes !== 'none') {
+                      chai.assert(url.includes(`&include_granted_scopes=${includeGrantedScopes}`));
+                    } else {
+                      chai.assert(!url.includes('&include_granted_scopes='));
+                    }
+                    done();
+                  })
+                  .catch(done);
+              });
             }
           }
         }
       }
-    });
+    }
   });
 
   describe('clientSecret', () => {
@@ -193,11 +203,15 @@ describe('DropboxAuth', () => {
       chai.assert.isTrue(!!dbxAuth.codeChallenge);
     });
 
-    it('gets called when using PKCE flow', () => {
+    it('gets called when using PKCE flow', (done) => {
       const dbxAuth = new DropboxAuth({ clientId: 'foo' });
       const pkceSpy = sinon.spy(dbxAuth, 'generatePKCECodes');
-      dbxAuth.getAuthenticationUrl('test', null, undefined, undefined, undefined, undefined, true);
-      chai.assert.isTrue(pkceSpy.calledOnce);
+      dbxAuth.getAuthenticationUrl('test', null, undefined, undefined, undefined, undefined, true)
+        .then(() => {
+          chai.assert.isTrue(pkceSpy.calledOnce);
+          done();
+        })
+        .catch(done);
     });
   });
 

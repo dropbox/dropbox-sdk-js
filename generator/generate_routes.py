@@ -77,7 +77,7 @@ def main():
     if verbose:
         print('Generating JS types')
     subprocess.check_output(
-        (['python', '-m', 'stone.cli', 'js_types', dropbox_pkg_path] +
+        (['python3', '-m', 'stone.cli', 'js_types', dropbox_pkg_path] +
          specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style', '-a', 'auth'] +
          ['--', 'types.js', '-e', json.dumps(upload_arg)]),
         cwd=stone_path)
@@ -85,7 +85,7 @@ def main():
     if verbose:
         print('Generating JS client routes for user routes')
     subprocess.check_output(
-        (['python', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
+        (['python3', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-a', 'host', '-a', 'style', '-a', 'auth'] +
          ['--', 'routes.js', '-c', 'Dropbox', '--wrap-response-in', 'DropboxResponse']),
         cwd=stone_path)
@@ -93,7 +93,7 @@ def main():
     if verbose:
         print('Generating TSD types')
     subprocess.check_output(
-        (['python', '-m', 'stone.cli', 'tsd_types', typescript_template_path] +
+        (['python3', '-m', 'stone.cli', 'tsd_types', typescript_template_path] +
          specs + ['-b', 'team'] + ['-a', 'host', '-a', 'style'] +
          ['--', 'dropbox_types.d.tstemplate', 'dropbox_types.d.ts', '-e', json.dumps(upload_arg), '--export-namespaces']),
         cwd=stone_path)
@@ -101,7 +101,7 @@ def main():
     if verbose:
         print('Generating TSD client routes for user routes')
     subprocess.check_output(
-        (['python', '-m', 'stone.cli', 'tsd_client', typescript_template_path] +
+        (['python3', '-m', 'stone.cli', 'tsd_client', typescript_template_path] +
          specs + ['-a', 'host', '-a', 'style'] +
          ['--', 'index.d.tstemplate', 'index.d.ts', '--wrap-response-in', 'DropboxResponse']),
         cwd=stone_path)
