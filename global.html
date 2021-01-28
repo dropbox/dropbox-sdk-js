@@ -1175,7 +1175,8 @@ can be used if you are unable to safely retrieve your app secret</td>
     
             
 <div class="param-desc">
-    Url to send user to for Dropbox API authentication
+    - Url to send user to for Dropbox API authentication
+returned in a promise
 </div>
 
 
@@ -1186,7 +1187,7 @@ can be used if you are unable to safely retrieve your app secret</td>
     </dt>
     <dd>
         
-<span class="param-type">String</span>
+<span class="param-type">Promise.&lt;String></span>
 
 
 
@@ -41201,8 +41202,7 @@ to when calling search to fetch the next page of results.</td>
             
 
             <td class="description last">The string to search for. May match across
-multiple fields based on the request arguments. Query string may be rewritten
-to improve relevance of results.</td>
+multiple fields based on the request arguments.</td>
         </tr>
 
     
@@ -104632,6 +104632,9 @@ policy on.</td>
 <span class="param-type">'other'</span>
 |
 
+<span class="param-type">'transient_error'</span>
+|
+
 <span class="param-type">'inactive_legal_hold'</span>
 |
 
@@ -113178,8 +113181,7 @@ alert configuration.</td>
 
             
 
-            <td class="description last">App unique ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">App unique ID.</td>
         </tr>
 
     
@@ -113211,8 +113213,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">App display name. Might be missing due to
-historical data gap.</td>
+            <td class="description last">App display name.</td>
         </tr>
 
     
@@ -121875,7 +121876,7 @@ to delete all of the account files upon unlinking.</td>
             
 
             <td class="description last">The IP address of the last activity from
-this session. Might be missing due to historical data gap.</td>
+this session.</td>
         </tr>
 
     
@@ -121907,8 +121908,7 @@ this session. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">The time this session was created. Might be
-missing due to historical data gap.</td>
+            <td class="description last">The time this session was created.</td>
         </tr>
 
     
@@ -121941,7 +121941,7 @@ missing due to historical data gap.</td>
             
 
             <td class="description last">The time of the last activity from this
-session. Might be missing due to historical data gap.</td>
+session.</td>
         </tr>
 
     
@@ -121974,7 +121974,7 @@ session. Might be missing due to historical data gap.</td>
             
 
             <td class="description last">Desktop session
-unique id. Might be missing due to historical data gap.</td>
+unique id.</td>
         </tr>
 
     
@@ -122173,8 +122173,7 @@ is only present when needed to discriminate between multiple possible subtypes.<
 
             
 
-            <td class="description last">Session ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Session ID.</td>
         </tr>
 
     
@@ -124776,8 +124775,7 @@ deletion failed.</td>
 
             
 
-            <td class="description last">Session unique id. Might be missing due to historical data
-gap.</td>
+            <td class="description last">Session unique id.</td>
         </tr>
 
     
@@ -125073,8 +125071,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Session unique id. Might be missing due to historical data
-gap.</td>
+            <td class="description last">Session unique id.</td>
         </tr>
 
     
@@ -126335,7 +126332,7 @@ historical data gap.</td>
             
 
             <td class="description last">The IP address of the last activity from
-this session. Might be missing due to historical data gap.</td>
+this session.</td>
         </tr>
 
     
@@ -126367,8 +126364,7 @@ this session. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">The time this session was created. Might be
-missing due to historical data gap.</td>
+            <td class="description last">The time this session was created.</td>
         </tr>
 
     
@@ -126401,7 +126397,7 @@ missing due to historical data gap.</td>
             
 
             <td class="description last">The time of the last activity from this
-session. Might be missing due to historical data gap.</td>
+session.</td>
         </tr>
 
     
@@ -169517,7 +169513,7 @@ extended version history policy. Might be missing due to historical data gap.</t
             
 
             <td class="description last">A user friendly explanation of
-the error. Might be missing due to historical data gap.</td>
+the error.</td>
         </tr>
 
     
@@ -170392,8 +170388,7 @@ details about the team.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -171914,8 +171909,7 @@ on team files policy. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -172581,8 +172575,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -173218,8 +173211,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -174042,8 +174034,7 @@ locking policy.</td>
 
             
 
-            <td class="description last">Display name. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Display name.</td>
         </tr>
 
     
@@ -174075,8 +174066,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Unique ID. Might be missing due to historical
-data gap.</td>
+            <td class="description last">Unique ID.</td>
         </tr>
 
     
@@ -174516,8 +174506,7 @@ data gap.</td>
 
             
 
-            <td class="description last">Display name. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Display name.</td>
         </tr>
 
     
@@ -174549,8 +174538,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Unique ID. Might be missing due to historical
-data gap.</td>
+            <td class="description last">Unique ID.</td>
         </tr>
 
     
@@ -176270,7 +176258,7 @@ be missing due to historical data gap.</td>
             
 
             <td class="description last">If set, allow uploads after the
-deadline has passed. Might be missing due to historical data gap.</td>
+deadline has passed.</td>
         </tr>
 
     
@@ -176722,8 +176710,7 @@ request details. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">File request deadline.
-Might be missing due to historical data gap.</td>
+            <td class="description last">File request deadline.</td>
         </tr>
 
     
@@ -176953,8 +176940,7 @@ details. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">The name as provided by the submitter.
-Might be missing due to historical data gap.</td>
+            <td class="description last">The name as provided by the submitter.</td>
         </tr>
 
     
@@ -176987,7 +176973,7 @@ Might be missing due to historical data gap.</td>
             
 
             <td class="description last">The email as provided by the
-submitter. Might be missing due to historical data gap.</td>
+submitter.</td>
         </tr>
 
     
@@ -178038,8 +178024,7 @@ requests policy. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -180729,8 +180714,7 @@ transfers policy.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -180984,8 +180968,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -181269,8 +181252,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Display name. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Display name.</td>
         </tr>
 
     
@@ -181302,8 +181284,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Unique ID. Might be missing due to historical
-data gap.</td>
+            <td class="description last">Unique ID.</td>
         </tr>
 
     
@@ -189033,8 +189014,7 @@ management type. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Is company managed group. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Is company managed group.</td>
         </tr>
 
     
@@ -189320,8 +189300,7 @@ missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Is company managed group. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Is company managed group.</td>
         </tr>
 
     
@@ -189892,8 +189871,7 @@ missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Is company managed group. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Is company managed group.</td>
         </tr>
 
     
@@ -190209,8 +190187,7 @@ missing due to historical data gap.</td>
 
             
 
-            <td class="description last">The unique id of this group. Might be missing
-due to historical data gap.</td>
+            <td class="description last">The unique id of this group.</td>
         </tr>
 
     
@@ -190242,8 +190219,7 @@ due to historical data gap.</td>
 
             
 
-            <td class="description last">External group ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">External group ID.</td>
         </tr>
 
     
@@ -194135,7 +194111,7 @@ possible subtypes.</td>
             
 
             <td class="description last">The IP address of the last activity from
-this session. Might be missing due to historical data gap.</td>
+this session.</td>
         </tr>
 
     
@@ -194167,8 +194143,7 @@ this session. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">The time this session was created. Might be
-missing due to historical data gap.</td>
+            <td class="description last">The time this session was created.</td>
         </tr>
 
     
@@ -194201,7 +194176,7 @@ missing due to historical data gap.</td>
             
 
             <td class="description last">The time of the last activity from this
-session. Might be missing due to historical data gap.</td>
+session.</td>
         </tr>
 
     
@@ -194242,8 +194217,7 @@ session. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Session unique id. Might be missing due to historical data
-gap.</td>
+            <td class="description last">Session unique id.</td>
         </tr>
 
     
@@ -207385,7 +207359,7 @@ type.</td>
             
 
             <td class="description last">The IP address of the last activity from
-this session. Might be missing due to historical data gap.</td>
+this session.</td>
         </tr>
 
     
@@ -207417,8 +207391,7 @@ this session. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">The time this session was created. Might be
-missing due to historical data gap.</td>
+            <td class="description last">The time this session was created.</td>
         </tr>
 
     
@@ -207451,7 +207424,7 @@ missing due to historical data gap.</td>
             
 
             <td class="description last">The time of the last activity from this
-session. Might be missing due to historical data gap.</td>
+session.</td>
         </tr>
 
     
@@ -207484,7 +207457,7 @@ session. Might be missing due to historical data gap.</td>
             
 
             <td class="description last">Mobile session
-unique id. Might be missing due to historical data gap.</td>
+unique id.</td>
         </tr>
 
     
@@ -207747,8 +207720,7 @@ is only present when needed to discriminate between multiple possible subtypes.<
 
             
 
-            <td class="description last">Session ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Session ID.</td>
         </tr>
 
     
@@ -207882,8 +207854,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Namespace ID. Might be missing due to historical
-data gap.</td>
+            <td class="description last">Namespace ID.</td>
         </tr>
 
     
@@ -207916,7 +207887,7 @@ data gap.</td>
             
 
             <td class="description last">A path relative to the specified
-namespace ID. Might be missing due to historical data gap.</td>
+namespace ID.</td>
         </tr>
 
     
@@ -207948,8 +207919,7 @@ namespace ID. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">True if the namespace is shared.
-Might be missing due to historical data gap.</td>
+            <td class="description last">True if the namespace is shared.</td>
         </tr>
 
     
@@ -209045,8 +209015,7 @@ subtypes.</td>
 
             
 
-            <td class="description last">User unique ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">User unique ID.</td>
         </tr>
 
     
@@ -209078,8 +209047,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">User display name. Might be missing due
-to historical data gap.</td>
+            <td class="description last">User display name.</td>
         </tr>
 
     
@@ -209111,8 +209079,7 @@ to historical data gap.</td>
 
             
 
-            <td class="description last">User email address. Might be missing due to
-historical data gap.</td>
+            <td class="description last">User email address.</td>
         </tr>
 
     
@@ -217040,8 +217007,7 @@ policy.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -217594,7 +217560,7 @@ historical data gap.</td>
             
 
             <td class="description last">Sharing policy with external
-users. Might be missing due to historical data gap.</td>
+users.</td>
         </tr>
 
     
@@ -217626,8 +217592,7 @@ users. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Sharing policy with team. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Sharing policy with team.</td>
         </tr>
 
     
@@ -218226,8 +218191,7 @@ level. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -219024,8 +218988,7 @@ format.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -220599,8 +220562,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -222008,8 +221970,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Comment text. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Comment text.</td>
         </tr>
 
     
@@ -227565,7 +227526,7 @@ relative to the namespace containing the content.</td>
             
 
             <td class="description last">Fully qualified path relative to event's
-context. Might be missing due to historical data gap.</td>
+context.</td>
         </tr>
 
     
@@ -228336,6 +228297,9 @@ permanent delete content policy. Might be missing due to historical data gap.</t
             <td class="type">
             
                 
+<span class="param-type">'disposition'</span>
+|
+
 <span class="param-type">'retention'</span>
 |
 
@@ -232944,8 +232908,7 @@ variant.</td>
 
             
 
-            <td class="description last">Session ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Session ID.</td>
         </tr>
 
     
@@ -233170,8 +233133,7 @@ list.</td>
 
             
 
-            <td class="description last">Sharing permission. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Sharing permission.</td>
         </tr>
 
     
@@ -233486,8 +233448,7 @@ list.</td>
 
             
 
-            <td class="description last">Shared folder type. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Shared folder type.</td>
         </tr>
 
     
@@ -233802,8 +233763,7 @@ list.</td>
 
             
 
-            <td class="description last">New sharing permission. Might
-be missing due to historical data gap.</td>
+            <td class="description last">New sharing permission.</td>
         </tr>
 
     
@@ -233836,7 +233796,7 @@ be missing due to historical data gap.</td>
             
 
             <td class="description last">Previous sharing
-permission. Might be missing due to historical data gap.</td>
+permission.</td>
         </tr>
 
     
@@ -234152,7 +234112,7 @@ list.</td>
             
 
             <td class="description last">Previous sharing
-permission. Might be missing due to historical data gap.</td>
+permission.</td>
         </tr>
 
     
@@ -234184,8 +234144,7 @@ permission. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">New sharing permission. Might
-be missing due to historical data gap.</td>
+            <td class="description last">New sharing permission.</td>
         </tr>
 
     
@@ -234500,8 +234459,7 @@ list.</td>
 
             
 
-            <td class="description last">Sharing permission. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Sharing permission.</td>
         </tr>
 
     
@@ -235599,8 +235557,7 @@ list.</td>
 
             
 
-            <td class="description last">New sharing permission. Might
-be missing due to historical data gap.</td>
+            <td class="description last">New sharing permission.</td>
         </tr>
 
     
@@ -235633,7 +235590,7 @@ be missing due to historical data gap.</td>
             
 
             <td class="description last">Previous sharing
-permission. Might be missing due to historical data gap.</td>
+permission.</td>
         </tr>
 
     
@@ -235948,8 +235905,7 @@ list.</td>
 
             
 
-            <td class="description last">Sharing permission. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Sharing permission.</td>
         </tr>
 
     
@@ -236445,8 +236401,7 @@ list.</td>
 
             
 
-            <td class="description last">Sharing permission. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Sharing permission.</td>
         </tr>
 
     
@@ -239730,7 +239685,7 @@ level. Might be missing due to historical data gap.</td>
             
 
             <td class="description last">Previous view info
-policy. Might be missing due to historical data gap.</td>
+policy.</td>
         </tr>
 
     
@@ -244478,8 +244433,7 @@ policy. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Target namespace ID. Might be missing due
-to historical data gap.</td>
+            <td class="description last">Target namespace ID.</td>
         </tr>
 
     
@@ -245245,8 +245199,7 @@ to historical data gap.</td>
 
             
 
-            <td class="description last">Previous parent namespace ID.
-Might be missing due to historical data gap.</td>
+            <td class="description last">Previous parent namespace ID.</td>
         </tr>
 
     
@@ -245278,8 +245231,7 @@ Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">New parent namespace ID. Might be
-missing due to historical data gap.</td>
+            <td class="description last">New parent namespace ID.</td>
         </tr>
 
     
@@ -245311,8 +245263,7 @@ missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Previous namespace path. Might be
-missing due to historical data gap.</td>
+            <td class="description last">Previous namespace path.</td>
         </tr>
 
     
@@ -245344,8 +245295,7 @@ missing due to historical data gap.</td>
 
             
 
-            <td class="description last">New namespace path. Might be missing due
-to historical data gap.</td>
+            <td class="description last">New namespace path.</td>
         </tr>
 
     
@@ -263927,8 +263877,7 @@ policy.</td>
 
             
 
-            <td class="description last">New single sign-on logout URL. Might be
-missing due to historical data gap.</td>
+            <td class="description last">New single sign-on logout URL.</td>
         </tr>
 
     
@@ -264769,8 +264718,7 @@ Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">New single sign-on logout URL. Might be
-missing due to historical data gap.</td>
+            <td class="description last">New single sign-on logout URL.</td>
         </tr>
 
     
@@ -269991,8 +269939,7 @@ subtypes.</td>
 
             
 
-            <td class="description last">App unique ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">App unique ID.</td>
         </tr>
 
     
@@ -270024,8 +269971,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">App display name. Might be missing due to
-historical data gap.</td>
+            <td class="description last">App display name.</td>
         </tr>
 
     
@@ -270317,8 +270263,7 @@ subtypes.</td>
 
             
 
-            <td class="description last">User unique ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">User unique ID.</td>
         </tr>
 
     
@@ -270350,8 +270295,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">User display name. Might be missing due
-to historical data gap.</td>
+            <td class="description last">User display name.</td>
         </tr>
 
     
@@ -270383,8 +270327,7 @@ to historical data gap.</td>
 
             
 
-            <td class="description last">User email address. Might be missing due to
-historical data gap.</td>
+            <td class="description last">User email address.</td>
         </tr>
 
     
@@ -270416,8 +270359,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">Team member ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Team member ID.</td>
         </tr>
 
     
@@ -281920,8 +281862,7 @@ possible subtypes.</td>
 
             
 
-            <td class="description last">User unique ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">User unique ID.</td>
         </tr>
 
     
@@ -281953,8 +281894,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">User display name. Might be missing due
-to historical data gap.</td>
+            <td class="description last">User display name.</td>
         </tr>
 
     
@@ -281986,8 +281926,7 @@ to historical data gap.</td>
 
             
 
-            <td class="description last">User email address. Might be missing due to
-historical data gap.</td>
+            <td class="description last">User email address.</td>
         </tr>
 
     
@@ -282994,8 +282933,7 @@ subtypes.</td>
 
             
 
-            <td class="description last">App unique ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">App unique ID.</td>
         </tr>
 
     
@@ -283027,8 +282965,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">App display name. Might be missing due to
-historical data gap.</td>
+            <td class="description last">App display name.</td>
         </tr>
 
     
@@ -283198,8 +283135,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">User unique ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">User unique ID.</td>
         </tr>
 
     
@@ -283231,8 +283167,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">User display name. Might be missing due
-to historical data gap.</td>
+            <td class="description last">User display name.</td>
         </tr>
 
     
@@ -283264,8 +283199,7 @@ to historical data gap.</td>
 
             
 
-            <td class="description last">User email address. Might be missing due to
-historical data gap.</td>
+            <td class="description last">User email address.</td>
         </tr>
 
     
@@ -283629,8 +283563,7 @@ possible subtypes.</td>
 
             
 
-            <td class="description last">App unique ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">App unique ID.</td>
         </tr>
 
     
@@ -283662,8 +283595,7 @@ historical data gap.</td>
 
             
 
-            <td class="description last">App display name. Might be missing due to
-historical data gap.</td>
+            <td class="description last">App display name.</td>
         </tr>
 
     
@@ -284590,7 +284522,7 @@ session.</td>
             
 
             <td class="description last">The IP address of the last activity from
-this session. Might be missing due to historical data gap.</td>
+this session.</td>
         </tr>
 
     
@@ -284622,8 +284554,7 @@ this session. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">The time this session was created. Might be
-missing due to historical data gap.</td>
+            <td class="description last">The time this session was created.</td>
         </tr>
 
     
@@ -284656,7 +284587,7 @@ missing due to historical data gap.</td>
             
 
             <td class="description last">The time of the last activity from this
-session. Might be missing due to historical data gap.</td>
+session.</td>
         </tr>
 
     
@@ -284688,8 +284619,7 @@ session. Might be missing due to historical data gap.</td>
 
             
 
-            <td class="description last">Web session unique id.
-Might be missing due to historical data gap.</td>
+            <td class="description last">Web session unique id.</td>
         </tr>
 
     
@@ -284856,8 +284786,7 @@ only present when needed to discriminate between multiple possible subtypes.</td
 
             
 
-            <td class="description last">Session ID. Might be missing due to
-historical data gap.</td>
+            <td class="description last">Session ID.</td>
         </tr>
 
     
@@ -314681,7 +314610,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-01-26T21:24:44+00:00
+		on 2021-01-28T21:47:44+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
