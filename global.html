@@ -23189,6 +23189,8 @@ path_lookup.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -23215,10 +23217,51 @@ path_lookup.</td>
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last">The path of the file to be exported.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>export_format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The file format to which the file should
+be exported. This must be one of the formats listed in the file's
+export_options returned by get_metadata. If none is specified, the default
+format (specified in export_as in file metadata) will be used.</td>
         </tr>
 
     
@@ -23365,6 +23408,9 @@ path_lookup.</td>
 |
 
 <span class="param-type">'non_exportable'</span>
+|
+
+<span class="param-type">'invalid_export_format'</span>
 |
 
 <span class="param-type">'retry_error'</span>
@@ -23522,6 +23568,40 @@ path_lookup.</td>
             
 
             <td class="description last">Format to which the file can be exported to.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>export_options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Additional formats to which the
+file can be exported. These values can be specified as the export_format in
+/files/export.</td>
         </tr>
 
     
@@ -23716,6 +23796,39 @@ extension). This never contains a slash.</td>
 This field can be used to verify data integrity. Similar to content hash. For
 more information see our Content hash
 https://www.dropbox.com/developers/reference/content-hash page.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>paper_revision</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">If the file is a Paper doc, this gives
+the latest doc revision.</td>
         </tr>
 
     
@@ -27450,6 +27563,9 @@ templates.</td>
 |
 
 <span class="param-type">'unsupported_file'</span>
+|
+
+<span class="param-type">'not_allowed'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -44950,7 +45066,7 @@ upload_session/start).</td>
 
             
 
-            <td class="description last">The amount of data that has been uploaded so far.
+            <td class="description last">Offset in bytes at which data should be appended.
 We use this to make sure upload data isn't lost or duplicated in the event of
 a network error.</td>
         </tr>
@@ -110957,6 +111073,8 @@ reseller. Action done by reseller.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -110983,10 +111101,225 @@ reseller. Action done by reseller.</td>
             </td>
 
             
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
 
             
 
             <td class="description last">Alert state.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sensitivity_level</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingAlertSensitivity">TeamLogAdminAlertingAlertSensitivity</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Sensitivity level.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>recipients_settings</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogRecipientsConfiguration">TeamLogRecipientsConfiguration</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Recipient
+settings.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertingAlertSensitivity">
+    <h4 id="TeamLogAdminAlertingAlertSensitivity">TeamLogAdminAlertingAlertSensitivity</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Alert sensitivity
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'high'</span>
+|
+
+<span class="param-type">'highest'</span>
+|
+
+<span class="param-type">'invalid'</span>
+|
+
+<span class="param-type">'low'</span>
+|
+
+<span class="param-type">'lowest'</span>
+|
+
+<span class="param-type">'medium'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -111986,6 +112319,142 @@ alert configuration.</td>
 |
 
 <span class="param-type">'user_management_admin'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAlertRecipientsSettingType">
+    <h4 id="TeamLogAlertRecipientsSettingType">TeamLogAlertRecipientsSettingType</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Alert recipients setting type
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'custom_list'</span>
+|
+
+<span class="param-type">'invalid'</span>
+|
+
+<span class="param-type">'none'</span>
+|
+
+<span class="param-type">'team_admins'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -136227,6 +136696,103 @@ folder_overview_item_unpinned_details.</td>
 
         <tr>
             
+                <td class="name"><code>object_label_added_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogObjectLabelAddedDetails">TeamLogObjectLabelAddedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is object_label_added_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>object_label_removed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogObjectLabelRemovedDetails">TeamLogObjectLabelRemovedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is object_label_removed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>object_label_updated_value_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogObjectLabelUpdatedValueDetails">TeamLogObjectLabelUpdatedValueDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+object_label_updated_value_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>rewind_folder_details</code></td>
             
 
@@ -148608,6 +149174,15 @@ to an internal error.</td>
 <span class="param-type">'folder_overview_item_unpinned_details'</span>
 |
 
+<span class="param-type">'object_label_added_details'</span>
+|
+
+<span class="param-type">'object_label_removed_details'</span>
+|
+
+<span class="param-type">'object_label_updated_value_details'</span>
+|
+
 <span class="param-type">'rewind_folder_details'</span>
 |
 
@@ -152703,6 +153278,105 @@ item to folder overview</td>
             <td class="description last">Available if .tag is
 folder_overview_item_unpinned. (file_operations) Unpinned item from folder
 overview</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>object_label_added</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogObjectLabelAddedType">TeamLogObjectLabelAddedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is object_label_added. (file_operations) Added a label</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>object_label_removed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogObjectLabelRemovedType">TeamLogObjectLabelRemovedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available
+if .tag is object_label_removed. (file_operations) Removed a label</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>object_label_updated_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogObjectLabelUpdatedValueType">TeamLogObjectLabelUpdatedValueType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is object_label_updated_value. (file_operations) Updated a
+label's value</td>
         </tr>
 
     
@@ -165329,6 +166003,15 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'folder_overview_item_unpinned'</span>
 |
 
+<span class="param-type">'object_label_added'</span>
+|
+
+<span class="param-type">'object_label_removed'</span>
+|
+
+<span class="param-type">'object_label_updated_value'</span>
+|
+
 <span class="param-type">'rewind_folder'</span>
 |
 
@@ -166822,6 +167505,15 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'folder_overview_item_unpinned'</span>
+|
+
+<span class="param-type">'object_label_added'</span>
+|
+
+<span class="param-type">'object_label_removed'</span>
+|
+
+<span class="param-type">'object_label_updated_value'</span>
 |
 
 <span class="param-type">'rewind_folder'</span>
@@ -193994,6 +194686,133 @@ shared folders at event time.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogLabelType">
+    <h4 id="TeamLogLabelType">TeamLogLabelType</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Label type
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'personal_information'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogLegacyDeviceSessionLogInfo">
     <h4 id="TeamLogLegacyDeviceSessionLogInfo">TeamLogLegacyDeviceSessionLogInfo</h4>
 
@@ -211234,6 +212053,738 @@ subtypes.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogObjectLabelAddedDetails">
+    <h4 id="TeamLogObjectLabelAddedDetails">TeamLogObjectLabelAddedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Added a label.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>label_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogLabelType">TeamLogLabelType</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Labels mark a file or folder.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogObjectLabelAddedType">
+    <h4 id="TeamLogObjectLabelAddedType">TeamLogObjectLabelAddedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogObjectLabelRemovedDetails">
+    <h4 id="TeamLogObjectLabelRemovedDetails">TeamLogObjectLabelRemovedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Removed a label.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>label_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogLabelType">TeamLogLabelType</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Labels mark a file or folder.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogObjectLabelRemovedType">
+    <h4 id="TeamLogObjectLabelRemovedType">TeamLogObjectLabelRemovedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogObjectLabelUpdatedValueDetails">
+    <h4 id="TeamLogObjectLabelUpdatedValueDetails">TeamLogObjectLabelUpdatedValueDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Updated a label's value.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>label_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogLabelType">TeamLogLabelType</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Labels mark a file or folder.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogObjectLabelUpdatedValueType">
+    <h4 id="TeamLogObjectLabelUpdatedValueType">TeamLogObjectLabelUpdatedValueType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogOpenNoteSharedDetails">
     <h4 id="TeamLogOpenNoteSharedDetails">TeamLogOpenNoteSharedDetails</h4>
 
@@ -228177,6 +229728,9 @@ permanent delete content policy. Might be missing due to historical data gap.</t
 <span class="param-type">'none'</span>
 |
 
+<span class="param-type">'uk_only'</span>
+|
+
 <span class="param-type">'other'</span>
 
 
@@ -229053,6 +230607,204 @@ was sent to.</td>
             
 
             <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogRecipientsConfiguration">
+    <h4 id="TeamLogRecipientsConfiguration">TeamLogRecipientsConfiguration</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Recipients Configuration
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>recipient_setting_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAlertRecipientsSettingType">TeamLogAlertRecipientsSettingType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Recipients setting type.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>emails</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A list of user emails to notify.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>groups</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A list of groups to notify.</td>
         </tr>
 
     
@@ -314610,7 +316362,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-02-10T18:36:04+00:00
+		on 2021-02-10T19:26:55+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
