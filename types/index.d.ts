@@ -873,8 +873,8 @@ export class Dropbox {
 
     /**
      * Get a thumbnail for an image. This method currently supports files with
-     * the following file extensions: jpg, jpeg, png, tiff, tif, gif and bmp.
-     * Photos that are larger than 20MB in size won't be converted to a
+     * the following file extensions: jpg, jpeg, png, tiff, tif, gif, webp, ppm
+     * and bmp. Photos that are larger than 20MB in size won't be converted to a
      * thumbnail.
      *
      * When an error occurs, the route rejects the promise with type
@@ -884,7 +884,10 @@ export class Dropbox {
     public filesGetThumbnail(arg: files.ThumbnailArg): Promise<DropboxResponse<files.FileMetadata>>;
 
     /**
-     * Get a thumbnail for a file.
+     * Get a thumbnail for an image. This method currently supports files with
+     * the following file extensions: jpg, jpeg, png, tiff, tif, gif, webp, ppm
+     * and bmp. Photos that are larger than 20MB in size won't be converted to a
+     * thumbnail.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<files.ThumbnailV2Error>.
@@ -895,8 +898,9 @@ export class Dropbox {
     /**
      * Get thumbnails for a list of images. We allow up to 25 thumbnails in a
      * single batch. This method currently supports files with the following
-     * file extensions: jpg, jpeg, png, tiff, tif, gif and bmp. Photos that are
-     * larger than 20MB in size won't be converted to a thumbnail.
+     * file extensions: jpg, jpeg, png, tiff, tif, gif, webp, ppm and bmp.
+     * Photos that are larger than 20MB in size won't be converted to a
+     * thumbnail.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<files.GetThumbnailBatchError>.
@@ -1319,8 +1323,8 @@ export class Dropbox {
      * save all the data to a file in Dropbox. A single request should not
      * upload more than 150 MB. The maximum size of a file one can upload to an
      * upload session is 350 GB. An upload session can be used for a maximum of
-     * 48 hours. Attempting to use an UploadSessionStartResult.session_id with
-     * uploadSessionAppendV2() or uploadSessionFinish() more than 48 hours after
+     * 7 days. Attempting to use an UploadSessionStartResult.session_id with
+     * uploadSessionAppendV2() or uploadSessionFinish() more than 7 days after
      * its creation will return a UploadSessionLookupError.not_found. Calls to
      * this endpoint will count as data transport calls for any Dropbox Business
      * teams with a limit on the number of data transport calls allowed per
