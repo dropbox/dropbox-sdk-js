@@ -1077,6 +1077,24 @@ export class Dropbox {
     public filesMoveBatchCheck(arg: async.PollArg): Promise<DropboxResponse<files.RelocationBatchJobStatus>>;
 
     /**
+     * Creates a new Paper doc with the provided content.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.PaperCreateError>.
+     * @param arg The request parameters.
+     */
+    public filesPaperCreate(arg: files.PaperCreateArg): Promise<DropboxResponse<files.PaperCreateResult>>;
+
+    /**
+     * Updates an existing Paper doc with the provided content.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<files.PaperUpdateError>.
+     * @param arg The request parameters.
+     */
+    public filesPaperUpdate(arg: files.PaperUpdateArg): Promise<DropboxResponse<files.PaperUpdateResult>>;
+
+    /**
      * Permanently delete the file or folder at a given path (see
      * https://www.dropbox.com/en/help/40). If the given file or folder is not
      * yet deleted, this route will first delete it. It is possible for this
@@ -2810,7 +2828,8 @@ export class Dropbox {
     public teamPropertiesTemplateUpdate(arg: file_properties.UpdateTemplateArg): Promise<DropboxResponse<file_properties.UpdateTemplateResult>>;
 
     /**
-     * Retrieves reporting data about a team's user activity.
+     * Retrieves reporting data about a team's user activity. Deprecated: Will
+     * be removed on July 1st 2021.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
@@ -2820,7 +2839,8 @@ export class Dropbox {
     public teamReportsGetActivity(arg: team.DateRange): Promise<DropboxResponse<team.GetActivityReport>>;
 
     /**
-     * Retrieves reporting data about a team's linked devices.
+     * Retrieves reporting data about a team's linked devices. Deprecated: Will
+     * be removed on July 1st 2021.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
@@ -2830,7 +2850,8 @@ export class Dropbox {
     public teamReportsGetDevices(arg: team.DateRange): Promise<DropboxResponse<team.GetDevicesReport>>;
 
     /**
-     * Retrieves reporting data about a team's membership.
+     * Retrieves reporting data about a team's membership. Deprecated: Will be
+     * removed on July 1st 2021.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
@@ -2840,7 +2861,8 @@ export class Dropbox {
     public teamReportsGetMembership(arg: team.DateRange): Promise<DropboxResponse<team.GetMembershipReport>>;
 
     /**
-     * Retrieves reporting data about a team's storage usage.
+     * Retrieves reporting data about a team's storage usage. Deprecated: Will
+     * be removed on July 1st 2021.
      *
      * When an error occurs, the route rejects the promise with type
      * Error<team.DateRangeError>.
