@@ -23828,7 +23828,7 @@ https://www.dropbox.com/developers/reference/content-hash page.</td>
             
 
             <td class="description last">If the file is a Paper doc, this gives
-the latest doc revision.</td>
+the latest doc revision which can be used in paper/update.</td>
         </tr>
 
     
@@ -29058,6 +29058,139 @@ be highlighted or not.</td>
             
                 
 <hr>
+<dt class="name" id="FilesImportFormat">
+    <h4 id="FilesImportFormat">FilesImportFormat</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The import format of the incoming Paper doc content.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'html'</span>
+|
+
+<span class="param-type">'markdown'</span>
+|
+
+<span class="param-type">'plain_text'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="FilesListFolderArg">
     <h4 id="FilesListFolderArg">FilesListFolderArg</h4>
 
@@ -33895,6 +34028,1338 @@ does not apply to copies.</td>
             
 
             <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesPaperContentError">
+    <h4 id="FilesPaperContentError">FilesPaperContentError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'insufficient_permissions'</span>
+|
+
+<span class="param-type">'content_malformed'</span>
+|
+
+<span class="param-type">'doc_length_exceeded'</span>
+|
+
+<span class="param-type">'image_size_exceeded'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesPaperCreateArg">
+    <h4 id="FilesPaperCreateArg">FilesPaperCreateArg</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>contents</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The file contents to be uploaded.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The fully qualified path to the location in the
+user's Dropbox where the Paper Doc should be created. This should include the
+document's title and end with .paper.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>import_format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesImportFormat">FilesImportFormat</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The format of the provided
+data.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesPaperCreateError">
+    <h4 id="FilesPaperCreateError">FilesPaperCreateError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'insufficient_permissions'</span>
+|
+
+<span class="param-type">'content_malformed'</span>
+|
+
+<span class="param-type">'doc_length_exceeded'</span>
+|
+
+<span class="param-type">'image_size_exceeded'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
+<span class="param-type">'invalid_path'</span>
+|
+
+<span class="param-type">'email_unverified'</span>
+|
+
+<span class="param-type">'invalid_file_extension'</span>
+|
+
+<span class="param-type">'paper_disabled'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesPaperCreateResult">
+    <h4 id="FilesPaperCreateResult">FilesPaperCreateResult</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URL to open the Paper Doc.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>result_path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The fully qualified path the Paper Doc was
+actually created at.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>file_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The id to use in Dropbox APIs when referencing
+the Paper Doc.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>paper_revision</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current doc revision.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesPaperDocUpdatePolicy">
+    <h4 id="FilesPaperDocUpdatePolicy">FilesPaperDocUpdatePolicy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'update'</span>
+|
+
+<span class="param-type">'overwrite'</span>
+|
+
+<span class="param-type">'prepend'</span>
+|
+
+<span class="param-type">'append'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesPaperUpdateArg">
+    <h4 id="FilesPaperUpdateArg">FilesPaperUpdateArg</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>contents</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The file contents to be uploaded.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Path in the user's Dropbox to update. The path must
+correspond to a Paper doc or an error will be returned.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>import_format</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesImportFormat">FilesImportFormat</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The format of the provided
+data.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>doc_update_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesPaperDocUpdatePolicy">FilesPaperDocUpdatePolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">How the provided
+content should be applied to the doc.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>paper_revision</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The latest doc revision. Required when
+doc_update_policy is update. This value must match the current revision of
+the doc or error revision_mismatch will be returned.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesPaperUpdateError">
+    <h4 id="FilesPaperUpdateError">FilesPaperUpdateError</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesLookupError">FilesLookupError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is path.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'insufficient_permissions'</span>
+|
+
+<span class="param-type">'content_malformed'</span>
+|
+
+<span class="param-type">'doc_length_exceeded'</span>
+|
+
+<span class="param-type">'image_size_exceeded'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
+<span class="param-type">'path'</span>
+|
+
+<span class="param-type">'revision_mismatch'</span>
+|
+
+<span class="param-type">'doc_archived'</span>
+|
+
+<span class="param-type">'doc_deleted'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="FilesPaperUpdateResult">
+    <h4 id="FilesPaperUpdateResult">FilesPaperUpdateResult</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>paper_revision</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The current doc revision.</td>
         </tr>
 
     
@@ -119317,7 +120782,7 @@ classification policy.</td>
 <dd>
     
     <div class="description">
-        The type of classification (currently only PII)
+        The type of classification (currently only personal information)
     </div>
     
 
@@ -119370,6 +120835,9 @@ classification policy.</td>
             <td class="type">
             
                 
+<span class="param-type">'personal_information'</span>
+|
+
 <span class="param-type">'pii'</span>
 |
 
@@ -128364,6 +129832,132 @@ historical data gap.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogDispositionActionType">
+    <h4 id="TeamLogDispositionActionType">TeamLogDispositionActionType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'automatic_delete'</span>
+|
+
+<span class="param-type">'automatic_permanently_delete'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogDomainInvitesApproveRequestToJoinTeamDetails">
     <h4 id="TeamLogDomainInvitesApproveRequestToJoinTeamDetails">TeamLogDomainInvitesApproveRequestToJoinTeamDetails</h4>
 
@@ -134450,6 +136044,39 @@ governance_policy_add_folders_details.</td>
 
             <td class="description last">Available if .tag is
 governance_policy_add_folder_failed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_content_disposed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyContentDisposedDetails">TeamLogGovernancePolicyContentDisposedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_content_disposed_details.</td>
         </tr>
 
     
@@ -148970,6 +150597,9 @@ to an internal error.</td>
 <span class="param-type">'governance_policy_add_folder_failed_details'</span>
 |
 
+<span class="param-type">'governance_policy_content_disposed_details'</span>
+|
+
 <span class="param-type">'governance_policy_create_details'</span>
 |
 
@@ -151012,6 +152642,39 @@ governance_policy_add_folders. (data_governance) Added folders to policy</td>
             <td class="description last">Available if .tag is
 governance_policy_add_folder_failed. (data_governance) Couldn't add a folder
 to a policy</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_content_disposed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogGovernancePolicyContentDisposedType">TeamLogGovernancePolicyContentDisposedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+governance_policy_content_disposed. (data_governance) Content disposed</td>
         </tr>
 
     
@@ -165799,6 +167462,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'governance_policy_add_folder_failed'</span>
 |
 
+<span class="param-type">'governance_policy_content_disposed'</span>
+|
+
 <span class="param-type">'governance_policy_create'</span>
 |
 
@@ -167301,6 +168967,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'governance_policy_add_folder_failed'</span>
+|
+
+<span class="param-type">'governance_policy_content_disposed'</span>
 |
 
 <span class="param-type">'governance_policy_create'</span>
@@ -184996,6 +186665,350 @@ sign-on policy. Might be missing due to historical data gap.</td>
 <hr>
 <dt class="name" id="TeamLogGovernancePolicyAddFoldersType">
     <h4 id="TeamLogGovernancePolicyAddFoldersType">TeamLogGovernancePolicyAddFoldersType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyContentDisposedDetails">
+    <h4 id="TeamLogGovernancePolicyContentDisposedDetails">TeamLogGovernancePolicyContentDisposedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Content disposed.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>governance_policy_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy ID.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>disposition_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogDispositionActionType">TeamLogDispositionActionType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Disposition type.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>policy_type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogPolicyType">TeamLogPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Policy type.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogGovernancePolicyContentDisposedType">
+    <h4 id="TeamLogGovernancePolicyContentDisposedType">TeamLogGovernancePolicyContentDisposedType</h4>
 
     
 </dt>
@@ -316362,7 +318375,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-02-10T19:26:55+00:00
+		on 2021-02-23T17:32:55+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
