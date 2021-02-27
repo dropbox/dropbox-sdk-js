@@ -152,3 +152,26 @@ describe('incorrect auth', () => {
       });
   });
 });
+
+describe('multiauth', () => {
+  it('mulitauth request is successful', (done) => {
+    const dbxAuth = new DropboxAuth(appInfo.LEGACY);
+    const dbx = new Dropbox({ auth: dbxAuth });
+    const arg = {
+      resource: {
+        '.tag': 'link',
+        url: process.env.DROPBOX_SHARED_LINK,
+      },
+      format: 'jpeg',
+      size: 'w64h64',
+      mode: 'strict',
+    };
+    dbx.filesGetThumbnailV2(arg)
+      .then((resp) => {
+        chai.assert.instanceOf(resp, DropboxResponse);
+        chai.assert.equal(resp.status, 200, resp.result);
+        done();
+      })
+      .catch(done);
+  });
+});

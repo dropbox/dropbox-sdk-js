@@ -12,7 +12,7 @@ import {
   APP_AUTH,
   NO_AUTH,
 } from '../../src/constants.js';
-import { Dropbox } from '../../index.js';
+import { Dropbox, DropboxAuth } from '../../index.js';
 
 chai.use(chaiAsPromised);
 describe('Dropbox', () => {
@@ -39,6 +39,51 @@ describe('Dropbox', () => {
       chai.assert.isTrue(rpcSpy.calledOnce);
       chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
+    });
+
+    it('completes a multiauth RPC request with user auth when supplied with an accessToken', () => {
+      const dbxAuth = new DropboxAuth({ accessToken: 'foo' });
+      const dbx = new Dropbox({ auth: dbxAuth });
+      const rpcSpy = sinon.spy(dbx, 'rpcRequest');
+      dbx.request('path', {}, 'user, app', 'api', RPC)
+        .catch((error) => {
+          fail(error);
+        });
+      chai.assert.isTrue(rpcSpy.calledOnce);
+      chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
+      chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
+      chai.assert.equal(USER_AUTH, dbx.rpcRequest.getCall(0).args[2]);
+    });
+
+    it('completes a multiauth RPC request with team auth when supplied with an accessToken', () => {
+      const dbxAuth = new DropboxAuth({ accessToken: 'foo' });
+      const dbx = new Dropbox({ auth: dbxAuth });
+      const rpcSpy = sinon.spy(dbx, 'rpcRequest');
+      dbx.request('path', {}, 'team, app', 'api', RPC)
+        .catch((error) => {
+          fail(error);
+        });
+      chai.assert.isTrue(rpcSpy.calledOnce);
+      chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
+      chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
+      chai.assert.equal(TEAM_AUTH, dbx.rpcRequest.getCall(0).args[2]);
+    });
+
+    it('completes a multiauth RPC request with app auth when not supplied with an accessToken', () => {
+      const dbxAuth = new DropboxAuth({
+        clientID: 'foo',
+        clientSecret: 'bar',
+      });
+      const dbx = new Dropbox({ auth: dbxAuth });
+      const rpcSpy = sinon.spy(dbx, 'rpcRequest');
+      dbx.request('path', {}, 'user, app', 'api', RPC)
+        .catch((error) => {
+          fail(error);
+        });
+      chai.assert.isTrue(rpcSpy.calledOnce);
+      chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
+      chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
+      chai.assert.equal(APP_AUTH, dbx.rpcRequest.getCall(0).args[2]);
     });
 
     it('throws an error for invalid request styles', () => {
