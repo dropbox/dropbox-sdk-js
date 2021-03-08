@@ -148,7 +148,7 @@ export default class Dropbox {
 
         return fetchOptions;
       })
-      .then((fetchOptions) => fetch(getBaseURL(host) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(getBaseURL(host) + path, fetchOptions))
       .then((res) => parseDownloadResponse(res));
   }
 
