@@ -15333,6 +15333,10 @@
       description: string;
     }
 
+    export interface AdminRoleBillingAdmin {
+      '.tag': 'billing_admin';
+    }
+
     export interface AdminRoleLimitedAdmin {
       '.tag': 'limited_admin';
     }
@@ -15357,7 +15361,7 @@
       '.tag': 'other';
     }
 
-    export type AdminRole = AdminRoleLimitedAdmin | AdminRoleMemberOnly | AdminRoleSupportAdmin | AdminRoleTeamAdmin | AdminRoleUserManagementAdmin | AdminRoleOther;
+    export type AdminRole = AdminRoleBillingAdmin | AdminRoleLimitedAdmin | AdminRoleMemberOnly | AdminRoleSupportAdmin | AdminRoleTeamAdmin | AdminRoleUserManagementAdmin | AdminRoleOther;
 
     export interface AlertRecipientsSettingTypeCustomList {
       '.tag': 'custom_list';
