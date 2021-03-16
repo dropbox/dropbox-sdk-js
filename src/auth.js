@@ -157,6 +157,7 @@ export default class DropboxAuth {
       codeVerifier = createBrowserSafeString(randomBytes).substr(0, 128);
     }
     this.codeVerifier = codeVerifier;
+    console.log({"code verifier": codeVerifier});
 
     const encoder = new Encoder();
     const codeData = encoder.encode(codeVerifier);
@@ -278,7 +279,7 @@ export default class DropboxAuth {
     if (clientSecret) {
       path += `&client_secret=${clientSecret}`;
     } else {
-      if (!this.codeChallenge) {
+      if (!this.codeVerifier) {
         throw new Error('You must use PKCE when generating the authorization URL to not include a client secret');
       }
       path += `&code_verifier=${this.codeVerifier}`;

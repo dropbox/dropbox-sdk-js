@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+  <title>Dropbox JavaScript SDK</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+  <script src="/__build__/Dropbox-sdk.min.js"></script>
+  <script src="/utils.js"></script>
+</head>
+<body>
+  <!-- Example layout boilerplate -->
+  <header class="page-header">
+    <div class="container">
+      <nav>
+        <a href="/">
+          <h1>
+            <img src="https://cfl.dropboxstatic.com/static/images/brand/logotype_white-vflRG5Zd8.svg" class="logo" />
+            JavaScript SDK Examples
+          </h1>
+        </a>
+        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript" class="view-source">View Source</a>
+      </nav>
+      <h2 class="code">
+        <a href="/">examples</a> / PKCE Frontend
+      </h2>
+    </div>
+  </header>
+
+  <!-- Example description and UI -->
+  <section class="container main">
+    <p>This example shows how to use PKCE in the browser</p>
+
+    <form onSubmit="return getAuthUrl()">
+      <input type="text" id="clientId" placeholder="Client ID" />
+      <button type="submit">Submit</button>
+    </form>
+
+    <!-- The download button is added here -->
+    <div id="results" style="margin-top: 30px"></div>
+
+    <p class="info">To obtain your app key for quick testing, you can go to the <a href="https://dropbox.com/developers/apps" target="_blank">Developer's Console</a> click on your desired app, copy the "App key" and then paste it here.</p>
+
+  </section>
+
+  <!-- Scripts to run example -->
+  <script>
+    var redirectUri = 'http://localhost:8080/PKCE-frontend';
+    function getAuthUrl() {
+      var clientId = document.getElementById('clientId').value;
+      var dbx = new Dropbox.Dropbox({
+        clientId: clientId,
+      });
+
+      dbx.auth.getAuthenticationUrl(redirectUri, undefined, 'code', 'offline', undefined, undefined, true)
+        .then(authUrl => {
+          const storage = window.sessionStorage;
+          storage.clear();
+          storage.setItem("clientId", clientId);
+          storage.setItem("codeVerifier", dbx.auth.codeVerifier);
+          storage.setItem("codeChallenge", dbx.auth.codeChallenge);
+          console.log(dbx.auth.codeChallenge);
+          console.log(dbx.auth.codeVerifier);
+          window.location.href = authUrl;
+        })
+        .catch((error) => error);
+    };
+
+    function responseCode() {
+      return utils.parseQueryString(window.location.search).code;
+    }
+
+    if(responseCode()) {
+      var dbxAuth = new Dropbox.DropboxAuth({
+        clientId: window.sessionStorage.getItem('clientId'),
+      });
+      dbxAuth.codeVerifier = window.sessionStorage.getItem('codeVerifier');
+      console.log(dbxAuth.codeVerifier);
+      console.log(window.sessionStorage.getItem('codeVerifier'));
+      var dbx = new Dropbox.Dropbox({
+        auth: dbxAuth,
+      });
+      console.log(responseCode())
+
+      dbx.auth.getAccessTokenFromCode(redirectUri, responseCode())
+        .then((accessToken) => {
+          console.log(accessToken)
+        })
+        .catch((error) => {
+          console.log(error.error)
+        });
+    }
+  </script>
+</body>
+</html>
