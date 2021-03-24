@@ -38,6 +38,7 @@ We provide [Examples][examples] to help get you started with a lot of the basic 
     - Auth - [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/auth) ] - A simple auth example to get an access token and list the files in the root of your Dropbox account.
     - Simple Backend [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/simple-backend) ] - A simple example of a node backend doing a multi-step auth flow for Short Lived Tokens.
     - PKCE Backend [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/PKCE-backend) ] - A simple example of a node backend doing a multi-step auth flow using PKCE and Short Lived Tokens.
+    - PKCE Browser [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/PKCE-browser) ] - A simple example of a frontend doing a multi-step auth flow using PKCE and Short Lived Tokens.
 
 - **Other Examples**
     - Basic - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/node), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/basic) ] - A simple example that takes in a token and fetches files from your Dropbox account.

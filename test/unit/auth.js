@@ -182,6 +182,20 @@ describe('DropboxAuth', () => {
     });
   });
 
+  describe('codeVerifier', () => {
+    it('is undefined when constructed', () => {
+      const dbxAuth = new DropboxAuth();
+      chai.assert.equal(dbxAuth.getCodeVerifier(), undefined);
+    });
+
+    it('can be set after being instantiated', () => {
+      const dbxAuth = new DropboxAuth();
+      const verifier = 'abcdef';
+      dbxAuth.setCodeVerifier(verifier);
+      chai.assert.equal(dbxAuth.getCodeVerifier(), verifier);
+    });
+  });
+
   describe('generatePKCECodes', () => {
     it('saves a new code verifier on Auth obj', () => {
       const dbxAuth = new DropboxAuth();
@@ -209,6 +223,18 @@ describe('DropboxAuth', () => {
       dbxAuth.getAuthenticationUrl('test', null, undefined, undefined, undefined, undefined, true)
         .then(() => {
           chai.assert.isTrue(pkceSpy.calledOnce);
+          done();
+        })
+        .catch(done);
+    });
+
+    it('generates valid code challenge from verifier (Node)', (done) => {
+      const dbxAuth = new DropboxAuth();
+      const verifier = 'NTUsMjIsMzYsMTY4LDIyLDEzNywyNDMsOTYsMTIxLDIxNSwxNDAsMTYwLDMwLDE1LDIzMSw1NiwzMCwyMTIsMTQyLDIyMywxMzMsMTIsMjI1LDIzOCwxMDcsMjQ1LDM0';
+      dbxAuth.setCodeVerifier(verifier);
+      dbxAuth.generateCodeChallenge()
+        .then(() => {
+          chai.assert.equal(dbxAuth.codeChallenge, 'fKco8CJrMUeyji-FJ83wxnx2bqK6BOqzefPamApt3Nc');
           done();
         })
         .catch(done);
