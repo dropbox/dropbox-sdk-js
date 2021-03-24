@@ -168,8 +168,8 @@ export default class DropboxAuth {
     if (isBrowserEnv()) {
       return crypto.subtle.digest('SHA-256', codeData)
         .then((digestedHash) => {
-          const b64ed = btoa(String.fromCharCode.apply(null, new Uint8Array(digestedHash)));
-          codeChallenge = createBrowserSafeString(b64ed).substr(0, 128);
+          const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(digestedHash)));
+          codeChallenge = createBrowserSafeString(base64String).substr(0, 128);
           this.codeChallenge = codeChallenge;
         });
     }
