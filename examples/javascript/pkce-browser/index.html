@@ -91,7 +91,7 @@
 
         if (hasRedirectedFromAuth()) {
             showPageSection('authed-section');
-            dbxAuth.setPkceCodeVerifierAndGenerateChallenge(window.sessionStorage.getItem('codeVerifier'));
+            dbxAuth.setCodeVerifier(window.sessionStorage.getItem('codeVerifier'));
             dbxAuth.getAccessTokenFromCode(REDIRECT_URI, getCodeFromUrl())
                 .then((response) => {
                     dbxAuth.setAccessToken(response.result.access_token);
