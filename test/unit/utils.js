@@ -1,17 +1,52 @@
 import { fail } from 'assert';
 import chai from 'chai';
 import {
-  getBaseURL,
+  baseApiUrl,
   getTokenExpiresAtDate,
   isWindowOrWorker,
+  OAuth2AuthorizationUrl,
+  OAuth2TokenUrl,
 } from '../../src/utils.js';
 
 describe('Dropbox utils', () => {
-  describe('getBaseUrl', () => {
-    it('correctly sets base url when provided a host', () => {
+  describe('baseApiUrl', () => {
+    it('correctly sets base url when provided a subdomain', () => {
       const host = 'test';
-      const testUrl = getBaseURL(host);
+      const testUrl = baseApiUrl(host);
       chai.assert.equal(testUrl, 'https://test.dropboxapi.com/2/');
+    });
+
+    it('correctly sets base url when provided a subdomain and domain', () => {
+      const host = 'test';
+      const domain = 'mydomain.com';
+      const testUrl = baseApiUrl(host, domain);
+      chai.assert.equal(testUrl, 'https://test.mydomain.com/2/');
+    });
+  });
+
+  describe('OAuth2AuthorizationUrl', () => {
+    it('correctly returns the authorization url when not provided an override', () => {
+      const testUrl = OAuth2AuthorizationUrl();
+      chai.assert.equal(testUrl, 'https://dropbox.com/oauth2/authorize');
+    });
+
+    it('correctly returns the authorization url when provided an override', () => {
+      const domain = 'mydomain.com';
+      const testUrl = OAuth2AuthorizationUrl(domain);
+      chai.assert.equal(testUrl, 'https://mydomain.com/oauth2/authorize');
+    });
+  });
+
+  describe('OAuth2TokenUrl', () => {
+    it('correctly returns the authorization url when not provided an override', () => {
+      const testUrl = OAuth2TokenUrl();
+      chai.assert.equal(testUrl, 'https://api.dropboxapi.com/oauth2/token');
+    });
+
+    it('correctly returns the authorization url when provided an override', () => {
+      const domain = 'mydomain.com';
+      const testUrl = OAuth2TokenUrl(domain);
+      chai.assert.equal(testUrl, 'https://api.mydomain.com/oauth2/token');
     });
   });
 
