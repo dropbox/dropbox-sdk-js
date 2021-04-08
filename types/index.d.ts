@@ -123,13 +123,13 @@ export class DropboxAuth {
     * Sets the code verifier for PKCE flow
     * @param {String} codeVerifier - new code verifier 
     */
-   setCodeVerifier(codeVerifier: string): void;
+  setCodeVerifier(codeVerifier: string): void;
 
-   /**
-     * Gets the code verifier for PKCE flow
-     * @returns {String} - code verifier for PKCE
-     */
-   getCodeVerifier(): string;
+  /**
+    * Gets the code verifier for PKCE flow
+    * @returns {String} - code verifier for PKCE
+    */
+  getCodeVerifier(): string;
 
   /**
    * Checks if a token is needed, can be refreshed and if the token is expired.
