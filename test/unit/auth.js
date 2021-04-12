@@ -1,90 +1,94 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import chaiAsPromised from 'chai-as-promised';
-import { Dropbox, DropboxAuth } from '../../index.js';
+import { DropboxAuth } from '../../index.js';
 
 chai.use(chaiAsPromised);
 describe('DropboxAuth', () => {
   describe('accessToken', () => {
     it('can be set in the constructor', () => {
-      const dbx = new Dropbox({ accessToken: 'foo' });
-      chai.assert.equal(dbx.auth.getAccessToken(), 'foo');
+      const dbx = new DropboxAuth({ accessToken: 'foo' });
+      chai.assert.equal(dbx.getAccessToken(), 'foo');
     });
 
     it('is undefined if not set in constructor', () => {
-      const dbx = new Dropbox();
-      chai.assert.equal(dbx.auth.getAccessToken(), undefined);
+      const dbx = new DropboxAuth();
+      chai.assert.equal(dbx.getAccessToken(), undefined);
     });
 
     it('can be set after being instantiated', () => {
-      const dbx = new Dropbox();
-      dbx.auth.setAccessToken('foo');
-      chai.assert.equal(dbx.auth.getAccessToken(), 'foo');
+      const dbx = new DropboxAuth();
+      dbx.setAccessToken('foo');
+      chai.assert.equal(dbx.getAccessToken(), 'foo');
     });
   });
 
   describe('clientId', () => {
     it('can be set in the constructor', () => {
-      const dbx = new Dropbox({ clientId: 'foo' });
-      chai.assert.equal(dbx.auth.getClientId(), 'foo');
+      const dbx = new DropboxAuth({ clientId: 'foo' });
+      chai.assert.equal(dbx.getClientId(), 'foo');
     });
 
     it('is undefined if not set in constructor', () => {
-      const dbx = new Dropbox();
-      chai.assert.equal(dbx.auth.getClientId(), undefined);
+      const dbx = new DropboxAuth();
+      chai.assert.equal(dbx.getClientId(), undefined);
     });
 
     it('can be set after being instantiated', () => {
-      const dbx = new Dropbox();
-      dbx.auth.setClientId('foo');
-      chai.assert.equal(dbx.auth.getClientId(), 'foo');
+      const dbx = new DropboxAuth();
+      dbx.setClientId('foo');
+      chai.assert.equal(dbx.getClientId(), 'foo');
     });
   });
 
   describe('getAuthenticationUrl()', () => {
     it('throws an error if the client id isn\'t set', () => {
-      const dbx = new Dropbox();
+      const dbx = new DropboxAuth();
       chai.assert.throws(
-        DropboxAuth.prototype.getAuthenticationUrl.bind(dbx.auth, 'https://redirecturl.com'),
+        DropboxAuth.prototype.getAuthenticationUrl.bind(dbx, 'https://redirecturl.com'),
         Error,
         'A client id is required. You can set the client id using .setClientId().',
       );
     });
 
     it('throws an error if the redirect url isn\'t set', () => {
-      const dbx = new Dropbox({ clientId: 'CLIENT_ID' });
+      const dbx = new DropboxAuth({ clientId: 'CLIENT_ID' });
       chai.assert.throws(
-        DropboxAuth.prototype.getAuthenticationUrl.bind(dbx.auth),
+        DropboxAuth.prototype.getAuthenticationUrl.bind(dbx),
         Error,
         'A redirect uri is required.',
       );
     });
 
     it('throws an error if the redirect url isn\'t set and type is code', () => {
-      const dbx = new Dropbox({ clientId: 'CLIENT_ID' });
+      const dbx = new DropboxAuth({ clientId: 'CLIENT_ID' });
       return chai.expect(
-        dbx.auth.getAuthenticationUrl('', null, 'code'),
-      ).to.eventually.deep.equal('https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID');
+        dbx.getAuthenticationUrl('', null, 'code'),
+      ).to.eventually.deep.equal('https://dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID');
     });
 
-    const dbx = new Dropbox({ clientId: 'CLIENT_ID' });
+    it('changes the domain if a custom domain is set', () => {
+      const dbx = new DropboxAuth({
+        clientId: 'CLIENT_ID',
+        domain: 'mydomain.com',
+      });
+      dbx.getAuthenticationUrl('localhost', null, 'code')
+        .then((url) => {
+          chai.assertEqual(url, 'https://mydomain.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID&redirect_uri=localhost');
+        });
+    });
+
+    const dbx = new DropboxAuth({ clientId: 'CLIENT_ID' });
     for (const redirectUri of ['', 'localhost']) {
       for (const state of ['', 'state']) {
         for (const tokenAccessType of [null, 'legacy', 'offline', 'online']) {
           for (const scope of [null, ['files.metadata.read', 'files.metadata.write']]) {
             for (const includeGrantedScopes of ['none', 'user', 'team']) {
-              const input = {
-                redirectUri,
-                state,
-                tokenAccessType,
-                scope,
-                includeGrantedScopes,
-              };
               it(`returns correct auth url with all combinations of valid input. redirectUri: ${redirectUri}, state: ${state}, 
                 tokenAccessType: ${tokenAccessType}, scope: ${scope}, includeGrantedScopes: ${includeGrantedScopes}`, (done) => {
-                dbx.auth.getAuthenticationUrl(redirectUri, state, 'code', tokenAccessType, scope, includeGrantedScopes) // eslint-disable-line no-await-in-loop
+                dbx.getAuthenticationUrl(redirectUri, state, 'code', tokenAccessType, scope, includeGrantedScopes) // eslint-disable-line no-await-in-loop
                   .then((url) => {
-                    chai.assert(url.startsWith('https://www.dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID'));
+                    chai.assert(url.startsWith('https://dropbox.com/oauth2/authorize?response_type=code&client_id=CLIENT_ID'));
 
                     if (redirectUri) {
                       chai.assert(url.includes(`&redirect_uri=${redirectUri}`));
@@ -128,19 +132,19 @@ describe('DropboxAuth', () => {
 
   describe('clientSecret', () => {
     it('can be set in the constructor', () => {
-      const dbx = new Dropbox({ clientSecret: 'foo' });
-      chai.assert.equal(dbx.auth.getClientSecret(), 'foo');
+      const dbx = new DropboxAuth({ clientSecret: 'foo' });
+      chai.assert.equal(dbx.getClientSecret(), 'foo');
     });
 
     it('is undefined if not set in constructor', () => {
-      const dbx = new Dropbox();
-      chai.assert.equal(dbx.auth.getClientSecret(), undefined);
+      const dbx = new DropboxAuth();
+      chai.assert.equal(dbx.getClientSecret(), undefined);
     });
 
     it('can be set after being instantiated', () => {
-      const dbx = new Dropbox();
-      dbx.auth.setClientSecret('foo');
-      chai.assert.equal(dbx.auth.getClientSecret(), 'foo');
+      const dbx = new DropboxAuth();
+      dbx.setClientSecret('foo');
+      chai.assert.equal(dbx.getClientSecret(), 'foo');
     });
   });
 

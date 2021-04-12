@@ -17,6 +17,8 @@ export interface DropboxAuthOptions {
   clientSecret?: string;
   // The fetch library for making requests.
   fetch?: Function;
+  // A custom domain to use when making api requests. This should only be used for testing as scaffolding to avoid making network requests.
+  domain?: string;
 }
 
 export class DropboxAuth {
@@ -169,6 +171,8 @@ export interface DropboxOptions {
   clientSecret?: string;
   // The fetch library for making requests.
   fetch?: Function;
+  // A custom domain to use when making api requests. This should only be used for testing as scaffolding to avoid making network requests.
+  domain?: string;
 }
 
 export class DropboxResponseError<T> {

@@ -2,6 +2,8 @@ import {
   getTokenExpiresAtDate,
   isBrowserEnv,
   createBrowserSafeString,
+  OAuth2AuthorizationUrl,
+  OAuth2TokenUrl,
 } from './utils.js';
 import { parseResponse } from './response.js';
 
@@ -32,8 +34,6 @@ const PKCELength = 128;
 const TokenAccessTypes = ['legacy', 'offline', 'online'];
 const GrantTypes = ['code', 'token'];
 const IncludeGrantedScopes = ['none', 'user', 'team'];
-const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
-const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
 /**
  * @class DropboxAuth
@@ -49,6 +49,8 @@ const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
  * authentication URL.
  * @arg {String} [options.clientSecret] - The client secret for your app. Used to create
  * authentication URL and refresh access tokens.
+ * @arg {String} [options.domain] - A custom domain to use when making api requests. This
+ * should only be used for testing as scaffolding to avoid making network requests.
  */
 export default class DropboxAuth {
   constructor(options) {
@@ -60,6 +62,8 @@ export default class DropboxAuth {
     this.refreshToken = options.refreshToken;
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
+
+    this.domain = options.domain;
   }
 
   /**
@@ -221,7 +225,7 @@ export default class DropboxAuth {
      */
   getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = null, scope = null, includeGrantedScopes = 'none', usePKCE = false) {
     const clientId = this.getClientId();
-    const baseUrl = BaseAuthorizeUrl;
+    const baseUrl = OAuth2AuthorizationUrl(this.domain);
 
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
@@ -289,7 +293,7 @@ export default class DropboxAuth {
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
     }
-    let path = BaseTokenUrl;
+    let path = OAuth2TokenUrl(this.domain);
     path += '?grant_type=authorization_code';
     path += `&code=${code}`;
     path += `&client_id=${clientId}`;
@@ -339,7 +343,7 @@ export default class DropboxAuth {
      * @returns {Promise<*>}
      */
   refreshAccessToken(scope = null) {
-    let refreshUrl = BaseTokenUrl;
+    let refreshUrl = OAuth2TokenUrl(this.domain);
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
 
