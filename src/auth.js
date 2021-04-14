@@ -2,6 +2,8 @@ import {
   getTokenExpiresAtDate,
   isBrowserEnv,
   createBrowserSafeString,
+  OAuth2AuthorizationUrl,
+  OAuth2TokenUrl,
 } from './utils.js';
 import { parseResponse } from './response.js';
 
@@ -32,8 +34,6 @@ const PKCELength = 128;
 const TokenAccessTypes = ['legacy', 'offline', 'online'];
 const GrantTypes = ['code', 'token'];
 const IncludeGrantedScopes = ['none', 'user', 'team'];
-const BaseAuthorizeUrl = 'https://www.dropbox.com/oauth2/authorize';
-const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
 
 /**
  * @class DropboxAuth
@@ -49,6 +49,8 @@ const BaseTokenUrl = 'https://api.dropboxapi.com/oauth2/token';
  * authentication URL.
  * @arg {String} [options.clientSecret] - The client secret for your app. Used to create
  * authentication URL and refresh access tokens.
+ * @arg {String} [options.domain] - A custom domain to use when making api requests. This
+ * should only be used for testing as scaffolding to avoid making network requests.
  */
 export default class DropboxAuth {
   constructor(options) {
@@ -60,89 +62,125 @@ export default class DropboxAuth {
     this.refreshToken = options.refreshToken;
     this.clientId = options.clientId;
     this.clientSecret = options.clientSecret;
+
+    this.domain = options.domain;
   }
 
   /**
-   * Set the access token used to authenticate requests to the API.
-   * @arg {String} accessToken - An access token
-   * @returns {undefined}
-   */
+     * Set the access token used to authenticate requests to the API.
+     * @arg {String} accessToken - An access token
+     * @returns {undefined}
+     */
   setAccessToken(accessToken) {
     this.accessToken = accessToken;
   }
 
   /**
-   * Get the access token
-   * @returns {String} Access token
-   */
+     * Get the access token
+     * @returns {String} Access token
+     */
   getAccessToken() {
     return this.accessToken;
   }
 
   /**
-   * Set the client id, which is used to help gain an access token.
-   * @arg {String} clientId - Your apps client id
-   * @returns {undefined}
-   */
+     * Set the client id, which is used to help gain an access token.
+     * @arg {String} clientId - Your apps client id
+     * @returns {undefined}
+     */
   setClientId(clientId) {
     this.clientId = clientId;
   }
 
   /**
-   * Get the client id
-   * @returns {String} Client id
-   */
+     * Get the client id
+     * @returns {String} Client id
+     */
   getClientId() {
     return this.clientId;
   }
 
   /**
-   * Set the client secret
-   * @arg {String} clientSecret - Your app's client secret
-   * @returns {undefined}
-   */
+     * Set the client secret
+     * @arg {String} clientSecret - Your app's client secret
+     * @returns {undefined}
+     */
   setClientSecret(clientSecret) {
     this.clientSecret = clientSecret;
   }
 
   /**
-   * Get the client secret
-   * @returns {String} Client secret
-   */
+     * Get the client secret
+     * @returns {String} Client secret
+     */
   getClientSecret() {
     return this.clientSecret;
   }
 
   /**
-   * Gets the refresh token
-   * @returns {String} Refresh token
-   */
+     * Gets the refresh token
+     * @returns {String} Refresh token
+     */
   getRefreshToken() {
     return this.refreshToken;
   }
 
   /**
-   * Sets the refresh token
-   * @param refreshToken - A refresh token
-   */
+     * Sets the refresh token
+     * @param refreshToken - A refresh token
+     */
   setRefreshToken(refreshToken) {
     this.refreshToken = refreshToken;
   }
 
   /**
-   * Gets the access token's expiration date
-   * @returns {Date} date of token expiration
-   */
+     * Gets the access token's expiration date
+     * @returns {Date} date of token expiration
+     */
   getAccessTokenExpiresAt() {
     return this.accessTokenExpiresAt;
   }
 
   /**
-   * Sets the access token's expiration date
-   * @param accessTokenExpiresAt - new expiration date
-   */
+     * Sets the access token's expiration date
+     * @param accessTokenExpiresAt - new expiration date
+     */
   setAccessTokenExpiresAt(accessTokenExpiresAt) {
     this.accessTokenExpiresAt = accessTokenExpiresAt;
+  }
+
+  /**
+     * Sets the code verifier for PKCE flow
+     * @param {String} codeVerifier - new code verifier
+     */
+  setCodeVerifier(codeVerifier) {
+    this.codeVerifier = codeVerifier;
+  }
+
+  /**
+     * Gets the code verifier for PKCE flow
+     * @returns {String} - code verifier for PKCE
+     */
+  getCodeVerifier() {
+    return this.codeVerifier;
+  }
+
+  generateCodeChallenge() {
+    const encoder = new Encoder();
+    const codeData = encoder.encode(this.codeVerifier);
+    let codeChallenge;
+    if (isBrowserEnv()) {
+      return crypto.subtle.digest('SHA-256', codeData)
+        .then((digestedHash) => {
+          const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(digestedHash)));
+          codeChallenge = createBrowserSafeString(base64String).substr(0, 128);
+          this.codeChallenge = codeChallenge;
+        });
+    }
+    const digestedHash = crypto.createHash('sha256').update(codeData).digest();
+    codeChallenge = createBrowserSafeString(digestedHash);
+    this.codeChallenge = codeChallenge;
+    return Promise.resolve();
   }
 
   generatePKCECodes() {
@@ -158,51 +196,36 @@ export default class DropboxAuth {
     }
     this.codeVerifier = codeVerifier;
 
-    const encoder = new Encoder();
-    const codeData = encoder.encode(codeVerifier);
-    let codeChallenge;
-    if (isBrowserEnv()) {
-      return crypto.subtle.digest('SHA-256', codeData)
-        .then((digestedHash) => {
-          const typedArray = new Uint8Array(digestedHash);
-          const base64String = btoa(typedArray);
-          codeChallenge = createBrowserSafeString(base64String).substr(0, 128);
-          this.codeChallenge = codeChallenge;
-        });
-    }
-    const digestedHash = crypto.createHash('sha256').update(codeData).digest();
-    codeChallenge = createBrowserSafeString(digestedHash);
-    this.codeChallenge = codeChallenge;
-    return Promise.resolve();
+    return this.generateCodeChallenge();
   }
 
   /**
-   * Get a URL that can be used to authenticate users for the Dropbox API.
-   * @arg {String} redirectUri - A URL to redirect the user to after
-   * authenticating. This must be added to your app through the admin interface.
-   * @arg {String} [state] - State that will be returned in the redirect URL to help
-   * prevent cross site scripting attacks.
-   * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
-   * @arg {String} [tokenAccessType] - type of token to request.  From the following:
-   * null - creates a token with the app default (either legacy or online)
-   * legacy - creates one long-lived token with no expiration
-   * online - create one short-lived token with an expiration
-   * offline - create one short-lived token with an expiration with a refresh token
-   * @arg {Array<String>} [scope] - scopes to request for the grant
-   * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.
-   * From the following:
-   * user - include user scopes in the grant
-   * team - include team scopes in the grant
-   * Note: if this user has never linked the app, include_granted_scopes must be None
-   * @arg {boolean} [usePKCE] - Whether or not to use Sha256 based PKCE. PKCE should be only use on
-   * client apps which doesn't call your server. It is less secure than non-PKCE flow but
-   * can be used if you are unable to safely retrieve your app secret
-   * @returns {Promise<String>} - Url to send user to for Dropbox API authentication
-   * returned in a promise
-   */
+     * Get a URL that can be used to authenticate users for the Dropbox API.
+     * @arg {String} redirectUri - A URL to redirect the user to after
+     * authenticating. This must be added to your app through the admin interface.
+     * @arg {String} [state] - State that will be returned in the redirect URL to help
+     * prevent cross site scripting attacks.
+     * @arg {String} [authType] - auth type, defaults to 'token', other option is 'code'
+     * @arg {String} [tokenAccessType] - type of token to request.  From the following:
+     * null - creates a token with the app default (either legacy or online)
+     * legacy - creates one long-lived token with no expiration
+     * online - create one short-lived token with an expiration
+     * offline - create one short-lived token with an expiration with a refresh token
+     * @arg {Array<String>} [scope] - scopes to request for the grant
+     * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.
+     * From the following:
+     * user - include user scopes in the grant
+     * team - include team scopes in the grant
+     * Note: if this user has never linked the app, include_granted_scopes must be None
+     * @arg {boolean} [usePKCE] - Whether or not to use Sha256 based PKCE. PKCE should be only use
+     * on client apps which doesn't call your server. It is less secure than non-PKCE flow but
+     * can be used if you are unable to safely retrieve your app secret
+     * @returns {Promise<String>} - Url to send user to for Dropbox API authentication
+     * returned in a promise
+     */
   getAuthenticationUrl(redirectUri, state, authType = 'token', tokenAccessType = null, scope = null, includeGrantedScopes = 'none', usePKCE = false) {
     const clientId = this.getClientId();
-    const baseUrl = BaseAuthorizeUrl;
+    const baseUrl = OAuth2AuthorizationUrl(this.domain);
 
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
@@ -257,12 +280,12 @@ export default class DropboxAuth {
   }
 
   /**
-   * Get an OAuth2 access token from an OAuth2 Code.
-   * @arg {String} redirectUri - A URL to redirect the user to after
-   * authenticating. This must be added to your app through the admin interface.
-   * @arg {String} code - An OAuth2 code.
-   * @returns {Object} An object containing the token and related info (if applicable)
-  */
+     * Get an OAuth2 access token from an OAuth2 Code.
+     * @arg {String} redirectUri - A URL to redirect the user to after
+     * authenticating. This must be added to your app through the admin interface.
+     * @arg {String} code - An OAuth2 code.
+     * @returns {Object} An object containing the token and related info (if applicable)
+     */
   getAccessTokenFromCode(redirectUri, code) {
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
@@ -270,7 +293,7 @@ export default class DropboxAuth {
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
     }
-    let path = BaseTokenUrl;
+    let path = OAuth2TokenUrl(this.domain);
     path += '?grant_type=authorization_code';
     path += `&code=${code}`;
     path += `&client_id=${clientId}`;
@@ -278,7 +301,7 @@ export default class DropboxAuth {
     if (clientSecret) {
       path += `&client_secret=${clientSecret}`;
     } else {
-      if (!this.codeChallenge) {
+      if (!this.codeVerifier) {
         throw new Error('You must use PKCE when generating the authorization URL to not include a client secret');
       }
       path += `&code_verifier=${this.codeVerifier}`;
@@ -298,14 +321,14 @@ export default class DropboxAuth {
   }
 
   /**
-   * Checks if a token is needed, can be refreshed and if the token is expired.
-   * If so, attempts to refresh access token
-   * @returns {Promise<*>}
-   */
+     * Checks if a token is needed, can be refreshed and if the token is expired.
+     * If so, attempts to refresh access token
+     * @returns {Promise<*>}
+     */
   checkAndRefreshAccessToken() {
     const canRefresh = this.getRefreshToken() && this.getClientId();
     const needsRefresh = !this.getAccessTokenExpiresAt()
-      || (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
+            || (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
     const needsToken = !this.getAccessToken();
     if ((needsRefresh || needsToken) && canRefresh) {
       return this.refreshAccessToken();
@@ -314,13 +337,13 @@ export default class DropboxAuth {
   }
 
   /**
-   * Refreshes the access token using the refresh token, if available
-   * @arg {Array<String>} scope - a subset of scopes from the original
-   * refresh to acquire with an access token
-   * @returns {Promise<*>}
-   */
+     * Refreshes the access token using the refresh token, if available
+     * @arg {Array<String>} scope - a subset of scopes from the original
+     * refresh to acquire with an access token
+     * @returns {Promise<*>}
+     */
   refreshAccessToken(scope = null) {
-    let refreshUrl = BaseTokenUrl;
+    let refreshUrl = OAuth2TokenUrl(this.domain);
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
 
@@ -356,10 +379,10 @@ export default class DropboxAuth {
   }
 
   /**
-   * An authentication process that works with cordova applications.
-   * @param {successCallback} successCallback
-   * @param {errorCallback} errorCallback
-   */
+     * An authentication process that works with cordova applications.
+     * @param {successCallback} successCallback
+     * @param {errorCallback} errorCallback
+     */
   authenticateWithCordova(successCallback, errorCallback) {
     const redirectUrl = 'https://www.dropbox.com/1/oauth2/redirect_receiver';
     this.getAuthenticationUrl(redirectUrl)

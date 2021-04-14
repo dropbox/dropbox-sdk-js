@@ -9,7 +9,7 @@ import {
 } from './constants.js';
 import { routes } from '../lib/routes.js';
 import DropboxAuth from './auth.js';
-import { getBaseURL, httpHeaderSafeJson } from './utils.js';
+import { baseApiUrl, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
 
 let fetch;
@@ -46,6 +46,8 @@ const b64 = typeof btoa === 'undefined'
  * authentication URL.
  * @arg {String} [options.clientSecret] - The client secret for your app. Used to create
  * authentication URL and refresh access tokens.
+ * @arg {String} [options.domain] - A custom domain to use when making api requests. This
+ * should only be used for testing as scaffolding to avoid making network requests.
  */
 export default class Dropbox {
   constructor(options) {
@@ -61,6 +63,8 @@ export default class Dropbox {
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.pathRoot = options.pathRoot;
+
+    this.domain = options.domain;
 
     Object.assign(this, routes);
   }
@@ -125,7 +129,7 @@ export default class Dropbox {
         this.setCommonHeaders(fetchOptions);
         return fetchOptions;
       })
-      .then((fetchOptions) => this.fetch(getBaseURL(host) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain) + path, fetchOptions))
       .then((res) => parseResponse(res));
   }
 
@@ -148,7 +152,7 @@ export default class Dropbox {
 
         return fetchOptions;
       })
-      .then((fetchOptions) => this.fetch(getBaseURL(host) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain) + path, fetchOptions))
       .then((res) => parseDownloadResponse(res));
   }
 
@@ -176,7 +180,7 @@ export default class Dropbox {
 
         return fetchOptions;
       })
-      .then((fetchOptions) => this.fetch(getBaseURL(host) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain) + path, fetchOptions))
       .then((res) => parseResponse(res));
   }
 

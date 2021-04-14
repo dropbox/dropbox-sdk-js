@@ -10469,6 +10469,8 @@
 
     /**
      * User can do a limited set of common support tasks for existing users.
+     * Note: Dropbox is adding new types of admin roles; these may display as
+     * support_admin.
      */
     export interface AdminTierSupportAdmin {
       '.tag': 'support_admin';
@@ -15333,6 +15335,10 @@
       description: string;
     }
 
+    export interface AdminRoleBillingAdmin {
+      '.tag': 'billing_admin';
+    }
+
     export interface AdminRoleLimitedAdmin {
       '.tag': 'limited_admin';
     }
@@ -15357,7 +15363,7 @@
       '.tag': 'other';
     }
 
-    export type AdminRole = AdminRoleLimitedAdmin | AdminRoleMemberOnly | AdminRoleSupportAdmin | AdminRoleTeamAdmin | AdminRoleUserManagementAdmin | AdminRoleOther;
+    export type AdminRole = AdminRoleBillingAdmin | AdminRoleLimitedAdmin | AdminRoleMemberOnly | AdminRoleSupportAdmin | AdminRoleTeamAdmin | AdminRoleUserManagementAdmin | AdminRoleOther;
 
     export interface AlertRecipientsSettingTypeCustomList {
       '.tag': 'custom_list';
@@ -15911,6 +15917,14 @@
       '.tag': 'enabled';
     }
 
+    export interface ClassificationPolicyEnumWrapperMemberAndTeamFolders {
+      '.tag': 'member_and_team_folders';
+    }
+
+    export interface ClassificationPolicyEnumWrapperTeamFolders {
+      '.tag': 'team_folders';
+    }
+
     export interface ClassificationPolicyEnumWrapperOther {
       '.tag': 'other';
     }
@@ -15918,7 +15932,7 @@
     /**
      * Policy for controlling team access to the classification feature
      */
-    export type ClassificationPolicyEnumWrapper = ClassificationPolicyEnumWrapperDisabled | ClassificationPolicyEnumWrapperEnabled | ClassificationPolicyEnumWrapperOther;
+    export type ClassificationPolicyEnumWrapper = ClassificationPolicyEnumWrapperDisabled | ClassificationPolicyEnumWrapperEnabled | ClassificationPolicyEnumWrapperMemberAndTeamFolders | ClassificationPolicyEnumWrapperTeamFolders | ClassificationPolicyEnumWrapperOther;
 
     export interface ClassificationTypePersonalInformation {
       '.tag': 'personal_information';

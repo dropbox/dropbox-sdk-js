@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Dropbox JavaScript SDK</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@7/dist/polyfill.min.js"></script>
+    <script src="/__build__/Dropbox-sdk.min.js"></script>
+    <script src="/utils.js"></script>
+</head>
+
+<body>
+    <!-- Example layout boilerplate -->
+    <header class="page-header">
+        <div class="container">
+            <nav>
+                <a href="/">
+                    <h1>
+                        <img src="https://cfl.dropboxstatic.com/static/images/brand/logotype_white-vflRG5Zd8.svg" class="logo" /> 
+                        JavaScript SDK Examples
+                    </h1>
+                </a>
+                <a href="https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript" class="view-source">View Source</a>
+            </nav>
+            <h2 class="code">
+                <a href="/">examples</a> / PKCE browser
+            </h2>
+        </div>
+    </header>
+
+    <!-- Example description and UI -->
+    <section class="container main">
+        <p>This example shows how to use PKCE in the browser</p>
+        <div id="pre-auth-section" style="display:none;">
+            <button onClick="doAuth()">Start PKCE Auth Flow</button>
+
+            <p class="info">Once authenticated, it will use the access token to list the files in your root directory.</p>
+        </div>
+
+        <div id="authed-section" style="display:none;">
+            <p>You have successfully authenticated. Below are the contents of your root directory. They were fetched using the SDK and access token.</p>
+            <ul id="files"></ul>
+        </div>
+    </section>
+
+    <!-- Scripts to run example -->
+    <script>
+        var REDIRECT_URI = 'http://localhost:8080/pkce-browser';
+        var CLIENT_ID = '42zjexze6mfpf7x';
+        var dbxAuth = new Dropbox.DropboxAuth({
+            clientId: CLIENT_ID,
+        });
+
+        // Parses the url and gets the access token if it is in the urls hash
+        function getCodeFromUrl() {
+            return utils.parseQueryString(window.location.search).code;
+        }
+
+        // If the user was just redirected from authenticating, the urls hash will
+        // contain the access token.
+        function hasRedirectedFromAuth() {
+            return !!getCodeFromUrl();
+        }
+
+        // Render a list of items to #files
+        function renderItems(items) {
+            var filesContainer = document.getElementById('files');
+            items.forEach(function(item) {
+                var li = document.createElement('li');
+                li.innerHTML = item.name;
+                filesContainer.appendChild(li);
+            });
+        }
+
+        // This example keeps both the authenticated and non-authenticated setions
+        // in the DOM and uses this function to show/hide the correct section.
+        function showPageSection(elementId) {
+            document.getElementById(elementId).style.display = 'block';
+        }
+
+        function doAuth() {
+            dbxAuth.getAuthenticationUrl(REDIRECT_URI, undefined, 'code', 'offline', undefined, undefined, true)
+                .then(authUrl => {
+                    window.sessionStorage.clear();
+                    window.sessionStorage.setItem("codeVerifier", dbxAuth.codeVerifier);
+                    window.location.href = authUrl;
+                })
+                .catch((error) => console.error(error));
+        };
+
+        if (hasRedirectedFromAuth()) {
+            showPageSection('authed-section');
+            dbxAuth.setCodeVerifier(window.sessionStorage.getItem('codeVerifier'));
+            dbxAuth.getAccessTokenFromCode(REDIRECT_URI, getCodeFromUrl())
+                .then((response) => {
+                    dbxAuth.setAccessToken(response.result.access_token);
+                    var dbx = new Dropbox.Dropbox({
+                        auth: dbxAuth
+                    });
+                    return dbx.filesListFolder({
+                        path: ''
+                    });
+                })
+                .then((response) => {
+                    renderItems(response.result.entries);
+                })
+                .catch((error) => {
+                    console.error(error)
+                });
+        } else {
+            showPageSection('pre-auth-section');
+        }
+    </script>
+</body>
+
+</html>
