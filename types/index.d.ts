@@ -125,13 +125,13 @@ export class DropboxAuth {
     * Sets the code verifier for PKCE flow
     * @param {String} codeVerifier - new code verifier 
     */
-   setCodeVerifier(codeVerifier: string): void;
+  setCodeVerifier(codeVerifier: string): void;
 
-   /**
-     * Gets the code verifier for PKCE flow
-     * @returns {String} - code verifier for PKCE
-     */
-   getCodeVerifier(): string;
+  /**
+    * Gets the code verifier for PKCE flow
+    * @returns {String} - code verifier for PKCE
+    */
+  getCodeVerifier(): string;
 
   /**
    * Checks if a token is needed, can be refreshed and if the token is expired.
@@ -2590,6 +2590,15 @@ export class Dropbox {
     public teamMembersDeleteProfilePhoto(arg: team.MembersDeleteProfilePhotoArg): Promise<DropboxResponse<team.TeamMemberInfo>>;
 
     /**
+     * Get available TeamMemberRoles for the connected team. To be used with
+     * membersSetAdminPermissionsV2(). Permission : Team member management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     */
+    public teamMembersGetAvailableTeamMemberRoles(): Promise<DropboxResponse<team.MembersGetAvailableTeamMemberRolesResult>>;
+
+    /**
      * Returns information about multiple team members. Permission : Team
      * information This endpoint will return MembersGetInfoItem.id_not_found,
      * for IDs (or emails) that cannot be matched to a valid team member.
@@ -2729,6 +2738,15 @@ export class Dropbox {
      * @param arg The request parameters.
      */
     public teamMembersSendWelcomeEmail(arg: team.UserSelectorArg): Promise<DropboxResponse<void>>;
+
+    /**
+     * Updates a team member's permissions. Permission : Team member management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersSetPermissions2Error>.
+     * @param arg The request parameters.
+     */
+    public teamMembersSetAdminPermissionsV2(arg: team.MembersSetPermissions2Arg): Promise<DropboxResponse<team.MembersSetPermissions2Result>>;
 
     /**
      * Updates a team member's permissions. Permission : Team member management.
