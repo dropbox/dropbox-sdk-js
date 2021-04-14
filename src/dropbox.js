@@ -152,7 +152,7 @@ export default class Dropbox {
 
         return fetchOptions;
       })
-      .then((fetchOptions) => fetch(baseApiUrl(host, this.domain) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain) + path, fetchOptions))
       .then((res) => parseDownloadResponse(res));
   }
 
