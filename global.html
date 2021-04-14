@@ -112650,6 +112650,9 @@ reseller. Action done by reseller.</td>
 <span class="param-type">'data_loss_protection'</span>
 |
 
+<span class="param-type">'information_governance'</span>
+|
+
 <span class="param-type">'malware_sharing'</span>
 |
 
@@ -113944,6 +113947,261 @@ alert configuration.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogAdminConsoleAppPermission">
+    <h4 id="TeamLogAdminConsoleAppPermission">TeamLogAdminConsoleAppPermission</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'default_for_listed_apps'</span>
+|
+
+<span class="param-type">'default_for_unlisted_apps'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminConsoleAppPolicy">
+    <h4 id="TeamLogAdminConsoleAppPolicy">TeamLogAdminConsoleAppPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'allow'</span>
+|
+
+<span class="param-type">'block'</span>
+|
+
+<span class="param-type">'default'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogAdminRole">
     <h4 id="TeamLogAdminRole">TeamLogAdminRole</h4>
 
@@ -114004,10 +114262,22 @@ alert configuration.</td>
 <span class="param-type">'billing_admin'</span>
 |
 
+<span class="param-type">'compliance_admin'</span>
+|
+
+<span class="param-type">'content_admin'</span>
+|
+
 <span class="param-type">'limited_admin'</span>
 |
 
 <span class="param-type">'member_only'</span>
+|
+
+<span class="param-type">'reporting_admin'</span>
+|
+
+<span class="param-type">'security_admin'</span>
 |
 
 <span class="param-type">'support_admin'</span>
@@ -114724,6 +114994,259 @@ alert configuration.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogAppBlockedByPermissionsDetails">
+    <h4 id="TeamLogAppBlockedByPermissionsDetails">TeamLogAppBlockedByPermissionsDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Failed to connect app for member.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>app_info</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogUserOrTeamLinkedAppLogInfo">TeamLogUserOrTeamLinkedAppLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogUserLinkedAppLogInfo">TeamLogUserLinkedAppLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogTeamLinkedAppLogInfo">TeamLogTeamLinkedAppLogInfo</a></span>
+|
+
+<span class="param-type"><a href="global.html#TeamLogAppLogInfo">TeamLogAppLogInfo</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Relevant application details.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAppBlockedByPermissionsType">
+    <h4 id="TeamLogAppBlockedByPermissionsType">TeamLogAppBlockedByPermissionsType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogAppLinkTeamDetails">
     <h4 id="TeamLogAppLinkTeamDetails">TeamLogAppLinkTeamDetails</h4>
 
@@ -115381,6 +115904,353 @@ alert configuration.</td>
             
 
             <td class="description last">App display name.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAppPermissionsChangedDetails">
+    <h4 id="TeamLogAppPermissionsChangedDetails">TeamLogAppPermissionsChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed app permissions.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminConsoleAppPolicy">TeamLogAdminConsoleAppPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Previous policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminConsoleAppPolicy">TeamLogAdminConsoleAppPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">New policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>app_name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Name of the app.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>permission</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminConsoleAppPermission">TeamLogAdminConsoleAppPermission</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Permission that
+was changed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAppPermissionsChangedType">
+    <h4 id="TeamLogAppPermissionsChangedType">TeamLogAppPermissionsChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -135767,6 +136637,39 @@ admin_alerting_triggered_alert_details.</td>
 
         <tr>
             
+                <td class="name"><code>app_blocked_by_permissions_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAppBlockedByPermissionsDetails">TeamLogAppBlockedByPermissionsDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+app_blocked_by_permissions_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>app_link_team_details</code></td>
             
 
@@ -146962,6 +147865,39 @@ allow_download_enabled_details.</td>
 
         <tr>
             
+                <td class="name"><code>app_permissions_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAppPermissionsChangedDetails">TeamLogAppPermissionsChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+app_permissions_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>camera_uploads_policy_changed_details</code></td>
             
 
@@ -150788,6 +151724,9 @@ to an internal error.</td>
 <span class="param-type">'admin_alerting_triggered_alert_details'</span>
 |
 
+<span class="param-type">'app_blocked_by_permissions_details'</span>
+|
+
 <span class="param-type">'app_link_team_details'</span>
 |
 
@@ -151814,6 +152753,9 @@ to an internal error.</td>
 <span class="param-type">'allow_download_enabled_details'</span>
 |
 
+<span class="param-type">'app_permissions_changed_details'</span>
+|
+
 <span class="param-type">'camera_uploads_policy_changed_details'</span>
 |
 
@@ -152349,6 +153291,39 @@ setting</td>
 
             <td class="description last">Available if .tag is
 admin_alerting_triggered_alert. (admin_alerting) Triggered security alert</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>app_blocked_by_permissions</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAppBlockedByPermissionsType">TeamLogAppBlockedByPermissionsType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is app_blocked_by_permissions. (apps) Failed to connect app
+for member</td>
         </tr>
 
     
@@ -163755,6 +164730,39 @@ downloads (deprecated, no longer logged)</td>
 
         <tr>
             
+                <td class="name"><code>app_permissions_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAppPermissionsChangedType">TeamLogAppPermissionsChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is app_permissions_changed. (team_policies) Changed app
+permissions</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>camera_uploads_policy_changed</code></td>
             
 
@@ -167653,6 +168661,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'admin_alerting_triggered_alert'</span>
 |
 
+<span class="param-type">'app_blocked_by_permissions'</span>
+|
+
 <span class="param-type">'app_link_team'</span>
 |
 
@@ -168677,6 +169688,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'allow_download_enabled'</span>
+|
+
+<span class="param-type">'app_permissions_changed'</span>
 |
 
 <span class="param-type">'camera_uploads_policy_changed'</span>
@@ -169160,6 +170174,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'admin_alerting_triggered_alert'</span>
 |
 
+<span class="param-type">'app_blocked_by_permissions'</span>
+|
+
 <span class="param-type">'app_link_team'</span>
 |
 
@@ -170184,6 +171201,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'allow_download_enabled'</span>
+|
+
+<span class="param-type">'app_permissions_changed'</span>
 |
 
 <span class="param-type">'camera_uploads_policy_changed'</span>
@@ -293521,6 +294541,131 @@ photo will be deleted.</td>
             
                 
 <hr>
+<dt class="name" id="TeamMembersGetAvailableTeamMemberRolesResult">
+    <h4 id="TeamMembersGetAvailableTeamMemberRolesResult">TeamMembersGetAvailableTeamMemberRolesResult</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Available TeamMemberRole for the connected team. To be used with
+members/set_admin_permissions:2.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>roles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#TeamTeamMemberRole">TeamTeamMemberRole</a>></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Available roles.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamMembersGetInfoArgs">
     <h4 id="TeamMembersGetInfoArgs">TeamMembersGetInfoArgs</h4>
 
@@ -295604,6 +296749,470 @@ should be set to false and keep_account should be set to true.</td>
             
 
             <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamMembersSetPermissions2Arg">
+    <h4 id="TeamMembersSetPermissions2Arg">TeamMembersSetPermissions2Arg</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Exactly one of team_member_id, email, or external_id must be provided to
+identify the user account.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>user</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamUserSelectorArg">TeamUserSelectorArg</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Identity of user whose role will be
+set.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_roles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;Object></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The new roles for the member. Send
+empty list to make user member only. For now, only up to one role is allowed.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamMembersSetPermissions2Error">
+    <h4 id="TeamMembersSetPermissions2Error">TeamMembersSetPermissions2Error</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'user_not_found'</span>
+|
+
+<span class="param-type">'last_admin'</span>
+|
+
+<span class="param-type">'user_not_in_team'</span>
+|
+
+<span class="param-type">'cannot_set_permissions'</span>
+|
+
+<span class="param-type">'role_not_found'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamMembersSetPermissions2Result">
+    <h4 id="TeamMembersSetPermissions2Result">TeamMembersSetPermissions2Result</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>team_member_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The member ID of the user to which the
+change was applied.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>roles</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#TeamTeamMemberRole">TeamTeamMemberRole</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The roles after the change.
+Empty in case the user become a non-admin.</td>
         </tr>
 
     
@@ -310489,6 +312098,181 @@ user, if one is set.</td>
             
                 
 <hr>
+<dt class="name" id="TeamTeamMemberRole">
+    <h4 id="TeamTeamMemberRole">TeamTeamMemberRole</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        A role which can be attached to a team member. This replaces AdminTier; each
+AdminTier corresponds to a new TeamMemberRole with a matching name.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>role_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A string containing encoded role ID. For roles
+defined by Dropbox, this is the same across all teams.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The role display name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Role description. Describes which
+permissions come with this role.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamTeamMembershipType">
     <h4 id="TeamTeamMembershipType">TeamTeamMembershipType</h4>
 
@@ -318614,7 +320398,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-04-14T22:16:26+00:00
+		on 2021-04-14T22:36:58+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
