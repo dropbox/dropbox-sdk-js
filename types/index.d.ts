@@ -2567,7 +2567,37 @@ export class Dropbox {
      * Error<void>.
      * @param arg The request parameters.
      */
+    public teamMembersAddV2(arg: team.MembersAddV2Arg): Promise<DropboxResponse<team.MembersAddLaunchV2Result>>;
+
+    /**
+     * Adds members to a team. Permission : Team member management A maximum of
+     * 20 members can be specified in a single call. If no Dropbox account
+     * exists with the email address specified, a new Dropbox account will be
+     * created with the given email address, and that account will be invited to
+     * the team. If a personal Dropbox account exists with the email address
+     * specified in the call, this call will create a placeholder Dropbox
+     * account for the user on the team and send an email inviting the user to
+     * migrate their existing personal account onto the team. Team member
+     * management apps are required to set an initial given_name and surname for
+     * a user to use in the team invitation and for 'Perform as team member'
+     * actions taken on the user before they become 'active'.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<void>.
+     * @param arg The request parameters.
+     */
     public teamMembersAdd(arg: team.MembersAddArg): Promise<DropboxResponse<team.MembersAddLaunch>>;
+
+    /**
+     * Once an async_job_id is returned from membersAddV2() , use this to poll
+     * the status of the asynchronous request. Permission : Team member
+     * management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<async.PollError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersAddJobStatusGetV2(arg: async.PollArg): Promise<DropboxResponse<team.MembersAddJobStatusV2Result>>;
 
     /**
      * Once an async_job_id is returned from membersAdd() , use this to poll the
@@ -2578,6 +2608,16 @@ export class Dropbox {
      * @param arg The request parameters.
      */
     public teamMembersAddJobStatusGet(arg: async.PollArg): Promise<DropboxResponse<team.MembersAddJobStatus>>;
+
+    /**
+     * Deletes a team member's profile photo. Permission : Team member
+     * management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersDeleteProfilePhotoError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersDeleteProfilePhotoV2(arg: team.MembersDeleteProfilePhotoArg): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
 
     /**
      * Deletes a team member's profile photo. Permission : Team member
@@ -2607,6 +2647,17 @@ export class Dropbox {
      * Error<team.MembersGetInfoError>.
      * @param arg The request parameters.
      */
+    public teamMembersGetInfoV2(arg: team.MembersGetInfoV2Arg): Promise<DropboxResponse<team.MembersGetInfoV2Result>>;
+
+    /**
+     * Returns information about multiple team members. Permission : Team
+     * information This endpoint will return MembersGetInfoItem.id_not_found,
+     * for IDs (or emails) that cannot be matched to a valid team member.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersGetInfoError>.
+     * @param arg The request parameters.
+     */
     public teamMembersGetInfo(arg: team.MembersGetInfoArgs): Promise<DropboxResponse<team.MembersGetInfoResult>>;
 
     /**
@@ -2616,7 +2667,26 @@ export class Dropbox {
      * Error<team.MembersListError>.
      * @param arg The request parameters.
      */
+    public teamMembersListV2(arg: team.MembersListArg): Promise<DropboxResponse<team.MembersListV2Result>>;
+
+    /**
+     * Lists members of a team. Permission : Team information.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersListError>.
+     * @param arg The request parameters.
+     */
     public teamMembersList(arg: team.MembersListArg): Promise<DropboxResponse<team.MembersListResult>>;
+
+    /**
+     * Once a cursor has been retrieved from membersListV2(), use this to
+     * paginate through all team members. Permission : Team information.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersListContinueError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersListContinueV2(arg: team.MembersListContinueArg): Promise<DropboxResponse<team.MembersListV2Result>>;
 
     /**
      * Once a cursor has been retrieved from membersList(), use this to paginate
@@ -2764,7 +2834,26 @@ export class Dropbox {
      * Error<team.MembersSetProfileError>.
      * @param arg The request parameters.
      */
+    public teamMembersSetProfileV2(arg: team.MembersSetProfileArg): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
+
+    /**
+     * Updates a team member's profile. Permission : Team member management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersSetProfileError>.
+     * @param arg The request parameters.
+     */
     public teamMembersSetProfile(arg: team.MembersSetProfileArg): Promise<DropboxResponse<team.TeamMemberInfo>>;
+
+    /**
+     * Updates a team member's profile photo. Permission : Team member
+     * management.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * Error<team.MembersSetProfilePhotoError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersSetProfilePhotoV2(arg: team.MembersSetProfilePhotoArg): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
 
     /**
      * Updates a team member's profile photo. Permission : Team member

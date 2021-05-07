@@ -1652,7 +1652,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * Path in the user's Dropbox to save the file.
        */
@@ -1693,7 +1693,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
     }
 
     export interface ContentSyncSetting {
@@ -3313,7 +3313,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * The fully qualified path to the location in the user's Dropbox where
        * the Paper Doc should be created. This should include the document's
@@ -3418,7 +3418,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * Path in the user's Dropbox to update. The path must correspond to a
        * Paper doc or an error will be returned.
@@ -4729,7 +4729,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * Contains the upload session ID and the offset.
        */
@@ -4744,7 +4744,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * The upload session ID (returned by uploadSessionStart()).
        */
@@ -4761,7 +4761,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * Contains the upload session ID and the offset.
        */
@@ -4966,7 +4966,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * Defaults to False.
        */
@@ -5855,7 +5855,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * The Paper folder ID where the Paper document should be created. The API
        * user has to have write access to this folder or error is thrown.
@@ -5969,7 +5969,7 @@
       /**
        * The file contents to be uploaded.
        */
-      contents: Object;
+      contents?: Object;
       /**
        * The policy used for the current update call.
        */
@@ -12551,7 +12551,17 @@
       access_type: GroupAccessType;
     }
 
-    export interface MemberAddArg {
+    export interface MemberAddArg extends MemberAddArgBase {
+      /**
+       * Defaults to TagRef(Union('AdminTier', [UnionField('team_admin', Void,
+       * False, None), UnionField('user_management_admin', Void, False, None),
+       * UnionField('support_admin', Void, False, None),
+       * UnionField('member_only', Void, False, None)]), 'member_only').
+       */
+      role?: AdminTier;
+    }
+
+    export interface MemberAddArgBase {
       member_email: common.EmailAddress;
       /**
        * Member's first name.
@@ -12575,13 +12585,6 @@
        */
       send_welcome_email?: boolean;
       /**
-       * Defaults to TagRef(Union('AdminTier', [UnionField('team_admin', Void,
-       * False, None), UnionField('user_management_admin', Void, False, None),
-       * UnionField('support_admin', Void, False, None),
-       * UnionField('member_only', Void, False, None)]), 'member_only').
-       */
-      role?: AdminTier;
-      /**
        * Whether a user is directory restricted.
        */
       is_directory_restricted?: boolean;
@@ -12595,9 +12598,17 @@
     }
 
     /**
+     * Describes the result of attempting to add a single user to the team.
+     * 'success' is the only value indicating that a user was indeed added to
+     * the team - the other values explain the type of failure that occurred,
+     * and include the email of the user for which the operation has failed.
+     */
+    export type MemberAddResult = MemberAddResultBase | MemberAddResultSuccess;
+
+    /**
      * Team is already full. The organization has no available licenses.
      */
-    export interface MemberAddResultTeamLicenseLimit {
+    export interface MemberAddResultBaseTeamLicenseLimit {
       '.tag': 'team_license_limit';
       team_license_limit: common.EmailAddress;
     }
@@ -12605,7 +12616,7 @@
     /**
      * Team is already full. The free team member limit has been reached.
      */
-    export interface MemberAddResultFreeTeamMemberLimitReached {
+    export interface MemberAddResultBaseFreeTeamMemberLimitReached {
       '.tag': 'free_team_member_limit_reached';
       free_team_member_limit_reached: common.EmailAddress;
     }
@@ -12615,7 +12626,7 @@
      * with a user who is already a member of (including in recoverable state)
      * or invited to the team.
      */
-    export interface MemberAddResultUserAlreadyOnTeam {
+    export interface MemberAddResultBaseUserAlreadyOnTeam {
       '.tag': 'user_already_on_team';
       user_already_on_team: common.EmailAddress;
     }
@@ -12624,7 +12635,7 @@
      * User is already on another team. The provided email address is associated
      * with a user that is already a member or invited to another team.
      */
-    export interface MemberAddResultUserOnAnotherTeam {
+    export interface MemberAddResultBaseUserOnAnotherTeam {
       '.tag': 'user_on_another_team';
       user_on_another_team: common.EmailAddress;
     }
@@ -12632,7 +12643,7 @@
     /**
      * User is already paired.
      */
-    export interface MemberAddResultUserAlreadyPaired {
+    export interface MemberAddResultBaseUserAlreadyPaired {
       '.tag': 'user_already_paired';
       user_already_paired: common.EmailAddress;
     }
@@ -12640,7 +12651,7 @@
     /**
      * User migration has failed.
      */
-    export interface MemberAddResultUserMigrationFailed {
+    export interface MemberAddResultBaseUserMigrationFailed {
       '.tag': 'user_migration_failed';
       user_migration_failed: common.EmailAddress;
     }
@@ -12649,7 +12660,7 @@
      * A user with the given external member ID already exists on the team
      * (including in recoverable state).
      */
-    export interface MemberAddResultDuplicateExternalMemberId {
+    export interface MemberAddResultBaseDuplicateExternalMemberId {
       '.tag': 'duplicate_external_member_id';
       duplicate_external_member_id: common.EmailAddress;
     }
@@ -12658,7 +12669,7 @@
      * A user with the given persistent ID already exists on the team (including
      * in recoverable state).
      */
-    export interface MemberAddResultDuplicateMemberPersistentId {
+    export interface MemberAddResultBaseDuplicateMemberPersistentId {
       '.tag': 'duplicate_member_persistent_id';
       duplicate_member_persistent_id: common.EmailAddress;
     }
@@ -12667,7 +12678,7 @@
      * Persistent ID is only available to teams with persistent ID SAML
      * configuration. Please contact Dropbox for more information.
      */
-    export interface MemberAddResultPersistentIdDisabled {
+    export interface MemberAddResultBasePersistentIdDisabled {
       '.tag': 'persistent_id_disabled';
       persistent_id_disabled: common.EmailAddress;
     }
@@ -12675,9 +12686,26 @@
     /**
      * User creation has failed.
      */
-    export interface MemberAddResultUserCreationFailed {
+    export interface MemberAddResultBaseUserCreationFailed {
       '.tag': 'user_creation_failed';
       user_creation_failed: common.EmailAddress;
+    }
+
+    export type MemberAddResultBase = MemberAddResultBaseTeamLicenseLimit | MemberAddResultBaseFreeTeamMemberLimitReached | MemberAddResultBaseUserAlreadyOnTeam | MemberAddResultBaseUserOnAnotherTeam | MemberAddResultBaseUserAlreadyPaired | MemberAddResultBaseUserMigrationFailed | MemberAddResultBaseDuplicateExternalMemberId | MemberAddResultBaseDuplicateMemberPersistentId | MemberAddResultBasePersistentIdDisabled | MemberAddResultBaseUserCreationFailed;
+
+    export interface MemberAddV2Arg extends MemberAddArgBase {
+      role_ids?: Array<TeamMemberRoleId>;
+    }
+
+    /**
+     * Describes a user that was successfully added to the team.
+     */
+    export interface MemberAddV2ResultSuccess extends TeamMemberInfoV2 {
+      '.tag': 'success';
+    }
+
+    export interface MemberAddV2ResultOther {
+      '.tag': 'other';
     }
 
     /**
@@ -12686,7 +12714,7 @@
      * the team - the other values explain the type of failure that occurred,
      * and include the email of the user for which the operation has failed.
      */
-    export type MemberAddResult = MemberAddResultSuccess | MemberAddResultTeamLicenseLimit | MemberAddResultFreeTeamMemberLimitReached | MemberAddResultUserAlreadyOnTeam | MemberAddResultUserOnAnotherTeam | MemberAddResultUserAlreadyPaired | MemberAddResultUserMigrationFailed | MemberAddResultDuplicateExternalMemberId | MemberAddResultDuplicateMemberPersistentId | MemberAddResultPersistentIdDisabled | MemberAddResultUserCreationFailed;
+    export type MemberAddV2Result = MemberAddResultBase | MemberAddV2ResultSuccess | MemberAddV2ResultOther;
 
     /**
      * Information on devices of a team's member.
@@ -12805,11 +12833,14 @@
 
     export type MemberSelectorError = UserSelectorError | MemberSelectorErrorUserNotInTeam;
 
-    export interface MembersAddArg {
+    export interface MembersAddArg extends MembersAddArgBase {
       /**
        * Details of new members to be added to the team.
        */
       new_members: Array<MemberAddArg>;
+    }
+
+    export interface MembersAddArgBase {
       /**
        * Defaults to False.
        */
@@ -12837,12 +12868,55 @@
 
     export type MembersAddJobStatus = async.PollResultBase | MembersAddJobStatusComplete | MembersAddJobStatusFailed;
 
+    /**
+     * The asynchronous job has finished. For each member that was specified in
+     * the parameter team.MembersAddArg that was provided to membersAddV2(), a
+     * corresponding item is returned in this list.
+     */
+    export interface MembersAddJobStatusV2ResultComplete {
+      '.tag': 'complete';
+      complete: Array<MemberAddV2Result>;
+    }
+
+    /**
+     * The asynchronous job returned an error. The string contains an error
+     * message.
+     */
+    export interface MembersAddJobStatusV2ResultFailed {
+      '.tag': 'failed';
+      failed: string;
+    }
+
+    export interface MembersAddJobStatusV2ResultOther {
+      '.tag': 'other';
+    }
+
+    export type MembersAddJobStatusV2Result = async.PollResultBase | MembersAddJobStatusV2ResultComplete | MembersAddJobStatusV2ResultFailed | MembersAddJobStatusV2ResultOther;
+
     export interface MembersAddLaunchComplete {
       '.tag': 'complete';
       complete: Array<MemberAddResult>;
     }
 
     export type MembersAddLaunch = async.LaunchResultBase | MembersAddLaunchComplete;
+
+    export interface MembersAddLaunchV2ResultComplete {
+      '.tag': 'complete';
+      complete: Array<MemberAddV2Result>;
+    }
+
+    export interface MembersAddLaunchV2ResultOther {
+      '.tag': 'other';
+    }
+
+    export type MembersAddLaunchV2Result = async.LaunchResultBase | MembersAddLaunchV2ResultComplete | MembersAddLaunchV2ResultOther;
+
+    export interface MembersAddV2Arg extends MembersAddArgBase {
+      /**
+       * Details of new members to be added to the team.
+       */
+      new_members: Array<MemberAddV2Arg>;
+    }
 
     export interface MembersDataTransferArg extends MembersDeactivateBaseArg {
       /**
@@ -12931,16 +13005,6 @@
     export type MembersGetInfoError = MembersGetInfoErrorOther;
 
     /**
-     * An ID that was provided as a parameter to membersGetInfo(), and did not
-     * match a corresponding user. This might be a team_member_id, an email, or
-     * an external ID, depending on how the method was called.
-     */
-    export interface MembersGetInfoItemIdNotFound {
-      '.tag': 'id_not_found';
-      id_not_found: string;
-    }
-
-    /**
      * Info about a team member.
      */
     export interface MembersGetInfoItemMemberInfo extends TeamMemberInfo {
@@ -12951,7 +13015,51 @@
      * Describes a result obtained for a single user whose id was specified in
      * the parameter of membersGetInfo().
      */
-    export type MembersGetInfoItem = MembersGetInfoItemIdNotFound | MembersGetInfoItemMemberInfo;
+    export type MembersGetInfoItem = MembersGetInfoItemBase | MembersGetInfoItemMemberInfo;
+
+    /**
+     * An ID that was provided as a parameter to membersGetInfo() or
+     * membersGetInfoV2(), and did not match a corresponding user. This might be
+     * a team_member_id, an email, or an external ID, depending on how the
+     * method was called.
+     */
+    export interface MembersGetInfoItemBaseIdNotFound {
+      '.tag': 'id_not_found';
+      id_not_found: string;
+    }
+
+    export type MembersGetInfoItemBase = MembersGetInfoItemBaseIdNotFound;
+
+    /**
+     * Info about a team member.
+     */
+    export interface MembersGetInfoItemV2MemberInfo extends TeamMemberInfoV2 {
+      '.tag': 'member_info';
+    }
+
+    export interface MembersGetInfoItemV2Other {
+      '.tag': 'other';
+    }
+
+    /**
+     * Describes a result obtained for a single user whose id was specified in
+     * the parameter of membersGetInfoV2().
+     */
+    export type MembersGetInfoItemV2 = MembersGetInfoItemBase | MembersGetInfoItemV2MemberInfo | MembersGetInfoItemV2Other;
+
+    export interface MembersGetInfoV2Arg {
+      /**
+       * List of team members.
+       */
+      members: Array<UserSelectorArg>;
+    }
+
+    export interface MembersGetInfoV2Result {
+      /**
+       * List of team members info.
+       */
+      members_info: Array<MembersGetInfoItemV2>;
+    }
 
     export interface MembersInfo {
       /**
@@ -13015,6 +13123,24 @@
        * Is true if there are additional team members that have not been
        * returned yet. An additional call to membersListContinue() can retrieve
        * them.
+       */
+      has_more: boolean;
+    }
+
+    export interface MembersListV2Result {
+      /**
+       * List of team members.
+       */
+      members: Array<TeamMemberInfoV2>;
+      /**
+       * Pass the cursor into membersListContinueV2() to obtain the additional
+       * members.
+       */
+      cursor: string;
+      /**
+       * Is true if there are additional team members that have not been
+       * returned yet. An additional call to membersListContinueV2() can
+       * retrieve them.
        */
       has_more: boolean;
     }
@@ -14347,6 +14473,31 @@
        * The user's role in the team.
        */
       role: AdminTier;
+    }
+
+    /**
+     * Information about a team member.
+     */
+    export interface TeamMemberInfoV2 {
+      /**
+       * Profile of a user as a member of a team.
+       */
+      profile: TeamMemberProfile;
+      /**
+       * The user's roles in the team.
+       */
+      roles?: Array<TeamMemberRole>;
+    }
+
+    /**
+     * Information about a team member, after the change, like at
+     * membersSetProfileV2().
+     */
+    export interface TeamMemberInfoV2Result {
+      /**
+       * Member info, after the change.
+       */
+      member_info: TeamMemberInfoV2;
     }
 
     /**
@@ -28734,6 +28885,20 @@
 
     export interface MemberTransferAccountContentsType {
       description: string;
+    }
+
+    /**
+     * Internal only - fields for target team computations
+     */
+    export interface MemberTransferredInternalFields {
+      /**
+       * Internal only - team user was moved from.
+       */
+      source_team_id: team_common.TeamId;
+      /**
+       * Internal only - team user was moved to.
+       */
+      target_team_id: team_common.TeamId;
     }
 
     /**
