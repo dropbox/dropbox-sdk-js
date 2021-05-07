@@ -29331,6 +29331,313 @@ status of the asynchronous request. Permission : Team member management.
             
 <hr>
 <dt>
+    <h4 class="name" id="teamMembersAddJobStatusGetV2"><span class="type-signature"></span>teamMembersAddJobStatusGetV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Once an async_job_id is returned from members/add_v2 , use this to poll the
+status of the asynchronous request. Permission : Team member management.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamMembersAddJobStatusV2Result">TeamMembersAddJobStatusV2Result</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersAddV2"><span class="type-signature"></span>teamMembersAddV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Adds members to a team. Permission : Team member management A maximum of 20
+members can be specified in a single call. If no Dropbox account exists with
+the email address specified, a new Dropbox account will be created with the
+given email address, and that account will be invited to the team. If a
+personal Dropbox account exists with the email address specified in the call,
+this call will create a placeholder Dropbox account for the user on the team
+and send an email inviting the user to migrate their existing personal
+account onto the team. Team member management apps are required to set an
+initial given_name and surname for a user to use in the team invitation and
+for 'Perform as team member' actions taken on the user before they become
+'active'.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersAddV2Arg">TeamMembersAddV2Arg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamMembersAddLaunchV2Result">TeamMembersAddLaunchV2Result</a>>, <a href="global.html#Error">Error</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="teamMembersDeleteProfilePhoto"><span class="type-signature"></span>teamMembersDeleteProfilePhoto(arg)</h4>
     
     
@@ -29463,6 +29770,154 @@ status of the asynchronous request. Permission : Team member management.
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamTeamMemberInfo">TeamTeamMemberInfo</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersDeleteProfilePhotoError">TeamMembersDeleteProfilePhotoError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersDeleteProfilePhotoV2"><span class="type-signature"></span>teamMembersDeleteProfilePhotoV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Deletes a team member's profile photo. Permission : Team member management.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersDeleteProfilePhotoArg">TeamMembersDeleteProfilePhotoArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamTeamMemberInfoV2Result">TeamTeamMemberInfoV2Result</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersDeleteProfilePhotoError">TeamMembersDeleteProfilePhotoError</a>>></span>
 
 
 
@@ -29712,6 +30167,156 @@ IDs (or emails) that cannot be matched to a valid team member.
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;Object>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersGetInfoError">TeamMembersGetInfoError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersGetInfoV2"><span class="type-signature"></span>teamMembersGetInfoV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns information about multiple team members. Permission : Team
+information This endpoint will return MembersGetInfoItem.id_not_found, for
+IDs (or emails) that cannot be matched to a valid team member.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersGetInfoV2Arg">TeamMembersGetInfoV2Arg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamMembersGetInfoV2Result">TeamMembersGetInfoV2Result</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersGetInfoError">TeamMembersGetInfoError</a>>></span>
 
 
 
@@ -30009,6 +30614,303 @@ through all team members. Permission : Team information.
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamMembersListResult">TeamMembersListResult</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersListContinueError">TeamMembersListContinueError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersListContinueV2"><span class="type-signature"></span>teamMembersListContinueV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Once a cursor has been retrieved from members/list_v2, use this to paginate
+through all team members. Permission : Team information.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersListContinueArg">TeamMembersListContinueArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamMembersListV2Result">TeamMembersListV2Result</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersListContinueError">TeamMembersListContinueError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersListV2"><span class="type-signature"></span>teamMembersListV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Lists members of a team. Permission : Team information.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersListArg">TeamMembersListArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamMembersListV2Result">TeamMembersListV2Result</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersListError">TeamMembersListError</a>>></span>
 
 
 
@@ -32997,6 +33899,302 @@ provided to identify the user account. No-op if team member is not pending.
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamTeamMemberInfo">TeamTeamMemberInfo</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersSetProfilePhotoError">TeamMembersSetProfilePhotoError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersSetProfilePhotoV2"><span class="type-signature"></span>teamMembersSetProfilePhotoV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Updates a team member's profile photo. Permission : Team member management.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersSetProfilePhotoArg">TeamMembersSetProfilePhotoArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamTeamMemberInfoV2Result">TeamTeamMemberInfoV2Result</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersSetProfilePhotoError">TeamMembersSetProfilePhotoError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersSetProfileV2"><span class="type-signature"></span>teamMembersSetProfileV2(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Updates a team member's profile. Permission : Team member management.
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersSetProfileArg">TeamMembersSetProfileArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamTeamMemberInfoV2Result">TeamTeamMemberInfoV2Result</a>>, <a href="global.html#Error">Error</a>.&lt;<a href="global.html#TeamMembersSetProfileError">TeamMembersSetProfileError</a>>></span>
 
 
 
@@ -37099,7 +38297,7 @@ queried per request.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-04-14T22:36:58+00:00
+		on 2021-05-07T19:11:50+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
