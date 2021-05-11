@@ -27895,6 +27895,10 @@
       '.tag': 'personal_information';
     }
 
+    export interface LabelTypeUserDefinedTag {
+      '.tag': 'user_defined_tag';
+    }
+
     export interface LabelTypeOther {
       '.tag': 'other';
     }
@@ -27902,7 +27906,7 @@
     /**
      * Label type
      */
-    export type LabelType = LabelTypePersonalInformation | LabelTypeOther;
+    export type LabelType = LabelTypePersonalInformation | LabelTypeUserDefinedTag | LabelTypeOther;
 
     /**
      * Information on sessions, in legacy format
