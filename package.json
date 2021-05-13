@@ -1,6 +1,6 @@
 {
     "name": "dropbox",
-    "version": "9.8.1",
+    "version": "9.8.2",
     "registry": "npm",
     "description": "The Dropbox JavaScript SDK is a lightweight, promise based interface to the Dropbox v2 API that works in both nodejs and browser environments.",
     "main": "cjs/index.js",
