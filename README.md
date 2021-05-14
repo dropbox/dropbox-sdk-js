@@ -26,6 +26,22 @@ $ cd dropbox-sdk-js
 $ npm install
 ```
 
+If you are using created an application in the Browser, you can include the SDK using a distribution from a CDN.
+
+For example if you wanted to use version 1.0.0 you could include the following line in the `<head>` tag of your page. We discourage importing the latest version of the SDK by default as major version bump contain breaking changes and could break your application without warning.
+
+```
+https://cdn.jsdelivr.net/npm/dropbox@1.0.0/dist/Dropbox-sdk.min.js
+```
+
+For debugging, we recommend using the non-minified version to help identify the source of any errors:
+
+```
+https://cdn.jsdelivr.net/npm/dropbox@1.0.0/dist/Dropbox-sdk.js
+```
+
+This example just uses jsdelivr as the source but you can use any CDN that automatically imports packages from NPM.
+
 After installation, follow one of our [Examples][examples] or read the [Documentation][documentation].
 
 You can also view our [OAuth guide][oauthguide].
