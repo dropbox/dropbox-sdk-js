@@ -5,9 +5,9 @@ function getSafeUnicode(c) {
   return `\\u${unicode}`;
 }
 
-export const baseApiUrl = (subdomain, domain = DEFAULT_API_DOMAIN) => `https://${subdomain}.${domain}/2/`;
+export const baseApiUrl = (subdomain, domain = DEFAULT_API_DOMAIN, domainDelimiter = '.') => `https://${subdomain}${domainDelimiter}${domain}/2/`;
 export const OAuth2AuthorizationUrl = (domain = DEFAULT_DOMAIN) => `https://${domain}/oauth2/authorize`;
-export const OAuth2TokenUrl = (domain = DEFAULT_API_DOMAIN) => `https://api.${domain}/oauth2/token`;
+export const OAuth2TokenUrl = (domain = DEFAULT_API_DOMAIN, domainDelimiter = '.') => `https://api${domainDelimiter}${domain}/oauth2/token`;
 
 // source https://www.dropboxforum.com/t5/API-support/HTTP-header-quot-Dropbox-API-Arg-quot-could-not-decode-input-as/m-p/173823/highlight/true#M6786
 export function httpHeaderSafeJson(args) {
