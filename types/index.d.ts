@@ -20,6 +20,8 @@ export interface DropboxAuthOptions {
   fetch?: Function;
   // A custom domain to use when making api requests. This should only be used for testing as scaffolding to avoid making network requests.
   domain?: string;
+  // A custom delimiter to use when separating domain from subdomain. This should only be used for testing as scaffolding.
+  domainDelimiter?: string;
 }
 
 export class DropboxAuth {
@@ -174,6 +176,8 @@ export interface DropboxOptions {
   fetch?: Function;
   // A custom domain to use when making api requests. This should only be used for testing as scaffolding to avoid making network requests.
   domain?: string;
+  // A custom delimiter to use when separating domain subdomain. This should only be used for testing as scaffolding.
+  domainDelimiter?: string;
 }
 
 export class DropboxResponseError<T> {
