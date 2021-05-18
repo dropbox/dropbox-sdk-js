@@ -51,6 +51,8 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
  * authentication URL and refresh access tokens.
  * @arg {String} [options.domain] - A custom domain to use when making api requests. This
  * should only be used for testing as scaffolding to avoid making network requests.
+ * @arg {String} [options.domainDelimiter] - A custom delimiter to use when separating domain
+ * subdomain. This should only be used for testing as scaffolding.
  */
 export default class DropboxAuth {
   constructor(options) {
@@ -64,6 +66,7 @@ export default class DropboxAuth {
     this.clientSecret = options.clientSecret;
 
     this.domain = options.domain;
+    this.domainDelimiter = options.domainDelimiter;
   }
 
   /**
@@ -293,7 +296,7 @@ export default class DropboxAuth {
     if (!clientId) {
       throw new Error('A client id is required. You can set the client id using .setClientId().');
     }
-    let path = OAuth2TokenUrl(this.domain);
+    let path = OAuth2TokenUrl(this.domain, this.domainDelimiter);
     path += '?grant_type=authorization_code';
     path += `&code=${code}`;
     path += `&client_id=${clientId}`;
@@ -343,7 +346,7 @@ export default class DropboxAuth {
      * @returns {Promise<*>}
      */
   refreshAccessToken(scope = null) {
-    let refreshUrl = OAuth2TokenUrl(this.domain);
+    let refreshUrl = OAuth2TokenUrl(this.domain, this.domainDelimiter);
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
 

@@ -48,6 +48,8 @@ const b64 = typeof btoa === 'undefined'
  * authentication URL and refresh access tokens.
  * @arg {String} [options.domain] - A custom domain to use when making api requests. This
  * should only be used for testing as scaffolding to avoid making network requests.
+ * @arg {String} [options.domainDelimiter] - A custom delimiter to use when separating domain
+ * subdomain. This should only be used for testing as scaffolding.
  */
 export default class Dropbox {
   constructor(options) {
@@ -65,6 +67,7 @@ export default class Dropbox {
     this.pathRoot = options.pathRoot;
 
     this.domain = options.domain;
+    this.domainDelimiter = options.domainDelimiter;
 
     Object.assign(this, routes);
   }
@@ -129,7 +132,7 @@ export default class Dropbox {
         this.setCommonHeaders(fetchOptions);
         return fetchOptions;
       })
-      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain, this.domainDelimiter) + path, fetchOptions))
       .then((res) => parseResponse(res));
   }
 
@@ -152,7 +155,7 @@ export default class Dropbox {
 
         return fetchOptions;
       })
-      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain, this.domainDelimiter) + path, fetchOptions))
       .then((res) => parseDownloadResponse(res));
   }
 
@@ -180,7 +183,7 @@ export default class Dropbox {
 
         return fetchOptions;
       })
-      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain) + path, fetchOptions))
+      .then((fetchOptions) => this.fetch(baseApiUrl(host, this.domain, this.domainDelimiter) + path, fetchOptions))
       .then((res) => parseResponse(res));
   }
 
