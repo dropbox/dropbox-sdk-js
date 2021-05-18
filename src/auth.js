@@ -51,7 +51,7 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
  * authentication URL and refresh access tokens.
  * @arg {String} [options.domain] - A custom domain to use when making api requests. This
  * should only be used for testing as scaffolding to avoid making network requests.
- * @arg {String} [options.domainDelimiter] - A custom delimiter to use when separating domain
+ * @arg {String} [options.domainDelimiter] - A custom delimiter to use when separating domain from
  * subdomain. This should only be used for testing as scaffolding.
  */
 export default class DropboxAuth {
