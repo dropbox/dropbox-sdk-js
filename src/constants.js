@@ -9,3 +9,9 @@ export const NO_AUTH = 'noauth';
 
 export const DEFAULT_API_DOMAIN = 'dropboxapi.com';
 export const DEFAULT_DOMAIN = 'dropbox.com';
+
+export const TEST_DOMAIN_MAPPINGS = {
+    "api": "api",
+    "notify": "bolt",
+    "content": "api-content"
+};
