@@ -6,7 +6,7 @@ function getSafeUnicode(c) {
 }
 
 export const baseApiUrl = (subdomain, domain = DEFAULT_API_DOMAIN, domainDelimiter = '.') => {
-  if (domain !== DEFAULT_API_DOMAIN) {
+  if (domain !== DEFAULT_API_DOMAIN && TEST_DOMAIN_MAPPINGS[subdomain] !== undefined) {
     subdomain = TEST_DOMAIN_MAPPINGS[subdomain];
     domainDelimiter = '-';
   }
@@ -19,7 +19,7 @@ export const OAuth2AuthorizationUrl = (domain = DEFAULT_DOMAIN) => {
   return `https://${domain}/oauth2/authorize`;
 };
 export const OAuth2TokenUrl = (domain = DEFAULT_API_DOMAIN, domainDelimiter = '.') => {
-  subdomain = 'api';
+  let subdomain = 'api';
   if (domain !== DEFAULT_API_DOMAIN) {
     subdomain = TEST_DOMAIN_MAPPINGS[subdomain];
     domainDelimiter = '-';
