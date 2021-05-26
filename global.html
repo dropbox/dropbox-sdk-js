@@ -112860,6 +112860,145 @@ reseller. Action done by reseller.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogAdminAlertGeneralStateEnum">
+    <h4 id="TeamLogAdminAlertGeneralStateEnum">TeamLogAdminAlertGeneralStateEnum</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Alert state
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'active'</span>
+|
+
+<span class="param-type">'dismissed'</span>
+|
+
+<span class="param-type">'in_progress'</span>
+|
+
+<span class="param-type">'na'</span>
+|
+
+<span class="param-type">'resolved'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogAdminAlertingAlertConfiguration">
     <h4 id="TeamLogAdminAlertingAlertConfiguration">TeamLogAdminAlertingAlertConfiguration</h4>
 
@@ -113150,6 +113289,372 @@ settings.</td>
             
 
             <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertingAlertStateChangedDetails">
+    <h4 id="TeamLogAdminAlertingAlertStateChangedDetails">TeamLogAdminAlertingAlertStateChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed an alert state.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert name.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_severity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertSeverityEnum">TeamLogAdminAlertSeverityEnum</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert severity.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_category</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertCategoryEnum">TeamLogAdminAlertCategoryEnum</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert category.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>alert_instance_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert ID.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertGeneralStateEnum">TeamLogAdminAlertGeneralStateEnum</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert state
+before the change.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertGeneralStateEnum">TeamLogAdminAlertGeneralStateEnum</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Alert state after
+the change.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogAdminAlertingAlertStateChangedType">
+    <h4 id="TeamLogAdminAlertingAlertStateChangedType">TeamLogAdminAlertingAlertStateChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -136703,6 +137208,39 @@ state.</td>
 
         <tr>
             
+                <td class="name"><code>admin_alerting_alert_state_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingAlertStateChangedDetails">TeamLogAdminAlertingAlertStateChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+admin_alerting_alert_state_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>admin_alerting_changed_alert_config_details</code></td>
             
 
@@ -139688,6 +140226,39 @@ folder_overview_item_unpinned_details.</td>
 
             <td class="description last">Available if .tag is
 object_label_updated_value_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>organize_folder_with_tidy_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogOrganizeFolderWithTidyDetails">TeamLogOrganizeFolderWithTidyDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+organize_folder_with_tidy_details.</td>
         </tr>
 
     
@@ -151850,6 +152421,9 @@ to an internal error.</td>
             <td class="type">
             
                 
+<span class="param-type">'admin_alerting_alert_state_changed_details'</span>
+|
+
 <span class="param-type">'admin_alerting_changed_alert_config_details'</span>
 |
 
@@ -152121,6 +152695,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'object_label_updated_value_details'</span>
+|
+
+<span class="param-type">'organize_folder_with_tidy_details'</span>
 |
 
 <span class="param-type">'rewind_folder_details'</span>
@@ -153358,6 +153935,39 @@ to an internal error.</td>
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>admin_alerting_alert_state_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogAdminAlertingAlertStateChangedType">TeamLogAdminAlertingAlertStateChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+admin_alerting_alert_state_changed. (admin_alerting) Changed an alert state</td>
+        </tr>
+
     
 
         <tr>
@@ -156386,6 +156996,39 @@ if .tag is object_label_removed. (file_operations) Removed a label</td>
 
             <td class="description last">Available if .tag is object_label_updated_value. (file_operations) Updated a
 label's value</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>organize_folder_with_tidy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogOrganizeFolderWithTidyType">TeamLogOrganizeFolderWithTidyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is organize_folder_with_tidy. (file_operations) Organized a
+folder with the Tidy Up action</td>
         </tr>
 
     
@@ -168787,6 +169430,9 @@ merge your team into another Dropbox team</td>
             <td class="type">
             
                 
+<span class="param-type">'admin_alerting_alert_state_changed'</span>
+|
+
 <span class="param-type">'admin_alerting_changed_alert_config'</span>
 |
 
@@ -169058,6 +169704,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'object_label_updated_value'</span>
+|
+
+<span class="param-type">'organize_folder_with_tidy'</span>
 |
 
 <span class="param-type">'rewind_folder'</span>
@@ -170300,6 +170949,9 @@ merge your team into another Dropbox team</td>
             <td class="type">
             
                 
+<span class="param-type">'admin_alerting_alert_state_changed'</span>
+|
+
 <span class="param-type">'admin_alerting_changed_alert_config'</span>
 |
 
@@ -170571,6 +171223,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'object_label_updated_value'</span>
+|
+
+<span class="param-type">'organize_folder_with_tidy'</span>
 |
 
 <span class="param-type">'rewind_folder'</span>
@@ -216728,6 +217383,197 @@ subtypes.</td>
             
 
             <td class="description last">The name of the organization.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogOrganizeFolderWithTidyDetails">
+    <h4 id="TeamLogOrganizeFolderWithTidyDetails">TeamLogOrganizeFolderWithTidyDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Organized a folder with the Tidy Up action.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogOrganizeFolderWithTidyType">
+    <h4 id="TeamLogOrganizeFolderWithTidyType">TeamLogOrganizeFolderWithTidyType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -324144,7 +324990,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-05-20T21:34:51+00:00
+		on 2021-05-26T22:43:08+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
