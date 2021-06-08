@@ -2,6 +2,20 @@
 
 This document is designed to show you how to upgrade to the latest version of the SDK accomodating any breaking changes introduced by major version updates.  If you find any issues with either this guide on upgrading or the changes introduced in the new version, please see [CONTRIBUTING.md][contributing]
 
+# Upgrading from v9.X.X to v10.0.0 
+
+## 1. Deprecating the `authenticateWithCordova` function
+
+The `authenticateWithCordova` function used an in-app browser within the Cordova framework to authenticate users via OAuth. As a part of hardening security, we are following [Google’s recommendation](https://developers.googleblog.com/2016/08/modernizing-oauth-interactions-in-native-apps.html) to remove support for authentication via a “web-view” or in-app browsers. Since the `authenticateWithCordova` function relies on running in an in-app browser, we have made the choice to deprecate this function.
+
+Instead, apps will need to implement logic to handle this use case. The high level logic would be as follows:
+
+1. getAuthenticationUrl with your app’s parameters. For Native Apps, we highly encourage using PKCE to increase your app’s security.
+2. Open the authentication URL in the default system browser
+3. Redirect back into your app upon completion of the OAuth flow. 
+
+We recommend using a custom URI for redirect to ensure you are redirecting directly back into your app. You can read up on this process more in detail on the [OAuth site](https://www.oauth.com/oauth2-servers/redirect-uris/redirect-uris-native-apps/).
+
 # Upgrading from v8.X.X to v9.0.0
 
 ## 1. Unblocking browser PKCE flow
