@@ -82717,13 +82717,13 @@ team.</td>
 
         <tr>
             
-                <td class="name"><code>requested_visibility</code></td>
+                <td class="name"><code>require_password</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="global.html#SharingRequestedVisibility">SharingRequestedVisibility</a></span>
+<span class="param-type">boolean</span>
 
 
 
@@ -82742,8 +82742,8 @@ team.</td>
 
             
 
-            <td class="description last">The requested
-access for this shared link.</td>
+            <td class="description last">Boolean flag to enable or disable
+password protection.</td>
         </tr>
 
     
@@ -82775,9 +82775,8 @@ access for this shared link.</td>
 
             
 
-            <td class="description last">If requested_visibility is
-RequestedVisibility.password this is needed to specify the password to access
-the link.</td>
+            <td class="description last">If require_password is true, this is
+needed to specify the password to access the link.</td>
         </tr>
 
     
@@ -82882,6 +82881,39 @@ effective audience type in the `effective_audience` field of
             <td class="description last">Requested access level
 you want the audience to gain from this link. Note, modifying access level
 for an existing link is not supported.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>requested_visibility</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingRequestedVisibility">SharingRequestedVisibility</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Use audience
+instead.  The requested access for this shared link.</td>
         </tr>
 
     
@@ -116440,6 +116472,197 @@ alert configuration.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogApplyNamingConventionDetails">
+    <h4 id="TeamLogApplyNamingConventionDetails">TeamLogApplyNamingConventionDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Applied a Naming Convention rule.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogApplyNamingConventionType">
+    <h4 id="TeamLogApplyNamingConventionType">TeamLogApplyNamingConventionType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogAppPermissionsChangedDetails">
     <h4 id="TeamLogAppPermissionsChangedDetails">TeamLogAppPermissionsChangedDetails</h4>
 
@@ -121503,6 +121726,137 @@ state.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogChangeLinkExpirationPolicy">
+    <h4 id="TeamLogChangeLinkExpirationPolicy">TeamLogChangeLinkExpirationPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for deciding whether the team's default expiration days policy must be
+enforced when an externally shared is updated
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'allowed'</span>
+|
+
+<span class="param-type">'not_allowed'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogClassificationChangePolicyDetails">
     <h4 id="TeamLogClassificationChangePolicyDetails">TeamLogClassificationChangePolicyDetails</h4>
 
@@ -124873,6 +125227,154 @@ restriction.</td>
             
 
             <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogDefaultLinkExpirationDaysPolicy">
+    <h4 id="TeamLogDefaultLinkExpirationDaysPolicy">TeamLogDefaultLinkExpirationDaysPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for the default number of days until an externally shared link expires
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'day_1'</span>
+|
+
+<span class="param-type">'day_180'</span>
+|
+
+<span class="param-type">'day_3'</span>
+|
+
+<span class="param-type">'day_30'</span>
+|
+
+<span class="param-type">'day_7'</span>
+|
+
+<span class="param-type">'day_90'</span>
+|
+
+<span class="param-type">'none'</span>
+|
+
+<span class="param-type">'year_1'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -136491,6 +136993,137 @@ information about the organization or team.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogEnforceLinkPasswordPolicy">
+    <h4 id="TeamLogEnforceLinkPasswordPolicy">TeamLogEnforceLinkPasswordPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for deciding whether password must be enforced when an externally
+shared link is updated
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'optional'</span>
+|
+
+<span class="param-type">'required'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogEnterpriseSettingsLockingDetails">
     <h4 id="TeamLogEnterpriseSettingsLockingDetails">TeamLogEnterpriseSettingsLockingDetails</h4>
 
@@ -139357,6 +139990,39 @@ enabled_domain_invites_details.</td>
 
         <tr>
             
+                <td class="name"><code>apply_naming_convention_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogApplyNamingConventionDetails">TeamLogApplyNamingConventionDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+apply_naming_convention_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>create_folder_details</code></td>
             
 
@@ -140140,6 +140806,71 @@ organize_folder_with_tidy_details.</td>
 
             <td class="description last">Available if
 .tag is rewind_folder_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user_tags_added_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogUserTagsAddedDetails">TeamLogUserTagsAddedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available
+if .tag is user_tags_added_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user_tags_removed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogUserTagsRemovedDetails">TeamLogUserTagsRemovedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is user_tags_removed_details.</td>
         </tr>
 
     
@@ -150094,6 +150825,105 @@ sharing_change_folder_join_policy_details.</td>
 
         <tr>
             
+                <td class="name"><code>sharing_change_link_allow_change_expiration_policy_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSharingChangeLinkAllowChangeExpirationPolicyDetails">TeamLogSharingChangeLinkAllowChangeExpirationPolicyDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is sharing_change_link_allow_change_expiration_policy_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sharing_change_link_default_expiration_policy_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSharingChangeLinkDefaultExpirationPolicyDetails">TeamLogSharingChangeLinkDefaultExpirationPolicyDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag
+is sharing_change_link_default_expiration_policy_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sharing_change_link_enforce_password_policy_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSharingChangeLinkEnforcePasswordPolicyDetails">TeamLogSharingChangeLinkEnforcePasswordPolicyDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+sharing_change_link_enforce_password_policy_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>sharing_change_link_policy_details</code></td>
             
 
@@ -152479,6 +153309,9 @@ to an internal error.</td>
 <span class="param-type">'enabled_domain_invites_details'</span>
 |
 
+<span class="param-type">'apply_naming_convention_details'</span>
+|
+
 <span class="param-type">'create_folder_details'</span>
 |
 
@@ -152549,6 +153382,12 @@ to an internal error.</td>
 |
 
 <span class="param-type">'rewind_folder_details'</span>
+|
+
+<span class="param-type">'user_tags_added_details'</span>
+|
+
+<span class="param-type">'user_tags_removed_details'</span>
 |
 
 <span class="param-type">'file_request_change_details'</span>
@@ -153461,6 +154300,15 @@ to an internal error.</td>
 |
 
 <span class="param-type">'sharing_change_folder_join_policy_details'</span>
+|
+
+<span class="param-type">'sharing_change_link_allow_change_expiration_policy_details'</span>
+|
+
+<span class="param-type">'sharing_change_link_default_expiration_policy_details'</span>
+|
+
+<span class="param-type">'sharing_change_link_enforce_password_policy_details'</span>
 |
 
 <span class="param-type">'sharing_change_link_policy_details'</span>
@@ -156120,6 +156968,39 @@ verified team domains</td>
 
         <tr>
             
+                <td class="name"><code>apply_naming_convention</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogApplyNamingConventionType">TeamLogApplyNamingConventionType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is apply_naming_convention. (file_operations) Applied a
+Naming Convention rule</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>create_folder</code></td>
             
 
@@ -156910,6 +157791,72 @@ folder with the Tidy Up action</td>
 
             <td class="description last">Available if .tag is
 rewind_folder. (file_operations) Rewound a folder</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user_tags_added</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogUserTagsAddedType">TeamLogUserTagsAddedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+user_tags_added. (file_operations) Tagged a file</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user_tags_removed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogUserTagsRemovedType">TeamLogUserTagsRemovedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if
+.tag is user_tags_removed. (file_operations) Removed tags</td>
         </tr>
 
     
@@ -167080,6 +168027,109 @@ members can join shared folders owned outside team</td>
 
         <tr>
             
+                <td class="name"><code>sharing_change_link_allow_change_expiration_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSharingChangeLinkAllowChangeExpirationPolicyType">TeamLogSharingChangeLinkAllowChangeExpirationPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+sharing_change_link_allow_change_expiration_policy. (team_policies) Changed
+the password requirement for the links shared outside of the team</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sharing_change_link_default_expiration_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSharingChangeLinkDefaultExpirationPolicyType">TeamLogSharingChangeLinkDefaultExpirationPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+sharing_change_link_default_expiration_policy. (team_policies) Changed the
+default expiration for the links shared outside of the team</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>sharing_change_link_enforce_password_policy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogSharingChangeLinkEnforcePasswordPolicyType">TeamLogSharingChangeLinkEnforcePasswordPolicyType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+sharing_change_link_enforce_password_policy. (team_policies) Changed the
+allow remove or change expiration policy for the links shared outside of the
+team</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>sharing_change_link_policy</code></td>
             
 
@@ -169488,6 +170538,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'enabled_domain_invites'</span>
 |
 
+<span class="param-type">'apply_naming_convention'</span>
+|
+
 <span class="param-type">'create_folder'</span>
 |
 
@@ -169558,6 +170611,12 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'rewind_folder'</span>
+|
+
+<span class="param-type">'user_tags_added'</span>
+|
+
+<span class="param-type">'user_tags_removed'</span>
 |
 
 <span class="param-type">'file_request_change'</span>
@@ -170470,6 +171529,15 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'sharing_change_folder_join_policy'</span>
+|
+
+<span class="param-type">'sharing_change_link_allow_change_expiration_policy'</span>
+|
+
+<span class="param-type">'sharing_change_link_default_expiration_policy'</span>
+|
+
+<span class="param-type">'sharing_change_link_enforce_password_policy'</span>
 |
 
 <span class="param-type">'sharing_change_link_policy'</span>
@@ -171007,6 +172075,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'enabled_domain_invites'</span>
 |
 
+<span class="param-type">'apply_naming_convention'</span>
+|
+
 <span class="param-type">'create_folder'</span>
 |
 
@@ -171077,6 +172148,12 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'rewind_folder'</span>
+|
+
+<span class="param-type">'user_tags_added'</span>
+|
+
+<span class="param-type">'user_tags_removed'</span>
 |
 
 <span class="param-type">'file_request_change'</span>
@@ -171989,6 +173066,15 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'sharing_change_folder_join_policy'</span>
+|
+
+<span class="param-type">'sharing_change_link_allow_change_expiration_policy'</span>
+|
+
+<span class="param-type">'sharing_change_link_default_expiration_policy'</span>
+|
+
+<span class="param-type">'sharing_change_link_enforce_password_policy'</span>
 |
 
 <span class="param-type">'sharing_change_link_policy'</span>
@@ -198655,6 +199741,9 @@ shared folders at event time.</td>
             
                 
 <span class="param-type">'personal_information'</span>
+|
+
+<span class="param-type">'test_only'</span>
 |
 
 <span class="param-type">'user_defined_tag'</span>
@@ -258132,6 +259221,859 @@ external join policy. Might be missing due to historical data gap.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogSharingChangeLinkAllowChangeExpirationPolicyDetails">
+    <h4 id="TeamLogSharingChangeLinkAllowChangeExpirationPolicyDetails">TeamLogSharingChangeLinkAllowChangeExpirationPolicyDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed the password requirement for the links shared outside of the team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogEnforceLinkPasswordPolicy">TeamLogEnforceLinkPasswordPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">To.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogEnforceLinkPasswordPolicy">TeamLogEnforceLinkPasswordPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">From.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSharingChangeLinkAllowChangeExpirationPolicyType">
+    <h4 id="TeamLogSharingChangeLinkAllowChangeExpirationPolicyType">TeamLogSharingChangeLinkAllowChangeExpirationPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSharingChangeLinkDefaultExpirationPolicyDetails">
+    <h4 id="TeamLogSharingChangeLinkDefaultExpirationPolicyDetails">TeamLogSharingChangeLinkDefaultExpirationPolicyDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed the default expiration for the links shared outside of the team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogDefaultLinkExpirationDaysPolicy">TeamLogDefaultLinkExpirationDaysPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">To.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogDefaultLinkExpirationDaysPolicy">TeamLogDefaultLinkExpirationDaysPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">From.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSharingChangeLinkDefaultExpirationPolicyType">
+    <h4 id="TeamLogSharingChangeLinkDefaultExpirationPolicyType">TeamLogSharingChangeLinkDefaultExpirationPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSharingChangeLinkEnforcePasswordPolicyDetails">
+    <h4 id="TeamLogSharingChangeLinkEnforcePasswordPolicyDetails">TeamLogSharingChangeLinkEnforcePasswordPolicyDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed the allow remove or change expiration policy for the links shared
+outside of the team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogChangeLinkExpirationPolicy">TeamLogChangeLinkExpirationPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">To.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogChangeLinkExpirationPolicy">TeamLogChangeLinkExpirationPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">From.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogSharingChangeLinkEnforcePasswordPolicyType">
+    <h4 id="TeamLogSharingChangeLinkEnforcePasswordPolicyType">TeamLogSharingChangeLinkEnforcePasswordPolicyType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogSharingChangeLinkPolicyDetails">
     <h4 id="TeamLogSharingChangeLinkPolicyDetails">TeamLogSharingChangeLinkPolicyDetails</h4>
 
@@ -289597,6 +291539,494 @@ possible subtypes.</td>
             
 
             <td class="description last">App display name.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogUserTagsAddedDetails">
+    <h4 id="TeamLogUserTagsAddedDetails">TeamLogUserTagsAddedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Tagged a file.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>values</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">values.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogUserTagsAddedType">
+    <h4 id="TeamLogUserTagsAddedType">TeamLogUserTagsAddedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogUserTagsRemovedDetails">
+    <h4 id="TeamLogUserTagsRemovedDetails">TeamLogUserTagsRemovedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Removed tags.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>values</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">values.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogUserTagsRemovedType">
+    <h4 id="TeamLogUserTagsRemovedType">TeamLogUserTagsRemovedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -324838,7 +327268,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-06-16T19:42:44+00:00
+		on 2021-06-17T01:57:50+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
