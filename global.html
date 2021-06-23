@@ -58222,8 +58222,8 @@ who can add, remove, or change the privileges of members.
             
 
             <td class="description last">Members to add. Note that
-even an email address is given, this may result in a user being directy added
-to the membership if that email is the user's main account email.</td>
+even an email address is given, this may result in a user being directly
+added to the membership if that email is the user's main account email.</td>
         </tr>
 
     
@@ -89099,7 +89099,7 @@ session.</td>
         Result of trying to add a secondary email to a user. 'success' is the only
 value indicating that a secondary email was successfully added to a user. The
 other values explain the type of error that occurred, and include the email
-for which the error occured.
+for which the error occurred.
     </div>
     
 
@@ -92280,7 +92280,7 @@ start_date is None or too long ago, this field will  be set to 6 months ago.</td
         Result of trying to delete a secondary email address. 'success' is the only
 value indicating that a secondary email was successfully deleted. The other
 values explain the type of error that occurred, and include the email for
-which the error occured.
+which the error occurred.
     </div>
     
 
@@ -103808,7 +103808,7 @@ https://www.dropbox.com/developers/reference/content-hash page.</td>
             
 
             <td class="description last">Team members IDs and number of
-permanetly deleted members under hold.</td>
+permanently deleted members under hold.</td>
         </tr>
 
     
@@ -150068,6 +150068,39 @@ integration_policy_changed_details.</td>
 
         <tr>
             
+                <td class="name"><code>invite_acceptance_email_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogInviteAcceptanceEmailPolicyChangedDetails">TeamLogInviteAcceptanceEmailPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+invite_acceptance_email_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>member_requests_change_policy_details</code></td>
             
 
@@ -154231,6 +154264,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'integration_policy_changed_details'</span>
+|
+
+<span class="param-type">'invite_acceptance_email_policy_changed_details'</span>
 |
 
 <span class="param-type">'member_requests_change_policy_details'</span>
@@ -167246,6 +167282,40 @@ integration policy for team</td>
 
         <tr>
             
+                <td class="name"><code>invite_acceptance_email_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogInviteAcceptanceEmailPolicyChangedType">TeamLogInviteAcceptanceEmailPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+invite_acceptance_email_policy_changed. (team_policies) Changed invite accept
+email policy for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>member_requests_change_policy</code></td>
             
 
@@ -171462,6 +171532,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'integration_policy_changed'</span>
 |
 
+<span class="param-type">'invite_acceptance_email_policy_changed'</span>
+|
+
 <span class="param-type">'member_requests_change_policy'</span>
 |
 
@@ -172997,6 +173070,9 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'integration_policy_changed'</span>
+|
+
+<span class="param-type">'invite_acceptance_email_policy_changed'</span>
 |
 
 <span class="param-type">'member_requests_change_policy'</span>
@@ -199034,6 +199110,405 @@ policy.</td>
 <hr>
 <dt class="name" id="TeamLogIntegrationPolicyChangedType">
     <h4 id="TeamLogIntegrationPolicyChangedType">TeamLogIntegrationPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogInviteAcceptanceEmailPolicy">
+    <h4 id="TeamLogInviteAcceptanceEmailPolicy">TeamLogInviteAcceptanceEmailPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for deciding whether team admins receive email when an invitation to
+join the team is accepted
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogInviteAcceptanceEmailPolicyChangedDetails">
+    <h4 id="TeamLogInviteAcceptanceEmailPolicyChangedDetails">TeamLogInviteAcceptanceEmailPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed invite accept email policy for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogInviteAcceptanceEmailPolicy">TeamLogInviteAcceptanceEmailPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">To.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogInviteAcceptanceEmailPolicy">TeamLogInviteAcceptanceEmailPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">From.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogInviteAcceptanceEmailPolicyChangedType">
+    <h4 id="TeamLogInviteAcceptanceEmailPolicyChangedType">TeamLogInviteAcceptanceEmailPolicyChangedType</h4>
 
     
 </dt>
@@ -310615,7 +311090,7 @@ converted to individual account.</td>
         Result of trying to resend verification email to a secondary email address.
 'success' is the only value indicating that a verification email was
 successfully sent. The other values explain the type of error that occurred,
-and include the email for which the error occured.
+and include the email for which the error occurred.
     </div>
     
 
@@ -320672,7 +321147,7 @@ API calls allowed per month.</td>
         Result of trying to add secondary emails to a user. 'success' is the only
 value indicating that a user was successfully retrieved for adding secondary
 emails. The other values explain the type of error that occurred, and include
-the user for which the error occured.
+the user for which the error occurred.
     </div>
     
 
@@ -321410,7 +321885,7 @@ user has no custom quota set.
         Result of trying to delete a user's secondary emails. 'success' is the only
 value indicating that a user was successfully retrieved for deleting
 secondary emails. The other values explain the type of error that occurred,
-and include the user for which the error occured.
+and include the user for which the error occurred.
     </div>
     
 
@@ -321763,7 +322238,7 @@ emails.</td>
         Result of trying to resend verification emails to a user. 'success' is the
 only value indicating that a user was successfully retrieved for sending
 verification emails. The other values explain the type of error that
-occurred, and include the user for which the error occured.
+occurred, and include the user for which the error occurred.
     </div>
     
 
@@ -327268,7 +327743,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-06-17T01:57:50+00:00
+		on 2021-06-23T19:55:22+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
