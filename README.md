@@ -26,7 +26,7 @@ $ cd dropbox-sdk-js
 $ npm install
 ```
 
-If you are using the repository from the browser, you can use any CDNs that hosts the Dropbox package by including a script tag with the link to the package. However, we highly recommend you do not directly import the latest version and instead choose a specific version. When we update and release a breaking change, this could break production code which we hope to avoid. Note, we follow semver naming conventions which means that any major version update could contain a breaking change.
+If you are using the repository from the browser, you can use any CDNs that hosts the Dropbox package by including a script tag with the link to the package. However, we highly recommend you do not directly import the latest version and instead choose a specific version. When we update and release a breaking change, this could break production code which we hope to avoid. Note, we follow [semver](https://semver.org/) naming conventions which means that any major version update could contain a breaking change.
 
 After installation, follow one of our [Examples][examples] or read the [Documentation][documentation].
 
