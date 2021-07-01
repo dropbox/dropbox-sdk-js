@@ -6688,24 +6688,6 @@
     }
 
     /**
-     * Arguments for changeFileMemberAccess().
-     */
-    export interface ChangeFileMemberAccessArgs {
-      /**
-       * File for which we are changing a member's access.
-       */
-      file: PathOrId;
-      /**
-       * The member whose access we are changing.
-       */
-      member: MemberSelector;
-      /**
-       * The new access level for the member.
-       */
-      access_level: AccessLevel;
-    }
-
-    /**
      * Metadata for a collection-based shared link.
      */
     export interface CollectionLinkMetadata extends LinkMetadata {
@@ -7033,7 +7015,7 @@
     export type FileMemberActionIndividualResult = FileMemberActionIndividualResultSuccess | FileMemberActionIndividualResultMemberError;
 
     /**
-     * Per-member result for addFileMember() or changeFileMemberAccess().
+     * Per-member result for addFileMember().
      */
     export interface FileMemberActionResult {
       /**
@@ -10026,7 +10008,19 @@
     /**
      * Arguments for updateFileMember().
      */
-    export interface UpdateFileMemberArgs extends ChangeFileMemberAccessArgs {
+    export interface UpdateFileMemberArgs {
+      /**
+       * File for which we are changing a member's access.
+       */
+      file: PathOrId;
+      /**
+       * The member whose access we are changing.
+       */
+      member: MemberSelector;
+      /**
+       * The new access level for the member.
+       */
+      access_level: AccessLevel;
     }
 
     export interface UpdateFolderMemberArg {

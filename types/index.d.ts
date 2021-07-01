@@ -1727,16 +1727,6 @@ export class Dropbox {
     public sharingAddFolderMember(arg: sharing.AddFolderMemberArg): Promise<DropboxResponse<void>>;
 
     /**
-     * Identical to update_file_member but with less information returned.
-     *
-     * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<sharing.FileMemberActionError>.
-     * @deprecated
-     * @param arg The request parameters.
-     */
-    public sharingChangeFileMemberAccess(arg: sharing.ChangeFileMemberAccessArgs): Promise<DropboxResponse<sharing.FileMemberActionResult>>;
-
-    /**
      * Returns the status of an asynchronous job.
      *
      * When an error occurs, the route rejects the promise with type
