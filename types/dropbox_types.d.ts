@@ -6643,6 +6643,11 @@
     export type AddMemberSelectorError = AddMemberSelectorErrorAutomaticGroup | AddMemberSelectorErrorInvalidDropboxId | AddMemberSelectorErrorInvalidEmail | AddMemberSelectorErrorUnverifiedDropboxId | AddMemberSelectorErrorGroupDeleted | AddMemberSelectorErrorGroupNotOnTeam | AddMemberSelectorErrorOther;
 
     /**
+     * check documentation for ResolvedVisibility.
+     */
+    export type AlphaResolvedVisibility = ResolvedVisibility;
+
+    /**
      * Information about the content that has a link audience different than
      * that of this folder.
      */
@@ -7658,6 +7663,27 @@
     export type LinkAudience = LinkAudiencePublic | LinkAudienceTeam | LinkAudienceNoOne | LinkAudiencePassword | LinkAudienceMembers | LinkAudienceOther;
 
     /**
+     * check documentation for VisibilityPolicyDisallowedReason.
+     */
+    export type LinkAudienceDisallowedReason = VisibilityPolicyDisallowedReason;
+
+    export interface LinkAudienceOption {
+      /**
+       * Specifies who can access the link.
+       */
+      audience: LinkAudience;
+      /**
+       * Whether the user calling this API can select this audience option.
+       */
+      allowed: boolean;
+      /**
+       * If allowed is false, this will provide the reason that the user is not
+       * permitted to set the visibility to this policy.
+       */
+      disallowed_reason?: LinkAudienceDisallowedReason;
+    }
+
+    /**
      * Remove the currently set expiry for the link.
      */
     export interface LinkExpiryRemoveExpiry {
@@ -7781,6 +7807,65 @@
        * permissions to the content.
        */
       link_access_level?: LinkAccessLevel;
+      /**
+       * A list of policies that the user might be able to set for the
+       * visibility.
+       */
+      visibility_policies: Array<VisibilityPolicy>;
+      /**
+       * Whether the user can set the expiry settings of the link. This refers
+       * to the ability to create a new expiry and modify an existing expiry.
+       */
+      can_set_expiry: boolean;
+      /**
+       * Whether the user can remove the expiry of the link.
+       */
+      can_remove_expiry: boolean;
+      /**
+       * Whether the link can be downloaded or not.
+       */
+      allow_download: boolean;
+      /**
+       * Whether the user can allow downloads via the link. This refers to the
+       * ability to remove a no-download restriction on the link.
+       */
+      can_allow_download: boolean;
+      /**
+       * Whether the user can disallow downloads via the link. This refers to
+       * the ability to impose a no-download restriction on the link.
+       */
+      can_disallow_download: boolean;
+      /**
+       * Whether comments are enabled for the linked file. This takes the team
+       * commenting policy into account.
+       */
+      allow_comments: boolean;
+      /**
+       * Whether the team has disabled commenting globally.
+       */
+      team_restricts_comments: boolean;
+      /**
+       * A list of link audience options the user might be able to set as the
+       * new audience.
+       */
+      audience_options?: Array<LinkAudienceOption>;
+      /**
+       * Whether the user can set a password for the link.
+       */
+      can_set_password?: boolean;
+      /**
+       * Whether the user can remove the password of the link.
+       */
+      can_remove_password?: boolean;
+      /**
+       * Whether the user is required to provide a password to view the link.
+       */
+      require_password?: boolean;
+      /**
+       * Whether the user can use extended sharing controls, based on their
+       * account type.
+       */
+      can_use_extended_sharing_controls?: boolean;
     }
 
     /**
@@ -8899,6 +8984,23 @@
       '.tag': 'shared_folder_only';
     }
 
+    /**
+     * The link merely points the user to the content, and does not grant any
+     * additional rights. Existing members of the content who use this link can
+     * only access the content with their pre-existing access rights. Either on
+     * the file directly, or inherited from a parent folder.
+     */
+    export interface ResolvedVisibilityNoOne {
+      '.tag': 'no_one';
+    }
+
+    /**
+     * Only the current user can view this link.
+     */
+    export interface ResolvedVisibilityOnlyYou {
+      '.tag': 'only_you';
+    }
+
     export interface ResolvedVisibilityOther {
       '.tag': 'other';
     }
@@ -8909,7 +9011,7 @@
      * the sharing.RequestedVisibility for more info on the possible visibility
      * values that can be set by the shared link's owner.
      */
-    export type ResolvedVisibility = RequestedVisibility | ResolvedVisibilityTeamAndPassword | ResolvedVisibilitySharedFolderOnly | ResolvedVisibilityOther;
+    export type ResolvedVisibility = RequestedVisibility | ResolvedVisibilityTeamAndPassword | ResolvedVisibilitySharedFolderOnly | ResolvedVisibilityNoOne | ResolvedVisibilityOnlyYou | ResolvedVisibilityOther;
 
     export interface RevokeSharedLinkArg {
       /**
@@ -9724,6 +9826,10 @@
        * Use audience instead.  The requested access for this shared link.
        */
       requested_visibility?: RequestedVisibility;
+      /**
+       * Boolean flag to allow or not download capabilities for shared links.
+       */
+      allow_download?: boolean;
     }
 
     /**
@@ -10290,6 +10396,80 @@
      * shared folder settings.
      */
     export type Visibility = VisibilityPublic | VisibilityTeamOnly | VisibilityPassword | VisibilityTeamAndPassword | VisibilitySharedFolderOnly | VisibilityOther;
+
+    export interface VisibilityPolicy {
+      /**
+       * This is the value to submit when saving the visibility setting.
+       */
+      policy: RequestedVisibility;
+      /**
+       * This is what the effective policy would be, if you selected this
+       * option. The resolved policy is obtained after considering external
+       * effects such as shared folder settings and team policy. This value is
+       * guaranteed to be provided.
+       */
+      resolved_policy: AlphaResolvedVisibility;
+      /**
+       * Whether the user is permitted to set the visibility to this policy.
+       */
+      allowed: boolean;
+      /**
+       * If allowed is false, this will provide the reason that the user is not
+       * permitted to set the visibility to this policy.
+       */
+      disallowed_reason?: VisibilityPolicyDisallowedReason;
+    }
+
+    /**
+     * The user needs to delete and recreate the link to change the visibility
+     * policy.
+     */
+    export interface VisibilityPolicyDisallowedReasonDeleteAndRecreate {
+      '.tag': 'delete_and_recreate';
+    }
+
+    /**
+     * The parent shared folder restricts sharing of links outside the shared
+     * folder. To change the visibility policy, remove the restriction from the
+     * parent shared folder.
+     */
+    export interface VisibilityPolicyDisallowedReasonRestrictedBySharedFolder {
+      '.tag': 'restricted_by_shared_folder';
+    }
+
+    /**
+     * The team policy prevents links being shared outside the team.
+     */
+    export interface VisibilityPolicyDisallowedReasonRestrictedByTeam {
+      '.tag': 'restricted_by_team';
+    }
+
+    /**
+     * The user needs to be on a team to set this policy.
+     */
+    export interface VisibilityPolicyDisallowedReasonUserNotOnTeam {
+      '.tag': 'user_not_on_team';
+    }
+
+    /**
+     * The user is a basic user or is on a limited team.
+     */
+    export interface VisibilityPolicyDisallowedReasonUserAccountType {
+      '.tag': 'user_account_type';
+    }
+
+    /**
+     * The user does not have permission.
+     */
+    export interface VisibilityPolicyDisallowedReasonPermissionDenied {
+      '.tag': 'permission_denied';
+    }
+
+    export interface VisibilityPolicyDisallowedReasonOther {
+      '.tag': 'other';
+    }
+
+    export type VisibilityPolicyDisallowedReason = VisibilityPolicyDisallowedReasonDeleteAndRecreate | VisibilityPolicyDisallowedReasonRestrictedBySharedFolder | VisibilityPolicyDisallowedReasonRestrictedByTeam | VisibilityPolicyDisallowedReasonUserNotOnTeam | VisibilityPolicyDisallowedReasonUserAccountType | VisibilityPolicyDisallowedReasonPermissionDenied | VisibilityPolicyDisallowedReasonOther;
 
     export type DropboxId = string;
 
