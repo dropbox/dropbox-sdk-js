@@ -1755,13 +1755,11 @@ export class Dropbox {
 
     /**
      * Create a shared link. If a shared link already exists for the given path,
-     * that link is returned. Note that in the returned PathLinkMetadata, the
-     * PathLinkMetadata.url field is the shortened URL if
-     * CreateSharedLinkArg.short_url argument is set to true. Previously, it was
-     * technically possible to break a shared link by moving or renaming the
-     * corresponding file or folder. In the future, this will no longer be the
-     * case, so your app shouldn't rely on this behavior. Instead, if your app
-     * needs to revoke a shared link, use revokeSharedLink().
+     * that link is returned. Previously, it was technically possible to break a
+     * shared link by moving or renaming the corresponding file or folder. In
+     * the future, this will no longer be the case, so your app shouldn't rely
+     * on this behavior. Instead, if your app needs to revoke a shared link, use
+     * revokeSharedLink().
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.CreateSharedLinkError>.
@@ -1833,8 +1831,7 @@ export class Dropbox {
      * for the current user, including collection links, up to a maximum of 1000
      * links. If a non-empty path is given, returns a list of all shared links
      * that allow access to the given path.  Collection links are never returned
-     * in this case. Note that the url field in the response is never the
-     * shortened URL.
+     * in this case.
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.GetSharedLinksError>.
