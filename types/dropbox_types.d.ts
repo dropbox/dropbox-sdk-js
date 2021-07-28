@@ -16422,7 +16422,7 @@
 
     /**
      * Policy for deciding whether the team's default expiration days policy
-     * must be enforced when an externally shared is updated
+     * must be enforced when an externally shared link is updated
      */
     export type ChangeLinkExpirationPolicy = ChangeLinkExpirationPolicyAllowed | ChangeLinkExpirationPolicyNotAllowed | ChangeLinkExpirationPolicyOther;
 
@@ -22565,8 +22565,8 @@
     }
 
     /**
-     * (team_policies) Changed the password requirement for the links shared
-     * outside of the team
+     * (team_policies) Changed the allow remove or change expiration policy for
+     * the links shared outside of the team
      */
     export interface EventTypeSharingChangeLinkAllowChangeExpirationPolicy extends SharingChangeLinkAllowChangeExpirationPolicyType {
       '.tag': 'sharing_change_link_allow_change_expiration_policy';
@@ -22581,8 +22581,8 @@
     }
 
     /**
-     * (team_policies) Changed the allow remove or change expiration policy for
-     * the links shared outside of the team
+     * (team_policies) Changed the password requirement for the links shared
+     * outside of the team
      */
     export interface EventTypeSharingChangeLinkEnforcePasswordPolicy extends SharingChangeLinkEnforcePasswordPolicyType {
       '.tag': 'sharing_change_link_enforce_password_policy';
@@ -25944,8 +25944,8 @@
     }
 
     /**
-     * (team_policies) Changed the password requirement for the links shared
-     * outside of the team
+     * (team_policies) Changed the allow remove or change expiration policy for
+     * the links shared outside of the team
      */
     export interface EventTypeArgSharingChangeLinkAllowChangeExpirationPolicy {
       '.tag': 'sharing_change_link_allow_change_expiration_policy';
@@ -25960,8 +25960,8 @@
     }
 
     /**
-     * (team_policies) Changed the allow remove or change expiration policy for
-     * the links shared outside of the team
+     * (team_policies) Changed the password requirement for the links shared
+     * outside of the team
      */
     export interface EventTypeArgSharingChangeLinkEnforcePasswordPolicy {
       '.tag': 'sharing_change_link_enforce_password_policy';
@@ -32697,8 +32697,8 @@
     }
 
     /**
-     * Changed the password requirement for the links shared outside of the
-     * team.
+     * Changed the allow remove or change expiration policy for the links shared
+     * outside of the team.
      */
     export interface SharingChangeLinkAllowChangeExpirationPolicyDetails {
       /**
@@ -32734,8 +32734,8 @@
     }
 
     /**
-     * Changed the allow remove or change expiration policy for the links shared
-     * outside of the team.
+     * Changed the password requirement for the links shared outside of the
+     * team.
      */
     export interface SharingChangeLinkEnforcePasswordPolicyDetails {
       /**
