@@ -3001,7 +3001,8 @@ export class Dropbox {
 
     /**
      * Sets an active team folder's status to archived and removes all folder
-     * and file members. Permission : Team member file access.
+     * and file members. This endpoint cannot be used for teams that have a
+     * shared team space. Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderArchiveError>.
@@ -3020,8 +3021,9 @@ export class Dropbox {
     public teamTeamFolderArchiveCheck(arg: async.PollArg): Promise<DropboxResponse<team.TeamFolderArchiveJobStatus>>;
 
     /**
-     * Creates a new, active, team folder with no members. Permission : Team
-     * member file access.
+     * Creates a new, active, team folder with no members. This endpoint can
+     * only be used for teams that do not already have a shared team space.
+     * Permission : Team member file access.
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderCreateError>.
@@ -3059,8 +3061,9 @@ export class Dropbox {
     public teamTeamFolderListContinue(arg: team.TeamFolderListContinueArg): Promise<DropboxResponse<team.TeamFolderListResult>>;
 
     /**
-     * Permanently deletes an archived team folder. Permission : Team member
-     * file access.
+     * Permanently deletes an archived team folder. This endpoint cannot be used
+     * for teams that have a shared team space. Permission : Team member file
+     * access.
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderPermanentlyDeleteError>.
