@@ -77213,7 +77213,8 @@ is access_error.</td>
             
 
             <td class="description last">Keep a copy of the folder's contents upon
-relinquishing membership.</td>
+relinquishing membership. This must be set to false when the folder is within
+a team folder or another shared folder.</td>
         </tr>
 
     
@@ -77959,8 +77960,9 @@ folder.</td>
 
             <td class="description last">If true, the removed user will keep their
 copy of the folder after it's unshared, assuming it was mounted. Otherwise,
-it will be removed from their Dropbox. Also, this must be set to false when
-kicking a group.</td>
+it will be removed from their Dropbox. This must be set to false when
+removing a group, or when the folder is within a team folder or another
+shared folder.</td>
         </tr>
 
     
@@ -88592,7 +88594,8 @@ parent folder.</td>
             
 
             <td class="description last">The UTC timestamp of when the user
-has last seen the content, if they have.</td>
+has last seen the content. Only populated if the user has seen the content
+and the caller has a plan that includes viewer history.</td>
         </tr>
 
     
@@ -150897,6 +150900,39 @@ extended_version_history_change_policy_details.</td>
 
         <tr>
             
+                <td class="name"><code>external_drive_backup_policy_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalDriveBackupPolicyChangedDetails">TeamLogExternalDriveBackupPolicyChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+external_drive_backup_policy_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>file_comments_change_policy_details</code></td>
             
 
@@ -155363,6 +155399,9 @@ to an internal error.</td>
 |
 
 <span class="param-type">'extended_version_history_change_policy_details'</span>
+|
+
+<span class="param-type">'external_drive_backup_policy_changed_details'</span>
 |
 
 <span class="param-type">'file_comments_change_policy_details'</span>
@@ -168107,6 +168146,40 @@ extended version history</td>
 
         <tr>
             
+                <td class="name"><code>external_drive_backup_policy_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalDriveBackupPolicyChangedType">TeamLogExternalDriveBackupPolicyChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+external_drive_backup_policy_changed. (team_policies) Changed external drive
+backup policy for team</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>file_comments_change_policy</code></td>
             
 
@@ -172631,6 +172704,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'extended_version_history_change_policy'</span>
 |
 
+<span class="param-type">'external_drive_backup_policy_changed'</span>
+|
+
 <span class="param-type">'file_comments_change_policy'</span>
 |
 
@@ -174171,6 +174247,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'extended_version_history_change_policy'</span>
 |
 
+<span class="param-type">'external_drive_backup_policy_changed'</span>
+|
+
 <span class="param-type">'file_comments_change_policy'</span>
 |
 
@@ -175339,6 +175418,406 @@ extended version history policy. Might be missing due to historical data gap.</t
             
 
             <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogExternalDriveBackupPolicy">
+    <h4 id="TeamLogExternalDriveBackupPolicy">TeamLogExternalDriveBackupPolicy</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Policy for controlling team access to external drive backup feature
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogExternalDriveBackupPolicyChangedDetails">
+    <h4 id="TeamLogExternalDriveBackupPolicyChangedDetails">TeamLogExternalDriveBackupPolicyChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed external drive backup policy for team.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>new_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalDriveBackupPolicy">TeamLogExternalDriveBackupPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New external drive
+backup policy.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalDriveBackupPolicy">TeamLogExternalDriveBackupPolicy</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous
+external drive backup policy.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogExternalDriveBackupPolicyChangedType">
+    <h4 id="TeamLogExternalDriveBackupPolicyChangedType">TeamLogExternalDriveBackupPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
         </tr>
 
     
@@ -308681,6 +309160,132 @@ the ID of the owning team member. Otherwise, this field is not present.</td>
             
                 
 <hr>
+<dt class="name" id="TeamPoliciesExternalDriveBackupPolicyState">
+    <h4 id="TeamPoliciesExternalDriveBackupPolicyState">TeamPoliciesExternalDriveBackupPolicyState</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'enabled'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamPoliciesFileLockingPolicyState">
     <h4 id="TeamPoliciesFileLockingPolicyState">TeamPoliciesFileLockingPolicyState</h4>
 
@@ -328869,7 +329474,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-07-28T20:41:07+00:00
+		on 2021-08-11T23:18:47+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
