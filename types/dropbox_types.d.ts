@@ -5177,9 +5177,14 @@
 
     /**
      * Overwrite if the given "rev" matches the existing file's "rev". The
-     * autorename strategy is to append the string "conflicted copy" to the file
-     * name. For example, "document.txt" might become "document (conflicted
-     * copy).txt" or "document (Panda's conflicted copy).txt".
+     * supplied value should be the latest known "rev" of the file, for example,
+     * from files.FileMetadata, from when the file was last downloaded by the
+     * app. This will cause the file on the Dropbox servers to be overwritten if
+     * the given "rev" matches the existing file's current "rev" on the Dropbox
+     * servers. The autorename strategy is to append the string "conflicted
+     * copy" to the file name. For example, "document.txt" might become
+     * "document (conflicted copy).txt" or "document (Panda's conflicted
+     * copy).txt".
      */
     export interface WriteModeUpdate {
       '.tag': 'update';
