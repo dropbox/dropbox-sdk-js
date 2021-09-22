@@ -17525,20 +17525,20 @@
     }
 
     /**
-     * Email ingest policy
+     * Policy for deciding whether a team can use Email to my Dropbox feature
      */
     export type EmailIngestPolicy = EmailIngestPolicyDisabled | EmailIngestPolicyEnabled | EmailIngestPolicyOther;
 
     /**
-     * Changed email to my dropbox policy for team.
+     * Changed email to my Dropbox policy for team.
      */
     export interface EmailIngestPolicyChangedDetails {
       /**
-       * New email to my dropbox policy.
+       * To.
        */
       new_value: EmailIngestPolicy;
       /**
-       * Previous email to my dropbox policy.
+       * From.
        */
       previous_value: EmailIngestPolicy;
     }
@@ -22437,7 +22437,7 @@
     }
 
     /**
-     * (team_policies) Changed email to my dropbox policy for team
+     * (team_policies) Changed email to my Dropbox policy for team
      */
     export interface EventTypeEmailIngestPolicyChanged extends EmailIngestPolicyChangedType {
       '.tag': 'email_ingest_policy_changed';
@@ -25844,7 +25844,7 @@
     }
 
     /**
-     * (team_policies) Changed email to my dropbox policy for team
+     * (team_policies) Changed email to my Dropbox policy for team
      */
     export interface EventTypeArgEmailIngestPolicyChanged {
       '.tag': 'email_ingest_policy_changed';
