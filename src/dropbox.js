@@ -6,6 +6,7 @@ import {
   TEAM_AUTH,
   USER_AUTH,
   NO_AUTH,
+  COOKIE,
 } from './constants.js';
 import { routes } from '../lib/routes.js';
 import DropboxAuth from './auth.js';
@@ -50,6 +51,8 @@ const b64 = typeof btoa === 'undefined'
  * should only be used for testing as scaffolding to avoid making network requests.
  * @arg {String} [options.domainDelimiter] - A custom delimiter to use when separating domain from
  * subdomain. This should only be used for testing as scaffolding.
+ * @arg {Object} [options.customHeaders] - An object (in the form of header: value) designed to set
+ * custom headers to use during a request.
  */
 export default class Dropbox {
   constructor(options) {
@@ -68,6 +71,7 @@ export default class Dropbox {
 
     this.domain = options.domain;
     this.domainDelimiter = options.domainDelimiter;
+    this.customHeaders = options.customHeaders;
 
     Object.assign(this, routes);
   }
@@ -124,6 +128,8 @@ export default class Dropbox {
             fetchOptions.headers.Authorization = `Bearer ${this.auth.getAccessToken()}`;
             break;
           case NO_AUTH:
+            break;
+          case COOKIE:
             break;
           default:
             throw new Error(`Unhandled auth type: ${auth}`);
@@ -205,6 +211,12 @@ export default class Dropbox {
     }
     if (this.pathRoot) {
       options.headers['Dropbox-API-Path-Root'] = this.pathRoot;
+    }
+    if (this.customHeaders) {
+      const headerKeys = Object.keys(this.customHeaders);
+      headerKeys.forEach((header) => {
+        options.headers[header] = this.customHeaders[header];
+      });
     }
   }
 }
