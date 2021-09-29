@@ -1348,6 +1348,28 @@ export class Dropbox {
     public filesUploadSessionFinishBatch(arg: files.UploadSessionFinishBatchArg): Promise<DropboxResponse<files.UploadSessionFinishBatchLaunch>>;
 
     /**
+     * This route helps you commit many files at once into a user's Dropbox. Use
+     * uploadSessionStart() and uploadSessionAppendV2() to upload file contents.
+     * We recommend uploading many files in parallel to increase throughput.
+     * Once the file contents have been uploaded, rather than calling
+     * uploadSessionFinish(), use this route to finish all your upload sessions
+     * in a single request. UploadSessionStartArg.close or
+     * UploadSessionAppendArg.close needs to be true for the last
+     * uploadSessionStart() or uploadSessionAppendV2() call of each upload
+     * session. The maximum size of a file one can upload to an upload session
+     * is 350 GB. We allow up to 1000 entries in a single request. Calls to this
+     * endpoint will count as data transport calls for any Dropbox Business
+     * teams with a limit on the number of data transport calls allowed per
+     * month. For more information, see the [Data transport limit page]{@link
+     * https://www.dropbox.com/developers/reference/data-transport-limit}.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     */
+    public filesUploadSessionFinishBatchV2(arg: files.UploadSessionFinishBatchArg): Promise<DropboxResponse<files.UploadSessionFinishBatchResult>>;
+
+    /**
      * Returns the status of an asynchronous job for uploadSessionFinishBatch().
      * If success, it returns list of result for each entry.
      *
