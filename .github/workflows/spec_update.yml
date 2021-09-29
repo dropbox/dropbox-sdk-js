@@ -61,6 +61,8 @@ jobs:
           cd ..
           python generate_routes.py
           cd ..
+      - name: Update SDK Version
+        run: npm version minor
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3.9.1
         if: steps.git-diff-num.outputs.num-diff != 0
