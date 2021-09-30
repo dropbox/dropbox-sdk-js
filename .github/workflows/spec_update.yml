@@ -1,5 +1,5 @@
 name: Spec Update
-on: 
+on:
   workflow_dispatch:
   repository_dispatch:
     types: [spec_update]
@@ -23,11 +23,11 @@ jobs:
         with:
           format: YYYY_MM_DD
           utcOffset: "-08:00"
+      - name: Update SDK Version
+        run: npm version --commit-hooks false --git-tag-version false minor
       - name: Install SDK
         run: |
           npm install
-      - name: Update SDK Version
-        run: npm version minor
       - name: Update Modules
         run: |
           git submodule init
