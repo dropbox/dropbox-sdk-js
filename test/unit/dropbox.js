@@ -11,6 +11,7 @@ import {
   TEAM_AUTH,
   APP_AUTH,
   NO_AUTH,
+  COOKIE,
 } from '../../src/constants.js';
 import { Dropbox, DropboxAuth } from '../../index.js';
 
@@ -25,6 +26,18 @@ describe('Dropbox', () => {
     it('is undefined if not set in constructor', () => {
       const dbx = new Dropbox();
       chai.assert.equal(dbx.selectUser, undefined);
+    });
+  });
+
+  describe('customHeaders', () => {
+    it('can be set in the constructor', () => {
+      const dbx = new Dropbox({ customHeaders: { foo: 'bar' } });
+      chai.assert.equal(dbx.customHeaders.foo, 'bar');
+    });
+
+    it('is undefined if not set in constructor', () => {
+      const dbx = new Dropbox();
+      chai.assert.equal(dbx.customHeaders, undefined);
     });
   });
 
@@ -86,6 +99,20 @@ describe('Dropbox', () => {
       chai.assert.equal(APP_AUTH, dbx.rpcRequest.getCall(0).args[2]);
     });
 
+    it('completes a cookie auth RPC request', () => {
+      const dbxAuth = new DropboxAuth();
+      const dbx = new Dropbox({ auth: dbxAuth });
+      const rpcSpy = sinon.spy(dbx, 'rpcRequest');
+      dbx.request('path', {}, COOKIE, 'api', RPC)
+        .catch((error) => {
+          fail(error);
+        });
+      chai.assert.isTrue(rpcSpy.calledOnce);
+      chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
+      chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
+      chai.assert.equal(COOKIE, dbx.rpcRequest.getCall(0).args[2]);
+    });
+
     it('throws an error for invalid request styles', () => {
       chai.assert.throws(
         Dropbox.prototype.request.bind(Dropbox, '', {}, 'user', 'api', 'BADTYPE'),
@@ -120,6 +147,10 @@ describe('Dropbox', () => {
       const dbx = new Dropbox();
       return chai.assert.isRejected(dbx.uploadRequest('path', {}, NO_AUTH, 'api'), Error, `Unexpected auth type: ${NO_AUTH}`);
     });
+    it('throws an error for cookie auth', () => {
+      const dbx = new Dropbox();
+      return chai.assert.isRejected(dbx.uploadRequest('path', {}, COOKIE, 'api'), Error, `Unexpected auth type: ${COOKIE}`);
+    });
   });
 
   describe('Download Requests', () => {
@@ -148,6 +179,11 @@ describe('Dropbox', () => {
     it('throws an error for no-auth', () => {
       const dbx = new Dropbox();
       return chai.assert.isRejected(dbx.downloadRequest('path', {}, NO_AUTH, 'api'), Error, `Unexpected auth type: ${NO_AUTH}`);
+    });
+
+    it('throws an error for cookie auth', () => {
+      const dbx = new Dropbox();
+      return chai.assert.isRejected(dbx.downloadRequest('path', {}, COOKIE, 'api'), Error, `Unexpected auth type: ${COOKIE}`);
     });
   });
 
@@ -185,6 +221,26 @@ describe('Dropbox', () => {
           }
         }
       }
+    });
+
+    it('sets custom headers correctly', () => {
+      const dbx = new Dropbox({
+        customHeaders: {
+          foo: 'bar',
+          milk: 'shake',
+          cookie: 'hash',
+        },
+      });
+
+      const fetchOptions = {
+        headers: {},
+      };
+
+      dbx.setCommonHeaders(fetchOptions);
+      const { headers } = fetchOptions;
+      chai.assert.equal(headers.foo, 'bar');
+      chai.assert.equal(headers.milk, 'shake');
+      chai.assert.equal(headers.cookie, 'hash');
     });
   });
 });

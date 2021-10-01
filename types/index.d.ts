@@ -178,6 +178,8 @@ export interface DropboxOptions {
   domain?: string;
   // A custom delimiter to use when separating domain subdomain. This should only be used for testing as scaffolding.
   domainDelimiter?: string;
+  // An object (in the form of header: value) designed to set custom headers to use during a request.
+  customHeaders?: object;
 }
 
 export class DropboxResponseError<T> {
