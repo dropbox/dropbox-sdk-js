@@ -33027,6 +33027,10 @@
      */
     export type SharingFolderJoinPolicy = SharingFolderJoinPolicyFromAnyone | SharingFolderJoinPolicyFromTeamOnly | SharingFolderJoinPolicyOther;
 
+    export interface SharingLinkPolicyDefaultNoOne {
+      '.tag': 'default_no_one';
+    }
+
     export interface SharingLinkPolicyDefaultPrivate {
       '.tag': 'default_private';
     }
@@ -33046,7 +33050,7 @@
     /**
      * Policy for controlling if team members can share links externally
      */
-    export type SharingLinkPolicy = SharingLinkPolicyDefaultPrivate | SharingLinkPolicyDefaultPublic | SharingLinkPolicyOnlyPrivate | SharingLinkPolicyOther;
+    export type SharingLinkPolicy = SharingLinkPolicyDefaultNoOne | SharingLinkPolicyDefaultPrivate | SharingLinkPolicyDefaultPublic | SharingLinkPolicyOnlyPrivate | SharingLinkPolicyOther;
 
     export interface SharingMemberPolicyAllow {
       '.tag': 'allow';
@@ -35879,6 +35883,14 @@
       '.tag': 'team_only';
     }
 
+    /**
+     * Only people invited can access newly created links. Login will be
+     * required to access the shared links unless overridden.
+     */
+    export interface SharedLinkCreatePolicyDefaultNoOne {
+      '.tag': 'default_no_one';
+    }
+
     export interface SharedLinkCreatePolicyOther {
       '.tag': 'other';
     }
@@ -35887,7 +35899,7 @@
      * Policy governing the visibility of shared links. This policy can apply to
      * newly created shared links, or all shared links.
      */
-    export type SharedLinkCreatePolicy = SharedLinkCreatePolicyDefaultPublic | SharedLinkCreatePolicyDefaultTeamOnly | SharedLinkCreatePolicyTeamOnly | SharedLinkCreatePolicyOther;
+    export type SharedLinkCreatePolicy = SharedLinkCreatePolicyDefaultPublic | SharedLinkCreatePolicyDefaultTeamOnly | SharedLinkCreatePolicyTeamOnly | SharedLinkCreatePolicyDefaultNoOne | SharedLinkCreatePolicyOther;
 
     /**
      * Do not allow files to be downloaded from Showcases.
