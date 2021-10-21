@@ -1345,6 +1345,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @deprecated
      * @param arg The request parameters.
      */
     public filesUploadSessionFinishBatch(arg: files.UploadSessionFinishBatchArg): Promise<DropboxResponse<files.UploadSessionFinishBatchLaunch>>;
