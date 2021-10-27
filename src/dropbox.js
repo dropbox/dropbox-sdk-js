@@ -116,7 +116,7 @@ export default class Dropbox {
           fetchOptions.headers['Content-Type'] = 'application/json';
         }
 
-        this.setAuthHeaders(fetchOptions);
+        this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
 
         return fetchOptions;
@@ -138,7 +138,7 @@ export default class Dropbox {
           },
         };
 
-        this.setAuthHeaders(fetchOptions);
+        this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
 
         return fetchOptions;
@@ -165,7 +165,7 @@ export default class Dropbox {
           },
         };
 
-        this.setAuthHeaders(fetchOptions);
+        this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
 
         return fetchOptions;
