@@ -86,6 +86,8 @@ export default class Dropbox {
         auth = TEAM_AUTH;
       } else if (authTypes.includes(APP_AUTH)) {
         auth = APP_AUTH;
+      } else {
+        auth = USER_AUTH; // Default to user auth
       }
     }
 
@@ -114,28 +116,9 @@ export default class Dropbox {
           fetchOptions.headers['Content-Type'] = 'application/json';
         }
 
-        let authHeader;
-        switch (auth) {
-          case APP_AUTH:
-            if (!this.auth.clientId || !this.auth.clientSecret) {
-              throw new Error('A client id and secret is required for this function');
-            }
-            authHeader = b64(`${this.auth.clientId}:${this.auth.clientSecret}`);
-            fetchOptions.headers.Authorization = `Basic ${authHeader}`;
-            break;
-          case TEAM_AUTH:
-          case USER_AUTH:
-            fetchOptions.headers.Authorization = `Bearer ${this.auth.getAccessToken()}`;
-            break;
-          case NO_AUTH:
-            break;
-          case COOKIE:
-            break;
-          default:
-            throw new Error(`Unhandled auth type: ${auth}`);
-        }
-
+        this.setAuthHeaders(fetchOptions);
         this.setCommonHeaders(fetchOptions);
+
         return fetchOptions;
       })
       .then((fetchOptions) => this.fetch(
@@ -148,18 +131,14 @@ export default class Dropbox {
   downloadRequest(path, args, auth, host) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
-        if (auth !== USER_AUTH) {
-          throw new Error(`Unexpected auth type: ${auth}`);
-        }
-
         const fetchOptions = {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${this.auth.getAccessToken()}`,
             'Dropbox-API-Arg': httpHeaderSafeJson(args),
           },
         };
 
+        this.setAuthHeaders(fetchOptions);
         this.setCommonHeaders(fetchOptions);
 
         return fetchOptions;
@@ -174,10 +153,6 @@ export default class Dropbox {
   uploadRequest(path, args, auth, host) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
-        if (auth !== USER_AUTH) {
-          throw new Error(`Unexpected auth type: ${auth}`);
-        }
-
         const { contents } = args;
         delete args.contents;
 
@@ -185,12 +160,12 @@ export default class Dropbox {
           body: contents,
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${this.auth.getAccessToken()}`,
             'Content-Type': 'application/octet-stream',
             'Dropbox-API-Arg': httpHeaderSafeJson(args),
           },
         };
 
+        this.setAuthHeaders(fetchOptions);
         this.setCommonHeaders(fetchOptions);
 
         return fetchOptions;
@@ -200,6 +175,28 @@ export default class Dropbox {
         fetchOptions,
       ))
       .then((res) => parseResponse(res));
+  }
+
+  setAuthHeaders(auth, fetchOptions) {
+    switch (auth) {
+      case APP_AUTH:
+        if (this.auth.clientId && this.auth.clientSecret) {
+          const authHeader = b64(`${this.auth.clientId}:${this.auth.clientSecret}`);
+          fetchOptions.headers.Authorization = `Basic ${authHeader}`;
+        }
+        break;
+      case TEAM_AUTH:
+      case USER_AUTH:
+        if (this.auth.getAccessToken()) {
+          fetchOptions.headers.Authorization = `Bearer ${this.auth.getAccessToken()}`;
+        }
+        break;
+      case NO_AUTH:
+      case COOKIE:
+        break;
+      default:
+        throw new Error(`Unhandled auth type: ${auth}`);
+    }
   }
 
   setCommonHeaders(options) {
