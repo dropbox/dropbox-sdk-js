@@ -134,23 +134,6 @@ describe('Dropbox', () => {
       chai.assert.equal('path', dbx.uploadRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.uploadRequest.getCall(0).args[1]);
     });
-
-    it('throws an error for team auth', () => {
-      const dbx = new Dropbox();
-      return chai.assert.isRejected(dbx.uploadRequest('path', {}, TEAM_AUTH, 'api'), Error, `Unexpected auth type: ${TEAM_AUTH}`);
-    });
-    it('throws an error for app auth', () => {
-      const dbx = new Dropbox();
-      return chai.assert.isRejected(dbx.uploadRequest('path', {}, APP_AUTH, 'api'), Error, `Unexpected auth type: ${APP_AUTH}`);
-    });
-    it('throws an error for no-auth', () => {
-      const dbx = new Dropbox();
-      return chai.assert.isRejected(dbx.uploadRequest('path', {}, NO_AUTH, 'api'), Error, `Unexpected auth type: ${NO_AUTH}`);
-    });
-    it('throws an error for cookie auth', () => {
-      const dbx = new Dropbox();
-      return chai.assert.isRejected(dbx.uploadRequest('path', {}, COOKIE, 'api'), Error, `Unexpected auth type: ${COOKIE}`);
-    });
   });
 
   describe('Download Requests', () => {
@@ -164,26 +147,6 @@ describe('Dropbox', () => {
       chai.assert.isTrue(downloadSpy.calledOnce);
       chai.assert.equal('path', dbx.downloadRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.downloadRequest.getCall(0).args[1]);
-    });
-
-    it('throws an error for team auth', () => {
-      const dbx = new Dropbox();
-      return chai.assert.isRejected(dbx.downloadRequest('path', {}, TEAM_AUTH, 'api'), Error, `Unexpected auth type: ${TEAM_AUTH}`);
-    });
-
-    it('throws an error for app auth', () => {
-      const dbx = new Dropbox();
-      return chai.assert.isRejected(dbx.downloadRequest('path', {}, APP_AUTH, 'api'), Error, `Unexpected auth type: ${APP_AUTH}`);
-    });
-
-    it('throws an error for no-auth', () => {
-      const dbx = new Dropbox();
-      return chai.assert.isRejected(dbx.downloadRequest('path', {}, NO_AUTH, 'api'), Error, `Unexpected auth type: ${NO_AUTH}`);
-    });
-
-    it('throws an error for cookie auth', () => {
-      const dbx = new Dropbox();
-      return chai.assert.isRejected(dbx.downloadRequest('path', {}, COOKIE, 'api'), Error, `Unexpected auth type: ${COOKIE}`);
     });
   });
 
