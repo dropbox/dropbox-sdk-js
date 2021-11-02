@@ -6,6 +6,9 @@ function getSafeUnicode(c) {
 }
 
 export const baseApiUrl = (subdomain, domain = DEFAULT_API_DOMAIN, domainDelimiter = '.') => {
+  if (domain == DEFAULT_DOMAIN || !domainDelimiter) {
+    return `https://${domain}/2/`;
+  }
   if (domain !== DEFAULT_API_DOMAIN && TEST_DOMAIN_MAPPINGS[subdomain] !== undefined) {
     subdomain = TEST_DOMAIN_MAPPINGS[subdomain];
     domainDelimiter = '-';
