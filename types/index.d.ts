@@ -1250,6 +1250,34 @@ export class Dropbox {
     public filesSearchContinueV2(arg: files.SearchV2ContinueArg): Promise<DropboxResponse<files.SearchV2Result>>;
 
     /**
+     * Add a tag to an item. A tag is a string. No more than 20 tags can be
+     * added to a given item.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<files.AddTagError>.
+     * @param arg The request parameters.
+     */
+    public filesTagsAdd(arg: files.AddTagArg): Promise<DropboxResponse<void>>;
+
+    /**
+     * Get list of tags assigned to items.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<files.BaseTagError>.
+     * @param arg The request parameters.
+     */
+    public filesTagsGet(arg: files.GetTagsArg): Promise<DropboxResponse<files.GetTagsResult>>;
+
+    /**
+     * Remove a tag from an item.
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<files.RemoveTagError>.
+     * @param arg The request parameters.
+     */
+    public filesTagsRemove(arg: files.RemoveTagArg): Promise<DropboxResponse<void>>;
+
+    /**
      * Unlock the files at the given paths. A locked file can only be unlocked
      * by the lock holder or, if a business account, a team admin. A successful
      * response indicates that the file has been unlocked. Returns a list of the
