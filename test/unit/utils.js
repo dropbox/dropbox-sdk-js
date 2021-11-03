@@ -10,6 +10,13 @@ import {
 
 describe('Dropbox utils', () => {
   describe('baseApiUrl', () => {
+    it('correctly sets base url when domainDelimiter is empty', () => {
+      const host = 'api';
+      const domain = 'mydomain.com';
+      const testUrl = baseApiUrl(host, domain, '');
+      chai.assert.equal(testUrl, 'https://mydomain.com/2/');
+    });
+
     it('correctly sets base url when provided a subdomain', () => {
       const host = 'test';
       const testUrl = baseApiUrl(host);
