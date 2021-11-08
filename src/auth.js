@@ -53,7 +53,9 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
  * should only be used for testing as scaffolding to avoid making network requests.
  * @arg {String} [options.domainDelimiter] - A custom delimiter to use when separating domain from
  * subdomain. This should only be used for testing as scaffolding.
- */
+ * @arg {Object} [options.customHeaders] - An object (in the form of header: value) designed to set
+ * custom headers to use during a request.
+*/
 export default class DropboxAuth {
   constructor(options) {
     options = options || {};
@@ -67,6 +69,7 @@ export default class DropboxAuth {
 
     this.domain = options.domain;
     this.domainDelimiter = options.domainDelimiter;
+    this.customHeaders = options.customHeaders;
   }
 
   /**

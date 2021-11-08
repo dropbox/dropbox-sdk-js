@@ -69,9 +69,9 @@ export default class Dropbox {
     this.selectAdmin = options.selectAdmin;
     this.pathRoot = options.pathRoot;
 
-    this.domain = options.domain;
-    this.domainDelimiter = options.domainDelimiter;
-    this.customHeaders = options.customHeaders;
+    this.domain = options.domain || this.auth.domain;
+    this.domainDelimiter = options.domainDelimiter || this.auth.domainDelimiter;
+    this.customHeaders = options.customHeaders || this.auth.customHeaders;
 
     Object.assign(this, routes);
   }

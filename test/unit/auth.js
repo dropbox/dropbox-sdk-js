@@ -41,6 +41,18 @@ describe('DropboxAuth', () => {
     });
   });
 
+  describe('customHeaders', () => {
+    it('can be set in the constructor', () => {
+      const dbx = new DropboxAuth({ customHeaders: { foo: 'bar' } });
+      chai.assert.equal(dbx.customHeaders.foo, 'bar');
+    });
+
+    it('is undefined if not set in constructor', () => {
+      const dbx = new DropboxAuth();
+      chai.assert.equal(dbx.customHeaders, undefined);
+    });
+  });
+
   describe('getAuthenticationUrl()', () => {
     it('throws an error if the client id isn\'t set', () => {
       const dbx = new DropboxAuth();
