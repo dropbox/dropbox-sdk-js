@@ -58,7 +58,7 @@ describe('Dropbox', () => {
       chai.assert.equal(dbx.domainDelimiter, undefined);
     });
 
-    it('is set by auth.domain if not set in constructor', () => {
+    it('is set by auth.domainDelimiter if not set in constructor', () => {
       const auth = new DropboxAuth({ domainDelimiter: '-' });
       const dbx = new Dropbox({ auth });
       chai.assert.equal(dbx.domainDelimiter, '-');
