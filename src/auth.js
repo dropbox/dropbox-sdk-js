@@ -11,7 +11,10 @@ let fetch;
 if (isBrowserEnv()) {
   fetch = window.fetch.bind(window);
 } else {
-  fetch = require('node-fetch'); // eslint-disable-line global-require
+  fetch = function (...args) {
+    // eslint-disable-next-line no-new-func
+    return new Function("return import('node-fetch')")().then((mod) => mod.default(...args));
+  };
 }
 
 let crypto;
