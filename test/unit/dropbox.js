@@ -29,6 +29,42 @@ describe('Dropbox', () => {
     });
   });
 
+  describe('domain', () => {
+    it('can be set in the constructor', () => {
+      const dbx = new Dropbox({ domain: 'mydomain.com' });
+      chai.assert.equal(dbx.domain, 'mydomain.com');
+    });
+
+    it('is undefined if not set in constructor', () => {
+      const dbx = new Dropbox();
+      chai.assert.equal(dbx.domain, undefined);
+    });
+
+    it('is set by auth.domain if not set in constructor', () => {
+      const auth = new DropboxAuth({ domain: 'mydomain.com' });
+      const dbx = new Dropbox({ auth });
+      chai.assert.equal(dbx.domain, 'mydomain.com');
+    });
+  });
+
+  describe('domainDelimiter', () => {
+    it('can be set in the constructor', () => {
+      const dbx = new Dropbox({ domainDelimiter: '-' });
+      chai.assert.equal(dbx.domainDelimiter, '-');
+    });
+
+    it('is undefined if not set in constructor', () => {
+      const dbx = new Dropbox();
+      chai.assert.equal(dbx.domainDelimiter, undefined);
+    });
+
+    it('is set by auth.domainDelimiter if not set in constructor', () => {
+      const auth = new DropboxAuth({ domainDelimiter: '-' });
+      const dbx = new Dropbox({ auth });
+      chai.assert.equal(dbx.domainDelimiter, '-');
+    });
+  });
+
   describe('customHeaders', () => {
     it('can be set in the constructor', () => {
       const dbx = new Dropbox({ customHeaders: { foo: 'bar' } });
@@ -38,6 +74,12 @@ describe('Dropbox', () => {
     it('is undefined if not set in constructor', () => {
       const dbx = new Dropbox();
       chai.assert.equal(dbx.customHeaders, undefined);
+    });
+
+    it('is set by auth.customHeaders if not set in constructor', () => {
+      const auth = new DropboxAuth({ customHeaders: { foo: 'bar' } });
+      const dbx = new Dropbox({ auth });
+      chai.assert.equal(dbx.customHeaders.foo, 'bar');
     });
   });
 
