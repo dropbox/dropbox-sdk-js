@@ -205,31 +205,31 @@ describe('Dropbox', () => {
   });
 
   describe('setAuthHeaders', () => {
-    const authTypes = ["user", "app", "team", "noauth", "user, app", "team, app", "cookie"];
-    for(let auth of authTypes){
-      for(let hasAccessToken of [true, false]){
-        for(let hasAppKeys of [true, false]){
-          it(`correctly sets auth headers given '${auth}' auth and ${hasAccessToken ? "has" : "does not have"} an access token`, () => {
+    const authTypes = ['user', 'app', 'team', 'noauth', 'user, app', 'team, app', 'cookie'];
+    for (const auth of authTypes) {
+      for (const hasAccessToken of [true, false]) {
+        for (const hasAppKeys of [true, false]) {
+          it(`correctly sets auth headers given '${auth}' auth and ${hasAccessToken ? 'has' : 'does not have'} an access token`, () => {
             const dbx = new Dropbox({
-              accessToken: hasAccessToken ? "token" : undefined,
-              clientId: hasAppKeys ? "app_key" : undefined,
-              clientSecret: hasAppKeys ? "app_secret": undefined
+              accessToken: hasAccessToken ? 'token' : undefined,
+              clientId: hasAppKeys ? 'app_key' : undefined,
+              clientSecret: hasAppKeys ? 'app_secret' : undefined,
             });
 
             const fetchOptions = {
               headers: {},
             };
 
-            const isExpectedToHaveTokenHeader = hasAccessToken && (auth.includes("user") || auth.includes("team"));
-            const isExpectedToHaveAppHeader = ((auth == "app") || (auth.includes("app") && !hasAccessToken)) && hasAppKeys;
+            const isExpectedToHaveTokenHeader = hasAccessToken && (auth.includes('user') || auth.includes('team'));
+            const isExpectedToHaveAppHeader = ((auth === 'app') || (auth.includes('app') && !hasAccessToken)) && hasAppKeys;
 
             dbx.setAuthHeaders(auth, fetchOptions);
-            
+
             const { headers } = fetchOptions;
-            if(isExpectedToHaveAppHeader){
-              chai.assert.isTrue(headers["Authorization"].includes("Basic"));
-            } else if(isExpectedToHaveTokenHeader){
-              chai.assert.isTrue(headers["Authorization"].includes("Bearer"));
+            if (isExpectedToHaveAppHeader) {
+              chai.assert.isTrue(headers.Authorization.includes('Basic'));
+            } else if (isExpectedToHaveTokenHeader) {
+              chai.assert.isTrue(headers.Authorization.includes('Bearer'));
             } else {
               chai.assert.deepEqual(headers, {});
             }
@@ -240,15 +240,15 @@ describe('Dropbox', () => {
 
     it('throws an error on an invalid auth type', () => {
       const dbx = new Dropbox();
-      
+
       const fetchOptions = {
         headers: {},
       };
 
       chai.assert.throws(
-        Dropbox.prototype.setAuthHeaders.bind(Dropbox, "bad auth type", fetchOptions),
-        Error
-      )
+        Dropbox.prototype.setAuthHeaders.bind(Dropbox, 'bad auth type', fetchOptions),
+        Error,
+      );
     });
   });
 });
