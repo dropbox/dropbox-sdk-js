@@ -77,20 +77,6 @@ export default class Dropbox {
   }
 
   request(path, args, auth, host, style) {
-    // checks for multiauth and assigns auth based on priority to create header in switch case
-    if (auth.split(',').length > 1) {
-      const authTypes = auth.replace(' ', '').split(',');
-      if (authTypes.includes(USER_AUTH) && this.auth.getAccessToken()) {
-        auth = USER_AUTH;
-      } else if (authTypes.includes(TEAM_AUTH) && this.auth.getAccessToken()) {
-        auth = TEAM_AUTH;
-      } else if (authTypes.includes(APP_AUTH)) {
-        auth = APP_AUTH;
-      } else {
-        auth = USER_AUTH; // Default to user auth
-      }
-    }
-
     switch (style) {
       case RPC:
         return this.rpcRequest(path, args, auth, host);
@@ -178,6 +164,18 @@ export default class Dropbox {
   }
 
   setAuthHeaders(auth, fetchOptions) {
+    // checks for multiauth and assigns auth based on priority to create header in switch case
+    if (auth.split(',').length > 1) {
+      const authTypes = auth.replace(' ', '').split(',');
+      if (authTypes.includes(USER_AUTH) && this.auth.getAccessToken()) {
+        auth = USER_AUTH;
+      } else if (authTypes.includes(TEAM_AUTH) && this.auth.getAccessToken()) {
+        auth = TEAM_AUTH;
+      } else if (authTypes.includes(APP_AUTH)) {
+        auth = APP_AUTH;
+      }
+    }
+
     switch (auth) {
       case APP_AUTH:
         if (this.auth.clientId && this.auth.clientSecret) {

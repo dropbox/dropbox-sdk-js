@@ -96,51 +96,6 @@ describe('Dropbox', () => {
       chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
     });
 
-    it('completes a multiauth RPC request with user auth when supplied with an accessToken', () => {
-      const dbxAuth = new DropboxAuth({ accessToken: 'foo' });
-      const dbx = new Dropbox({ auth: dbxAuth });
-      const rpcSpy = sinon.spy(dbx, 'rpcRequest');
-      dbx.request('path', {}, 'user, app', 'api', RPC)
-        .catch((error) => {
-          fail(error);
-        });
-      chai.assert.isTrue(rpcSpy.calledOnce);
-      chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
-      chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
-      chai.assert.equal(USER_AUTH, dbx.rpcRequest.getCall(0).args[2]);
-    });
-
-    it('completes a multiauth RPC request with team auth when supplied with an accessToken', () => {
-      const dbxAuth = new DropboxAuth({ accessToken: 'foo' });
-      const dbx = new Dropbox({ auth: dbxAuth });
-      const rpcSpy = sinon.spy(dbx, 'rpcRequest');
-      dbx.request('path', {}, 'team, app', 'api', RPC)
-        .catch((error) => {
-          fail(error);
-        });
-      chai.assert.isTrue(rpcSpy.calledOnce);
-      chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
-      chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
-      chai.assert.equal(TEAM_AUTH, dbx.rpcRequest.getCall(0).args[2]);
-    });
-
-    it('completes a multiauth RPC request with app auth when not supplied with an accessToken', () => {
-      const dbxAuth = new DropboxAuth({
-        clientID: 'foo',
-        clientSecret: 'bar',
-      });
-      const dbx = new Dropbox({ auth: dbxAuth });
-      const rpcSpy = sinon.spy(dbx, 'rpcRequest');
-      dbx.request('path', {}, 'user, app', 'api', RPC)
-        .catch((error) => {
-          fail(error);
-        });
-      chai.assert.isTrue(rpcSpy.calledOnce);
-      chai.assert.equal('path', dbx.rpcRequest.getCall(0).args[0]);
-      chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
-      chai.assert.equal(APP_AUTH, dbx.rpcRequest.getCall(0).args[2]);
-    });
-
     it('completes a cookie auth RPC request', () => {
       const dbxAuth = new DropboxAuth();
       const dbx = new Dropbox({ auth: dbxAuth });
@@ -246,6 +201,54 @@ describe('Dropbox', () => {
       chai.assert.equal(headers.foo, 'bar');
       chai.assert.equal(headers.milk, 'shake');
       chai.assert.equal(headers.cookie, 'hash');
+    });
+  });
+
+  describe('setAuthHeaders', () => {
+    const authTypes = ['user', 'app', 'team', 'noauth', 'user, app', 'team, app', 'cookie'];
+    for (const auth of authTypes) {
+      for (const hasAccessToken of [true, false]) {
+        for (const hasAppKeys of [true, false]) {
+          it(`correctly sets auth headers given '${auth}' auth and ${hasAccessToken ? 'has' : 'does not have'} an access token`, () => {
+            const dbx = new Dropbox({
+              accessToken: hasAccessToken ? 'token' : undefined,
+              clientId: hasAppKeys ? 'app_key' : undefined,
+              clientSecret: hasAppKeys ? 'app_secret' : undefined,
+            });
+
+            const fetchOptions = {
+              headers: {},
+            };
+
+            const isExpectedToHaveTokenHeader = hasAccessToken && (auth.includes('user') || auth.includes('team'));
+            const isExpectedToHaveAppHeader = ((auth === 'app') || (auth.includes('app') && !hasAccessToken)) && hasAppKeys;
+
+            dbx.setAuthHeaders(auth, fetchOptions);
+
+            const { headers } = fetchOptions;
+            if (isExpectedToHaveAppHeader) {
+              chai.assert.isTrue(headers.Authorization.includes('Basic'));
+            } else if (isExpectedToHaveTokenHeader) {
+              chai.assert.isTrue(headers.Authorization.includes('Bearer'));
+            } else {
+              chai.assert.deepEqual(headers, {});
+            }
+          });
+        }
+      }
+    }
+
+    it('throws an error on an invalid auth type', () => {
+      const dbx = new Dropbox();
+
+      const fetchOptions = {
+        headers: {},
+      };
+
+      chai.assert.throws(
+        Dropbox.prototype.setAuthHeaders.bind(Dropbox, 'bad auth type', fetchOptions),
+        Error,
+      );
     });
   });
 });
