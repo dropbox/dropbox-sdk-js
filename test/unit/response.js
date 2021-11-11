@@ -1,7 +1,6 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { Response } from 'node-fetch';
-import { httpHeaderSafeJson } from '../../src/utils';
+import { httpHeaderSafeJson } from '../../src/utils.js';
 import {
   DropboxResponse,
   parseResponse,
@@ -10,6 +9,17 @@ import {
 import { DropboxResponseError } from '../../src/error.js';
 
 chai.use(chaiAsPromised);
+
+let Response;
+
+before((done) => {
+  // eslint-disable-next-line no-new-func
+  new Function("return import('node-fetch')")().then((mod) => {
+    Response = mod.Response;
+    done();
+  });
+});
+
 describe('DropboxResponse', () => {
   describe('Status', () => {
     it('can be set in the constructor', () => {
