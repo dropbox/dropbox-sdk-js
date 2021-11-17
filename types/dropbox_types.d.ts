@@ -1645,7 +1645,7 @@
     }
 
     /**
-     * Item already has max supported tags.
+     * The item already has the maximum supported number of tags.
      */
     export interface AddTagErrorTooManyTags {
       '.tag': 'too_many_tags';
@@ -1668,55 +1668,16 @@
 
     export type AlphaGetMetadataError = GetMetadataError | AlphaGetMetadataErrorPropertiesError;
 
-    /**
-     * Action failed.
-     */
-    export interface BaseErrorUnknown {
-      '.tag': 'unknown';
+    export interface BaseTagErrorPath {
+      '.tag': 'path';
+      path: LookupError;
     }
 
-    /**
-     * Action failed. Try again.
-     */
-    export interface BaseErrorTransient {
-      '.tag': 'transient';
-    }
-
-    /**
-     * Action failed due to wrong params.
-     */
-    export interface BaseErrorInputValidation {
-      '.tag': 'input_validation';
-    }
-
-    /**
-     * Action cancelled.
-     */
-    export interface BaseErrorCancelled {
-      '.tag': 'cancelled';
-    }
-
-    export interface BaseErrorOther {
+    export interface BaseTagErrorOther {
       '.tag': 'other';
     }
 
-    export type BaseError = BaseErrorUnknown | BaseErrorTransient | BaseErrorInputValidation | BaseErrorCancelled | BaseErrorOther;
-
-    /**
-     * Tags are not turned on for your team. Please turn on the feature.
-     */
-    export interface BaseTagErrorFeatureNotSupported {
-      '.tag': 'feature_not_supported';
-    }
-
-    /**
-     * Path not found.
-     */
-    export interface BaseTagErrorPathNotFound {
-      '.tag': 'path_not_found';
-    }
-
-    export type BaseTagError = BaseError | BaseTagErrorFeatureNotSupported | BaseTagErrorPathNotFound;
+    export type BaseTagError = BaseTagErrorPath | BaseTagErrorOther;
 
     export interface CommitInfo {
       /**
@@ -3959,11 +3920,11 @@
     /**
      * That tag doesn't exist at this path.
      */
-    export interface RemoveTagErrorTagNotExistsForThisPath {
-      '.tag': 'tag_not_exists_for_this_path';
+    export interface RemoveTagErrorTagNotPresent {
+      '.tag': 'tag_not_present';
     }
 
-    export type RemoveTagError = BaseTagError | RemoveTagErrorTagNotExistsForThisPath;
+    export type RemoveTagError = BaseTagError | RemoveTagErrorTagNotPresent;
 
     export interface RestoreArg {
       /**
