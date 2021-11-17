@@ -17450,6 +17450,8 @@ update. If :val:`null`, the file request's deadline is cleared.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -17462,31 +17464,48 @@ update. If :val:`null`, the file request's deadline is cleared.</td>
 
         <tr>
             
+                <td class="name"><code>path</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesLookupError">FilesLookupError</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is path.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>.tag</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">'unknown'</span>
-|
-
-<span class="param-type">'transient'</span>
-|
-
-<span class="param-type">'input_validation'</span>
-|
-
-<span class="param-type">'cancelled'</span>
+<span class="param-type">'path'</span>
 |
 
 <span class="param-type">'other'</span>
-|
-
-<span class="param-type">'feature_not_supported'</span>
-|
-
-<span class="param-type">'path_not_found'</span>
 |
 
 <span class="param-type">'too_many_tags'</span>
@@ -17496,6 +17515,12 @@ update. If :val:`null`, the file request's deadline is cleared.</td>
             
             </td>
 
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -18039,138 +18064,6 @@ custom properties.</td>
             
                 
 <hr>
-<dt class="name" id="FilesBaseError">
-    <h4 id="FilesBaseError">FilesBaseError</h4>
-
-    
-</dt>
-<dd>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">Object</span>
-
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    <dl>
-
-<table class="props table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>.tag</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">'unknown'</span>
-|
-
-<span class="param-type">'transient'</span>
-|
-
-<span class="param-type">'input_validation'</span>
-|
-
-<span class="param-type">'cancelled'</span>
-|
-
-<span class="param-type">'other'</span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Tag identifying the union variant.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-</dl>
-
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-</dd>
-
-            
-                
-<hr>
 <dt class="name" id="FilesBaseTagError">
     <h4 id="FilesBaseTagError">FilesBaseTagError</h4>
 
@@ -18210,6 +18103,8 @@ custom properties.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -18222,37 +18117,60 @@ custom properties.</td>
 
         <tr>
             
-                <td class="name"><code>.tag</code></td>
+                <td class="name"><code>path</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">'unknown'</span>
-|
-
-<span class="param-type">'transient'</span>
-|
-
-<span class="param-type">'input_validation'</span>
-|
-
-<span class="param-type">'cancelled'</span>
-|
-
-<span class="param-type">'other'</span>
-|
-
-<span class="param-type">'feature_not_supported'</span>
-|
-
-<span class="param-type">'path_not_found'</span>
+<span class="param-type"><a href="global.html#FilesLookupError">FilesLookupError</a></span>
 
 
 
             
             </td>
 
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is path.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'path'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -40522,6 +40440,8 @@ destination.</td>
         <th>Type</th>
 
         
+        <th>Argument</th>
+        
 
         
 
@@ -40534,40 +40454,63 @@ destination.</td>
 
         <tr>
             
-                <td class="name"><code>.tag</code></td>
+                <td class="name"><code>path</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">'unknown'</span>
-|
-
-<span class="param-type">'transient'</span>
-|
-
-<span class="param-type">'input_validation'</span>
-|
-
-<span class="param-type">'cancelled'</span>
-|
-
-<span class="param-type">'other'</span>
-|
-
-<span class="param-type">'feature_not_supported'</span>
-|
-
-<span class="param-type">'path_not_found'</span>
-|
-
-<span class="param-type">'tag_not_exists_for_this_path'</span>
+<span class="param-type"><a href="global.html#FilesLookupError">FilesLookupError</a></span>
 
 
 
             
             </td>
 
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is path.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'path'</span>
+|
+
+<span class="param-type">'other'</span>
+|
+
+<span class="param-type">'tag_not_present'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
             
 
             
@@ -332400,7 +332343,7 @@ file_locking.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2021-11-10T22:08:16+00:00
+		on 2021-11-17T19:37:08+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
