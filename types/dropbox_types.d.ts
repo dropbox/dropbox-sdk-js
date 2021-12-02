@@ -26839,6 +26839,10 @@
 
     export type ExtendedVersionHistoryPolicy = ExtendedVersionHistoryPolicyExplicitlyLimited | ExtendedVersionHistoryPolicyExplicitlyUnlimited | ExtendedVersionHistoryPolicyImplicitlyLimited | ExtendedVersionHistoryPolicyImplicitlyUnlimited | ExtendedVersionHistoryPolicyOther;
 
+    export interface ExternalDriveBackupPolicyDefault {
+      '.tag': 'default';
+    }
+
     export interface ExternalDriveBackupPolicyDisabled {
       '.tag': 'disabled';
     }
@@ -26854,7 +26858,7 @@
     /**
      * Policy for controlling team access to external drive backup feature
      */
-    export type ExternalDriveBackupPolicy = ExternalDriveBackupPolicyDisabled | ExternalDriveBackupPolicyEnabled | ExternalDriveBackupPolicyOther;
+    export type ExternalDriveBackupPolicy = ExternalDriveBackupPolicyDefault | ExternalDriveBackupPolicyDisabled | ExternalDriveBackupPolicyEnabled | ExternalDriveBackupPolicyOther;
 
     /**
      * Changed external drive backup policy for team.
@@ -35751,11 +35755,18 @@
       '.tag': 'enabled';
     }
 
+    /**
+     * External Drive Backup default value based on team tier.
+     */
+    export interface ExternalDriveBackupPolicyStateDefault {
+      '.tag': 'default';
+    }
+
     export interface ExternalDriveBackupPolicyStateOther {
       '.tag': 'other';
     }
 
-    export type ExternalDriveBackupPolicyState = ExternalDriveBackupPolicyStateDisabled | ExternalDriveBackupPolicyStateEnabled | ExternalDriveBackupPolicyStateOther;
+    export type ExternalDriveBackupPolicyState = ExternalDriveBackupPolicyStateDisabled | ExternalDriveBackupPolicyStateEnabled | ExternalDriveBackupPolicyStateDefault | ExternalDriveBackupPolicyStateOther;
 
     /**
      * File locking feature is disabled.
