@@ -9,14 +9,14 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
   # Updates to TS examples
   - package-ecosystem: "npm"
     directory: "examples/typescript"
     schedule:
-      interval: "daily"
+      interval: "monthly"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
