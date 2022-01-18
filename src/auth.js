@@ -41,19 +41,7 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
 */
 export default class DropboxAuth {
   constructor(options) {
-    options = options || {};
-
-    this.fetch = options.fetch || fetch;
-    this.accessToken = options.accessToken;
-    this.accessTokenExpiresAt = options.accessTokenExpiresAt;
-    this.refreshToken = options.refreshToken;
-    this.clientId = options.clientId;
-    this.clientSecret = options.clientSecret;
-
-    this.domain = options.domain;
-    this.domainDelimiter = options.domainDelimiter;
-    this.customHeaders = options.customHeaders;
-
+    // Setup Globals
     if (isBrowserEnv()) {
       fetch = window.fetch.bind(window);
       crypto = window.crypto || window.msCrypto; // for IE11
@@ -67,6 +55,19 @@ export default class DropboxAuth {
     } else {
       Encoder = TextEncoder;
     }
+
+    options = options || {};
+
+    this.fetch = options.fetch || fetch;
+    this.accessToken = options.accessToken;
+    this.accessTokenExpiresAt = options.accessTokenExpiresAt;
+    this.refreshToken = options.refreshToken;
+    this.clientId = options.clientId;
+    this.clientSecret = options.clientSecret;
+
+    this.domain = options.domain;
+    this.domainDelimiter = options.domainDelimiter;
+    this.customHeaders = options.customHeaders;
   }
 
   /**
