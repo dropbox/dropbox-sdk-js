@@ -75,6 +75,12 @@ export default class Dropbox {
     this.domainDelimiter = options.domainDelimiter || this.auth.domainDelimiter;
     this.customHeaders = options.customHeaders || this.auth.customHeaders;
 
+    if (isBrowserEnv()) {
+      fetch = window.fetch.bind(window);
+    } else {
+      fetch = require('node-fetch'); // eslint-disable-line global-require
+    }
+
     Object.assign(this, routes);
   }
 

@@ -60,6 +60,20 @@ export default class DropboxAuth {
 
     options = options || {};
 
+    if (isBrowserEnv()) {
+      fetch = window.fetch.bind(window);
+      crypto = window.crypto || window.msCrypto; // for IE11
+    } else {
+      fetch = require('node-fetch'); // eslint-disable-line global-require
+      crypto = require('crypto'); // eslint-disable-line global-require
+    }
+
+    if (typeof TextEncoder === 'undefined') {
+      Encoder = require('util').TextEncoder; // eslint-disable-line global-require
+    } else {
+      Encoder = TextEncoder;
+    }
+
     this.fetch = options.fetch || fetch;
     this.accessToken = options.accessToken;
     this.accessTokenExpiresAt = options.accessTokenExpiresAt;
