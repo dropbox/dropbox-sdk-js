@@ -10,15 +10,10 @@ import {
 } from './constants.js';
 import { routes } from '../lib/routes.js';
 import DropboxAuth from './auth.js';
-import { baseApiUrl, httpHeaderSafeJson } from './utils.js';
+import { baseApiUrl, httpHeaderSafeJson, isBrowserEnv } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
 
 let fetch;
-if (typeof window !== 'undefined') {
-  fetch = window.fetch.bind(window);
-} else {
-  fetch = require('node-fetch'); // eslint-disable-line global-require
-}
 
 const b64 = typeof btoa === 'undefined'
   ? (str) => Buffer.from(str).toString('base64')
@@ -72,6 +67,12 @@ export default class Dropbox {
     this.domain = options.domain || this.auth.domain;
     this.domainDelimiter = options.domainDelimiter || this.auth.domainDelimiter;
     this.customHeaders = options.customHeaders || this.auth.customHeaders;
+
+    if (isBrowserEnv()) {
+      fetch = window.fetch.bind(window);
+    } else {
+      fetch = require('node-fetch'); // eslint-disable-line global-require
+    }
 
     Object.assign(this, routes);
   }
