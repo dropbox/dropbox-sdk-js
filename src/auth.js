@@ -349,7 +349,7 @@ export default class DropboxAuth {
      * @returns {Promise<*>}
      */
   refreshAccessToken(scope = null) {
-    let refreshUrl = OAuth2TokenUrl(this.domain, this.domainDelimiter);
+    const refreshUrl = OAuth2TokenUrl(this.domain, this.domainDelimiter);
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
 
@@ -362,19 +362,18 @@ export default class DropboxAuth {
 
     const headers = {};
     headers['Content-Type'] = 'application/json';
-    refreshUrl += `?grant_type=refresh_token&refresh_token=${this.getRefreshToken()}`;
-    refreshUrl += `&client_id=${clientId}`;
-    if (clientSecret) {
-      refreshUrl += `&client_secret=${clientSecret}`;
-    }
-    if (scope) {
-      refreshUrl += `&scope=${scope.join(' ')}`;
-    }
-    const fetchOptions = {
-      method: 'POST',
-    };
 
-    fetchOptions.headers = headers;
+    const body = { grant_type: 'refresh_token', client_id: clientId, refresh_token: this.getRefreshToken() };
+
+    if (clientSecret) {
+      body.client_secret = clientSecret;
+    }
+
+    if (scope) {
+      body.scope = scope.join(' ');
+    }
+
+    const fetchOptions = { body, headers, method: 'POST' };
 
     return this.fetch(refreshUrl, fetchOptions)
       .then((res) => parseResponse(res))

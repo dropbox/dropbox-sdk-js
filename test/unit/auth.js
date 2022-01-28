@@ -366,9 +366,9 @@ describe('DropboxAuth', () => {
       );
     });
 
-    const testRefreshUrl = 'https://api.dropboxapi.com/oauth2/token?grant_type=refresh_token&refresh_token=undefined&client_id=foo&client_secret=bar';
+    const testRefreshUrl = 'https://api.dropboxapi.com/oauth2/token';
 
-    it('sets the correct refresh url (no scope passed)', () => {
+    it('sets the correct refresh body (no scope passed)', () => {
       const dbxAuth = new DropboxAuth({
         clientId: 'foo',
         clientSecret: 'bar',
@@ -378,12 +378,16 @@ describe('DropboxAuth', () => {
       dbxAuth.refreshAccessToken();
       chai.assert.isTrue(fetchSpy.calledOnce);
       const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
-      const { headers } = dbxAuth.fetch.getCall(0).args[1];
+      const { body, headers } = dbxAuth.fetch.getCall(0).args[1];
       chai.assert.equal(refreshUrl, testRefreshUrl);
       chai.assert.equal(headers['Content-Type'], 'application/json');
+      chai.assert.equal(body.grant_type, 'refresh_token');
+      chai.assert.equal(body.client_id, 'foo');
+      chai.assert.equal(body.client_secret, 'bar');
+      chai.assert.notProperty(body, 'scope');
     });
 
-    it('sets the correct refresh url (scope passed)', () => {
+    it('sets the correct refresh body (scope passed)', () => {
       const dbxAuth = new DropboxAuth({
         clientId: 'foo',
         clientSecret: 'bar',
@@ -393,10 +397,13 @@ describe('DropboxAuth', () => {
       dbxAuth.refreshAccessToken(['files.metadata.read']);
       chai.assert.isTrue(fetchSpy.calledOnce);
       const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
-      const { headers } = dbxAuth.fetch.getCall(0).args[1];
-      const testScopeUrl = `${testRefreshUrl}&scope=files.metadata.read`;
-      chai.assert.equal(refreshUrl, testScopeUrl);
+      const { body, headers } = dbxAuth.fetch.getCall(0).args[1];
+      chai.assert.equal(refreshUrl, testRefreshUrl);
       chai.assert.equal(headers['Content-Type'], 'application/json');
+      chai.assert.equal(body.grant_type, 'refresh_token');
+      chai.assert.equal(body.client_id, 'foo');
+      chai.assert.equal(body.client_secret, 'bar');
+      chai.assert.equal(body.scope, 'files.metadata.read');
     });
   });
 });
