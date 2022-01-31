@@ -23,6 +23,8 @@ export interface DropboxAuthOptions {
   domainDelimiter?: string;
   // An object (in the form of header: value) designed to set custom headers to use during a request.
   customHeaders?: object;
+  // Whether request data is sent on body or as URL params. Defaults to false.
+  dataOnBody?: boolean;
 }
 
 export class DropboxAuth {
