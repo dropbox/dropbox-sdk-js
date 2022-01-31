@@ -160,6 +160,18 @@ describe('DropboxAuth', () => {
     });
   });
 
+  describe('dataOnBody', () => {
+    it('can be set in the constructor', () => {
+      const dbx = new DropboxAuth({ dataOnBody: true });
+      chai.assert.equal(dbx.dataOnBody, true);
+    });
+
+    it('is undefined if not set in constructor', () => {
+      const dbx = new DropboxAuth();
+      chai.assert.equal(dbx.dataOnBody, undefined);
+    });
+  });
+
   describe('refreshToken', () => {
     it('can be set in the constructor', () => {
       const dbxAuth = new DropboxAuth({ refreshToken: 'foo' });
@@ -366,9 +378,7 @@ describe('DropboxAuth', () => {
       );
     });
 
-    const testRefreshUrl = 'https://api.dropboxapi.com/oauth2/token?grant_type=refresh_token&refresh_token=undefined&client_id=foo&client_secret=bar';
-
-    it('sets the correct refresh url (no scope passed)', () => {
+    it('sets request content type to json', () => {
       const dbxAuth = new DropboxAuth({
         clientId: 'foo',
         clientSecret: 'bar',
@@ -377,26 +387,97 @@ describe('DropboxAuth', () => {
       const fetchSpy = sinon.spy(dbxAuth, 'fetch');
       dbxAuth.refreshAccessToken();
       chai.assert.isTrue(fetchSpy.calledOnce);
-      const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
+
       const { headers } = dbxAuth.fetch.getCall(0).args[1];
-      chai.assert.equal(refreshUrl, testRefreshUrl);
       chai.assert.equal(headers['Content-Type'], 'application/json');
     });
 
-    it('sets the correct refresh url (scope passed)', () => {
-      const dbxAuth = new DropboxAuth({
-        clientId: 'foo',
-        clientSecret: 'bar',
+    describe('when dataOnBody flag is enabled', () => {
+      const dataOnBody = true;
+
+      it('does the request without URL parameters', () => {
+        const dbxAuth = new DropboxAuth({
+          clientId: 'foo',
+          clientSecret: 'bar',
+          dataOnBody,
+        });
+
+        const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+        dbxAuth.refreshAccessToken(['files.metadata.read']);
+        chai.assert.isTrue(fetchSpy.calledOnce);
+        const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
+
+        chai.assert.equal(refreshUrl, 'https://api.dropboxapi.com/oauth2/token');
       });
 
-      const fetchSpy = sinon.spy(dbxAuth, 'fetch');
-      dbxAuth.refreshAccessToken(['files.metadata.read']);
-      chai.assert.isTrue(fetchSpy.calledOnce);
-      const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
-      const { headers } = dbxAuth.fetch.getCall(0).args[1];
-      const testScopeUrl = `${testRefreshUrl}&scope=files.metadata.read`;
-      chai.assert.equal(refreshUrl, testScopeUrl);
-      chai.assert.equal(headers['Content-Type'], 'application/json');
+      it('sends the client id and secret in the body', () => {
+        const dbxAuth = new DropboxAuth({
+          clientId: 'foo',
+          clientSecret: 'bar',
+          dataOnBody,
+        });
+
+        const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+        dbxAuth.refreshAccessToken();
+        chai.assert.isTrue(fetchSpy.calledOnce);
+
+        const { body } = dbxAuth.fetch.getCall(0).args[1];
+        chai.assert.equal(body.client_id, 'foo');
+        chai.assert.equal(body.client_secret, 'bar');
+      });
+
+      it('sends the scope in the body when passed', () => {
+        const dbxAuth = new DropboxAuth({
+          clientId: 'foo',
+          clientSecret: 'bar',
+          dataOnBody,
+        });
+
+        const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+        dbxAuth.refreshAccessToken(['files.metadata.read']);
+        chai.assert.isTrue(fetchSpy.calledOnce);
+
+        const { body } = dbxAuth.fetch.getCall(0).args[1];
+        chai.assert.equal(body.scope, 'files.metadata.read');
+      });
+    });
+
+    describe('when dataOnBody flag is disabled', () => {
+      const dataOnBody = false;
+      const testRefreshUrl = 'https://api.dropboxapi.com/oauth2/token?grant_type=refresh_token&refresh_token=undefined&client_id=foo&client_secret=bar';
+
+      it('sets the correct refresh url (no scope passed)', () => {
+        const dbxAuth = new DropboxAuth({
+          clientId: 'foo',
+          clientSecret: 'bar',
+          dataOnBody,
+        });
+
+        const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+        dbxAuth.refreshAccessToken();
+        chai.assert.isTrue(fetchSpy.calledOnce);
+        const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
+        const { headers } = dbxAuth.fetch.getCall(0).args[1];
+        chai.assert.equal(refreshUrl, testRefreshUrl);
+        chai.assert.equal(headers['Content-Type'], 'application/json');
+      });
+
+      it('sets the correct refresh url (scope passed)', () => {
+        const dbxAuth = new DropboxAuth({
+          clientId: 'foo',
+          clientSecret: 'bar',
+          dataOnBody,
+        });
+
+        const fetchSpy = sinon.spy(dbxAuth, 'fetch');
+        dbxAuth.refreshAccessToken(['files.metadata.read']);
+        chai.assert.isTrue(fetchSpy.calledOnce);
+        const refreshUrl = dbxAuth.fetch.getCall(0).args[0];
+        const { headers } = dbxAuth.fetch.getCall(0).args[1];
+        const testScopeUrl = `${testRefreshUrl}&scope=files.metadata.read`;
+        chai.assert.equal(refreshUrl, testScopeUrl);
+        chai.assert.equal(headers['Content-Type'], 'application/json');
+      });
     });
   });
 });

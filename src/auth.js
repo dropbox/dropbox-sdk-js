@@ -55,6 +55,8 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
  * subdomain. This should only be used for testing as scaffolding.
  * @arg {Object} [options.customHeaders] - An object (in the form of header: value) designed to set
  * custom headers to use during a request.
+ * @arg {Boolean} [options.dataOnBody] - Whether request data is sent on body or as URL params.
+  * Defaults to false.
 */
 export default class DropboxAuth {
   constructor(options) {
@@ -70,6 +72,7 @@ export default class DropboxAuth {
     this.domain = options.domain;
     this.domainDelimiter = options.domainDelimiter;
     this.customHeaders = options.customHeaders;
+    this.dataOnBody = options.dataOnBody;
   }
 
   /**
@@ -349,7 +352,6 @@ export default class DropboxAuth {
      * @returns {Promise<*>}
      */
   refreshAccessToken(scope = null) {
-    let refreshUrl = OAuth2TokenUrl(this.domain, this.domainDelimiter);
     const clientId = this.getClientId();
     const clientSecret = this.getClientSecret();
 
@@ -360,21 +362,33 @@ export default class DropboxAuth {
       throw new Error('Scope must be an array of strings');
     }
 
-    const headers = {};
-    headers['Content-Type'] = 'application/json';
-    refreshUrl += `?grant_type=refresh_token&refresh_token=${this.getRefreshToken()}`;
-    refreshUrl += `&client_id=${clientId}`;
-    if (clientSecret) {
-      refreshUrl += `&client_secret=${clientSecret}`;
-    }
-    if (scope) {
-      refreshUrl += `&scope=${scope.join(' ')}`;
-    }
+    let refreshUrl = OAuth2TokenUrl(this.domain, this.domainDelimiter);
     const fetchOptions = {
+      headers: { 'Content-Type': 'application/json' },
       method: 'POST',
     };
 
-    fetchOptions.headers = headers;
+    if (this.dataOnBody) {
+      const body = { grant_type: 'refresh_token', client_id: clientId, refresh_token: this.getRefreshToken() };
+
+      if (clientSecret) {
+        body.client_secret = clientSecret;
+      }
+      if (scope) {
+        body.scope = scope.join(' ');
+      }
+
+      fetchOptions.body = body;
+    } else {
+      refreshUrl += `?grant_type=refresh_token&refresh_token=${this.getRefreshToken()}`;
+      refreshUrl += `&client_id=${clientId}`;
+      if (clientSecret) {
+        refreshUrl += `&client_secret=${clientSecret}`;
+      }
+      if (scope) {
+        refreshUrl += `&scope=${scope.join(' ')}`;
+      }
+    }
 
     return this.fetch(refreshUrl, fetchOptions)
       .then((res) => parseResponse(res))
