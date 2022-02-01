@@ -726,6 +726,8 @@ custom headers to use during a request.</td>
     
     <div class="description">
         Sets a user's profile photo.
+Route attributes:
+  scope: account_info.write
     </div>
     
 
@@ -1278,6 +1280,8 @@ token, and returns the supplied string, to allow you to test your code and
 connection to the Dropbox API. It has no other effect. If you receive an HTTP
 200 response with the supplied query, it indicates at least part of the
 Dropbox API infrastructure is working and that the access token is valid.
+Route attributes:
+  scope: account_info.read
     </div>
     
 
@@ -1427,6 +1431,8 @@ Dropbox API infrastructure is working and that the access token is valid.
     <div class="description">
         Removes all manually added contacts. You'll still keep contacts who are on
 your team or who you imported. New contacts will be added when you share.
+Route attributes:
+  scope: contacts.write
     </div>
     
 
@@ -1525,6 +1531,8 @@ your team or who you imported. New contacts will be added when you share.
     
     <div class="description">
         Removes manually added contacts from the given list.
+Route attributes:
+  scope: contacts.write
     </div>
     
 
@@ -1674,6 +1682,8 @@ your team or who you imported. New contacts will be added when you share.
     <div class="description">
         Add property groups to a Dropbox file. See templates/add_for_user or
 templates/add_for_team to create new templates.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -1826,6 +1836,8 @@ used instead of properties/update when property groups are being updated via
 a "snapshot" instead of via a "delta". In other words, this endpoint will
 delete all omitted fields from a property group, whereas properties/update
 will only delete fields that are explicitly marked for deletion.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -1978,6 +1990,8 @@ specific property field key value pairs, see properties/update. To update a
 template, see templates/update_for_user or templates/update_for_team. To
 remove a template, see templates/remove_for_user or
 templates/remove_for_team.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -2126,6 +2140,8 @@ templates/remove_for_team.
     
     <div class="description">
         Search across property templates for particular property field values.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -2275,6 +2291,8 @@ templates/remove_for_team.
     <div class="description">
         Once a cursor has been retrieved from properties/search, use this to paginate
 through all search results.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -2428,6 +2446,8 @@ property groups are being updated via a "delta" instead of via a "snapshot" .
 In other words, this endpoint will not delete any omitted fields from a
 property group, whereas properties/overwrite will delete any fields that are
 omitted from a property group.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -2577,6 +2597,8 @@ omitted from a property group.
     <div class="description">
         Add a template associated with a team. See properties/add to add properties
 to a file or folder. Note: this endpoint will create team-owned templates.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -2726,6 +2748,8 @@ to a file or folder. Note: this endpoint will create team-owned templates.
     <div class="description">
         Add a template associated with a user. See properties/add to add properties
 to a file. This endpoint can't be called on a team member or admin's behalf.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -2874,6 +2898,8 @@ to a file. This endpoint can't be called on a team member or admin's behalf.
     
     <div class="description">
         Get the schema for a specified template.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -3023,6 +3049,8 @@ to a file. This endpoint can't be called on a team member or admin's behalf.
     <div class="description">
         Get the schema for a specified template. This endpoint can't be called on a
 team member or admin's behalf.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -3172,6 +3200,8 @@ team member or admin's behalf.
     <div class="description">
         Get the template identifiers for a team. To get the schema of each template
 use templates/get_for_team.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -3272,6 +3302,8 @@ use templates/get_for_team.
         Get the template identifiers for a team. To get the schema of each template
 use templates/get_for_user. This endpoint can't be called on a team member or
 admin's behalf.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -3372,6 +3404,8 @@ admin's behalf.
         Permanently removes the specified template created from
 templates/add_for_user. All properties associated with the template will also
 be removed. This action cannot be undone.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -3522,6 +3556,8 @@ be removed. This action cannot be undone.
         Permanently removes the specified template created from
 templates/add_for_user. All properties associated with the template will also
 be removed. This action cannot be undone.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -3671,6 +3707,8 @@ be removed. This action cannot be undone.
     <div class="description">
         Update a template associated with a team. This route can update the template
 name, the template description and add optional properties to templates.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -3821,6 +3859,8 @@ name, the template description and add optional properties to templates.
         Update a template associated with a user. This route can update the template
 name, the template description and add optional properties to templates. This
 endpoint can't be called on a team member or admin's behalf.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -3970,6 +4010,8 @@ endpoint can't be called on a team member or admin's behalf.
     <div class="description">
         Returns the total number of file requests owned by this user. Includes both
 open and closed file requests.
+Route attributes:
+  scope: file_requests.read
     </div>
     
 
@@ -4068,6 +4110,8 @@ open and closed file requests.
     
     <div class="description">
         Creates a file request for this user.
+Route attributes:
+  scope: file_requests.write
     </div>
     
 
@@ -4216,6 +4260,8 @@ open and closed file requests.
     
     <div class="description">
         Delete a batch of closed file requests.
+Route attributes:
+  scope: file_requests.write
     </div>
     
 
@@ -4364,6 +4410,8 @@ open and closed file requests.
     
     <div class="description">
         Delete all closed file requests owned by this user.
+Route attributes:
+  scope: file_requests.write
     </div>
     
 
@@ -4462,6 +4510,8 @@ open and closed file requests.
     
     <div class="description">
         Returns the specified file request.
+Route attributes:
+  scope: file_requests.read
     </div>
     
 
@@ -4612,6 +4662,8 @@ open and closed file requests.
         Returns a list of file requests owned by this user. For apps with the app
 folder permission, this will only return file requests with destinations in
 the app folder.
+Route attributes:
+  scope: file_requests.read
     </div>
     
 
@@ -4712,6 +4764,8 @@ the app folder.
         Once a cursor has been retrieved from list_v2, use this to paginate through
 all file requests. The cursor must come from a previous call to list_v2 or
 list/continue.
+Route attributes:
+  scope: file_requests.read
     </div>
     
 
@@ -4862,6 +4916,8 @@ list/continue.
         Returns a list of file requests owned by this user. For apps with the app
 folder permission, this will only return file requests with destinations in
 the app folder.
+Route attributes:
+  scope: file_requests.read
     </div>
     
 
@@ -5010,6 +5066,8 @@ the app folder.
     
     <div class="description">
         Update a file request.
+Route attributes:
+  scope: file_requests.write
     </div>
     
 
@@ -5160,6 +5218,8 @@ the app folder.
         Returns the metadata for a file or folder. This is an alpha endpoint
 compatible with the properties API. Note: Metadata for the root folder is
 unsupported.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -5320,6 +5380,8 @@ unsupported.
 endpoint is part of the properties API alpha and is slightly different from
 upload. Do not use this to upload a file larger than 150 MB. Instead, create
 an upload session with upload_session/start.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -5478,6 +5540,8 @@ an upload session with upload_session/start.
     <div class="description">
         Copy a file or folder to a different location in the user's Dropbox. If the
 source path is a folder all its contents will be copied.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -5637,6 +5701,8 @@ source path is a folder all its contents will be copied.
         Copy multiple files or folders to different locations at once in the user's
 Dropbox. This route will return job ID immediately and do the async copy job
 in background. Please use copy_batch/check to check the job status.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -5795,6 +5861,8 @@ in background. Please use copy_batch/check to check the job status.
     <div class="description">
         Returns the status of an asynchronous job for copy_batch. If success, it
 returns list of results for each entry.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -5953,6 +6021,8 @@ returns list of results for each entry.
     <div class="description">
         Returns the status of an asynchronous job for copy_batch_v2. It returns list
 of results for each entry.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -6106,6 +6176,8 @@ route will return status for each entry, while copy_batch raises failure if
 any entry fails. This route will either finish synchronously, or return a job
 ID and do the async copy job in background. Please use copy_batch/check_v2 to
 check the job status.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -6256,6 +6328,8 @@ check the job status.
         Get a copy reference to a file or folder. This reference string can be used
 to save that file or folder to another user's Dropbox by passing it to
 copy_reference/save.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -6404,6 +6478,8 @@ copy_reference/save.
     
     <div class="description">
         Save a copy reference returned by copy_reference/get to the user's Dropbox.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -6553,6 +6629,8 @@ copy_reference/save.
     <div class="description">
         Copy a file or folder to a different location in the user's Dropbox. If the
 source path is a folder all its contents will be copied.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -6701,6 +6779,8 @@ source path is a folder all its contents will be copied.
     
     <div class="description">
         Create a folder at a given path.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -6863,6 +6943,8 @@ asynchronously. Otherwise, creates the folders and returns the result
 synchronously for smaller inputs. You can force asynchronous behaviour by
 using the CreateFolderBatchArg.force_async flag.  Use
 create_folder_batch/check to check the job status.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -7012,6 +7094,8 @@ create_folder_batch/check to check the job status.
     <div class="description">
         Returns the status of an asynchronous job for create_folder_batch. If
 success, it returns list of result for each entry.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -7160,6 +7244,8 @@ success, it returns list of result for each entry.
     
     <div class="description">
         Create a folder at a given path.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -7312,6 +7398,8 @@ contents will be deleted too. A successful response indicates that the file
 or folder was deleted. The returned metadata will be the corresponding
 FileMetadata or FolderMetadata for the item at time of deletion, and not a
 DeletedMetadata object.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -7471,6 +7559,8 @@ DeletedMetadata object.
         Delete multiple files/folders at once. This route is asynchronous, which
 returns a job ID immediately and runs the delete batch asynchronously. Use
 delete_batch/check to check the job status.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -7620,6 +7710,8 @@ delete_batch/check to check the job status.
     <div class="description">
         Returns the status of an asynchronous job for delete_batch. If success, it
 returns list of result for each entry.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -7772,6 +7864,8 @@ contents will be deleted too. A successful response indicates that the file
 or folder was deleted. The returned metadata will be the corresponding
 FileMetadata or FolderMetadata for the item at time of deletion, and not a
 DeletedMetadata object.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -7920,6 +8014,8 @@ DeletedMetadata object.
     
     <div class="description">
         Download a file from a user's Dropbox.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -8071,6 +8167,8 @@ DeletedMetadata object.
 less than 20 GB in size and any single file within must be less than 4 GB in
 size. The resulting zip must have fewer than 10,000 total file and folder
 entries, including the top level folder. The input cannot be a single file.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -8221,6 +8319,8 @@ entries, including the top level folder. The input cannot be a single file.
         Export a file from a user's Dropbox. This route only supports exporting files
 that cannot be downloaded directly  and whose ExportResult.file_metadata has
 ExportInfo.export_as populated.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -8369,6 +8469,8 @@ ExportInfo.export_as populated.
     
     <div class="description">
         Return the lock metadata for the given list of paths.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -8518,6 +8620,8 @@ ExportInfo.export_as populated.
     <div class="description">
         Returns the metadata for a file or folder. Note: Metadata for the root folder
 is unsupported.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -8671,6 +8775,8 @@ with the following extensions: .ai, .doc, .docm, .docx, .eps, .gdoc,
 previews are generated for files with the following extensions: .csv, .ods,
 .xls, .xlsm, .gsheet, .xlsx. Other formats will return an unsupported
 extension error.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -8822,6 +8928,8 @@ extension error.
 four hours and afterwards you will get 410 Gone. This URL should not be used
 to display content directly in the browser. The Content-Type of the link is
 determined automatically by the file's mime type.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -8996,6 +9104,8 @@ link does not exist or is currently unavailable, the upload failed, or
 another error happened. HTTP 410 Gone: The temporary upload link is expired
 or consumed.  Example unsuccessful temporary upload link consumption
 response: Temporary upload link has been recently consumed.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -9146,6 +9256,8 @@ response: Temporary upload link has been recently consumed.
         Get a thumbnail for an image. This method currently supports files with the
 following file extensions: jpg, jpeg, png, tiff, tif, gif, webp, ppm and bmp.
 Photos that are larger than 20MB in size won't be converted to a thumbnail.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -9297,6 +9409,8 @@ Photos that are larger than 20MB in size won't be converted to a thumbnail.
 batch. This method currently supports files with the following file
 extensions: jpg, jpeg, png, tiff, tif, gif, webp, ppm and bmp. Photos that
 are larger than 20MB in size won't be converted to a thumbnail.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -9447,6 +9561,8 @@ are larger than 20MB in size won't be converted to a thumbnail.
         Get a thumbnail for an image. This method currently supports files with the
 following file extensions: jpg, jpeg, png, tiff, tif, gif, webp, ppm and bmp.
 Photos that are larger than 20MB in size won't be converted to a thumbnail.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -9614,6 +9730,8 @@ auth.RateLimitError may be returned if multiple list_folder or
 list_folder/continue calls with same parameters are made simultaneously by
 same API app for same user. If your app implements retry logic, please hold
 off the retry until the previous request finishes.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -9764,6 +9882,8 @@ off the retry until the previous request finishes.
         Once a cursor has been retrieved from list_folder, use this to paginate
 through all files and retrieve updates to the folder, following the same
 rules as documented for list_folder.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -9915,6 +10035,8 @@ rules as documented for list_folder.
 list_folder/get_latest_cursor doesn't return any entries. This endpoint is
 for app which only needs to know about new files and modifications and
 doesn't need to know about files that already exist in Dropbox.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -10068,6 +10190,8 @@ account for file changes. The connection will block until there are changes
 available or a timeout occurs. This endpoint is useful mostly for client-side
 apps. If you're looking for server-side notifications, check out our webhooks
 documentation https://www.dropbox.com/developers/reference/webhooks.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -10223,6 +10347,8 @@ setting the mode parameter appropriately. In the ListRevisionsMode.path
 are returned. If revisions with the same file id are desired, then mode must
 be set to ListRevisionsMode.id. The ListRevisionsMode.id mode is useful to
 retrieve revisions for a given file across moves or renames.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -10374,6 +10500,8 @@ retrieve revisions for a given file across moves or renames.
 lock holder. A successful response indicates that the file has been locked.
 Returns a list of the locked file paths and their metadata after this
 operation.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -10523,6 +10651,8 @@ operation.
     <div class="description">
         Move a file or folder to a different location in the user's Dropbox. If the
 source path is a folder all its contents will be moved.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -10682,6 +10812,8 @@ source path is a folder all its contents will be moved.
         Move multiple files or folders to different locations at once in the user's
 Dropbox. This route will return job ID immediately and do the async moving
 job in background. Please use move_batch/check to check the job status.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -10840,6 +10972,8 @@ job in background. Please use move_batch/check to check the job status.
     <div class="description">
         Returns the status of an asynchronous job for move_batch. If success, it
 returns list of results for each entry.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -10998,6 +11132,8 @@ returns list of results for each entry.
     <div class="description">
         Returns the status of an asynchronous job for move_batch_v2. It returns list
 of results for each entry.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -11152,6 +11288,8 @@ for each entry, while move_batch raises failure if any entry fails. This
 route will either finish synchronously, or return a job ID and do the async
 move job in background. Please use move_batch/check_v2 to check the job
 status.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -11302,6 +11440,8 @@ status.
         Move a file or folder to a different location in the user's Dropbox. If the
 source path is a folder all its contents will be moved. Note that we do not
 currently support case-only renaming.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -11450,6 +11590,8 @@ currently support case-only renaming.
     
     <div class="description">
         Creates a new Paper doc with the provided content.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -11598,6 +11740,8 @@ currently support case-only renaming.
     
     <div class="description">
         Updates an existing Paper doc with the provided content.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -11750,6 +11894,8 @@ https://www.dropbox.com/en/help/40). If the given file or folder is not yet
 deleted, this route will first delete it. It is possible for this route to
 successfully delete, then fail to permanently delete. Note: This endpoint is
 only available for Dropbox Business apps.
+Route attributes:
+  scope: files.permanent_delete
     </div>
     
 
@@ -11895,6 +12041,11 @@ only available for Dropbox Business apps.
 </dt>
 <dd>
 
+    
+    <div class="description">
+        Route attributes:
+  scope: files.metadata.write
+    </div>
     
 
     
@@ -12049,6 +12200,11 @@ only available for Dropbox Business apps.
 <dd>
 
     
+    <div class="description">
+        Route attributes:
+  scope: files.metadata.write
+    </div>
+    
 
     
 
@@ -12201,6 +12357,11 @@ only available for Dropbox Business apps.
 </dt>
 <dd>
 
+    
+    <div class="description">
+        Route attributes:
+  scope: files.metadata.write
+    </div>
     
 
     
@@ -12355,6 +12516,11 @@ only available for Dropbox Business apps.
 <dd>
 
     
+    <div class="description">
+        Route attributes:
+  scope: files.metadata.read
+    </div>
+    
 
     
 
@@ -12508,6 +12674,11 @@ only available for Dropbox Business apps.
 <dd>
 
     
+    <div class="description">
+        Route attributes:
+  scope: files.metadata.read
+    </div>
+    
 
     
 
@@ -12610,6 +12781,11 @@ only available for Dropbox Business apps.
 </dt>
 <dd>
 
+    
+    <div class="description">
+        Route attributes:
+  scope: files.metadata.write
+    </div>
     
 
     
@@ -12766,6 +12942,8 @@ only available for Dropbox Business apps.
     
     <div class="description">
         Restore a specific revision of a file to the given path.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -12917,6 +13095,8 @@ only available for Dropbox Business apps.
 the transfer from the URL must complete within 5 minutes, or the operation
 will time out and the job will fail. If the given path already exists, the
 file will be renamed to avoid the conflict (e.g. myfile (1).txt).
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -13065,6 +13245,8 @@ file will be renamed to avoid the conflict (e.g. myfile (1).txt).
     
     <div class="description">
         Check the status of a save_url job.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -13215,6 +13397,8 @@ file will be renamed to avoid the conflict (e.g. myfile (1).txt).
         Searches for files and folders. Note: Recent changes will be reflected in
 search results within a few seconds and older revisions of existing files may
 still match your query for up to a few days.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -13376,6 +13560,8 @@ search_v2 along with search/continue_v2 can only be used to retrieve a
 maximum of 10,000 matches. Recent changes may not immediately be reflected in
 search results due to a short delay in indexing. Duplicate results may be
 returned across pages. Some results may not be returned.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -13528,6 +13714,8 @@ can only be used to retrieve a maximum of 10,000 matches. Recent changes may
 not immediately be reflected in search results due to a short delay in
 indexing. Duplicate results may be returned across pages. Some results may
 not be returned.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -13677,6 +13865,8 @@ not be returned.
     <div class="description">
         Add a tag to an item. A tag is a string. No more than 20 tags can be added to
 a given item.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -13825,6 +14015,8 @@ a given item.
     
     <div class="description">
         Get list of tags assigned to items.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -13973,6 +14165,8 @@ a given item.
     
     <div class="description">
         Remove a tag from an item.
+Route attributes:
+  scope: files.metadata.write
     </div>
     
 
@@ -14124,6 +14318,8 @@ a given item.
 the lock holder or, if a business account, a team admin. A successful
 response indicates that the file has been unlocked. Returns a list of the
 unlocked file paths and their metadata after this operation.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -14278,6 +14474,8 @@ calls for any Dropbox Business teams with a limit on the number of data
 transport calls allowed per month. For more information, see the Data
 transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -14431,6 +14629,8 @@ session is 350 GB. Calls to this endpoint will count as data transport calls
 for any Dropbox Business teams with a limit on the number of data transport
 calls allowed per month. For more information, see the Data transport limit
 page https://www.dropbox.com/developers/reference/data-transport-limit.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -14594,6 +14794,8 @@ Calls to this endpoint will count as data transport calls for any Dropbox
 Business teams with a limit on the number of data transport calls allowed per
 month. For more information, see the Data transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -14748,6 +14950,8 @@ count as data transport calls for any Dropbox Business teams with a limit on
 the number of data transport calls allowed per month. For more information,
 see the Data transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -14912,6 +15116,8 @@ transport calls for any Dropbox Business teams with a limit on the number of
 data transport calls allowed per month. For more information, see the Data
 transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -15070,6 +15276,8 @@ https://www.dropbox.com/developers/reference/data-transport-limit.
     <div class="description">
         Returns the status of an asynchronous job for upload_session/finish_batch. If
 success, it returns list of result for each entry.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -15230,6 +15438,8 @@ this endpoint will count as data transport calls for any Dropbox Business
 teams with a limit on the number of data transport calls allowed per month.
 For more information, see the Data transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -15405,6 +15615,8 @@ upload_session/append_v2 call. Also data uploaded in upload_session/append_v2
 call must be multiple of 4194304 bytes (except for last
 upload_session/append_v2 with UploadSessionStartArg.close to true, that may
 contain any remaining data).
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -15561,6 +15773,8 @@ version of Paper. This endpoint will be retired in September 2020. Refer to
 the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 more information.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -15725,6 +15939,8 @@ the user is running the new version of Paper. This endpoint will be retired
 in September 2020. Refer to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 more information.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -15888,6 +16104,8 @@ version of Paper. To check which version of Paper a user is on, use
 the user is running the new version of Paper. Refer to the Paper Migration
 Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
 for migration information.
+Route attributes:
+  scope: files.content.read
     </div>
     
 
@@ -16054,6 +16272,8 @@ paper_as_files feature is enabled, then the user is running the new version
 of Paper. Refer to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 migration information.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -16218,6 +16438,8 @@ If the paper_as_files feature is enabled, then the user is running the new
 version of Paper. Refer to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 migration information.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -16386,6 +16608,8 @@ feature is enabled, then the user is running the new version of Paper. Refer
 to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 migration information.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -16551,6 +16775,8 @@ feature is enabled, then the user is running the new version of Paper. Refer
 to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 migration information.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -16715,6 +16941,8 @@ feature is enabled, then the user is running the new version of Paper. Refer
 to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 migration information.
+Route attributes:
+  scope: files.metadata.read
     </div>
     
 
@@ -16879,6 +17107,8 @@ older version of Paper. To check which version of Paper a user is on, use
 the user is running the new version of Paper. Refer to the Paper Migration
 Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
 for migration information.
+Route attributes:
+  scope: files.permanent_delete
     </div>
     
 
@@ -17042,6 +17272,8 @@ version of Paper. To check which version of Paper a user is on, use
 the user is running the new version of Paper. Refer to the Paper Migration
 Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
 for migration information.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -17209,6 +17441,8 @@ enabled, then the user is running the new version of Paper. Refer to the
 Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 migration information.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -17373,6 +17607,8 @@ the user is running the new version of Paper. This endpoint will be retired
 in September 2020. Refer to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 more information.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -17538,6 +17774,8 @@ paper_as_files feature is enabled, then the user is running the new version
 of Paper. Refer to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 migration information.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -17704,6 +17942,8 @@ version of Paper. To check which version of Paper a user is on, use
 the user is running the new version of Paper. Refer to the Paper Migration
 Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
 for migration information.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -17868,6 +18108,8 @@ paper_as_files feature is enabled, then the user is running the new version
 of Paper. Refer to the Paper Migration Guide
 https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
 migration information.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -18032,6 +18274,8 @@ version of Paper. To check which version of Paper a user is on, use
 the user is running the new version of Paper. Refer to the Paper Migration
 Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
 for migration information.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -18195,6 +18439,8 @@ Paper. To check which version of Paper a user is on, use
 the user is running the new version of Paper. Refer to the Paper Migration
 Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
 for migration information.
+Route attributes:
+  scope: files.content.write
     </div>
     
 
@@ -18352,6 +18598,8 @@ for migration information.
     
     <div class="description">
         Adds specified members to a file.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -18503,6 +18751,8 @@ for migration information.
 folder to add another member. For the new member to get access to all the
 functionality for this folder, you will need to call mount_folder on their
 behalf.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -18651,6 +18901,8 @@ behalf.
     
     <div class="description">
         Returns the status of an asynchronous job.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -18799,6 +19051,8 @@ behalf.
     
     <div class="description">
         Returns the status of an asynchronous job for sharing a folder.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -18947,6 +19201,8 @@ behalf.
     
     <div class="description">
         Returns the status of an asynchronous job for sharing a folder.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -19100,6 +19356,8 @@ shared link by moving or renaming the corresponding file or folder. In the
 future, this will no longer be the case, so your app shouldn't rely on this
 behavior. Instead, if your app needs to revoke a shared link, use
 revoke_shared_link.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -19259,6 +19517,8 @@ revoke_shared_link.
         Create a shared link with custom settings. If no settings are given then the
 default visibility is RequestedVisibility.public (The resolved visibility,
 though, may depend on other aspects such as team and shared folder settings).
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -19407,6 +19667,8 @@ though, may depend on other aspects such as team and shared folder settings).
     
     <div class="description">
         Returns shared file metadata.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -19555,6 +19817,8 @@ though, may depend on other aspects such as team and shared folder settings).
     
     <div class="description">
         Returns shared file metadata.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -19703,6 +19967,8 @@ though, may depend on other aspects such as team and shared folder settings).
     
     <div class="description">
         Returns shared folder metadata by its folder ID.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -19851,6 +20117,8 @@ though, may depend on other aspects such as team and shared folder settings).
     
     <div class="description">
         Download the shared link's file from a user's Dropbox.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -19999,6 +20267,8 @@ though, may depend on other aspects such as team and shared folder settings).
     
     <div class="description">
         Get the shared link's metadata.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -20151,6 +20421,8 @@ links. If no path is given, returns a list of all shared links for the
 current user, including collection links, up to a maximum of 1000 links. If a
 non-empty path is given, returns a list of all shared links that allow access
 to the given path.  Collection links are never returned in this case.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -20309,6 +20581,8 @@ to the given path.  Collection links are never returned in this case.
     <div class="description">
         Use to obtain the members who have been invited to a file, both inherited and
 uninherited members.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -20461,6 +20735,8 @@ limited, and the limit on query result size per file is more strict. To
 customize the results more, use the individual file endpoint. Inherited users
 and groups are not included in the result, and permissions are not returned
 for this endpoint.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -20611,6 +20887,8 @@ for this endpoint.
         Once a cursor has been retrieved from list_file_members or
 list_file_members/batch, use this to paginate through all shared file
 members.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -20759,6 +21037,8 @@ members.
     
     <div class="description">
         Returns shared folder membership by its folder ID.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -20908,6 +21188,8 @@ members.
     <div class="description">
         Once a cursor has been retrieved from list_folder_members, use this to
 paginate through all shared folder members.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -21056,6 +21338,8 @@ paginate through all shared folder members.
     
     <div class="description">
         Return the list of all shared folders the current user has access to.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -21206,6 +21490,8 @@ paginate through all shared folder members.
         Once a cursor has been retrieved from list_folders, use this to paginate
 through all shared folders. The cursor must come from a previous call to
 list_folders or list_folders/continue.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -21354,6 +21640,8 @@ list_folders or list_folders/continue.
     
     <div class="description">
         Return the list of all shared folders the current user can mount or unmount.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -21504,6 +21792,8 @@ list_folders or list_folders/continue.
         Once a cursor has been retrieved from list_mountable_folders, use this to
 paginate through all mountable shared folders. The cursor must come from a
 previous call to list_mountable_folders or list_mountable_folders/continue.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -21654,6 +21944,8 @@ previous call to list_mountable_folders or list_mountable_folders/continue.
         Returns a list of all files shared with current user.  Does not include files
 the user has received via shared folders, and does  not include unclaimed
 invitations.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -21802,6 +22094,8 @@ invitations.
     
     <div class="description">
         Get more results with a cursor from list_received_files.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -21959,6 +22253,8 @@ path is given, returns a list of all shared links that allow access to the
 given path - direct links to the given path and links to parent folders of
 the given path. Links to parent folders can be suppressed by setting
 direct_only to true.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -22112,6 +22408,8 @@ file is part of a shared folder) then the LinkPermissions.resolved_visibility
 of the returned SharedLinkMetadata will reflect the actual visibility of the
 shared link and the LinkPermissions.requested_visibility will reflect the
 requested visibility.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -22262,6 +22560,8 @@ requested visibility.
         The current user mounts the designated folder. Mount a shared folder for a
 user after they have been added as a member. Once mounted, the shared folder
 will appear in their Dropbox.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -22412,6 +22712,8 @@ will appear in their Dropbox.
         The current user relinquishes their membership in the designated file. Note
 that the current user may still have inherited access to this file through
 the parent folder.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -22563,6 +22865,8 @@ the parent folder.
 folder and will no longer have access to the folder.  A folder owner cannot
 relinquish membership in their own folder. This will run synchronously if
 leave_a_copy is false, and asynchronously if leave_a_copy is true.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -22711,6 +23015,8 @@ leave_a_copy is false, and asynchronously if leave_a_copy is true.
     
     <div class="description">
         Identical to remove_file_member_2 but with less information returned.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -22868,6 +23174,8 @@ leave_a_copy is false, and asynchronously if leave_a_copy is true.
     
     <div class="description">
         Removes a specified member from the file.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -23017,6 +23325,8 @@ leave_a_copy is false, and asynchronously if leave_a_copy is true.
     <div class="description">
         Allows an owner or editor (if the ACL update policy allows) of a shared
 folder to remove another member.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -23169,6 +23479,8 @@ the file may be accessible if there are shared links leading to any of the
 file parent folders. To list all shared links that enable access to a
 specific file, you can use the list_shared_links with the file as the
 ListSharedLinksArg.path argument.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -23320,6 +23632,8 @@ ListSharedLinksArg.path argument.
 for shared folders in a shared team root. If a ShareFolderLaunch.async_job_id
 is returned, you'll need to call check_share_job_status until the action
 completes to get the metadata for the folder.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -23473,6 +23787,8 @@ testing the async case repeatable, set `ShareFolderArg.force_async`. If a
 ShareFolderLaunch.async_job_id is returned, you'll need to call
 check_share_job_status until the action completes to get the metadata for the
 folder.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -23623,6 +23939,8 @@ folder.
         Transfer ownership of a shared folder to a member of the shared folder. User
 must have AccessLevel.owner access to the shared folder to perform a
 transfer.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -23772,6 +24090,8 @@ transfer.
     <div class="description">
         The current user unmounts the designated folder. They can re-mount the folder
 at a later time using mount_folder.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -23920,6 +24240,8 @@ at a later time using mount_folder.
     
     <div class="description">
         Remove all members from this file. Does not remove inherited members.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -24069,6 +24391,8 @@ at a later time using mount_folder.
     <div class="description">
         Allows a shared folder owner to unshare the folder. You'll need to call
 check_job_status to determine if the action has completed successfully.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -24217,6 +24541,8 @@ check_job_status to determine if the action has completed successfully.
     
     <div class="description">
         Changes a member's access on a shared file.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -24366,6 +24692,8 @@ check_job_status to determine if the action has completed successfully.
     <div class="description">
         Allows an owner or editor of a shared folder to update another member's
 permissions.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -24515,6 +24843,8 @@ permissions.
     <div class="description">
         Update the sharing policies for a shared folder. User must have
 AccessLevel.owner access to the shared folder to update its policies.
+Route attributes:
+  scope: sharing.write
     </div>
     
 
@@ -24663,6 +24993,8 @@ AccessLevel.owner access to the shared folder to update its policies.
     
     <div class="description">
         List all device sessions of a team's member.
+Route attributes:
+  scope: sessions.list
     </div>
     
 
@@ -24811,6 +25143,8 @@ AccessLevel.owner access to the shared folder to update its policies.
     
     <div class="description">
         List all device sessions of a team. Permission : Team member file access.
+Route attributes:
+  scope: sessions.list
     </div>
     
 
@@ -24959,6 +25293,8 @@ AccessLevel.owner access to the shared folder to update its policies.
     
     <div class="description">
         List all device sessions of a team. Permission : Team member file access.
+Route attributes:
+  scope: sessions.list
     </div>
     
 
@@ -25116,6 +25452,8 @@ AccessLevel.owner access to the shared folder to update its policies.
     
     <div class="description">
         Revoke a device session of a team's member.
+Route attributes:
+  scope: sessions.modify
     </div>
     
 
@@ -25264,6 +25602,8 @@ AccessLevel.owner access to the shared folder to update its policies.
     
     <div class="description">
         Revoke a list of device sessions of team members.
+Route attributes:
+  scope: sessions.modify
     </div>
     
 
@@ -25414,6 +25754,8 @@ AccessLevel.owner access to the shared folder to update its policies.
         Get the values for one or more featues. This route allows you to check your
 account's capability for what feature you can access or what value you have
 for certain features. Permission : Team information.
+Route attributes:
+  scope: team_info.read
     </div>
     
 
@@ -25562,6 +25904,8 @@ for certain features. Permission : Team information.
     
     <div class="description">
         Retrieves information about a team.
+Route attributes:
+  scope: team_info.read
     </div>
     
 
@@ -25661,6 +26005,8 @@ for certain features. Permission : Team information.
     <div class="description">
         Creates a new, empty group, with a requested name. Permission : Team member
 management.
+Route attributes:
+  scope: groups.write
     </div>
     
 
@@ -25812,6 +26158,8 @@ management.
 group-owned resources may take additional time. Use the groups/job_status/get
 to determine whether this process has completed. Permission : Team member
 management.
+Route attributes:
+  scope: groups.write
     </div>
     
 
@@ -25962,6 +26310,8 @@ management.
         Retrieves information about one or more groups. Note that the optional field
 GroupFullInfo.members is not returned for system-managed groups. Permission :
 Team Information.
+Route attributes:
+  scope: groups.read
     </div>
     
 
@@ -26113,6 +26463,8 @@ Team Information.
 groups/members/remove use this method to poll the status of granting/revoking
 group members' access to group-owned resources. Permission : Team member
 management.
+Route attributes:
+  scope: groups.write
     </div>
     
 
@@ -26261,6 +26613,8 @@ management.
     
     <div class="description">
         Lists groups on a team. Permission : Team Information.
+Route attributes:
+  scope: groups.read
     </div>
     
 
@@ -26410,6 +26764,8 @@ management.
     <div class="description">
         Once a cursor has been retrieved from groups/list, use this to paginate
 through all groups. Permission : Team Information.
+Route attributes:
+  scope: groups.read
     </div>
     
 
@@ -26561,6 +26917,8 @@ through all groups. Permission : Team Information.
 granting of group-owned resources may take additional time. Use the
 groups/job_status/get to determine whether this process has completed.
 Permission : Team member management.
+Route attributes:
+  scope: groups.write
     </div>
     
 
@@ -26709,6 +27067,8 @@ Permission : Team member management.
     
     <div class="description">
         Lists members of a group. Permission : Team Information.
+Route attributes:
+  scope: groups.read
     </div>
     
 
@@ -26858,6 +27218,8 @@ Permission : Team member management.
     <div class="description">
         Once a cursor has been retrieved from groups/members/list, use this to
 paginate through all members of the group. Permission : Team information.
+Route attributes:
+  scope: groups.read
     </div>
     
 
@@ -27010,6 +27372,8 @@ the revoking of group-owned resources may take additional time. Use the
 groups/job_status/get to determine whether this process has completed. This
 method permits removing the only owner of a group, even in cases where this
 is not possible via the web client. Permission : Team member management.
+Route attributes:
+  scope: groups.write
     </div>
     
 
@@ -27158,6 +27522,8 @@ is not possible via the web client. Permission : Team member management.
     
     <div class="description">
         Sets a member's access type in a group. Permission : Team member management.
+Route attributes:
+  scope: groups.write
     </div>
     
 
@@ -27307,6 +27673,8 @@ is not possible via the web client. Permission : Team member management.
     <div class="description">
         Updates a group's name and/or external ID. Permission : Team member
 management.
+Route attributes:
+  scope: groups.write
     </div>
     
 
@@ -27456,6 +27824,8 @@ management.
     <div class="description">
         Creates new legal hold policy. Note: Legal Holds is a paid add-on. Not all
 teams have the feature. Permission : Team member file access.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -27605,6 +27975,8 @@ teams have the feature. Permission : Team member file access.
     <div class="description">
         Gets a legal hold by Id. Note: Legal Holds is a paid add-on. Not all teams
 have the feature. Permission : Team member file access.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -27754,6 +28126,8 @@ have the feature. Permission : Team member file access.
     <div class="description">
         List the file metadata that's under the hold. Note: Legal Holds is a paid
 add-on. Not all teams have the feature. Permission : Team member file access.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -27904,6 +28278,8 @@ add-on. Not all teams have the feature. Permission : Team member file access.
         Continue listing the file metadata that's under the hold. Note: Legal Holds
 is a paid add-on. Not all teams have the feature. Permission : Team member
 file access.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -28053,6 +28429,8 @@ file access.
     <div class="description">
         Lists legal holds on a team. Note: Legal Holds is a paid add-on. Not all
 teams have the feature. Permission : Team member file access.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -28202,6 +28580,8 @@ teams have the feature. Permission : Team member file access.
     <div class="description">
         Releases a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
 teams have the feature. Permission : Team member file access.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -28351,6 +28731,8 @@ teams have the feature. Permission : Team member file access.
     <div class="description">
         Updates a legal hold. Note: Legal Holds is a paid add-on. Not all teams have
 the feature. Permission : Team member file access.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -28500,6 +28882,8 @@ the feature. Permission : Team member file access.
     <div class="description">
         List all linked applications of the team member. Note, this endpoint does not
 list any team-linked applications.
+Route attributes:
+  scope: sessions.list
     </div>
     
 
@@ -28649,6 +29033,8 @@ list any team-linked applications.
     <div class="description">
         List all applications linked to the team members' accounts. Note, this
 endpoint does not list any team-linked applications.
+Route attributes:
+  scope: sessions.list
     </div>
     
 
@@ -28798,6 +29184,8 @@ endpoint does not list any team-linked applications.
     <div class="description">
         List all applications linked to the team members' accounts. Note, this
 endpoint doesn't list any team-linked applications.
+Route attributes:
+  scope: sessions.list
     </div>
     
 
@@ -28955,6 +29343,8 @@ endpoint doesn't list any team-linked applications.
     
     <div class="description">
         Revoke a linked application of the team member.
+Route attributes:
+  scope: sessions.modify
     </div>
     
 
@@ -29103,6 +29493,8 @@ endpoint doesn't list any team-linked applications.
     
     <div class="description">
         Revoke a list of linked applications of the team members.
+Route attributes:
+  scope: sessions.modify
     </div>
     
 
@@ -29260,6 +29652,8 @@ all Dropbox Business plans /business/plans-comparison. Use
 features/get_values
 /developers/documentation/http/teams#team-features-get_values to check for
 this feature. Permission : Team Auditing.
+Route attributes:
+  scope: events.read
     </div>
     
 
@@ -29409,6 +29803,8 @@ this feature. Permission : Team Auditing.
     <div class="description">
         Once a cursor has been retrieved from get_events, use this to paginate
 through all events. Permission : Team Auditing.
+Route attributes:
+  scope: events.read
     </div>
     
 
@@ -29567,6 +29963,8 @@ account onto the team. Team member management apps are required to set an
 initial given_name and surname for a user to use in the team invitation and
 for 'Perform as team member' actions taken on the user before they become
 'active'.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -29716,6 +30114,8 @@ for 'Perform as team member' actions taken on the user before they become
     <div class="description">
         Once an async_job_id is returned from members/add , use this to poll the
 status of the asynchronous request. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -29865,6 +30265,8 @@ status of the asynchronous request. Permission : Team member management.
     <div class="description">
         Once an async_job_id is returned from members/add_v2 , use this to poll the
 status of the asynchronous request. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -30023,6 +30425,8 @@ account onto the team. Team member management apps are required to set an
 initial given_name and surname for a user to use in the team invitation and
 for 'Perform as team member' actions taken on the user before they become
 'active'.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -30171,6 +30575,8 @@ for 'Perform as team member' actions taken on the user before they become
     
     <div class="description">
         Deletes a team member's profile photo. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -30319,6 +30725,8 @@ for 'Perform as team member' actions taken on the user before they become
     
     <div class="description">
         Deletes a team member's profile photo. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -30468,6 +30876,8 @@ for 'Perform as team member' actions taken on the user before they become
     <div class="description">
         Get available TeamMemberRoles for the connected team. To be used with
 members/set_admin_permissions_v2. Permission : Team member management.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -30568,6 +30978,8 @@ members/set_admin_permissions_v2. Permission : Team member management.
         Returns information about multiple team members. Permission : Team
 information This endpoint will return MembersGetInfoItem.id_not_found, for
 IDs (or emails) that cannot be matched to a valid team member.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -30718,6 +31130,8 @@ IDs (or emails) that cannot be matched to a valid team member.
         Returns information about multiple team members. Permission : Team
 information This endpoint will return MembersGetInfoItem.id_not_found, for
 IDs (or emails) that cannot be matched to a valid team member.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -30866,6 +31280,8 @@ IDs (or emails) that cannot be matched to a valid team member.
     
     <div class="description">
         Lists members of a team. Permission : Team information.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -31015,6 +31431,8 @@ IDs (or emails) that cannot be matched to a valid team member.
     <div class="description">
         Once a cursor has been retrieved from members/list, use this to paginate
 through all team members. Permission : Team information.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -31164,6 +31582,8 @@ through all team members. Permission : Team information.
     <div class="description">
         Once a cursor has been retrieved from members/list_v2, use this to paginate
 through all team members. Permission : Team information.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -31312,6 +31732,8 @@ through all team members. Permission : Team information.
     
     <div class="description">
         Lists members of a team. Permission : Team information.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -31463,6 +31885,8 @@ through all team members. Permission : Team information.
 an asynchronous job. To obtain the final result of the job, the client should
 periodically poll members/move_former_member_files/job_status/check.
 Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -31613,6 +32037,8 @@ Permission : Team member management.
         Once an async_job_id is returned from members/move_former_member_files , use
 this to poll the status of the asynchronous request. Permission : Team member
 management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -31761,6 +32187,8 @@ management.
     
     <div class="description">
         Add users to member space limits excluded users list.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -31909,6 +32337,8 @@ management.
     
     <div class="description">
         List member space limits excluded users.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -32057,6 +32487,8 @@ management.
     
     <div class="description">
         Continue listing member space limits excluded users.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -32205,6 +32637,8 @@ management.
     
     <div class="description">
         Remove users from member space limits excluded users list.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -32354,6 +32788,8 @@ management.
     <div class="description">
         Get users custom quota. Returns none as the custom quota if none was set. A
 maximum of 1000 members can be specified in a single call.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -32503,6 +32939,8 @@ maximum of 1000 members can be specified in a single call.
     <div class="description">
         Remove users custom quota. A maximum of 1000 members can be specified in a
 single call.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -32652,6 +33090,8 @@ single call.
     <div class="description">
         Set users custom quota. Custom quota has to be at least 15GB. A maximum of
 1000 members can be specified in a single call.
+Route attributes:
+  scope: members.read
     </div>
     
 
@@ -32802,6 +33242,8 @@ single call.
         Recover a deleted member. Permission : Team member management Exactly one of
 team_member_id, email, or external_id must be provided to identify the user
 account.
+Route attributes:
+  scope: members.delete
     </div>
     
 
@@ -32960,6 +33402,8 @@ transferred via the admin console for a limited time, based on the version
 history length associated with the team (180 days for most teams). This
 endpoint may initiate an asynchronous job. To obtain the final result of the
 job, the client should periodically poll members/remove/job_status/get.
+Route attributes:
+  scope: members.delete
     </div>
     
 
@@ -33109,6 +33553,8 @@ job, the client should periodically poll members/remove/job_status/get.
     <div class="description">
         Once an async_job_id is returned from members/remove , use this to poll the
 status of the asynchronous request. Permission : Team member management.
+Route attributes:
+  scope: members.delete
     </div>
     
 
@@ -33259,6 +33705,8 @@ status of the asynchronous request. Permission : Team member management.
         Add secondary emails to users. Permission : Team member management. Emails
 that are on verified domains will be verified automatically. For each email
 address not on a verified domain a verification email will be sent.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -33409,6 +33857,8 @@ address not on a verified domain a verification email will be sent.
         Delete secondary emails from users Permission : Team member management. Users
 will be notified of deletions of verified secondary emails at both the
 secondary email and their primary email.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -33558,6 +34008,8 @@ secondary email and their primary email.
     <div class="description">
         Resend secondary email verification emails. Permission : Team member
 management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -33708,6 +34160,8 @@ management.
         Sends welcome email to pending team member. Permission : Team member
 management Exactly one of team_member_id, email, or external_id must be
 provided to identify the user account. No-op if team member is not pending.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -33856,6 +34310,8 @@ provided to identify the user account. No-op if team member is not pending.
     
     <div class="description">
         Updates a team member's permissions. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -34004,6 +34460,8 @@ provided to identify the user account. No-op if team member is not pending.
     
     <div class="description">
         Updates a team member's permissions. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -34152,6 +34610,8 @@ provided to identify the user account. No-op if team member is not pending.
     
     <div class="description">
         Updates a team member's profile. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -34300,6 +34760,8 @@ provided to identify the user account. No-op if team member is not pending.
     
     <div class="description">
         Updates a team member's profile photo. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -34448,6 +34910,8 @@ provided to identify the user account. No-op if team member is not pending.
     
     <div class="description">
         Updates a team member's profile photo. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -34596,6 +35060,8 @@ provided to identify the user account. No-op if team member is not pending.
     
     <div class="description">
         Updates a team member's profile. Permission : Team member management.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -34746,6 +35212,8 @@ provided to identify the user account. No-op if team member is not pending.
         Suspend a member from a team. Permission : Team member management Exactly one
 of team_member_id, email, or external_id must be provided to identify the
 user account.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -34896,6 +35364,8 @@ user account.
         Unsuspend a member from a team. Permission : Team member management Exactly
 one of team_member_id, email, or external_id must be provided to identify the
 user account.
+Route attributes:
+  scope: members.write
     </div>
     
 
@@ -35048,6 +35518,8 @@ folders, shared folders containing team members, team members' home
 namespaces, and team members' app folders. Home namespaces and app folders
 are always owned by this team or members of the team, but shared folders may
 be owned by other users or other teams. Duplicates may occur in the list.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -35197,6 +35669,8 @@ be owned by other users or other teams. Duplicates may occur in the list.
     <div class="description">
         Once a cursor has been retrieved from namespaces/list, use this to paginate
 through all team-accessible namespaces. Duplicates may occur in the list.
+Route attributes:
+  scope: team_data.member
     </div>
     
 
@@ -35345,6 +35819,8 @@ through all team-accessible namespaces. Duplicates may occur in the list.
     
     <div class="description">
         Permission : Team member file access.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -35503,6 +35979,8 @@ through all team-accessible namespaces. Duplicates may occur in the list.
     <div class="description">
         Permission : Team member file access. The scope for the route is
 files.team_metadata.write.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -35661,6 +36139,8 @@ files.team_metadata.write.
     <div class="description">
         Permission : Team member file access. The scope for the route is
 files.team_metadata.write.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -35768,6 +36248,8 @@ files.team_metadata.write.
     
     <div class="description">
         Permission : Team member file access.
+Route attributes:
+  scope: files.team_metadata.write
     </div>
     
 
@@ -35926,6 +36408,8 @@ files.team_metadata.write.
     <div class="description">
         Retrieves reporting data about a team's user activity. Deprecated: Will be
 removed on July 1st 2021.
+Route attributes:
+  scope: team_info.read
     </div>
     
 
@@ -36084,6 +36568,8 @@ removed on July 1st 2021.
     <div class="description">
         Retrieves reporting data about a team's linked devices. Deprecated: Will be
 removed on July 1st 2021.
+Route attributes:
+  scope: team_info.read
     </div>
     
 
@@ -36242,6 +36728,8 @@ removed on July 1st 2021.
     <div class="description">
         Retrieves reporting data about a team's membership. Deprecated: Will be
 removed on July 1st 2021.
+Route attributes:
+  scope: team_info.read
     </div>
     
 
@@ -36400,6 +36888,8 @@ removed on July 1st 2021.
     <div class="description">
         Retrieves reporting data about a team's storage usage. Deprecated: Will be
 removed on July 1st 2021.
+Route attributes:
+  scope: team_info.read
     </div>
     
 
@@ -36558,6 +37048,8 @@ removed on July 1st 2021.
     <div class="description">
         Sets an archived team folder's status to active. Permission : Team member
 file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -36708,6 +37200,8 @@ file access.
         Sets an active team folder's status to archived and removes all folder and
 file members. This endpoint cannot be used for teams that have a shared team
 space. Permission : Team member file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -36857,6 +37351,8 @@ space. Permission : Team member file access.
     <div class="description">
         Returns the status of an asynchronous job for archiving a team folder.
 Permission : Team member file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -37007,6 +37503,8 @@ Permission : Team member file access.
         Creates a new, active, team folder with no members. This endpoint can only be
 used for teams that do not already have a shared team space. Permission :
 Team member file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -37155,6 +37653,8 @@ Team member file access.
     
     <div class="description">
         Retrieves metadata for team folders. Permission : Team member file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -37303,6 +37803,8 @@ Team member file access.
     
     <div class="description">
         Lists all team folders. Permission : Team member file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -37452,6 +37954,8 @@ Team member file access.
     <div class="description">
         Once a cursor has been retrieved from team_folder/list, use this to paginate
 through all team folders. Permission : Team member file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -37601,6 +38105,8 @@ through all team folders. Permission : Team member file access.
     <div class="description">
         Permanently deletes an archived team folder. This endpoint cannot be used for
 teams that have a shared team space. Permission : Team member file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -37749,6 +38255,8 @@ teams that have a shared team space. Permission : Team member file access.
     
     <div class="description">
         Changes an active team folder's name. Permission : Team member file access.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -37898,6 +38406,8 @@ teams that have a shared team space. Permission : Team member file access.
     <div class="description">
         Updates the sync settings on a team folder or its contents.  Use of this
 endpoint requires that the team has team selective sync enabled.
+Route attributes:
+  scope: team_data.team_space
     </div>
     
 
@@ -38047,6 +38557,8 @@ endpoint requires that the team has team selective sync enabled.
     <div class="description">
         Returns the member profile of the admin who generated the team access token
 used to make the call.
+Route attributes:
+  scope: team_info.read
     </div>
     
 
@@ -38145,6 +38657,8 @@ used to make the call.
     
     <div class="description">
         Get a list of feature values that may be configured for the current account.
+Route attributes:
+  scope: account_info.read
     </div>
     
 
@@ -38293,6 +38807,8 @@ used to make the call.
     
     <div class="description">
         Get information about a user's account.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -38442,6 +38958,8 @@ used to make the call.
     <div class="description">
         Get information about multiple user accounts.  At most 300 accounts may be
 queried per request.
+Route attributes:
+  scope: sharing.read
     </div>
     
 
@@ -38590,6 +39108,8 @@ queried per request.
     
     <div class="description">
         Get information about the current user's account.
+Route attributes:
+  scope: account_info.read
     </div>
     
 
@@ -38688,6 +39208,8 @@ queried per request.
     
     <div class="description">
         Get the space usage information for the current user's account.
+Route attributes:
+  scope: account_info.read
     </div>
     
 
@@ -38823,7 +39345,7 @@ queried per request.
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2022-01-31T18:50:30+00:00
+		on 2022-02-01T19:10:25+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
