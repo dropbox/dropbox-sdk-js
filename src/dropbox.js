@@ -77,6 +77,7 @@ export default class Dropbox {
   }
 
   request(path, args, auth, host, style) {
+    // scope is provided after "style", but unused in requests, so it's not in parameters
     switch (style) {
       case RPC:
         return this.rpcRequest(path, args, auth, host);

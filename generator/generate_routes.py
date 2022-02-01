@@ -84,11 +84,13 @@ def main():
 
     if verbose:
         print('Generating JS client routes for user routes')
-    subprocess.check_output(
+    o = subprocess.check_output(
         (['python3', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
-         specs + ['-a', 'host', '-a', 'style', '-a', 'auth'] +
-         ['--', 'routes.js', '-c', 'Dropbox', '--wrap-response-in', 'DropboxResponse', '--wrap-error-in', 'DropboxResponseError']),
+         specs + ['-a', 'host', '-a', 'style', '-a', 'auth', '-a', 'scope'] +
+         ['--', 'routes.js', '-c', 'Dropbox', '--wrap-response-in', 'DropboxResponse', '--wrap-error-in', 'DropboxResponseError', '-a', 'scope']),
         cwd=stone_path)
+    if verbose:
+        print(o)
 
     if verbose:
         print('Generating TSD types')
@@ -102,8 +104,8 @@ def main():
         print('Generating TSD client routes for user routes')
     subprocess.check_output(
         (['python3', '-m', 'stone.cli', 'tsd_client', typescript_template_path] +
-         specs + ['-a', 'host', '-a', 'style'] +
-         ['--', 'index.d.tstemplate', 'index.d.ts', '--wrap-response-in', 'DropboxResponse', '--wrap-error-in', 'DropboxResponseError', '--import-namespaces', '--types-file', './dropbox_types']),
+         specs + ['-a', 'host', '-a', 'style', '-a', 'scope'] +
+         ['--', 'index.d.tstemplate', 'index.d.ts', '--wrap-response-in', 'DropboxResponse', '--wrap-error-in', 'DropboxResponseError', '--import-namespaces', '--types-file', './dropbox_types', '-a', 'scope']),
         cwd=stone_path)
 
     typescript_generated_files = glob.glob('typescript/*.d.ts')

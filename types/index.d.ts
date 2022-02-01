@@ -246,6 +246,9 @@ export class Dropbox {
     /**
      * Sets a user's profile photo.
      *
+     * Route attributes:
+     *   scope: account_info.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<account.SetProfilePhotoError>.
      * @param arg The request parameters.
@@ -294,6 +297,9 @@ export class Dropbox {
      * least part of the Dropbox API infrastructure is working and that the
      * access token is valid.
      *
+     * Route attributes:
+     *   scope: account_info.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -305,6 +311,9 @@ export class Dropbox {
      * on your team or who you imported. New contacts will be added when you
      * share.
      *
+     * Route attributes:
+     *   scope: contacts.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      */
@@ -312,6 +321,9 @@ export class Dropbox {
 
     /**
      * Removes manually added contacts from the given list.
+     *
+     * Route attributes:
+     *   scope: contacts.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<contacts.DeleteManualContactsError>.
@@ -322,6 +334,9 @@ export class Dropbox {
     /**
      * Add property groups to a Dropbox file. See templatesAddForUser() or
      * templatesAddForTeam() to create new templates.
+     *
+     * Route attributes:
+     *   scope: files.metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.AddPropertiesError>.
@@ -337,6 +352,9 @@ export class Dropbox {
      * propertiesUpdate() will only delete fields that are explicitly marked for
      * deletion.
      *
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.InvalidPropertyGroupError>.
      * @param arg The request parameters.
@@ -350,6 +368,9 @@ export class Dropbox {
      * templatesUpdateForTeam(). To remove a template, see
      * templatesRemoveForUser() or templatesRemoveForTeam().
      *
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.RemovePropertiesError>.
      * @param arg The request parameters.
@@ -358,6 +379,9 @@ export class Dropbox {
 
     /**
      * Search across property templates for particular property field values.
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.PropertiesSearchError>.
@@ -368,6 +392,9 @@ export class Dropbox {
     /**
      * Once a cursor has been retrieved from propertiesSearch(), use this to
      * paginate through all search results.
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.PropertiesSearchContinueError>.
@@ -383,6 +410,9 @@ export class Dropbox {
      * fields from a property group, whereas propertiesOverwrite() will delete
      * any fields that are omitted from a property group.
      *
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.UpdatePropertiesError>.
      * @param arg The request parameters.
@@ -393,6 +423,9 @@ export class Dropbox {
      * Add a template associated with a team. See propertiesAdd() to add
      * properties to a file or folder. Note: this endpoint will create
      * team-owned templates.
+     *
+     * Route attributes:
+     *   scope: files.team_metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
@@ -405,6 +438,9 @@ export class Dropbox {
      * properties to a file. This endpoint can't be called on a team member or
      * admin's behalf.
      *
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
@@ -413,6 +449,9 @@ export class Dropbox {
 
     /**
      * Get the schema for a specified template.
+     *
+     * Route attributes:
+     *   scope: files.team_metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
@@ -424,6 +463,9 @@ export class Dropbox {
      * Get the schema for a specified template. This endpoint can't be called on
      * a team member or admin's behalf.
      *
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @param arg The request parameters.
@@ -433,6 +475,9 @@ export class Dropbox {
     /**
      * Get the template identifiers for a team. To get the schema of each
      * template use templatesGetForTeam().
+     *
+     * Route attributes:
+     *   scope: files.team_metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
@@ -444,6 +489,9 @@ export class Dropbox {
      * template use templatesGetForUser(). This endpoint can't be called on a
      * team member or admin's behalf.
      *
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      */
@@ -453,6 +501,9 @@ export class Dropbox {
      * Permanently removes the specified template created from
      * templatesAddForUser(). All properties associated with the template will
      * also be removed. This action cannot be undone.
+     *
+     * Route attributes:
+     *   scope: files.team_metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
@@ -465,6 +516,9 @@ export class Dropbox {
      * templatesAddForUser(). All properties associated with the template will
      * also be removed. This action cannot be undone.
      *
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @param arg The request parameters.
@@ -475,6 +529,9 @@ export class Dropbox {
      * Update a template associated with a team. This route can update the
      * template name, the template description and add optional properties to
      * templates.
+     *
+     * Route attributes:
+     *   scope: files.team_metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
@@ -488,6 +545,9 @@ export class Dropbox {
      * templates. This endpoint can't be called on a team member or admin's
      * behalf.
      *
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
@@ -498,6 +558,9 @@ export class Dropbox {
      * Returns the total number of file requests owned by this user. Includes
      * both open and closed file requests.
      *
+     * Route attributes:
+     *   scope: file_requests.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.CountFileRequestsError>.
      */
@@ -505,6 +568,9 @@ export class Dropbox {
 
     /**
      * Creates a file request for this user.
+     *
+     * Route attributes:
+     *   scope: file_requests.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.CreateFileRequestError>.
@@ -515,6 +581,9 @@ export class Dropbox {
     /**
      * Delete a batch of closed file requests.
      *
+     * Route attributes:
+     *   scope: file_requests.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.DeleteFileRequestError>.
      * @param arg The request parameters.
@@ -524,6 +593,9 @@ export class Dropbox {
     /**
      * Delete all closed file requests owned by this user.
      *
+     * Route attributes:
+     *   scope: file_requests.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.DeleteAllClosedFileRequestsError>.
      */
@@ -531,6 +603,9 @@ export class Dropbox {
 
     /**
      * Returns the specified file request.
+     *
+     * Route attributes:
+     *   scope: file_requests.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.GetFileRequestError>.
@@ -543,6 +618,9 @@ export class Dropbox {
      * folder permission, this will only return file requests with destinations
      * in the app folder.
      *
+     * Route attributes:
+     *   scope: file_requests.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.ListFileRequestsError>.
      * @param arg The request parameters.
@@ -554,6 +632,9 @@ export class Dropbox {
      * folder permission, this will only return file requests with destinations
      * in the app folder.
      *
+     * Route attributes:
+     *   scope: file_requests.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.ListFileRequestsError>.
      */
@@ -564,6 +645,9 @@ export class Dropbox {
      * through all file requests. The cursor must come from a previous call to
      * listV2() or listContinue().
      *
+     * Route attributes:
+     *   scope: file_requests.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.ListFileRequestsContinueError>.
      * @param arg The request parameters.
@@ -572,6 +656,9 @@ export class Dropbox {
 
     /**
      * Update a file request.
+     *
+     * Route attributes:
+     *   scope: file_requests.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.UpdateFileRequestError>.
@@ -583,6 +670,9 @@ export class Dropbox {
      * Returns the metadata for a file or folder. This is an alpha endpoint
      * compatible with the properties API. Note: Metadata for the root folder is
      * unsupported.
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.AlphaGetMetadataError>.
@@ -597,6 +687,9 @@ export class Dropbox {
      * different from upload(). Do not use this to upload a file larger than 150
      * MB. Instead, create an upload session with uploadSessionStart().
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadErrorWithProperties>.
      * @deprecated
@@ -608,6 +701,9 @@ export class Dropbox {
      * Copy a file or folder to a different location in the user's Dropbox. If
      * the source path is a folder all its contents will be copied.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RelocationError>.
      * @param arg The request parameters.
@@ -617,6 +713,9 @@ export class Dropbox {
     /**
      * Copy a file or folder to a different location in the user's Dropbox. If
      * the source path is a folder all its contents will be copied.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RelocationError>.
@@ -633,6 +732,9 @@ export class Dropbox {
      * or return a job ID and do the async copy job in background. Please use
      * copyBatchCheckV2() to check the job status.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -645,6 +747,9 @@ export class Dropbox {
      * async copy job in background. Please use copyBatchCheck() to check the
      * job status.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @deprecated
@@ -656,6 +761,9 @@ export class Dropbox {
      * Returns the status of an asynchronous job for copyBatchV2(). It returns
      * list of results for each entry.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
@@ -665,6 +773,9 @@ export class Dropbox {
     /**
      * Returns the status of an asynchronous job for copyBatch(). If success, it
      * returns list of results for each entry.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -678,6 +789,9 @@ export class Dropbox {
      * used to save that file or folder to another user's Dropbox by passing it
      * to copyReferenceSave().
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.GetCopyReferenceError>.
      * @param arg The request parameters.
@@ -688,6 +802,9 @@ export class Dropbox {
      * Save a copy reference returned by copyReferenceGet() to the user's
      * Dropbox.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SaveCopyReferenceError>.
      * @param arg The request parameters.
@@ -697,6 +814,9 @@ export class Dropbox {
     /**
      * Create a folder at a given path.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.CreateFolderError>.
      * @param arg The request parameters.
@@ -705,6 +825,9 @@ export class Dropbox {
 
     /**
      * Create a folder at a given path.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.CreateFolderError>.
@@ -721,6 +844,9 @@ export class Dropbox {
      * behaviour by using the CreateFolderBatchArg.force_async flag.  Use
      * createFolderBatchCheck() to check the job status.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -730,6 +856,9 @@ export class Dropbox {
     /**
      * Returns the status of an asynchronous job for createFolderBatch(). If
      * success, it returns list of result for each entry.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -744,6 +873,9 @@ export class Dropbox {
      * corresponding FileMetadata or FolderMetadata for the item at time of
      * deletion, and not a DeletedMetadata object.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DeleteError>.
      * @param arg The request parameters.
@@ -757,6 +889,9 @@ export class Dropbox {
      * corresponding FileMetadata or FolderMetadata for the item at time of
      * deletion, and not a DeletedMetadata object.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DeleteError>.
      * @deprecated
@@ -769,6 +904,9 @@ export class Dropbox {
      * returns a job ID immediately and runs the delete batch asynchronously.
      * Use deleteBatchCheck() to check the job status.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -779,6 +917,9 @@ export class Dropbox {
      * Returns the status of an asynchronous job for deleteBatch(). If success,
      * it returns list of result for each entry.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
@@ -787,6 +928,9 @@ export class Dropbox {
 
     /**
      * Download a file from a user's Dropbox.
+     *
+     * Route attributes:
+     *   scope: files.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DownloadError>.
@@ -801,6 +945,9 @@ export class Dropbox {
      * folder entries, including the top level folder. The input cannot be a
      * single file.
      *
+     * Route attributes:
+     *   scope: files.content.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DownloadZipError>.
      * @param arg The request parameters.
@@ -812,6 +959,9 @@ export class Dropbox {
      * files that cannot be downloaded directly  and whose
      * ExportResult.file_metadata has ExportInfo.export_as populated.
      *
+     * Route attributes:
+     *   scope: files.content.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ExportError>.
      * @param arg The request parameters.
@@ -820,6 +970,9 @@ export class Dropbox {
 
     /**
      * Return the lock metadata for the given list of paths.
+     *
+     * Route attributes:
+     *   scope: files.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.LockFileError>.
@@ -830,6 +983,9 @@ export class Dropbox {
     /**
      * Returns the metadata for a file or folder. Note: Metadata for the root
      * folder is unsupported.
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.GetMetadataError>.
@@ -845,6 +1001,9 @@ export class Dropbox {
      * .ods, .xls, .xlsm, .gsheet, .xlsx. Other formats will return an
      * unsupported extension error.
      *
+     * Route attributes:
+     *   scope: files.content.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.PreviewError>.
      * @param arg The request parameters.
@@ -856,6 +1015,9 @@ export class Dropbox {
      * in four hours and afterwards you will get 410 Gone. This URL should not
      * be used to display content directly in the browser. The Content-Type of
      * the link is determined automatically by the file's mime type.
+     *
+     * Route attributes:
+     *   scope: files.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.GetTemporaryLinkError>.
@@ -894,6 +1056,9 @@ export class Dropbox {
      * temporary upload link consumption response: Temporary upload link has
      * been recently consumed.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -905,6 +1070,9 @@ export class Dropbox {
      * the following file extensions: jpg, jpeg, png, tiff, tif, gif, webp, ppm
      * and bmp. Photos that are larger than 20MB in size won't be converted to a
      * thumbnail.
+     *
+     * Route attributes:
+     *   scope: files.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ThumbnailError>.
@@ -918,6 +1086,9 @@ export class Dropbox {
      * and bmp. Photos that are larger than 20MB in size won't be converted to a
      * thumbnail.
      *
+     * Route attributes:
+     *   scope: files.content.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ThumbnailV2Error>.
      * @param arg The request parameters.
@@ -930,6 +1101,9 @@ export class Dropbox {
      * file extensions: jpg, jpeg, png, tiff, tif, gif, webp, ppm and bmp.
      * Photos that are larger than 20MB in size won't be converted to a
      * thumbnail.
+     *
+     * Route attributes:
+     *   scope: files.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.GetThumbnailBatchError>.
@@ -960,6 +1134,9 @@ export class Dropbox {
      * app implements retry logic, please hold off the retry until the previous
      * request finishes.
      *
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListFolderError>.
      * @param arg The request parameters.
@@ -970,6 +1147,9 @@ export class Dropbox {
      * Once a cursor has been retrieved from listFolder(), use this to paginate
      * through all files and retrieve updates to the folder, following the same
      * rules as documented for listFolder().
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListFolderContinueError>.
@@ -983,6 +1163,9 @@ export class Dropbox {
      * This endpoint is for app which only needs to know about new files and
      * modifications and doesn't need to know about files that already exist in
      * Dropbox.
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListFolderError>.
@@ -998,6 +1181,9 @@ export class Dropbox {
      * mostly for client-side apps. If you're looking for server-side
      * notifications, check out our [webhooks documentation]{@link
      * https://www.dropbox.com/developers/reference/webhooks}.
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListFolderLongpollError>.
@@ -1016,6 +1202,9 @@ export class Dropbox {
      * ListRevisionsMode.id mode is useful to retrieve revisions for a given
      * file across moves or renames.
      *
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListRevisionsError>.
      * @param arg The request parameters.
@@ -1028,6 +1217,9 @@ export class Dropbox {
      * locked. Returns a list of the locked file paths and their metadata after
      * this operation.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.LockFileError>.
      * @param arg The request parameters.
@@ -1039,6 +1231,9 @@ export class Dropbox {
      * the source path is a folder all its contents will be moved. Note that we
      * do not currently support case-only renaming.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RelocationError>.
      * @param arg The request parameters.
@@ -1048,6 +1243,9 @@ export class Dropbox {
     /**
      * Move a file or folder to a different location in the user's Dropbox. If
      * the source path is a folder all its contents will be moved.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RelocationError>.
@@ -1065,6 +1263,9 @@ export class Dropbox {
      * job ID and do the async move job in background. Please use
      * moveBatchCheckV2() to check the job status.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -1077,6 +1278,9 @@ export class Dropbox {
      * async moving job in background. Please use moveBatchCheck() to check the
      * job status.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @deprecated
@@ -1088,6 +1292,9 @@ export class Dropbox {
      * Returns the status of an asynchronous job for moveBatchV2(). It returns
      * list of results for each entry.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
@@ -1097,6 +1304,9 @@ export class Dropbox {
     /**
      * Returns the status of an asynchronous job for moveBatch(). If success, it
      * returns list of results for each entry.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -1108,6 +1318,9 @@ export class Dropbox {
     /**
      * Creates a new Paper doc with the provided content.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.PaperCreateError>.
      * @param arg The request parameters.
@@ -1116,6 +1329,9 @@ export class Dropbox {
 
     /**
      * Updates an existing Paper doc with the provided content.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.PaperUpdateError>.
@@ -1130,6 +1346,9 @@ export class Dropbox {
      * route to successfully delete, then fail to permanently delete. Note: This
      * endpoint is only available for Dropbox Business apps.
      *
+     * Route attributes:
+     *   scope: files.permanent_delete
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DeleteError>.
      * @param arg The request parameters.
@@ -1137,6 +1356,9 @@ export class Dropbox {
     public filesPermanentlyDelete(arg: files.DeleteArg): Promise<DropboxResponse<void>>;
 
     /**
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.AddPropertiesError>.
      * @deprecated
@@ -1145,6 +1367,9 @@ export class Dropbox {
     public filesPropertiesAdd(arg: file_properties.AddPropertiesArg): Promise<DropboxResponse<void>>;
 
     /**
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.InvalidPropertyGroupError>.
      * @deprecated
@@ -1153,6 +1378,9 @@ export class Dropbox {
     public filesPropertiesOverwrite(arg: file_properties.OverwritePropertyGroupArg): Promise<DropboxResponse<void>>;
 
     /**
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.RemovePropertiesError>.
      * @deprecated
@@ -1161,6 +1389,9 @@ export class Dropbox {
     public filesPropertiesRemove(arg: file_properties.RemovePropertiesArg): Promise<DropboxResponse<void>>;
 
     /**
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @deprecated
@@ -1169,6 +1400,9 @@ export class Dropbox {
     public filesPropertiesTemplateGet(arg: file_properties.GetTemplateArg): Promise<DropboxResponse<file_properties.GetTemplateResult>>;
 
     /**
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @deprecated
@@ -1176,6 +1410,9 @@ export class Dropbox {
     public filesPropertiesTemplateList(): Promise<DropboxResponse<file_properties.ListTemplateResult>>;
 
     /**
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.UpdatePropertiesError>.
      * @deprecated
@@ -1185,6 +1422,9 @@ export class Dropbox {
 
     /**
      * Restore a specific revision of a file to the given path.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RestoreError>.
@@ -1199,6 +1439,9 @@ export class Dropbox {
      * exists, the file will be renamed to avoid the conflict (e.g. myfile
      * (1).txt).
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SaveUrlError>.
      * @param arg The request parameters.
@@ -1207,6 +1450,9 @@ export class Dropbox {
 
     /**
      * Check the status of a saveUrl() job.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -1218,6 +1464,9 @@ export class Dropbox {
      * Searches for files and folders. Note: Recent changes will be reflected in
      * search results within a few seconds and older revisions of existing files
      * may still match your query for up to a few days.
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SearchError>.
@@ -1233,6 +1482,9 @@ export class Dropbox {
      * results due to a short delay in indexing. Duplicate results may be
      * returned across pages. Some results may not be returned.
      *
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SearchError>.
      * @param arg The request parameters.
@@ -1246,6 +1498,9 @@ export class Dropbox {
      * reflected in search results due to a short delay in indexing. Duplicate
      * results may be returned across pages. Some results may not be returned.
      *
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SearchError>.
      * @param arg The request parameters.
@@ -1256,6 +1511,9 @@ export class Dropbox {
      * Add a tag to an item. A tag is a string. No more than 20 tags can be
      * added to a given item.
      *
+     * Route attributes:
+     *   scope: files.metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.AddTagError>.
      * @param arg The request parameters.
@@ -1265,6 +1523,9 @@ export class Dropbox {
     /**
      * Get list of tags assigned to items.
      *
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.BaseTagError>.
      * @param arg The request parameters.
@@ -1273,6 +1534,9 @@ export class Dropbox {
 
     /**
      * Remove a tag from an item.
+     *
+     * Route attributes:
+     *   scope: files.metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RemoveTagError>.
@@ -1285,6 +1549,9 @@ export class Dropbox {
      * by the lock holder or, if a business account, a team admin. A successful
      * response indicates that the file has been unlocked. Returns a list of the
      * unlocked file paths and their metadata after this operation.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.LockFileError>.
@@ -1300,6 +1567,9 @@ export class Dropbox {
      * number of data transport calls allowed per month. For more information,
      * see the [Data transport limit page]{@link
      * https://www.dropbox.com/developers/reference/data-transport-limit}.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadError>.
@@ -1317,6 +1587,9 @@ export class Dropbox {
      * transport limit page]{@link
      * https://www.dropbox.com/developers/reference/data-transport-limit}.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadSessionLookupError>.
      * @param arg The request parameters.
@@ -1331,6 +1604,9 @@ export class Dropbox {
      * transport calls allowed per month. For more information, see the [Data
      * transport limit page]{@link
      * https://www.dropbox.com/developers/reference/data-transport-limit}.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadSessionLookupError>.
@@ -1347,6 +1623,9 @@ export class Dropbox {
      * teams with a limit on the number of data transport calls allowed per
      * month. For more information, see the [Data transport limit page]{@link
      * https://www.dropbox.com/developers/reference/data-transport-limit}.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadSessionFinishError>.
@@ -1374,6 +1653,9 @@ export class Dropbox {
      * [Data transport limit page]{@link
      * https://www.dropbox.com/developers/reference/data-transport-limit}.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @deprecated
@@ -1397,6 +1679,9 @@ export class Dropbox {
      * month. For more information, see the [Data transport limit page]{@link
      * https://www.dropbox.com/developers/reference/data-transport-limit}.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -1406,6 +1691,9 @@ export class Dropbox {
     /**
      * Returns the status of an asynchronous job for uploadSessionFinishBatch().
      * If success, it returns list of result for each entry.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -1444,6 +1732,9 @@ export class Dropbox {
      * for last uploadSessionAppendV2() with UploadSessionStartArg.close to
      * true, that may contain any remaining data).
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadSessionStartError>.
      * @param arg The request parameters.
@@ -1460,6 +1751,9 @@ export class Dropbox {
      * retired in September 2020. Refer to the [Paper Migration Guide]{@link
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for more information.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
@@ -1478,6 +1772,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for more information.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.PaperDocCreateError>.
      * @deprecated
@@ -1494,6 +1791,9 @@ export class Dropbox {
      * Migration Guide]{@link
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
+     *
+     * Route attributes:
+     *   scope: files.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
@@ -1515,6 +1815,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
@@ -1532,6 +1835,9 @@ export class Dropbox {
      * Migration Guide]{@link
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.ListUsersCursorError>.
@@ -1555,6 +1861,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
@@ -1573,6 +1882,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
      *
+     * Route attributes:
+     *   scope: files.metadata.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @deprecated
@@ -1589,6 +1901,9 @@ export class Dropbox {
      * version of Paper. Refer to the [Paper Migration Guide]{@link
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
+     *
+     * Route attributes:
+     *   scope: files.metadata.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.ListDocsCursorError>.
@@ -1608,6 +1923,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
      *
+     * Route attributes:
+     *   scope: files.permanent_delete
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
@@ -1624,6 +1942,9 @@ export class Dropbox {
      * Migration Guide]{@link
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
@@ -1645,6 +1966,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
@@ -1661,6 +1985,9 @@ export class Dropbox {
      * retired in September 2020. Refer to the [Paper Migration Guide]{@link
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for more information.
+     *
+     * Route attributes:
+     *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.PaperDocUpdateError>.
@@ -1680,6 +2007,9 @@ export class Dropbox {
      * Migration Guide]{@link
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
@@ -1701,6 +2031,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
@@ -1718,6 +2051,9 @@ export class Dropbox {
      * Migration Guide]{@link
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.ListUsersCursorError>.
@@ -1737,6 +2073,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
@@ -1754,6 +2093,9 @@ export class Dropbox {
      * https://www.dropbox.com/lp/developers/reference/paper-migration-guide}
      * for migration information.
      *
+     * Route attributes:
+     *   scope: files.content.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.PaperFolderCreateError>.
      * @deprecated
@@ -1763,6 +2105,9 @@ export class Dropbox {
 
     /**
      * Adds specified members to a file.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.AddFileMemberError>.
@@ -1776,6 +2121,9 @@ export class Dropbox {
      * functionality for this folder, you will need to call mountFolder() on
      * their behalf.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.AddFolderMemberError>.
      * @param arg The request parameters.
@@ -1784,6 +2132,9 @@ export class Dropbox {
 
     /**
      * Returns the status of an asynchronous job.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -1794,6 +2145,9 @@ export class Dropbox {
     /**
      * Returns the status of an asynchronous job for sharing a folder.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
@@ -1802,6 +2156,9 @@ export class Dropbox {
 
     /**
      * Returns the status of an asynchronous job for sharing a folder.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -1817,6 +2174,9 @@ export class Dropbox {
      * on this behavior. Instead, if your app needs to revoke a shared link, use
      * revokeSharedLink().
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.CreateSharedLinkError>.
      * @deprecated
@@ -1830,6 +2190,9 @@ export class Dropbox {
      * visibility, though, may depend on other aspects such as team and shared
      * folder settings).
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.CreateSharedLinkWithSettingsError>.
      * @param arg The request parameters.
@@ -1838,6 +2201,9 @@ export class Dropbox {
 
     /**
      * Returns shared file metadata.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.GetFileMetadataError>.
@@ -1848,6 +2214,9 @@ export class Dropbox {
     /**
      * Returns shared file metadata.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharingUserError>.
      * @param arg The request parameters.
@@ -1856,6 +2225,9 @@ export class Dropbox {
 
     /**
      * Returns shared folder metadata by its folder ID.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharedFolderAccessError>.
@@ -1866,6 +2238,9 @@ export class Dropbox {
     /**
      * Download the shared link's file from a user's Dropbox.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.GetSharedLinkFileError>.
      * @param arg The request parameters.
@@ -1874,6 +2249,9 @@ export class Dropbox {
 
     /**
      * Get the shared link's metadata.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharedLinkError>.
@@ -1889,6 +2267,9 @@ export class Dropbox {
      * that allow access to the given path.  Collection links are never returned
      * in this case.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.GetSharedLinksError>.
      * @deprecated
@@ -1899,6 +2280,9 @@ export class Dropbox {
     /**
      * Use to obtain the members who have been invited to a file, both inherited
      * and uninherited members.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFileMembersError>.
@@ -1913,6 +2297,9 @@ export class Dropbox {
      * Inherited users and groups are not included in the result, and
      * permissions are not returned for this endpoint.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharingUserError>.
      * @param arg The request parameters.
@@ -1924,6 +2311,9 @@ export class Dropbox {
      * listFileMembersBatch(), use this to paginate through all shared file
      * members.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFileMembersContinueError>.
      * @param arg The request parameters.
@@ -1932,6 +2322,9 @@ export class Dropbox {
 
     /**
      * Returns shared folder membership by its folder ID.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharedFolderAccessError>.
@@ -1943,6 +2336,9 @@ export class Dropbox {
      * Once a cursor has been retrieved from listFolderMembers(), use this to
      * paginate through all shared folder members.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFolderMembersContinueError>.
      * @param arg The request parameters.
@@ -1951,6 +2347,9 @@ export class Dropbox {
 
     /**
      * Return the list of all shared folders the current user has access to.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
@@ -1963,6 +2362,9 @@ export class Dropbox {
      * through all shared folders. The cursor must come from a previous call to
      * listFolders() or listFoldersContinue().
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFoldersContinueError>.
      * @param arg The request parameters.
@@ -1972,6 +2374,9 @@ export class Dropbox {
     /**
      * Return the list of all shared folders the current user can mount or
      * unmount.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
@@ -1985,6 +2390,9 @@ export class Dropbox {
      * a previous call to listMountableFolders() or
      * listMountableFoldersContinue().
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFoldersContinueError>.
      * @param arg The request parameters.
@@ -1996,6 +2404,9 @@ export class Dropbox {
      * files the user has received via shared folders, and does  not include
      * unclaimed invitations.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharingUserError>.
      * @param arg The request parameters.
@@ -2004,6 +2415,9 @@ export class Dropbox {
 
     /**
      * Get more results with a cursor from listReceivedFiles().
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFilesContinueError>.
@@ -2023,6 +2437,9 @@ export class Dropbox {
      * parent folders of the given path. Links to parent folders can be
      * suppressed by setting direct_only to true.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListSharedLinksError>.
      * @param arg The request parameters.
@@ -2038,6 +2455,9 @@ export class Dropbox {
      * LinkPermissions.requested_visibility will reflect the requested
      * visibility.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ModifySharedLinkSettingsError>.
      * @param arg The request parameters.
@@ -2049,6 +2469,9 @@ export class Dropbox {
      * a user after they have been added as a member. Once mounted, the shared
      * folder will appear in their Dropbox.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.MountFolderError>.
      * @param arg The request parameters.
@@ -2059,6 +2482,9 @@ export class Dropbox {
      * The current user relinquishes their membership in the designated file.
      * Note that the current user may still have inherited access to this file
      * through the parent folder.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RelinquishFileMembershipError>.
@@ -2073,6 +2499,9 @@ export class Dropbox {
      * synchronously if leave_a_copy is false, and asynchronously if
      * leave_a_copy is true.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RelinquishFolderMembershipError>.
      * @param arg The request parameters.
@@ -2081,6 +2510,9 @@ export class Dropbox {
 
     /**
      * Identical to remove_file_member_2 but with less information returned.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RemoveFileMemberError>.
@@ -2092,6 +2524,9 @@ export class Dropbox {
     /**
      * Removes a specified member from the file.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RemoveFileMemberError>.
      * @param arg The request parameters.
@@ -2101,6 +2536,9 @@ export class Dropbox {
     /**
      * Allows an owner or editor (if the ACL update policy allows) of a shared
      * folder to remove another member.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RemoveFolderMemberError>.
@@ -2115,6 +2553,9 @@ export class Dropbox {
      * to a specific file, you can use the listSharedLinks() with the file as
      * the ListSharedLinksArg.path argument.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RevokeSharedLinkError>.
      * @param arg The request parameters.
@@ -2127,6 +2568,9 @@ export class Dropbox {
      * ShareFolderLaunch.async_job_id is returned, you'll need to call
      * checkShareJobStatus() until the action completes to get the metadata for
      * the folder.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SetAccessInheritanceError>.
@@ -2142,6 +2586,9 @@ export class Dropbox {
      * checkShareJobStatus() until the action completes to get the metadata for
      * the folder.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ShareFolderError>.
      * @param arg The request parameters.
@@ -2153,6 +2600,9 @@ export class Dropbox {
      * User must have AccessLevel.owner access to the shared folder to perform a
      * transfer.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.TransferFolderError>.
      * @param arg The request parameters.
@@ -2163,6 +2613,9 @@ export class Dropbox {
      * The current user unmounts the designated folder. They can re-mount the
      * folder at a later time using mountFolder().
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UnmountFolderError>.
      * @param arg The request parameters.
@@ -2171,6 +2624,9 @@ export class Dropbox {
 
     /**
      * Remove all members from this file. Does not remove inherited members.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UnshareFileError>.
@@ -2182,6 +2638,9 @@ export class Dropbox {
      * Allows a shared folder owner to unshare the folder. You'll need to call
      * checkJobStatus() to determine if the action has completed successfully.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UnshareFolderError>.
      * @param arg The request parameters.
@@ -2190,6 +2649,9 @@ export class Dropbox {
 
     /**
      * Changes a member's access on a shared file.
+     *
+     * Route attributes:
+     *   scope: sharing.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.FileMemberActionError>.
@@ -2201,6 +2663,9 @@ export class Dropbox {
      * Allows an owner or editor of a shared folder to update another member's
      * permissions.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UpdateFolderMemberError>.
      * @param arg The request parameters.
@@ -2211,6 +2676,9 @@ export class Dropbox {
      * Update the sharing policies for a shared folder. User must have
      * AccessLevel.owner access to the shared folder to update its policies.
      *
+     * Route attributes:
+     *   scope: sharing.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UpdateFolderPolicyError>.
      * @param arg The request parameters.
@@ -2219,6 +2687,9 @@ export class Dropbox {
 
     /**
      * List all device sessions of a team's member.
+     *
+     * Route attributes:
+     *   scope: sessions.list
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListMemberDevicesError>.
@@ -2229,6 +2700,9 @@ export class Dropbox {
     /**
      * List all device sessions of a team. Permission : Team member file access.
      *
+     * Route attributes:
+     *   scope: sessions.list
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListMembersDevicesError>.
      * @param arg The request parameters.
@@ -2237,6 +2711,9 @@ export class Dropbox {
 
     /**
      * List all device sessions of a team. Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: sessions.list
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListTeamDevicesError>.
@@ -2248,6 +2725,9 @@ export class Dropbox {
     /**
      * Revoke a device session of a team's member.
      *
+     * Route attributes:
+     *   scope: sessions.modify
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.RevokeDeviceSessionError>.
      * @param arg The request parameters.
@@ -2256,6 +2736,9 @@ export class Dropbox {
 
     /**
      * Revoke a list of device sessions of team members.
+     *
+     * Route attributes:
+     *   scope: sessions.modify
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.RevokeDeviceSessionBatchError>.
@@ -2268,6 +2751,9 @@ export class Dropbox {
      * your account's capability for what feature you can access or what value
      * you have for certain features. Permission : Team information.
      *
+     * Route attributes:
+     *   scope: team_info.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.FeaturesGetValuesBatchError>.
      * @param arg The request parameters.
@@ -2277,6 +2763,9 @@ export class Dropbox {
     /**
      * Retrieves information about a team.
      *
+     * Route attributes:
+     *   scope: team_info.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      */
@@ -2285,6 +2774,9 @@ export class Dropbox {
     /**
      * Creates a new, empty group, with a requested name. Permission : Team
      * member management.
+     *
+     * Route attributes:
+     *   scope: groups.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupCreateError>.
@@ -2298,6 +2790,9 @@ export class Dropbox {
      * groupsJobStatusGet() to determine whether this process has completed.
      * Permission : Team member management.
      *
+     * Route attributes:
+     *   scope: groups.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupDeleteError>.
      * @param arg The request parameters.
@@ -2308,6 +2803,9 @@ export class Dropbox {
      * Retrieves information about one or more groups. Note that the optional
      * field  GroupFullInfo.members is not returned for system-managed groups.
      * Permission : Team Information.
+     *
+     * Route attributes:
+     *   scope: groups.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupsGetInfoError>.
@@ -2321,6 +2819,9 @@ export class Dropbox {
      * granting/revoking group members' access to group-owned resources.
      * Permission : Team member management.
      *
+     * Route attributes:
+     *   scope: groups.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupsPollError>.
      * @param arg The request parameters.
@@ -2329,6 +2830,9 @@ export class Dropbox {
 
     /**
      * Lists groups on a team. Permission : Team Information.
+     *
+     * Route attributes:
+     *   scope: groups.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
@@ -2339,6 +2843,9 @@ export class Dropbox {
     /**
      * Once a cursor has been retrieved from groupsList(), use this to paginate
      * through all groups. Permission : Team Information.
+     *
+     * Route attributes:
+     *   scope: groups.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupsListContinueError>.
@@ -2352,6 +2859,9 @@ export class Dropbox {
      * groupsJobStatusGet() to determine whether this process has completed.
      * Permission : Team member management.
      *
+     * Route attributes:
+     *   scope: groups.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupMembersAddError>.
      * @param arg The request parameters.
@@ -2360,6 +2870,9 @@ export class Dropbox {
 
     /**
      * Lists members of a group. Permission : Team Information.
+     *
+     * Route attributes:
+     *   scope: groups.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupSelectorError>.
@@ -2370,6 +2883,9 @@ export class Dropbox {
     /**
      * Once a cursor has been retrieved from groupsMembersList(), use this to
      * paginate through all members of the group. Permission : Team information.
+     *
+     * Route attributes:
+     *   scope: groups.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupsMembersListContinueError>.
@@ -2385,6 +2901,9 @@ export class Dropbox {
      * in cases where this is not possible via the web client. Permission : Team
      * member management.
      *
+     * Route attributes:
+     *   scope: groups.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupMembersRemoveError>.
      * @param arg The request parameters.
@@ -2394,6 +2913,9 @@ export class Dropbox {
     /**
      * Sets a member's access type in a group. Permission : Team member
      * management.
+     *
+     * Route attributes:
+     *   scope: groups.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupMemberSetAccessTypeError>.
@@ -2405,6 +2927,9 @@ export class Dropbox {
      * Updates a group's name and/or external ID. Permission : Team member
      * management.
      *
+     * Route attributes:
+     *   scope: groups.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupUpdateError>.
      * @param arg The request parameters.
@@ -2415,6 +2940,9 @@ export class Dropbox {
      * Creates new legal hold policy. Note: Legal Holds is a paid add-on. Not
      * all teams have the feature. Permission : Team member file access.
      *
+     * Route attributes:
+     *   scope: team_data.member
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyCreateError>.
      * @param arg The request parameters.
@@ -2424,6 +2952,9 @@ export class Dropbox {
     /**
      * Gets a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
      * teams have the feature. Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: team_data.member
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsGetPolicyError>.
@@ -2436,6 +2967,9 @@ export class Dropbox {
      * add-on. Not all teams have the feature. Permission : Team member file
      * access.
      *
+     * Route attributes:
+     *   scope: team_data.member
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListHeldRevisionsError>.
      * @param arg The request parameters.
@@ -2447,6 +2981,9 @@ export class Dropbox {
      * Holds is a paid add-on. Not all teams have the feature. Permission : Team
      * member file access.
      *
+     * Route attributes:
+     *   scope: team_data.member
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListHeldRevisionsError>.
      * @param arg The request parameters.
@@ -2456,6 +2993,9 @@ export class Dropbox {
     /**
      * Lists legal holds on a team. Note: Legal Holds is a paid add-on. Not all
      * teams have the feature. Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: team_data.member
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListPoliciesError>.
@@ -2467,6 +3007,9 @@ export class Dropbox {
      * Releases a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
      * teams have the feature. Permission : Team member file access.
      *
+     * Route attributes:
+     *   scope: team_data.member
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyReleaseError>.
      * @param arg The request parameters.
@@ -2476,6 +3019,9 @@ export class Dropbox {
     /**
      * Updates a legal hold. Note: Legal Holds is a paid add-on. Not all teams
      * have the feature. Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: team_data.member
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyUpdateError>.
@@ -2487,6 +3033,9 @@ export class Dropbox {
      * List all linked applications of the team member. Note, this endpoint does
      * not list any team-linked applications.
      *
+     * Route attributes:
+     *   scope: sessions.list
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListMemberAppsError>.
      * @param arg The request parameters.
@@ -2496,6 +3045,9 @@ export class Dropbox {
     /**
      * List all applications linked to the team members' accounts. Note, this
      * endpoint does not list any team-linked applications.
+     *
+     * Route attributes:
+     *   scope: sessions.list
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListMembersAppsError>.
@@ -2507,6 +3059,9 @@ export class Dropbox {
      * List all applications linked to the team members' accounts. Note, this
      * endpoint doesn't list any team-linked applications.
      *
+     * Route attributes:
+     *   scope: sessions.list
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListTeamAppsError>.
      * @deprecated
@@ -2517,6 +3072,9 @@ export class Dropbox {
     /**
      * Revoke a linked application of the team member.
      *
+     * Route attributes:
+     *   scope: sessions.modify
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.RevokeLinkedAppError>.
      * @param arg The request parameters.
@@ -2525,6 +3083,9 @@ export class Dropbox {
 
     /**
      * Revoke a list of linked applications of the team members.
+     *
+     * Route attributes:
+     *   scope: sessions.modify
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.RevokeLinkedAppBatchError>.
@@ -2535,6 +3096,9 @@ export class Dropbox {
     /**
      * Add users to member space limits excluded users list.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ExcludedUsersUpdateError>.
      * @param arg The request parameters.
@@ -2543,6 +3107,9 @@ export class Dropbox {
 
     /**
      * List member space limits excluded users.
+     *
+     * Route attributes:
+     *   scope: members.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ExcludedUsersListError>.
@@ -2553,6 +3120,9 @@ export class Dropbox {
     /**
      * Continue listing member space limits excluded users.
      *
+     * Route attributes:
+     *   scope: members.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ExcludedUsersListContinueError>.
      * @param arg The request parameters.
@@ -2561,6 +3131,9 @@ export class Dropbox {
 
     /**
      * Remove users from member space limits excluded users list.
+     *
+     * Route attributes:
+     *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ExcludedUsersUpdateError>.
@@ -2572,6 +3145,9 @@ export class Dropbox {
      * Get users custom quota. Returns none as the custom quota if none was set.
      * A maximum of 1000 members can be specified in a single call.
      *
+     * Route attributes:
+     *   scope: members.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.CustomQuotaError>.
      * @param arg The request parameters.
@@ -2582,6 +3158,9 @@ export class Dropbox {
      * Remove users custom quota. A maximum of 1000 members can be specified in
      * a single call.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.CustomQuotaError>.
      * @param arg The request parameters.
@@ -2591,6 +3170,9 @@ export class Dropbox {
     /**
      * Set users custom quota. Custom quota has to be at least 15GB. A maximum
      * of 1000 members can be specified in a single call.
+     *
+     * Route attributes:
+     *   scope: members.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.SetCustomQuotaError>.
@@ -2611,6 +3193,9 @@ export class Dropbox {
      * a user to use in the team invitation and for 'Perform as team member'
      * actions taken on the user before they become 'active'.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -2630,6 +3215,9 @@ export class Dropbox {
      * a user to use in the team invitation and for 'Perform as team member'
      * actions taken on the user before they become 'active'.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -2641,6 +3229,9 @@ export class Dropbox {
      * the status of the asynchronous request. Permission : Team member
      * management.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
@@ -2650,6 +3241,9 @@ export class Dropbox {
     /**
      * Once an async_job_id is returned from membersAdd() , use this to poll the
      * status of the asynchronous request. Permission : Team member management.
+     *
+     * Route attributes:
+     *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -2661,6 +3255,9 @@ export class Dropbox {
      * Deletes a team member's profile photo. Permission : Team member
      * management.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersDeleteProfilePhotoError>.
      * @param arg The request parameters.
@@ -2670,6 +3267,9 @@ export class Dropbox {
     /**
      * Deletes a team member's profile photo. Permission : Team member
      * management.
+     *
+     * Route attributes:
+     *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersDeleteProfilePhotoError>.
@@ -2681,6 +3281,9 @@ export class Dropbox {
      * Get available TeamMemberRoles for the connected team. To be used with
      * membersSetAdminPermissionsV2(). Permission : Team member management.
      *
+     * Route attributes:
+     *   scope: members.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      */
@@ -2690,6 +3293,9 @@ export class Dropbox {
      * Returns information about multiple team members. Permission : Team
      * information This endpoint will return MembersGetInfoItem.id_not_found,
      * for IDs (or emails) that cannot be matched to a valid team member.
+     *
+     * Route attributes:
+     *   scope: members.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersGetInfoError>.
@@ -2702,6 +3308,9 @@ export class Dropbox {
      * information This endpoint will return MembersGetInfoItem.id_not_found,
      * for IDs (or emails) that cannot be matched to a valid team member.
      *
+     * Route attributes:
+     *   scope: members.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersGetInfoError>.
      * @param arg The request parameters.
@@ -2711,6 +3320,9 @@ export class Dropbox {
     /**
      * Lists members of a team. Permission : Team information.
      *
+     * Route attributes:
+     *   scope: members.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersListError>.
      * @param arg The request parameters.
@@ -2719,6 +3331,9 @@ export class Dropbox {
 
     /**
      * Lists members of a team. Permission : Team information.
+     *
+     * Route attributes:
+     *   scope: members.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersListError>.
@@ -2730,6 +3345,9 @@ export class Dropbox {
      * Once a cursor has been retrieved from membersListV2(), use this to
      * paginate through all team members. Permission : Team information.
      *
+     * Route attributes:
+     *   scope: members.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersListContinueError>.
      * @param arg The request parameters.
@@ -2739,6 +3357,9 @@ export class Dropbox {
     /**
      * Once a cursor has been retrieved from membersList(), use this to paginate
      * through all team members. Permission : Team information.
+     *
+     * Route attributes:
+     *   scope: members.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersListContinueError>.
@@ -2753,6 +3374,9 @@ export class Dropbox {
      * membersMoveFormerMemberFilesJobStatusCheck(). Permission : Team member
      * management.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersTransferFormerMembersFilesError>.
      * @param arg The request parameters.
@@ -2764,6 +3388,9 @@ export class Dropbox {
      * use this to poll the status of the asynchronous request. Permission :
      * Team member management.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
@@ -2774,6 +3401,9 @@ export class Dropbox {
      * Recover a deleted member. Permission : Team member management Exactly one
      * of team_member_id, email, or external_id must be provided to identify the
      * user account.
+     *
+     * Route attributes:
+     *   scope: members.delete
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersRecoverError>.
@@ -2795,6 +3425,9 @@ export class Dropbox {
      * final result of the job, the client should periodically poll
      * membersRemoveJobStatusGet().
      *
+     * Route attributes:
+     *   scope: members.delete
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersRemoveError>.
      * @param arg The request parameters.
@@ -2805,6 +3438,9 @@ export class Dropbox {
      * Once an async_job_id is returned from membersRemove() , use this to poll
      * the status of the asynchronous request. Permission : Team member
      * management.
+     *
+     * Route attributes:
+     *   scope: members.delete
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -2818,6 +3454,9 @@ export class Dropbox {
      * each email address not on a verified domain a verification email will be
      * sent.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.AddSecondaryEmailsError>.
      * @param arg The request parameters.
@@ -2829,6 +3468,9 @@ export class Dropbox {
      * Users will be notified of deletions of verified secondary emails at both
      * the secondary email and their primary email.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -2838,6 +3480,9 @@ export class Dropbox {
     /**
      * Resend secondary email verification emails. Permission : Team member
      * management.
+     *
+     * Route attributes:
+     *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
@@ -2851,6 +3496,9 @@ export class Dropbox {
      * provided to identify the user account. No-op if team member is not
      * pending.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSendWelcomeError>.
      * @param arg The request parameters.
@@ -2859,6 +3507,9 @@ export class Dropbox {
 
     /**
      * Updates a team member's permissions. Permission : Team member management.
+     *
+     * Route attributes:
+     *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetPermissions2Error>.
@@ -2869,6 +3520,9 @@ export class Dropbox {
     /**
      * Updates a team member's permissions. Permission : Team member management.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetPermissionsError>.
      * @param arg The request parameters.
@@ -2878,6 +3532,9 @@ export class Dropbox {
     /**
      * Updates a team member's profile. Permission : Team member management.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetProfileError>.
      * @param arg The request parameters.
@@ -2886,6 +3543,9 @@ export class Dropbox {
 
     /**
      * Updates a team member's profile. Permission : Team member management.
+     *
+     * Route attributes:
+     *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetProfileError>.
@@ -2897,6 +3557,9 @@ export class Dropbox {
      * Updates a team member's profile photo. Permission : Team member
      * management.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetProfilePhotoError>.
      * @param arg The request parameters.
@@ -2906,6 +3569,9 @@ export class Dropbox {
     /**
      * Updates a team member's profile photo. Permission : Team member
      * management.
+     *
+     * Route attributes:
+     *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetProfilePhotoError>.
@@ -2918,6 +3584,9 @@ export class Dropbox {
      * one of team_member_id, email, or external_id must be provided to identify
      * the user account.
      *
+     * Route attributes:
+     *   scope: members.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSuspendError>.
      * @param arg The request parameters.
@@ -2928,6 +3597,9 @@ export class Dropbox {
      * Unsuspend a member from a team. Permission : Team member management
      * Exactly one of team_member_id, email, or external_id must be provided to
      * identify the user account.
+     *
+     * Route attributes:
+     *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersUnsuspendError>.
@@ -2943,6 +3615,9 @@ export class Dropbox {
      * folders may be owned by other users or other teams. Duplicates may occur
      * in the list.
      *
+     * Route attributes:
+     *   scope: team_data.member
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamNamespacesListError>.
      * @param arg The request parameters.
@@ -2954,6 +3629,9 @@ export class Dropbox {
      * paginate through all team-accessible namespaces. Duplicates may occur in
      * the list.
      *
+     * Route attributes:
+     *   scope: team_data.member
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamNamespacesListContinueError>.
      * @param arg The request parameters.
@@ -2962,6 +3640,9 @@ export class Dropbox {
 
     /**
      * Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: files.team_metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
@@ -2974,6 +3655,9 @@ export class Dropbox {
      * Permission : Team member file access. The scope for the route is
      * files.team_metadata.write.
      *
+     * Route attributes:
+     *   scope: files.team_metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @deprecated
@@ -2985,6 +3669,9 @@ export class Dropbox {
      * Permission : Team member file access. The scope for the route is
      * files.team_metadata.write.
      *
+     * Route attributes:
+     *   scope: files.team_metadata.write
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @deprecated
@@ -2993,6 +3680,9 @@ export class Dropbox {
 
     /**
      * Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: files.team_metadata.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
@@ -3005,6 +3695,9 @@ export class Dropbox {
      * Retrieves reporting data about a team's user activity. Deprecated: Will
      * be removed on July 1st 2021.
      *
+     * Route attributes:
+     *   scope: team_info.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.DateRangeError>.
      * @deprecated
@@ -3015,6 +3708,9 @@ export class Dropbox {
     /**
      * Retrieves reporting data about a team's linked devices. Deprecated: Will
      * be removed on July 1st 2021.
+     *
+     * Route attributes:
+     *   scope: team_info.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.DateRangeError>.
@@ -3027,6 +3723,9 @@ export class Dropbox {
      * Retrieves reporting data about a team's membership. Deprecated: Will be
      * removed on July 1st 2021.
      *
+     * Route attributes:
+     *   scope: team_info.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.DateRangeError>.
      * @deprecated
@@ -3037,6 +3736,9 @@ export class Dropbox {
     /**
      * Retrieves reporting data about a team's storage usage. Deprecated: Will
      * be removed on July 1st 2021.
+     *
+     * Route attributes:
+     *   scope: team_info.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.DateRangeError>.
@@ -3049,6 +3751,9 @@ export class Dropbox {
      * Sets an archived team folder's status to active. Permission : Team member
      * file access.
      *
+     * Route attributes:
+     *   scope: team_data.team_space
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderActivateError>.
      * @param arg The request parameters.
@@ -3060,6 +3765,9 @@ export class Dropbox {
      * and file members. This endpoint cannot be used for teams that have a
      * shared team space. Permission : Team member file access.
      *
+     * Route attributes:
+     *   scope: team_data.team_space
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderArchiveError>.
      * @param arg The request parameters.
@@ -3069,6 +3777,9 @@ export class Dropbox {
     /**
      * Returns the status of an asynchronous job for archiving a team folder.
      * Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: team_data.team_space
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -3081,6 +3792,9 @@ export class Dropbox {
      * only be used for teams that do not already have a shared team space.
      * Permission : Team member file access.
      *
+     * Route attributes:
+     *   scope: team_data.team_space
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderCreateError>.
      * @param arg The request parameters.
@@ -3091,6 +3805,9 @@ export class Dropbox {
      * Retrieves metadata for team folders. Permission : Team member file
      * access.
      *
+     * Route attributes:
+     *   scope: team_data.team_space
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
@@ -3099,6 +3816,9 @@ export class Dropbox {
 
     /**
      * Lists all team folders. Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: team_data.team_space
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderListError>.
@@ -3109,6 +3829,9 @@ export class Dropbox {
     /**
      * Once a cursor has been retrieved from teamFolderList(), use this to
      * paginate through all team folders. Permission : Team member file access.
+     *
+     * Route attributes:
+     *   scope: team_data.team_space
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderListContinueError>.
@@ -3121,6 +3844,9 @@ export class Dropbox {
      * for teams that have a shared team space. Permission : Team member file
      * access.
      *
+     * Route attributes:
+     *   scope: team_data.team_space
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderPermanentlyDeleteError>.
      * @param arg The request parameters.
@@ -3130,6 +3856,9 @@ export class Dropbox {
     /**
      * Changes an active team folder's name. Permission : Team member file
      * access.
+     *
+     * Route attributes:
+     *   scope: team_data.team_space
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderRenameError>.
@@ -3141,6 +3870,9 @@ export class Dropbox {
      * Updates the sync settings on a team folder or its contents.  Use of this
      * endpoint requires that the team has team selective sync enabled.
      *
+     * Route attributes:
+     *   scope: team_data.team_space
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderUpdateSyncSettingsError>.
      * @param arg The request parameters.
@@ -3150,6 +3882,9 @@ export class Dropbox {
     /**
      * Returns the member profile of the admin who generated the team access
      * token used to make the call.
+     *
+     * Route attributes:
+     *   scope: team_info.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TokenGetAuthenticatedAdminError>.
@@ -3168,6 +3903,9 @@ export class Dropbox {
      * /developers/documentation/http/teams#team-features-get_values} to check
      * for this feature. Permission : Team Auditing.
      *
+     * Route attributes:
+     *   scope: events.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team_log.GetTeamEventsError>.
      * @param arg The request parameters.
@@ -3177,6 +3915,9 @@ export class Dropbox {
     /**
      * Once a cursor has been retrieved from getEvents(), use this to paginate
      * through all events. Permission : Team Auditing.
+     *
+     * Route attributes:
+     *   scope: events.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team_log.GetTeamEventsContinueError>.
@@ -3188,6 +3929,9 @@ export class Dropbox {
      * Get a list of feature values that may be configured for the current
      * account.
      *
+     * Route attributes:
+     *   scope: account_info.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<users.UserFeaturesGetValuesBatchError>.
      * @param arg The request parameters.
@@ -3196,6 +3940,9 @@ export class Dropbox {
 
     /**
      * Get information about a user's account.
+     *
+     * Route attributes:
+     *   scope: sharing.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<users.GetAccountError>.
@@ -3207,6 +3954,9 @@ export class Dropbox {
      * Get information about multiple user accounts.  At most 300 accounts may
      * be queried per request.
      *
+     * Route attributes:
+     *   scope: sharing.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<users.GetAccountBatchError>.
      * @param arg The request parameters.
@@ -3216,6 +3966,9 @@ export class Dropbox {
     /**
      * Get information about the current user's account.
      *
+     * Route attributes:
+     *   scope: account_info.read
+     *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      */
@@ -3223,6 +3976,9 @@ export class Dropbox {
 
     /**
      * Get the space usage information for the current user's account.
+     *
+     * Route attributes:
+     *   scope: account_info.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
