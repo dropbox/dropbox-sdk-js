@@ -683,19 +683,19 @@ export class Dropbox {
 
     /**
      * Create a new file with the contents provided in the request. Note that
-     * this endpoint is part of the properties API alpha and is slightly
-     * different from upload(). Do not use this to upload a file larger than 150
-     * MB. Instead, create an upload session with uploadSessionStart().
+     * the behavior of this alpha endpoint is unstable and subject to change. Do
+     * not use this to upload a file larger than 150 MB. Instead, create an
+     * upload session with uploadSessionStart().
      *
      * Route attributes:
      *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<files.UploadErrorWithProperties>.
+     * DropboxResponseError<files.UploadError>.
      * @deprecated
      * @param arg The request parameters.
      */
-    public filesAlphaUpload(arg: files.CommitInfoWithProperties): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesAlphaUpload(arg: files.UploadArg): Promise<DropboxResponse<files.FileMetadata>>;
 
     /**
      * Copy a file or folder to a different location in the user's Dropbox. If
@@ -1575,7 +1575,7 @@ export class Dropbox {
      * DropboxResponseError<files.UploadError>.
      * @param arg The request parameters.
      */
-    public filesUpload(arg: files.CommitInfo): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesUpload(arg: files.UploadArg): Promise<DropboxResponse<files.FileMetadata>>;
 
     /**
      * Append more data to an upload session. When the parameter close is set,
@@ -1591,7 +1591,7 @@ export class Dropbox {
      *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<files.UploadSessionLookupError>.
+     * DropboxResponseError<files.UploadSessionAppendError>.
      * @param arg The request parameters.
      */
     public filesUploadSessionAppendV2(arg: files.UploadSessionAppendArg): Promise<DropboxResponse<void>>;
@@ -1609,7 +1609,7 @@ export class Dropbox {
      *   scope: files.content.write
      *
      * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<files.UploadSessionLookupError>.
+     * DropboxResponseError<files.UploadSessionAppendError>.
      * @deprecated
      * @param arg The request parameters.
      */
