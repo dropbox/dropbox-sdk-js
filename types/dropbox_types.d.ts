@@ -1681,10 +1681,6 @@
 
     export interface CommitInfo {
       /**
-       * The file contents to be uploaded.
-       */
-      contents?: Object;
-      /**
        * Path in the user's Dropbox to save the file.
        */
       path: WritePathOrId;
@@ -1718,13 +1714,6 @@
        * Defaults to False.
        */
       strict_conflict?: boolean;
-    }
-
-    export interface CommitInfoWithProperties extends CommitInfo {
-      /**
-       * The file contents to be uploaded.
-       */
-      contents?: Object;
     }
 
     export interface ContentSyncSetting {
@@ -4815,6 +4804,20 @@
       entries: Array<UnlockFileArg>;
     }
 
+    export interface UploadArg extends CommitInfo {
+      /**
+       * The file contents to be uploaded.
+       */
+      contents?: Object;
+      /**
+       * NOT YET SUPPORTED. A hash of the file content uploaded in this call. If
+       * provided and the uploaded content does not match this hash, an error
+       * will be returned. For more information see our [Content hash]{@link
+       * https://www.dropbox.com/developers/reference/content-hash} page.
+       */
+      content_hash?: Sha256HexHash;
+    }
+
     /**
      * Unable to save the uploaded contents to a file.
      */
@@ -4838,13 +4841,19 @@
       '.tag': 'payload_too_large';
     }
 
+    /**
+     * The content received by the Dropbox server in this call does not match
+     * the provided content hash.
+     */
+    export interface UploadErrorContentHashMismatch {
+      '.tag': 'content_hash_mismatch';
+    }
+
     export interface UploadErrorOther {
       '.tag': 'other';
     }
 
-    export type UploadError = UploadErrorPath | UploadErrorPropertiesError | UploadErrorPayloadTooLarge | UploadErrorOther;
-
-    export type UploadErrorWithProperties = UploadError;
+    export type UploadError = UploadErrorPath | UploadErrorPropertiesError | UploadErrorPayloadTooLarge | UploadErrorContentHashMismatch | UploadErrorOther;
 
     export interface UploadSessionAppendArg {
       /**
@@ -4859,7 +4868,24 @@
        * Defaults to False.
        */
       close?: boolean;
+      /**
+       * NOT YET SUPPORTED. A hash of the file content uploaded in this call. If
+       * provided and the uploaded content does not match this hash, an error
+       * will be returned. For more information see our [Content hash]{@link
+       * https://www.dropbox.com/developers/reference/content-hash} page.
+       */
+      content_hash?: Sha256HexHash;
     }
+
+    /**
+     * The content received by the Dropbox server in this call does not match
+     * the provided content hash.
+     */
+    export interface UploadSessionAppendErrorContentHashMismatch {
+      '.tag': 'content_hash_mismatch';
+    }
+
+    export type UploadSessionAppendError = UploadSessionLookupError | UploadSessionAppendErrorContentHashMismatch;
 
     export interface UploadSessionCursor {
       /**
@@ -4891,6 +4917,13 @@
        * Contains the path and other optional modifiers for the commit.
        */
       commit: CommitInfo;
+      /**
+       * NOT YET SUPPORTED. A hash of the file content uploaded in this call. If
+       * provided and the uploaded content does not match this hash, an error
+       * will be returned. For more information see our [Content hash]{@link
+       * https://www.dropbox.com/developers/reference/content-hash} page.
+       */
+      content_hash?: Sha256HexHash;
     }
 
     export interface UploadSessionFinishBatchArg {
@@ -5014,11 +5047,19 @@
       '.tag': 'payload_too_large';
     }
 
+    /**
+     * The content received by the Dropbox server in this call does not match
+     * the provided content hash.
+     */
+    export interface UploadSessionFinishErrorContentHashMismatch {
+      '.tag': 'content_hash_mismatch';
+    }
+
     export interface UploadSessionFinishErrorOther {
       '.tag': 'other';
     }
 
-    export type UploadSessionFinishError = UploadSessionFinishErrorLookupFailed | UploadSessionFinishErrorPath | UploadSessionFinishErrorPropertiesError | UploadSessionFinishErrorTooManySharedFolderTargets | UploadSessionFinishErrorTooManyWriteOperations | UploadSessionFinishErrorConcurrentSessionDataNotAllowed | UploadSessionFinishErrorConcurrentSessionNotClosed | UploadSessionFinishErrorConcurrentSessionMissingData | UploadSessionFinishErrorPayloadTooLarge | UploadSessionFinishErrorOther;
+    export type UploadSessionFinishError = UploadSessionFinishErrorLookupFailed | UploadSessionFinishErrorPath | UploadSessionFinishErrorPropertiesError | UploadSessionFinishErrorTooManySharedFolderTargets | UploadSessionFinishErrorTooManyWriteOperations | UploadSessionFinishErrorConcurrentSessionDataNotAllowed | UploadSessionFinishErrorConcurrentSessionNotClosed | UploadSessionFinishErrorConcurrentSessionMissingData | UploadSessionFinishErrorPayloadTooLarge | UploadSessionFinishErrorContentHashMismatch | UploadSessionFinishErrorOther;
 
     /**
      * The upload session ID was not found or has expired. Upload sessions are
@@ -5111,6 +5152,13 @@
        * UploadSessionType.sequential.
        */
       session_type?: UploadSessionType;
+      /**
+       * NOT YET SUPPORTED. A hash of the file content uploaded in this call. If
+       * provided and the uploaded content does not match this hash, an error
+       * will be returned. For more information see our [Content hash]{@link
+       * https://www.dropbox.com/developers/reference/content-hash} page.
+       */
+      content_hash?: Sha256HexHash;
     }
 
     /**
@@ -5134,11 +5182,19 @@
       '.tag': 'payload_too_large';
     }
 
+    /**
+     * The content received by the Dropbox server in this call does not match
+     * the provided content hash.
+     */
+    export interface UploadSessionStartErrorContentHashMismatch {
+      '.tag': 'content_hash_mismatch';
+    }
+
     export interface UploadSessionStartErrorOther {
       '.tag': 'other';
     }
 
-    export type UploadSessionStartError = UploadSessionStartErrorConcurrentSessionDataNotAllowed | UploadSessionStartErrorConcurrentSessionCloseNotAllowed | UploadSessionStartErrorPayloadTooLarge | UploadSessionStartErrorOther;
+    export type UploadSessionStartError = UploadSessionStartErrorConcurrentSessionDataNotAllowed | UploadSessionStartErrorConcurrentSessionCloseNotAllowed | UploadSessionStartErrorPayloadTooLarge | UploadSessionStartErrorContentHashMismatch | UploadSessionStartErrorOther;
 
     export interface UploadSessionStartResult {
       /**
