@@ -4810,9 +4810,9 @@
        */
       contents?: Object;
       /**
-       * NOT YET SUPPORTED. A hash of the file content uploaded in this call. If
-       * provided and the uploaded content does not match this hash, an error
-       * will be returned. For more information see our [Content hash]{@link
+       * A hash of the file content uploaded in this call. If provided and the
+       * uploaded content does not match this hash, an error will be returned.
+       * For more information see our [Content hash]{@link
        * https://www.dropbox.com/developers/reference/content-hash} page.
        */
       content_hash?: Sha256HexHash;
@@ -4869,9 +4869,9 @@
        */
       close?: boolean;
       /**
-       * NOT YET SUPPORTED. A hash of the file content uploaded in this call. If
-       * provided and the uploaded content does not match this hash, an error
-       * will be returned. For more information see our [Content hash]{@link
+       * A hash of the file content uploaded in this call. If provided and the
+       * uploaded content does not match this hash, an error will be returned.
+       * For more information see our [Content hash]{@link
        * https://www.dropbox.com/developers/reference/content-hash} page.
        */
       content_hash?: Sha256HexHash;
@@ -4918,9 +4918,9 @@
        */
       commit: CommitInfo;
       /**
-       * NOT YET SUPPORTED. A hash of the file content uploaded in this call. If
-       * provided and the uploaded content does not match this hash, an error
-       * will be returned. For more information see our [Content hash]{@link
+       * A hash of the file content uploaded in this call. If provided and the
+       * uploaded content does not match this hash, an error will be returned.
+       * For more information see our [Content hash]{@link
        * https://www.dropbox.com/developers/reference/content-hash} page.
        */
       content_hash?: Sha256HexHash;
@@ -5153,9 +5153,9 @@
        */
       session_type?: UploadSessionType;
       /**
-       * NOT YET SUPPORTED. A hash of the file content uploaded in this call. If
-       * provided and the uploaded content does not match this hash, an error
-       * will be returned. For more information see our [Content hash]{@link
+       * A hash of the file content uploaded in this call. If provided and the
+       * uploaded content does not match this hash, an error will be returned.
+       * For more information see our [Content hash]{@link
        * https://www.dropbox.com/developers/reference/content-hash} page.
        */
       content_hash?: Sha256HexHash;
@@ -6550,6 +6550,14 @@
       '.tag': 'viewer_no_comment';
     }
 
+    /**
+     * The collaborator can only view the shared folder that they have access
+     * to.
+     */
+    export interface AccessLevelTraverse {
+      '.tag': 'traverse';
+    }
+
     export interface AccessLevelOther {
       '.tag': 'other';
     }
@@ -6557,7 +6565,7 @@
     /**
      * Defines the access levels for collaborators.
      */
-    export type AccessLevel = AccessLevelOwner | AccessLevelEditor | AccessLevelViewer | AccessLevelViewerNoComment | AccessLevelOther;
+    export type AccessLevel = AccessLevelOwner | AccessLevelEditor | AccessLevelViewer | AccessLevelViewerNoComment | AccessLevelTraverse | AccessLevelOther;
 
     /**
      * Only the owner can update the ACL.
@@ -6610,8 +6618,9 @@
        * Defaults to TagRef(Union('AccessLevel', [UnionField('owner', Void,
        * False, None), UnionField('editor', Void, False, None),
        * UnionField('viewer', Void, False, None),
-       * UnionField('viewer_no_comment', Void, False, None), UnionField('other',
-       * Void, True, None)]), 'viewer').
+       * UnionField('viewer_no_comment', Void, False, None),
+       * UnionField('traverse', Void, False, None), UnionField('other', Void,
+       * True, None)]), 'viewer').
        */
       access_level?: AccessLevel;
       /**
@@ -6792,8 +6801,9 @@
        * Defaults to TagRef(Union('AccessLevel', [UnionField('owner', Void,
        * False, None), UnionField('editor', Void, False, None),
        * UnionField('viewer', Void, False, None),
-       * UnionField('viewer_no_comment', Void, False, None), UnionField('other',
-       * Void, True, None)]), 'viewer').
+       * UnionField('viewer_no_comment', Void, False, None),
+       * UnionField('traverse', Void, False, None), UnionField('other', Void,
+       * True, None)]), 'viewer').
        */
       access_level?: AccessLevel;
     }
@@ -17756,12 +17766,12 @@
     }
 
     /**
-     * Policy for deciding whether a team can use Email to my Dropbox feature
+     * Policy for deciding whether a team can use Email to Dropbox feature
      */
     export type EmailIngestPolicy = EmailIngestPolicyDisabled | EmailIngestPolicyEnabled | EmailIngestPolicyOther;
 
     /**
-     * Changed email to my Dropbox policy for team.
+     * Changed email to Dropbox policy for team.
      */
     export interface EmailIngestPolicyChangedDetails {
       /**
@@ -17779,7 +17789,7 @@
     }
 
     /**
-     * Received files via Email to my Dropbox.
+     * Received files via Email to Dropbox.
      */
     export interface EmailIngestReceiveFileDetails {
       /**
@@ -20765,7 +20775,7 @@
     }
 
     /**
-     * (file_requests) Received files via Email to my Dropbox
+     * (file_requests) Received files via Email to Dropbox
      */
     export interface EventTypeEmailIngestReceiveFile extends EmailIngestReceiveFileType {
       '.tag': 'email_ingest_receive_file';
@@ -22698,7 +22708,7 @@
     }
 
     /**
-     * (team_policies) Changed email to my Dropbox policy for team
+     * (team_policies) Changed email to Dropbox policy for team
      */
     export interface EventTypeEmailIngestPolicyChanged extends EmailIngestPolicyChangedType {
       '.tag': 'email_ingest_policy_changed';
@@ -24201,7 +24211,7 @@
     }
 
     /**
-     * (file_requests) Received files via Email to my Dropbox
+     * (file_requests) Received files via Email to Dropbox
      */
     export interface EventTypeArgEmailIngestReceiveFile {
       '.tag': 'email_ingest_receive_file';
@@ -26134,7 +26144,7 @@
     }
 
     /**
-     * (team_policies) Changed email to my Dropbox policy for team
+     * (team_policies) Changed email to Dropbox policy for team
      */
     export interface EventTypeArgEmailIngestPolicyChanged {
       '.tag': 'email_ingest_policy_changed';
