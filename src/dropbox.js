@@ -14,11 +14,6 @@ import { baseApiUrl, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
 
 let fetch;
-if (typeof window !== 'undefined') {
-  fetch = window.fetch.bind(window);
-} else {
-  fetch = require('node-fetch'); // eslint-disable-line global-require
-}
 
 const b64 = typeof btoa === 'undefined'
   ? (str) => Buffer.from(str).toString('base64')
@@ -57,6 +52,12 @@ const b64 = typeof btoa === 'undefined'
 export default class Dropbox {
   constructor(options) {
     options = options || {};
+
+    if (typeof window !== 'undefined') {
+      fetch = window.fetch.bind(window);
+    } else {
+      fetch = require('node-fetch'); // eslint-disable-line global-require
+    }
 
     if (options.auth) {
       this.auth = options.auth;

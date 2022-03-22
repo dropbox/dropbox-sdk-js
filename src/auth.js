@@ -8,25 +8,8 @@ import {
 import { parseResponse } from './response.js';
 
 let fetch;
-if (isBrowserEnv()) {
-  fetch = window.fetch.bind(window);
-} else {
-  fetch = require('node-fetch'); // eslint-disable-line global-require
-}
-
 let crypto;
-if (isBrowserEnv()) {
-  crypto = window.crypto || window.msCrypto; // for IE11
-} else {
-  crypto = require('crypto'); // eslint-disable-line global-require
-}
-
 let Encoder;
-if (typeof TextEncoder === 'undefined') {
-  Encoder = require('util').TextEncoder; // eslint-disable-line global-require
-} else {
-  Encoder = TextEncoder;
-}
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -61,6 +44,20 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
 export default class DropboxAuth {
   constructor(options) {
     options = options || {};
+
+    if (isBrowserEnv()) {
+      fetch = window.fetch.bind(window);
+      crypto = window.crypto || window.msCrypto; // for IE11
+    } else {
+      fetch = require('node-fetch'); // eslint-disable-line global-require
+      crypto = require('crypto'); // eslint-disable-line global-require
+    }
+
+    if (typeof TextEncoder === 'undefined') {
+      Encoder = require('util').TextEncoder; // eslint-disable-line global-require
+    } else {
+      Encoder = TextEncoder;
+    }
 
     this.fetch = options.fetch || fetch;
     this.accessToken = options.accessToken;
