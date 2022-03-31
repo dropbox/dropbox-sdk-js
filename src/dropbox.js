@@ -53,12 +53,6 @@ export default class Dropbox {
   constructor(options) {
     options = options || {};
 
-    if (typeof window !== 'undefined') {
-      fetch = window.fetch.bind(window);
-    } else {
-      fetch = require('node-fetch'); // eslint-disable-line global-require
-    }
-
     if (options.auth) {
       this.auth = options.auth;
     } else {
