@@ -65,7 +65,7 @@ export default class Dropbox {
       this.auth = new DropboxAuth(options);
     }
 
-    this.fetch = options.fetch || fetch;
+    this.fetch = options.fetch || this.auth.fetch;
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.pathRoot = options.pathRoot;
