@@ -13,8 +13,6 @@ import DropboxAuth from './auth.js';
 import { baseApiUrl, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
 
-let fetch;
-
 const b64 = typeof btoa === 'undefined'
   ? (str) => Buffer.from(str).toString('base64')
   : btoa;
@@ -53,19 +51,13 @@ export default class Dropbox {
   constructor(options) {
     options = options || {};
 
-    if (typeof window !== 'undefined') {
-      fetch = window.fetch.bind(window);
-    } else {
-      fetch = require('node-fetch'); // eslint-disable-line global-require
-    }
-
     if (options.auth) {
       this.auth = options.auth;
     } else {
       this.auth = new DropboxAuth(options);
     }
 
-    this.fetch = options.fetch || fetch;
+    this.fetch = options.fetch || this.auth.fetch;
     this.selectUser = options.selectUser;
     this.selectAdmin = options.selectAdmin;
     this.pathRoot = options.pathRoot;
