@@ -13,8 +13,6 @@ import DropboxAuth from './auth.js';
 import { baseApiUrl, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
 
-let fetch;
-
 const b64 = typeof btoa === 'undefined'
   ? (str) => Buffer.from(str).toString('base64')
   : btoa;
