@@ -1743,6 +1743,19 @@ export class Dropbox {
     public filesUploadSessionStart(arg: files.UploadSessionStartArg): Promise<DropboxResponse<files.UploadSessionStartResult>>;
 
     /**
+     * This route starts batch of upload_sessions. Please refer to
+     * `upload_session/start` usage.
+     *
+     * Route attributes:
+     *   scope: files.content.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     */
+    public filesUploadSessionStartBatch(arg: files.UploadSessionStartBatchArg): Promise<DropboxResponse<files.UploadSessionStartBatchResult>>;
+
+    /**
      * Marks the given Paper doc as archived. This action can be performed or
      * undone by anyone with edit permissions to the doc. Note that this
      * endpoint will continue to work for content created by users on the older
