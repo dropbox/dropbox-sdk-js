@@ -1,4 +1,3 @@
-import { fail } from 'assert';
 import chai from 'chai';
 import {
   baseApiUrl,
@@ -6,6 +5,7 @@ import {
   isWindowOrWorker,
   OAuth2AuthorizationUrl,
   OAuth2TokenUrl,
+  isWorkerEnv,
 } from '../../src/utils.js';
 
 describe('Dropbox utils', () => {
@@ -79,5 +79,11 @@ describe('isWindowOrWorker', () => {
   it('returns false when not window or of type WorkerGlobalScope', () => {
     const testEnv = isWindowOrWorker();
     chai.assert.isFalse(testEnv);
+  });
+});
+
+describe('isWorkerEnv', () => {
+  it('returns false when not running in a service worker env', () => {
+    chai.assert.isFalse(isWorkerEnv());
   });
 });

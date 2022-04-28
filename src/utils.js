@@ -57,6 +57,10 @@ export function isBrowserEnv() {
   return typeof window !== 'undefined';
 }
 
+export function isWorkerEnv() {
+  return typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope; // eslint-disable-line no-restricted-globals
+}
+
 export function createBrowserSafeString(toBeConverted) {
   const convertedString = toBeConverted.toString('base64')
     .replace(/\+/g, '-')
