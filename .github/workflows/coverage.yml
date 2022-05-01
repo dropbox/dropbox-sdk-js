@@ -23,7 +23,7 @@ jobs:
         run: |
           npm run coverage:unit
       - name: Publish Coverage
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v3.1.0
         with:
           flags: unit
           fail_ci_if_error: true
@@ -56,7 +56,7 @@ jobs:
         run: |
           npm run coverage:integration
       - name: Publish Coverage
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v3.1.0
         with:
           flags: integration
           fail_ci_if_error: true
