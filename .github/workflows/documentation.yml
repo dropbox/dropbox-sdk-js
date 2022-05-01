@@ -9,7 +9,7 @@ jobs:
   npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3.0.2
       - uses: actions/setup-node@v2.1.5
         with:
           registry-url: https://npm.pkg.github.com/

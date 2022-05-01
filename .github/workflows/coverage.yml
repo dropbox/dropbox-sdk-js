@@ -11,7 +11,7 @@ jobs:
   Unit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3.0.2
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
         with:
@@ -30,7 +30,7 @@ jobs:
   Integration:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3.0.2
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
         with:

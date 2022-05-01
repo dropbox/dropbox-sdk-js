@@ -11,7 +11,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         node: [10, 11, 12, 13, 14]
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3.0.2
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
         with:
@@ -50,7 +50,7 @@ jobs:
         os: [ubuntu-latest, macos-latest]
         node: [14] # Can only be ran on 14 because it relies on fs/promises
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3.0.2
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.1.5
         with:
