@@ -1,6 +1,7 @@
 import chai from 'chai';
 import sinon from 'sinon';
 import chaiAsPromised from 'chai-as-promised';
+import * as utils from '../../src/utils';
 import { DropboxAuth } from '../../index.js';
 
 chai.use(chaiAsPromised);
@@ -478,6 +479,85 @@ describe('DropboxAuth', () => {
         chai.assert.equal(refreshUrl, testScopeUrl);
         chai.assert.equal(headers['Content-Type'], 'application/json');
       });
+    });
+  });
+  describe('fetch and crypto', () => {
+    const windowRef = global.window;
+    const selfRef = global.self;
+    let spyOnFetch;
+    let spyOnDigest;
+    let spyOnIsBrowserEnv;
+    let spyOnIsWorkerEnv;
+    beforeEach(() => {
+      spyOnFetch = sinon.spy();
+      spyOnDigest = sinon.spy();
+      spyOnIsBrowserEnv = sinon.stub(utils, 'isBrowserEnv');
+      spyOnIsWorkerEnv = sinon.stub(utils, 'isWorkerEnv');
+    });
+    afterEach(() => {
+      Object.defineProperty(global, 'window', {
+        writable: true,
+        value: windowRef,
+      });
+      Object.defineProperty(global, 'self', {
+        writable: true,
+        value: selfRef,
+      });
+      spyOnIsBrowserEnv.restore();
+      spyOnIsWorkerEnv.restore();
+    });
+    it('refers fetch and crypto from window object in browser env', () => {
+      Object.defineProperty(global, 'window', {
+        writable: true,
+        value: {
+          fetch: spyOnFetch,
+          crypto: {
+            subtle: {
+              digest: () => ({
+                then: spyOnDigest,
+              }),
+            },
+          },
+        },
+      });
+      spyOnIsBrowserEnv.returns(true);
+      const dbxAuth = new DropboxAuth({
+        clientId: 'foo',
+        clientSecret: 'bar',
+      });
+      dbxAuth.fetch();
+      dbxAuth.generateCodeChallenge();
+      chai.assert(spyOnIsBrowserEnv.called);
+      chai.assert(!spyOnIsWorkerEnv.called);
+      chai.assert(spyOnFetch.calledOnce);
+      chai.assert(spyOnDigest.calledOnce);
+    });
+    it('refers fetch and crypto from self object in service worker env', () => {
+      Object.defineProperty(global, 'self', {
+        writable: true,
+        value: {
+          fetch: spyOnFetch,
+          crypto: {
+            subtle: {
+              digest: () => ({
+                then: spyOnDigest,
+              }),
+            },
+          },
+        },
+      });
+      spyOnIsBrowserEnv.returns(false);
+      spyOnIsWorkerEnv.returns(true);
+      const dbxAuth = new DropboxAuth({
+        clientId: 'foo',
+        clientSecret: 'bar',
+      });
+      dbxAuth.fetch();
+      dbxAuth.generateCodeChallenge();
+      chai.assert(spyOnIsBrowserEnv.called);
+      chai.assert(spyOnIsWorkerEnv.called);
+      chai.assert(spyOnFetch.calledOnce);
+      chai.assert(spyOnDigest.calledOnce);
     });
   });
 });

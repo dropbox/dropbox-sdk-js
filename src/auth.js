@@ -4,6 +4,7 @@ import {
   createBrowserSafeString,
   OAuth2AuthorizationUrl,
   OAuth2TokenUrl,
+  isWorkerEnv,
 } from './utils.js';
 import { parseResponse } from './response.js';
 
@@ -48,6 +49,11 @@ export default class DropboxAuth {
     if (isBrowserEnv()) {
       fetch = window.fetch.bind(window);
       crypto = window.crypto || window.msCrypto; // for IE11
+    } else if (isWorkerEnv()) {
+      /* eslint-disable no-restricted-globals */
+      fetch = self.fetch.bind(self);
+      crypto = self.crypto;
+      /* eslint-enable no-restricted-globals */
     } else {
       fetch = require('node-fetch'); // eslint-disable-line global-require
       crypto = require('crypto'); // eslint-disable-line global-require
@@ -175,7 +181,7 @@ export default class DropboxAuth {
     const encoder = new Encoder();
     const codeData = encoder.encode(this.codeVerifier);
     let codeChallenge;
-    if (isBrowserEnv()) {
+    if (isBrowserEnv() || isWorkerEnv()) {
       return crypto.subtle.digest('SHA-256', codeData)
         .then((digestedHash) => {
           const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(digestedHash)));
@@ -191,7 +197,7 @@ export default class DropboxAuth {
 
   generatePKCECodes() {
     let codeVerifier;
-    if (isBrowserEnv()) {
+    if (isBrowserEnv() || isWorkerEnv()) {
       const array = new Uint8Array(PKCELength);
       const randomValueArray = crypto.getRandomValues(array);
       const base64String = btoa(randomValueArray);
