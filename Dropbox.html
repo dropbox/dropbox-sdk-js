@@ -8167,6 +8167,7 @@ Route attributes:
 less than 20 GB in size and any single file within must be less than 4 GB in
 size. The resulting zip must have fewer than 10,000 total file and folder
 entries, including the top level folder. The input cannot be a single file.
+Note: this endpoint does not support HTTP range requests.
 Route attributes:
   scope: files.content.read
     </div>
@@ -27977,7 +27978,7 @@ Route attributes:
         Creates new legal hold policy. Note: Legal Holds is a paid add-on. Not all
 teams have the feature. Permission : Team member file access.
 Route attributes:
-  scope: team_data.member
+  scope: team_data.governance.write
     </div>
     
 
@@ -28128,7 +28129,7 @@ Route attributes:
         Gets a legal hold by Id. Note: Legal Holds is a paid add-on. Not all teams
 have the feature. Permission : Team member file access.
 Route attributes:
-  scope: team_data.member
+  scope: team_data.governance.write
     </div>
     
 
@@ -28279,7 +28280,7 @@ Route attributes:
         List the file metadata that's under the hold. Note: Legal Holds is a paid
 add-on. Not all teams have the feature. Permission : Team member file access.
 Route attributes:
-  scope: team_data.member
+  scope: team_data.governance.write
     </div>
     
 
@@ -28431,7 +28432,7 @@ Route attributes:
 is a paid add-on. Not all teams have the feature. Permission : Team member
 file access.
 Route attributes:
-  scope: team_data.member
+  scope: team_data.governance.write
     </div>
     
 
@@ -28582,7 +28583,7 @@ Route attributes:
         Lists legal holds on a team. Note: Legal Holds is a paid add-on. Not all
 teams have the feature. Permission : Team member file access.
 Route attributes:
-  scope: team_data.member
+  scope: team_data.governance.write
     </div>
     
 
@@ -28733,7 +28734,7 @@ Route attributes:
         Releases a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
 teams have the feature. Permission : Team member file access.
 Route attributes:
-  scope: team_data.member
+  scope: team_data.governance.write
     </div>
     
 
@@ -28884,7 +28885,7 @@ Route attributes:
         Updates a legal hold. Note: Legal Holds is a paid add-on. Not all teams have
 the feature. Permission : Team member file access.
 Route attributes:
-  scope: team_data.member
+  scope: team_data.governance.write
     </div>
     
 
@@ -37201,7 +37202,7 @@ Route attributes:
         Sets an archived team folder's status to active. Permission : Team member
 file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.write
     </div>
     
 
@@ -37353,7 +37354,7 @@ Route attributes:
 file members. This endpoint cannot be used for teams that have a shared team
 space. Permission : Team member file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.write
     </div>
     
 
@@ -37504,7 +37505,7 @@ Route attributes:
         Returns the status of an asynchronous job for archiving a team folder.
 Permission : Team member file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.write
     </div>
     
 
@@ -37656,7 +37657,7 @@ Route attributes:
 used for teams that do not already have a shared team space. Permission :
 Team member file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.write
     </div>
     
 
@@ -37806,7 +37807,7 @@ Route attributes:
     <div class="description">
         Retrieves metadata for team folders. Permission : Team member file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.read
     </div>
     
 
@@ -37956,7 +37957,7 @@ Route attributes:
     <div class="description">
         Lists all team folders. Permission : Team member file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.read
     </div>
     
 
@@ -38107,7 +38108,7 @@ Route attributes:
         Once a cursor has been retrieved from team_folder/list, use this to paginate
 through all team folders. Permission : Team member file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.read
     </div>
     
 
@@ -38258,7 +38259,7 @@ Route attributes:
         Permanently deletes an archived team folder. This endpoint cannot be used for
 teams that have a shared team space. Permission : Team member file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.write
     </div>
     
 
@@ -38408,7 +38409,7 @@ Route attributes:
     <div class="description">
         Changes an active team folder's name. Permission : Team member file access.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.write
     </div>
     
 
@@ -38559,7 +38560,7 @@ Route attributes:
         Updates the sync settings on a team folder or its contents.  Use of this
 endpoint requires that the team has team selective sync enabled.
 Route attributes:
-  scope: team_data.team_space
+  scope: team_data.content.write
     </div>
     
 
@@ -39497,7 +39498,7 @@ Route attributes:
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2022-05-03T18:15:21+00:00
+		on 2022-05-18T21:52:04+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
