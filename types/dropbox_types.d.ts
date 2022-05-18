@@ -15948,6 +15948,14 @@
        * Recipient settings.
        */
       recipients_settings?: RecipientsConfiguration;
+      /**
+       * Text.
+       */
+      text?: string;
+      /**
+       * Excluded file extensions.
+       */
+      excluded_file_extensions?: string;
     }
 
     export interface AdminAlertingAlertSensitivityHigh {
@@ -31734,11 +31742,15 @@
       '.tag': 'uk_only';
     }
 
+    export interface PlacementRestrictionUsS3Only {
+      '.tag': 'us_s3_only';
+    }
+
     export interface PlacementRestrictionOther {
       '.tag': 'other';
     }
 
-    export type PlacementRestriction = PlacementRestrictionAustraliaOnly | PlacementRestrictionEuropeOnly | PlacementRestrictionJapanOnly | PlacementRestrictionNone | PlacementRestrictionUkOnly | PlacementRestrictionOther;
+    export type PlacementRestriction = PlacementRestrictionAustraliaOnly | PlacementRestrictionEuropeOnly | PlacementRestrictionJapanOnly | PlacementRestrictionNone | PlacementRestrictionUkOnly | PlacementRestrictionUsS3Only | PlacementRestrictionOther;
 
     export interface PolicyTypeDisposition {
       '.tag': 'disposition';

@@ -943,7 +943,7 @@ export class Dropbox {
      * be less than 20 GB in size and any single file within must be less than 4
      * GB in size. The resulting zip must have fewer than 10,000 total file and
      * folder entries, including the top level folder. The input cannot be a
-     * single file.
+     * single file. Note: this endpoint does not support HTTP range requests.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -2955,7 +2955,7 @@ export class Dropbox {
      * all teams have the feature. Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.member
+     *   scope: team_data.governance.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyCreateError>.
@@ -2968,7 +2968,7 @@ export class Dropbox {
      * teams have the feature. Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.member
+     *   scope: team_data.governance.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsGetPolicyError>.
@@ -2982,7 +2982,7 @@ export class Dropbox {
      * access.
      *
      * Route attributes:
-     *   scope: team_data.member
+     *   scope: team_data.governance.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListHeldRevisionsError>.
@@ -2996,7 +2996,7 @@ export class Dropbox {
      * member file access.
      *
      * Route attributes:
-     *   scope: team_data.member
+     *   scope: team_data.governance.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListHeldRevisionsError>.
@@ -3009,7 +3009,7 @@ export class Dropbox {
      * teams have the feature. Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.member
+     *   scope: team_data.governance.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListPoliciesError>.
@@ -3022,7 +3022,7 @@ export class Dropbox {
      * teams have the feature. Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.member
+     *   scope: team_data.governance.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyReleaseError>.
@@ -3035,7 +3035,7 @@ export class Dropbox {
      * have the feature. Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.member
+     *   scope: team_data.governance.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyUpdateError>.
@@ -3766,7 +3766,7 @@ export class Dropbox {
      * file access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderActivateError>.
@@ -3780,7 +3780,7 @@ export class Dropbox {
      * shared team space. Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderArchiveError>.
@@ -3793,7 +3793,7 @@ export class Dropbox {
      * Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
@@ -3807,7 +3807,7 @@ export class Dropbox {
      * Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderCreateError>.
@@ -3820,7 +3820,7 @@ export class Dropbox {
      * access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
@@ -3832,7 +3832,7 @@ export class Dropbox {
      * Lists all team folders. Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderListError>.
@@ -3845,7 +3845,7 @@ export class Dropbox {
      * paginate through all team folders. Permission : Team member file access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderListContinueError>.
@@ -3859,7 +3859,7 @@ export class Dropbox {
      * access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderPermanentlyDeleteError>.
@@ -3872,7 +3872,7 @@ export class Dropbox {
      * access.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderRenameError>.
@@ -3885,7 +3885,7 @@ export class Dropbox {
      * endpoint requires that the team has team selective sync enabled.
      *
      * Route attributes:
-     *   scope: team_data.team_space
+     *   scope: team_data.content.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderUpdateSyncSettingsError>.
