@@ -4320,6 +4320,10 @@
        * for active file search.
        */
       file_categories?: Array<FileCategory>;
+      /**
+       * Restricts results to the given account id.
+       */
+      account_id?: users_common.AccountId;
     }
 
     export interface SearchOrderByRelevance {

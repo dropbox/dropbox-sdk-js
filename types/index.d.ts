@@ -1744,7 +1744,11 @@ export class Dropbox {
 
     /**
      * This route starts batch of upload_sessions. Please refer to
-     * `upload_session/start` usage.
+     * `upload_session/start` usage. Calls to this endpoint will count as data
+     * transport calls for any Dropbox Business teams with a limit on the number
+     * of data transport calls allowed per month. For more information, see the
+     * [Data transport limit page]{@link
+     * https://www.dropbox.com/developers/reference/data-transport-limit}.
      *
      * Route attributes:
      *   scope: files.content.write
