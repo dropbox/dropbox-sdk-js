@@ -1760,6 +1760,20 @@ export class Dropbox {
     public filesUploadSessionStartBatch(arg: files.UploadSessionStartBatchArg): Promise<DropboxResponse<files.UploadSessionStartBatchResult>>;
 
     /**
+     * This route is used for refreshing the info that is found in the id_token
+     * during the OIDC flow. This route doesn't require any arguments and will
+     * use the scopes approved for the given access token.
+     *
+     * Route attributes:
+     *   scope: openid
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<openid.UserInfoError>.
+     * @param arg The request parameters.
+     */
+    public openidUserinfo(arg: openid.UserInfoArgs): Promise<DropboxResponse<openid.UserInfoResult>>;
+
+    /**
      * Marks the given Paper doc as archived. This action can be performed or
      * undone by anyone with edit permissions to the doc. Note that this
      * endpoint will continue to work for content created by users on the older
