@@ -1760,6 +1760,20 @@ export class Dropbox {
     public filesUploadSessionStartBatch(arg: files.UploadSessionStartBatchArg): Promise<DropboxResponse<files.UploadSessionStartBatchResult>>;
 
     /**
+     * This route is used for refreshing the info that is found in the id_token
+     * during the OIDC flow. This route doesn't require any arguments and will
+     * use the scopes approved for the given access token.
+     *
+     * Route attributes:
+     *   scope: openid
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<openid.UserInfoError>.
+     * @param arg The request parameters.
+     */
+    public openidUserinfo(arg: openid.UserInfoArgs): Promise<DropboxResponse<openid.UserInfoResult>>;
+
+    /**
      * Marks the given Paper doc as archived. This action can be performed or
      * undone by anyone with edit permissions to the doc. Note that this
      * endpoint will continue to work for content created by users on the older
@@ -3764,6 +3778,66 @@ export class Dropbox {
      * @param arg The request parameters.
      */
     public teamReportsGetStorage(arg: team.DateRange): Promise<DropboxResponse<team.GetStorageReport>>;
+
+    /**
+     * Endpoint adds Approve List entries. Changes are effective immediately.
+     * Changes are committed in transaction. In case of single validation error
+     * - all entries are rejected. Valid domains (RFC-1034/5) and emails
+     * (RFC-5322/822) are accepted. Added entries cannot overflow limit of 10000
+     * entries per team. Maximum 100 entries per call is allowed.
+     *
+     * Route attributes:
+     *   scope: team_info.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.SharingAllowlistAddError>.
+     * @param arg The request parameters.
+     */
+    public teamSharingAllowlistAdd(arg: team.SharingAllowlistAddArgs): Promise<DropboxResponse<team.SharingAllowlistAddResponse>>;
+
+    /**
+     * Lists Approve List entries for given team, from newest to oldest,
+     * returning up to `limit` entries at a time. If there are more than `limit`
+     * entries associated with the current team, more can be fetched by passing
+     * the returned `cursor` to sharingAllowlistListContinue().
+     *
+     * Route attributes:
+     *   scope: team_info.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.SharingAllowlistListError>.
+     * @param arg The request parameters.
+     */
+    public teamSharingAllowlistList(arg: team.SharingAllowlistListArg): Promise<DropboxResponse<team.SharingAllowlistListResponse>>;
+
+    /**
+     * Lists entries associated with given team, starting from a the cursor. See
+     * sharingAllowlistList().
+     *
+     * Route attributes:
+     *   scope: team_info.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.SharingAllowlistListContinueError>.
+     * @param arg The request parameters.
+     */
+    public teamSharingAllowlistListContinue(arg: team.SharingAllowlistListContinueArg): Promise<DropboxResponse<team.SharingAllowlistListResponse>>;
+
+    /**
+     * Endpoint removes Approve List entries. Changes are effective immediately.
+     * Changes are committed in transaction. In case of single validation error
+     * - all entries are rejected. Valid domains (RFC-1034/5) and emails
+     * (RFC-5322/822) are accepted. Entries being removed have to be present on
+     * the list. Maximum 1000 entries per call is allowed.
+     *
+     * Route attributes:
+     *   scope: team_info.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.SharingAllowlistRemoveError>.
+     * @param arg The request parameters.
+     */
+    public teamSharingAllowlistRemove(arg: team.SharingAllowlistRemoveArgs): Promise<DropboxResponse<team.SharingAllowlistRemoveResponse>>;
 
     /**
      * Sets an archived team folder's status to active. Permission : Team member
