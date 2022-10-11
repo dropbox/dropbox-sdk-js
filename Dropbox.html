@@ -15913,6 +15913,158 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="openidUserinfo"><span class="type-signature"></span>openidUserinfo(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This route is used for refreshing the info that is found in the id_token
+during the OIDC flow. This route doesn't require any arguments and will use
+the scopes approved for the given access token.
+Route attributes:
+  scope: openid
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#OpenidUserInfoArgs">OpenidUserInfoArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#OpenidUserInfoResult">OpenidUserInfoResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#OpenidUserInfoError">OpenidUserInfoError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="paperDocsArchive"><span class="type-signature"></span>paperDocsArchive(arg)</h4>
     
     
@@ -37195,6 +37347,618 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="teamSharingAllowlistAdd"><span class="type-signature"></span>teamSharingAllowlistAdd(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Endpoint adds Approve List entries. Changes are effective immediately.
+Changes are committed in transaction. In case of single validation error -
+all entries are rejected. Valid domains (RFC-1034/5) and emails
+(RFC-5322/822) are accepted. Added entries cannot overflow limit of 10000
+entries per team. Maximum 100 entries per call is allowed.
+Route attributes:
+  scope: team_info.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamSharingAllowlistAddArgs">TeamSharingAllowlistAddArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamSharingAllowlistAddResponse">TeamSharingAllowlistAddResponse</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamSharingAllowlistAddError">TeamSharingAllowlistAddError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamSharingAllowlistList"><span class="type-signature"></span>teamSharingAllowlistList(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Lists Approve List entries for given team, from newest to oldest, returning
+up to `limit` entries at a time. If there are more than `limit` entries
+associated with the current team, more can be fetched by passing the returned
+`cursor` to sharing_allowlist/list/continue.
+Route attributes:
+  scope: team_info.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamSharingAllowlistListArg">TeamSharingAllowlistListArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamSharingAllowlistListResponse">TeamSharingAllowlistListResponse</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamSharingAllowlistListError">TeamSharingAllowlistListError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamSharingAllowlistListContinue"><span class="type-signature"></span>teamSharingAllowlistListContinue(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Lists entries associated with given team, starting from a the cursor. See
+sharing_allowlist/list.
+Route attributes:
+  scope: team_info.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamSharingAllowlistListContinueArg">TeamSharingAllowlistListContinueArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamSharingAllowlistListResponse">TeamSharingAllowlistListResponse</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamSharingAllowlistListContinueError">TeamSharingAllowlistListContinueError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamSharingAllowlistRemove"><span class="type-signature"></span>teamSharingAllowlistRemove(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Endpoint removes Approve List entries. Changes are effective immediately.
+Changes are committed in transaction. In case of single validation error -
+all entries are rejected. Valid domains (RFC-1034/5) and emails
+(RFC-5322/822) are accepted. Entries being removed have to be present on the
+list. Maximum 1000 entries per call is allowed.
+Route attributes:
+  scope: team_info.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamSharingAllowlistRemoveArgs">TeamSharingAllowlistRemoveArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamSharingAllowlistRemoveResponse">TeamSharingAllowlistRemoveResponse</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamSharingAllowlistRemoveError">TeamSharingAllowlistRemoveError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="teamTeamFolderActivate"><span class="type-signature"></span>teamTeamFolderActivate(arg)</h4>
     
     
@@ -39502,7 +40266,7 @@ Route attributes:
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2022-07-13T18:00:45+00:00
+		on 2022-10-11T21:43:12+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
