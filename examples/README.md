@@ -3,10 +3,9 @@
 To run the examples in your development environment:
 
 1. Clone this repo
-2. Run `npm install` and `npm run build` in the root of the repository
-3. `cd` into `javascript`
-4. Start the development server with `node server.js`.
-5. Point your browser to <http://0.0.0.0:8080/>
+2. Run `npm install` and `npm run build`
+3. Start the development server with `node server.js`.
+4. Point your browser to <http://0.0.0.0:8080/>
 
 # Dropbox TypeScript SDK Examples
 
@@ -16,8 +15,8 @@ To run the examples in your development environment:
 2. Run `npm install` and `npm run build` in the root of the repository
 3. `cd` into `typescript`
 4. Run `npm install`
-5. From this `typescript`, run the example you want
-   e.g. `node node/basic.js`
+5. Run the example you want (basic, download, team, team-as-user, or upload)
+   e.g. `node basic`
 
 ## Code flow example
 
