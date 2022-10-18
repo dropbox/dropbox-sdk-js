@@ -12,10 +12,8 @@ To run the examples in your development environment:
 To run the examples in your development environment:
 
 1. Clone this repo
-2. Run `npm install` and `npm run build` in the root of the repository
-3. `cd` into `typescript`
-4. Run `npm install`
-5. Run the example you want (basic, download, team, team-as-user, or upload)
+2. Run `npm install` and `npm run build`
+3. Run the example you want (basic, download, team, team-as-user, or upload)
    e.g. `node basic`
 
 ## Code flow example
