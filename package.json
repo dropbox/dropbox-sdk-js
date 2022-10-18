@@ -10,8 +10,8 @@
     "module": "es/index.js",
     "jsnext:main": "es/index.js",
     "scripts": {
-        "build:es": "cross-env BABEL_ENV=es babel src -d es/src; cross-env BABEL_ENV=es babel lib -d es/lib; cross-env BABEL_ENV=es babel index.js -d es",
-        "build:cjs": "cross-env BABEL_ENV=commonjs babel src -d cjs/src; cross-env BABEL_ENV=commonjs babel lib -d cjs/lib; cross-env BABEL_ENV=commonjs babel index.js -d cjs",
+        "build:es": "cross-env BABEL_ENV=es babel src -d es/src && cross-env BABEL_ENV=es babel lib -d es/lib && cross-env BABEL_ENV=es babel index.js -d es",
+        "build:cjs": "cross-env BABEL_ENV=commonjs babel src -d cjs/src && cross-env BABEL_ENV=commonjs babel lib -d cjs/lib && cross-env BABEL_ENV=commonjs babel index.js -d cjs",
         "build:umd": "cross-env BABEL_ENV=es BUNDLE_TYPE=normal rollup -c -i index.js -o dist/Dropbox-sdk.js -n Dropbox",
         "build:umd:min": "cross-env BABEL_ENV=es BUNDLE_TYPE=minified rollup -c -i index.js -o dist/Dropbox-sdk.min.js -n Dropbox",
         "build": "npm run build:es && npm run build:cjs && npm run build:umd && npm run build:umd:min",
