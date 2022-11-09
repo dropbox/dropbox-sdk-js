@@ -11,13 +11,9 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitUseStrict": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "outDir": "dist"
   },
-  "include": [
-    "server.ts",
-    "node/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts", "node/**/*.ts"],
+  "exclude": ["node_modules"]
 }
