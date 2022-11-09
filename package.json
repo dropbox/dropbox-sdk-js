@@ -108,6 +108,6 @@
         "@types/node-fetch": "^2.5.7"
     },
     "dependencies": {
-        "node-fetch": "^2.6.1"
+        "node-fetch": "^3.2.10"
     }
 }
