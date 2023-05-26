@@ -28,11 +28,11 @@
 
   <!-- Example description and UI -->
   <section class="container main">
-    <p>This example shows how to use the Dropbox class and the <code>Dropbox.actAsUser()</code> [<a href="http://dropbox.github.io/dropbox-sdk-js/Dropbox.html#actAsUser">docs</a>] method, to retreive a Dropbox class that is acting as a specific user on the team.</p>
+    <p>This example shows how to use the Dropbox class and the <code>selectUser</code> [<a href="https://dropbox.github.io/dropbox-sdk-js/Dropbox.html#Dropbox__anchor">docs</a>] parameter, to retreive a Dropbox class that is acting as a specific user on the team.</p>
 
     <form onSubmit="return listFiles()">
       <input type="text" id="access-token" placeholder="Access token" />
-      <input type="text" id="user-id" placeholder="User id" />
+      <input type="text" id="member-id" placeholder="Member ID" />
       <button type="submit">Submit</button>
     </form>
 
@@ -46,15 +46,15 @@
   <script>
     function listFiles() {
       var ACCESS_TOKEN = document.getElementById('access-token').value;
-      var USER_ID = document.getElementById('user-id').value;
-      var dbxTeam = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN , assumeUser: USER_ID});
+      var MEMBER_ID = document.getElementById('member-id').value;
+      var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN , selectUser: MEMBER_ID});
       dbx.filesListFolder({path: ''})
         .then(function(response) {
           displayFiles(response.result.entries);
           console.log(response);
         })
         .catch(function(error) {
-          console.error(error);
+          console.error(error.error || error);
         });
       return false;
     }

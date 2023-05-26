@@ -50,7 +50,7 @@
       var file = fileInput.files[0];
       
       
-      if (file.size < UPLOAD_FILE_SIZE_LIMIT) { // File is smaller than 150 Mb - use filesUpload API
+      if (file.size < UPLOAD_FILE_SIZE_LIMIT) { // File is smaller than 150 MB - use filesUpload API
         dbx.filesUpload({path: '/' + file.name, contents: file})
           .then(function(response) {
             var results = document.getElementById('results');
@@ -60,12 +60,12 @@
             console.log(response);
           })
           .catch(function(error) {
-            console.error(error);
+            console.error(error.error || error);
           });
-      } else { // File is bigger than 150 Mb - use filesUploadSession* API
-        const maxBlob = 8 * 1000 * 1000; // 8Mb - Dropbox JavaScript API suggested max file / chunk size
+      } else { // File is bigger than 150 MB - use filesUploadSession* API
+        const maxBlob = 12 * 1024 * 1024; // 8MB - Dropbox JavaScript API suggested chunk size
 
-        var workItems = [];     
+        var workItems = [];
       
         var offset = 0;
 
@@ -80,7 +80,7 @@
             // Starting multipart upload of file
             return acc.then(function() {
               return dbx.filesUploadSessionStart({ close: false, contents: blob})
-                        .then(response => response.session_id)
+                        .then(response => response.result.session_id)
             });          
           } else if (idx < items.length-1) {  
             // Append part to the upload session
