@@ -5,7 +5,7 @@ To run the examples in your development environment:
 1. Clone this repo
 2. Run `npm install` and `npm run build`
 3. Start the development server with `node server.js`.
-4. Point your browser to <http://0.0.0.0:8080/>
+4. Point your browser to <http://localhost:8080/>
 
 # Dropbox TypeScript SDK Examples
 
