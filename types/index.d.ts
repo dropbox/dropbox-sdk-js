@@ -77,7 +77,7 @@ export class DropboxAuth {
    * @returns {Promise<String>} - Url to send user to for Dropbox API authentication
    * returned in a promise
    */
-  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): Promise<String>;
+  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): Promise<string>;
 
   /**
    * Get the client id
