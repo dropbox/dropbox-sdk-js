@@ -3,6 +3,27 @@
 /*IMPORT*/
 export * from './dropbox_types';
 
+/**
+ * SDK-specific extensions to API types.
+ * These properties are added by the SDK and are not part of the Dropbox API spec.
+ */
+declare module './dropbox_types' {
+  namespace files {
+    interface FileMetadata {
+      /**
+       * The file content as a Buffer.
+       * Only set for download-style endpoints in Node.js environments.
+       */
+      fileBinary?: Buffer;
+      /**
+       * The file content as a Blob.
+       * Only set for download-style endpoints in browser environments.
+       */
+      fileBlob?: Blob;
+    }
+  }
+}
+
 export interface DropboxAuthOptions {
   // An access token for making authenticated requests.
   accessToken?: string;
@@ -64,7 +85,7 @@ export class DropboxAuth {
    * legacy - creates one long-lived token with no expiration
    * online - create one short-lived token with an expiration
    * offline - create one short-lived token with an expiration with a refresh token
-   * @arg {Array<String>} [scope] - scopes to request for the grant
+   * @arg {Array<string>} [scope] - scopes to request for the grant
    * @arg {String} [includeGrantedScopes] - whether or not to include previously granted scopes.
    * From the following:
    * user - include user scopes in the grant
@@ -76,7 +97,7 @@ export class DropboxAuth {
    * @returns {Promise<String>} - Url to send user to for Dropbox API authentication
    * returned in a promise
    */
-  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): Promise<String>;
+  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<string>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): Promise<String>;
 
   /**
    * Get the client id
@@ -151,7 +172,7 @@ export class DropboxAuth {
    * refresh to acquire with an access token
    * @returns {Promise<*>}
    */
-  refreshAccessToken(scope?: Array<String>): void;
+  refreshAccessToken(scope?: Array<string>): void;
 
 }
 
