@@ -16,7 +16,12 @@ updates:
     schedule:
       interval: "monthly"
 
+  # Group all GitHub Actions updates into one PR
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
