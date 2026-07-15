@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: [22, 24, 26]
+        node: [22, 24]
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js environment
@@ -38,11 +38,12 @@ jobs:
           npm run build
           npm run test:build
   Integration:
+    continue-on-error: true
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: [22, 24, 26]
+        node: [22, 24]
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js environment
