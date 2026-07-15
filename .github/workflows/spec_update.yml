@@ -8,13 +8,13 @@ jobs:
   Update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v7.0.0
       - name: Setup Python environment
-        uses: actions/setup-python@v2.2.2
+        uses: actions/setup-python@v6.3.0
         with:
           python-version: 3.7
       - name: Setup Node.JS environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: 14
       - name: Get current time
@@ -64,7 +64,7 @@ jobs:
           python generate_routes.py
           cd ..
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.9.1
+        uses: peter-evans/create-pull-request@v8.1.1
         if: steps.git-diff-num.outputs.num-diff != 0
         with:
           token: ${{ secrets.SPEC_UPDATE_TOKEN }}

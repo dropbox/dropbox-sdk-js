@@ -11,9 +11,9 @@ jobs:
   Unit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v7.0.0
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: '14'
       - name: Install SDK
@@ -23,16 +23,16 @@ jobs:
         run: |
           npm run coverage:unit
       - name: Publish Coverage
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v7.0.0
         with:
           flags: unit
           fail_ci_if_error: true
   Integration:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v7.0.0
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v7.0.0
         with:
           node-version: '14'
       - name: Install SDK
@@ -56,7 +56,7 @@ jobs:
         run: |
           npm run coverage:integration
       - name: Publish Coverage
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v7.0.0
         with:
           flags: integration
           fail_ci_if_error: true
