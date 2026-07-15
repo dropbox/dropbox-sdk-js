@@ -45,17 +45,18 @@ const IncludeGrantedScopes = ['none', 'user', 'team'];
 export default class DropboxAuth {
   constructor(options) {
     options = options || {};
+    fetch = options.fetch;
 
     if (isBrowserEnv()) {
-      fetch = window.fetch.bind(window);
+      fetch = fetch || window.fetch.bind(window);
       crypto = window.crypto || window.msCrypto; // for IE11
     } else if (isWorkerEnv()) {
       /* eslint-disable no-restricted-globals */
-      fetch = self.fetch.bind(self);
+      fetch = fetch || self.fetch.bind(self);
       crypto = self.crypto;
       /* eslint-enable no-restricted-globals */
     } else {
-      fetch = require('node-fetch'); // eslint-disable-line global-require
+      fetch = fetch || global.fetch || require('node-fetch'); // eslint-disable-line global-require
       crypto = require('crypto'); // eslint-disable-line global-require
     }
 
@@ -65,7 +66,7 @@ export default class DropboxAuth {
       Encoder = TextEncoder;
     }
 
-    this.fetch = options.fetch || fetch;
+    this.fetch = fetch;
     this.accessToken = options.accessToken;
     this.accessTokenExpiresAt = options.accessTokenExpiresAt;
     this.refreshToken = options.refreshToken;
@@ -340,7 +341,7 @@ export default class DropboxAuth {
   checkAndRefreshAccessToken() {
     const canRefresh = this.getRefreshToken() && this.getClientId();
     const needsRefresh = !this.getAccessTokenExpiresAt()
-            || (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
+      || (new Date(Date.now() + TokenExpirationBuffer)) >= this.getAccessTokenExpiresAt();
     const needsToken = !this.getAccessToken();
     if ((needsRefresh || needsToken) && canRefresh) {
       return this.refreshAccessToken();

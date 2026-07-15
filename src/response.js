@@ -48,7 +48,7 @@ export function parseDownloadResponse(res) {
     if (isWindowOrWorker()) {
       res.blob().then((data) => resolve(data));
     } else {
-      res.buffer().then((data) => resolve(data));
+      res.arrayBuffer().then((data) => resolve(Buffer.from(data)));
     }
   }).then((data) => {
     const result = JSON.parse(res.headers.get('dropbox-api-result'));
