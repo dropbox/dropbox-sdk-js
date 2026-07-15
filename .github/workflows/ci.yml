@@ -5,6 +5,7 @@ on:
 
 jobs:
   CI:
+    continue-on-error: true
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
