@@ -2,18 +2,18 @@ name: Update Documentation
 
 on:
   push:
-    branches: 
+    branches:
       - main
 
 jobs:
   npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
-      - uses: actions/setup-node@v2.1.5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           registry-url: https://npm.pkg.github.com/
-          node-version: 14
+          node-version: 22
       - name: Build Package
         run: |
           npm install
@@ -21,8 +21,8 @@ jobs:
       - name: Build Documentation
         run: npm run generate-docs
       - name: Push Documentation
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          ACCESS_TOKEN: ${{ secrets.GH_PAGES_PUBLISH_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: docs # The folder the action should deploy.
+          token: ${{ secrets.GH_PAGES_PUBLISH_TOKEN }}
+          branch: gh-pages
+          folder: docs

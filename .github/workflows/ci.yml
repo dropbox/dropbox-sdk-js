@@ -5,41 +5,33 @@ on:
 
 jobs:
   CI:
-    continue-on-error: true
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: [10, 11, 12, 13, 14]
+        node: [22, 24, 26]
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
       - name: Run Build
-        run: |
-          npm run build
+        run: npm run build
       - name: Run Examples Builds
         run: |
           cd examples/typescript/
           npm install
           npm run build
-          cd ../..
       - name: Run Linter
-        run: |
-          npm run lint
+        run: npm run lint
       - name: Run Unit Tests
-        run: |
-          npm run test:unit
-      - name: Run TypeScipt Tests
-        run: |
-          npm run test:typescript
+        run: npm run test:unit
+      - name: Run TypeScript Tests
+        run: npm run test:typescript
       - name: Run Build Tests
-        if: matrix.node >= 12 # "type" = "module" was introduced in node v12 so lower versions will fail ESM tests
         run: |
           npm run clean
           npm run build
@@ -49,16 +41,15 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: [14] # Can only be ran on 14 because it relies on fs/promises
+        node: [22, 24, 26]
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
       - name: Run Integration Tests
         env:
           LEGACY_USER_DROPBOX_TOKEN: ${{ secrets.LEGACY_USER_DROPBOX_TOKEN }}
@@ -74,5 +65,4 @@ jobs:
           SCOPED_TEAM_CLIENT_SECRET: ${{ secrets.SCOPED_TEAM_CLIENT_SECRET }}
           SCOPED_TEAM_REFRESH_TOKEN: ${{ secrets.SCOPED_TEAM_REFRESH_TOKEN }}
           DROPBOX_SHARED_LINK: ${{ secrets.DROPBOX_SHARED_LINK }}
-        run: |
-          npm run test:integration
+        run: npm run test:integration

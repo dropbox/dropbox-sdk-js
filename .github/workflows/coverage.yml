@@ -1,7 +1,7 @@
 name: CodeCov
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
   schedule:
@@ -11,33 +11,30 @@ jobs:
   Unit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '22'
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
       - name: Generate Unit Test Coverage
-        run: |
-          npm run coverage:unit
+        run: npm run coverage:unit
       - name: Publish Coverage
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v5
         with:
           flags: unit
           fail_ci_if_error: true
   Integration:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '22'
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
       - name: Generate Integration Test Coverage
         env:
           LEGACY_USER_DROPBOX_TOKEN: ${{ secrets.LEGACY_USER_DROPBOX_TOKEN }}
@@ -53,10 +50,9 @@ jobs:
           SCOPED_TEAM_CLIENT_SECRET: ${{ secrets.SCOPED_TEAM_CLIENT_SECRET }}
           SCOPED_TEAM_REFRESH_TOKEN: ${{ secrets.SCOPED_TEAM_REFRESH_TOKEN }}
           DROPBOX_SHARED_LINK: ${{ secrets.DROPBOX_SHARED_LINK }}
-        run: |
-          npm run coverage:integration
+        run: npm run coverage:integration
       - name: Publish Coverage
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v5
         with:
           flags: integration
           fail_ci_if_error: true
