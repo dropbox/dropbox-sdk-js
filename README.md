@@ -1,7 +1,7 @@
 # Dropbox JavaScript SDK
 
-[![node-current](https://img.shields.io/node/v/dropbox)](https://www.npmjs.com/package/dropbox)
-[![npm](https://img.shields.io/npm/v/dropbox)](https://www.npmjs.com/package/dropbox)
+[![Node.js 22 and 24](https://img.shields.io/badge/Node.js-22%20%7C%2024-339933?logo=nodedotjs&logoColor=white)](https://github.com/dropbox/dropbox-sdk-js/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/dropbox?logo=npm)](https://www.npmjs.com/package/dropbox)
 [![codecov](https://codecov.io/gh/dropbox/dropbox-sdk-js/branch/main/graph/badge.svg)](https://codecov.io/gh/dropbox/dropbox-sdk-js)
 
 The official Dropbox API v2 SDK for JavaScript.
@@ -19,6 +19,8 @@ that do not provide the required APIs.
 Create an app in the [Developer Console][devconsole], then install the SDK from
 npm. Published npm packages already contain CommonJS, ES module, browser, and
 TypeScript builds; applications do not need to build the SDK from source.
+Published versions and release history are available on the
+[npm versions page][npm-versions].
 
 ```sh
 npm install dropbox
@@ -142,6 +144,7 @@ This SDK is distributed under the MIT license, please see [LICENSE][license] for
 [dropbox-error]: https://dropbox.github.io/dropbox-sdk-js/DropboxResponseError.html
 [global-api]: https://dropbox.github.io/dropbox-sdk-js/global.html
 [examples]: https://github.com/dropbox/dropbox-sdk-js/tree/main/examples
+[npm-versions]: https://www.npmjs.com/package/dropbox?activeTab=versions
 [license]: https://github.com/dropbox/dropbox-sdk-js/blob/main/LICENSE
 [contributing]: https://github.com/dropbox/dropbox-sdk-js/blob/main/CONTRIBUTING.md
 [devconsole]: https://dropbox.com/developers/apps
