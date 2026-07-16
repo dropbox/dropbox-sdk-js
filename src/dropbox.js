@@ -133,15 +133,16 @@ export default class Dropbox {
   uploadRequest(path, args, auth, host) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
-        const { contents } = args;
-        delete args.contents;
+        const requestArgs = Object.assign({}, args); // eslint-disable-line prefer-object-spread
+        const { contents } = requestArgs;
+        delete requestArgs.contents;
 
         const fetchOptions = {
           body: contents,
           method: 'POST',
           headers: {
             'Content-Type': 'application/octet-stream',
-            'Dropbox-API-Arg': httpHeaderSafeJson(args),
+            'Dropbox-API-Arg': httpHeaderSafeJson(requestArgs),
           },
         };
 
