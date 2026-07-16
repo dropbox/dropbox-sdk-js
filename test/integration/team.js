@@ -1,12 +1,10 @@
 import chai from 'chai';
-import fs from 'fs/promises';
-import path from 'path';
 import { Dropbox, DropboxAuth } from '../../index.js';
 import { DropboxResponse } from '../../src/response.js';
+import { DropboxResponseError } from '../../src/error.js';
 
 const appInfo = {
   SCOPED: {
-    accessToken: process.env.SCOPED_TEAM_DROPBOX_TOKEN,
     clientId: process.env.SCOPED_TEAM_CLIENT_ID,
     clientSecret: process.env.SCOPED_TEAM_CLIENT_SECRET,
     refreshToken: process.env.SCOPED_TEAM_REFRESH_TOKEN,
@@ -65,9 +63,7 @@ for (const appType in appInfo) {
               chai.assert.equal(resp.status, 200, resp.result);
               chai.assert.isObject(resp.result);
               // testing to make sure that the token has been refreshed
-              chai.assert.notEqual(
-                dbxAuth.getAccessToken(), appInfo[appType].token,
-              );
+              chai.assert.isString(dbxAuth.getAccessToken());
               // comparing dates to make sure new token expiration is set
               chai.assert.isTrue(
                 dbxAuth.accessTokenExpiresAt > new Date(expirationBeforeRefresh),
