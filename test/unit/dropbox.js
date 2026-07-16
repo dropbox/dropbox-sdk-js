@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
+import { Readable } from 'stream';
 
 import { fail } from 'assert';
 import {
@@ -130,6 +131,24 @@ describe('Dropbox', () => {
       chai.assert.isTrue(uploadSpy.calledOnce);
       chai.assert.equal('path', dbx.uploadRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.uploadRequest.getCall(0).args[1]);
+    });
+
+    it('sets duplex for a Node Readable body', () => {
+      const fetchStub = sinon.stub().resolves(new Response('{}', { status: 200 }));
+      const auth = new DropboxAuth({ accessToken: 'token', fetch: fetchStub });
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+      const contents = Readable.from([Buffer.from('stream contents')]);
+
+      return dbx.uploadRequest(
+        '/files/upload',
+        { path: '/test.txt', contents },
+        USER_AUTH,
+        'content',
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(fetchOptions.body, contents);
+        chai.assert.equal(fetchOptions.duplex, 'half');
+      });
     });
   });
 

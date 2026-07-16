@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import path from 'path';
+import { Readable } from 'stream';
 
 import chai from 'chai';
 
@@ -88,6 +89,41 @@ for (const appType in appInfo) {
                 })
                 .catch(done);
             });
+        });
+
+        it('upload request accepts a Node Readable with native fetch', (done) => {
+          const contents = 'native fetch readable upload';
+          const uploadPath = `/dropbox-sdk-js-readable-${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}.txt`;
+          const dbxWithNativeFetch = new Dropbox({ auth: dbxAuth, fetch: global.fetch });
+          let uploaded = false;
+          let testError;
+          const cleanup = () => (uploaded
+            ? dbxWithNativeFetch.filesDeleteV2({ path: uploadPath })
+            : Promise.resolve());
+
+          dbxWithNativeFetch.filesUpload({
+            path: uploadPath,
+            contents: Readable.from([Buffer.from(contents)]),
+          })
+            .then((uploadResponse) => {
+              uploaded = true;
+
+              chai.assert.instanceOf(uploadResponse, DropboxResponse);
+              chai.assert.equal(uploadResponse.status, 200, uploadResponse.result);
+
+              return dbxWithNativeFetch.filesDownload({ path: uploadPath });
+            })
+            .then((downloadResponse) => {
+              chai.assert.instanceOf(downloadResponse, DropboxResponse);
+              chai.assert.equal(downloadResponse.status, 200, downloadResponse.result);
+              chai.assert.equal(downloadResponse.result.fileBinary.toString('utf8'), contents);
+            })
+            .catch((error) => {
+              testError = error;
+            })
+            .then(cleanup)
+            .then(() => done(testError))
+            .catch((cleanupError) => done(testError || cleanupError));
         });
       });
 

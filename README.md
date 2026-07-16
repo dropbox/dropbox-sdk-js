@@ -8,11 +8,12 @@ The official Dropbox API v2 SDK for JavaScript.
 
 ## Runtime support
 
-The SDK supports Node.js, modern web browsers, and Web Workers. Continuous
-integration currently tests Node.js 22 and 24. Browser and Worker environments
-must provide `Promise`, `fetch`, and `TextEncoder`; PKCE authentication also
-requires the Web Crypto API. Add polyfills when targeting older environments
-that do not provide the required APIs.
+The SDK supports Node.js 22 and newer, modern web browsers, and Web Workers.
+Continuous integration currently tests Node.js 22 and 24, and Node.js uses its
+built-in `fetch` implementation. Browser and Worker environments must provide
+`Promise`, `fetch`, and `TextEncoder`; PKCE authentication also requires the Web
+Crypto API. Add polyfills when targeting older environments that do not provide
+the required APIs.
 
 ## Installation
 

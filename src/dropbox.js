@@ -145,6 +145,10 @@ export default class Dropbox {
           },
         };
 
+        if (contents && typeof contents.pipe === 'function') {
+          fetchOptions.duplex = 'half';
+        }
+
         this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
 

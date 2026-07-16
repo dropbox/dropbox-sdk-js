@@ -484,6 +484,7 @@ describe('DropboxAuth', () => {
   describe('fetch and crypto', () => {
     const windowRef = global.window;
     const selfRef = global.self;
+    const fetchRef = global.fetch;
     let spyOnFetch;
     let spyOnDigest;
     let spyOnIsBrowserEnv;
@@ -502,6 +503,10 @@ describe('DropboxAuth', () => {
       Object.defineProperty(global, 'self', {
         writable: true,
         value: selfRef,
+      });
+      Object.defineProperty(global, 'fetch', {
+        writable: true,
+        value: fetchRef,
       });
       spyOnIsBrowserEnv.restore();
       spyOnIsWorkerEnv.restore();
@@ -558,6 +563,19 @@ describe('DropboxAuth', () => {
       chai.assert(spyOnIsWorkerEnv.called);
       chai.assert(spyOnFetch.calledOnce);
       chai.assert(spyOnDigest.calledOnce);
+    });
+    it('uses an injected fetch when native fetch is unavailable', () => {
+      Object.defineProperty(global, 'fetch', {
+        writable: true,
+        value: undefined,
+      });
+      spyOnIsBrowserEnv.returns(false);
+      spyOnIsWorkerEnv.returns(false);
+
+      const dbxAuth = new DropboxAuth({ fetch: spyOnFetch });
+      dbxAuth.fetch();
+
+      chai.assert(spyOnFetch.calledOnce);
     });
   });
 });

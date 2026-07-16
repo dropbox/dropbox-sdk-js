@@ -5,7 +5,6 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-import { Headers } from 'node-fetch';
 import * as Dropbox from '../../types/index'; // eslint-disable-line
 
 // Check DropboxAuth Constructor and Methods

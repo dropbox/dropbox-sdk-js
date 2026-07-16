@@ -1,6 +1,5 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { Response } from 'node-fetch';
 import { httpHeaderSafeJson } from '../../src/utils';
 import {
   DropboxResponse,
