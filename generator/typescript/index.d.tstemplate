@@ -3,6 +3,27 @@
 /*IMPORT*/
 export * from './dropbox_types';
 
+/** Binary download content returned by the SDK in Node.js environments. */
+export interface DropboxFileBinary extends Uint8Array {
+  toString(encoding?: string, start?: number, end?: number): string;
+}
+
+/** Blob download content returned by the SDK in browser and Worker environments. */
+export interface DropboxFileBlob {
+  readonly size: number;
+  readonly type: string;
+  arrayBuffer(): Promise<ArrayBuffer>;
+  slice(start?: number, end?: number, contentType?: string): DropboxFileBlob;
+  stream(): any;
+  text(): Promise<string>;
+}
+
+/** API result augmented with the downloaded file content for the current environment. */
+export type DropboxDownloadResult<T> = T & (
+  | { fileBinary: DropboxFileBinary; fileBlob?: never }
+  | { fileBinary?: never; fileBlob: DropboxFileBlob }
+);
+
 export interface DropboxAuthOptions {
   // An access token for making authenticated requests.
   accessToken?: string;

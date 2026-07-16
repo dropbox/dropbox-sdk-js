@@ -67,3 +67,24 @@ dropbox.usersGetCurrentAccount()
     var errorObject = error.error;
 });
 dropbox2.usersGetCurrentAccount();
+// Download routes expose the SDK-injected body for both supported environments.
+dropbox.filesDownload({ path: '/test.txt' })
+    .then(function (response) {
+    var _a = response.result, fileBinary = _a.fileBinary, fileBlob = _a.fileBlob;
+    if (fileBinary) {
+        fileBinary.toString('utf8');
+    }
+    if (fileBlob) {
+        fileBlob.arrayBuffer();
+    }
+});
+dropbox.sharingGetSharedLinkFile({ url: 'https://www.dropbox.com/example' })
+    .then(function (response) {
+    var _a = response.result, fileBinary = _a.fileBinary, fileBlob = _a.fileBlob;
+    if (fileBinary) {
+        fileBinary.toString('utf8');
+    }
+    if (fileBlob) {
+        fileBlob.text();
+    }
+});
