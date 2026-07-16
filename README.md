@@ -103,7 +103,7 @@ authorization-code flow.
 - [DropboxAuth class][dropbox-auth] — OAuth URLs, PKCE, access tokens, and token
   refresh.
 - [DropboxResponseError class][dropbox-error] — errors returned by API requests.
-- [Global API][global-api] — exported authentication helpers.
+- [Global API][global-api] — generated methods and route type definitions.
 
 The complete generated [API reference][documentation] is published on GitHub
 Pages.
