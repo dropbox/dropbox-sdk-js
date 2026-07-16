@@ -1,7 +1,7 @@
 name: CodeCov
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
   schedule:
@@ -11,52 +11,97 @@ jobs:
   Unit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v7
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v7
         with:
-          node-version: '14'
+          node-version: '22'
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
       - name: Generate Unit Test Coverage
-        run: |
-          npm run coverage:unit
-      - name: Publish Coverage
-        uses: codecov/codecov-action@v1.5.0
+        run: npm run coverage:unit
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
         with:
+          name: unit-coverage
+          path: coverage/lcov.info
+  CoverageUpload:
+    needs: Unit
+    # Fork PRs cannot assume the AWS OIDC role used to fetch the Codecov token.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - name: Download coverage artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: unit-coverage
+          path: coverage
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::082972943155:role/oidc-github-dropbox-dropbox-sdk-js-repo
+          aws-region: us-west-2
+      - name: Get Codecov token from AWS Secrets Manager
+        uses: aws-actions/aws-secretsmanager-get-secrets@v3
+        with:
+          secret-ids: |
+            CODECOV_TOKEN,codecov-token-dropbox-sdk-js
+          parse-json-secrets: false
+      - name: Publish Coverage
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ env.CODECOV_TOKEN }}
           flags: unit
           fail_ci_if_error: true
   Integration:
+    # Fork PRs cannot assume the AWS OIDC role used to fetch credentials.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v7
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v7
         with:
-          node-version: '14'
+          node-version: '22'
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::082972943155:role/oidc-github-dropbox-dropbox-sdk-js-repo
+          aws-region: us-west-2
+      - name: Get integration credentials from AWS Secrets Manager
+        uses: aws-actions/aws-secretsmanager-get-secrets@v3
+        with:
+          secret-ids: |
+            CREDS,api-sdk-integration-test-creds
+          parse-json-secrets: true
+      - name: Get Codecov token from AWS Secrets Manager
+        uses: aws-actions/aws-secretsmanager-get-secrets@v3
+        with:
+          secret-ids: |
+            CODECOV_TOKEN,codecov-token-dropbox-sdk-js
+          parse-json-secrets: false
       - name: Generate Integration Test Coverage
         env:
-          LEGACY_USER_DROPBOX_TOKEN: ${{ secrets.LEGACY_USER_DROPBOX_TOKEN }}
-          LEGACY_USER_CLIENT_ID: ${{ secrets.LEGACY_USER_CLIENT_ID }}
-          LEGACY_USER_CLIENT_SECRET: ${{ secrets.LEGACY_USER_CLIENT_SECRET }}
-          LEGACY_USER_REFRESH_TOKEN: ${{ secrets.LEGACY_USER_REFRESH_TOKEN }}
-          SCOPED_USER_DROPBOX_TOKEN: ${{ secrets.SCOPED_USER_DROPBOX_TOKEN }}
-          SCOPED_USER_CLIENT_ID: ${{ secrets.SCOPED_USER_CLIENT_ID }}
-          SCOPED_USER_CLIENT_SECRET: ${{ secrets.SCOPED_USER_CLIENT_SECRET }}
-          SCOPED_USER_REFRESH_TOKEN: ${{ secrets.SCOPED_USER_REFRESH_TOKEN }}
-          SCOPED_TEAM_DROPBOX_TOKEN: ${{ secrets.SCOPED_TEAM_DROPBOX_TOKEN }}
-          SCOPED_TEAM_CLIENT_ID: ${{ secrets.SCOPED_TEAM_CLIENT_ID }}
-          SCOPED_TEAM_CLIENT_SECRET: ${{ secrets.SCOPED_TEAM_CLIENT_SECRET }}
-          SCOPED_TEAM_REFRESH_TOKEN: ${{ secrets.SCOPED_TEAM_REFRESH_TOKEN }}
-          DROPBOX_SHARED_LINK: ${{ secrets.DROPBOX_SHARED_LINK }}
-        run: |
-          npm run coverage:integration
+          SCOPED_USER_CLIENT_ID: ${{ env.CREDS_SCOPED_USER_CLIENT_ID }}
+          SCOPED_USER_CLIENT_SECRET: ${{ env.CREDS_SCOPED_USER_CLIENT_SECRET }}
+          SCOPED_USER_REFRESH_TOKEN: ${{ env.CREDS_SCOPED_USER_REFRESH_TOKEN }}
+          SCOPED_TEAM_CLIENT_ID: ${{ env.CREDS_SCOPED_TEAM_CLIENT_ID }}
+          SCOPED_TEAM_CLIENT_SECRET: ${{ env.CREDS_SCOPED_TEAM_CLIENT_SECRET }}
+          SCOPED_TEAM_REFRESH_TOKEN: ${{ env.CREDS_SCOPED_TEAM_REFRESH_TOKEN }}
+          DROPBOX_SHARED_LINK: ${{ env.CREDS_DROPBOX_SHARED_LINK }}
+        run: npm run coverage:integration
       - name: Publish Coverage
-        uses: codecov/codecov-action@v1.5.0
+        uses: codecov/codecov-action@v7
         with:
+          token: ${{ env.CODECOV_TOKEN }}
           flags: integration
           fail_ci_if_error: true

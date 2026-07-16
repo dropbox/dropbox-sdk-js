@@ -10,69 +10,73 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: [10, 11, 12, 13, 14]
+        node: [22, 24]
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v7
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
       - name: Run Build
-        run: |
-          npm run build
+        run: npm run build
       - name: Run Examples Builds
         run: |
           cd examples/typescript/
           npm install
           npm run build
-          cd ../..
       - name: Run Linter
-        run: |
-          npm run lint
+        run: npm run lint
       - name: Run Unit Tests
-        run: |
-          npm run test:unit
-      - name: Run TypeScipt Tests
-        run: |
-          npm run test:typescript
+        run: npm run test:unit
+      - name: Run TypeScript Tests
+        run: npm run test:typescript
       - name: Run Build Tests
-        if: matrix.node >= 12 # "type" = "module" was introduced in node v12 so lower versions will fail ESM tests
         run: |
           npm run clean
           npm run build
           npm run test:build
   Integration:
+    # Fork PRs cannot assume the AWS OIDC role used to fetch credentials.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    continue-on-error: false
     runs-on: ${{ matrix.os }}
+    permissions:
+      id-token: write
+      contents: read
     strategy:
+      fail-fast: false
+      max-parallel: 1
       matrix:
         os: [ubuntu-latest, macos-latest]
-        node: [14] # Can only be ran on 14 because it relies on fs/promises
+        node: [22, 24]
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v7
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node }}
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::082972943155:role/oidc-github-dropbox-dropbox-sdk-js-repo
+          aws-region: us-west-2
+      - name: Get integration credentials from AWS Secrets Manager
+        uses: aws-actions/aws-secretsmanager-get-secrets@v3
+        with:
+          secret-ids: |
+            CREDS,api-sdk-integration-test-creds
+          parse-json-secrets: true
       - name: Run Integration Tests
         env:
-          LEGACY_USER_DROPBOX_TOKEN: ${{ secrets.LEGACY_USER_DROPBOX_TOKEN }}
-          LEGACY_USER_CLIENT_ID: ${{ secrets.LEGACY_USER_CLIENT_ID }}
-          LEGACY_USER_CLIENT_SECRET: ${{ secrets.LEGACY_USER_CLIENT_SECRET }}
-          LEGACY_USER_REFRESH_TOKEN: ${{ secrets.LEGACY_USER_REFRESH_TOKEN }}
-          SCOPED_USER_DROPBOX_TOKEN: ${{ secrets.SCOPED_USER_DROPBOX_TOKEN }}
-          SCOPED_USER_CLIENT_ID: ${{ secrets.SCOPED_USER_CLIENT_ID }}
-          SCOPED_USER_CLIENT_SECRET: ${{ secrets.SCOPED_USER_CLIENT_SECRET }}
-          SCOPED_USER_REFRESH_TOKEN: ${{ secrets.SCOPED_USER_REFRESH_TOKEN }}
-          SCOPED_TEAM_DROPBOX_TOKEN: ${{ secrets.SCOPED_TEAM_DROPBOX_TOKEN }}
-          SCOPED_TEAM_CLIENT_ID: ${{ secrets.SCOPED_TEAM_CLIENT_ID }}
-          SCOPED_TEAM_CLIENT_SECRET: ${{ secrets.SCOPED_TEAM_CLIENT_SECRET }}
-          SCOPED_TEAM_REFRESH_TOKEN: ${{ secrets.SCOPED_TEAM_REFRESH_TOKEN }}
-          DROPBOX_SHARED_LINK: ${{ secrets.DROPBOX_SHARED_LINK }}
-        run: |
-          npm run test:integration
+          SCOPED_USER_CLIENT_ID: ${{ env.CREDS_SCOPED_USER_CLIENT_ID }}
+          SCOPED_USER_CLIENT_SECRET: ${{ env.CREDS_SCOPED_USER_CLIENT_SECRET }}
+          SCOPED_USER_REFRESH_TOKEN: ${{ env.CREDS_SCOPED_USER_REFRESH_TOKEN }}
+          SCOPED_TEAM_CLIENT_ID: ${{ env.CREDS_SCOPED_TEAM_CLIENT_ID }}
+          SCOPED_TEAM_CLIENT_SECRET: ${{ env.CREDS_SCOPED_TEAM_CLIENT_SECRET }}
+          SCOPED_TEAM_REFRESH_TOKEN: ${{ env.CREDS_SCOPED_TEAM_REFRESH_TOKEN }}
+          DROPBOX_SHARED_LINK: ${{ env.CREDS_DROPBOX_SHARED_LINK }}
+        run: npm run test:integration

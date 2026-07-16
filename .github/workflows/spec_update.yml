@@ -8,15 +8,15 @@ jobs:
   Update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v4
       - name: Setup Python environment
-        uses: actions/setup-python@v2.2.2
+        uses: actions/setup-python@v5
         with:
-          python-version: 3.7
+          python-version: '3.12'
       - name: Setup Node.JS environment
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: 22
       - name: Get current time
         uses: 1466587594/get-current-time@v2
         id: current-time
@@ -26,8 +26,7 @@ jobs:
       - name: Update SDK Version
         run: npm version --commit-hooks false --git-tag-version false minor
       - name: Install SDK
-        run: |
-          npm install
+        run: npm install
       - name: Update Modules
         run: |
           git submodule init
@@ -35,14 +34,14 @@ jobs:
       - name: Generate Branch Name
         id: git-branch
         run: |
-          echo "::set-output name=branch::spec_update_${{ steps.current-time.outputs.formattedTime }}"
+          echo "branch=spec_update_${{ steps.current-time.outputs.formattedTime }}" >> "$GITHUB_OUTPUT"
       - name: Generate Num Diffs
         id: git-diff-num
         run: |
           cd generator/
           diffs=$(git diff --submodule dropbox-api-spec | grep ">" | wc -l)
           echo "Number of Spec diffs: $diffs"
-          echo "::set-output name=num-diff::$diffs"
+          echo "num-diff=$diffs" >> "$GITHUB_OUTPUT"
           cd ..
       - name: Generate Diff
         id: git-diff
@@ -54,7 +53,7 @@ jobs:
           commit="${commit//$'\n'/'%0A'}"
           commit="${commit//$'\r'/'%0D'}"
           echo "Commit Message: $commit"
-          echo "::set-output name=commit::$commit"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
           cd ../..
       - name: Generate New Routes
         run: |
@@ -64,7 +63,7 @@ jobs:
           python generate_routes.py
           cd ..
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.9.1
+        uses: peter-evans/create-pull-request@v7
         if: steps.git-diff-num.outputs.num-diff != 0
         with:
           token: ${{ secrets.SPEC_UPDATE_TOKEN }}

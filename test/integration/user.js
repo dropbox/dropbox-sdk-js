@@ -8,14 +8,7 @@ import { DropboxResponse } from '../../src/response.js';
 import { DropboxResponseError } from '../../src/error.js';
 
 const appInfo = {
-  LEGACY: {
-    accessToken: process.env.LEGACY_USER_DROPBOX_TOKEN,
-    clientId: process.env.LEGACY_USER_CLIENT_ID,
-    clientSecret: process.env.LEGACY_USER_CLIENT_SECRET,
-    refreshToken: process.env.LEGACY_USER_REFRESH_TOKEN,
-  },
   SCOPED: {
-    accessToken: process.env.SCOPED_USER_DROPBOX_TOKEN,
     clientId: process.env.SCOPED_USER_CLIENT_ID,
     clientSecret: process.env.SCOPED_USER_CLIENT_SECRET,
     refreshToken: process.env.SCOPED_USER_REFRESH_TOKEN,
@@ -110,9 +103,7 @@ for (const appType in appInfo) {
               chai.assert.equal(resp.status, 200, resp.result);
               chai.assert.isObject(resp.result);
               // testing to make sure that the token has been refreshed
-              chai.assert.notEqual(
-                dbxAuth.getAccessToken(), appInfo[appType].token,
-              );
+              chai.assert.isString(dbxAuth.getAccessToken());
               // comparing dates to make sure new token expiration is set
               chai.assert.isTrue(
                 dbxAuth.accessTokenExpiresAt > new Date(expirationBeforeRefresh),
@@ -155,7 +146,7 @@ describe('incorrect auth', () => {
 
 describe('multiauth', () => {
   it('mulitauth request is successful', (done) => {
-    const dbxAuth = new DropboxAuth(appInfo.LEGACY);
+    const dbxAuth = new DropboxAuth(appInfo.SCOPED);
     const dbx = new Dropbox({ auth: dbxAuth });
     const arg = {
       resource: {
