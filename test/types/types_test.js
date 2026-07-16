@@ -29,13 +29,13 @@ dropboxAuth.setClientId('myClientId');
 dropboxAuth.getClientId();
 dropboxAuth.setClientSecret('myClientSecret');
 // Test other methods
-dropboxAuth.getAuthenticationUrl('myRedirect');
+var authenticationUrl = dropboxAuth.getAuthenticationUrl('myRedirect');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState', 'code');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'mystate', 'code', 'offline', ['scope', 'scope'], 'none', false);
 dropboxAuth.getAccessTokenFromCode('myRedirect', 'myCode');
-dropboxAuth.checkAndRefreshAccessToken();
-dropboxAuth.refreshAccessToken();
+var checkedAccessToken = dropboxAuth.checkAndRefreshAccessToken();
+var refreshedAccessToken = dropboxAuth.refreshAccessToken();
 dropboxAuth.refreshAccessToken(['files.metadata.read', 'files.metadata.write']);
 // Check Dropbox Constructor or Methods
 // Test config constructor
