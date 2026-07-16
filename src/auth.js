@@ -55,7 +55,9 @@ export default class DropboxAuth {
       crypto = self.crypto;
       /* eslint-enable no-restricted-globals */
     } else {
-      fetch = globalThis.fetch.bind(globalThis);
+      fetch = typeof globalThis.fetch === 'function'
+        ? globalThis.fetch.bind(globalThis)
+        : undefined;
       crypto = require('crypto'); // eslint-disable-line global-require
     }
 
@@ -66,6 +68,9 @@ export default class DropboxAuth {
     }
 
     this.fetch = options.fetch || fetch;
+    if (!this.fetch) {
+      throw new Error('A fetch implementation is required. Use Node.js 22 or later, or provide options.fetch.');
+    }
     this.accessToken = options.accessToken;
     this.accessTokenExpiresAt = options.accessTokenExpiresAt;
     this.refreshToken = options.refreshToken;
