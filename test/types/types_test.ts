@@ -73,3 +73,34 @@ dropbox.usersGetCurrentAccount()
     const errorObject: Dropbox.users.GetAccountError = error.error;
   });
 dropbox2.usersGetCurrentAccount();
+
+// Download routes expose the SDK-injected body for both supported environments.
+dropbox.filesDownload({ path: '/test.txt' })
+  .then((response) => {
+    const {
+      fileBinary,
+      fileBlob,
+    } = response.result;
+
+    if (fileBinary) {
+      fileBinary.toString('utf8');
+    }
+    if (fileBlob) {
+      fileBlob.arrayBuffer();
+    }
+  });
+
+dropbox.sharingGetSharedLinkFile({ url: 'https://www.dropbox.com/example' })
+  .then((response) => {
+    const {
+      fileBinary,
+      fileBlob,
+    } = response.result;
+
+    if (fileBinary) {
+      fileBinary.toString('utf8');
+    }
+    if (fileBlob) {
+      fileBlob.text();
+    }
+  });

@@ -36,6 +36,8 @@ _cmdline_parser.add_argument(
 def main():
     """The entry point for the program."""
 
+    os.environ.setdefault('PYTHONDONTWRITEBYTECODE', '1')
+
     args = _cmdline_parser.parse_args()
     verbose = args.verbose
 
@@ -66,6 +68,9 @@ def main():
         os.path.join(os.path.dirname(sys.argv[0]), '../types'))
     if verbose:
         print('Types template path: %s' % types_template_path)
+
+    typescript_client_backend_path = os.path.join(
+        typescript_template_path, 'dropbox_tsd_client.stoneg.py')
 
     upload_arg = {
         "match": ["style", "upload"],
@@ -103,7 +108,8 @@ def main():
     if verbose:
         print('Generating TSD client routes for user routes')
     subprocess.check_output(
-        (['python3', '-m', 'stone.cli', 'tsd_client', typescript_template_path] +
+        (['python3', '-m', 'stone.cli', typescript_client_backend_path,
+          typescript_template_path] +
          specs + ['-a', 'host', '-a', 'style', '-a', 'scope'] +
          ['--', 'index.d.tstemplate', 'index.d.ts', '--wrap-response-in', 'DropboxResponse', '--wrap-error-in', 'DropboxResponseError', '--import-namespaces', '--types-file', './dropbox_types', '-a', 'scope']),
         cwd=stone_path)

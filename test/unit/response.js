@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { httpHeaderSafeJson } from '../../src/utils';
+import sinon from 'sinon';
+import * as utils from '../../src/utils';
 import {
   DropboxResponse,
   parseResponse,
@@ -57,7 +58,7 @@ describe('DropboxResponse', () => {
       const init = {
         status: 200,
         headers: {
-          'dropbox-api-result': httpHeaderSafeJson({ fileBinary: 'test' }),
+          'dropbox-api-result': utils.httpHeaderSafeJson({ fileBinary: 'test' }),
         },
       };
       const response = new Response(undefined, init);
@@ -68,7 +69,7 @@ describe('DropboxResponse', () => {
       const init = {
         status: 200,
         headers: {
-          'dropbox-api-result': httpHeaderSafeJson({ name: 'test.bin' }),
+          'dropbox-api-result': utils.httpHeaderSafeJson({ name: 'test.bin' }),
         },
       };
       const response = new global.Response(Buffer.from([0, 1, 255]), init);
@@ -79,12 +80,31 @@ describe('DropboxResponse', () => {
       });
     });
 
+    it('parses a browser response as a Blob', () => {
+      const isWindowOrWorker = sinon.stub(utils, 'isWindowOrWorker').returns(true);
+      const init = {
+        status: 200,
+        headers: {
+          'dropbox-api-result': utils.httpHeaderSafeJson({ name: 'test.bin' }),
+        },
+      };
+      const response = new global.Response(Buffer.from([0, 1, 255]), init);
+
+      return parseDownloadResponse(response)
+        .then((parsedResponse) => {
+          chai.assert.instanceOf(parsedResponse.result.fileBlob, Blob);
+          chai.assert.equal(parsedResponse.result.fileBlob.size, 3);
+          chai.assert.isUndefined(parsedResponse.result.fileBinary);
+        })
+        .finally(() => isWindowOrWorker.restore());
+    });
+
     it('propagates errors while reading the download body', () => {
       const response = {
         ok: true,
         status: 200,
         headers: {
-          get: () => httpHeaderSafeJson({ name: 'test.bin' }),
+          get: () => utils.httpHeaderSafeJson({ name: 'test.bin' }),
         },
         arrayBuffer: () => Promise.reject(new Error('body read failed')),
       };

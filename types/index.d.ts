@@ -4,6 +4,27 @@
 import { account, async, auth, check, common, contacts, file_properties, file_requests, files, openid, paper, secondary_emails, seen_state, sharing, team, team_common, team_log, team_policies, users, users_common } from './dropbox_types';
 export * from './dropbox_types';
 
+/** Binary download content returned by the SDK in Node.js environments. */
+export interface DropboxFileBinary extends Uint8Array {
+  toString(encoding?: string, start?: number, end?: number): string;
+}
+
+/** Blob download content returned by the SDK in browser and Worker environments. */
+export interface DropboxFileBlob {
+  readonly size: number;
+  readonly type: string;
+  arrayBuffer(): Promise<ArrayBuffer>;
+  slice(start?: number, end?: number, contentType?: string): DropboxFileBlob;
+  stream(): any;
+  text(): Promise<string>;
+}
+
+/** API result augmented with the downloaded file content for the current environment. */
+export type DropboxDownloadResult<T> = T & (
+  | { fileBinary: DropboxFileBinary; fileBlob?: never }
+  | { fileBinary?: never; fileBlob: DropboxFileBlob }
+);
+
 export interface DropboxAuthOptions {
   // An access token for making authenticated requests.
   accessToken?: string;
@@ -936,7 +957,7 @@ export class Dropbox {
      * DropboxResponseError<files.DownloadError>.
      * @param arg The request parameters.
      */
-    public filesDownload(arg: files.DownloadArg): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesDownload(arg: files.DownloadArg): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
 
     /**
      * Download a folder from the user's Dropbox, as a zip file. The folder must
@@ -952,7 +973,7 @@ export class Dropbox {
      * DropboxResponseError<files.DownloadZipError>.
      * @param arg The request parameters.
      */
-    public filesDownloadZip(arg: files.DownloadZipArg): Promise<DropboxResponse<files.DownloadZipResult>>;
+    public filesDownloadZip(arg: files.DownloadZipArg): Promise<DropboxResponse<DropboxDownloadResult<files.DownloadZipResult>>>;
 
     /**
      * Export a file from a user's Dropbox. This route only supports exporting
@@ -966,7 +987,7 @@ export class Dropbox {
      * DropboxResponseError<files.ExportError>.
      * @param arg The request parameters.
      */
-    public filesExport(arg: files.ExportArg): Promise<DropboxResponse<files.ExportResult>>;
+    public filesExport(arg: files.ExportArg): Promise<DropboxResponse<DropboxDownloadResult<files.ExportResult>>>;
 
     /**
      * Return the lock metadata for the given list of paths.
@@ -1008,7 +1029,7 @@ export class Dropbox {
      * DropboxResponseError<files.PreviewError>.
      * @param arg The request parameters.
      */
-    public filesGetPreview(arg: files.PreviewArg): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesGetPreview(arg: files.PreviewArg): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
 
     /**
      * Get a temporary link to stream content of a file. This link will expire
@@ -1078,7 +1099,7 @@ export class Dropbox {
      * DropboxResponseError<files.ThumbnailError>.
      * @param arg The request parameters.
      */
-    public filesGetThumbnail(arg: files.ThumbnailArg): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesGetThumbnail(arg: files.ThumbnailArg): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
 
     /**
      * Get a thumbnail for an image. This method currently supports files with
@@ -1093,7 +1114,7 @@ export class Dropbox {
      * DropboxResponseError<files.ThumbnailV2Error>.
      * @param arg The request parameters.
      */
-    public filesGetThumbnailV2(arg: files.ThumbnailV2Arg): Promise<DropboxResponse<files.PreviewResult>>;
+    public filesGetThumbnailV2(arg: files.ThumbnailV2Arg): Promise<DropboxResponse<DropboxDownloadResult<files.PreviewResult>>>;
 
     /**
      * Get thumbnails for a list of images. We allow up to 25 thumbnails in a
@@ -1832,7 +1853,7 @@ export class Dropbox {
      * @deprecated
      * @param arg The request parameters.
      */
-    public paperDocsDownload(arg: paper.PaperDocExport): Promise<DropboxResponse<paper.PaperDocExportResult>>;
+    public paperDocsDownload(arg: paper.PaperDocExport): Promise<DropboxResponse<DropboxDownloadResult<paper.PaperDocExportResult>>>;
 
     /**
      * Lists the users who are explicitly invited to the Paper folder in which
@@ -2277,7 +2298,7 @@ export class Dropbox {
      * DropboxResponseError<sharing.GetSharedLinkFileError>.
      * @param arg The request parameters.
      */
-    public sharingGetSharedLinkFile(arg: sharing.GetSharedLinkFileArg): Promise<DropboxResponse<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>;
+    public sharingGetSharedLinkFile(arg: sharing.GetSharedLinkFileArg): Promise<DropboxResponse<DropboxDownloadResult<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>>;
 
     /**
      * Get the shared link's metadata.
