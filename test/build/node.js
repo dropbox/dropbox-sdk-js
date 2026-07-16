@@ -149,21 +149,27 @@ describe('Node Definitions', () => {
   describe('Built JS ESM entry point', () => {
     it('executes directly in Node', () => {
       const packageRoot = path.resolve(__dirname, '../..');
-      execFileSync(
-        process.execPath,
-        [
-          '--experimental-default-type=module',
-          '--input-type=module',
-          '--eval',
+      const esPackageJson = path.join(packageRoot, 'es/package.json');
+
+      fs.writeFileSync(esPackageJson, '{"type":"module"}\n');
+      try {
+        execFileSync(
+          process.execPath,
           [
-            "const sdk = await import('./es/index.js');",
-            "if (typeof sdk.Dropbox !== 'function' || typeof sdk.DropboxAuth !== 'function') {",
-            "  throw new Error('Built ES module did not expose the SDK entry points');",
-            '}',
-          ].join('\n'),
-        ],
-        { cwd: packageRoot, stdio: 'pipe' },
-      );
+            '--input-type=module',
+            '--eval',
+            [
+              "const sdk = await import('./es/index.js');",
+              "if (typeof sdk.Dropbox !== 'function' || typeof sdk.DropboxAuth !== 'function') {",
+              "  throw new Error('Built ES module did not expose the SDK entry points');",
+              '}',
+            ].join('\n'),
+          ],
+          { cwd: packageRoot, stdio: 'pipe' },
+        );
+      } finally {
+        fs.unlinkSync(esPackageJson);
+      }
     });
   });
 
