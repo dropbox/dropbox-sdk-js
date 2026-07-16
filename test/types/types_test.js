@@ -67,6 +67,17 @@ dropbox.usersGetCurrentAccount()
     var errorObject = error.error;
 });
 dropbox2.usersGetCurrentAccount();
+// New namespace variants and upload routes from the current API specification.
+var teamMemberRoot = { '.tag': 'team_member_root' };
+teamMemberRoot['.tag'];
+dropbox.filesUploadSessionAppendBatch({
+    contents: new Uint8Array(),
+    entries: [{
+            cursor: { session_id: 'session-id', offset: 0 },
+            length: 0,
+        }],
+    content_hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+});
 // Download routes expose the SDK-injected body for both supported environments.
 dropbox.filesDownload({ path: '/test.txt' })
     .then(function (response) {
