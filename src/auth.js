@@ -55,7 +55,7 @@ export default class DropboxAuth {
       crypto = self.crypto;
       /* eslint-enable no-restricted-globals */
     } else {
-      fetch = require('node-fetch'); // eslint-disable-line global-require
+      fetch = globalThis.fetch.bind(globalThis);
       crypto = require('crypto'); // eslint-disable-line global-require
     }
 
