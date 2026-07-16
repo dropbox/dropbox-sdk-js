@@ -150,6 +150,50 @@ describe('Dropbox', () => {
         chai.assert.equal(fetchOptions.duplex, 'half');
       });
     });
+
+    it('can reuse upload arguments after a successful request', () => {
+      const fetchStub = sinon.stub().callsFake(
+        () => Promise.resolve(new Response('{}', { status: 200 })),
+      );
+      const auth = new DropboxAuth({ accessToken: 'token', fetch: fetchStub });
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+      const contents = Buffer.from('reusable contents');
+      const args = { path: '/test.txt', contents };
+
+      return dbx.filesUpload(args)
+        .then(() => dbx.filesUpload(args))
+        .then(() => {
+          chai.assert.strictEqual(args.contents, contents);
+          chai.assert.strictEqual(fetchStub.firstCall.args[1].body, contents);
+          chai.assert.strictEqual(fetchStub.secondCall.args[1].body, contents);
+          chai.assert.deepEqual(
+            JSON.parse(fetchStub.firstCall.args[1].headers['Dropbox-API-Arg']),
+            { path: '/test.txt' },
+          );
+        });
+    });
+
+    it('can reuse upload arguments after a rejected request', () => {
+      const fetchStub = sinon.stub();
+      fetchStub.onFirstCall().resolves(new Response('{}', { status: 429 }));
+      fetchStub.onSecondCall().resolves(new Response('{}', { status: 200 }));
+      const auth = new DropboxAuth({ accessToken: 'token', fetch: fetchStub });
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+      const contents = Buffer.from('reusable contents');
+      const args = { path: '/test.txt', contents };
+
+      return chai.assert.isRejected(dbx.filesUpload(args))
+        .then(() => dbx.filesUpload(args))
+        .then(() => {
+          chai.assert.strictEqual(args.contents, contents);
+          chai.assert.strictEqual(fetchStub.firstCall.args[1].body, contents);
+          chai.assert.strictEqual(fetchStub.secondCall.args[1].body, contents);
+          chai.assert.deepEqual(
+            JSON.parse(fetchStub.secondCall.args[1].headers['Dropbox-API-Arg']),
+            { path: '/test.txt' },
+          );
+        });
+    });
   });
 
   describe('Download Requests', () => {
