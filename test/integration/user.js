@@ -54,6 +54,24 @@ for (const appType in appInfo) {
             })
             .catch(done);
         });
+
+        it('download request with native fetch returns a Buffer', (done) => {
+          const dbxWithNativeFetch = new Dropbox({ auth: dbxAuth, fetch: global.fetch });
+
+          dbxWithNativeFetch.sharingGetSharedLinkFile({
+            url: process.env.DROPBOX_SHARED_LINK,
+          })
+            .then((resp) => {
+              chai.assert.instanceOf(resp, DropboxResponse);
+              chai.assert.equal(resp.status, 200, resp.result);
+              chai.assert.isString(resp.result.name);
+              chai.assert.isTrue(Buffer.isBuffer(resp.result.fileBinary));
+              chai.assert.isAbove(resp.result.fileBinary.length, 0);
+
+              done();
+            })
+            .catch(done);
+        });
       });
 
       describe('upload', () => {

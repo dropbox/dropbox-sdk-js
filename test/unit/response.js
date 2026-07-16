@@ -65,6 +65,38 @@ describe('DropboxResponse', () => {
       return chai.assert.isFulfilled(parseDownloadResponse(response));
     });
 
+    it('parses a standards-compliant response as a Buffer', () => {
+      const init = {
+        status: 200,
+        headers: {
+          'dropbox-api-result': httpHeaderSafeJson({ name: 'test.bin' }),
+        },
+      };
+      const response = new global.Response(Buffer.from([0, 1, 255]), init);
+
+      return parseDownloadResponse(response).then((parsedResponse) => {
+        chai.assert.isTrue(Buffer.isBuffer(parsedResponse.result.fileBinary));
+        chai.assert.deepEqual([...parsedResponse.result.fileBinary], [0, 1, 255]);
+      });
+    });
+
+    it('propagates errors while reading the download body', () => {
+      const response = {
+        ok: true,
+        status: 200,
+        headers: {
+          get: () => httpHeaderSafeJson({ name: 'test.bin' }),
+        },
+        arrayBuffer: () => Promise.reject(new Error('body read failed')),
+      };
+
+      return chai.assert.isRejected(
+        parseDownloadResponse(response),
+        Error,
+        'body read failed',
+      );
+    });
+
     it('throws an error when not a 200 status code', () => {
       const statusArray = [300, 400, 500];
       for (const status of statusArray) {
