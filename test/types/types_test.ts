@@ -33,13 +33,13 @@ dropboxAuth.getClientId();
 dropboxAuth.setClientSecret('myClientSecret');
 
 // Test other methods
-dropboxAuth.getAuthenticationUrl('myRedirect');
+const authenticationUrl: Promise<string> = dropboxAuth.getAuthenticationUrl('myRedirect');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState', 'code');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'mystate', 'code', 'offline', ['scope', 'scope'], 'none', false);
 dropboxAuth.getAccessTokenFromCode('myRedirect', 'myCode');
-dropboxAuth.checkAndRefreshAccessToken();
-dropboxAuth.refreshAccessToken();
+const checkedAccessToken: Promise<void> = dropboxAuth.checkAndRefreshAccessToken();
+const refreshedAccessToken: Promise<void> = dropboxAuth.refreshAccessToken();
 dropboxAuth.refreshAccessToken(['files.metadata.read', 'files.metadata.write']);
 
 // Check Dropbox Constructor or Methods

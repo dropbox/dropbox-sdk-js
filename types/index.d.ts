@@ -74,10 +74,10 @@ export class DropboxAuth {
    * @arg {boolean} [usePKCE] - Whether or not to use Sha256 based PKCE. PKCE should be only use on
    * client apps which doesn't call your server. It is less secure than non-PKCE flow but
    * can be used if you are unable to safely retrieve your app secret
-   * @returns {Promise<String>} - Url to send user to for Dropbox API authentication
+   * @returns {Promise<string>} - Url to send user to for Dropbox API authentication
    * returned in a promise
    */
-  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): Promise<String>;
+  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): Promise<string>;
 
   /**
    * Get the client id
@@ -142,17 +142,17 @@ export class DropboxAuth {
   /**
    * Checks if a token is needed, can be refreshed and if the token is expired.
    * If so, attempts to refresh access token
-   * @returns {Promise<*>}
+   * @returns {Promise<void>}
    */
-  checkAndRefreshAccessToken(): void;
+  checkAndRefreshAccessToken(): Promise<void>;
 
   /**
    * Refreshes the access token using the refresh token, if available
    * @arg {List} scope - a subset of scopes from the original
    * refresh to acquire with an access token
-   * @returns {Promise<*>}
+   * @returns {Promise<void>}
    */
-  refreshAccessToken(scope?: Array<String>): void;
+  refreshAccessToken(scope?: Array<String>): Promise<void>;
 
 }
 
@@ -4077,4 +4077,3 @@ export class Dropbox {
      */
     public usersGetSpaceUsage(): Promise<DropboxResponse<users.SpaceUsage>>;
 }
-
