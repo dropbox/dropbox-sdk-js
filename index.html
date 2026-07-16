@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Dropbox Node SDK Index</title>
+	<title>Dropbox JavaScript SDK Index</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +20,7 @@
 <div class="navbar navbar-default navbar-fixed-top ">
 <div class="container">
 	<div class="navbar-header">
-		<a class="navbar-brand" href="index.html">Dropbox Node SDK</a>
+		<a class="navbar-brand" href="index.html">Dropbox JavaScript SDK</a>
 		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
 			<span class="icon-bar"></span>
 			<span class="icon-bar"></span>
@@ -93,27 +93,88 @@
 
 
     <section class="readme-section">
-        <article><p><a href="https://github.com/dropbox/dropbox-sdk-js"><img src="https://cfl.dropboxstatic.com/static/images/sdk/javascript_banner.png" alt="Logo"></a></p>
-<p><a href="https://www.npmjs.com/package/dropbox"><img src="https://img.shields.io/node/v/dropbox" alt="node-current"></a>
-<a href="https://www.npmjs.com/package/dropbox"><img src="https://img.shields.io/npm/v/dropbox" alt="npm"></a>
+        <article><h1>Dropbox JavaScript SDK</h1>
+<p><a href="https://github.com/dropbox/dropbox-sdk-js/actions/workflows/ci.yml"><img src="https://img.shields.io/badge/Node.js-22%20%7C%2024-339933?logo=nodedotjs&amp;logoColor=white" alt="Node.js 22 and 24"></a>
+<a href="https://www.npmjs.com/package/dropbox"><img src="https://img.shields.io/npm/v/dropbox?logo=npm" alt="npm version"></a>
 <a href="https://codecov.io/gh/dropbox/dropbox-sdk-js"><img src="https://codecov.io/gh/dropbox/dropbox-sdk-js/branch/main/graph/badge.svg" alt="codecov"></a></p>
-<p>The offical Dropbox SDK for Javascript.</p>
-<p>Documentation can be found on <a href="https://dropbox.github.io/dropbox-sdk-js/">GitHub Pages</a></p>
+<p>The official Dropbox API v2 SDK for JavaScript.</p>
+<h2>Runtime support</h2>
+<p>The SDK supports Node.js, modern web browsers, and Web Workers. Continuous
+integration currently tests Node.js 22 and 24. Browser and Worker environments
+must provide <code>Promise</code>, <code>fetch</code>, and <code>TextEncoder</code>; PKCE authentication also
+requires the Web Crypto API. Add polyfills when targeting older environments
+that do not provide the required APIs.</p>
 <h2>Installation</h2>
-<p>Create an app via the <a href="https://dropbox.com/developers/apps">Developer Console</a></p>
-<p>Install via <a href="https://www.npmjs.com/">npm</a></p>
-<pre class="prettyprint source"><code>$ npm install --save dropbox
+<p>Create an app in the <a href="https://dropbox.com/developers/apps">Developer Console</a>, then install the SDK from
+npm. Published npm packages already contain CommonJS, ES module, browser, and
+TypeScript builds; applications do not need to build the SDK from source.
+Published versions and release history are available on the
+<a href="https://www.npmjs.com/package/dropbox?activeTab=versions">npm versions page</a>.</p>
+<pre class="prettyprint source lang-sh"><code>npm install dropbox
 </code></pre>
-<p>Install from source:</p>
-<pre class="prettyprint source"><code>$ git clone https://github.com/dropbox/dropbox-sdk-js.git
-$ cd dropbox-sdk-js
-$ npm install
+<h3>Node.js</h3>
+<pre class="prettyprint source lang-js"><code>const { Dropbox } = require('dropbox');
+
+const dbx = new Dropbox({
+  accessToken: process.env.DROPBOX_ACCESS_TOKEN,
+});
+
+dbx.filesListFolder({ path: '' })
+  .then(({ result }) => console.log(result.entries))
+  .catch(console.error);
 </code></pre>
-<p>If you are using the repository from the browser, you can use any CDNs that hosts the Dropbox package by including a script tag with the link to the package. However, we highly recommend you do not directly import the latest version and instead choose a specific version. When we update and release a breaking change, this could break production code which we hope to avoid. Note, we follow <a href="https://semver.org/">semver</a> naming conventions which means that any major version update could contain a breaking change.</p>
-<p>After installation, follow one of our <a href="https://github.com/dropbox/dropbox-sdk-js/tree/main/examples">Examples</a> or read the <a href="https://dropbox.github.io/dropbox-sdk-js/">Documentation</a>.</p>
-<p>You can also view our <a href="https://www.dropbox.com/lp/developers/reference/oauth-guide">OAuth guide</a>.</p>
+<h3>Browser application with a bundler</h3>
+<p>Webpack, Rollup, Vite, and similar tools can use the package's ES module build.</p>
+<pre class="prettyprint source lang-js"><code>import { Dropbox } from 'dropbox';
+
+const dbx = new Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN' });
+</code></pre>
+<h3>Browser application from a CDN</h3>
+<p>The browser bundle exposes the SDK through the global <code>Dropbox</code> object. Pin an
+exact SDK version so a future breaking release cannot change your application
+unexpectedly.</p>
+<pre class="prettyprint source lang-html"><code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/dropbox@10.34.0/dist/Dropbox-sdk.min.js&quot;>&lt;/script>
+&lt;script>
+  const dbx = new Dropbox.Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN' });
+&lt;/script>
+</code></pre>
+<p>Do not hard-code production access tokens in public source code.</p>
+<h3>Web Worker</h3>
+<p>The same browser bundle can be loaded in a Worker:</p>
+<pre class="prettyprint source lang-js"><code>importScripts('https://cdn.jsdelivr.net/npm/dropbox@10.34.0/dist/Dropbox-sdk.min.js');
+
+const dbx = new Dropbox.Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN' });
+</code></pre>
+<h3>Install from source</h3>
+<p>Building is required only when developing the SDK itself or running examples
+directly from this repository.</p>
+<pre class="prettyprint source lang-sh"><code>git clone https://github.com/dropbox/dropbox-sdk-js.git
+cd dropbox-sdk-js
+npm install
+npm run build
+</code></pre>
+<h2>Browser authentication and PKCE</h2>
+<p>Client-side applications cannot keep an app secret confidential. Never embed a
+Dropbox app secret in browser or Worker code. Use the OAuth authorization-code
+flow with PKCE and your app key instead. See the <a href="https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/pkce-browser">browser PKCE example</a>
+and the <a href="https://www.dropbox.com/lp/developers/reference/oauth-guide">Dropbox OAuth guide</a>. PKCE requires a secure context and the
+Web Crypto API.</p>
+<p>Server applications can keep an app secret confidential and may use the regular
+authorization-code flow.</p>
+<h2>API reference</h2>
+<ul>
+<li><a href="https://dropbox.github.io/dropbox-sdk-js/Dropbox.html">Dropbox class</a> — Dropbox API routes for files, sharing, users,
+teams, and other namespaces.</li>
+<li><a href="https://dropbox.github.io/dropbox-sdk-js/DropboxAuth.html">DropboxAuth class</a> — OAuth URLs, PKCE, access tokens, and token
+refresh.</li>
+<li><a href="https://dropbox.github.io/dropbox-sdk-js/DropboxResponseError.html">DropboxResponseError class</a> — errors returned by API requests.</li>
+<li><a href="https://dropbox.github.io/dropbox-sdk-js/global.html">Global API</a> — generated methods and route type definitions.</li>
+</ul>
+<p>The complete generated <a href="https://dropbox.github.io/dropbox-sdk-js/Dropbox.html">API reference</a> is published on GitHub
+Pages.</p>
 <h2>Examples</h2>
-<p>We provide <a href="https://github.com/dropbox/dropbox-sdk-js/tree/main/examples">Examples</a> to help get you started with a lot of the basic functionality in the SDK.  We provide most examples in both Javascript and Typescript with some having a Node equivalent.</p>
+<p>The <a href="https://github.com/dropbox/dropbox-sdk-js/tree/main/examples">examples</a> demonstrate common SDK operations. Most are available
+in both JavaScript and TypeScript, with additional Node.js OAuth examples.</p>
 <ul>
 <li>
 <p><strong>OAuth</strong></p>
@@ -185,7 +246,7 @@ $ npm install
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2026-07-16T05:59:45+00:00
+		on 2026-07-16T06:25:38+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
