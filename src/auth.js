@@ -10,7 +10,8 @@ import { parseResponse } from './response.js';
 
 let fetch;
 let crypto;
-let Encoder;
+
+const base64EncodeBytes = (bytes) => btoa(String.fromCharCode.apply(null, bytes));
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -58,13 +59,7 @@ export default class DropboxAuth {
       fetch = typeof globalThis.fetch === 'function'
         ? globalThis.fetch.bind(globalThis)
         : undefined;
-      crypto = require('crypto'); // eslint-disable-line global-require
-    }
-
-    if (typeof TextEncoder === 'undefined') {
-      Encoder = require('util').TextEncoder; // eslint-disable-line global-require
-    } else {
-      Encoder = TextEncoder;
+      crypto = globalThis.crypto;
     }
 
     this.fetch = options.fetch || fetch;
@@ -183,35 +178,20 @@ export default class DropboxAuth {
   }
 
   generateCodeChallenge() {
-    const encoder = new Encoder();
+    const encoder = new TextEncoder();
     const codeData = encoder.encode(this.codeVerifier);
-    let codeChallenge;
-    if (isBrowserEnv() || isWorkerEnv()) {
-      return crypto.subtle.digest('SHA-256', codeData)
-        .then((digestedHash) => {
-          const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(digestedHash)));
-          codeChallenge = createBrowserSafeString(base64String).substr(0, 128);
-          this.codeChallenge = codeChallenge;
-        });
-    }
-    const digestedHash = crypto.createHash('sha256').update(codeData).digest();
-    codeChallenge = createBrowserSafeString(digestedHash);
-    this.codeChallenge = codeChallenge;
-    return Promise.resolve();
+    return crypto.subtle.digest('SHA-256', codeData)
+      .then((digestedHash) => {
+        const base64String = base64EncodeBytes(new Uint8Array(digestedHash));
+        this.codeChallenge = createBrowserSafeString(base64String).substr(0, 128);
+      });
   }
 
   generatePKCECodes() {
-    let codeVerifier;
-    if (isBrowserEnv() || isWorkerEnv()) {
-      const array = new Uint8Array(PKCELength);
-      const randomValueArray = crypto.getRandomValues(array);
-      const base64String = btoa(randomValueArray);
-      codeVerifier = createBrowserSafeString(base64String).substr(0, 128);
-    } else {
-      const randomBytes = crypto.randomBytes(PKCELength);
-      codeVerifier = createBrowserSafeString(randomBytes).substr(0, 128);
-    }
-    this.codeVerifier = codeVerifier;
+    const array = new Uint8Array(PKCELength);
+    const randomValueArray = crypto.getRandomValues(array);
+    const base64String = base64EncodeBytes(randomValueArray);
+    this.codeVerifier = createBrowserSafeString(base64String).substr(0, 128);
 
     return this.generateCodeChallenge();
   }
