@@ -47,7 +47,7 @@ export default class DropboxAuth {
   constructor(options) {
     options = options || {};
 
-    if (isBrowserEnv()) {
+    if (isBrowserEnv() && typeof window.fetch === 'function') {
       fetch = window.fetch.bind(window);
       crypto = window.crypto || window.msCrypto; // for IE11
     } else if (isWorkerEnv()) {
