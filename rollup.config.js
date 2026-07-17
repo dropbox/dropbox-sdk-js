@@ -18,11 +18,8 @@ const config = {
   output: {
     format: 'umd',
     sourcemap: (process.env.BUNDLE_TYPE !== 'minified'),
-    globals: {
-      crypto: 'crypto',
-    },
   },
-  external: ['es6-promise/auto', 'crypto'],
+  external: ['es6-promise/auto'],
   plugins: [
     babel(),
   ],

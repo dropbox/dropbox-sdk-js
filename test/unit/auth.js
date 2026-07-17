@@ -242,8 +242,32 @@ describe('DropboxAuth', () => {
     it('saves a new code challenge on Auth obj', () => {
       const dbxAuth = new DropboxAuth();
       chai.assert.equal(dbxAuth.codeChallenge, undefined);
-      dbxAuth.generatePKCECodes();
-      chai.assert.isTrue(!!dbxAuth.codeChallenge);
+      return dbxAuth.generatePKCECodes()
+        .then(() => {
+          chai.assert.isTrue(!!dbxAuth.codeChallenge);
+        });
+    });
+
+    it('base64 encodes the random bytes used for the code verifier', () => {
+      const getRandomValuesStub = sinon.stub(globalThis.crypto, 'getRandomValues')
+        .callsFake((array) => {
+          for (let i = 0; i < array.length; i += 1) {
+            array[i] = i;
+          }
+          return array;
+        });
+      const dbxAuth = new DropboxAuth();
+
+      return dbxAuth.generatePKCECodes()
+        .then(() => {
+          chai.assert.equal(
+            dbxAuth.codeVerifier,
+            'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5f',
+          );
+        })
+        .finally(() => {
+          getRandomValuesStub.restore();
+        });
     });
 
     it('gets called when using PKCE flow', (done) => {
@@ -257,7 +281,7 @@ describe('DropboxAuth', () => {
         .catch(done);
     });
 
-    it('generates valid code challenge from verifier (Node)', (done) => {
+    it('generates valid code challenge from verifier', (done) => {
       const dbxAuth = new DropboxAuth();
       const verifier = 'NTUsMjIsMzYsMTY4LDIyLDEzNywyNDMsOTYsMTIxLDIxNSwxNDAsMTYwLDMwLDE1LDIzMSw1NiwzMCwyMTIsMTQyLDIyMywxMzMsMTIsMjI1LDIzOCwxMDcsMjQ1LDM0';
       dbxAuth.setCodeVerifier(verifier);
