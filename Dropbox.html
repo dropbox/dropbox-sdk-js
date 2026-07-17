@@ -717,6 +717,306 @@ custom headers to use during a request.</td>
             
 <hr>
 <dt>
+    <h4 class="name" id="accountDeleteProfilePhoto"><span class="type-signature"></span>accountDeleteProfilePhoto(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Deletes the current user's profile photo.
+Route attributes:
+  scope: account_info.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AccountDeleteProfilePhotoArg">AccountDeleteProfilePhotoArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AccountDeleteProfilePhotoResult">AccountDeleteProfilePhotoResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AccountDeleteProfilePhotoError">AccountDeleteProfilePhotoError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="accountGetPhoto"><span class="type-signature"></span>accountGetPhoto(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        This lovely endpoint gets the account photo of a given user.
+Route attributes:
+  scope: account_info.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AccountAccountPhotoGetArg">AccountAccountPhotoGetArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AccountAccountPhotoGetResult">AccountAccountPhotoGetResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AccountAccountPhotoGetError">AccountAccountPhotoGetError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="accountSetProfilePhoto"><span class="type-signature"></span>accountSetProfilePhoto(arg)</h4>
     
     
@@ -955,6 +1255,15 @@ Route attributes:
     
 
 	
+	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
+	
+    <dd class="yes-def tag-deprecated">
+        <ul class="dummy">
+            <li>Yes</li>
+        </ul>
+    </dd>
+    
+    
 
 	
 
@@ -1250,7 +1559,7 @@ Dropbox API infrastructure is working and that the app key and secret valid.
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#CheckEchoResult">CheckEchoResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#CheckEchoResult">CheckEchoResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#CheckEchoError">CheckEchoError</a>>></span>
 
 
 
@@ -1404,7 +1713,7 @@ Route attributes:
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#CheckEchoResult">CheckEchoResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#CheckEchoResult">CheckEchoResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#CheckEchoError">CheckEchoError</a>>></span>
 
 
 
@@ -5378,7 +5687,7 @@ Route attributes:
     <div class="description">
         Create a new file with the contents provided in the request. Note that the
 behavior of this alpha endpoint is unstable and subject to change. Do not use
-this to upload a file larger than 150 MB. Instead, create an upload session
+this to upload a file larger than 150 MiB. Instead, create an upload session
 with upload_session/start.
 Route attributes:
   scope: files.content.write
@@ -8318,7 +8627,7 @@ Route attributes:
     
     <div class="description">
         Export a file from a user's Dropbox. This route only supports exporting files
-that cannot be downloaded directly  and whose ExportResult.file_metadata has
+that cannot be downloaded directly and whose ExportResult.file_metadata has
 ExportInfo.export_as populated.
 Route attributes:
   scope: files.content.read
@@ -8773,9 +9082,8 @@ Route attributes:
         Get a preview for a file. Currently, PDF previews are generated for files
 with the following extensions: .ai, .doc, .docm, .docx, .eps, .gdoc,
 .gslides, .odp, .odt, .pps, .ppsm, .ppsx, .ppt, .pptm, .pptx, .rtf. HTML
-previews are generated for files with the following extensions: .csv, .ods,
-.xls, .xlsm, .gsheet, .xlsx. Other formats will return an unsupported
-extension error.
+previews are generated for .csv, .ods, .xls, .xlsm, .gsheet, .xlsx. Other
+formats will return an unsupported extension error.
 Route attributes:
   scope: files.content.read
     </div>
@@ -9079,10 +9387,10 @@ Route attributes:
     
     <div class="description">
         Get a one-time use temporary upload link to upload a file to a Dropbox
-location.  This endpoint acts as a delayed upload. The returned temporary
+location.  This endpoint acts as a delayed upload(). The returned temporary
 upload link may be used to make a POST request with the data to be uploaded.
 The upload will then be perfomed with the CommitInfo previously provided to
-get_temporary_upload_link but evaluated only upon consumption. Hence, errors
+getTemporaryUploadLink() but evaluated only upon consumption. Hence, errors
 stemming from invalid CommitInfo with respect to the state of the user's
 Dropbox will only be communicated at consumption time. Additionally, these
 errors are surfaced as generic HTTP 409 Conflict responses, potentially
@@ -9095,16 +9403,16 @@ request:  curl -X POST
 https://content.dropboxapi.com/apitul/1/bNi2uIYF51cVBND --header
 "Content-Type: application/octet-stream" --data-binary @local_file.txt  A
 successful temporary upload link consumption request returns the content hash
-of the uploaded data in JSON format.  Example successful temporary upload
-link consumption response: {"content-hash":
+of the uploaded data in JSON format. Example successful temporary upload link
+consumption response: {"content-hash":
 "599d71033d700ac892a0e48fa61b125d2f5994"}  An unsuccessful temporary upload
 link consumption request returns any of the following status codes:  HTTP 400
 Bad Request: Content-Type is not one of application/octet-stream and
 text/plain or request is invalid. HTTP 409 Conflict: The temporary upload
 link does not exist or is currently unavailable, the upload failed, or
 another error happened. HTTP 410 Gone: The temporary upload link is expired
-or consumed.  Example unsuccessful temporary upload link consumption
-response: Temporary upload link has been recently consumed.
+or consumed. Example unsuccessful temporary upload link consumption response:
+Temporary upload link has been recently consumed.
 Route attributes:
   scope: files.content.write
     </div>
@@ -10189,8 +10497,7 @@ Route attributes:
 list_folder/continue, this call gives you a low-latency way to monitor an
 account for file changes. The connection will block until there are changes
 available or a timeout occurs. This endpoint is useful mostly for client-side
-apps. If you're looking for server-side notifications, check out our webhooks
-documentation https://www.dropbox.com/developers/reference/webhooks.
+apps.
 Route attributes:
   scope: files.metadata.read
     </div>
@@ -12044,7 +12351,9 @@ Route attributes:
 
     
     <div class="description">
-        Route attributes:
+        Add property groups to a Dropbox file. See templates/add_for_user or
+templates/add_for_team to create new templates.
+Route attributes:
   scope: files.metadata.write
     </div>
     
@@ -12202,7 +12511,10 @@ Route attributes:
 
     
     <div class="description">
-        Route attributes:
+        Overwrite property groups associated with a file. This endpoint should be
+used instead of properties/update when property groups are being overwritten
+rather than updated via a "delta".
+Route attributes:
   scope: files.metadata.write
     </div>
     
@@ -12352,430 +12664,6 @@ Route attributes:
             
 <hr>
 <dt>
-    <h4 class="name" id="filesPropertiesRemove"><span class="type-signature"></span>filesPropertiesRemove(arg)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Route attributes:
-  scope: files.metadata.write
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#FilePropertiesRemovePropertiesArg">FilePropertiesRemovePropertiesArg</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
-	
-    <dd class="yes-def tag-deprecated">
-        <ul class="dummy">
-            <li>Yes</li>
-        </ul>
-    </dd>
-    
-    
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;void>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#FilePropertiesRemovePropertiesError">FilePropertiesRemovePropertiesError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="filesPropertiesTemplateGet"><span class="type-signature"></span>filesPropertiesTemplateGet(arg)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Route attributes:
-  scope: files.metadata.read
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#FilePropertiesGetTemplateArg">FilePropertiesGetTemplateArg</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
-	
-    <dd class="yes-def tag-deprecated">
-        <ul class="dummy">
-            <li>Yes</li>
-        </ul>
-    </dd>
-    
-    
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#FilePropertiesGetTemplateResult">FilePropertiesGetTemplateResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="filesPropertiesTemplateList"><span class="type-signature"></span>filesPropertiesTemplateList()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Route attributes:
-  scope: files.metadata.read
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
-	
-    <dd class="yes-def tag-deprecated">
-        <ul class="dummy">
-            <li>Yes</li>
-        </ul>
-    </dd>
-    
-    
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#FilePropertiesListTemplateResult">FilePropertiesListTemplateResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
     <h4 class="name" id="filesPropertiesUpdate"><span class="type-signature"></span>filesPropertiesUpdate(arg)</h4>
     
     
@@ -12784,7 +12672,11 @@ Route attributes:
 
     
     <div class="description">
-        Route attributes:
+        Add, update or remove properties associated with the supplied file and
+templates. This endpoint should be used instead of properties/overwrite when
+property groups are being updated via a "delta" instead of overwriting all
+properties of a file.
+Route attributes:
   scope: files.metadata.write
     </div>
     
@@ -13093,9 +12985,8 @@ Route attributes:
     
     <div class="description">
         Save the data from a specified URL into a file in user's Dropbox. Note that
-the transfer from the URL must complete within 5 minutes, or the operation
-will time out and the job will fail. If the given path already exists, the
-file will be renamed to avoid the conflict (e.g. myfile (1).txt).
+the transfer from the URL must complete within 15 minutes, or the operation
+will time out and the job will fail.
 Route attributes:
   scope: files.content.write
     </div>
@@ -14470,7 +14361,7 @@ Route attributes:
     
     <div class="description">
         Create a new file with the contents provided in the request. Do not use this
-to upload a file larger than 150 MB. Instead, create an upload session with
+to upload a file larger than 150 MiB. Instead, create an upload session with
 upload_session/start. Calls to this endpoint will count as data transport
 calls for any Dropbox Business teams with a limit on the number of data
 transport calls allowed per month. For more information, see the Data
@@ -14626,11 +14517,12 @@ Route attributes:
     
     <div class="description">
         Append more data to an upload session. A single request should not upload
-more than 150 MB. The maximum size of a file one can upload to an upload
-session is 350 GB. Calls to this endpoint will count as data transport calls
-for any Dropbox Business teams with a limit on the number of data transport
-calls allowed per month. For more information, see the Data transport limit
-page https://www.dropbox.com/developers/reference/data-transport-limit.
+more than 150 MiB. The maximum size of a file one can upload to an upload
+session is 2^41 - 2^22 (2,199,019,061,248) bytes. Calls to this endpoint will
+count as data transport calls for any Dropbox Business teams with a limit on
+the number of data transport calls allowed per month. For more information,
+see the Data transport limit page
+https://www.dropbox.com/developers/reference/data-transport-limit.
 Route attributes:
   scope: files.content.write
     </div>
@@ -14781,6 +14673,165 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="filesUploadSessionAppendBatch"><span class="type-signature"></span>filesUploadSessionAppendBatch(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Append more data to multiple upload sessions. Each piece of file content to
+append to each upload session should be concatenated in the request body, in
+the order delineated by UploadSessionAppendBatchArg.entries and their
+individual lengths indicated by UploadSessionAppendBatchArgEntry.length. A
+single request should not upload more than 150 MiB. The maximum size of a
+file one can upload to an upload session is 2^41 - 2^22 (2,199,019,061,248)
+bytes. Calls to this endpoint will count as data transport calls for any
+Dropbox Business teams with a limit on the number of data transport calls
+allowed per month. For more information, see the Data transport limit page
+https://www.dropbox.com/developers/reference/data-transport-limit.
+Route attributes:
+  scope: files.content.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#FilesUploadSessionAppendBatchArg">FilesUploadSessionAppendBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#FilesUploadSessionAppendBatchResult">FilesUploadSessionAppendBatchResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#FilesUploadSessionAppendBatchError">FilesUploadSessionAppendBatchError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="filesUploadSessionAppendV2"><span class="type-signature"></span>filesUploadSessionAppendV2(arg)</h4>
     
     
@@ -14791,10 +14842,11 @@ Route attributes:
     <div class="description">
         Append more data to an upload session. When the parameter close is set, this
 call will close the session. A single request should not upload more than 150
-MB. The maximum size of a file one can upload to an upload session is 350 GB.
-Calls to this endpoint will count as data transport calls for any Dropbox
-Business teams with a limit on the number of data transport calls allowed per
-month. For more information, see the Data transport limit page
+MiB. The maximum size of a file one can upload to an upload session is 2^41 -
+2^22 (2,199,019,061,248) bytes. Calls to this endpoint will count as data
+transport calls for any Dropbox Business teams with a limit on the number of
+data transport calls allowed per month. For more information, see the Data
+transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
 Route attributes:
   scope: files.content.write
@@ -14946,11 +14998,11 @@ Route attributes:
     
     <div class="description">
         Finish an upload session and save the uploaded data to the given file path. A
-single request should not upload more than 150 MB. The maximum size of a file
-one can upload to an upload session is 350 GB. Calls to this endpoint will
-count as data transport calls for any Dropbox Business teams with a limit on
-the number of data transport calls allowed per month. For more information,
-see the Data transport limit page
+single request should not upload more than 150 MiB. The maximum size of a
+file one can upload to an upload session is 2^41 - 2^22 (2,199,019,061,248)
+bytes. Calls to this endpoint will count as data transport calls for any
+Dropbox Business teams with a limit on the number of data transport calls
+allowed per month. For more information, see the Data transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
 Route attributes:
   scope: files.content.write
@@ -15108,15 +15160,15 @@ file contents have been uploaded, rather than calling upload_session/finish,
 use this route to finish all your upload sessions in a single request.
 UploadSessionStartArg.close or UploadSessionAppendArg.close needs to be true
 for the last upload_session/start or upload_session/append_v2 call. The
-maximum size of a file one can upload to an upload session is 350 GB. This
-route will return a job_id immediately and do the async commit job in
-background. Use upload_session/finish_batch/check to check the job status.
-For the same account, this route should be executed serially. That means you
-should not start the next job before current job finishes. We allow up to
-1000 entries in a single request. Calls to this endpoint will count as data
-transport calls for any Dropbox Business teams with a limit on the number of
-data transport calls allowed per month. For more information, see the Data
-transport limit page
+maximum size of a file one can upload to an upload session is 2^41 - 2^22
+(2,199,019,061,248) bytes. This route will return a job_id immediately and do
+the async commit job in background. Use upload_session/finish_batch/check to
+check the job status. For the same account, this route should be executed
+serially. That means you should not start the next job before current job
+finishes. We allow up to 1000 entries in a single request. Calls to this
+endpoint will count as data transport calls for any Dropbox Business teams
+with a limit on the number of data transport calls allowed per month. For
+more information, see the Data transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
 Route attributes:
   scope: files.content.write
@@ -15435,10 +15487,11 @@ use this route to finish all your upload sessions in a single request.
 UploadSessionStartArg.close or UploadSessionAppendArg.close needs to be true
 for the last upload_session/start or upload_session/append_v2 call of each
 upload session. The maximum size of a file one can upload to an upload
-session is 350 GB. We allow up to 1000 entries in a single request. Calls to
-this endpoint will count as data transport calls for any Dropbox Business
-teams with a limit on the number of data transport calls allowed per month.
-For more information, see the Data transport limit page
+session is 2^41 - 2^22 (2,199,019,061,248) bytes. We allow up to 1000 entries
+in a single request. Calls to this endpoint will count as data transport
+calls for any Dropbox Business teams with a limit on the number of data
+transport calls allowed per month. For more information, see the Data
+transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
 Route attributes:
   scope: files.content.write
@@ -15590,33 +15643,35 @@ Route attributes:
     
     <div class="description">
         Upload sessions allow you to upload a single file in one or more requests,
-for example where the size of the file is greater than 150 MB.  This call
+for example where the size of the file is greater than 150 MiB. This call
 starts a new upload session with the given data. You can then use
-upload_session/append_v2 to add more data and upload_session/finish to save
-all the data to a file in Dropbox. A single request should not upload more
-than 150 MB. The maximum size of a file one can upload to an upload session
-is 350 GB. An upload session can be used for a maximum of 7 days. Attempting
-to use an UploadSessionStartResult.session_id with upload_session/append_v2
-or upload_session/finish more than 7 days after its creation will return a
-UploadSessionLookupError.not_found. Calls to this endpoint will count as data
-transport calls for any Dropbox Business teams with a limit on the number of
-data transport calls allowed per month. For more information, see the Data
-transport limit page
+upload_session/append_v2 or upload_session/append_batch to add more data,
+then upload_session/finish or upload_session/finish_batch_v2 to save all the
+data to a file in Dropbox. A single request should not upload more than 150
+MiB. The maximum size of a file one can upload to an upload session is 2^41 -
+2^22 (2,199,019,061,248) bytes. An upload session can be used for a maximum
+of 7 days. Attempting to use a UploadSessionStartResult.session_id with
+upload_session/append_v2 or other upload session routes more than 7 days
+after its creation will return UploadSessionLookupError.not_found. Calls to
+this endpoint will count as data transport calls for any Dropbox Business
+teams with a limit on the number of data transport calls allowed per month.
+For more information, see the Data transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit. By
 default, upload sessions require you to send content of the file in
 sequential order via consecutive upload_session/start,
-upload_session/append_v2, upload_session/finish calls. For better
-performance, you can instead optionally use a UploadSessionType.concurrent
-upload session. To start a new concurrent session, set
-UploadSessionStartArg.session_type to UploadSessionType.concurrent. After
-that, you can send file data in concurrent upload_session/append_v2 requests.
-Finally finish the session with upload_session/finish. There are couple of
-constraints with concurrent sessions to make them work. You can not send data
-with upload_session/start or upload_session/finish call, only with
-upload_session/append_v2 call. Also data uploaded in upload_session/append_v2
-call must be multiple of 4194304 bytes (except for last
-upload_session/append_v2 with UploadSessionStartArg.close to true, that may
-contain any remaining data).
+upload_session/append_v2, and upload_session/finish calls (or their batch
+variants). For better performance, you can optionally set
+UploadSessionStartArg.session_type to UploadSessionType.concurrent to start a
+concurrent upload session. Concurrent upload sessions may upload file data in
+concurrent upload_session/append_v2 requests, with a few caveats. After all
+of the requests are complete, finish the session with upload_session/finish
+as normal. You can not send data in a upload_session/start or
+upload_session/finish call, only with upload_session/append_v2 or
+upload_session/append_batch. Also, the length of the uploaded data in a call
+to upload_session/append_v2 or upload_session/append_batch must be a multiple
+of 2^22 (4,194,304) bytes, except for the final append request with
+UploadSessionAppendArg.close or UploadSessionAppendBatchArgEntry.close set to
+true that may contain any remaining data.
 Route attributes:
   scope: files.content.write
     </div>
@@ -15766,11 +15821,10 @@ Route attributes:
 
     
     <div class="description">
-        This route starts batch of upload_sessions. Please refer to
-`upload_session/start` usage. Calls to this endpoint will count as data
-transport calls for any Dropbox Business teams with a limit on the number of
-data transport calls allowed per month. For more information, see the Data
-transport limit page
+        Start a batch of upload sessions. See upload_session/start. Calls to this
+endpoint will count as data transport calls for any Dropbox Business teams
+with a limit on the number of data transport calls allowed per month. For
+more information, see the Data transport limit page
 https://www.dropbox.com/developers/reference/data-transport-limit.
 Route attributes:
   scope: files.content.write
@@ -16905,18 +16959,17 @@ Route attributes:
 
     
     <div class="description">
-        Retrieves folder information for the given Paper doc. This includes:   -
-folder sharing policy; permissions for subfolders are set by the top-level
-folder.   - full 'filepath', i.e. the list of folders (both folderId and
-folderName) from     the root folder to the folder directly containing the
-Paper doc.  If the Paper doc is not in any folder (aka unfiled) the response
-will be empty. Note that this endpoint will continue to work for content
-created by users on the older version of Paper. To check which version of
-Paper a user is on, use /users/features/get_values. If the paper_as_files
-feature is enabled, then the user is running the new version of Paper. Refer
-to the Paper Migration Guide
-https://www.dropbox.com/lp/developers/reference/paper-migration-guide for
-migration information.
+        Retrieves folder information for the given Paper doc. This includes: - folder
+sharing policy; permissions for subfolders are set by the top-level folder. -
+full 'filepath', i.e. the list of folders (both folderId and folderName) from
+the root folder to the folder directly containing the Paper doc. If the Paper
+doc is not in any folder (aka unfiled) the response will be empty. Note that
+this endpoint will continue to work for content created by users on the older
+version of Paper. To check which version of Paper a user is on, use
+/users/features/get_values. If the paper_as_files feature is enabled, then
+the user is running the new version of Paper. Refer to the Paper Migration
+Guide https://www.dropbox.com/lp/developers/reference/paper-migration-guide
+for migration information.
 Route attributes:
   scope: sharing.read
     </div>
@@ -17051,6 +17104,156 @@ Route attributes:
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#PaperFoldersContainingPaperDoc">PaperFoldersContainingPaperDoc</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="paperDocsGetMetadata"><span class="type-signature"></span>paperDocsGetMetadata(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns metadata for a Paper doc or Cloud Doc.
+Route attributes:
+  scope: files.metadata.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#PaperGetDocMetadataArg">PaperGetDocMetadataArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#PaperPaperDocGetMetadataResult">PaperPaperDocGetMetadataResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#PaperDocLookupError">PaperDocLookupError</a>>></span>
 
 
 
@@ -18898,6 +19101,906 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="rivieraGetMarkdownAsync"><span class="type-signature"></span>rivieraGetMarkdownAsync(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Asynchronous document-to-markdown conversion for supported file formats.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraGetMarkdownArgs">RivieraGetMarkdownArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchResultBase">AsyncLaunchResultBase</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraGetMarkdownAsyncCheck"><span class="type-signature"></span>rivieraGetMarkdownAsyncCheck(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the status or result of specified get_markdown_async task.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#RivieraGetMarkdownAsyncCheckResult">RivieraGetMarkdownAsyncCheckResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraGetMetadataAsync"><span class="type-signature"></span>rivieraGetMetadataAsync(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Asynchronous file metadata extraction for supported file formats.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraGetMetadataArgs">RivieraGetMetadataArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchResultBase">AsyncLaunchResultBase</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraGetMetadataAsyncCheck"><span class="type-signature"></span>rivieraGetMetadataAsyncCheck(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the status or result of specified get_metadata_async task.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#RivieraGetMetadataAsyncCheckResult">RivieraGetMetadataAsyncCheckResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraGetTranscriptAsync"><span class="type-signature"></span>rivieraGetTranscriptAsync(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Asynchronous transcript generation for audio and video files.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraGetTranscriptArgs">RivieraGetTranscriptArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchResultBase">AsyncLaunchResultBase</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraGetTranscriptAsyncCheck"><span class="type-signature"></span>rivieraGetTranscriptAsyncCheck(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the status or result of specified get_transcript_async task.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#RivieraGetTranscriptAsyncCheckResult">RivieraGetTranscriptAsyncCheckResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="sharingAddFileMember"><span class="type-signature"></span>sharingAddFileMember(arg)</h4>
     
     
@@ -19664,7 +20767,7 @@ that link is returned. Previously, it was technically possible to break a
 shared link by moving or renaming the corresponding file or folder. In the
 future, this will no longer be the case, so your app shouldn't rely on this
 behavior. Instead, if your app needs to revoke a shared link, use
-revoke_shared_link.
+revoke_shared_link. DEPRECATED: Use create_shared_link_with_settings instead.
 Route attributes:
   scope: sharing.write
     </div>
@@ -20425,7 +21528,8 @@ Route attributes:
 
     
     <div class="description">
-        Download the shared link's file from a user's Dropbox.
+        Download the shared link's file from a user's Dropbox. This is a
+download-style endpoint that returns the file content.
 Route attributes:
   scope: sharing.read
     </div>
@@ -20700,7 +21804,7 @@ Route attributes:
     </dt>
     <dd>
         
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;(<a href="global.html#SharingFileLinkMetadata">SharingFileLinkMetadata</a>|<a href="global.html#SharingFolderLinkMetadata">SharingFolderLinkMetadata</a>|<a href="global.html#SharingSharedLinkMetadata">SharingSharedLinkMetadata</a>)>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#SharingSharedLinkError">SharingSharedLinkError</a>>></span>
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;(<a href="global.html#SharingFileLinkMetadata">SharingFileLinkMetadata</a>|<a href="global.html#SharingFolderLinkMetadata">SharingFolderLinkMetadata</a>|<a href="global.html#SharingSharedLinkMetadata">SharingSharedLinkMetadata</a>)>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#SharingSharedLinkMetadataError">SharingSharedLinkMetadataError</a>>></span>
 
 
 
@@ -20725,11 +21829,12 @@ Route attributes:
 
     
     <div class="description">
-        Returns a list of LinkMetadata objects for this user, including collection
-links. If no path is given, returns a list of all shared links for the
-current user, including collection links, up to a maximum of 1000 links. If a
-non-empty path is given, returns a list of all shared links that allow access
-to the given path.  Collection links are never returned in this case.
+        DEPRECATED: Use list_shared_links instead. This endpoint will be retired in
+October 2026. Returns a list of LinkMetadata objects for this user, including
+collection links. If no path is given, returns a list of all shared links for
+the current user, including collection links, up to a maximum of 1000 links.
+If a non-empty path is given, returns a list of all shared links that allow
+access to the given path. Collection links are never returned in this case.
 Route attributes:
   scope: sharing.read
     </div>
@@ -22250,9 +23355,7 @@ Route attributes:
 
     
     <div class="description">
-        Returns a list of all files shared with current user.  Does not include files
-the user has received via shared folders, and does  not include unclaimed
-invitations.
+        Returns a list of all files shared with current user.
 Route attributes:
   scope: sharing.read
     </div>
@@ -22555,13 +23658,11 @@ Route attributes:
         List shared links of this user. If no path is given, returns a list of all
 shared links for the current user. For members of business teams using team
 space and member folders, returns all shared links in the team member's home
-folder unless the team space ID is specified in the request header. For more
-information, refer to the Namespace Guide
-https://www.dropbox.com/developers/reference/namespace-guide. If a non-empty
-path is given, returns a list of all shared links that allow access to the
-given path - direct links to the given path and links to parent folders of
-the given path. Links to parent folders can be suppressed by setting
-direct_only to true.
+folder unless the team space ID is specified in the request header. If a
+non-empty path is given, returns a list of all shared links that allow access
+to the given path - direct links to the given path and links to parent
+folders of the given path. Links to parent folders can be suppressed by
+setting direct_only to true.
 Route attributes:
   scope: sharing.read
     </div>
@@ -23010,6 +24111,158 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="sharingRelinquishAccess"><span class="type-signature"></span>sharingRelinquishAccess(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Removes all self-removable access from a file or folder for the current user.
+Best-effort and idempotent: attempts to drop link-visitor associations and
+explicit ACL membership.
+Route attributes:
+  scope: private:sharing.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingRelinquishAccessArg">SharingRelinquishAccessArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#SharingRelinquishAccessResult">SharingRelinquishAccessResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#SharingRelinquishAccessError">SharingRelinquishAccessError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="sharingRelinquishFileMembership"><span class="type-signature"></span>sharingRelinquishFileMembership(arg)</h4>
     
     
@@ -23018,9 +24271,7 @@ Route attributes:
 
     
     <div class="description">
-        The current user relinquishes their membership in the designated file. Note
-that the current user may still have inherited access to this file through
-the parent folder.
+        The current user relinquishes their membership in the designated file.
 Route attributes:
   scope: sharing.write
     </div>
@@ -24698,8 +25949,10 @@ Route attributes:
 
     
     <div class="description">
-        Allows a shared folder owner to unshare the folder. You'll need to call
-check_job_status to determine if the action has completed successfully.
+        Allows a shared folder owner to unshare the folder. Unshare will not work in
+following cases: The shared folder contains shared folders OR the shared
+folder is inside another shared folder. You'll need to call check_job_status
+to determine if the action has completed successfully.
 Route attributes:
   scope: sharing.write
     </div>
@@ -24975,6 +26228,156 @@ Route attributes:
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#SharingMemberAccessLevelResult">SharingMemberAccessLevelResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#SharingFileMemberActionError">SharingFileMemberActionError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="sharingUpdateFilePolicy"><span class="type-signature"></span>sharingUpdateFilePolicy(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Update the viewer info policy of a file.
+Route attributes:
+  scope: sharing.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#SharingUpdateFilePolicyArg">SharingUpdateFilePolicyArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#SharingSharedFileMetadata">SharingSharedFileMetadata</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#SharingUpdateFilePolicyError">SharingUpdateFilePolicyError</a>>></span>
 
 
 
@@ -26060,7 +27463,7 @@ Route attributes:
 
     
     <div class="description">
-        Get the values for one or more featues. This route allows you to check your
+        Get the values for one or more features. This route allows you to check your
 account's capability for what feature you can access or what value you have
 for certain features. Permission : Team information.
 Route attributes:
@@ -30730,10 +32133,7 @@ given email address, and that account will be invited to the team. If a
 personal Dropbox account exists with the email address specified in the call,
 this call will create a placeholder Dropbox account for the user on the team
 and send an email inviting the user to migrate their existing personal
-account onto the team. Team member management apps are required to set an
-initial given_name and surname for a user to use in the team invitation and
-for 'Perform as team member' actions taken on the user before they become
-'active'.
+account onto the team.
 Route attributes:
   scope: members.write
     </div>
@@ -30859,6 +32259,160 @@ Route attributes:
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamMembersAddLaunchV2Result">TeamMembersAddLaunchV2Result</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersDeleteFormerMemberFiles"><span class="type-signature"></span>teamMembersDeleteFormerMemberFiles(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Permanently delete the files of a user who has been removed from the team.
+After permanent deletion, those files will not be available to be transferred
+to another team member. Permission : Team member management Exactly one of
+team_member_id, email, or external_id must be provided to identify the user
+account.
+Route attributes:
+  scope: members.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersFormerMemberArg">TeamMembersFormerMemberArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;void>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamMembersDeleteFormerMemberFilesError">TeamMembersDeleteFormerMemberFilesError</a>>></span>
 
 
 
@@ -33095,8 +34649,10 @@ Route attributes:
 
     
     <div class="description">
-        Get users custom quota. Returns none as the custom quota if none was set. A
-maximum of 1000 members can be specified in a single call.
+        Get users custom quota. A maximum of 1000 members can be specified in a
+single call. Note: to apply a custom space limit, a team admin needs to set a
+member space limit for the team first. (the team admin can check the settings
+here: https://www.dropbox.com/team/admin/settings/space).
 Route attributes:
   scope: members.read
     </div>
@@ -33247,7 +34803,9 @@ Route attributes:
     
     <div class="description">
         Remove users custom quota. A maximum of 1000 members can be specified in a
-single call.
+single call. Note: to apply a custom space limit, a team admin needs to set a
+member space limit for the team first. (the team admin can check the settings
+here: https://www.dropbox.com/team/admin/settings/space).
 Route attributes:
   scope: members.write
     </div>
@@ -33397,8 +34955,11 @@ Route attributes:
 
     
     <div class="description">
-        Set users custom quota. Custom quota has to be at least 15GB. A maximum of
-1000 members can be specified in a single call.
+        Set users custom quota. Custom quota has to be at least 2GB. A maximum of
+1000 members can be specified in a single call. Note: to apply a custom space
+limit, a team admin needs to set a member space limit for the team first.
+(the team admin can check the settings here:
+https://www.dropbox.com/team/admin/settings/space).
 Route attributes:
   scope: members.read
     </div>
@@ -33708,9 +35269,11 @@ another account (whichever comes first). Calling members/add while a user is
 still recoverable on your team will return with
 MemberAddResult.user_already_on_team. Accounts can have their files
 transferred via the admin console for a limited time, based on the version
-history length associated with the team (180 days for most teams). This
-endpoint may initiate an asynchronous job. To obtain the final result of the
-job, the client should periodically poll members/remove/job_status/get.
+history length associated with the team (180 days for most teams). Accounts
+can have their stacks transferred through the admin console. This only
+transfers stacks that they have created. This endpoint may initiate an
+asynchronous job. To obtain the final result of the job, the client should
+periodically poll members/remove/job_status/get.
 Route attributes:
   scope: members.delete
     </div>
@@ -36438,275 +38001,6 @@ Route attributes:
             
 <hr>
 <dt>
-    <h4 class="name" id="teamPropertiesTemplateList"><span class="type-signature"></span>teamPropertiesTemplateList()</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Permission : Team member file access. The scope for the route is
-files.team_metadata.write.
-Route attributes:
-  scope: files.team_metadata.write
-    </div>
-    
-
-    
-
-    
-
-    
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
-	
-    <dd class="yes-def tag-deprecated">
-        <ul class="dummy">
-            <li>Yes</li>
-        </ul>
-    </dd>
-    
-    
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#FilePropertiesListTemplateResult">FilePropertiesListTemplateResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#FilePropertiesTemplateError">FilePropertiesTemplateError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamPropertiesTemplateUpdate"><span class="type-signature"></span>teamPropertiesTemplateUpdate(arg)</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Permission : Team member file access.
-Route attributes:
-  scope: files.team_metadata.write
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#FilePropertiesUpdateTemplateArg">FilePropertiesUpdateTemplateArg</a></span>
-
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
-	
-    <dd class="yes-def tag-deprecated">
-        <ul class="dummy">
-            <li>Yes</li>
-        </ul>
-    </dd>
-    
-    
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#FilePropertiesUpdateTemplateResult">FilePropertiesUpdateTemplateResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#FilePropertiesModifyTemplateError">FilePropertiesModifyTemplateError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
     <h4 class="name" id="teamReportsGetActivity"><span class="type-signature"></span>teamReportsGetActivity(arg)</h4>
     
     
@@ -38120,7 +39414,9 @@ Route attributes:
     <div class="description">
         Sets an active team folder's status to archived and removes all folder and
 file members. This endpoint cannot be used for teams that have a shared team
-space. Permission : Team member file access.
+space. This route will either finish synchronously, or return a job ID and do
+the async archive job in background. Please use team_folder/archive/check to
+check the job status. Permission : Team member file access.
 Route attributes:
   scope: team_data.content.write
     </div>
@@ -38270,8 +39566,12 @@ Route attributes:
 
     
     <div class="description">
-        Returns the status of an asynchronous job for archiving a team folder.
-Permission : Team member file access.
+        Returns the status of an asynchronous job for archiving a team folder. The
+job may show '.tag' as complete, but the team folder could still be in the
+process of archiving (indicated by TeamFolderMetadata.status with
+'archive_in_progress'). To confirm that the team folder is fully archived,
+check the field TeamFolderMetadata.status in the response for the value
+'archived'. Permission : Team member file access.
 Route attributes:
   scope: team_data.content.write
     </div>
@@ -39317,6 +40617,157 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="teamTeamFolderRestore"><span class="type-signature"></span>teamTeamFolderRestore(arg)</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Sets an inactive team folder's status to active. Permission: Team member file
+access.
+Route attributes:
+  scope: team_data.content.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamTeamFolderIdArg">TeamTeamFolderIdArg</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamTeamFolderMetadata">TeamTeamFolderMetadata</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamTeamFolderRestoreError">TeamTeamFolderRestoreError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="teamTeamFolderUpdateSyncSettings"><span class="type-signature"></span>teamTeamFolderUpdateSyncSettings(arg)</h4>
     
     
@@ -39877,7 +41328,7 @@ Route attributes:
 
     
     <div class="description">
-        Get information about multiple user accounts.  At most 300 accounts may be
+        Get information about multiple user accounts. At most 300 accounts may be
 queried per request.
 Route attributes:
   scope: sharing.read
@@ -40266,7 +41717,7 @@ Route attributes:
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2026-07-16T22:52:32+00:00
+		on 2026-07-17T00:18:54+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
