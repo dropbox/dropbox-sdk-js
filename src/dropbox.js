@@ -12,6 +12,9 @@ import { routes } from '../lib/routes.js';
 import DropboxAuth from './auth.js';
 import { baseApiUrl, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
+import {
+  contentHash as getUploadContentHash,
+} from './upload-content-hash.js';
 
 const b64 = typeof btoa === 'undefined'
   ? (str) => Buffer.from(str).toString('base64')
@@ -65,6 +68,7 @@ export default class Dropbox {
     this.domain = options.domain || this.auth.domain;
     this.domainDelimiter = options.domainDelimiter || this.auth.domainDelimiter;
     this.customHeaders = options.customHeaders || this.auth.customHeaders;
+    this.autoContentHash = options.autoContentHash !== false;
 
     Object.assign(this, routes);
   }
@@ -132,10 +136,15 @@ export default class Dropbox {
 
   uploadRequest(path, args, auth, host) {
     return this.auth.checkAndRefreshAccessToken()
-      .then(() => {
+      .then(async () => {
         const requestArgs = Object.assign({}, args); // eslint-disable-line prefer-object-spread
         const { contents } = requestArgs;
         delete requestArgs.contents;
+        await this.maybeAddContentHash(
+          path,
+          requestArgs,
+          contents,
+        );
 
         const fetchOptions = {
           body: contents,
@@ -211,6 +220,22 @@ export default class Dropbox {
       headerKeys.forEach((header) => {
         options.headers[header] = this.customHeaders[header];
       });
+    }
+  }
+
+  async maybeAddContentHash(path, requestArgs, contents) {
+    if (
+      !this.autoContentHash
+      || path !== '/2/files/upload'
+      || requestArgs.content_hash !== undefined
+    ) {
+      return;
+    }
+
+    const hash = await getUploadContentHash(contents);
+
+    if (hash !== null) {
+      requestArgs.content_hash = hash;
     }
   }
 }
