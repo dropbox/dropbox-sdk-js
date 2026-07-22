@@ -1,15 +1,42 @@
 {
   "extends": ["airbnb-base"],
   "env": {
-    "browser": false,
     "node": true
   },
   "rules": {
     "func-names": 0,
     "no-param-reassign": 0,
-    "import/prefer-default-export": 0
+    "import/prefer-default-export": 0,
+    "import/extensions": 0,
+    "no-undef": 0
   },
-  "plugins": ["@typescript-eslint"],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": { "ecmaVersion": 6 }
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "impliedStrict": false
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "error"
+      }
+    },
+    {
+      "files": ["**/*.d.ts"],
+      "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    },
+    {
+      "files": ["test/types/**/*.ts"],
+      "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    }
+  ]
 }

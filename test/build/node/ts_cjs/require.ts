@@ -1,4 +1,7 @@
-const dropbox = require('dropbox');
+const dropbox = require('dropbox') as typeof import('dropbox');
 
-var dbx: dropbox.Dropbox = new dropbox.Dropbox();
-var dbxAuth: dropbox.DropboxAuth = new dropbox.DropboxAuth();
+const dbx: import('dropbox').Dropbox = new dropbox.Dropbox();
+const dbxAuth: import('dropbox').DropboxAuth = new dropbox.DropboxAuth();
+
+void dbx;
+void dbxAuth;
