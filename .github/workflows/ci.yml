@@ -5,7 +5,6 @@ on:
 
 jobs:
   CI:
-    continue-on-error: true
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -18,7 +17,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install SDK
-        run: npm install
+        run: npm ci
       - name: Run Build
         run: npm run build
       - name: Run Examples Builds
@@ -58,7 +57,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install SDK
-        run: npm install
+        run: npm ci
       - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v6
         with:
