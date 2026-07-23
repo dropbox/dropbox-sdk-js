@@ -204,6 +204,7 @@ export interface DropboxOptions {
   domainDelimiter?: string;
   // An object (in the form of header: value) designed to set custom headers to use during a request.
   customHeaders?: object;
+  autoContentHash?: boolean;
 }
 
 export class DropboxResponseError<T> {
