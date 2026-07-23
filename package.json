@@ -72,7 +72,7 @@
     ],
     "devDependencies": {
         "@babel/cli": "^7.29.7",
-        "@babel/core": "^7.29.7",
+        "@babel/core": "^8.0.1",
         "@babel/preset-env": "^7.29.7",
         "@babel/register": "^7.28.6",
         "@testing-library/dom": "^7.24.5",
