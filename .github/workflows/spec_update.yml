@@ -91,9 +91,9 @@ jobs:
           cd ../..
       - name: Generate New Routes
         run: |
-          cd generator/stone
-          python setup.py install
-          cd ..
+          python -m pip install --upgrade pip
+          pip install -r generator/stone/requirements.txt
+          cd generator
           python generate_routes.py
           cd ..
 
