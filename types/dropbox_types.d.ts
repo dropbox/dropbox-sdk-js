@@ -7634,6 +7634,55 @@
     }
 
     /**
+     * Arguments for the asynchronous `get_text_async` route. Exactly one of
+     * `file_id`, `path`, or `url` must be supplied via `file_id_or_url` to
+     * identify the document whose plain-text content should be extracted.
+     */
+    export interface GetTextArgs {
+      /**
+       * Identifier of the document to extract text from. Callers must set
+       * exactly one of the `FileIdOrUrl` variants. Text extraction is supported
+       * for common document formats (Word, PowerPoint, Excel, PDF, RTF, and
+       * Dropbox document types); see the route description for the supported
+       * formats. Requests against unsupported formats return
+       * `unsupported_format_error`. NOTE: for the `url` variant, only Dropbox
+       * shared links (www.dropbox.com) are supported. External (non-Dropbox)
+       * URLs are not supported and return `unsupported_format_error`; import
+       * the file into Dropbox and reference it by `file_id` or `path` instead.
+       */
+      file_id_or_url?: FileIdOrUrl;
+    }
+
+    export interface GetTextAsyncCheckResultInProgress {
+      '.tag': 'in_progress';
+    }
+
+    export interface GetTextAsyncCheckResultComplete extends GetTextResult {
+      '.tag': 'complete';
+    }
+
+    export interface GetTextAsyncCheckResultFailed {
+      '.tag': 'failed';
+      failed: TextExtractionApiV2Error;
+    }
+
+    export interface GetTextAsyncCheckResultOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Result type for EventBus async check - must end in "CheckResult"
+     */
+    export type GetTextAsyncCheckResult = GetTextAsyncCheckResultInProgress | GetTextAsyncCheckResultComplete | GetTextAsyncCheckResultFailed | GetTextAsyncCheckResultOther;
+
+    export interface GetTextResult {
+      /**
+       * Defaults to .
+       */
+      text?: string;
+    }
+
+    /**
      * Arguments for the asynchronous `get_transcript_async` route. Exactly one
      * of `file_id`, `path`, or `url` must be supplied via `file_id_or_url` to
      * identify the audio or video asset to transcribe.
@@ -7888,6 +7937,72 @@
      * result.
      */
     export type OfficeFileType = OfficeFileTypeOfficeFiletypeUnknown | OfficeFileTypeOfficeFiletypeWord | OfficeFileTypeOfficeFiletypePowerpoint | OfficeFileTypeOfficeFiletypeExcel | OfficeFileTypeOther;
+
+    /**
+     * An unexpected, typically transient, server-side failure. The string is a
+     * human-readable message; retrying with backoff may succeed.
+     */
+    export interface TextExtractionApiV2ErrorServerError {
+      '.tag': 'server_error';
+      server_error: string;
+    }
+
+    /**
+     * The request could not be processed as supplied (a problem with the
+     * caller's input). The string is a human-readable message; retrying the
+     * same request will not help.
+     */
+    export interface TextExtractionApiV2ErrorUserError {
+      '.tag': 'user_error';
+      user_error: string;
+    }
+
+    export interface TextExtractionApiV2ErrorUnsupportedFormatError {
+      '.tag': 'unsupported_format_error';
+    }
+
+    export interface TextExtractionApiV2ErrorLinkDownloadDisabledError {
+      '.tag': 'link_download_disabled_error';
+    }
+
+    export interface TextExtractionApiV2ErrorSharedLinkPasswordProtected {
+      '.tag': 'shared_link_password_protected';
+    }
+
+    export interface TextExtractionApiV2ErrorLimitExceededError {
+      '.tag': 'limit_exceeded_error';
+    }
+
+    export interface TextExtractionApiV2ErrorConversionFailureError {
+      '.tag': 'conversion_failure_error';
+    }
+
+    /**
+     * The referenced file does not exist or is not accessible.
+     */
+    export interface TextExtractionApiV2ErrorNotFoundError {
+      '.tag': 'not_found_error';
+    }
+
+    /**
+     * The target is a folder, not a file.
+     */
+    export interface TextExtractionApiV2ErrorIsAFolderError {
+      '.tag': 'is_a_folder_error';
+    }
+
+    export interface TextExtractionApiV2ErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Reason a text extraction job failed. Returned in the `failed` variant of
+     * `GetTextAsyncCheckResult`. This is a semantic error union: the HTTP
+     * status of the poll request itself is unaffected (a poll that surfaces a
+     * failed job is still a normal successful poll response). Callers should
+     * branch on the variant.
+     */
+    export type TextExtractionApiV2Error = TextExtractionApiV2ErrorServerError | TextExtractionApiV2ErrorUserError | TextExtractionApiV2ErrorUnsupportedFormatError | TextExtractionApiV2ErrorLinkDownloadDisabledError | TextExtractionApiV2ErrorSharedLinkPasswordProtected | TextExtractionApiV2ErrorLimitExceededError | TextExtractionApiV2ErrorConversionFailureError | TextExtractionApiV2ErrorNotFoundError | TextExtractionApiV2ErrorIsAFolderError | TextExtractionApiV2ErrorOther;
 
     export interface TimestampLevelSentence {
       '.tag': 'sentence';

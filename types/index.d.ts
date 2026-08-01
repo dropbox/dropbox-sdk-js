@@ -2259,6 +2259,37 @@ export class Dropbox {
     public rivieraGetMetadataAsyncCheck(arg: async.PollArg): Promise<DropboxResponse<riviera.GetMetadataAsyncCheckResult>>;
 
     /**
+     * Asynchronous plain-text extraction from documents. Supported formats
+     * include: - Word processing: .doc, .docx, .docm, .rtf. - Presentations:
+     * .ppt, .pptx, .pptm. - Spreadsheets: .xls, .xlsx, .xlsm. - PDF: .pdf. -
+     * Dropbox document types: .paper, .papert, .binder, .gdoc, .gsheet,
+     * .gslides. - Plain text / subtitles: .txt, .vtt. Unsupported formats
+     * return an `unsupported_format_error`. For the `url` variant only Dropbox
+     * shared links are supported; external URLs return
+     * `unsupported_format_error`.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     */
+    public rivieraGetTextAsync(arg: riviera.GetTextArgs): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Returns the status or result of specified get_text_async task.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     */
+    public rivieraGetTextAsyncCheck(arg: async.PollArg): Promise<DropboxResponse<riviera.GetTextAsyncCheckResult>>;
+
+    /**
      * Asynchronous transcript generation for audio and video files. Supported
      * audio formats: .aac, .aif, .aiff, .flac, .m4a, .m4r, .mp3, .oga, .ogg,
      * .wav, .wma. Supported video formats: .3gp, .3gpp, .3gpp2, .asf, .avi,
