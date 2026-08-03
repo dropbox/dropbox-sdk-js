@@ -4,6 +4,14 @@
 import { account, async, auth, check, common, contacts, file_properties, file_requests, files, openid, paper, riviera, secondary_emails, seen_state, sharing, team, team_common, team_log, team_policies, users, users_common } from './dropbox_types';
 export * from './dropbox_types';
 
+/**
+ * Optional transport settings for a single Dropbox API request.
+ */
+export interface DropboxRequestOptions {
+  /** An AbortSignal used to cancel the request. */
+  signal?: AbortSignal;
+}
+
 /** Binary download content returned by the SDK in Node.js environments. */
 export interface DropboxFileBinary extends Uint8Array {
   toString(encoding?: string, start?: number, end?: number): string;
@@ -273,8 +281,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<account.DeleteProfilePhotoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public accountDeleteProfilePhoto(arg: account.DeleteProfilePhotoArg): Promise<DropboxResponse<account.DeleteProfilePhotoResult>>;
+    public accountDeleteProfilePhoto(arg: account.DeleteProfilePhotoArg, options?: DropboxRequestOptions): Promise<DropboxResponse<account.DeleteProfilePhotoResult>>;
 
     /**
      * This lovely endpoint gets the account photo of a given user.
@@ -285,8 +294,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<account.AccountPhotoGetError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public accountGetPhoto(arg: account.AccountPhotoGetArg): Promise<DropboxResponse<DropboxDownloadResult<account.AccountPhotoGetResult>>>;
+    public accountGetPhoto(arg: account.AccountPhotoGetArg, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<account.AccountPhotoGetResult>>>;
 
     /**
      * Sets a user's profile photo.
@@ -297,8 +307,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<account.SetProfilePhotoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public accountSetProfilePhoto(arg: account.SetProfilePhotoArg): Promise<DropboxResponse<account.SetProfilePhotoResult>>;
+    public accountSetProfilePhoto(arg: account.SetProfilePhotoArg, options?: DropboxRequestOptions): Promise<DropboxResponse<account.SetProfilePhotoResult>>;
 
     /**
      * Creates an OAuth 2.0 access token from the supplied OAuth 1.0 access
@@ -308,8 +319,9 @@ export class Dropbox {
      * DropboxResponseError<auth.TokenFromOAuth1Error>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public authTokenFromOauth1(arg: auth.TokenFromOAuth1Arg): Promise<DropboxResponse<auth.TokenFromOAuth1Result>>;
+    public authTokenFromOauth1(arg: auth.TokenFromOAuth1Arg, options?: DropboxRequestOptions): Promise<DropboxResponse<auth.TokenFromOAuth1Result>>;
 
     /**
      * Disables the access token used to authenticate the call. If there is a
@@ -318,8 +330,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @param options Optional transport settings for this request.
      */
-    public authTokenRevoke(): Promise<DropboxResponse<void>>;
+    public authTokenRevoke(options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * This endpoint performs App Authentication, validating the supplied app
@@ -332,8 +345,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<check.EchoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public checkApp(arg: check.EchoArg): Promise<DropboxResponse<check.EchoResult>>;
+    public checkApp(arg: check.EchoArg, options?: DropboxRequestOptions): Promise<DropboxResponse<check.EchoResult>>;
 
     /**
      * This endpoint performs User Authentication, validating the supplied
@@ -349,8 +363,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<check.EchoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public checkUser(arg: check.EchoArg): Promise<DropboxResponse<check.EchoResult>>;
+    public checkUser(arg: check.EchoArg, options?: DropboxRequestOptions): Promise<DropboxResponse<check.EchoResult>>;
 
     /**
      * Removes all manually added contacts. You'll still keep contacts who are
@@ -362,8 +377,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @param options Optional transport settings for this request.
      */
-    public contactsDeleteManualContacts(): Promise<DropboxResponse<void>>;
+    public contactsDeleteManualContacts(options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Removes manually added contacts from the given list.
@@ -374,8 +390,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<contacts.DeleteManualContactsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public contactsDeleteManualContactsBatch(arg: contacts.DeleteManualContactsArg): Promise<DropboxResponse<void>>;
+    public contactsDeleteManualContactsBatch(arg: contacts.DeleteManualContactsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Add property groups to a Dropbox file. See templatesAddForUser() or
@@ -387,8 +404,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.AddPropertiesError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesPropertiesAdd(arg: file_properties.AddPropertiesArg): Promise<DropboxResponse<void>>;
+    public filePropertiesPropertiesAdd(arg: file_properties.AddPropertiesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Overwrite property groups associated with a file. This endpoint should be
@@ -404,8 +422,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.InvalidPropertyGroupError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesPropertiesOverwrite(arg: file_properties.OverwritePropertyGroupArg): Promise<DropboxResponse<void>>;
+    public filePropertiesPropertiesOverwrite(arg: file_properties.OverwritePropertyGroupArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Permanently removes the specified property group from the file. To remove
@@ -420,8 +439,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.RemovePropertiesError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesPropertiesRemove(arg: file_properties.RemovePropertiesArg): Promise<DropboxResponse<void>>;
+    public filePropertiesPropertiesRemove(arg: file_properties.RemovePropertiesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Search across property templates for particular property field values.
@@ -432,8 +452,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.PropertiesSearchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesPropertiesSearch(arg: file_properties.PropertiesSearchArg): Promise<DropboxResponse<file_properties.PropertiesSearchResult>>;
+    public filePropertiesPropertiesSearch(arg: file_properties.PropertiesSearchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.PropertiesSearchResult>>;
 
     /**
      * Once a cursor has been retrieved from propertiesSearch(), use this to
@@ -445,8 +466,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.PropertiesSearchContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesPropertiesSearchContinue(arg: file_properties.PropertiesSearchContinueArg): Promise<DropboxResponse<file_properties.PropertiesSearchResult>>;
+    public filePropertiesPropertiesSearchContinue(arg: file_properties.PropertiesSearchContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.PropertiesSearchResult>>;
 
     /**
      * Add, update or remove properties associated with the supplied file and
@@ -462,8 +484,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.UpdatePropertiesError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesPropertiesUpdate(arg: file_properties.UpdatePropertiesArg): Promise<DropboxResponse<void>>;
+    public filePropertiesPropertiesUpdate(arg: file_properties.UpdatePropertiesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Add a template associated with a team. See propertiesAdd() to add
@@ -476,8 +499,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesAddForTeam(arg: file_properties.AddTemplateArg): Promise<DropboxResponse<file_properties.AddTemplateResult>>;
+    public filePropertiesTemplatesAddForTeam(arg: file_properties.AddTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.AddTemplateResult>>;
 
     /**
      * Add a template associated with a user. See propertiesAdd() to add
@@ -490,8 +514,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesAddForUser(arg: file_properties.AddTemplateArg): Promise<DropboxResponse<file_properties.AddTemplateResult>>;
+    public filePropertiesTemplatesAddForUser(arg: file_properties.AddTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.AddTemplateResult>>;
 
     /**
      * Get the schema for a specified template.
@@ -502,8 +527,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesGetForTeam(arg: file_properties.GetTemplateArg): Promise<DropboxResponse<file_properties.GetTemplateResult>>;
+    public filePropertiesTemplatesGetForTeam(arg: file_properties.GetTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.GetTemplateResult>>;
 
     /**
      * Get the schema for a specified template. This endpoint can't be called on
@@ -515,8 +541,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesGetForUser(arg: file_properties.GetTemplateArg): Promise<DropboxResponse<file_properties.GetTemplateResult>>;
+    public filePropertiesTemplatesGetForUser(arg: file_properties.GetTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.GetTemplateResult>>;
 
     /**
      * Get the template identifiers for a team. To get the schema of each
@@ -527,8 +554,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesListForTeam(): Promise<DropboxResponse<file_properties.ListTemplateResult>>;
+    public filePropertiesTemplatesListForTeam(options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.ListTemplateResult>>;
 
     /**
      * Get the template identifiers for a team. To get the schema of each
@@ -540,8 +568,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesListForUser(): Promise<DropboxResponse<file_properties.ListTemplateResult>>;
+    public filePropertiesTemplatesListForUser(options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.ListTemplateResult>>;
 
     /**
      * Permanently removes the specified template created from
@@ -554,8 +583,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesRemoveForTeam(arg: file_properties.RemoveTemplateArg): Promise<DropboxResponse<void>>;
+    public filePropertiesTemplatesRemoveForTeam(arg: file_properties.RemoveTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Permanently removes the specified template created from
@@ -568,8 +598,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.TemplateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesRemoveForUser(arg: file_properties.RemoveTemplateArg): Promise<DropboxResponse<void>>;
+    public filePropertiesTemplatesRemoveForUser(arg: file_properties.RemoveTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Update a template associated with a team. This route can update the
@@ -582,8 +613,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesUpdateForTeam(arg: file_properties.UpdateTemplateArg): Promise<DropboxResponse<file_properties.UpdateTemplateResult>>;
+    public filePropertiesTemplatesUpdateForTeam(arg: file_properties.UpdateTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.UpdateTemplateResult>>;
 
     /**
      * Update a template associated with a user. This route can update the
@@ -597,8 +629,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_properties.ModifyTemplateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filePropertiesTemplatesUpdateForUser(arg: file_properties.UpdateTemplateArg): Promise<DropboxResponse<file_properties.UpdateTemplateResult>>;
+    public filePropertiesTemplatesUpdateForUser(arg: file_properties.UpdateTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.UpdateTemplateResult>>;
 
     /**
      * Returns the total number of file requests owned by this user. Includes
@@ -609,8 +642,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.CountFileRequestsError>.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsCount(): Promise<DropboxResponse<file_requests.CountFileRequestsResult>>;
+    public fileRequestsCount(options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.CountFileRequestsResult>>;
 
     /**
      * Creates a file request for this user.
@@ -621,8 +655,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.CreateFileRequestError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsCreate(arg: file_requests.CreateFileRequestArgs): Promise<DropboxResponse<file_requests.FileRequest>>;
+    public fileRequestsCreate(arg: file_requests.CreateFileRequestArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.FileRequest>>;
 
     /**
      * Delete a batch of closed file requests.
@@ -633,8 +668,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.DeleteFileRequestError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsDelete(arg: file_requests.DeleteFileRequestArgs): Promise<DropboxResponse<file_requests.DeleteFileRequestsResult>>;
+    public fileRequestsDelete(arg: file_requests.DeleteFileRequestArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.DeleteFileRequestsResult>>;
 
     /**
      * Delete all closed file requests owned by this user.
@@ -644,8 +680,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.DeleteAllClosedFileRequestsError>.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsDeleteAllClosed(): Promise<DropboxResponse<file_requests.DeleteAllClosedFileRequestsResult>>;
+    public fileRequestsDeleteAllClosed(options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.DeleteAllClosedFileRequestsResult>>;
 
     /**
      * Returns the specified file request.
@@ -656,8 +693,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.GetFileRequestError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsGet(arg: file_requests.GetFileRequestArgs): Promise<DropboxResponse<file_requests.FileRequest>>;
+    public fileRequestsGet(arg: file_requests.GetFileRequestArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.FileRequest>>;
 
     /**
      * Returns a list of file requests owned by this user. For apps with the app
@@ -669,8 +707,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.ListFileRequestsError>.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsList(): Promise<DropboxResponse<file_requests.ListFileRequestsResult>>;
+    public fileRequestsList(options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.ListFileRequestsResult>>;
 
     /**
      * Returns a list of file requests owned by this user. For apps with the app
@@ -683,8 +722,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.ListFileRequestsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsListV2(arg: file_requests.ListFileRequestsArg): Promise<DropboxResponse<file_requests.ListFileRequestsV2Result>>;
+    public fileRequestsListV2(arg: file_requests.ListFileRequestsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.ListFileRequestsV2Result>>;
 
     /**
      * Once a cursor has been retrieved from listV2(), use this to paginate
@@ -697,8 +737,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.ListFileRequestsContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsListContinue(arg: file_requests.ListFileRequestsContinueArg): Promise<DropboxResponse<file_requests.ListFileRequestsV2Result>>;
+    public fileRequestsListContinue(arg: file_requests.ListFileRequestsContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.ListFileRequestsV2Result>>;
 
     /**
      * Update a file request.
@@ -709,8 +750,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<file_requests.UpdateFileRequestError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public fileRequestsUpdate(arg: file_requests.UpdateFileRequestArgs): Promise<DropboxResponse<file_requests.FileRequest>>;
+    public fileRequestsUpdate(arg: file_requests.UpdateFileRequestArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<file_requests.FileRequest>>;
 
     /**
      * Returns the metadata for a file or folder. This is an alpha endpoint
@@ -724,8 +766,9 @@ export class Dropbox {
      * DropboxResponseError<files.AlphaGetMetadataError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesAlphaGetMetadata(arg: files.AlphaGetMetadataArg): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
+    public filesAlphaGetMetadata(arg: files.AlphaGetMetadataArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
 
     /**
      * Create a new file with the contents provided in the request. Note that
@@ -740,8 +783,9 @@ export class Dropbox {
      * DropboxResponseError<files.UploadError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesAlphaUpload(arg: files.UploadArg): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesAlphaUpload(arg: files.UploadArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadata>>;
 
     /**
      * Copy a file or folder to a different location in the user's Dropbox. If
@@ -754,8 +798,9 @@ export class Dropbox {
      * DropboxResponseError<files.RelocationError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCopy(arg: files.RelocationArg): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
+    public filesCopy(arg: files.RelocationArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
 
     /**
      * Copy a file or folder to a different location in the user's Dropbox. If
@@ -767,8 +812,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RelocationError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCopyV2(arg: files.RelocationArg): Promise<DropboxResponse<files.RelocationResult>>;
+    public filesCopyV2(arg: files.RelocationArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationResult>>;
 
     /**
      * Copy multiple files or folders to different locations at once in the
@@ -783,8 +829,9 @@ export class Dropbox {
      * DropboxResponseError<void>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCopyBatch(arg: files.RelocationBatchArg): Promise<DropboxResponse<files.RelocationBatchLaunch>>;
+    public filesCopyBatch(arg: files.RelocationBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationBatchLaunch>>;
 
     /**
      * Copy multiple files or folders to different locations at once in the
@@ -800,8 +847,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCopyBatchV2(arg: files.CopyBatchArg): Promise<DropboxResponse<files.RelocationBatchV2Launch>>;
+    public filesCopyBatchV2(arg: files.CopyBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationBatchV2Launch>>;
 
     /**
      * Returns the status of an asynchronous job for copyBatch(). If success, it
@@ -814,8 +862,9 @@ export class Dropbox {
      * DropboxResponseError<async.PollError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCopyBatchCheck(arg: async.PollArg): Promise<DropboxResponse<files.RelocationBatchJobStatus>>;
+    public filesCopyBatchCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationBatchJobStatus>>;
 
     /**
      * Returns the status of an asynchronous job for copyBatchV2(). It returns
@@ -827,8 +876,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCopyBatchCheckV2(arg: async.PollArg): Promise<DropboxResponse<files.RelocationBatchV2JobStatus>>;
+    public filesCopyBatchCheckV2(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationBatchV2JobStatus>>;
 
     /**
      * Get a copy reference to a file or folder. This reference string can be
@@ -841,8 +891,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.GetCopyReferenceError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCopyReferenceGet(arg: files.GetCopyReferenceArg): Promise<DropboxResponse<files.GetCopyReferenceResult>>;
+    public filesCopyReferenceGet(arg: files.GetCopyReferenceArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.GetCopyReferenceResult>>;
 
     /**
      * Save a copy reference returned by copyReferenceGet() to the user's
@@ -854,8 +905,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SaveCopyReferenceError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCopyReferenceSave(arg: files.SaveCopyReferenceArg): Promise<DropboxResponse<files.SaveCopyReferenceResult>>;
+    public filesCopyReferenceSave(arg: files.SaveCopyReferenceArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.SaveCopyReferenceResult>>;
 
     /**
      * Create a folder at a given path.
@@ -867,8 +919,9 @@ export class Dropbox {
      * DropboxResponseError<files.CreateFolderError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCreateFolder(arg: files.CreateFolderArg): Promise<DropboxResponse<files.FolderMetadata>>;
+    public filesCreateFolder(arg: files.CreateFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FolderMetadata>>;
 
     /**
      * Create a folder at a given path.
@@ -879,8 +932,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.CreateFolderError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCreateFolderV2(arg: files.CreateFolderArg): Promise<DropboxResponse<files.CreateFolderResult>>;
+    public filesCreateFolderV2(arg: files.CreateFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.CreateFolderResult>>;
 
     /**
      * Create multiple folders at once. This route is asynchronous for large
@@ -896,8 +950,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCreateFolderBatch(arg: files.CreateFolderBatchArg): Promise<DropboxResponse<files.CreateFolderBatchLaunch>>;
+    public filesCreateFolderBatch(arg: files.CreateFolderBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.CreateFolderBatchLaunch>>;
 
     /**
      * Returns the status of an asynchronous job for createFolderBatch(). If
@@ -909,8 +964,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesCreateFolderBatchCheck(arg: async.PollArg): Promise<DropboxResponse<files.CreateFolderBatchJobStatus>>;
+    public filesCreateFolderBatchCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.CreateFolderBatchJobStatus>>;
 
     /**
      * Delete the file or folder at a given path. If the path is a folder, all
@@ -926,8 +982,9 @@ export class Dropbox {
      * DropboxResponseError<files.DeleteError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesDelete(arg: files.DeleteArg): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
+    public filesDelete(arg: files.DeleteArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
 
     /**
      * Delete the file or folder at a given path. If the path is a folder, all
@@ -942,8 +999,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DeleteError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesDeleteV2(arg: files.DeleteArg): Promise<DropboxResponse<files.DeleteResult>>;
+    public filesDeleteV2(arg: files.DeleteArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.DeleteResult>>;
 
     /**
      * Delete multiple files/folders at once. This route is asynchronous, which
@@ -956,8 +1014,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesDeleteBatch(arg: files.DeleteBatchArg): Promise<DropboxResponse<files.DeleteBatchLaunch>>;
+    public filesDeleteBatch(arg: files.DeleteBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.DeleteBatchLaunch>>;
 
     /**
      * Returns the status of an asynchronous job for deleteBatch(). If success,
@@ -969,8 +1028,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesDeleteBatchCheck(arg: async.PollArg): Promise<DropboxResponse<files.DeleteBatchJobStatus>>;
+    public filesDeleteBatchCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.DeleteBatchJobStatus>>;
 
     /**
      * Download a file from a user's Dropbox.
@@ -981,8 +1041,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DownloadError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesDownload(arg: files.DownloadArg): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
+    public filesDownload(arg: files.DownloadArg, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
 
     /**
      * Download a folder from the user's Dropbox, as a zip file. The folder must
@@ -997,8 +1058,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DownloadZipError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesDownloadZip(arg: files.DownloadZipArg): Promise<DropboxResponse<DropboxDownloadResult<files.DownloadZipResult>>>;
+    public filesDownloadZip(arg: files.DownloadZipArg, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<files.DownloadZipResult>>>;
 
     /**
      * Export a file from a user's Dropbox. This route only supports exporting
@@ -1011,8 +1073,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ExportError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesExport(arg: files.ExportArg): Promise<DropboxResponse<DropboxDownloadResult<files.ExportResult>>>;
+    public filesExport(arg: files.ExportArg, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<files.ExportResult>>>;
 
     /**
      * Return the lock metadata for the given list of paths.
@@ -1023,8 +1086,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.LockFileError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesGetFileLockBatch(arg: files.LockFileBatchArg): Promise<DropboxResponse<files.LockFileBatchResult>>;
+    public filesGetFileLockBatch(arg: files.LockFileBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.LockFileBatchResult>>;
 
     /**
      * Returns the metadata for a file or folder. Note: Metadata for the root
@@ -1036,8 +1100,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.GetMetadataError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesGetMetadata(arg: files.GetMetadataArg): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
+    public filesGetMetadata(arg: files.GetMetadataArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
 
     /**
      * Get a preview for a file. Currently, PDF previews are generated for files
@@ -1052,8 +1117,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.PreviewError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesGetPreview(arg: files.PreviewArg): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
+    public filesGetPreview(arg: files.PreviewArg, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
 
     /**
      * Get a temporary link to stream content of a file. This link will expire
@@ -1067,8 +1133,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.GetTemporaryLinkError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesGetTemporaryLink(arg: files.GetTemporaryLinkArg): Promise<DropboxResponse<files.GetTemporaryLinkResult>>;
+    public filesGetTemporaryLink(arg: files.GetTemporaryLinkArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.GetTemporaryLinkResult>>;
 
     /**
      * Get a one-time use temporary upload link to upload a file to a Dropbox
@@ -1107,8 +1174,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesGetTemporaryUploadLink(arg: files.GetTemporaryUploadLinkArg): Promise<DropboxResponse<files.GetTemporaryUploadLinkResult>>;
+    public filesGetTemporaryUploadLink(arg: files.GetTemporaryUploadLinkArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.GetTemporaryUploadLinkResult>>;
 
     /**
      * Get a thumbnail for an image. This method currently supports files with
@@ -1122,8 +1190,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ThumbnailError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesGetThumbnail(arg: files.ThumbnailArg): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
+    public filesGetThumbnail(arg: files.ThumbnailArg, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<files.FileMetadata>>>;
 
     /**
      * Get a thumbnail for an image. This method currently supports files with
@@ -1137,8 +1206,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ThumbnailV2Error>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesGetThumbnailV2(arg: files.ThumbnailV2Arg): Promise<DropboxResponse<DropboxDownloadResult<files.PreviewResult>>>;
+    public filesGetThumbnailV2(arg: files.ThumbnailV2Arg, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<files.PreviewResult>>>;
 
     /**
      * Get thumbnails for a list of images. We allow up to 25 thumbnails in a
@@ -1153,8 +1223,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.GetThumbnailBatchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesGetThumbnailBatch(arg: files.GetThumbnailBatchArg): Promise<DropboxResponse<files.GetThumbnailBatchResult>>;
+    public filesGetThumbnailBatch(arg: files.GetThumbnailBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.GetThumbnailBatchResult>>;
 
     /**
      * Starts returning the contents of a folder. If the result's
@@ -1185,8 +1256,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListFolderError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesListFolder(arg: files.ListFolderArg): Promise<DropboxResponse<files.ListFolderResult>>;
+    public filesListFolder(arg: files.ListFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.ListFolderResult>>;
 
     /**
      * Once a cursor has been retrieved from listFolder(), use this to paginate
@@ -1199,8 +1271,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListFolderContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesListFolderContinue(arg: files.ListFolderContinueArg): Promise<DropboxResponse<files.ListFolderResult>>;
+    public filesListFolderContinue(arg: files.ListFolderContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.ListFolderResult>>;
 
     /**
      * A way to quickly get a cursor for the folder's state. Unlike
@@ -1215,8 +1288,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListFolderError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesListFolderGetLatestCursor(arg: files.ListFolderArg): Promise<DropboxResponse<files.ListFolderGetLatestCursorResult>>;
+    public filesListFolderGetLatestCursor(arg: files.ListFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.ListFolderGetLatestCursorResult>>;
 
     /**
      * A longpoll endpoint to wait for changes on an account. In conjunction
@@ -1231,8 +1305,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListFolderLongpollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesListFolderLongpoll(arg: files.ListFolderLongpollArg): Promise<DropboxResponse<files.ListFolderLongpollResult>>;
+    public filesListFolderLongpoll(arg: files.ListFolderLongpollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.ListFolderLongpollResult>>;
 
     /**
      * Returns revisions for files based on a file path or a file id. The file
@@ -1251,8 +1326,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.ListRevisionsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesListRevisions(arg: files.ListRevisionsArg): Promise<DropboxResponse<files.ListRevisionsResult>>;
+    public filesListRevisions(arg: files.ListRevisionsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.ListRevisionsResult>>;
 
     /**
      * Lock the files at the given paths. A locked file will be writable only by
@@ -1266,8 +1342,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.LockFileError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesLockFileBatch(arg: files.LockFileBatchArg): Promise<DropboxResponse<files.LockFileBatchResult>>;
+    public filesLockFileBatch(arg: files.LockFileBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.LockFileBatchResult>>;
 
     /**
      * Move a file or folder to a different location in the user's Dropbox. If
@@ -1280,8 +1357,9 @@ export class Dropbox {
      * DropboxResponseError<files.RelocationError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesMove(arg: files.RelocationArg): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
+    public filesMove(arg: files.RelocationArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadataReference|files.FolderMetadataReference|files.DeletedMetadataReference>>;
 
     /**
      * Move a file or folder to a different location in the user's Dropbox. If
@@ -1294,8 +1372,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RelocationError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesMoveV2(arg: files.RelocationArg): Promise<DropboxResponse<files.RelocationResult>>;
+    public filesMoveV2(arg: files.RelocationArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationResult>>;
 
     /**
      * Move multiple files or folders to different locations at once in the
@@ -1310,8 +1389,9 @@ export class Dropbox {
      * DropboxResponseError<void>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesMoveBatch(arg: files.RelocationBatchArg): Promise<DropboxResponse<files.RelocationBatchLaunch>>;
+    public filesMoveBatch(arg: files.RelocationBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationBatchLaunch>>;
 
     /**
      * Move multiple files or folders to different locations at once in the
@@ -1328,8 +1408,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesMoveBatchV2(arg: files.MoveBatchArg): Promise<DropboxResponse<files.RelocationBatchV2Launch>>;
+    public filesMoveBatchV2(arg: files.MoveBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationBatchV2Launch>>;
 
     /**
      * Returns the status of an asynchronous job for moveBatch(). If success, it
@@ -1342,8 +1423,9 @@ export class Dropbox {
      * DropboxResponseError<async.PollError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesMoveBatchCheck(arg: async.PollArg): Promise<DropboxResponse<files.RelocationBatchJobStatus>>;
+    public filesMoveBatchCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationBatchJobStatus>>;
 
     /**
      * Returns the status of an asynchronous job for moveBatchV2(). It returns
@@ -1355,8 +1437,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesMoveBatchCheckV2(arg: async.PollArg): Promise<DropboxResponse<files.RelocationBatchV2JobStatus>>;
+    public filesMoveBatchCheckV2(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.RelocationBatchV2JobStatus>>;
 
     /**
      * Creates a new Paper doc with the provided content.
@@ -1367,8 +1450,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.PaperCreateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesPaperCreate(arg: files.PaperCreateArg): Promise<DropboxResponse<files.PaperCreateResult>>;
+    public filesPaperCreate(arg: files.PaperCreateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.PaperCreateResult>>;
 
     /**
      * Updates an existing Paper doc with the provided content.
@@ -1379,8 +1463,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.PaperUpdateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesPaperUpdate(arg: files.PaperUpdateArg): Promise<DropboxResponse<files.PaperUpdateResult>>;
+    public filesPaperUpdate(arg: files.PaperUpdateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.PaperUpdateResult>>;
 
     /**
      * Permanently delete the file or folder at a given path (see
@@ -1395,8 +1480,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.DeleteError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesPermanentlyDelete(arg: files.DeleteArg): Promise<DropboxResponse<void>>;
+    public filesPermanentlyDelete(arg: files.DeleteArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Add property groups to a Dropbox file. See templates/add_for_user or
@@ -1409,8 +1495,9 @@ export class Dropbox {
      * DropboxResponseError<file_properties.AddPropertiesError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesPropertiesAdd(arg: file_properties.AddPropertiesArg): Promise<DropboxResponse<void>>;
+    public filesPropertiesAdd(arg: file_properties.AddPropertiesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Overwrite property groups associated with a file. This endpoint should be
@@ -1424,8 +1511,9 @@ export class Dropbox {
      * DropboxResponseError<file_properties.InvalidPropertyGroupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesPropertiesOverwrite(arg: file_properties.OverwritePropertyGroupArg): Promise<DropboxResponse<void>>;
+    public filesPropertiesOverwrite(arg: file_properties.OverwritePropertyGroupArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Add, update or remove properties associated with the supplied file and
@@ -1440,8 +1528,9 @@ export class Dropbox {
      * DropboxResponseError<file_properties.UpdatePropertiesError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesPropertiesUpdate(arg: file_properties.UpdatePropertiesArg): Promise<DropboxResponse<void>>;
+    public filesPropertiesUpdate(arg: file_properties.UpdatePropertiesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Restore a specific revision of a file to the given path.
@@ -1452,8 +1541,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RestoreError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesRestore(arg: files.RestoreArg): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesRestore(arg: files.RestoreArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadata>>;
 
     /**
      * Save the data from a specified URL into a file in user's Dropbox. Note
@@ -1466,8 +1556,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SaveUrlError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesSaveUrl(arg: files.SaveUrlArg): Promise<DropboxResponse<files.SaveUrlResult>>;
+    public filesSaveUrl(arg: files.SaveUrlArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.SaveUrlResult>>;
 
     /**
      * Check the status of a saveUrl() job.
@@ -1478,8 +1569,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesSaveUrlCheckJobStatus(arg: async.PollArg): Promise<DropboxResponse<files.SaveUrlJobStatus>>;
+    public filesSaveUrlCheckJobStatus(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.SaveUrlJobStatus>>;
 
     /**
      * Searches for files and folders. Note: Recent changes will be reflected in
@@ -1493,8 +1585,9 @@ export class Dropbox {
      * DropboxResponseError<files.SearchError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesSearch(arg: files.SearchArg): Promise<DropboxResponse<files.SearchResult>>;
+    public filesSearch(arg: files.SearchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.SearchResult>>;
 
     /**
      * Searches for files and folders. Note: searchV2() along with
@@ -1509,8 +1602,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SearchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesSearchV2(arg: files.SearchV2Arg): Promise<DropboxResponse<files.SearchV2Result>>;
+    public filesSearchV2(arg: files.SearchV2Arg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.SearchV2Result>>;
 
     /**
      * Fetches the next page of search results returned from searchV2(). Note:
@@ -1525,8 +1619,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.SearchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesSearchContinueV2(arg: files.SearchV2ContinueArg): Promise<DropboxResponse<files.SearchV2Result>>;
+    public filesSearchContinueV2(arg: files.SearchV2ContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.SearchV2Result>>;
 
     /**
      * Add a tag to an item. A tag is a string. The strings are automatically
@@ -1539,8 +1634,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.AddTagError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesTagsAdd(arg: files.AddTagArg): Promise<DropboxResponse<void>>;
+    public filesTagsAdd(arg: files.AddTagArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Get list of tags assigned to items.
@@ -1551,8 +1647,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.BaseTagError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesTagsGet(arg: files.GetTagsArg): Promise<DropboxResponse<files.GetTagsResult>>;
+    public filesTagsGet(arg: files.GetTagsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.GetTagsResult>>;
 
     /**
      * Remove a tag from an item.
@@ -1563,8 +1660,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.RemoveTagError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesTagsRemove(arg: files.RemoveTagArg): Promise<DropboxResponse<void>>;
+    public filesTagsRemove(arg: files.RemoveTagArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Unlock the files at the given paths. A locked file can only be unlocked
@@ -1578,8 +1676,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.LockFileError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUnlockFileBatch(arg: files.UnlockFileBatchArg): Promise<DropboxResponse<files.LockFileBatchResult>>;
+    public filesUnlockFileBatch(arg: files.UnlockFileBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.LockFileBatchResult>>;
 
     /**
      * Create a new file with the contents provided in the request. Do not use
@@ -1596,8 +1695,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUpload(arg: files.UploadArg): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesUpload(arg: files.UploadArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadata>>;
 
     /**
      * Append more data to an upload session. A single request should not upload
@@ -1615,8 +1715,9 @@ export class Dropbox {
      * DropboxResponseError<files.UploadSessionAppendError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionAppend(arg: files.UploadSessionCursor): Promise<DropboxResponse<void>>;
+    public filesUploadSessionAppend(arg: files.UploadSessionCursor, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Append more data to an upload session. When the parameter close is set,
@@ -1634,8 +1735,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadSessionAppendError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionAppendV2(arg: files.UploadSessionAppendArg): Promise<DropboxResponse<void>>;
+    public filesUploadSessionAppendV2(arg: files.UploadSessionAppendArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Append more data to multiple upload sessions. Each piece of file content
@@ -1656,8 +1758,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadSessionAppendBatchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionAppendBatch(arg: files.UploadSessionAppendBatchArg): Promise<DropboxResponse<files.UploadSessionAppendBatchResult>>;
+    public filesUploadSessionAppendBatch(arg: files.UploadSessionAppendBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.UploadSessionAppendBatchResult>>;
 
     /**
      * Finish an upload session and save the uploaded data to the given file
@@ -1675,8 +1778,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadSessionFinishError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionFinish(arg: files.UploadSessionFinishArg): Promise<DropboxResponse<files.FileMetadata>>;
+    public filesUploadSessionFinish(arg: files.UploadSessionFinishArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.FileMetadata>>;
 
     /**
      * This route helps you commit many files at once into a user's Dropbox. Use
@@ -1706,8 +1810,9 @@ export class Dropbox {
      * DropboxResponseError<void>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionFinishBatch(arg: files.UploadSessionFinishBatchArg): Promise<DropboxResponse<files.UploadSessionFinishBatchLaunch>>;
+    public filesUploadSessionFinishBatch(arg: files.UploadSessionFinishBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.UploadSessionFinishBatchLaunch>>;
 
     /**
      * This route helps you commit many files at once into a user's Dropbox. Use
@@ -1732,8 +1837,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionFinishBatchV2(arg: files.UploadSessionFinishBatchArg): Promise<DropboxResponse<files.UploadSessionFinishBatchResult>>;
+    public filesUploadSessionFinishBatchV2(arg: files.UploadSessionFinishBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.UploadSessionFinishBatchResult>>;
 
     /**
      * Returns the status of an asynchronous job for uploadSessionFinishBatch().
@@ -1745,8 +1851,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionFinishBatchCheck(arg: async.PollArg): Promise<DropboxResponse<files.UploadSessionFinishBatchJobStatus>>;
+    public filesUploadSessionFinishBatchCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.UploadSessionFinishBatchJobStatus>>;
 
     /**
      * Upload sessions allow you to upload a single file in one or more
@@ -1788,8 +1895,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<files.UploadSessionStartError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionStart(arg: files.UploadSessionStartArg): Promise<DropboxResponse<files.UploadSessionStartResult>>;
+    public filesUploadSessionStart(arg: files.UploadSessionStartArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.UploadSessionStartResult>>;
 
     /**
      * Start a batch of upload sessions. See uploadSessionStart(). Calls to this
@@ -1804,8 +1912,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public filesUploadSessionStartBatch(arg: files.UploadSessionStartBatchArg): Promise<DropboxResponse<files.UploadSessionStartBatchResult>>;
+    public filesUploadSessionStartBatch(arg: files.UploadSessionStartBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<files.UploadSessionStartBatchResult>>;
 
     /**
      * This route is used for refreshing the info that is found in the id_token
@@ -1818,8 +1927,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<openid.UserInfoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public openidUserinfo(arg: openid.UserInfoArgs): Promise<DropboxResponse<openid.UserInfoResult>>;
+    public openidUserinfo(arg: openid.UserInfoArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<openid.UserInfoResult>>;
 
     /**
      * Marks the given Paper doc as archived. This action can be performed or
@@ -1839,8 +1949,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsArchive(arg: paper.RefPaperDoc): Promise<DropboxResponse<void>>;
+    public paperDocsArchive(arg: paper.RefPaperDoc, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Creates a new Paper doc with the provided content. Note that this
@@ -1859,8 +1970,9 @@ export class Dropbox {
      * DropboxResponseError<paper.PaperDocCreateError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsCreate(arg: paper.PaperDocCreateArgs): Promise<DropboxResponse<paper.PaperDocCreateUpdateResult>>;
+    public paperDocsCreate(arg: paper.PaperDocCreateArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.PaperDocCreateUpdateResult>>;
 
     /**
      * Exports and downloads Paper doc either as HTML or markdown. Note that
@@ -1879,8 +1991,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsDownload(arg: paper.PaperDocExport): Promise<DropboxResponse<DropboxDownloadResult<paper.PaperDocExportResult>>>;
+    public paperDocsDownload(arg: paper.PaperDocExport, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<paper.PaperDocExportResult>>>;
 
     /**
      * Lists the users who are explicitly invited to the Paper folder in which
@@ -1902,8 +2015,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsFolderUsersList(arg: paper.ListUsersOnFolderArgs): Promise<DropboxResponse<paper.ListUsersOnFolderResponse>>;
+    public paperDocsFolderUsersList(arg: paper.ListUsersOnFolderArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.ListUsersOnFolderResponse>>;
 
     /**
      * Once a cursor has been retrieved from docsFolderUsersList(), use this to
@@ -1923,8 +2037,9 @@ export class Dropbox {
      * DropboxResponseError<paper.ListUsersCursorError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsFolderUsersListContinue(arg: paper.ListUsersOnFolderContinueArgs): Promise<DropboxResponse<paper.ListUsersOnFolderResponse>>;
+    public paperDocsFolderUsersListContinue(arg: paper.ListUsersOnFolderContinueArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.ListUsersOnFolderResponse>>;
 
     /**
      * Retrieves folder information for the given Paper doc. This includes: -
@@ -1948,8 +2063,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsGetFolderInfo(arg: paper.RefPaperDoc): Promise<DropboxResponse<paper.FoldersContainingPaperDoc>>;
+    public paperDocsGetFolderInfo(arg: paper.RefPaperDoc, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.FoldersContainingPaperDoc>>;
 
     /**
      * Returns metadata for a Paper doc or Cloud Doc.
@@ -1960,8 +2076,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<paper.DocLookupError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsGetMetadata(arg: paper.GetDocMetadataArg): Promise<DropboxResponse<paper.PaperDocGetMetadataResult>>;
+    public paperDocsGetMetadata(arg: paper.GetDocMetadataArg, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.PaperDocGetMetadataResult>>;
 
     /**
      * Return the list of all Paper docs according to the argument
@@ -1981,8 +2098,9 @@ export class Dropbox {
      * DropboxResponseError<void>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsList(arg: paper.ListPaperDocsArgs): Promise<DropboxResponse<paper.ListPaperDocsResponse>>;
+    public paperDocsList(arg: paper.ListPaperDocsArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.ListPaperDocsResponse>>;
 
     /**
      * Once a cursor has been retrieved from docsList(), use this to paginate
@@ -2001,8 +2119,9 @@ export class Dropbox {
      * DropboxResponseError<paper.ListDocsCursorError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsListContinue(arg: paper.ListPaperDocsContinueArgs): Promise<DropboxResponse<paper.ListPaperDocsResponse>>;
+    public paperDocsListContinue(arg: paper.ListPaperDocsContinueArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.ListPaperDocsResponse>>;
 
     /**
      * Permanently deletes the given Paper doc. This operation is final as the
@@ -2022,8 +2141,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsPermanentlyDelete(arg: paper.RefPaperDoc): Promise<DropboxResponse<void>>;
+    public paperDocsPermanentlyDelete(arg: paper.RefPaperDoc, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Gets the default sharing policy for the given Paper doc. Note that this
@@ -2042,8 +2162,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsSharingPolicyGet(arg: paper.RefPaperDoc): Promise<DropboxResponse<paper.SharingPolicy>>;
+    public paperDocsSharingPolicyGet(arg: paper.RefPaperDoc, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.SharingPolicy>>;
 
     /**
      * Sets the default sharing policy for the given Paper doc. The default
@@ -2065,8 +2186,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsSharingPolicySet(arg: paper.PaperDocSharingPolicy): Promise<DropboxResponse<void>>;
+    public paperDocsSharingPolicySet(arg: paper.PaperDocSharingPolicy, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Updates an existing Paper doc with the provided content. Note that this
@@ -2085,8 +2207,9 @@ export class Dropbox {
      * DropboxResponseError<paper.PaperDocUpdateError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsUpdate(arg: paper.PaperDocUpdateArgs): Promise<DropboxResponse<paper.PaperDocCreateUpdateResult>>;
+    public paperDocsUpdate(arg: paper.PaperDocUpdateArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.PaperDocCreateUpdateResult>>;
 
     /**
      * Allows an owner or editor to add users to a Paper doc or change their
@@ -2107,8 +2230,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsUsersAdd(arg: paper.AddPaperDocUser): Promise<DropboxResponse<Array<paper.AddPaperDocUserMemberResult>>>;
+    public paperDocsUsersAdd(arg: paper.AddPaperDocUser, options?: DropboxRequestOptions): Promise<DropboxResponse<Array<paper.AddPaperDocUserMemberResult>>>;
 
     /**
      * Lists all users who visited the Paper doc or users with explicit access.
@@ -2130,8 +2254,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsUsersList(arg: paper.ListUsersOnPaperDocArgs): Promise<DropboxResponse<paper.ListUsersOnPaperDocResponse>>;
+    public paperDocsUsersList(arg: paper.ListUsersOnPaperDocArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.ListUsersOnPaperDocResponse>>;
 
     /**
      * Once a cursor has been retrieved from docsUsersList(), use this to
@@ -2151,8 +2276,9 @@ export class Dropbox {
      * DropboxResponseError<paper.ListUsersCursorError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsUsersListContinue(arg: paper.ListUsersOnPaperDocContinueArgs): Promise<DropboxResponse<paper.ListUsersOnPaperDocResponse>>;
+    public paperDocsUsersListContinue(arg: paper.ListUsersOnPaperDocContinueArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.ListUsersOnPaperDocResponse>>;
 
     /**
      * Allows an owner or editor to remove users from a Paper doc using their
@@ -2172,8 +2298,9 @@ export class Dropbox {
      * DropboxResponseError<paper.DocLookupError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperDocsUsersRemove(arg: paper.RemovePaperDocUser): Promise<DropboxResponse<void>>;
+    public paperDocsUsersRemove(arg: paper.RemovePaperDocUser, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Create a new Paper folder with the provided info. Note that this endpoint
@@ -2192,11 +2319,16 @@ export class Dropbox {
      * DropboxResponseError<paper.PaperFolderCreateError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public paperFoldersCreate(arg: paper.PaperFolderCreateArg): Promise<DropboxResponse<paper.PaperFolderCreateResult>>;
+    public paperFoldersCreate(arg: paper.PaperFolderCreateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.PaperFolderCreateResult>>;
 
     /**
      * Asynchronous document-to-markdown conversion for supported file formats.
+     * Supported formats: .binder, .docx, .html, .paper, .papert, .pptx, .xlsx,
+     * .gsheet, .ods, .pdf. Unsupported formats return an
+     * `unsupported_format_error`. Size limit: the source file must be at most
+     * 50 MB. Larger files are rejected.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -2204,8 +2336,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public rivieraGetMarkdownAsync(arg: riviera.GetMarkdownArgs): Promise<DropboxResponse<async.LaunchResultBase>>;
+    public rivieraGetMarkdownAsync(arg: riviera.GetMarkdownArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
 
     /**
      * Returns the status or result of specified get_markdown_async task.
@@ -2216,11 +2349,23 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public rivieraGetMarkdownAsyncCheck(arg: async.PollArg): Promise<DropboxResponse<riviera.GetMarkdownAsyncCheckResult>>;
+    public rivieraGetMarkdownAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetMarkdownAsyncCheckResult>>;
 
     /**
-     * Asynchronous file metadata extraction for supported file formats.
+     * Asynchronous file metadata extraction for supported file formats. The
+     * kind of metadata returned depends on the file type: - Image (EXIF)
+     * formats: .3fr, .arw, .avif, .bmp, .cr2, .cr3, .crw, .dcr, .dcs, .dng,
+     * .erf, .gif, .heic, .j2c, .j2k, .jp2, .jpc, .jpeg, .jpf, .jpg, .jpg2,
+     * .jpm, .jpx, .kdc, .mef, .mos, .mrw, .nef, .nrw, .orf, .pef, .png, .ppm,
+     * .r3d, .raf, .rw2, .rwl, .sr2, .tga, .tif, .tiff, .wbmp, .web, .webp,
+     * .x3f. - Audio/video (media) formats: .aac, .aif, .aiff, .flac, .m4a,
+     * .m4r, .mp3, .oga, .ogg, .wav, .wma, .3gp, .3gpp, .3gpp2, .asf, .avi, .dv,
+     * .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf,
+     * .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv. - PDF format: .pdf. - MS
+     * Office formats: .docx, .pptx, .xlsx. Unsupported formats return an
+     * `unsupported_format_error`.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -2228,8 +2373,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public rivieraGetMetadataAsync(arg: riviera.GetMetadataArgs): Promise<DropboxResponse<async.LaunchResultBase>>;
+    public rivieraGetMetadataAsync(arg: riviera.GetMetadataArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
 
     /**
      * Returns the status or result of specified get_metadata_async task.
@@ -2240,11 +2386,19 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public rivieraGetMetadataAsyncCheck(arg: async.PollArg): Promise<DropboxResponse<riviera.GetMetadataAsyncCheckResult>>;
+    public rivieraGetMetadataAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetMetadataAsyncCheckResult>>;
 
     /**
-     * Asynchronous transcript generation for audio and video files.
+     * Asynchronous plain-text extraction from documents. Supported formats
+     * include: - Word processing: .doc, .docx, .docm, .rtf. - Presentations:
+     * .ppt, .pptx, .pptm. - Spreadsheets: .xls, .xlsx, .xlsm. - PDF: .pdf. -
+     * Dropbox document types: .paper, .papert, .binder, .gdoc, .gsheet,
+     * .gslides. - Plain text / subtitles: .txt, .vtt. Unsupported formats
+     * return an `unsupported_format_error`. For the `url` variant only Dropbox
+     * shared links are supported; external URLs return
+     * `unsupported_format_error`.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -2252,8 +2406,42 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public rivieraGetTranscriptAsync(arg: riviera.GetTranscriptArgs): Promise<DropboxResponse<async.LaunchResultBase>>;
+    public rivieraGetTextAsync(arg: riviera.GetTextArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Returns the status or result of specified get_text_async task.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetTextAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetTextAsyncCheckResult>>;
+
+    /**
+     * Asynchronous transcript generation for audio and video files. Supported
+     * audio formats: .aac, .aif, .aiff, .flac, .m4a, .m4r, .mp3, .oga, .ogg,
+     * .wav, .wma. Supported video formats: .3gp, .3gpp, .3gpp2, .asf, .avi,
+     * .dv, .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf,
+     * .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv. Unsupported formats return
+     * an `unsupported_format_error`. Size limits: the source file must be at
+     * most 10 GB and its audio track at most 1 hour in duration. Files
+     * exceeding these limits are rejected.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetTranscriptAsync(arg: riviera.GetTranscriptArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
 
     /**
      * Returns the status or result of specified get_transcript_async task.
@@ -2264,8 +2452,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public rivieraGetTranscriptAsyncCheck(arg: async.PollArg): Promise<DropboxResponse<riviera.GetTranscriptAsyncCheckResult>>;
+    public rivieraGetTranscriptAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetTranscriptAsyncCheckResult>>;
 
     /**
      * Adds specified members to a file.
@@ -2276,8 +2465,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.AddFileMemberError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingAddFileMember(arg: sharing.AddFileMemberArgs): Promise<DropboxResponse<Array<sharing.FileMemberActionResult>>>;
+    public sharingAddFileMember(arg: sharing.AddFileMemberArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<Array<sharing.FileMemberActionResult>>>;
 
     /**
      * Allows an owner or editor (if the ACL update policy allows) of a shared
@@ -2291,8 +2481,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.AddFolderMemberError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingAddFolderMember(arg: sharing.AddFolderMemberArg): Promise<DropboxResponse<void>>;
+    public sharingAddFolderMember(arg: sharing.AddFolderMemberArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Returns the status of an asynchronous job.
@@ -2303,8 +2494,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingCheckJobStatus(arg: async.PollArg): Promise<DropboxResponse<sharing.JobStatus>>;
+    public sharingCheckJobStatus(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.JobStatus>>;
 
     /**
      * Returns the status of an asynchronous job for sharing a folder.
@@ -2315,8 +2507,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingCheckRemoveMemberJobStatus(arg: async.PollArg): Promise<DropboxResponse<sharing.RemoveMemberJobStatus>>;
+    public sharingCheckRemoveMemberJobStatus(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.RemoveMemberJobStatus>>;
 
     /**
      * Returns the status of an asynchronous job for sharing a folder.
@@ -2327,8 +2520,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingCheckShareJobStatus(arg: async.PollArg): Promise<DropboxResponse<sharing.ShareFolderJobStatus>>;
+    public sharingCheckShareJobStatus(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ShareFolderJobStatus>>;
 
     /**
      * Create a shared link. If a shared link already exists for the given path,
@@ -2346,8 +2540,9 @@ export class Dropbox {
      * DropboxResponseError<sharing.CreateSharedLinkError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingCreateSharedLink(arg: sharing.CreateSharedLinkArg): Promise<DropboxResponse<sharing.PathLinkMetadata>>;
+    public sharingCreateSharedLink(arg: sharing.CreateSharedLinkArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.PathLinkMetadata>>;
 
     /**
      * Create a shared link with custom settings. If no settings are given then
@@ -2361,8 +2556,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.CreateSharedLinkWithSettingsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingCreateSharedLinkWithSettings(arg: sharing.CreateSharedLinkWithSettingsArg): Promise<DropboxResponse<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>;
+    public sharingCreateSharedLinkWithSettings(arg: sharing.CreateSharedLinkWithSettingsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>;
 
     /**
      * Returns shared file metadata.
@@ -2373,8 +2569,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.GetFileMetadataError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingGetFileMetadata(arg: sharing.GetFileMetadataArg): Promise<DropboxResponse<sharing.SharedFileMetadata>>;
+    public sharingGetFileMetadata(arg: sharing.GetFileMetadataArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFileMetadata>>;
 
     /**
      * Returns shared file metadata.
@@ -2385,8 +2582,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharingUserError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingGetFileMetadataBatch(arg: sharing.GetFileMetadataBatchArg): Promise<DropboxResponse<Array<sharing.GetFileMetadataBatchResult>>>;
+    public sharingGetFileMetadataBatch(arg: sharing.GetFileMetadataBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<Array<sharing.GetFileMetadataBatchResult>>>;
 
     /**
      * Returns shared folder metadata by its folder ID.
@@ -2397,8 +2595,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharedFolderAccessError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingGetFolderMetadata(arg: sharing.GetMetadataArgs): Promise<DropboxResponse<sharing.SharedFolderMetadata>>;
+    public sharingGetFolderMetadata(arg: sharing.GetMetadataArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFolderMetadata>>;
 
     /**
      * Download the shared link's file from a user's Dropbox. This is a
@@ -2410,8 +2609,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.GetSharedLinkFileError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingGetSharedLinkFile(arg: sharing.GetSharedLinkFileArg): Promise<DropboxResponse<DropboxDownloadResult<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>>;
+    public sharingGetSharedLinkFile(arg: sharing.GetSharedLinkFileArg, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>>;
 
     /**
      * Get the shared link's metadata.
@@ -2422,8 +2622,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharedLinkMetadataError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingGetSharedLinkMetadata(arg: sharing.GetSharedLinkMetadataArg): Promise<DropboxResponse<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>;
+    public sharingGetSharedLinkMetadata(arg: sharing.GetSharedLinkMetadataArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>;
 
     /**
      * DEPRECATED: Use list_shared_links instead. This endpoint will be retired
@@ -2441,8 +2642,9 @@ export class Dropbox {
      * DropboxResponseError<sharing.GetSharedLinksError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingGetSharedLinks(arg: sharing.GetSharedLinksArg): Promise<DropboxResponse<sharing.GetSharedLinksResult>>;
+    public sharingGetSharedLinks(arg: sharing.GetSharedLinksArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.GetSharedLinksResult>>;
 
     /**
      * Use to obtain the members who have been invited to a file, both inherited
@@ -2454,8 +2656,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFileMembersError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListFileMembers(arg: sharing.ListFileMembersArg): Promise<DropboxResponse<sharing.SharedFileMembers>>;
+    public sharingListFileMembers(arg: sharing.ListFileMembersArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFileMembers>>;
 
     /**
      * Get members of multiple files at once. The arguments to this route are
@@ -2470,8 +2673,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharingUserError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListFileMembersBatch(arg: sharing.ListFileMembersBatchArg): Promise<DropboxResponse<Array<sharing.ListFileMembersBatchResult>>>;
+    public sharingListFileMembersBatch(arg: sharing.ListFileMembersBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<Array<sharing.ListFileMembersBatchResult>>>;
 
     /**
      * Once a cursor has been retrieved from listFileMembers() or
@@ -2484,8 +2688,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFileMembersContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListFileMembersContinue(arg: sharing.ListFileMembersContinueArg): Promise<DropboxResponse<sharing.SharedFileMembers>>;
+    public sharingListFileMembersContinue(arg: sharing.ListFileMembersContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFileMembers>>;
 
     /**
      * Returns shared folder membership by its folder ID.
@@ -2496,8 +2701,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharedFolderAccessError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListFolderMembers(arg: sharing.ListFolderMembersArgs): Promise<DropboxResponse<sharing.SharedFolderMembers>>;
+    public sharingListFolderMembers(arg: sharing.ListFolderMembersArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFolderMembers>>;
 
     /**
      * Once a cursor has been retrieved from listFolderMembers(), use this to
@@ -2509,8 +2715,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFolderMembersContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListFolderMembersContinue(arg: sharing.ListFolderMembersContinueArg): Promise<DropboxResponse<sharing.SharedFolderMembers>>;
+    public sharingListFolderMembersContinue(arg: sharing.ListFolderMembersContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFolderMembers>>;
 
     /**
      * Return the list of all shared folders the current user has access to.
@@ -2521,8 +2728,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListFolders(arg: sharing.ListFoldersArgs): Promise<DropboxResponse<sharing.ListFoldersResult>>;
+    public sharingListFolders(arg: sharing.ListFoldersArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ListFoldersResult>>;
 
     /**
      * Once a cursor has been retrieved from listFolders(), use this to paginate
@@ -2535,8 +2743,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFoldersContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListFoldersContinue(arg: sharing.ListFoldersContinueArg): Promise<DropboxResponse<sharing.ListFoldersResult>>;
+    public sharingListFoldersContinue(arg: sharing.ListFoldersContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ListFoldersResult>>;
 
     /**
      * Return the list of all shared folders the current user can mount or
@@ -2548,8 +2757,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListMountableFolders(arg: sharing.ListFoldersArgs): Promise<DropboxResponse<sharing.ListFoldersResult>>;
+    public sharingListMountableFolders(arg: sharing.ListFoldersArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ListFoldersResult>>;
 
     /**
      * Once a cursor has been retrieved from listMountableFolders(), use this to
@@ -2563,8 +2773,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFoldersContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListMountableFoldersContinue(arg: sharing.ListFoldersContinueArg): Promise<DropboxResponse<sharing.ListFoldersResult>>;
+    public sharingListMountableFoldersContinue(arg: sharing.ListFoldersContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ListFoldersResult>>;
 
     /**
      * Returns a list of all files shared with current user.
@@ -2575,8 +2786,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SharingUserError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListReceivedFiles(arg: sharing.ListFilesArg): Promise<DropboxResponse<sharing.ListFilesResult>>;
+    public sharingListReceivedFiles(arg: sharing.ListFilesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ListFilesResult>>;
 
     /**
      * Get more results with a cursor from listReceivedFiles().
@@ -2587,8 +2799,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListFilesContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListReceivedFilesContinue(arg: sharing.ListFilesContinueArg): Promise<DropboxResponse<sharing.ListFilesResult>>;
+    public sharingListReceivedFilesContinue(arg: sharing.ListFilesContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ListFilesResult>>;
 
     /**
      * List shared links of this user. If no path is given, returns a list of
@@ -2606,8 +2819,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ListSharedLinksError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingListSharedLinks(arg: sharing.ListSharedLinksArg): Promise<DropboxResponse<sharing.ListSharedLinksResult>>;
+    public sharingListSharedLinks(arg: sharing.ListSharedLinksArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ListSharedLinksResult>>;
 
     /**
      * Modify the shared link's settings. If the requested visibility conflict
@@ -2624,8 +2838,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ModifySharedLinkSettingsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingModifySharedLinkSettings(arg: sharing.ModifySharedLinkSettingsArgs): Promise<DropboxResponse<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>;
+    public sharingModifySharedLinkSettings(arg: sharing.ModifySharedLinkSettingsArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.FileLinkMetadataReference|sharing.FolderLinkMetadataReference|sharing.SharedLinkMetadataReference>>;
 
     /**
      * The current user mounts the designated folder. Mount a shared folder for
@@ -2638,8 +2853,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.MountFolderError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingMountFolder(arg: sharing.MountFolderArg): Promise<DropboxResponse<sharing.SharedFolderMetadata>>;
+    public sharingMountFolder(arg: sharing.MountFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFolderMetadata>>;
 
     /**
      * Removes all self-removable access from a file or folder for the current
@@ -2652,8 +2868,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RelinquishAccessError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingRelinquishAccess(arg: sharing.RelinquishAccessArg): Promise<DropboxResponse<sharing.RelinquishAccessResult>>;
+    public sharingRelinquishAccess(arg: sharing.RelinquishAccessArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.RelinquishAccessResult>>;
 
     /**
      * The current user relinquishes their membership in the designated file.
@@ -2664,8 +2881,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RelinquishFileMembershipError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingRelinquishFileMembership(arg: sharing.RelinquishFileMembershipArg): Promise<DropboxResponse<void>>;
+    public sharingRelinquishFileMembership(arg: sharing.RelinquishFileMembershipArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * The current user relinquishes their membership in the designated shared
@@ -2680,8 +2898,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RelinquishFolderMembershipError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingRelinquishFolderMembership(arg: sharing.RelinquishFolderMembershipArg): Promise<DropboxResponse<async.LaunchEmptyResult>>;
+    public sharingRelinquishFolderMembership(arg: sharing.RelinquishFolderMembershipArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchEmptyResult>>;
 
     /**
      * Identical to remove_file_member_2 but with less information returned.
@@ -2693,8 +2912,9 @@ export class Dropbox {
      * DropboxResponseError<sharing.RemoveFileMemberError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingRemoveFileMember(arg: sharing.RemoveFileMemberArg): Promise<DropboxResponse<sharing.FileMemberActionIndividualResult>>;
+    public sharingRemoveFileMember(arg: sharing.RemoveFileMemberArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.FileMemberActionIndividualResult>>;
 
     /**
      * Removes a specified member from the file.
@@ -2705,8 +2925,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RemoveFileMemberError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingRemoveFileMember2(arg: sharing.RemoveFileMemberArg): Promise<DropboxResponse<sharing.FileMemberRemoveActionResult>>;
+    public sharingRemoveFileMember2(arg: sharing.RemoveFileMemberArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.FileMemberRemoveActionResult>>;
 
     /**
      * Allows an owner or editor (if the ACL update policy allows) of a shared
@@ -2718,8 +2939,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RemoveFolderMemberError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingRemoveFolderMember(arg: sharing.RemoveFolderMemberArg): Promise<DropboxResponse<async.LaunchResultBase>>;
+    public sharingRemoveFolderMember(arg: sharing.RemoveFolderMemberArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
 
     /**
      * Revoke a shared link. Note that even after revoking a shared link to a
@@ -2734,8 +2956,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.RevokeSharedLinkError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingRevokeSharedLink(arg: sharing.RevokeSharedLinkArg): Promise<DropboxResponse<void>>;
+    public sharingRevokeSharedLink(arg: sharing.RevokeSharedLinkArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Change the inheritance policy of an existing Shared Folder. Only
@@ -2750,8 +2973,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.SetAccessInheritanceError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingSetAccessInheritance(arg: sharing.SetAccessInheritanceArg): Promise<DropboxResponse<sharing.ShareFolderLaunch>>;
+    public sharingSetAccessInheritance(arg: sharing.SetAccessInheritanceArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ShareFolderLaunch>>;
 
     /**
      * Share a folder with collaborators. Most sharing will be completed
@@ -2767,8 +2991,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.ShareFolderError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingShareFolder(arg: sharing.ShareFolderArg): Promise<DropboxResponse<sharing.ShareFolderLaunch>>;
+    public sharingShareFolder(arg: sharing.ShareFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.ShareFolderLaunch>>;
 
     /**
      * Transfer ownership of a shared folder to a member of the shared folder.
@@ -2781,8 +3006,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.TransferFolderError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingTransferFolder(arg: sharing.TransferFolderArg): Promise<DropboxResponse<void>>;
+    public sharingTransferFolder(arg: sharing.TransferFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * The current user unmounts the designated folder. They can re-mount the
@@ -2794,8 +3020,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UnmountFolderError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingUnmountFolder(arg: sharing.UnmountFolderArg): Promise<DropboxResponse<void>>;
+    public sharingUnmountFolder(arg: sharing.UnmountFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Remove all members from this file. Does not remove inherited members.
@@ -2806,8 +3033,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UnshareFileError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingUnshareFile(arg: sharing.UnshareFileArg): Promise<DropboxResponse<void>>;
+    public sharingUnshareFile(arg: sharing.UnshareFileArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Allows a shared folder owner to unshare the folder. Unshare will not work
@@ -2821,8 +3049,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UnshareFolderError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingUnshareFolder(arg: sharing.UnshareFolderArg): Promise<DropboxResponse<async.LaunchEmptyResult>>;
+    public sharingUnshareFolder(arg: sharing.UnshareFolderArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchEmptyResult>>;
 
     /**
      * Changes a member's access on a shared file.
@@ -2833,8 +3062,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.FileMemberActionError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingUpdateFileMember(arg: sharing.UpdateFileMemberArgs): Promise<DropboxResponse<sharing.MemberAccessLevelResult>>;
+    public sharingUpdateFileMember(arg: sharing.UpdateFileMemberArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.MemberAccessLevelResult>>;
 
     /**
      * Update the viewer info policy of a file.
@@ -2845,8 +3075,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UpdateFilePolicyError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingUpdateFilePolicy(arg: sharing.UpdateFilePolicyArg): Promise<DropboxResponse<sharing.SharedFileMetadata>>;
+    public sharingUpdateFilePolicy(arg: sharing.UpdateFilePolicyArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFileMetadata>>;
 
     /**
      * Allows an owner or editor of a shared folder to update another member's
@@ -2858,8 +3089,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UpdateFolderMemberError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingUpdateFolderMember(arg: sharing.UpdateFolderMemberArg): Promise<DropboxResponse<sharing.MemberAccessLevelResult>>;
+    public sharingUpdateFolderMember(arg: sharing.UpdateFolderMemberArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.MemberAccessLevelResult>>;
 
     /**
      * Update the sharing policies for a shared folder. User must have
@@ -2871,8 +3103,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<sharing.UpdateFolderPolicyError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public sharingUpdateFolderPolicy(arg: sharing.UpdateFolderPolicyArg): Promise<DropboxResponse<sharing.SharedFolderMetadata>>;
+    public sharingUpdateFolderPolicy(arg: sharing.UpdateFolderPolicyArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.SharedFolderMetadata>>;
 
     /**
      * List all device sessions of a team's member.
@@ -2883,8 +3116,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListMemberDevicesError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamDevicesListMemberDevices(arg: team.ListMemberDevicesArg): Promise<DropboxResponse<team.ListMemberDevicesResult>>;
+    public teamDevicesListMemberDevices(arg: team.ListMemberDevicesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ListMemberDevicesResult>>;
 
     /**
      * List all device sessions of a team. Permission : Team member file access.
@@ -2895,8 +3129,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListMembersDevicesError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamDevicesListMembersDevices(arg: team.ListMembersDevicesArg): Promise<DropboxResponse<team.ListMembersDevicesResult>>;
+    public teamDevicesListMembersDevices(arg: team.ListMembersDevicesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ListMembersDevicesResult>>;
 
     /**
      * List all device sessions of a team. Permission : Team member file access.
@@ -2908,8 +3143,9 @@ export class Dropbox {
      * DropboxResponseError<team.ListTeamDevicesError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamDevicesListTeamDevices(arg: team.ListTeamDevicesArg): Promise<DropboxResponse<team.ListTeamDevicesResult>>;
+    public teamDevicesListTeamDevices(arg: team.ListTeamDevicesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ListTeamDevicesResult>>;
 
     /**
      * Revoke a device session of a team's member.
@@ -2920,8 +3156,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.RevokeDeviceSessionError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamDevicesRevokeDeviceSession(arg: team.RevokeDeviceSessionArg): Promise<DropboxResponse<void>>;
+    public teamDevicesRevokeDeviceSession(arg: team.RevokeDeviceSessionArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Revoke a list of device sessions of team members.
@@ -2932,8 +3169,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.RevokeDeviceSessionBatchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamDevicesRevokeDeviceSessionBatch(arg: team.RevokeDeviceSessionBatchArg): Promise<DropboxResponse<team.RevokeDeviceSessionBatchResult>>;
+    public teamDevicesRevokeDeviceSessionBatch(arg: team.RevokeDeviceSessionBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.RevokeDeviceSessionBatchResult>>;
 
     /**
      * Get the values for one or more features. This route allows you to check
@@ -2946,8 +3184,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.FeaturesGetValuesBatchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamFeaturesGetValues(arg: team.FeaturesGetValuesBatchArg): Promise<DropboxResponse<team.FeaturesGetValuesBatchResult>>;
+    public teamFeaturesGetValues(arg: team.FeaturesGetValuesBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.FeaturesGetValuesBatchResult>>;
 
     /**
      * Retrieves information about a team.
@@ -2957,8 +3196,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @param options Optional transport settings for this request.
      */
-    public teamGetInfo(): Promise<DropboxResponse<team.TeamGetInfoResult>>;
+    public teamGetInfo(options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamGetInfoResult>>;
 
     /**
      * Creates a new, empty group, with a requested name. Permission : Team
@@ -2970,8 +3210,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupCreateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsCreate(arg: team.GroupCreateArg): Promise<DropboxResponse<team.GroupFullInfo>>;
+    public teamGroupsCreate(arg: team.GroupCreateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupFullInfo>>;
 
     /**
      * Deletes a group. The group is deleted immediately. However the revoking
@@ -2985,8 +3226,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupDeleteError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsDelete(arg: team.GroupSelector): Promise<DropboxResponse<async.LaunchEmptyResult>>;
+    public teamGroupsDelete(arg: team.GroupSelector, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchEmptyResult>>;
 
     /**
      * Retrieves information about one or more groups. Note that the optional
@@ -2999,8 +3241,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupsGetInfoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsGetInfo(arg: team.GroupsSelector): Promise<DropboxResponse<team.GroupsGetInfoResult>>;
+    public teamGroupsGetInfo(arg: team.GroupsSelector, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupsGetInfoResult>>;
 
     /**
      * Once an async_job_id is returned from groupsDelete(), groupsMembersAdd()
@@ -3014,8 +3257,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupsPollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsJobStatusGet(arg: async.PollArg): Promise<DropboxResponse<async.PollEmptyResult>>;
+    public teamGroupsJobStatusGet(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.PollEmptyResult>>;
 
     /**
      * Lists groups on a team. Permission : Team Information.
@@ -3026,8 +3270,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsList(arg: team.GroupsListArg): Promise<DropboxResponse<team.GroupsListResult>>;
+    public teamGroupsList(arg: team.GroupsListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupsListResult>>;
 
     /**
      * Once a cursor has been retrieved from groupsList(), use this to paginate
@@ -3039,8 +3284,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupsListContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsListContinue(arg: team.GroupsListContinueArg): Promise<DropboxResponse<team.GroupsListResult>>;
+    public teamGroupsListContinue(arg: team.GroupsListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupsListResult>>;
 
     /**
      * Adds members to a group. The members are added immediately. However the
@@ -3054,8 +3300,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupMembersAddError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsMembersAdd(arg: team.GroupMembersAddArg): Promise<DropboxResponse<team.GroupMembersChangeResult>>;
+    public teamGroupsMembersAdd(arg: team.GroupMembersAddArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupMembersChangeResult>>;
 
     /**
      * Lists members of a group. Permission : Team Information.
@@ -3066,8 +3313,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupSelectorError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsMembersList(arg: team.GroupsMembersListArg): Promise<DropboxResponse<team.GroupsMembersListResult>>;
+    public teamGroupsMembersList(arg: team.GroupsMembersListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupsMembersListResult>>;
 
     /**
      * Once a cursor has been retrieved from groupsMembersList(), use this to
@@ -3079,8 +3327,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupsMembersListContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsMembersListContinue(arg: team.GroupsMembersListContinueArg): Promise<DropboxResponse<team.GroupsMembersListResult>>;
+    public teamGroupsMembersListContinue(arg: team.GroupsMembersListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupsMembersListResult>>;
 
     /**
      * Removes members from a group. The members are removed immediately.
@@ -3096,8 +3345,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupMembersRemoveError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsMembersRemove(arg: team.GroupMembersRemoveArg): Promise<DropboxResponse<team.GroupMembersChangeResult>>;
+    public teamGroupsMembersRemove(arg: team.GroupMembersRemoveArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupMembersChangeResult>>;
 
     /**
      * Sets a member's access type in a group. Permission : Team member
@@ -3109,8 +3359,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupMemberSetAccessTypeError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsMembersSetAccessType(arg: team.GroupMembersSetAccessTypeArg): Promise<DropboxResponse<team.GroupsGetInfoResult>>;
+    public teamGroupsMembersSetAccessType(arg: team.GroupMembersSetAccessTypeArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupsGetInfoResult>>;
 
     /**
      * Updates a group's name and/or external ID. Permission : Team member
@@ -3122,8 +3373,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.GroupUpdateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamGroupsUpdate(arg: team.GroupUpdateArgs): Promise<DropboxResponse<team.GroupFullInfo>>;
+    public teamGroupsUpdate(arg: team.GroupUpdateArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GroupFullInfo>>;
 
     /**
      * Creates new legal hold policy. Note: Legal Holds is a paid add-on. Not
@@ -3135,8 +3387,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyCreateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLegalHoldsCreatePolicy(arg: team.LegalHoldsPolicyCreateArg): Promise<DropboxResponse<team.LegalHoldsPolicyCreateResult>>;
+    public teamLegalHoldsCreatePolicy(arg: team.LegalHoldsPolicyCreateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.LegalHoldsPolicyCreateResult>>;
 
     /**
      * Gets a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
@@ -3148,8 +3401,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsGetPolicyError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLegalHoldsGetPolicy(arg: team.LegalHoldsGetPolicyArg): Promise<DropboxResponse<team.LegalHoldsGetPolicyResult>>;
+    public teamLegalHoldsGetPolicy(arg: team.LegalHoldsGetPolicyArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.LegalHoldsGetPolicyResult>>;
 
     /**
      * List the file metadata that's under the hold. Note: Legal Holds is a paid
@@ -3162,8 +3416,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListHeldRevisionsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLegalHoldsListHeldRevisions(arg: team.LegalHoldsListHeldRevisionsArg): Promise<DropboxResponse<team.LegalHoldsListHeldRevisionResult>>;
+    public teamLegalHoldsListHeldRevisions(arg: team.LegalHoldsListHeldRevisionsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.LegalHoldsListHeldRevisionResult>>;
 
     /**
      * Continue listing the file metadata that's under the hold. Note: Legal
@@ -3176,8 +3431,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListHeldRevisionsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLegalHoldsListHeldRevisionsContinue(arg: team.LegalHoldsListHeldRevisionsContinueArg): Promise<DropboxResponse<team.LegalHoldsListHeldRevisionResult>>;
+    public teamLegalHoldsListHeldRevisionsContinue(arg: team.LegalHoldsListHeldRevisionsContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.LegalHoldsListHeldRevisionResult>>;
 
     /**
      * Lists legal holds on a team. Note: Legal Holds is a paid add-on. Not all
@@ -3189,8 +3445,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsListPoliciesError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLegalHoldsListPolicies(arg: team.LegalHoldsListPoliciesArg): Promise<DropboxResponse<team.LegalHoldsListPoliciesResult>>;
+    public teamLegalHoldsListPolicies(arg: team.LegalHoldsListPoliciesArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.LegalHoldsListPoliciesResult>>;
 
     /**
      * Releases a legal hold by Id. Note: Legal Holds is a paid add-on. Not all
@@ -3202,8 +3459,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyReleaseError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLegalHoldsReleasePolicy(arg: team.LegalHoldsPolicyReleaseArg): Promise<DropboxResponse<void>>;
+    public teamLegalHoldsReleasePolicy(arg: team.LegalHoldsPolicyReleaseArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Updates a legal hold. Note: Legal Holds is a paid add-on. Not all teams
@@ -3215,8 +3473,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.LegalHoldsPolicyUpdateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLegalHoldsUpdatePolicy(arg: team.LegalHoldsPolicyUpdateArg): Promise<DropboxResponse<team.LegalHoldsPolicyUpdateResult>>;
+    public teamLegalHoldsUpdatePolicy(arg: team.LegalHoldsPolicyUpdateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.LegalHoldsPolicyUpdateResult>>;
 
     /**
      * List all linked applications of the team member. Note, this endpoint does
@@ -3228,8 +3487,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListMemberAppsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLinkedAppsListMemberLinkedApps(arg: team.ListMemberAppsArg): Promise<DropboxResponse<team.ListMemberAppsResult>>;
+    public teamLinkedAppsListMemberLinkedApps(arg: team.ListMemberAppsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ListMemberAppsResult>>;
 
     /**
      * List all applications linked to the team members' accounts. Note, this
@@ -3241,8 +3501,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ListMembersAppsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLinkedAppsListMembersLinkedApps(arg: team.ListMembersAppsArg): Promise<DropboxResponse<team.ListMembersAppsResult>>;
+    public teamLinkedAppsListMembersLinkedApps(arg: team.ListMembersAppsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ListMembersAppsResult>>;
 
     /**
      * List all applications linked to the team members' accounts. Note, this
@@ -3255,8 +3516,9 @@ export class Dropbox {
      * DropboxResponseError<team.ListTeamAppsError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLinkedAppsListTeamLinkedApps(arg: team.ListTeamAppsArg): Promise<DropboxResponse<team.ListTeamAppsResult>>;
+    public teamLinkedAppsListTeamLinkedApps(arg: team.ListTeamAppsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ListTeamAppsResult>>;
 
     /**
      * Revoke a linked application of the team member.
@@ -3267,8 +3529,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.RevokeLinkedAppError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLinkedAppsRevokeLinkedApp(arg: team.RevokeLinkedApiAppArg): Promise<DropboxResponse<void>>;
+    public teamLinkedAppsRevokeLinkedApp(arg: team.RevokeLinkedApiAppArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Revoke a list of linked applications of the team members.
@@ -3279,8 +3542,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.RevokeLinkedAppBatchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLinkedAppsRevokeLinkedAppBatch(arg: team.RevokeLinkedApiAppBatchArg): Promise<DropboxResponse<team.RevokeLinkedAppBatchResult>>;
+    public teamLinkedAppsRevokeLinkedAppBatch(arg: team.RevokeLinkedApiAppBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.RevokeLinkedAppBatchResult>>;
 
     /**
      * Add users to member space limits excluded users list.
@@ -3291,8 +3555,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ExcludedUsersUpdateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMemberSpaceLimitsExcludedUsersAdd(arg: team.ExcludedUsersUpdateArg): Promise<DropboxResponse<team.ExcludedUsersUpdateResult>>;
+    public teamMemberSpaceLimitsExcludedUsersAdd(arg: team.ExcludedUsersUpdateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ExcludedUsersUpdateResult>>;
 
     /**
      * List member space limits excluded users.
@@ -3303,8 +3568,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ExcludedUsersListError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMemberSpaceLimitsExcludedUsersList(arg: team.ExcludedUsersListArg): Promise<DropboxResponse<team.ExcludedUsersListResult>>;
+    public teamMemberSpaceLimitsExcludedUsersList(arg: team.ExcludedUsersListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ExcludedUsersListResult>>;
 
     /**
      * Continue listing member space limits excluded users.
@@ -3315,8 +3581,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ExcludedUsersListContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMemberSpaceLimitsExcludedUsersListContinue(arg: team.ExcludedUsersListContinueArg): Promise<DropboxResponse<team.ExcludedUsersListResult>>;
+    public teamMemberSpaceLimitsExcludedUsersListContinue(arg: team.ExcludedUsersListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ExcludedUsersListResult>>;
 
     /**
      * Remove users from member space limits excluded users list.
@@ -3327,8 +3594,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.ExcludedUsersUpdateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMemberSpaceLimitsExcludedUsersRemove(arg: team.ExcludedUsersUpdateArg): Promise<DropboxResponse<team.ExcludedUsersUpdateResult>>;
+    public teamMemberSpaceLimitsExcludedUsersRemove(arg: team.ExcludedUsersUpdateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ExcludedUsersUpdateResult>>;
 
     /**
      * Get users custom quota. A maximum of 1000 members can be specified in a
@@ -3342,8 +3610,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.CustomQuotaError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMemberSpaceLimitsGetCustomQuota(arg: team.CustomQuotaUsersArg): Promise<DropboxResponse<Array<team.CustomQuotaResult>>>;
+    public teamMemberSpaceLimitsGetCustomQuota(arg: team.CustomQuotaUsersArg, options?: DropboxRequestOptions): Promise<DropboxResponse<Array<team.CustomQuotaResult>>>;
 
     /**
      * Remove users custom quota. A maximum of 1000 members can be specified in
@@ -3357,8 +3626,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.CustomQuotaError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMemberSpaceLimitsRemoveCustomQuota(arg: team.CustomQuotaUsersArg): Promise<DropboxResponse<Array<team.RemoveCustomQuotaResult>>>;
+    public teamMemberSpaceLimitsRemoveCustomQuota(arg: team.CustomQuotaUsersArg, options?: DropboxRequestOptions): Promise<DropboxResponse<Array<team.RemoveCustomQuotaResult>>>;
 
     /**
      * Set users custom quota. Custom quota has to be at least 2GB. A maximum of
@@ -3373,8 +3643,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.SetCustomQuotaError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMemberSpaceLimitsSetCustomQuota(arg: team.SetCustomQuotaArg): Promise<DropboxResponse<Array<team.CustomQuotaResult>>>;
+    public teamMemberSpaceLimitsSetCustomQuota(arg: team.SetCustomQuotaArg, options?: DropboxRequestOptions): Promise<DropboxResponse<Array<team.CustomQuotaResult>>>;
 
     /**
      * Adds members to a team. Permission : Team member management A maximum of
@@ -3395,8 +3666,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersAdd(arg: team.MembersAddArg): Promise<DropboxResponse<team.MembersAddLaunch>>;
+    public teamMembersAdd(arg: team.MembersAddArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersAddLaunch>>;
 
     /**
      * Adds members to a team. Permission : Team member management A maximum of
@@ -3414,8 +3686,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersAddV2(arg: team.MembersAddV2Arg): Promise<DropboxResponse<team.MembersAddLaunchV2Result>>;
+    public teamMembersAddV2(arg: team.MembersAddV2Arg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersAddLaunchV2Result>>;
 
     /**
      * Once an async_job_id is returned from membersAdd() , use this to poll the
@@ -3427,8 +3700,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersAddJobStatusGet(arg: async.PollArg): Promise<DropboxResponse<team.MembersAddJobStatus>>;
+    public teamMembersAddJobStatusGet(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersAddJobStatus>>;
 
     /**
      * Once an async_job_id is returned from membersAddV2() , use this to poll
@@ -3441,8 +3715,35 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersAddJobStatusGetV2(arg: async.PollArg): Promise<DropboxResponse<team.MembersAddJobStatusV2Result>>;
+    public teamMembersAddJobStatusGetV2(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersAddJobStatusV2Result>>;
+
+    /**
+     * Launch a bulk suspend job. The server enforces a maximum of 500 members.
+     *
+     * Route attributes:
+     *   scope: members.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.BulkSuspendError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public teamMembersBulkSuspend(arg: team.BulkSuspendArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Poll a previously launched bulk suspend job.
+     *
+     * Route attributes:
+     *   scope: members.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public teamMembersBulkSuspendJobStatusCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.BulkSuspendJobStatus>>;
 
     /**
      * Permanently delete the files of a user who has been removed from the
@@ -3457,8 +3758,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersDeleteFormerMemberFilesError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersDeleteFormerMemberFiles(arg: team.MembersFormerMemberArg): Promise<DropboxResponse<void>>;
+    public teamMembersDeleteFormerMemberFiles(arg: team.MembersFormerMemberArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Deletes a team member's profile photo. Permission : Team member
@@ -3470,8 +3772,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersDeleteProfilePhotoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersDeleteProfilePhoto(arg: team.MembersDeleteProfilePhotoArg): Promise<DropboxResponse<team.TeamMemberInfo>>;
+    public teamMembersDeleteProfilePhoto(arg: team.MembersDeleteProfilePhotoArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamMemberInfo>>;
 
     /**
      * Deletes a team member's profile photo. Permission : Team member
@@ -3483,8 +3786,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersDeleteProfilePhotoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersDeleteProfilePhotoV2(arg: team.MembersDeleteProfilePhotoArg): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
+    public teamMembersDeleteProfilePhotoV2(arg: team.MembersDeleteProfilePhotoArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
 
     /**
      * Get available TeamMemberRoles for the connected team. To be used with
@@ -3495,8 +3799,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersGetAvailableTeamMemberRoles(): Promise<DropboxResponse<team.MembersGetAvailableTeamMemberRolesResult>>;
+    public teamMembersGetAvailableTeamMemberRoles(options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersGetAvailableTeamMemberRolesResult>>;
 
     /**
      * Returns information about multiple team members. Permission : Team
@@ -3509,8 +3814,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersGetInfoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersGetInfo(arg: team.MembersGetInfoArgs): Promise<DropboxResponse<team.MembersGetInfoResult>>;
+    public teamMembersGetInfo(arg: team.MembersGetInfoArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersGetInfoResult>>;
 
     /**
      * Returns information about multiple team members. Permission : Team
@@ -3523,8 +3829,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersGetInfoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersGetInfoV2(arg: team.MembersGetInfoV2Arg): Promise<DropboxResponse<team.MembersGetInfoV2Result>>;
+    public teamMembersGetInfoV2(arg: team.MembersGetInfoV2Arg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersGetInfoV2Result>>;
 
     /**
      * Lists members of a team. Permission : Team information.
@@ -3535,8 +3842,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersListError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersList(arg: team.MembersListArg): Promise<DropboxResponse<team.MembersListResult>>;
+    public teamMembersList(arg: team.MembersListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersListResult>>;
 
     /**
      * Lists members of a team. Permission : Team information.
@@ -3547,8 +3855,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersListError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersListV2(arg: team.MembersListArg): Promise<DropboxResponse<team.MembersListV2Result>>;
+    public teamMembersListV2(arg: team.MembersListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersListV2Result>>;
 
     /**
      * Once a cursor has been retrieved from membersList(), use this to paginate
@@ -3560,8 +3869,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersListContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersListContinue(arg: team.MembersListContinueArg): Promise<DropboxResponse<team.MembersListResult>>;
+    public teamMembersListContinue(arg: team.MembersListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersListResult>>;
 
     /**
      * Once a cursor has been retrieved from membersListV2(), use this to
@@ -3573,8 +3883,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersListContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersListContinueV2(arg: team.MembersListContinueArg): Promise<DropboxResponse<team.MembersListV2Result>>;
+    public teamMembersListContinueV2(arg: team.MembersListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersListV2Result>>;
 
     /**
      * Moves removed member's files to a different member. This endpoint
@@ -3589,8 +3900,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersTransferFormerMembersFilesError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersMoveFormerMemberFiles(arg: team.MembersDataTransferArg): Promise<DropboxResponse<async.LaunchEmptyResult>>;
+    public teamMembersMoveFormerMemberFiles(arg: team.MembersDataTransferArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchEmptyResult>>;
 
     /**
      * Once an async_job_id is returned from membersMoveFormerMemberFiles() ,
@@ -3603,8 +3915,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersMoveFormerMemberFilesJobStatusCheck(arg: async.PollArg): Promise<DropboxResponse<async.PollEmptyResult>>;
+    public teamMembersMoveFormerMemberFilesJobStatusCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.PollEmptyResult>>;
 
     /**
      * Recover a deleted member. Permission : Team member management Exactly one
@@ -3617,8 +3930,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersRecoverError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersRecover(arg: team.MembersRecoverArg): Promise<DropboxResponse<void>>;
+    public teamMembersRecover(arg: team.MembersRecoverArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Removes a member from a team. Permission : Team member management Exactly
@@ -3641,8 +3955,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersRemoveError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersRemove(arg: team.MembersRemoveArg): Promise<DropboxResponse<async.LaunchEmptyResult>>;
+    public teamMembersRemove(arg: team.MembersRemoveArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchEmptyResult>>;
 
     /**
      * Once an async_job_id is returned from membersRemove() , use this to poll
@@ -3655,8 +3970,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersRemoveJobStatusGet(arg: async.PollArg): Promise<DropboxResponse<async.PollEmptyResult>>;
+    public teamMembersRemoveJobStatusGet(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.PollEmptyResult>>;
 
     /**
      * Add secondary emails to users. Permission : Team member management.
@@ -3670,8 +3986,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.AddSecondaryEmailsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSecondaryEmailsAdd(arg: team.AddSecondaryEmailsArg): Promise<DropboxResponse<team.AddSecondaryEmailsResult>>;
+    public teamMembersSecondaryEmailsAdd(arg: team.AddSecondaryEmailsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.AddSecondaryEmailsResult>>;
 
     /**
      * Delete secondary emails from users Permission : Team member management.
@@ -3684,8 +4001,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSecondaryEmailsDelete(arg: team.DeleteSecondaryEmailsArg): Promise<DropboxResponse<team.DeleteSecondaryEmailsResult>>;
+    public teamMembersSecondaryEmailsDelete(arg: team.DeleteSecondaryEmailsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.DeleteSecondaryEmailsResult>>;
 
     /**
      * Resend secondary email verification emails. Permission : Team member
@@ -3697,8 +4015,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSecondaryEmailsResendVerificationEmails(arg: team.ResendVerificationEmailArg): Promise<DropboxResponse<team.ResendVerificationEmailResult>>;
+    public teamMembersSecondaryEmailsResendVerificationEmails(arg: team.ResendVerificationEmailArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.ResendVerificationEmailResult>>;
 
     /**
      * Sends welcome email to pending team member. Permission : Team member
@@ -3712,8 +4031,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSendWelcomeError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSendWelcomeEmail(arg: team.UserSelectorArg): Promise<DropboxResponse<void>>;
+    public teamMembersSendWelcomeEmail(arg: team.UserSelectorArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Updates a team member's permissions. Permission : Team member management.
@@ -3724,8 +4044,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetPermissionsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSetAdminPermissions(arg: team.MembersSetPermissionsArg): Promise<DropboxResponse<team.MembersSetPermissionsResult>>;
+    public teamMembersSetAdminPermissions(arg: team.MembersSetPermissionsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersSetPermissionsResult>>;
 
     /**
      * Updates a team member's permissions. Permission : Team member management.
@@ -3736,8 +4057,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetPermissions2Error>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSetAdminPermissionsV2(arg: team.MembersSetPermissions2Arg): Promise<DropboxResponse<team.MembersSetPermissions2Result>>;
+    public teamMembersSetAdminPermissionsV2(arg: team.MembersSetPermissions2Arg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersSetPermissions2Result>>;
 
     /**
      * Updates a team member's profile. Permission : Team member management.
@@ -3748,8 +4070,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetProfileError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSetProfile(arg: team.MembersSetProfileArg): Promise<DropboxResponse<team.TeamMemberInfo>>;
+    public teamMembersSetProfile(arg: team.MembersSetProfileArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamMemberInfo>>;
 
     /**
      * Updates a team member's profile. Permission : Team member management.
@@ -3760,8 +4083,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetProfileError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSetProfileV2(arg: team.MembersSetProfileArg): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
+    public teamMembersSetProfileV2(arg: team.MembersSetProfileArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
 
     /**
      * Updates a team member's profile photo. Permission : Team member
@@ -3773,8 +4097,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetProfilePhotoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSetProfilePhoto(arg: team.MembersSetProfilePhotoArg): Promise<DropboxResponse<team.TeamMemberInfo>>;
+    public teamMembersSetProfilePhoto(arg: team.MembersSetProfilePhotoArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamMemberInfo>>;
 
     /**
      * Updates a team member's profile photo. Permission : Team member
@@ -3786,8 +4111,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSetProfilePhotoError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSetProfilePhotoV2(arg: team.MembersSetProfilePhotoArg): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
+    public teamMembersSetProfilePhotoV2(arg: team.MembersSetProfilePhotoArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamMemberInfoV2Result>>;
 
     /**
      * Suspend a member from a team. Permission : Team member management Exactly
@@ -3800,8 +4126,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersSuspendError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersSuspend(arg: team.MembersDeactivateArg): Promise<DropboxResponse<void>>;
+    public teamMembersSuspend(arg: team.MembersDeactivateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Unsuspend a member from a team. Permission : Team member management
@@ -3814,8 +4141,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.MembersUnsuspendError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamMembersUnsuspend(arg: team.MembersUnsuspendArg): Promise<DropboxResponse<void>>;
+    public teamMembersUnsuspend(arg: team.MembersUnsuspendArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Returns a list of all team-accessible namespaces. This list includes team
@@ -3831,8 +4159,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamNamespacesListError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamNamespacesList(arg: team.TeamNamespacesListArg): Promise<DropboxResponse<team.TeamNamespacesListResult>>;
+    public teamNamespacesList(arg: team.TeamNamespacesListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamNamespacesListResult>>;
 
     /**
      * Once a cursor has been retrieved from namespacesList(), use this to
@@ -3845,8 +4174,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamNamespacesListContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamNamespacesListContinue(arg: team.TeamNamespacesListContinueArg): Promise<DropboxResponse<team.TeamNamespacesListResult>>;
+    public teamNamespacesListContinue(arg: team.TeamNamespacesListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamNamespacesListResult>>;
 
     /**
      * Permission : Team member file access.
@@ -3858,8 +4188,9 @@ export class Dropbox {
      * DropboxResponseError<file_properties.ModifyTemplateError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamPropertiesTemplateAdd(arg: file_properties.AddTemplateArg): Promise<DropboxResponse<file_properties.AddTemplateResult>>;
+    public teamPropertiesTemplateAdd(arg: file_properties.AddTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.AddTemplateResult>>;
 
     /**
      * Permission : Team member file access. The scope for the route is
@@ -3872,8 +4203,9 @@ export class Dropbox {
      * DropboxResponseError<file_properties.TemplateError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamPropertiesTemplateGet(arg: file_properties.GetTemplateArg): Promise<DropboxResponse<file_properties.GetTemplateResult>>;
+    public teamPropertiesTemplateGet(arg: file_properties.GetTemplateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<file_properties.GetTemplateResult>>;
 
     /**
      * Retrieves reporting data about a team's user activity. Deprecated: Will
@@ -3886,8 +4218,9 @@ export class Dropbox {
      * DropboxResponseError<team.DateRangeError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamReportsGetActivity(arg: team.DateRange): Promise<DropboxResponse<team.GetActivityReport>>;
+    public teamReportsGetActivity(arg: team.DateRange, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GetActivityReport>>;
 
     /**
      * Retrieves reporting data about a team's linked devices. Deprecated: Will
@@ -3900,8 +4233,9 @@ export class Dropbox {
      * DropboxResponseError<team.DateRangeError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamReportsGetDevices(arg: team.DateRange): Promise<DropboxResponse<team.GetDevicesReport>>;
+    public teamReportsGetDevices(arg: team.DateRange, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GetDevicesReport>>;
 
     /**
      * Retrieves reporting data about a team's membership. Deprecated: Will be
@@ -3914,8 +4248,9 @@ export class Dropbox {
      * DropboxResponseError<team.DateRangeError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamReportsGetMembership(arg: team.DateRange): Promise<DropboxResponse<team.GetMembershipReport>>;
+    public teamReportsGetMembership(arg: team.DateRange, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GetMembershipReport>>;
 
     /**
      * Retrieves reporting data about a team's storage usage. Deprecated: Will
@@ -3928,8 +4263,9 @@ export class Dropbox {
      * DropboxResponseError<team.DateRangeError>.
      * @deprecated
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamReportsGetStorage(arg: team.DateRange): Promise<DropboxResponse<team.GetStorageReport>>;
+    public teamReportsGetStorage(arg: team.DateRange, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GetStorageReport>>;
 
     /**
      * Endpoint adds Approve List entries. Changes are effective immediately.
@@ -3944,8 +4280,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.SharingAllowlistAddError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamSharingAllowlistAdd(arg: team.SharingAllowlistAddArgs): Promise<DropboxResponse<team.SharingAllowlistAddResponse>>;
+    public teamSharingAllowlistAdd(arg: team.SharingAllowlistAddArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<team.SharingAllowlistAddResponse>>;
 
     /**
      * Lists Approve List entries for given team, from newest to oldest,
@@ -3959,8 +4296,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.SharingAllowlistListError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamSharingAllowlistList(arg: team.SharingAllowlistListArg): Promise<DropboxResponse<team.SharingAllowlistListResponse>>;
+    public teamSharingAllowlistList(arg: team.SharingAllowlistListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.SharingAllowlistListResponse>>;
 
     /**
      * Lists entries associated with given team, starting from a the cursor. See
@@ -3972,8 +4310,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.SharingAllowlistListContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamSharingAllowlistListContinue(arg: team.SharingAllowlistListContinueArg): Promise<DropboxResponse<team.SharingAllowlistListResponse>>;
+    public teamSharingAllowlistListContinue(arg: team.SharingAllowlistListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.SharingAllowlistListResponse>>;
 
     /**
      * Endpoint removes Approve List entries. Changes are effective immediately.
@@ -3988,8 +4327,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.SharingAllowlistRemoveError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamSharingAllowlistRemove(arg: team.SharingAllowlistRemoveArgs): Promise<DropboxResponse<team.SharingAllowlistRemoveResponse>>;
+    public teamSharingAllowlistRemove(arg: team.SharingAllowlistRemoveArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<team.SharingAllowlistRemoveResponse>>;
 
     /**
      * Sets an archived team folder's status to active. Permission : Team member
@@ -4001,8 +4341,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderActivateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderActivate(arg: team.TeamFolderIdArg): Promise<DropboxResponse<team.TeamFolderMetadata>>;
+    public teamTeamFolderActivate(arg: team.TeamFolderIdArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderMetadata>>;
 
     /**
      * Sets an active team folder's status to archived and removes all folder
@@ -4018,8 +4359,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderArchiveError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderArchive(arg: team.TeamFolderArchiveArg): Promise<DropboxResponse<team.TeamFolderArchiveLaunch>>;
+    public teamTeamFolderArchive(arg: team.TeamFolderArchiveArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderArchiveLaunch>>;
 
     /**
      * Returns the status of an asynchronous job for archiving a team folder.
@@ -4035,8 +4377,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderArchiveCheck(arg: async.PollArg): Promise<DropboxResponse<team.TeamFolderArchiveJobStatus>>;
+    public teamTeamFolderArchiveCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderArchiveJobStatus>>;
 
     /**
      * Creates a new, active, team folder with no members. This endpoint can
@@ -4049,8 +4392,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderCreateError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderCreate(arg: team.TeamFolderCreateArg): Promise<DropboxResponse<team.TeamFolderMetadata>>;
+    public teamTeamFolderCreate(arg: team.TeamFolderCreateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderMetadata>>;
 
     /**
      * Retrieves metadata for team folders. Permission : Team member file
@@ -4062,8 +4406,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderGetInfo(arg: team.TeamFolderIdListArg): Promise<DropboxResponse<Array<team.TeamFolderGetInfoItem>>>;
+    public teamTeamFolderGetInfo(arg: team.TeamFolderIdListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<Array<team.TeamFolderGetInfoItem>>>;
 
     /**
      * Lists all team folders. Permission : Team member file access.
@@ -4074,8 +4419,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderListError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderList(arg: team.TeamFolderListArg): Promise<DropboxResponse<team.TeamFolderListResult>>;
+    public teamTeamFolderList(arg: team.TeamFolderListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderListResult>>;
 
     /**
      * Once a cursor has been retrieved from teamFolderList(), use this to
@@ -4087,8 +4433,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderListContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderListContinue(arg: team.TeamFolderListContinueArg): Promise<DropboxResponse<team.TeamFolderListResult>>;
+    public teamTeamFolderListContinue(arg: team.TeamFolderListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderListResult>>;
 
     /**
      * Permanently deletes an archived team folder. This endpoint cannot be used
@@ -4101,8 +4448,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderPermanentlyDeleteError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderPermanentlyDelete(arg: team.TeamFolderIdArg): Promise<DropboxResponse<void>>;
+    public teamTeamFolderPermanentlyDelete(arg: team.TeamFolderIdArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
      * Changes an active team folder's name. Permission : Team member file
@@ -4114,8 +4462,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderRenameError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderRename(arg: team.TeamFolderRenameArg): Promise<DropboxResponse<team.TeamFolderMetadata>>;
+    public teamTeamFolderRename(arg: team.TeamFolderRenameArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderMetadata>>;
 
     /**
      * Sets an inactive team folder's status to active. Permission: Team member
@@ -4127,8 +4476,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderRestoreError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderRestore(arg: team.TeamFolderIdArg): Promise<DropboxResponse<team.TeamFolderMetadata>>;
+    public teamTeamFolderRestore(arg: team.TeamFolderIdArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderMetadata>>;
 
     /**
      * Updates the sync settings on a team folder or its contents.  Use of this
@@ -4140,8 +4490,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TeamFolderUpdateSyncSettingsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamTeamFolderUpdateSyncSettings(arg: team.TeamFolderUpdateSyncSettingsArg): Promise<DropboxResponse<team.TeamFolderMetadata>>;
+    public teamTeamFolderUpdateSyncSettings(arg: team.TeamFolderUpdateSyncSettingsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderMetadata>>;
 
     /**
      * Returns the member profile of the admin who generated the team access
@@ -4152,8 +4503,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team.TokenGetAuthenticatedAdminError>.
+     * @param options Optional transport settings for this request.
      */
-    public teamTokenGetAuthenticatedAdmin(): Promise<DropboxResponse<team.TokenGetAuthenticatedAdminResult>>;
+    public teamTokenGetAuthenticatedAdmin(options?: DropboxRequestOptions): Promise<DropboxResponse<team.TokenGetAuthenticatedAdminResult>>;
 
     /**
      * Retrieves team events. If the result's GetTeamEventsResult.has_more field
@@ -4173,8 +4525,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team_log.GetTeamEventsError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLogGetEvents(arg: team_log.GetTeamEventsArg): Promise<DropboxResponse<team_log.GetTeamEventsResult>>;
+    public teamLogGetEvents(arg: team_log.GetTeamEventsArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team_log.GetTeamEventsResult>>;
 
     /**
      * Once a cursor has been retrieved from getEvents(), use this to paginate
@@ -4186,8 +4539,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<team_log.GetTeamEventsContinueError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public teamLogGetEventsContinue(arg: team_log.GetTeamEventsContinueArg): Promise<DropboxResponse<team_log.GetTeamEventsResult>>;
+    public teamLogGetEventsContinue(arg: team_log.GetTeamEventsContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team_log.GetTeamEventsResult>>;
 
     /**
      * Get a list of feature values that may be configured for the current
@@ -4199,8 +4553,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<users.UserFeaturesGetValuesBatchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public usersFeaturesGetValues(arg: users.UserFeaturesGetValuesBatchArg): Promise<DropboxResponse<users.UserFeaturesGetValuesBatchResult>>;
+    public usersFeaturesGetValues(arg: users.UserFeaturesGetValuesBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<users.UserFeaturesGetValuesBatchResult>>;
 
     /**
      * Get information about a user's account.
@@ -4211,8 +4566,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<users.GetAccountError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public usersGetAccount(arg: users.GetAccountArg): Promise<DropboxResponse<users.BasicAccount>>;
+    public usersGetAccount(arg: users.GetAccountArg, options?: DropboxRequestOptions): Promise<DropboxResponse<users.BasicAccount>>;
 
     /**
      * Get information about multiple user accounts. At most 300 accounts may be
@@ -4224,8 +4580,9 @@ export class Dropbox {
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<users.GetAccountBatchError>.
      * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
      */
-    public usersGetAccountBatch(arg: users.GetAccountBatchArg): Promise<DropboxResponse<users.GetAccountBatchResult>>;
+    public usersGetAccountBatch(arg: users.GetAccountBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<users.GetAccountBatchResult>>;
 
     /**
      * Get information about the current user's account.
@@ -4235,8 +4592,9 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @param options Optional transport settings for this request.
      */
-    public usersGetCurrentAccount(): Promise<DropboxResponse<users.FullAccount>>;
+    public usersGetCurrentAccount(options?: DropboxRequestOptions): Promise<DropboxResponse<users.FullAccount>>;
 
     /**
      * Get the space usage information for the current user's account.
@@ -4246,6 +4604,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @param options Optional transport settings for this request.
      */
-    public usersGetSpaceUsage(): Promise<DropboxResponse<users.SpaceUsage>>;
+    public usersGetSpaceUsage(options?: DropboxRequestOptions): Promise<DropboxResponse<users.SpaceUsage>>;
 }

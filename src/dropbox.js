@@ -12,6 +12,9 @@ import { routes } from '../lib/routes.js';
 import DropboxAuth from './auth.js';
 import { baseApiUrl, httpHeaderSafeJson } from './utils.js';
 import { parseDownloadResponse, parseResponse } from './response.js';
+import {
+  contentHash as getUploadContentHash,
+} from './upload-content-hash.js';
 
 const b64 = typeof btoa === 'undefined'
   ? (str) => Buffer.from(str).toString('base64')
@@ -65,25 +68,26 @@ export default class Dropbox {
     this.domain = options.domain || this.auth.domain;
     this.domainDelimiter = options.domainDelimiter || this.auth.domainDelimiter;
     this.customHeaders = options.customHeaders || this.auth.customHeaders;
+    this.autoContentHash = options.autoContentHash !== false;
 
     Object.assign(this, routes);
   }
 
-  request(path, args, auth, host, style) {
-    // scope is provided after "style", but unused in requests, so it's not in parameters
+  request(path, args, auth, host, style, scope, options) {
+    // scope is currently unused by the transport layer
     switch (style) {
       case RPC:
-        return this.rpcRequest(path, args, auth, host);
+        return this.rpcRequest(path, args, auth, host, options);
       case DOWNLOAD:
-        return this.downloadRequest(path, args, auth, host);
+        return this.downloadRequest(path, args, auth, host, options);
       case UPLOAD:
-        return this.uploadRequest(path, args, auth, host);
+        return this.uploadRequest(path, args, auth, host, options);
       default:
         throw new Error(`Invalid request style: ${style}`);
     }
   }
 
-  rpcRequest(path, body, auth, host) {
+  rpcRequest(path, body, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
         const fetchOptions = {
@@ -91,6 +95,10 @@ export default class Dropbox {
           body: (body) ? JSON.stringify(body) : null,
           headers: {},
         };
+
+        if (options && options.signal) {
+          fetchOptions.signal = options.signal;
+        }
 
         if (body) {
           fetchOptions.headers['Content-Type'] = 'application/json';
@@ -108,7 +116,7 @@ export default class Dropbox {
       .then((res) => parseResponse(res));
   }
 
-  downloadRequest(path, args, auth, host) {
+  downloadRequest(path, args, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
         const fetchOptions = {
@@ -117,6 +125,10 @@ export default class Dropbox {
             'Dropbox-API-Arg': httpHeaderSafeJson(args),
           },
         };
+
+        if (options && options.signal) {
+          fetchOptions.signal = options.signal;
+        }
 
         this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
@@ -130,12 +142,17 @@ export default class Dropbox {
       .then((res) => parseDownloadResponse(res));
   }
 
-  uploadRequest(path, args, auth, host) {
+  uploadRequest(path, args, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
-      .then(() => {
+      .then(async () => {
         const requestArgs = Object.assign({}, args); // eslint-disable-line prefer-object-spread
         const { contents } = requestArgs;
         delete requestArgs.contents;
+        await this.maybeAddContentHash(
+          path,
+          requestArgs,
+          contents,
+        );
 
         const fetchOptions = {
           body: contents,
@@ -145,6 +162,10 @@ export default class Dropbox {
             'Dropbox-API-Arg': httpHeaderSafeJson(requestArgs),
           },
         };
+
+        if (options && options.signal) {
+          fetchOptions.signal = options.signal;
+        }
 
         if (contents && typeof contents.pipe === 'function') {
           fetchOptions.duplex = 'half';
@@ -211,6 +232,22 @@ export default class Dropbox {
       headerKeys.forEach((header) => {
         options.headers[header] = this.customHeaders[header];
       });
+    }
+  }
+
+  async maybeAddContentHash(path, requestArgs, contents) {
+    if (
+      !this.autoContentHash
+      || path !== '/2/files/upload'
+      || requestArgs.content_hash !== undefined
+    ) {
+      return;
+    }
+
+    const hash = await getUploadContentHash(contents);
+
+    if (hash !== null) {
+      requestArgs.content_hash = hash;
     }
   }
 }
