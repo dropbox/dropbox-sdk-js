@@ -3,6 +3,14 @@
 /*IMPORT*/
 export * from './dropbox_types';
 
+/**
+ * Optional transport settings for a single Dropbox API request.
+ */
+export interface DropboxRequestOptions {
+  /** An AbortSignal used to cancel the request. */
+  signal?: AbortSignal;
+}
+
 /** Binary download content returned by the SDK in Node.js environments. */
 export interface DropboxFileBinary extends Uint8Array {
   toString(encoding?: string, start?: number, end?: number): string;
