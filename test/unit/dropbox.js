@@ -98,6 +98,29 @@ describe('Dropbox', () => {
       chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
     });
 
+    it('passes request signal through a generated route', () => {
+      const controller = new AbortController();
+
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({
+        fetch: fetchStub,
+      });
+
+      return dbx.filesGetMetadata(
+        { path: '/test.txt' },
+        { signal: controller.signal },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(fetchOptions.signal, controller.signal);
+      });
+    });
+
     it('completes a cookie auth RPC request', () => {
       const dbxAuth = new DropboxAuth();
       const dbx = new Dropbox({ auth: dbxAuth });
