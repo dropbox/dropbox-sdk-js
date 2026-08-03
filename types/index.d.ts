@@ -2197,6 +2197,10 @@ export class Dropbox {
 
     /**
      * Asynchronous document-to-markdown conversion for supported file formats.
+     * Supported formats: .binder, .docx, .html, .paper, .papert, .pptx, .xlsx,
+     * .gsheet, .ods, .pdf. Unsupported formats return an
+     * `unsupported_format_error`. Size limit: the source file must be at most
+     * 50 MB. Larger files are rejected.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -2220,7 +2224,18 @@ export class Dropbox {
     public rivieraGetMarkdownAsyncCheck(arg: async.PollArg): Promise<DropboxResponse<riviera.GetMarkdownAsyncCheckResult>>;
 
     /**
-     * Asynchronous file metadata extraction for supported file formats.
+     * Asynchronous file metadata extraction for supported file formats. The
+     * kind of metadata returned depends on the file type: - Image (EXIF)
+     * formats: .3fr, .arw, .avif, .bmp, .cr2, .cr3, .crw, .dcr, .dcs, .dng,
+     * .erf, .gif, .heic, .j2c, .j2k, .jp2, .jpc, .jpeg, .jpf, .jpg, .jpg2,
+     * .jpm, .jpx, .kdc, .mef, .mos, .mrw, .nef, .nrw, .orf, .pef, .png, .ppm,
+     * .r3d, .raf, .rw2, .rwl, .sr2, .tga, .tif, .tiff, .wbmp, .web, .webp,
+     * .x3f. - Audio/video (media) formats: .aac, .aif, .aiff, .flac, .m4a,
+     * .m4r, .mp3, .oga, .ogg, .wav, .wma, .3gp, .3gpp, .3gpp2, .asf, .avi, .dv,
+     * .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf,
+     * .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv. - PDF format: .pdf. - MS
+     * Office formats: .docx, .pptx, .xlsx. Unsupported formats return an
+     * `unsupported_format_error`.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -2244,7 +2259,45 @@ export class Dropbox {
     public rivieraGetMetadataAsyncCheck(arg: async.PollArg): Promise<DropboxResponse<riviera.GetMetadataAsyncCheckResult>>;
 
     /**
-     * Asynchronous transcript generation for audio and video files.
+     * Asynchronous plain-text extraction from documents. Supported formats
+     * include: - Word processing: .doc, .docx, .docm, .rtf. - Presentations:
+     * .ppt, .pptx, .pptm. - Spreadsheets: .xls, .xlsx, .xlsm. - PDF: .pdf. -
+     * Dropbox document types: .paper, .papert, .binder, .gdoc, .gsheet,
+     * .gslides. - Plain text / subtitles: .txt, .vtt. Unsupported formats
+     * return an `unsupported_format_error`. For the `url` variant only Dropbox
+     * shared links are supported; external URLs return
+     * `unsupported_format_error`.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     */
+    public rivieraGetTextAsync(arg: riviera.GetTextArgs): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Returns the status or result of specified get_text_async task.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     */
+    public rivieraGetTextAsyncCheck(arg: async.PollArg): Promise<DropboxResponse<riviera.GetTextAsyncCheckResult>>;
+
+    /**
+     * Asynchronous transcript generation for audio and video files. Supported
+     * audio formats: .aac, .aif, .aiff, .flac, .m4a, .m4r, .mp3, .oga, .ogg,
+     * .wav, .wma. Supported video formats: .3gp, .3gpp, .3gpp2, .asf, .avi,
+     * .dv, .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf,
+     * .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv. Unsupported formats return
+     * an `unsupported_format_error`. Size limits: the source file must be at
+     * most 10 GB and its audio track at most 1 hour in duration. Files
+     * exceeding these limits are rejected.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -3443,6 +3496,30 @@ export class Dropbox {
      * @param arg The request parameters.
      */
     public teamMembersAddJobStatusGetV2(arg: async.PollArg): Promise<DropboxResponse<team.MembersAddJobStatusV2Result>>;
+
+    /**
+     * Launch a bulk suspend job. The server enforces a maximum of 500 members.
+     *
+     * Route attributes:
+     *   scope: members.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.BulkSuspendError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersBulkSuspend(arg: team.BulkSuspendArg): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Poll a previously launched bulk suspend job.
+     *
+     * Route attributes:
+     *   scope: members.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     */
+    public teamMembersBulkSuspendJobStatusCheck(arg: async.PollArg): Promise<DropboxResponse<team.BulkSuspendJobStatus>>;
 
     /**
      * Permanently delete the files of a user who has been removed from the
