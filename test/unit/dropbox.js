@@ -165,13 +165,6 @@ describe('Dropbox', () => {
         fetch: fetchStub,
       });
 
-      fetchStub.resolves({
-        ok: true,
-        status: 200,
-        headers: new Headers(),
-        text: () => Promise.resolve('{}'),
-      });
-
       return dbx.uploadRequest(
         'path',
         { contents: 'test' },
