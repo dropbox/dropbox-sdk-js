@@ -73,21 +73,21 @@ export default class Dropbox {
     Object.assign(this, routes);
   }
 
-  request(path, args, auth, host, style) {
-    // scope is provided after "style", but unused in requests, so it's not in parameters
+  request(path, args, auth, host, style, scope, options) {
+    // scope is currently unused by the transport layer
     switch (style) {
       case RPC:
-        return this.rpcRequest(path, args, auth, host);
+        return this.rpcRequest(path, args, auth, host, options);
       case DOWNLOAD:
-        return this.downloadRequest(path, args, auth, host);
+        return this.downloadRequest(path, args, auth, host, options);
       case UPLOAD:
-        return this.uploadRequest(path, args, auth, host);
+        return this.uploadRequest(path, args, auth, host, options);
       default:
         throw new Error(`Invalid request style: ${style}`);
     }
   }
 
-  rpcRequest(path, body, auth, host) {
+  rpcRequest(path, body, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
         const fetchOptions = {
@@ -95,6 +95,10 @@ export default class Dropbox {
           body: (body) ? JSON.stringify(body) : null,
           headers: {},
         };
+
+        if (options && options.signal) {
+          fetchOptions.signal = options.signal;
+        }
 
         if (body) {
           fetchOptions.headers['Content-Type'] = 'application/json';
@@ -112,7 +116,7 @@ export default class Dropbox {
       .then((res) => parseResponse(res));
   }
 
-  downloadRequest(path, args, auth, host) {
+  downloadRequest(path, args, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
         const fetchOptions = {
@@ -121,6 +125,10 @@ export default class Dropbox {
             'Dropbox-API-Arg': httpHeaderSafeJson(args),
           },
         };
+
+        if (options && options.signal) {
+          fetchOptions.signal = options.signal;
+        }
 
         this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
@@ -134,7 +142,7 @@ export default class Dropbox {
       .then((res) => parseDownloadResponse(res));
   }
 
-  uploadRequest(path, args, auth, host) {
+  uploadRequest(path, args, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
       .then(async () => {
         const requestArgs = Object.assign({}, args); // eslint-disable-line prefer-object-spread
@@ -154,6 +162,10 @@ export default class Dropbox {
             'Dropbox-API-Arg': httpHeaderSafeJson(requestArgs),
           },
         };
+
+        if (options && options.signal) {
+          fetchOptions.signal = options.signal;
+        }
 
         if (contents && typeof contents.pipe === 'function') {
           fetchOptions.duplex = 'half';
