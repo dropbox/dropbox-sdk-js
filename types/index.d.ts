@@ -2394,6 +2394,41 @@ export class Dropbox {
     public rivieraGetMetadataAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetMetadataAsyncCheckResult>>;
 
     /**
+     * Asynchronous OCR (optical character recognition) text extraction for
+     * images and PDFs, including scanned / non-text PDFs. Supported formats: -
+     * Image formats: .bmp, .gif, .heic, .jpeg, .jpg, .png, .tif, .tiff, .webp.
+     * - PDF format: .pdf. Unsupported formats return an
+     * `unsupported_format_error`. For the `url` variant only Dropbox shared
+     * links are supported; external URLs return `unsupported_format_error`.
+     * Text-based PDFs already carry a text layer, so OCR is not run against
+     * them and the result is empty; use `get_text_async` to read the embedded
+     * text layer of such a PDF. The result carries the extracted words as plain
+     * text, plus the same content as hOCR with per-word coordinates.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetOcrAsync(arg: riviera.GetOcrArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Returns the status or result of specified get_ocr_async task.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetOcrAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetOcrAsyncCheckResult>>;
+
+    /**
      * Asynchronous plain-text extraction from documents. Supported formats
      * include: - Word processing: .doc, .docx, .docm, .rtf. - Presentations:
      * .ppt, .pptx, .pptm. - Spreadsheets: .xls, .xlsx, .xlsm. - PDF: .pdf. -

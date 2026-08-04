@@ -7634,6 +7634,59 @@
     }
 
     /**
+     * Arguments for the asynchronous `get_ocr_async` route. Exactly one of
+     * `file_id`, `path`, or `url` must be supplied via `file_id_or_url` to
+     * identify the image or PDF whose text should be extracted via OCR (optical
+     * character recognition).
+     */
+    export interface GetOcrArgs {
+      /**
+       * Identifier of the file to run OCR on. Callers must set exactly one of
+       * the `FileIdOrUrl` variants. OCR is supported for image files and PDFs,
+       * including scanned / non-text PDFs; see the route description for the
+       * supported formats. Requests against unsupported formats return
+       * `unsupported_format_error`. NOTE: for the `url` variant, only Dropbox
+       * shared links (www.dropbox.com) are supported. External (non-Dropbox)
+       * URLs are not supported and return `unsupported_format_error`; import
+       * the file into Dropbox and reference it by `file_id` or `path` instead.
+       */
+      file_id_or_url?: FileIdOrUrl;
+    }
+
+    export interface GetOcrAsyncCheckResultInProgress {
+      '.tag': 'in_progress';
+    }
+
+    export interface GetOcrAsyncCheckResultComplete extends GetOcrResult {
+      '.tag': 'complete';
+    }
+
+    export interface GetOcrAsyncCheckResultFailed {
+      '.tag': 'failed';
+      failed: OcrExtractionApiV2Error;
+    }
+
+    export interface GetOcrAsyncCheckResultOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Result type for EventBus async check - must end in "CheckResult"
+     */
+    export type GetOcrAsyncCheckResult = GetOcrAsyncCheckResultInProgress | GetOcrAsyncCheckResultComplete | GetOcrAsyncCheckResultFailed | GetOcrAsyncCheckResultOther;
+
+    export interface GetOcrResult {
+      /**
+       * Defaults to .
+       */
+      text?: string;
+      /**
+       * Defaults to .
+       */
+      hocr?: string;
+    }
+
+    /**
      * Arguments for the asynchronous `get_text_async` route. Exactly one of
      * `file_id`, `path`, or `url` must be supplied via `file_id_or_url` to
      * identify the document whose plain-text content should be extracted.
@@ -7911,6 +7964,72 @@
      * from the file type.
      */
     export type MetadataType = MetadataTypeMetadataTypeUnknown | MetadataTypeMetadataTypeExif | MetadataTypeMetadataTypeMedia | MetadataTypeMetadataTypePdf | MetadataTypeMetadataTypeOffice | MetadataTypeOther;
+
+    /**
+     * An unexpected, typically transient, server-side failure. The string is a
+     * human-readable message; retrying with backoff may succeed.
+     */
+    export interface OcrExtractionApiV2ErrorServerError {
+      '.tag': 'server_error';
+      server_error: string;
+    }
+
+    /**
+     * The request could not be processed as supplied (a problem with the
+     * caller's input). The string is a human-readable message; retrying the
+     * same request will not help.
+     */
+    export interface OcrExtractionApiV2ErrorUserError {
+      '.tag': 'user_error';
+      user_error: string;
+    }
+
+    export interface OcrExtractionApiV2ErrorUnsupportedFormatError {
+      '.tag': 'unsupported_format_error';
+    }
+
+    export interface OcrExtractionApiV2ErrorLinkDownloadDisabledError {
+      '.tag': 'link_download_disabled_error';
+    }
+
+    export interface OcrExtractionApiV2ErrorSharedLinkPasswordProtected {
+      '.tag': 'shared_link_password_protected';
+    }
+
+    export interface OcrExtractionApiV2ErrorLimitExceededError {
+      '.tag': 'limit_exceeded_error';
+    }
+
+    export interface OcrExtractionApiV2ErrorConversionFailureError {
+      '.tag': 'conversion_failure_error';
+    }
+
+    /**
+     * The referenced file does not exist or is not accessible.
+     */
+    export interface OcrExtractionApiV2ErrorNotFoundError {
+      '.tag': 'not_found_error';
+    }
+
+    /**
+     * The target is a folder, not a file.
+     */
+    export interface OcrExtractionApiV2ErrorIsAFolderError {
+      '.tag': 'is_a_folder_error';
+    }
+
+    export interface OcrExtractionApiV2ErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Reason an OCR extraction job failed. Returned in the `failed` variant of
+     * `GetOcrAsyncCheckResult`. This is a semantic error union: the HTTP status
+     * of the poll request itself is unaffected (a poll that surfaces a failed
+     * job is still a normal successful poll response). Callers should branch on
+     * the variant.
+     */
+    export type OcrExtractionApiV2Error = OcrExtractionApiV2ErrorServerError | OcrExtractionApiV2ErrorUserError | OcrExtractionApiV2ErrorUnsupportedFormatError | OcrExtractionApiV2ErrorLinkDownloadDisabledError | OcrExtractionApiV2ErrorSharedLinkPasswordProtected | OcrExtractionApiV2ErrorLimitExceededError | OcrExtractionApiV2ErrorConversionFailureError | OcrExtractionApiV2ErrorNotFoundError | OcrExtractionApiV2ErrorIsAFolderError | OcrExtractionApiV2ErrorOther;
 
     export interface OfficeFileTypeOfficeFiletypeUnknown {
       '.tag': 'office_filetype_unknown';
