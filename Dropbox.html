@@ -25297,6 +25297,403 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="rivieraGetOcrAsync"><span class="type-signature"></span>rivieraGetOcrAsync(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Asynchronous OCR (optical character recognition) text extraction for images
+and PDFs, including scanned / non-text PDFs. Supported formats: - Image
+formats: .bmp, .gif, .heic, .jpeg, .jpg, .png, .tif, .tiff, .webp. - PDF
+format: .pdf. Unsupported formats return an `unsupported_format_error`. For
+the `url` variant only Dropbox shared links are supported; external URLs
+return `unsupported_format_error`. Text-based PDFs already carry a text
+layer, so OCR is not run against them and the result is empty; use
+`get_text_async` to read the embedded text layer of such a PDF. The result
+carries the extracted words as plain text, plus the same content as hOCR with
+per-word coordinates.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraGetOcrArgs">RivieraGetOcrArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchResultBase">AsyncLaunchResultBase</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraGetOcrAsyncCheck"><span class="type-signature"></span>rivieraGetOcrAsyncCheck(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the status or result of specified get_ocr_async task.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#RivieraGetOcrAsyncCheckResult">RivieraGetOcrAsyncCheckResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="rivieraGetTextAsync"><span class="type-signature"></span>rivieraGetTextAsync(arg [, options])</h4>
     
     
@@ -54616,7 +55013,7 @@ Route attributes:
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2026-08-03T23:09:54+00:00
+		on 2026-08-04T12:05:10+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
