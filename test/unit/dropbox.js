@@ -98,6 +98,57 @@ describe('Dropbox', () => {
       chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
     });
 
+    it('passes a timeout signal to fetch', () => {
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({ fetch: fetchStub });
+
+      return dbx.rpcRequest(
+        'path',
+        {},
+        USER_AUTH,
+        'api',
+        { timeout: 1000 },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.instanceOf(fetchOptions.signal, AbortSignal);
+        chai.assert.isFalse(fetchOptions.signal.aborted);
+      });
+    });
+
+    it('combines a request signal with a timeout', () => {
+      const controller = new AbortController();
+
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({ fetch: fetchStub });
+
+      return dbx.rpcRequest(
+        'path',
+        {},
+        USER_AUTH,
+        'api',
+        {
+          signal: controller.signal,
+          timeout: 1000,
+        },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        controller.abort();
+        chai.assert.isTrue(fetchOptions.signal.aborted);
+      });
+    });
+
     it('passes request signal through a generated route', () => {
       const controller = new AbortController();
 
