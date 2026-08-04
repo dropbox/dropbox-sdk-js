@@ -21,6 +21,20 @@ const b64 = typeof btoa === 'undefined'
   : btoa;
 
 /**
+ * Returns the AbortSignal to use for a request, combining a user-provided
+ * signal with an optional timeout.
+ */
+function buildRequestSignal({ signal, timeout } = {}) {
+  if (timeout == null) {
+    return signal;
+  }
+
+  return signal
+    ? AbortSignal.any([signal, AbortSignal.timeout(timeout)])
+    : AbortSignal.timeout(timeout);
+}
+
+/**
  * @class Dropbox
  * @classdesc The Dropbox SDK class that provides methods to read, write and
  * create files or folders in a user or team's Dropbox.
@@ -92,13 +106,10 @@ export default class Dropbox {
       .then(() => {
         const fetchOptions = {
           method: 'POST',
-          body: (body) ? JSON.stringify(body) : null,
+          body: body ? JSON.stringify(body) : null,
           headers: {},
+          signal: buildRequestSignal(options),
         };
-
-        if (options && options.signal) {
-          fetchOptions.signal = options.signal;
-        }
 
         if (body) {
           fetchOptions.headers['Content-Type'] = 'application/json';
@@ -124,11 +135,8 @@ export default class Dropbox {
           headers: {
             'Dropbox-API-Arg': httpHeaderSafeJson(args),
           },
+          signal: buildRequestSignal(options),
         };
-
-        if (options && options.signal) {
-          fetchOptions.signal = options.signal;
-        }
 
         this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
@@ -161,11 +169,8 @@ export default class Dropbox {
             'Content-Type': 'application/octet-stream',
             'Dropbox-API-Arg': httpHeaderSafeJson(requestArgs),
           },
+          signal: buildRequestSignal(options),
         };
-
-        if (options && options.signal) {
-          fetchOptions.signal = options.signal;
-        }
 
         if (contents && typeof contents.pipe === 'function') {
           fetchOptions.duplex = 'half';

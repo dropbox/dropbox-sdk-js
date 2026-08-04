@@ -9,6 +9,9 @@ export * from './dropbox_types';
 export interface DropboxRequestOptions {
   /** An AbortSignal used to cancel the request. */
   signal?: AbortSignal;
+
+  /** Maximum request duration in milliseconds. */
+  timeout?: number;
 }
 
 /** Binary download content returned by the SDK in Node.js environments. */
