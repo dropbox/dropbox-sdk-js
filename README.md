@@ -124,6 +124,7 @@ in both JavaScript and TypeScript, with additional Node.js OAuth examples.
 
 - **Other Examples**
     - Basic - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/basic), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/basic) ] - A simple example that takes in a token and fetches files from your Dropbox account.
+    - Backend Download - [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/backend-download) ] - An example showing resumable backend downloads to local storage.
     - Download - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/download), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/download) ] - An example showing how to download a shared file.
     - Team As User - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/team-as-user), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/team-as-user) ] - An example showing how to act as a user.
     - Team - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/team), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/team) ] - An example showing how to use the team functionality and list team devices.

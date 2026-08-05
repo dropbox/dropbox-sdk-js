@@ -99,3 +99,18 @@ dropbox.sharingGetSharedLinkFile({ url: 'https://www.dropbox.com/example' })
         fileBlob.text();
     }
 });
+var fileDownloader = new Dropbox.DropboxFileDownloader(dropbox, {
+    maxAttempts: 2,
+    parallelDownloads: 4,
+    retryDelay: 1000,
+    progress: function (progress) {
+        var bytesWritten = progress.bytesWritten, totalBytes = progress.totalBytes, resumedFrom = progress.resumedFrom;
+    },
+});
+fileDownloader.downloadFile('/test.txt', '/tmp/test.txt')
+    .then(function (result) {
+    var metadata = result.metadata, resumedFrom = result.resumedFrom;
+});
+Dropbox.downloadFile(dropbox, '/test.txt', '/tmp/test.txt', {
+    timeout: 1000,
+});
