@@ -149,6 +149,50 @@ describe('Dropbox', () => {
       });
     });
 
+    it('adds per-request headers to RPC requests', () => {
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: {
+          get: () => 'application/json',
+        },
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({
+        accessToken: 'token',
+        fetch: fetchStub,
+      });
+
+      return dbx.rpcRequest(
+        'path',
+        { value: true },
+        USER_AUTH,
+        'api',
+        {
+          extraHeaders: {
+            'X-Test-Header': 'test-value',
+            'Content-Type': 'incorrect',
+            'content-type': 'incorrect-lowercase',
+          },
+        },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+
+        chai.assert.strictEqual(
+          fetchOptions.headers['X-Test-Header'],
+          'test-value',
+        );
+
+        chai.assert.strictEqual(
+          fetchOptions.headers['Content-Type'],
+          'application/json',
+        );
+
+        chai.assert.isUndefined(fetchOptions.headers['content-type']);
+      });
+    });
+
     it('passes request signal through a generated route', () => {
       const controller = new AbortController();
 
@@ -222,6 +266,60 @@ describe('Dropbox', () => {
           fetchStub.firstCall.args[1].headers['Dropbox-API-Arg'],
         );
         chai.assert.notProperty(requestArgs, 'content_hash');
+      });
+    });
+
+    it('adds per-request headers to upload requests', () => {
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: {
+          get: () => 'application/json',
+        },
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({
+        accessToken: 'token',
+        fetch: fetchStub,
+        autoContentHash: false,
+      });
+
+      return dbx.uploadRequest(
+        'path',
+        {
+          contents: Buffer.from('test'),
+        },
+        USER_AUTH,
+        'content',
+        {
+          extraHeaders: {
+            'X-Test-Header': 'test-value',
+            'Content-Type': 'incorrect',
+            'content-type': 'incorrect-lowercase',
+            'Dropbox-API-Arg': 'incorrect',
+            'dropbox-api-arg': 'incorrect-lowercase',
+          },
+        },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(
+          fetchOptions.headers['X-Test-Header'],
+          'test-value',
+        );
+
+        chai.assert.strictEqual(
+          fetchOptions.headers['Content-Type'],
+          'application/octet-stream',
+        );
+
+        chai.assert.notEqual(
+          fetchOptions.headers['Dropbox-API-Arg'],
+          'incorrect',
+        );
+
+        chai.assert.isUndefined(fetchOptions.headers['content-type']);
+        chai.assert.isUndefined(fetchOptions.headers['dropbox-api-arg']);
       });
     });
 
@@ -461,6 +559,59 @@ describe('Dropbox', () => {
       chai.assert.isTrue(downloadSpy.calledOnce);
       chai.assert.equal('path', dbx.downloadRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.downloadRequest.getCall(0).args[1]);
+    });
+
+    it('adds per-request headers to download requests', () => {
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: {
+          get: (name) => (
+            name === 'dropbox-api-result' ? '{}' : null
+          ),
+        },
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
+      });
+
+      const dbx = new Dropbox({
+        accessToken: 'token',
+        fetch: fetchStub,
+      });
+
+      return dbx.downloadRequest(
+        'path',
+        { path: '/test.txt' },
+        USER_AUTH,
+        'content',
+        {
+          extraHeaders: {
+            Range: 'bytes=0-99',
+            Authorization: 'incorrect',
+            authorization: 'incorrect-lowercase',
+            'Dropbox-API-Arg': 'incorrect',
+            'dropbox-api-arg': 'incorrect-lowercase',
+          },
+        },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(
+          fetchOptions.headers.Range,
+          'bytes=0-99',
+        );
+
+        chai.assert.strictEqual(
+          fetchOptions.headers.Authorization,
+          'Bearer token',
+        );
+
+        chai.assert.notEqual(
+          fetchOptions.headers['Dropbox-API-Arg'],
+          'incorrect',
+        );
+
+        chai.assert.isUndefined(fetchOptions.headers.authorization);
+        chai.assert.isUndefined(fetchOptions.headers['dropbox-api-arg']);
+      });
     });
 
     it('passes request signal to download fetch', () => {

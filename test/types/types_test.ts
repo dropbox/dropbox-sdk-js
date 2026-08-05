@@ -116,3 +116,28 @@ dropbox.sharingGetSharedLinkFile({ url: 'https://www.dropbox.com/example' })
       fileBlob.text();
     }
   });
+
+const fileDownloader = new Dropbox.DropboxFileDownloader(dropbox, {
+  maxAttempts: 2,
+  parallelDownloads: 4,
+  retryDelay: 1000,
+  progress: (progress: Dropbox.DropboxFileDownloadProgress) => {
+    const {
+      bytesWritten,
+      totalBytes,
+      resumedFrom,
+    }: Dropbox.DropboxFileDownloadProgress = progress;
+  },
+});
+
+fileDownloader.downloadFile('/test.txt', '/tmp/test.txt')
+  .then((result: Dropbox.DropboxFileDownloadResult) => {
+    const {
+      metadata,
+      resumedFrom,
+    }: Dropbox.DropboxFileDownloadResult = result;
+  });
+
+Dropbox.downloadFile(dropbox, '/test.txt', '/tmp/test.txt', {
+  timeout: 1000,
+});

@@ -13,6 +13,9 @@ export interface DropboxRequestOptions {
 
   /** Maximum request duration in milliseconds. */
   timeout?: number;
+
+  /** Additional HTTP headers for this request. */
+  extraHeaders?: Record<string, string>;
 }
 
 /** Binary download content returned by the SDK in Node.js environments. */
@@ -35,6 +38,59 @@ export type DropboxDownloadResult<T> = T & (
   | { fileBinary: DropboxFileBinary; fileBlob?: never }
   | { fileBinary?: never; fileBlob: DropboxFileBlob }
 );
+
+/** Progress reported by the local file download helper. */
+export interface DropboxFileDownloadProgress {
+  /** Cumulative bytes written to local storage. */
+  bytesWritten: number;
+
+  /** Expected total bytes from Dropbox metadata, when known. */
+  totalBytes: number;
+
+  /** Byte offset from an existing .part file. */
+  resumedFrom: number;
+}
+
+export interface DropboxFileDownloaderOptions {
+  /** Maximum number of download attempts. Defaults to 3. */
+  maxAttempts?: number;
+
+  /** Number of parallel ranged downloads for fresh downloads. Defaults to 1. */
+  parallelDownloads?: number;
+
+  /** Initial retry delay in milliseconds. Defaults to 500. */
+  retryDelay?: number;
+
+  /** Receives cumulative download progress updates. */
+  progress?: (progress: DropboxFileDownloadProgress) => void;
+
+  /** An AbortSignal used to cancel Dropbox requests. */
+  signal?: AbortSignal;
+
+  /** Maximum duration for each Dropbox request in milliseconds. Must be a positive integer. */
+  timeout?: number;
+}
+
+export interface DropboxFileDownloadResult {
+  /** Metadata returned by filesDownload. */
+  metadata: files.FileMetadata;
+
+  /** Byte offset used to resume from an existing .part file. */
+  resumedFrom: number;
+}
+
+export class DropboxFileDownloader {
+  constructor(client: Dropbox, options?: DropboxFileDownloaderOptions);
+
+  downloadFile(remotePath: string, localPath: string): Promise<DropboxFileDownloadResult>;
+}
+
+export function downloadFile(
+  client: Dropbox,
+  remotePath: string,
+  localPath: string,
+  options?: DropboxFileDownloaderOptions,
+): Promise<DropboxFileDownloadResult>;
 
 export interface DropboxAuthOptions {
   // An access token for making authenticated requests.
