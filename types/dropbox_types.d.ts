@@ -36681,6 +36681,10 @@
       '.tag': 'public';
     }
 
+    export interface MediaHubSharedLinkAudiencePublicLoggedInOnly {
+      '.tag': 'public_logged_in_only';
+    }
+
     export interface MediaHubSharedLinkAudienceTeamOnly {
       '.tag': 'team_only';
     }
@@ -36692,7 +36696,7 @@
     /**
      * Media Hub shared link audience
      */
-    export type MediaHubSharedLinkAudience = MediaHubSharedLinkAudienceNoOne | MediaHubSharedLinkAudiencePublic | MediaHubSharedLinkAudienceTeamOnly | MediaHubSharedLinkAudienceOther;
+    export type MediaHubSharedLinkAudience = MediaHubSharedLinkAudienceNoOne | MediaHubSharedLinkAudiencePublic | MediaHubSharedLinkAudiencePublicLoggedInOnly | MediaHubSharedLinkAudienceTeamOnly | MediaHubSharedLinkAudienceOther;
 
     /**
      * Changed Replay shared link audience.
