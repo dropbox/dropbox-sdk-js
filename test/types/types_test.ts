@@ -141,3 +141,19 @@ fileDownloader.downloadFile('/test.txt', '/tmp/test.txt')
 Dropbox.downloadFile(dropbox, '/test.txt', '/tmp/test.txt', {
   timeout: 1000,
 });
+
+const uploadSource = Dropbox.bytesUpload('upload content');
+const fileUploader = new Dropbox.DropboxFileUploader(dropbox, {
+  parallelUploads: 2,
+  progress: (progress: Dropbox.DropboxFileUploadProgress) => {
+    const { bytesCommitted, totalBytes }: Dropbox.DropboxFileUploadProgress = progress;
+  },
+});
+
+fileUploader.upload(uploadSource, { path: '/upload.txt' })
+  .then((result: Dropbox.DropboxFileUploadResult) => result.metadata);
+
+const uploadReader = {} as AsyncIterable<Uint8Array>;
+
+Dropbox.readerUpload(uploadReader);
+Dropbox.sizedReaderUpload(uploadReader, 3);

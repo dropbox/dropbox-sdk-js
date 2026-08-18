@@ -201,6 +201,21 @@ function isRetryableError(error) {
   );
 }
 
+function retryAfter(error) {
+  if (!(error instanceof DropboxResponseError) || !error.headers) {
+    return null;
+  }
+
+  const value = typeof error.headers.get === 'function'
+    ? error.headers.get('retry-after')
+    : error.headers['retry-after'] || error.headers['Retry-After'];
+  if (!value || !/^\d+$/.test(value)) {
+    return null;
+  }
+
+  return Number(value) * 1000;
+}
+
 function delay(ms, signal) {
   return new Promise((resolve, reject) => {
     let timeout;
@@ -673,7 +688,7 @@ export class DropboxFileDownloader {
 
           if (attempt < this.maxAttempts - 1) {
             await this.delay(
-              this.retryDelay * (2 ** attempt),
+              retryAfter(error) || this.retryDelay * (2 ** attempt),
               this.signal,
             );
           }

@@ -238,6 +238,23 @@ describe('DropboxFileDownloader', () => {
     expect(fs.readFileSync(localPath, 'utf8')).to.equal('hello');
   });
 
+  it('honors Retry-After for rate-limited downloads', async () => {
+    const dir = tempDir();
+    const localPath = path.join(dir, 'file.bin');
+    const fetch = sinon.stub();
+    fetch.onFirstCall().rejects(new DropboxResponseError(429, {
+      get: (name) => (name === 'retry-after' ? '7' : null),
+    }, 'rate limit'));
+    fetch.onSecondCall().returns(downloadResponse('hello'));
+    const delays = [];
+
+    await new DropboxFileDownloader(client(fetch), {
+      delay: (value) => { delays.push(value); return Promise.resolve(); },
+    }).downloadFile('/file.bin', localPath);
+
+    expect(delays).to.deep.equal([7000]);
+  });
+
   it('aborts during retry backoff without waiting for the delay', async () => {
     const dir = tempDir();
     const localPath = path.join(dir, 'file.bin');
