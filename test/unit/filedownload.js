@@ -210,7 +210,7 @@ describe('DropboxFileDownloader', () => {
     }).downloadFile('/file.bin', localPath);
 
     expect(fetch.callCount).to.equal(2);
-    expect(delays).to.deep.equal([500]);
+    expect(delays[0]).to.be.within(100, 200);
     expect(fetchRange(fetch.secondCall.args[1])).to.equal('bytes=6-');
     expect(fs.readFileSync(localPath, 'utf8')).to.equal('hello world');
     expect(result.resumedFrom).to.equal(6);
@@ -234,7 +234,8 @@ describe('DropboxFileDownloader', () => {
     }).downloadFile('/file.bin', localPath);
 
     expect(fetch.callCount).to.equal(3);
-    expect(delays).to.deep.equal([10, 20]);
+    expect(delays[0]).to.be.within(5, 10);
+    expect(delays[1]).to.be.within(10, 20);
     expect(fs.readFileSync(localPath, 'utf8')).to.equal('hello');
   });
 
@@ -253,6 +254,20 @@ describe('DropboxFileDownloader', () => {
     }).downloadFile('/file.bin', localPath);
 
     expect(delays).to.deep.equal([7000]);
+  });
+
+  it('retries every 5xx Dropbox response', async () => {
+    const dir = tempDir();
+    const localPath = path.join(dir, 'file.bin');
+    const fetch = sinon.stub();
+    fetch.onFirstCall().rejects(new DropboxResponseError(599, {}, 'server error'));
+    fetch.onSecondCall().returns(downloadResponse('hello'));
+
+    await new DropboxFileDownloader(client(fetch), {
+      delay: () => Promise.resolve(),
+    }).downloadFile('/file.bin', localPath);
+
+    expect(fetch.callCount).to.equal(2);
   });
 
   it('aborts during retry backoff without waiting for the delay', async () => {
@@ -302,11 +317,11 @@ describe('DropboxFileDownloader', () => {
     expect(fetch.callCount).to.equal(1);
   });
 
-  it('does not retry non-transient server responses', async () => {
+  it('does not retry responses outside the 5xx range', async () => {
     const dir = tempDir();
     const localPath = path.join(dir, 'file.bin');
     const fetch = sinon.stub().rejects(
-      new DropboxResponseError(501, {}, 'not implemented'),
+      new DropboxResponseError(600, {}, 'out of range'),
     );
 
     try {
@@ -315,7 +330,7 @@ describe('DropboxFileDownloader', () => {
       throw new Error('expected download to fail');
     } catch (error) {
       expect(error).to.be.instanceOf(DropboxResponseError);
-      expect(error.status).to.equal(501);
+      expect(error.status).to.equal(600);
     }
 
     expect(fetch.callCount).to.equal(1);

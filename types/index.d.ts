@@ -58,7 +58,7 @@ export interface DropboxFileDownloaderOptions {
   /** Number of parallel ranged downloads for fresh downloads. Defaults to 1. */
   parallelDownloads?: number;
 
-  /** Initial retry delay in milliseconds. Defaults to 500. */
+  /** Initial retry delay in milliseconds. Defaults to 200. */
   retryDelay?: number;
 
   /** Receives cumulative download progress updates. */
@@ -105,7 +105,7 @@ export interface DropboxFileUploaderOptions {
   /** Maximum number of upload attempts. Defaults to 3. */
   maxAttempts?: number;
 
-  /** Initial retry delay in milliseconds. Defaults to 500. */
+  /** Initial retry delay in milliseconds. Defaults to 200. */
   retryDelay?: number;
 
   /** Upload session chunk size in bytes. Defaults to 8 MiB. */

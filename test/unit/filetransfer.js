@@ -87,7 +87,80 @@ describe('DropboxFileUploader', () => {
     expect(bytes(dbx.filesUploadSessionFinish.firstCall.args[0].contents)).to.equal('hello');
     expect(bytes(dbx.filesUploadSessionFinish.secondCall.args[0].contents)).to.equal('');
     expect(dbx.filesUploadSessionFinish.secondCall.args[0].cursor.offset).to.equal(5);
-    expect(delays).to.deep.equal([500]);
+    expect(delays[0]).to.be.within(100, 200);
+  });
+
+  it('retries browser-style network failures but not arbitrary TypeErrors', async () => {
+    const retryingClient = client();
+    retryingClient.filesUploadSessionStart.onFirstCall().rejects(new TypeError('fetch failed'));
+    const delays = [];
+
+    await new DropboxFileUploader(retryingClient, {
+      delay: (value) => { delays.push(value); return Promise.resolve(); },
+    }).upload(bytesUpload('hello'), { path: '/retry.txt' });
+
+    expect(retryingClient.filesUploadSessionStart.callCount).to.equal(2);
+    expect(delays[0]).to.be.within(100, 200);
+
+    const failingClient = client();
+    failingClient.filesUploadSessionStart.rejects(new TypeError('invalid upload configuration'));
+    try {
+      await new DropboxFileUploader(failingClient).upload(bytesUpload('hello'), { path: '/failure.txt' });
+      throw new Error('expected upload to fail');
+    } catch (error) {
+      expect(error.message).to.equal('invalid upload configuration');
+    }
+    expect(failingClient.filesUploadSessionStart.calledOnce).to.equal(true);
+  });
+
+  it('honors Retry-After and bounds jittered exponential retry delays', async () => {
+    const rateLimitedClient = client();
+    rateLimitedClient.filesUploadSessionStart.onFirstCall().rejects(
+      new DropboxResponseError(429, { get: () => '7' }, 'rate limit'),
+    );
+    const rateLimitDelays = [];
+    await new DropboxFileUploader(rateLimitedClient, {
+      delay: (value) => { rateLimitDelays.push(value); return Promise.resolve(); },
+    }).upload(bytesUpload('hello'), { path: '/rate-limit.txt' });
+    expect(rateLimitDelays).to.deep.equal([7000]);
+
+    const retryingClient = client();
+    retryingClient.filesUploadSessionStart.rejects(new DropboxResponseError(503, {}, 'unavailable'));
+    const delays = [];
+    try {
+      await new DropboxFileUploader(retryingClient, {
+        maxAttempts: 7,
+        delay: (value) => { delays.push(value); return Promise.resolve(); },
+      }).upload(bytesUpload('hello'), { path: '/backoff.txt' });
+      throw new Error('expected upload to fail');
+    } catch (error) {
+      expect(error.status).to.equal(503);
+    }
+    [
+      [100, 200], [200, 400], [400, 800], [800, 1600], [1600, 3200], [2500, 5000],
+    ].forEach(([minimum, maximum], index) => {
+      expect(delays[index]).to.be.within(minimum, maximum);
+    });
+  });
+
+  it('aborts upload retry backoff promptly', async () => {
+    const dbx = client();
+    dbx.filesUploadSessionStart.rejects(new DropboxResponseError(503, {}, 'unavailable'));
+    const controller = new AbortController();
+    const reason = new Error('cancelled');
+    const upload = new DropboxFileUploader(dbx, {
+      signal: controller.signal,
+      maxAttempts: 2,
+    }).upload(bytesUpload('hello'), { path: '/abort.txt' });
+    setTimeout(() => controller.abort(reason), 0);
+
+    try {
+      await upload;
+      throw new Error('expected upload to fail');
+    } catch (error) {
+      expect(error).to.equal(reason);
+    }
+    expect(dbx.filesUploadSessionStart.calledOnce).to.equal(true);
   });
 
   it('supports unknown-size one-shot streams', async () => {

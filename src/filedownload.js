@@ -3,8 +3,8 @@ import { DropboxResponseError } from './error.js';
 import { baseApiUrl, httpHeaderSafeJson } from './utils.js';
 
 const DEFAULT_MAX_ATTEMPTS = 3;
-const DEFAULT_RETRY_DELAY = 500;
-const RETRYABLE_5XX_STATUSES = new Set([500, 502, 503, 504]);
+const DEFAULT_RETRY_DELAY = 200;
+const MAX_RETRY_DELAY = 5000;
 const BLOCK_SIZE = 4 * 1024 * 1024;
 let nodeRuntime;
 
@@ -183,7 +183,7 @@ function isRetryableError(error) {
     return (
       error.status === 408
       || error.status === 429
-      || RETRYABLE_5XX_STATUSES.has(error.status)
+      || (error.status >= 500 && error.status <= 599)
     );
   }
 
@@ -214,6 +214,20 @@ function retryAfter(error) {
   }
 
   return Number(value) * 1000;
+}
+
+function getRetryDelay(error, attempt, baseDelay) {
+  const rateLimitDelay = retryAfter(error);
+  if (rateLimitDelay !== null) {
+    return rateLimitDelay;
+  }
+
+  const maximum = Math.min(
+    baseDelay * (2 ** attempt),
+    MAX_RETRY_DELAY,
+  );
+  const half = maximum / 2;
+  return Math.floor(half + Math.random() * (half + 1));
 }
 
 function delay(ms, signal) {
@@ -688,7 +702,7 @@ export class DropboxFileDownloader {
 
           if (attempt < this.maxAttempts - 1) {
             await this.delay(
-              retryAfter(error) || this.retryDelay * (2 ** attempt),
+              getRetryDelay(error, attempt, this.retryDelay),
               this.signal,
             );
           }

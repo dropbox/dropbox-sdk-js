@@ -2,7 +2,8 @@ import { DropboxFileDownloader, downloadFile } from './filedownload.js';
 import { DropboxResponseError } from './error.js';
 
 const DEFAULT_MAX_ATTEMPTS = 3;
-const DEFAULT_RETRY_DELAY = 500;
+const DEFAULT_RETRY_DELAY = 200;
+const MAX_RETRY_DELAY = 5000;
 const DEFAULT_CHUNK_SIZE = 8 * 1024 * 1024;
 const CONCURRENT_CHUNK_SIZE = 4 * 1024 * 1024;
 
@@ -153,12 +154,37 @@ function retryAfter(error) {
   return Number(value) * 1000;
 }
 
+function retryDelay(error, attempt, baseDelay) {
+  const rateLimitDelay = retryAfter(error);
+  if (rateLimitDelay !== null) {
+    return rateLimitDelay;
+  }
+
+  const maximum = Math.min(
+    baseDelay * (2 ** attempt),
+    MAX_RETRY_DELAY,
+  );
+  const half = maximum / 2;
+  return Math.floor(half + Math.random() * (half + 1));
+}
+
 function isRetryableError(error) {
   if (error && error.uploadSessionRetry) return true;
   if (error instanceof DropboxResponseError) {
-    return error.status === 408 || error.status === 429 || error.status >= 500;
+    return error.status === 408
+      || error.status === 429
+      || (error.status >= 500 && error.status <= 599);
   }
-  return !(error && (error.name === 'AbortError' || error.message === 'upload client is required'));
+  if (!error || error.name === 'AbortError') return false;
+  const code = error.code || (error.cause && error.cause.code);
+  if (typeof code === 'string' && /^(EAI_AGAIN|ECONN|ENET|EHOST|ETIMEDOUT|UND_ERR_)/.test(code)) {
+    return true;
+  }
+  return error instanceof TypeError && (
+    error.message === 'fetch failed'
+    || error.message === 'Failed to fetch'
+    || error.message === 'NetworkError when attempting to fetch resource.'
+  );
 }
 
 function correctOffset(error) {
@@ -306,7 +332,7 @@ export class DropboxFileUploader {
         if (attempt < this.maxAttempts - 1) {
           // eslint-disable-next-line no-await-in-loop
           await this.delay(
-            retryAfter(error) || this.retryDelay * (2 ** attempt),
+            retryDelay(error, attempt, this.retryDelay),
             this.signal,
           );
         }
