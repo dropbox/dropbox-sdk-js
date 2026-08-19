@@ -205,6 +205,83 @@ describe('DropboxFileUploader', () => {
     expect(bytes(dbx.filesUploadSessionFinish.firstCall.args[0].contents)).to.equal('');
   });
 
+  it('finishes after a lost response from the final concurrent append', async () => {
+    const dbx = client();
+    const data = Buffer.alloc(8 * 1024 * 1024 + 1, 97);
+    dbx.filesUploadSessionAppendV2.onThirdCall().rejects(new TypeError('fetch failed'));
+    dbx.filesUploadSessionAppendV2.onCall(3).rejects(new DropboxResponseError(409, {}, {
+      '.tag': 'lookup_failed',
+      lookup_failed: { '.tag': 'closed' },
+    }));
+
+    const result = await new DropboxFileUploader(dbx, {
+      parallelUploads: 2,
+      chunkSize: 4 * 1024 * 1024,
+      delay: () => Promise.resolve(),
+    }).upload(bytesUpload(data), { path: '/parallel.bin' });
+
+    expect(result.metadata.name).to.equal('file.bin');
+    expect(dbx.filesUploadSessionAppendV2.callCount).to.equal(4);
+    expect(dbx.filesUploadSessionAppendV2.thirdCall.args[0].close).to.equal(true);
+    expect(dbx.filesUploadSessionAppendV2.getCall(3).args[0].close).to.equal(true);
+    expect(dbx.filesUploadSessionFinish.calledOnce).to.equal(true);
+  });
+
+  it('stops parallel workers after the first failure', async () => {
+    const dbx = client();
+    const chunkSize = 4 * 1024 * 1024;
+    const failure = new Error('append failed');
+    let releaseSecondRead;
+    let secondReadStarted;
+    const secondRead = new Promise((resolve) => { releaseSecondRead = resolve; });
+    const source = {
+      size: chunkSize * 4,
+      read: (offset, length) => {
+        if (offset === 0) return Buffer.alloc(length);
+        if (offset === chunkSize) {
+          secondReadStarted = true;
+          return secondRead.then(() => Buffer.alloc(length));
+        }
+        throw new Error(`unexpected read at ${offset}`);
+      },
+    };
+    dbx.filesUploadSessionAppendV2.callsFake(({ cursor }) => {
+      if (cursor.offset === 0) return Promise.reject(failure);
+      return Promise.resolve();
+    });
+    const progress = [];
+    const upload = new DropboxFileUploader(dbx, {
+      parallelUploads: 2,
+      chunkSize,
+      progress: (value) => progress.push(value),
+    }).upload(source, { path: '/parallel.bin' });
+
+    while (!secondReadStarted) { // eslint-disable-line no-await-in-loop
+      // eslint-disable-next-line no-await-in-loop
+      await Promise.resolve();
+    }
+    while (!dbx.filesUploadSessionAppendV2.called) { // eslint-disable-line no-await-in-loop
+      // eslint-disable-next-line no-await-in-loop
+      await Promise.resolve();
+    }
+    const { signal } = dbx.filesUploadSessionAppendV2.firstCall.args[1];
+    while (!signal.aborted) { // eslint-disable-line no-await-in-loop
+      // eslint-disable-next-line no-await-in-loop
+      await Promise.resolve();
+    }
+    releaseSecondRead();
+
+    try {
+      await upload;
+      throw new Error('expected upload to fail');
+    } catch (error) {
+      expect(error).to.equal(failure);
+    }
+    expect(dbx.filesUploadSessionAppendV2.calledOnce).to.equal(true);
+    expect(progress).to.deep.equal([]);
+    expect(dbx.filesUploadSessionFinish.called).to.equal(false);
+  });
+
   it('treats parallelUploads below two as sequential', async () => {
     const dbx = client();
     await new DropboxFileUploader(dbx, { parallelUploads: 0 })

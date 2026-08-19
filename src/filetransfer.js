@@ -200,6 +200,16 @@ function correctOffset(error) {
   return visit(error.error);
 }
 
+function isClosedSession(error) {
+  if (!(error instanceof DropboxResponseError) || !error.error) return false;
+  const visit = (value) => {
+    if (!value || typeof value !== 'object') return false;
+    if (value['.tag'] === 'closed') return true;
+    return Object.keys(value).some((key) => visit(value[key]));
+  };
+  return visit(error.error);
+}
+
 function resultOf(response) {
   return response && response.result ? response.result : response;
 }
@@ -300,7 +310,7 @@ export class DropboxFileUploader {
     this.delay = options.delay || delay;
   }
 
-  requestOptions() { return { signal: this.signal, timeout: this.timeout }; }
+  requestOptions(signal = this.signal) { return { signal, timeout: this.timeout }; }
 
   validate(source, commitInfo) {
     if (!this.client || typeof this.client.filesUploadSessionStart !== 'function'
@@ -320,20 +330,20 @@ export class DropboxFileUploader {
     if (this.progress && bytesCommitted > 0) this.progress({ bytesCommitted, totalBytes });
   }
 
-  async retry(operation) {
+  async retry(operation, signal = this.signal) {
     let lastError;
     for (let attempt = 0; attempt < this.maxAttempts; attempt += 1) {
       try { // eslint-disable-line no-await-in-loop
         return await operation(); // eslint-disable-line no-await-in-loop
       } catch (error) {
-        if (this.signal && this.signal.aborted) throw this.signal.reason || error;
+        if (signal && signal.aborted) throw signal.reason || error;
         if (!isRetryableError(error)) throw error;
         lastError = error;
         if (attempt < this.maxAttempts - 1) {
           // eslint-disable-next-line no-await-in-loop
           await this.delay(
             retryDelay(error, attempt, this.retryDelay),
-            this.signal,
+            signal,
           );
         }
       }
@@ -351,16 +361,17 @@ export class DropboxFileUploader {
     return sessionId;
   }
 
-  async append(sessionId, offset, contents, close = false) {
+  async append(sessionId, offset, contents, close = false, signal = this.signal) {
     const expectedOffset = offset + contents.byteLength;
     return this.retry(async () => {
       try {
         await this.client.filesUploadSessionAppendV2({
           cursor: { session_id: sessionId, offset }, close, contents,
-        }, this.requestOptions());
+        }, this.requestOptions(signal));
       } catch (error) {
         const actual = correctOffset(error);
         if (actual === expectedOffset) return;
+        if (close && isClosedSession(error)) return;
         if (actual === offset) {
           error.uploadSessionRetry = true; // eslint-disable-line no-param-reassign
         }
@@ -369,7 +380,7 @@ export class DropboxFileUploader {
         }
         throw error;
       }
-    });
+    }, signal);
   }
 
   async finish(sessionId, offset, commit, contents) {
@@ -451,21 +462,47 @@ export class DropboxFileUploader {
     }
     const finalRange = ranges.pop();
     let committed = 0;
+    const controller = new AbortController();
+    const signal = this.signal
+      ? AbortSignal.any([this.signal, controller.signal])
+      : controller.signal;
+    let firstError;
+    const stop = (error) => {
+      if (!firstError) {
+        firstError = error;
+        controller.abort(error);
+      }
+    };
     const uploadRange = async (range, close) => {
+      if (firstError) throw firstError;
       const bytes = await rangedChunk(source, range.offset, range.length);
-      await this.append(sessionId, range.offset, bytes, close);
+      if (firstError) throw firstError;
+      await this.append(sessionId, range.offset, bytes, close, signal);
+      if (firstError) throw firstError;
       committed += range.length;
       this.report(committed, source.size);
     };
     const workerCount = Math.min(this.parallelUploads, ranges.length);
     const workers = Array.from({ length: workerCount }, async () => {
-      while (ranges.length) {
-        // eslint-disable-next-line no-await-in-loop
-        await uploadRange(ranges.shift(), false);
+      while (!firstError && ranges.length) {
+        const range = ranges.shift();
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          await uploadRange(range, false);
+        } catch (error) {
+          stop(error);
+          return;
+        }
       }
     });
-    await Promise.all(workers);
-    await uploadRange(finalRange, true);
+    await Promise.allSettled(workers);
+    if (firstError) throw firstError;
+    try {
+      await uploadRange(finalRange, true);
+    } catch (error) {
+      stop(error);
+      throw firstError;
+    }
     if (committed !== source.size) {
       throw new Error(`incomplete upload: committed ${committed} of ${source.size} bytes`);
     }
