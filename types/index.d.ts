@@ -58,7 +58,7 @@ export interface DropboxFileDownloaderOptions {
   /** Number of parallel ranged downloads for fresh downloads. Defaults to 1. */
   parallelDownloads?: number;
 
-  /** Initial retry delay in milliseconds. Defaults to 500. */
+  /** Initial retry delay in milliseconds. Defaults to 200. */
   retryDelay?: number;
 
   /** Receives cumulative download progress updates. */
@@ -91,6 +91,94 @@ export function downloadFile(
   localPath: string,
   options?: DropboxFileDownloaderOptions,
 ): Promise<DropboxFileDownloadResult>;
+
+/** Progress reported by the local file upload helper. */
+export interface DropboxFileUploadProgress {
+  /** Cumulative bytes committed to Dropbox. */
+  bytesCommitted: number;
+
+  /** Total bytes in the upload source. */
+  totalBytes: number;
+}
+
+export interface DropboxFileUploaderOptions {
+  /** Maximum number of upload attempts. Defaults to 3. */
+  maxAttempts?: number;
+
+  /** Initial retry delay in milliseconds. Defaults to 200. */
+  retryDelay?: number;
+
+  /** Upload session chunk size in bytes. Defaults to 8 MiB. */
+  chunkSize?: number;
+
+  /** Maximum number of concurrent upload requests. Values below 2 disable concurrency. */
+  parallelUploads?: number;
+
+  /** Receives cumulative upload progress updates. */
+  progress?: (progress: DropboxFileUploadProgress) => void;
+
+  /** An AbortSignal used to cancel Dropbox requests. */
+  signal?: AbortSignal;
+
+  /** Maximum duration for each Dropbox request in milliseconds. Must be a positive integer. */
+  timeout?: number;
+}
+
+export interface DropboxRangedUploadSource {
+  /** Total bytes available from this source. */
+  size: number;
+
+  /** Reads a byte range from this source. */
+  read(offset: number, length: number): Promise<
+    Uint8Array | ArrayBuffer | DropboxFileBlob | AsyncIterable<Uint8Array>
+  >;
+}
+
+export interface DropboxSequentialUploadSource {
+  /** Opens this one-shot source from its beginning. */
+  open(): Promise<AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>>;
+
+  /** Total bytes when known. Omit when the size is unknown. */
+  size?: number;
+}
+
+export type DropboxUploadSource = DropboxRangedUploadSource | DropboxSequentialUploadSource;
+
+export interface DropboxFileUploadResult {
+  /** Metadata returned by the completed upload. */
+  metadata: files.FileMetadata;
+}
+
+export class DropboxFileUploader {
+  constructor(client: Dropbox, options?: DropboxFileUploaderOptions);
+
+  upload(
+    source: DropboxUploadSource,
+    commitInfo: files.CommitInfo,
+  ): Promise<DropboxFileUploadResult>;
+}
+
+export function bytesUpload(
+  contents: string | Uint8Array | ArrayBuffer | DropboxFileBlob,
+): DropboxRangedUploadSource;
+
+export function fileUpload(filePath: string): Promise<DropboxRangedUploadSource>;
+
+export function readerUpload(
+  reader: AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>,
+): DropboxSequentialUploadSource;
+
+export function sizedReaderUpload(
+  reader: AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>,
+  size: number,
+): DropboxSequentialUploadSource;
+
+export function uploadFile(
+  client: Dropbox,
+  source: DropboxUploadSource,
+  commitInfo: files.CommitInfo,
+  options?: DropboxFileUploaderOptions,
+): Promise<DropboxFileUploadResult>;
 
 export interface DropboxAuthOptions {
   // An access token for making authenticated requests.

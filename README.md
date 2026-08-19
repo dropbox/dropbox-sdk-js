@@ -130,6 +130,55 @@ in both JavaScript and TypeScript, with additional Node.js OAuth examples.
     - Team - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/team), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/team) ] - An example showing how to use the team functionality and list team devices.
     - Upload [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/upload), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/upload) ] - An example showing how to upload a file to Dropbox.
 
+## Reliable file transfers
+
+For Node.js applications that need resumable local downloads or retrying uploads,
+the SDK exports file transfer helpers alongside the generated API methods.
+
+```js
+const {
+  Dropbox,
+  DropboxFileUploader,
+  bytesUpload,
+  downloadFile,
+  fileUpload,
+  readerUpload,
+  sizedReaderUpload,
+} = require('dropbox');
+
+const dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN });
+
+await downloadFile(dbx, '/large-file.bin', './large-file.bin', {
+  parallelDownloads: 4,
+  progress: ({ bytesWritten, totalBytes }) => {
+    console.log(`${bytesWritten}/${totalBytes}`);
+  },
+});
+
+const uploader = new DropboxFileUploader(dbx, {
+  progress: ({ bytesCommitted, totalBytes }) => {
+    console.log(`${bytesCommitted}/${totalBytes}`);
+  },
+});
+
+await uploader.upload(
+  await fileUpload('./large-file.bin'),
+  { path: '/large-file.bin', mode: { '.tag': 'overwrite' } },
+);
+
+await uploader.upload(
+  bytesUpload('hello from the Dropbox SDK\n'),
+  { path: '/hello.txt' },
+);
+```
+
+Downloads write to `localPath + ".part"` and rename the file after validating
+the final size and Dropbox `content_hash` metadata when present. Uploads retry
+transient failures at the individual session request, reconcile committed
+offsets after lost responses, and use upload sessions for every source. Pass
+`parallelUploads` for repeatable byte or file sources, or use `readerUpload()`
+and `sizedReaderUpload()` for one-shot Node readable streams.
+
 ## Getting Help
 
 If you find a bug, please see [CONTRIBUTING.md][contributing] for information on how to report it.

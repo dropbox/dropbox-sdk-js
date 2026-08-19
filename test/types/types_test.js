@@ -114,3 +114,15 @@ fileDownloader.downloadFile('/test.txt', '/tmp/test.txt')
 Dropbox.downloadFile(dropbox, '/test.txt', '/tmp/test.txt', {
     timeout: 1000,
 });
+var uploadSource = Dropbox.bytesUpload('upload content');
+var fileUploader = new Dropbox.DropboxFileUploader(dropbox, {
+    parallelUploads: 2,
+    progress: function (progress) {
+        var bytesCommitted = progress.bytesCommitted, totalBytes = progress.totalBytes;
+    },
+});
+fileUploader.upload(uploadSource, { path: '/upload.txt' })
+    .then(function (result) { return result.metadata; });
+var uploadReader = {};
+Dropbox.readerUpload(uploadReader);
+Dropbox.sizedReaderUpload(uploadReader, 3);

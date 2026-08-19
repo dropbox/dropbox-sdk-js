@@ -5,7 +5,14 @@ import { Readable } from 'stream';
 
 import chai from 'chai';
 
-import { Dropbox, DropboxAuth, downloadFile } from '../../index.js';
+import {
+  Dropbox,
+  DropboxAuth,
+  DropboxFileUploader,
+  bytesUpload,
+  downloadFile,
+  readerUpload,
+} from '../../index.js';
 import { DropboxResponse } from '../../src/response.js';
 import { DropboxResponseError } from '../../src/error.js';
 
@@ -175,6 +182,40 @@ for (const appType in appInfo) {
             .then(cleanup)
             .then(() => done(testError))
             .catch((cleanupError) => done(testError || cleanupError));
+        });
+
+        it('file transfer uploader supports sequential and concurrent sessions', async () => {
+          const suffix = `${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+          const sequentialPath = `/dropbox-sdk-js-transfer-sequential-${suffix}.txt`;
+          const concurrentPath = `/dropbox-sdk-js-transfer-concurrent-${suffix}.bin`;
+          const sequentialContents = Buffer.from('file transfer reader upload\n');
+          const concurrentContents = Buffer.alloc(8 * 1024 * 1024 + 1, 97);
+
+          try {
+            const sequentialUploader = new DropboxFileUploader(dbx, { chunkSize: 4 });
+            await sequentialUploader.upload(
+              readerUpload(Readable.from([sequentialContents])),
+              { path: sequentialPath },
+            );
+            const sequentialDownload = await dbx.filesDownload({ path: sequentialPath });
+            chai.assert.deepEqual(sequentialDownload.result.fileBinary, sequentialContents);
+
+            const concurrentUploader = new DropboxFileUploader(dbx, {
+              chunkSize: 4 * 1024 * 1024,
+              parallelUploads: 2,
+            });
+            await concurrentUploader.upload(
+              bytesUpload(concurrentContents),
+              { path: concurrentPath },
+            );
+            const concurrentDownload = await dbx.filesDownload({ path: concurrentPath });
+            chai.assert.deepEqual(concurrentDownload.result.fileBinary, concurrentContents);
+          } finally {
+            await Promise.allSettled([
+              dbx.filesDeleteV2({ path: sequentialPath }),
+              dbx.filesDeleteV2({ path: concurrentPath }),
+            ]);
+          }
         });
       });
 
