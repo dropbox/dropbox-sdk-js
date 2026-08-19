@@ -36631,6 +36631,10 @@
        * Replay project.
        */
       project?: MediaHubProjectLogInfo;
+      /**
+       * The email address of the Replay project member targeted by the event.
+       */
+      invitee?: EmailAddress;
     }
 
     export interface MediaHubProjectTeamAddType {
@@ -36645,6 +36649,10 @@
        * Replay project.
        */
       project?: MediaHubProjectLogInfo;
+      /**
+       * The email address of the Replay project member targeted by the event.
+       */
+      invitee?: EmailAddress;
     }
 
     export interface MediaHubProjectTeamDeleteType {
@@ -36667,6 +36675,10 @@
        * Replay project.
        */
       project?: MediaHubProjectLogInfo;
+      /**
+       * The email address of the Replay project member targeted by the event.
+       */
+      invitee?: EmailAddress;
     }
 
     export interface MediaHubProjectTeamRoleChangedType {
