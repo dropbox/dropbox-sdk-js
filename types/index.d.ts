@@ -58,7 +58,7 @@ export interface DropboxFileDownloaderOptions {
   /** Number of parallel ranged downloads for fresh downloads. Defaults to 1. */
   parallelDownloads?: number;
 
-  /** Initial retry delay in milliseconds. Defaults to 200. */
+  /** Initial retry delay in milliseconds. Defaults to 500. */
   retryDelay?: number;
 
   /** Receives cumulative download progress updates. */
@@ -91,94 +91,6 @@ export function downloadFile(
   localPath: string,
   options?: DropboxFileDownloaderOptions,
 ): Promise<DropboxFileDownloadResult>;
-
-/** Progress reported by the local file upload helper. */
-export interface DropboxFileUploadProgress {
-  /** Cumulative bytes committed to Dropbox. */
-  bytesCommitted: number;
-
-  /** Total bytes in the upload source. */
-  totalBytes: number;
-}
-
-export interface DropboxFileUploaderOptions {
-  /** Maximum number of upload attempts. Defaults to 3. */
-  maxAttempts?: number;
-
-  /** Initial retry delay in milliseconds. Defaults to 200. */
-  retryDelay?: number;
-
-  /** Upload session chunk size in bytes. Defaults to 8 MiB. */
-  chunkSize?: number;
-
-  /** Maximum number of concurrent upload requests. Values below 2 disable concurrency. */
-  parallelUploads?: number;
-
-  /** Receives cumulative upload progress updates. */
-  progress?: (progress: DropboxFileUploadProgress) => void;
-
-  /** An AbortSignal used to cancel Dropbox requests. */
-  signal?: AbortSignal;
-
-  /** Maximum duration for each Dropbox request in milliseconds. Must be a positive integer. */
-  timeout?: number;
-}
-
-export interface DropboxRangedUploadSource {
-  /** Total bytes available from this source. */
-  size: number;
-
-  /** Reads a byte range from this source. */
-  read(offset: number, length: number): Promise<
-    Uint8Array | ArrayBuffer | DropboxFileBlob | AsyncIterable<Uint8Array>
-  >;
-}
-
-export interface DropboxSequentialUploadSource {
-  /** Opens this one-shot source from its beginning. */
-  open(): Promise<AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>>;
-
-  /** Total bytes when known. Omit when the size is unknown. */
-  size?: number;
-}
-
-export type DropboxUploadSource = DropboxRangedUploadSource | DropboxSequentialUploadSource;
-
-export interface DropboxFileUploadResult {
-  /** Metadata returned by the completed upload. */
-  metadata: files.FileMetadata;
-}
-
-export class DropboxFileUploader {
-  constructor(client: Dropbox, options?: DropboxFileUploaderOptions);
-
-  upload(
-    source: DropboxUploadSource,
-    commitInfo: files.CommitInfo,
-  ): Promise<DropboxFileUploadResult>;
-}
-
-export function bytesUpload(
-  contents: string | Uint8Array | ArrayBuffer | DropboxFileBlob,
-): DropboxRangedUploadSource;
-
-export function fileUpload(filePath: string): Promise<DropboxRangedUploadSource>;
-
-export function readerUpload(
-  reader: AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>,
-): DropboxSequentialUploadSource;
-
-export function sizedReaderUpload(
-  reader: AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>,
-  size: number,
-): DropboxSequentialUploadSource;
-
-export function uploadFile(
-  client: Dropbox,
-  source: DropboxUploadSource,
-  commitInfo: files.CommitInfo,
-  options?: DropboxFileUploaderOptions,
-): Promise<DropboxFileUploadResult>;
 
 export interface DropboxAuthOptions {
   // An access token for making authenticated requests.
@@ -1299,8 +1211,7 @@ export class Dropbox {
      * exist for a specific upload path at any given time.  The POST request on
      * the temporary upload link must have its Content-Type set to
      * "application/octet-stream".  Example temporary upload link consumption
-     * request:  curl -X POST
-     * https://content.dropboxapi.com/apitul/1/bNi2uIYF51cVBND --header
+     * request:  curl -X POST <temporary_upload_link_url> --header
      * "Content-Type: application/octet-stream" --data-binary @local_file.txt  A
      * successful temporary upload link consumption request returns the content
      * hash of the uploaded data in JSON format. Example successful temporary
@@ -2469,6 +2380,45 @@ export class Dropbox {
      * @param options Optional transport settings for this request.
      */
     public paperFoldersCreate(arg: paper.PaperFolderCreateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.PaperFolderCreateResult>>;
+
+    /**
+     * Asynchronous scene-change keyframe extraction for video files. Detects
+     * scene changes in the source video and returns one representative keyframe
+     * per detected scene, each tagged with its timestamp (seconds from the
+     * start of the video) and scene-change score. Set `include_images = true`
+     * to also receive each frame as a base64-encoded JPEG; when the field is
+     * omitted the response carries keyframe metadata only. Supported video
+     * formats: .3gp, .3gpp, .3gpp2, .asf, .avi, .dv, .flv, .m2t, .m2ts, .m4v,
+     * .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf, .oggtheora, .ogv, .rm, .ts,
+     * .vob, .webm, .wmv. Unsupported formats return an
+     * `unsupported_format_error`. Limits: the source file must be at most 10
+     * GB. To keep responses within service limits the number of keyframes and
+     * the total image payload are bounded; requests that would exceed these
+     * limits return a `limit_exceeded_error` -- raise `scene_change_threshold`
+     * or set `include_images = false` to stay within bounds.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetKeyframesAsync(arg: riviera.GetKeyframesArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Returns the status or result of specified get_keyframes_async task.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetKeyframesAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetKeyframesAsyncCheckResult>>;
 
     /**
      * Asynchronous document-to-markdown conversion for supported file formats.
