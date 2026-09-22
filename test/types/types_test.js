@@ -29,13 +29,13 @@ dropboxAuth.setClientId('myClientId');
 dropboxAuth.getClientId();
 dropboxAuth.setClientSecret('myClientSecret');
 // Test other methods
-dropboxAuth.getAuthenticationUrl('myRedirect');
+var authenticationUrl = dropboxAuth.getAuthenticationUrl('myRedirect');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState', 'code');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'mystate', 'code', 'offline', ['scope', 'scope'], 'none', false);
 dropboxAuth.getAccessTokenFromCode('myRedirect', 'myCode');
-dropboxAuth.checkAndRefreshAccessToken();
-dropboxAuth.refreshAccessToken();
+var checkedAccessToken = dropboxAuth.checkAndRefreshAccessToken();
+var refreshedAccessToken = dropboxAuth.refreshAccessToken();
 dropboxAuth.refreshAccessToken(['files.metadata.read', 'files.metadata.write']);
 // Check Dropbox Constructor or Methods
 // Test config constructor
@@ -67,3 +67,62 @@ dropbox.usersGetCurrentAccount()
     var errorObject = error.error;
 });
 dropbox2.usersGetCurrentAccount();
+// New namespace variants and upload routes from the current API specification.
+var teamMemberRoot = { '.tag': 'team_member_root' };
+teamMemberRoot['.tag'];
+dropbox.filesUploadSessionAppendBatch({
+    contents: new Uint8Array(),
+    entries: [{
+            cursor: { session_id: 'session-id', offset: 0 },
+            length: 0,
+        }],
+    content_hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+});
+// Download routes expose the SDK-injected body for both supported environments.
+dropbox.filesDownload({ path: '/test.txt' })
+    .then(function (response) {
+    var _a = response.result, fileBinary = _a.fileBinary, fileBlob = _a.fileBlob;
+    if (fileBinary) {
+        fileBinary.toString('utf8');
+    }
+    if (fileBlob) {
+        fileBlob.arrayBuffer();
+    }
+});
+dropbox.sharingGetSharedLinkFile({ url: 'https://www.dropbox.com/example' })
+    .then(function (response) {
+    var _a = response.result, fileBinary = _a.fileBinary, fileBlob = _a.fileBlob;
+    if (fileBinary) {
+        fileBinary.toString('utf8');
+    }
+    if (fileBlob) {
+        fileBlob.text();
+    }
+});
+var fileDownloader = new Dropbox.DropboxFileDownloader(dropbox, {
+    maxAttempts: 2,
+    parallelDownloads: 4,
+    retryDelay: 1000,
+    progress: function (progress) {
+        var bytesWritten = progress.bytesWritten, totalBytes = progress.totalBytes, resumedFrom = progress.resumedFrom;
+    },
+});
+fileDownloader.downloadFile('/test.txt', '/tmp/test.txt')
+    .then(function (result) {
+    var metadata = result.metadata, resumedFrom = result.resumedFrom;
+});
+Dropbox.downloadFile(dropbox, '/test.txt', '/tmp/test.txt', {
+    timeout: 1000,
+});
+var uploadSource = Dropbox.bytesUpload('upload content');
+var fileUploader = new Dropbox.DropboxFileUploader(dropbox, {
+    parallelUploads: 2,
+    progress: function (progress) {
+        var bytesCommitted = progress.bytesCommitted, totalBytes = progress.totalBytes;
+    },
+});
+fileUploader.upload(uploadSource, { path: '/upload.txt' })
+    .then(function (result) { return result.metadata; });
+var uploadReader = {};
+Dropbox.readerUpload(uploadReader);
+Dropbox.sizedReaderUpload(uploadReader, 3);
