@@ -11,6 +11,10 @@ permissions:
   contents: read
   id-token: write
 
+concurrency:
+  group: sdk-release
+  cancel-in-progress: false
+
 jobs:
   npm:
     runs-on: ubuntu-latest

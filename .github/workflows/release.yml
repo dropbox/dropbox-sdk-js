@@ -1,0 +1,161 @@
+name: Release
+
+run-name: Release v${{ inputs.version }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Semantic version to release (without the v prefix)
+        required: true
+        type: string
+
+permissions: {}
+
+concurrency:
+  group: sdk-release
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: Validate release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Require an administrator running from main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "Releases must be run from main (received $GITHUB_REF)." >&2
+            exit 1
+          fi
+
+          permission="$(gh api \
+            "repos/${GITHUB_REPOSITORY}/collaborators/${GITHUB_ACTOR}/permission" \
+            --jq '.permission')"
+          if [ "$permission" != "admin" ]; then
+            echo "Only repository administrators can run a release (received $permission)." >&2
+            exit 1
+          fi
+
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Validate version and tag
+        id: version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          if [[ ! "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "Version must be a stable semantic version such as 10.47.0, without a v prefix." >&2
+            exit 1
+          fi
+
+          package_version="$(node -p 'require("./package.json").version')"
+          if [ "$VERSION" != "$package_version" ]; then
+            echo "Version $VERSION does not match package.json version $package_version." >&2
+            exit 1
+          fi
+
+          tag="v${VERSION}"
+          if git show-ref --verify --quiet "refs/tags/${tag}"; then
+            echo "Tag $tag already exists." >&2
+            exit 1
+          fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+  publish:
+    name: Build, test, and publish
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+      - name: Build package
+        run: npm run build
+      - name: Check package version
+        id: package
+        env:
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          package_name="$(node -p 'require("./package.json").name')"
+          echo "name=$package_name" >> "$GITHUB_OUTPUT"
+          if npm view "${package_name}@${VERSION}" version > /dev/null 2>&1; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            echo "${package_name}@${VERSION} is already published; continuing to the GitHub release."
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publish package
+        if: steps.package.outputs.publish == 'true'
+        run: npm publish --provenance
+      - name: Verify published package
+        env:
+          PACKAGE_NAME: ${{ steps.package.outputs.name }}
+          VERSION: ${{ needs.validate.outputs.version }}
+        run: |
+          for attempt in 1 2 3 4 5 6; do
+            published_version="$(npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null || true)"
+            if [ "$published_version" = "$VERSION" ]; then
+              exit 0
+            fi
+            if [ "$attempt" -lt 6 ]; then
+              sleep 5
+            fi
+          done
+          echo "Expected ${PACKAGE_NAME}@${VERSION}, received $published_version." >&2
+          exit 1
+
+  github-release:
+    name: Create GitHub release
+    needs: [validate, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create tag and release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.validate.outputs.tag }}
+        run: |
+          gh release create "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "$TAG" \
+            --generate-notes
+
+  documentation:
+    name: Trigger documentation
+    needs: github-release
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Dispatch documentation workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run documentation.yml \
+            --repo "$GITHUB_REPOSITORY" \
+            --ref main \
+            -f checkout_ref="$GITHUB_SHA"

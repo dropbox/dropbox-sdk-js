@@ -55,6 +55,17 @@ $ npm run test:integration
 
 Note: If you do not have all of these tokens available, we run integration tests as a part of pull request validation and you are able to rely on those if you are unable to obtain yourself.
 
+## Creating a Release
+
+Repository administrators can create a release from the GitHub Actions page:
+
+1. Merge the version change to `package.json` and `package-lock.json` into `main`.
+2. Open **Actions**, select the **Release** workflow, and choose **Run workflow**.
+3. Select the `main` branch and enter the exact `package.json` semantic version without a `v` prefix (for example, `10.47.0`).
+4. Run the workflow and confirm that its validation, package publication, GitHub release, and documentation jobs succeed.
+
+The workflow only accepts stable `X.Y.Z` versions, rejects existing `vX.Y.Z` tags, and verifies that the npm package is published before it creates the tag and generated release notes. The existing npm publishing workflow may have already published a version after its version change reached `main`; in that case, the Release workflow verifies that package and proceeds without publishing it again.
+
 [issues]: https://github.com/dropbox/dropbox-sdk-js/issues
 [pr]: https://github.com/dropbox/dropbox-sdk-js/pulls
 [coc]: https://github.com/dropbox/dropbox-sdk-js/blob/main/CODE_OF_CONDUCT.md
