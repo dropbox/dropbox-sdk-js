@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Semantic version to release (without the v prefix)
+        description: Stable semantic version to release (without the v prefix)
         required: true
         type: string
 
@@ -18,144 +18,148 @@ concurrency:
 
 jobs:
   validate:
-    name: Validate release
     runs-on: ubuntu-latest
     permissions:
       contents: read
     outputs:
-      tag: ${{ steps.version.outputs.tag }}
-      version: ${{ steps.version.outputs.version }}
+      release_sha: ${{ steps.validate.outputs.release_sha }}
+      tag: ${{ steps.validate.outputs.tag }}
+      version: ${{ steps.validate.outputs.version }}
     steps:
       - name: Require an administrator running from main
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
-            echo "Releases must be run from main (received $GITHUB_REF)." >&2
-            exit 1
-          fi
-
-          permission="$(gh api \
-            "repos/${GITHUB_REPOSITORY}/collaborators/${GITHUB_ACTOR}/permission" \
-            --jq '.permission')"
-          if [ "$permission" != "admin" ]; then
-            echo "Only repository administrators can run a release (received $permission)." >&2
-            exit 1
-          fi
-
+          test "$GITHUB_REF" = refs/heads/main || { echo "Releases must run from main." >&2; exit 1; }
+          permission="$(gh api "repos/${GITHUB_REPOSITORY}/collaborators/${GITHUB_ACTOR}/permission" --jq .permission)"
+          test "$permission" = admin || { echo "Only repository administrators can release (permission: $permission)." >&2; exit 1; }
       - uses: actions/checkout@v7
         with:
-          fetch-depth: 0
-
-      - name: Validate version and tag
-        id: version
+          ref: main
+          fetch-depth: 1
+      - name: Validate main, version, and tag
+        id: validate
         env:
+          GH_TOKEN: ${{ github.token }}
           VERSION: ${{ inputs.version }}
         run: |
-          if [[ ! "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
-            echo "Version must be a stable semantic version such as 10.47.0, without a v prefix." >&2
-            exit 1
-          fi
-
+          latest_main_sha="$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)"
+          checked_out_sha="$(git rev-parse HEAD)"
+          test "$latest_main_sha" = "$GITHUB_SHA" && test "$checked_out_sha" = "$latest_main_sha" || { echo "Workflow is not running against the latest main commit." >&2; exit 1; }
+          [[ "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] || { echo "Version must be stable X.Y.Z." >&2; exit 1; }
           package_version="$(node -p 'require("./package.json").version')"
-          if [ "$VERSION" != "$package_version" ]; then
-            echo "Version $VERSION does not match package.json version $package_version." >&2
-            exit 1
-          fi
-
+          lock_version="$(node -p 'require("./package-lock.json").version')"
+          test "$VERSION" = "$package_version" && test "$VERSION" = "$lock_version" || { echo "Version does not match package manifests." >&2; exit 1; }
+          latest_release="$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --exclude-pre-releases --limit 100 --json tagName --jq '.[].tagName' | sed -n 's/^v\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\)$/\1/p' | sort -V | tail -n 1)"
+          test -z "$latest_release" || test "$(printf '%s\n%s\n' "$latest_release" "$VERSION" | sort -V | tail -n 1)" = "$VERSION" && test "$VERSION" != "$latest_release" || { echo "Version must be greater than the latest stable release ($latest_release)." >&2; exit 1; }
           tag="v${VERSION}"
-          if git show-ref --verify --quiet "refs/tags/${tag}"; then
-            echo "Tag $tag already exists." >&2
-            exit 1
-          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/${tag}" >/dev/null 2>&1; then echo "Tag $tag already exists." >&2; exit 1; fi
+          {
+            echo "release_sha=$latest_main_sha"
+            echo "version=$VERSION"
+            echo "tag=$tag"
+          } >> "$GITHUB_OUTPUT"
 
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
-
-  publish:
-    name: Build, test, and publish
+  build:
     needs: validate
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.validate.outputs.release_sha }}
+          fetch-depth: 1
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          registry-url: https://registry.npmjs.org
           package-manager-cache: false
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tests
-        run: npm test
-      - name: Build package
-        run: npm run build
-      - name: Check package version
-        id: package
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Pack SDK
+        run: |
+          mkdir -p "$RUNNER_TEMP/npm-package"
+          npm pack --json --pack-destination "$RUNNER_TEMP/npm-package" > "$RUNNER_TEMP/npm-package/pack.json"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/npm-package
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: [validate, build]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: npm-package
+          path: package
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Publish or verify package
+        id: npm
+        working-directory: package
         env:
           VERSION: ${{ needs.validate.outputs.version }}
         run: |
-          package_name="$(node -p 'require("./package.json").name')"
+          package_name="$(jq -r '.[0].name' pack.json)"
+          package_file="$(jq -r '.[0].filename' pack.json)"
+          test -f "$package_file"
+          test "$(tar -xOf "$package_file" package/package.json | jq -r .version)" = "$VERSION"
           echo "name=$package_name" >> "$GITHUB_OUTPUT"
-          if npm view "${package_name}@${VERSION}" version > /dev/null 2>&1; then
-            echo "publish=false" >> "$GITHUB_OUTPUT"
-            echo "${package_name}@${VERSION} is already published; continuing to the GitHub release."
+          if npm view "${package_name}@${VERSION}" version >/dev/null 2>&1; then
+            echo "${package_name}@${VERSION} already exists; not overwriting it."
           else
-            echo "publish=true" >> "$GITHUB_OUTPUT"
+            npm publish "$package_file" --provenance --ignore-scripts
           fi
-      - name: Publish package
-        if: steps.package.outputs.publish == 'true'
-        run: npm publish --provenance
-      - name: Verify published package
+      - name: Verify package is available
         env:
-          PACKAGE_NAME: ${{ steps.package.outputs.name }}
+          PACKAGE_NAME: ${{ steps.npm.outputs.name }}
           VERSION: ${{ needs.validate.outputs.version }}
         run: |
-          for attempt in 1 2 3 4 5 6; do
-            published_version="$(npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null || true)"
-            if [ "$published_version" = "$VERSION" ]; then
-              exit 0
-            fi
-            if [ "$attempt" -lt 6 ]; then
-              sleep 5
-            fi
+          for attempt in {1..12}; do
+            test "$(npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null || true)" = "$VERSION" && exit 0
+            [ "$attempt" -lt 12 ] && sleep 5
           done
-          echo "Expected ${PACKAGE_NAME}@${VERSION}, received $published_version." >&2
+          echo "${PACKAGE_NAME}@${VERSION} was not found in npm." >&2
           exit 1
 
   github-release:
-    name: Create GitHub release
     needs: [validate, publish]
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Create tag and release
+      - name: Revalidate main and tag before release
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ needs.validate.outputs.release_sha }}
           TAG: ${{ needs.validate.outputs.tag }}
         run: |
-          gh release create "$TAG" \
-            --repo "$GITHUB_REPOSITORY" \
-            --target "$GITHUB_SHA" \
-            --title "$TAG" \
-            --generate-notes
+          test "$(gh api "repos/${GITHUB_REPOSITORY}/commits/main" --jq .sha)" = "$RELEASE_SHA" || { echo "main changed during release." >&2; exit 1; }
+          if gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${TAG}" >/dev/null 2>&1; then echo "Tag $TAG already exists." >&2; exit 1; fi
+      - name: Create tag and GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ needs.validate.outputs.release_sha }}
+          TAG: ${{ needs.validate.outputs.tag }}
+        run: gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$RELEASE_SHA" --title "$TAG" --generate-notes
 
   documentation:
-    name: Trigger documentation
-    needs: github-release
+    needs: [github-release, validate]
     runs-on: ubuntu-latest
     permissions:
       actions: write
       contents: read
     steps:
-      - name: Dispatch documentation workflow
+      - name: Dispatch documentation for the validated release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          gh workflow run documentation.yml \
-            --repo "$GITHUB_REPOSITORY" \
-            --ref main \
-            -f checkout_ref="$GITHUB_SHA"
+          TAG: ${{ needs.validate.outputs.tag }}
+        run: gh workflow run documentation.yml --repo "$GITHUB_REPOSITORY" --ref main -f release_tag="$TAG"

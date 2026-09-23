@@ -64,7 +64,12 @@ Repository administrators can create a release from the GitHub Actions page:
 3. Select the `main` branch and enter the exact `package.json` semantic version without a `v` prefix (for example, `10.47.0`).
 4. Run the workflow and confirm that its validation, package publication, GitHub release, and documentation jobs succeed.
 
-The workflow only accepts stable `X.Y.Z` versions, rejects existing `vX.Y.Z` tags, and verifies that the npm package is published before it creates the tag and generated release notes. The existing npm publishing workflow may have already published a version after its version change reached `main`; in that case, the Release workflow verifies that package and proceeds without publishing it again.
+Before the first release, an npm organization/package owner must configure npm Trusted Publishing (OIDC) for:
+
+- Repository: `dropbox/dropbox-sdk-js`
+- Workflow: `release.yml` (at `.github/workflows/release.yml`)
+
+No `NPM_TOKEN`, `NODE_AUTH_TOKEN`, or npm secret is used. The workflow validates that the actor is an administrator, the run is on the latest `main`, and the version is newer than the latest stable release. It builds and tests an artifact, publishes that artifact with npm provenance, verifies it exists, then creates the `vX.Y.Z` tag, GitHub Release notes, and documentation. If npm already contains the exact version, a rerun verifies it without attempting to overwrite it. Documentation can be safely retried by manually dispatching **Update Documentation** with an existing published release tag.
 
 [issues]: https://github.com/dropbox/dropbox-sdk-js/issues
 [pr]: https://github.com/dropbox/dropbox-sdk-js/pulls
