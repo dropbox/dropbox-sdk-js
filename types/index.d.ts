@@ -1299,8 +1299,7 @@ export class Dropbox {
      * exist for a specific upload path at any given time.  The POST request on
      * the temporary upload link must have its Content-Type set to
      * "application/octet-stream".  Example temporary upload link consumption
-     * request:  curl -X POST
-     * https://content.dropboxapi.com/apitul/1/bNi2uIYF51cVBND --header
+     * request:  curl -X POST <temporary_upload_link_url> --header
      * "Content-Type: application/octet-stream" --data-binary @local_file.txt  A
      * successful temporary upload link consumption request returns the content
      * hash of the uploaded data in JSON format. Example successful temporary
@@ -2471,11 +2470,54 @@ export class Dropbox {
     public paperFoldersCreate(arg: paper.PaperFolderCreateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.PaperFolderCreateResult>>;
 
     /**
+     * Asynchronous scene-change keyframe extraction for video files. Detects
+     * scene changes in the source video and returns one representative keyframe
+     * per detected scene, each tagged with its timestamp (seconds from the
+     * start of the video) and scene-change score. Set `include_images = true`
+     * to also receive each frame as a base64-encoded JPEG; when the field is
+     * omitted the response carries keyframe metadata only. Supported video
+     * formats: .3gp, .3gpp, .3gpp2, .asf, .avi, .dv, .flv, .m2t, .m2ts, .m4v,
+     * .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf, .oggtheora, .ogv, .rm, .ts,
+     * .vob, .webm, .wmv. Unsupported formats return an
+     * `unsupported_format_error`. Limits: the source file must be at most 10
+     * GB. To keep responses within service limits the number of keyframes and
+     * the total image payload are bounded; requests that would exceed these
+     * limits return a `limit_exceeded_error` -- raise `scene_change_threshold`
+     * or set `include_images = false` to stay within bounds.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetKeyframesAsync(arg: riviera.GetKeyframesArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Returns the status or result of specified get_keyframes_async task.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetKeyframesAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetKeyframesAsyncCheckResult>>;
+
+    /**
      * Asynchronous document-to-markdown conversion for supported file formats.
      * Supported formats: .binder, .docx, .html, .paper, .papert, .pptx, .xlsx,
-     * .gsheet, .ods, .pdf. Unsupported formats return an
-     * `unsupported_format_error`. Size limit: the source file must be at most
-     * 50 MB. Larger files are rejected.
+     * .gsheet, .ods, .pdf. Files in other formats fail with
+     * MarkdownConversionApiV2Error.user_error. Size limit: the source file must
+     * be at most 50 MB. Larger files fail with
+     * MarkdownConversionApiV2Error.user_error. The markdown is not returned by
+     * this route. Poll getMarkdownAsyncCheck() with the returned async job ID
+     * until it reports GetMarkdownAsyncCheckResult.complete or
+     * GetMarkdownAsyncCheckResult.failed.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -2511,8 +2553,15 @@ export class Dropbox {
      * .m4r, .mp3, .oga, .ogg, .wav, .wma, .3gp, .3gpp, .3gpp2, .asf, .avi, .dv,
      * .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf,
      * .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv. - PDF format: .pdf. - MS
-     * Office formats: .docx, .pptx, .xlsx. Unsupported formats return an
-     * `unsupported_format_error`.
+     * Office formats: .docx, .pptx, .xlsx. Files in other formats fail with
+     * MetadataExtractionApiV2Error.user_error. Size limits depend on the kind
+     * of metadata being extracted: at most 200 MB for image (EXIF) files, 100
+     * GB for audio/video files, 500 MB for PDFs, and 288 MB for MS Office
+     * files. Files over the limit for their kind fail with
+     * MetadataExtractionApiV2Error.user_error. The metadata is not returned by
+     * this route. Poll getMetadataAsyncCheck() with the returned async job ID
+     * until it reports GetMetadataAsyncCheckResult.complete or
+     * GetMetadataAsyncCheckResult.failed.
      *
      * Route attributes:
      *   scope: files.content.read
@@ -2610,10 +2659,14 @@ export class Dropbox {
      * audio formats: .aac, .aif, .aiff, .flac, .m4a, .m4r, .mp3, .oga, .ogg,
      * .wav, .wma. Supported video formats: .3gp, .3gpp, .3gpp2, .asf, .avi,
      * .dv, .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf,
-     * .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv. Unsupported formats return
-     * an `unsupported_format_error`. Size limits: the source file must be at
-     * most 10 GB and its audio track at most 1 hour in duration. Files
-     * exceeding these limits are rejected.
+     * .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv. Files in other formats
+     * fail with ContentApiV2Error.user_error. Size limits: the source file must
+     * be at most 10 GB and its audio track at most 1 hour in duration. Files
+     * exceeding either limit fail with ContentApiV2Error.user_error. The
+     * transcript is not returned by this route. Poll getTranscriptAsyncCheck()
+     * with the returned async job ID until it reports
+     * GetTranscriptAsyncCheckResult.complete or
+     * GetTranscriptAsyncCheckResult.failed.
      *
      * Route attributes:
      *   scope: files.content.read
