@@ -17,9 +17,9 @@ prompt.get({
   const dbx = new Dropbox({ accessToken: result.accessToken });
   dbx.sharingGetSharedLinkFile({ url: result.sharedLink })
     .then((data) => {
-      fs.writeFile(data.name, data.fileBinary, 'binary', (err) => {
+      fs.writeFile(data.result.name, data.result.fileBinary, 'binary', (err) => {
         if (err) { throw err; }
-        console.log(`File: ${data.name} saved.`);
+        console.log(`File: ${data.result.name} saved.`);
       });
     })
     .catch((err) => {
