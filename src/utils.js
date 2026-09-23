@@ -1,4 +1,4 @@
-import { DEFAULT_API_DOMAIN, DEFAULT_DOMAIN, TEST_DOMAIN_MAPPINGS } from './constants';
+import { DEFAULT_API_DOMAIN, DEFAULT_DOMAIN, TEST_DOMAIN_MAPPINGS } from './constants.js';
 
 function getSafeUnicode(c) {
   const unicode = `000${c.charCodeAt(0).toString(16)}`.slice(-4);

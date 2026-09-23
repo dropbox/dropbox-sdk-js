@@ -106,7 +106,7 @@
                     renderItems(response.result.entries);
                 })
                 .catch((error) => {
-                    console.error(error)
+                    console.error(error.error || error);
                 });
         } else {
             showPageSection('pre-auth-section');

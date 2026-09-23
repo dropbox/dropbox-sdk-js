@@ -19,11 +19,11 @@ prompt.get({
         // Note: The fileBinary field is not part of the Dropbox SDK
         // specification, so it is not included in the TypeScript type.
         // It is injected by the SDK.
-        fs.writeFile(data.name, data.fileBinary, { encoding: 'binary' }, (err) => {
+        fs.writeFile(data.result.name, data.result.fileBinary, { encoding: 'binary' }, (err) => {
             if (err) {
                 throw err;
             }
-            console.log(`File: ${data.name} saved.`);
+            console.log(`File: ${data.result.name} saved.`);
         });
     })
         .catch((err) => {
