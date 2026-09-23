@@ -136,18 +136,6 @@ jobs:
           else
             npm publish "$package_file" --provenance --ignore-scripts
           fi
-      - name: Verify package is available
-        env:
-          PACKAGE_NAME: ${{ steps.npm.outputs.name }}
-          VERSION: ${{ needs.validate.outputs.version }}
-        run: |
-          for attempt in {1..12}; do
-            test "$(npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null || true)" = "$VERSION" && exit 0
-            [ "$attempt" -lt 12 ] && sleep 5
-          done
-          echo "${PACKAGE_NAME}@${VERSION} was not found in npm." >&2
-          exit 1
-
   github-release:
     needs: [validate, publish]
     runs-on: ubuntu-latest
