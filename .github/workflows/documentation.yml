@@ -1,30 +1,61 @@
 name: Update Documentation
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing stable GitHub release tag (for example v10.47.0)
+        required: true
+        type: string
 
-permissions:
-  contents: write
+permissions: {}
 
 jobs:
-  npm:
+  validate-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      release_sha: ${{ steps.release.outputs.release_sha }}
+    steps:
+      - name: Validate published release tag
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          [[ "$RELEASE_TAG" =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]] || { echo "Only stable release tags are allowed." >&2; exit 1; }
+          release_json="$(gh api "repos/${GITHUB_REPOSITORY}/releases/tags/${RELEASE_TAG}")"
+          test "$(jq -r .draft <<<"$release_json")" = false && test "$(jq -r .prerelease <<<"$release_json")" = false || { echo "Release is not published." >&2; exit 1; }
+          ref_json="$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${RELEASE_TAG}")"
+          object_type="$(jq -r .object.type <<<"$ref_json")"
+          object_sha="$(jq -r .object.sha <<<"$ref_json")"
+          if [ "$object_type" = tag ]; then
+            object_sha="$(gh api "repos/${GITHUB_REPOSITORY}/git/tags/${object_sha}" --jq .object.sha)"
+          elif [ "$object_type" != commit ]; then
+            echo "Release tag does not resolve to a commit." >&2
+            exit 1
+          fi
+          gh api "repos/${GITHUB_REPOSITORY}/commits/${object_sha}" --jq .sha >/dev/null
+          echo "release_sha=$object_sha" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: validate-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.validate-release.outputs.release_sha }}
+          fetch-depth: 1
       - uses: actions/setup-node@v7
         with:
-          registry-url: https://npm.pkg.github.com/
           node-version: 22
-      - name: Build Package
-        run: |
-          npm install
-          npm run build
-      - name: Build Documentation
-        run: npm run generate-docs
-      - name: Push Documentation
-        uses: JamesIves/github-pages-deploy-action@v4
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run generate-docs
+      - uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: docs
