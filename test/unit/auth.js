@@ -242,8 +242,32 @@ describe('DropboxAuth', () => {
     it('saves a new code challenge on Auth obj', () => {
       const dbxAuth = new DropboxAuth();
       chai.assert.equal(dbxAuth.codeChallenge, undefined);
-      dbxAuth.generatePKCECodes();
-      chai.assert.isTrue(!!dbxAuth.codeChallenge);
+      return dbxAuth.generatePKCECodes()
+        .then(() => {
+          chai.assert.isTrue(!!dbxAuth.codeChallenge);
+        });
+    });
+
+    it('base64 encodes the random bytes used for the code verifier', () => {
+      const getRandomValuesStub = sinon.stub(globalThis.crypto, 'getRandomValues')
+        .callsFake((array) => {
+          for (let i = 0; i < array.length; i += 1) {
+            array[i] = i;
+          }
+          return array;
+        });
+      const dbxAuth = new DropboxAuth();
+
+      return dbxAuth.generatePKCECodes()
+        .then(() => {
+          chai.assert.equal(
+            dbxAuth.codeVerifier,
+            'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5f',
+          );
+        })
+        .finally(() => {
+          getRandomValuesStub.restore();
+        });
     });
 
     it('gets called when using PKCE flow', (done) => {
@@ -257,7 +281,7 @@ describe('DropboxAuth', () => {
         .catch(done);
     });
 
-    it('generates valid code challenge from verifier (Node)', (done) => {
+    it('generates valid code challenge from verifier', (done) => {
       const dbxAuth = new DropboxAuth();
       const verifier = 'NTUsMjIsMzYsMTY4LDIyLDEzNywyNDMsOTYsMTIxLDIxNSwxNDAsMTYwLDMwLDE1LDIzMSw1NiwzMCwyMTIsMTQyLDIyMywxMzMsMTIsMjI1LDIzOCwxMDcsMjQ1LDM0';
       dbxAuth.setCodeVerifier(verifier);
@@ -484,6 +508,7 @@ describe('DropboxAuth', () => {
   describe('fetch and crypto', () => {
     const windowRef = global.window;
     const selfRef = global.self;
+    const fetchRef = global.fetch;
     let spyOnFetch;
     let spyOnDigest;
     let spyOnIsBrowserEnv;
@@ -502,6 +527,10 @@ describe('DropboxAuth', () => {
       Object.defineProperty(global, 'self', {
         writable: true,
         value: selfRef,
+      });
+      Object.defineProperty(global, 'fetch', {
+        writable: true,
+        value: fetchRef,
       });
       spyOnIsBrowserEnv.restore();
       spyOnIsWorkerEnv.restore();
@@ -558,6 +587,40 @@ describe('DropboxAuth', () => {
       chai.assert(spyOnIsWorkerEnv.called);
       chai.assert(spyOnFetch.calledOnce);
       chai.assert(spyOnDigest.calledOnce);
+    });
+    it('uses native fetch when window exists without fetch', () => {
+      Object.defineProperty(global, 'window', {
+        writable: true,
+        value: {},
+      });
+      Object.defineProperty(global, 'fetch', {
+        writable: true,
+        value: spyOnFetch,
+      });
+      spyOnIsBrowserEnv.returns(true);
+      spyOnIsWorkerEnv.returns(false);
+
+      const dbxAuth = new DropboxAuth();
+      dbxAuth.fetch();
+
+      chai.assert(spyOnFetch.calledOnce);
+    });
+    it('uses an injected fetch when native fetch is unavailable', () => {
+      Object.defineProperty(global, 'window', {
+        writable: true,
+        value: {},
+      });
+      Object.defineProperty(global, 'fetch', {
+        writable: true,
+        value: undefined,
+      });
+      spyOnIsBrowserEnv.returns(true);
+      spyOnIsWorkerEnv.returns(false);
+
+      const dbxAuth = new DropboxAuth({ fetch: spyOnFetch });
+      dbxAuth.fetch();
+
+      chai.assert(spyOnFetch.calledOnce);
     });
   });
 });

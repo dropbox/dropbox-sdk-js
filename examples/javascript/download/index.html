@@ -50,16 +50,16 @@
       var dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
       dbx.sharingGetSharedLinkFile({url: SHARED_LINK})
         .then(function(data) {
-          var downloadUrl = URL.createObjectURL(data.fileBlob);
+          var downloadUrl = URL.createObjectURL(data.result.fileBlob);
           var downloadButton = document.createElement('a');
           downloadButton.setAttribute('href', downloadUrl);
-          downloadButton.setAttribute('download', data.name);
+          downloadButton.setAttribute('download', data.result.name);
           downloadButton.setAttribute('class', 'button');
-          downloadButton.innerText = 'Download: ' + data.name;
+          downloadButton.innerText = 'Download: ' + data.result.name;
           document.getElementById('results').appendChild(downloadButton);
         })
         .catch(function(error) {
-          console.error(error);
+          console.error(error.error || error);
         });
       return false;
     }

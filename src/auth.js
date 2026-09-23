@@ -10,7 +10,8 @@ import { parseResponse } from './response.js';
 
 let fetch;
 let crypto;
-let Encoder;
+
+const base64EncodeBytes = (bytes) => btoa(String.fromCharCode.apply(null, bytes));
 
 // Expiration is 300 seconds but needs to be in milliseconds for Date object
 const TokenExpirationBuffer = 300 * 1000;
@@ -46,7 +47,7 @@ export default class DropboxAuth {
   constructor(options) {
     options = options || {};
 
-    if (isBrowserEnv()) {
+    if (isBrowserEnv() && typeof window.fetch === 'function') {
       fetch = window.fetch.bind(window);
       crypto = window.crypto || window.msCrypto; // for IE11
     } else if (isWorkerEnv()) {
@@ -55,17 +56,16 @@ export default class DropboxAuth {
       crypto = self.crypto;
       /* eslint-enable no-restricted-globals */
     } else {
-      fetch = require('node-fetch'); // eslint-disable-line global-require
-      crypto = require('crypto'); // eslint-disable-line global-require
-    }
-
-    if (typeof TextEncoder === 'undefined') {
-      Encoder = require('util').TextEncoder; // eslint-disable-line global-require
-    } else {
-      Encoder = TextEncoder;
+      fetch = typeof globalThis.fetch === 'function'
+        ? globalThis.fetch.bind(globalThis)
+        : undefined;
+      crypto = globalThis.crypto;
     }
 
     this.fetch = options.fetch || fetch;
+    if (!this.fetch) {
+      throw new Error('A fetch implementation is required. Use Node.js 22 or later, or provide options.fetch.');
+    }
     this.accessToken = options.accessToken;
     this.accessTokenExpiresAt = options.accessTokenExpiresAt;
     this.refreshToken = options.refreshToken;
@@ -178,35 +178,20 @@ export default class DropboxAuth {
   }
 
   generateCodeChallenge() {
-    const encoder = new Encoder();
+    const encoder = new TextEncoder();
     const codeData = encoder.encode(this.codeVerifier);
-    let codeChallenge;
-    if (isBrowserEnv() || isWorkerEnv()) {
-      return crypto.subtle.digest('SHA-256', codeData)
-        .then((digestedHash) => {
-          const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(digestedHash)));
-          codeChallenge = createBrowserSafeString(base64String).substr(0, 128);
-          this.codeChallenge = codeChallenge;
-        });
-    }
-    const digestedHash = crypto.createHash('sha256').update(codeData).digest();
-    codeChallenge = createBrowserSafeString(digestedHash);
-    this.codeChallenge = codeChallenge;
-    return Promise.resolve();
+    return crypto.subtle.digest('SHA-256', codeData)
+      .then((digestedHash) => {
+        const base64String = base64EncodeBytes(new Uint8Array(digestedHash));
+        this.codeChallenge = createBrowserSafeString(base64String).substr(0, 128);
+      });
   }
 
   generatePKCECodes() {
-    let codeVerifier;
-    if (isBrowserEnv() || isWorkerEnv()) {
-      const array = new Uint8Array(PKCELength);
-      const randomValueArray = crypto.getRandomValues(array);
-      const base64String = btoa(randomValueArray);
-      codeVerifier = createBrowserSafeString(base64String).substr(0, 128);
-    } else {
-      const randomBytes = crypto.randomBytes(PKCELength);
-      codeVerifier = createBrowserSafeString(randomBytes).substr(0, 128);
-    }
-    this.codeVerifier = codeVerifier;
+    const array = new Uint8Array(PKCELength);
+    const randomValueArray = crypto.getRandomValues(array);
+    const base64String = base64EncodeBytes(randomValueArray);
+    this.codeVerifier = createBrowserSafeString(base64String).substr(0, 128);
 
     return this.generateCodeChallenge();
   }
