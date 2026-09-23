@@ -58,7 +58,7 @@ exact SDK version so a future breaking release cannot change your application
 unexpectedly.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/dropbox@10.34.0/dist/Dropbox-sdk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dropbox@10.46.0/dist/Dropbox-sdk.min.js"></script>
 <script>
   const dbx = new Dropbox.Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN' });
 </script>
@@ -66,12 +66,18 @@ unexpectedly.
 
 Do not hard-code production access tokens in public source code.
 
+For debugging, use the unminified bundle:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/dropbox@10.46.0/dist/Dropbox-sdk.js"></script>
+```
+
 ### Web Worker
 
 The same browser bundle can be loaded in a Worker:
 
 ```js
-importScripts('https://cdn.jsdelivr.net/npm/dropbox@10.34.0/dist/Dropbox-sdk.min.js');
+importScripts('https://cdn.jsdelivr.net/npm/dropbox@10.46.0/dist/Dropbox-sdk.min.js');
 
 const dbx = new Dropbox.Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN' });
 ```

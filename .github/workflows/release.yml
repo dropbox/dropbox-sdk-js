@@ -123,8 +123,8 @@ jobs:
           test -f "$package_file"
           test "$(tar -xOf "$package_file" package/package.json | jq -r .version)" = "$VERSION"
           echo "name=$package_name" >> "$GITHUB_OUTPUT"
-          npm_metadata="$(npm view "${package_name}@${VERSION}" --json 2>/dev/null || true)"
-          if [ -n "$npm_metadata" ]; then
+          if npm view "${package_name}@${VERSION}" version >/dev/null 2>&1; then
+            npm_metadata="$(npm view "${package_name}@${VERSION}" --json)"
             published_integrity="$(jq -r '.dist.integrity // empty' <<<"$npm_metadata")"
             local_integrity="sha512-$(openssl dgst -sha512 -binary "$package_file" | openssl base64 -A)"
             if [ -z "$published_integrity" ] || [ "$published_integrity" != "$local_integrity" ]; then
