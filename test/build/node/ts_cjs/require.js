@@ -1,4 +1,6 @@
 const dropbox = require('dropbox');
-var dbx = new dropbox.Dropbox();
-var dbxAuth = new dropbox.DropboxAuth();
+const dbx = new dropbox.Dropbox();
+const dbxAuth = new dropbox.DropboxAuth();
+void dbx;
+void dbxAuth;
 //# sourceMappingURL=require.js.map

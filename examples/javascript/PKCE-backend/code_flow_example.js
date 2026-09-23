@@ -3,15 +3,13 @@
 // On the server logs, you should have the auth code, as well as the token
 // from exchanging it. This exchange is invisible to the app user
 
-const fetch = require('node-fetch');
 const app = require('express')();
 
 const hostname = 'localhost';
 const port = 3000;
 
 const config = {
-  fetch,
-  clientId: [clientId],
+  clientId: '42zjexze6mfpf7x',
 };
 
 const { Dropbox } = require('dropbox'); // eslint-disable-line import/no-unresolved
@@ -45,8 +43,9 @@ app.get('/auth', (req, res) => { // eslint-disable-line no-unused-vars
         });
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
+  res.end();
 });
 
 app.listen(port);
