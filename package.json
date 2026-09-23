@@ -19,7 +19,7 @@
         "lint-fix": "eslint --fix --ext .js,.jsx,.ts .",
         "test": "npm run test:typescript && npm run test:unit",
         "test:typescript": "tsc --build test/types",
-    "test:integration": "mocha --timeout 30000 --require @babel/register test/integration/**/*.js",
+        "test:integration": "mocha --timeout 30000 --require @babel/register test/integration/**/*.js",
         "test:unit": "mocha --require @babel/register test/unit/**/*.js",
         "test:build": "mocha --timeout 100000 --require @babel/register test/build/*.js",
         "report": "nyc report --reporter=lcov --reporter=text",
