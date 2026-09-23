@@ -21,6 +21,20 @@ const executeTest = (testContainer) => {
 };
 
 describe('Browser Definitions', () => {
+  describe('Node built-in dependencies', () => {
+    [
+      'es/src/auth.js',
+      'cjs/src/auth.js',
+      'dist/Dropbox-sdk.js',
+      'dist/Dropbox-sdk.min.js',
+    ].forEach((buildPath) => {
+      it(`${buildPath} does not depend on Node crypto or util`, () => {
+        const build = fs.readFileSync(path.resolve(__dirname, `../../${buildPath}`), 'utf8');
+        chai.assert.notMatch(build, /require\(['"](?:crypto|util)['"]\)/);
+      });
+    });
+  });
+
   describe('ES Build', () => {
     let html;
     let dom;

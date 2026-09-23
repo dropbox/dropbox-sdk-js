@@ -80,7 +80,7 @@
           renderItems(response.result.entries);
         })
         .catch(function(error) {
-          console.error(error);
+          console.error(error.error || error);
         });
     } else {
       showPageSection('pre-auth-section');
