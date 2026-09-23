@@ -52,9 +52,18 @@ jobs:
           test "$VERSION" = "$package_version" && test "$VERSION" = "$lock_version" || { echo "Version does not match package manifests." >&2; exit 1; }
           package_name="$(node -p 'require("./package.json").name')"
           latest_release="$(npm view "$package_name" versions --json | jq -r 'if type == "array" then .[] else . end' | sed -n 's/^\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\)$/\1/p' | sort -V | tail -n 1)"
-          test -z "$latest_release" || test "$(printf '%s\n%s\n' "$latest_release" "$VERSION" | sort -V | tail -n 1)" = "$VERSION" && test "$VERSION" != "$latest_release" || { echo "Version must be greater than the latest stable release ($latest_release)." >&2; exit 1; }
           tag="v${VERSION}"
           if git ls-remote --exit-code --tags origin "refs/tags/${tag}" >/dev/null 2>&1; then echo "Tag $tag already exists." >&2; exit 1; fi
+          if [ -n "$latest_release" ] && [ "$VERSION" = "$latest_release" ]; then
+            if gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+              echo "GitHub Release $tag already exists; refusing to recover it." >&2
+              exit 1
+            fi
+            echo "Recovering $tag: npm already contains this version; the publish job must verify artifact integrity."
+          elif [ -n "$latest_release" ] && [ "$(printf '%s\n%s\n' "$latest_release" "$VERSION" | sort -V | tail -n 1)" != "$VERSION" ]; then
+            echo "Version must not be less than the latest stable npm version ($latest_release)." >&2
+            exit 1
+          fi
           {
             echo "release_sha=$latest_main_sha"
             echo "version=$VERSION"
