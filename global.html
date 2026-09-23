@@ -40232,6 +40232,12 @@ Room folder under certain circumstances, see detailed error.</td>
 <span class="param-type">'cant_move_into_family'</span>
 |
 
+<span class="param-type">'team_folder_insufficient_quota'</span>
+|
+
+<span class="param-type">'member_folder_insufficient_quota'</span>
+|
+
 <span class="param-type">'other'</span>
 |
 
@@ -42089,6 +42095,12 @@ Room folder under certain circumstances, see detailed error.</td>
 |
 
 <span class="param-type">'cant_move_into_family'</span>
+|
+
+<span class="param-type">'team_folder_insufficient_quota'</span>
+|
+
+<span class="param-type">'member_folder_insufficient_quota'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -48296,37 +48308,6 @@ achieve the desired size.</td>
 
         <tr>
             
-                <td class="name"><code>quality</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#FilesThumbnailQuality">FilesThumbnailQuality</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Field is only returned for
-"internal" callers. Quality of the thumbnail image.</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>exclude_media_info</code></td>
             
 
@@ -49040,9 +49021,6 @@ occurs when downloading metadata for the image.</td>
 |
 
 <span class="param-type">'w2048h1536'</span>
-|
-
-<span class="param-type">'w3200h2400'</span>
 
 
 
@@ -49284,37 +49262,6 @@ achieve the desired size.</td>
 
         <tr>
             
-                <td class="name"><code>quality</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#FilesThumbnailQuality">FilesThumbnailQuality</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Field is only returned for
-"internal" callers. Quality of the thumbnail image.</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>exclude_media_info</code></td>
             
 
@@ -49344,6 +49291,39 @@ achieve the desired size.</td>
 is set for photo and video. When this flag is true, FileMetadata.media_info
 is not populated. This improves latency for use cases where `media_info` is
 not needed.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>preserve_transparency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Whether to preserve the original
+image's transparency in the thumbnail. This is supported only when the output
+format is PNG or WebP. Requests that set this flag with JPEG output return an
+error.</td>
         </tr>
 
     
@@ -49506,6 +49486,9 @@ occurred when downloading metadata for the image.</td>
 |
 
 <span class="param-type">'not_found'</span>
+|
+
+<span class="param-type">'unsupported_output_format'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -50159,7 +50142,8 @@ when the target path refers to a file with identical contents.</td>
 
             <td class="description last">A hash of the file content uploaded in
 this call. If provided and the uploaded content does not match this hash, an
-error will be returned. For more information see our Content hash
+error will be returned. Optional, but recommended to avoid committing data
+corrupted in transit. For more information see our Content hash
 https://www.dropbox.com/developers/reference/content-hash page.</td>
         </tr>
 
@@ -50596,7 +50580,8 @@ the current session.</td>
 
             <td class="description last">A hash of the file content uploaded in
 this call. If provided and the uploaded content does not match this hash, an
-error will be returned. For more information see our Content hash
+error will be returned. Optional, but recommended to avoid committing data
+corrupted in transit. For more information see our Content hash
 https://www.dropbox.com/developers/reference/content-hash page.</td>
         </tr>
 
@@ -50790,10 +50775,11 @@ information for each file in the batch.</td>
 
             
 
-            <td class="description last">A hash of the entire request body which
-is all the concatenated pieces of file content that were uploaded in this
-call. If provided and the uploaded content does not match this hash, an error
-will be returned. For more information see our Content hash
+            <td class="description last">A single hash of all the concatenated
+file contents uploaded in this call. If provided and the uploaded content
+does not match this hash, an error will be returned. Optional, but
+recommended to avoid committing data corrupted in transit. For more
+information see our Content hash
 https://www.dropbox.com/developers/reference/content-hash page.</td>
         </tr>
 
@@ -52171,7 +52157,8 @@ modifiers for the commit.</td>
 
             <td class="description last">A hash of the file content uploaded in
 this call. If provided and the uploaded content does not match this hash, an
-error will be returned. For more information see our Content hash
+error will be returned. Optional, but recommended to avoid committing data
+corrupted in transit. For more information see our Content hash
 https://www.dropbox.com/developers/reference/content-hash page.</td>
         </tr>
 
@@ -53781,7 +53768,8 @@ you want to start. If not specified, default is UploadSessionType.sequential.</t
 
             <td class="description last">A hash of the file content uploaded in
 this call. If provided and the uploaded content does not match this hash, an
-error will be returned. For more information see our Content hash
+error will be returned. Optional, but recommended to avoid committing data
+corrupted in transit. For more information see our Content hash
 https://www.dropbox.com/developers/reference/content-hash page.</td>
         </tr>
 
@@ -55311,6 +55299,15 @@ the way.</td>
 |
 
 <span class="param-type">'access_restricted'</span>
+|
+
+<span class="param-type">'team_folder_insufficient_space'</span>
+|
+
+<span class="param-type">'member_folder_insufficient_space'</span>
+|
+
+<span class="param-type">'upload_traffic_limit_reached'</span>
 |
 
 <span class="param-type">'other'</span>
@@ -64585,8 +64582,8 @@ file.
 
             
 
-            <td class="description last">Latitude / longitude in decimal degrees
-(positive = N/E, negative = S/W).</td>
+            <td class="description last">Latitude in decimal degrees (positive = north,
+negative = south).</td>
         </tr>
 
     
@@ -64610,7 +64607,8 @@ file.
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Longitude in decimal degrees (positive = east,
+negative = west).</td>
         </tr>
 
     
@@ -64660,8 +64658,8 @@ reference direction).</td>
 
             
 
-            <td class="description last">Timestamp / datestamp of the GPS fix, in the
-EXIF-provided format.</td>
+            <td class="description last">Time of the GPS fix, in the EXIF-provided
+format.</td>
         </tr>
 
     
@@ -64685,7 +64683,8 @@ EXIF-provided format.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Date of the GPS fix, in the EXIF-provided
+format.</td>
         </tr>
 
     
@@ -64745,8 +64744,8 @@ EXIF-provided format.</td>
 <dd>
     
     <div class="description">
-        Image EXIF metadata. Mirrors the useful subset of the internal
-`riviera.ExifMetadata` message. Fields are best-effort and may be empty.
+        Image EXIF metadata. Fields are populated on a best-effort basis and may be
+empty when absent from the source file.
     </div>
     
 
@@ -64818,7 +64817,7 @@ EXIF-provided format.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Width of the image, in pixels.</td>
         </tr>
 
     
@@ -64848,7 +64847,7 @@ EXIF-provided format.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Height of the image, in pixels.</td>
         </tr>
 
     
@@ -64878,7 +64877,8 @@ EXIF-provided format.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Manufacturer of the device that captured the
+image, e.g. "Apple".</td>
         </tr>
 
     
@@ -64908,7 +64908,8 @@ EXIF-provided format.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Model of the device that captured the
+image, e.g. "iPhone 15 Pro".</td>
         </tr>
 
     
@@ -64938,7 +64939,8 @@ EXIF-provided format.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Model of the lens the image was captured
+with, when the source records it.</td>
         </tr>
 
     
@@ -65000,7 +65002,7 @@ format (local time of the camera).</td>
             
 
             <td class="description last">Timezone offset for
-`date_time_original`, e.g. "+09:00".</td>
+ApiExifMetadata.date_time_original, e.g. "+09:00".</td>
         </tr>
 
     
@@ -65061,7 +65063,8 @@ spec; 1 is the normal upright orientation.</td>
 
             
 
-            <td class="description last">fraction in string form, e.g. "1/250"</td>
+            <td class="description last">Exposure time the image was captured with,
+as a fractional-second string, e.g. "1/250".</td>
         </tr>
 
     
@@ -65091,7 +65094,8 @@ spec; 1 is the normal upright orientation.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Aperture the image was captured at, as
+reported by the EXIF aperture tag.</td>
         </tr>
 
     
@@ -65121,7 +65125,7 @@ spec; 1 is the normal upright orientation.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">ISO sensitivity the image was captured at.</td>
         </tr>
 
     
@@ -65151,7 +65155,8 @@ spec; 1 is the normal upright orientation.</td>
 
             
 
-            <td class="description last">e.g. "26.0 mm"</td>
+            <td class="description last">Focal length the image was captured at,
+including the unit, e.g. "26.0 mm".</td>
         </tr>
 
     
@@ -65181,7 +65186,8 @@ spec; 1 is the normal upright orientation.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Total pixel count of the image, in
+megapixels.</td>
         </tr>
 
     
@@ -65211,7 +65217,7 @@ spec; 1 is the normal upright orientation.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Creator credited in the EXIF artist tag.</td>
         </tr>
 
     
@@ -65241,7 +65247,7 @@ spec; 1 is the normal upright orientation.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Copyright notice from the EXIF copyright tag.</td>
         </tr>
 
     
@@ -65273,7 +65279,186 @@ spec; 1 is the normal upright orientation.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Location tags from the
+image, when the source recorded a location.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="RivieraApiKeyframe">
+    <h4 id="RivieraApiKeyframe">RivieraApiKeyframe</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        A single extracted scene-change keyframe.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>timestamp</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Presentation timestamp of the keyframe, in
+seconds from the start of the video.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scene_score</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Scene-change score that triggered this
+keyframe, in the range [0.0, 1.0]. Higher values indicate a more pronounced
+scene change relative to the preceding frame. The first keyframe of a video
+is always reported as 1.0: the start of a video is a scene boundary by
+definition, so that score is not a measured frame-to-frame comparison.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>image_base64</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The extracted frame as a base64-encoded
+JPEG image. Empty when the request set `include_images = false`.</td>
         </tr>
 
     
@@ -65333,8 +65518,8 @@ spec; 1 is the normal upright orientation.</td>
 <dd>
     
     <div class="description">
-        Audio/video container and per-stream metadata. Mirrors the useful subset of
-the internal `riviera.MediaMetadata` message.
+        Audio/video container and per-stream metadata. Fields are populated on a
+best-effort basis and may be empty when absent from the source file.
     </div>
     
 
@@ -65406,7 +65591,8 @@ the internal `riviera.MediaMetadata` message.
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Overall bitrate of the container, in bits
+per second.</td>
         </tr>
 
     
@@ -65436,7 +65622,7 @@ the internal `riviera.MediaMetadata` message.
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Duration of the media, in seconds.</td>
         </tr>
 
     
@@ -65499,7 +65685,8 @@ present.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The audio and video
+streams the container holds, in container order.</td>
         </tr>
 
     
@@ -65623,7 +65810,8 @@ present.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Zero-based index of the stream within the
+container.</td>
         </tr>
 
     
@@ -65647,7 +65835,8 @@ present.</td>
 
             
 
-            <td class="description last">"audio", "video", etc.</td>
+            <td class="description last">Kind of media the stream carries, e.g.
+"audio" or "video".</td>
         </tr>
 
     
@@ -65671,7 +65860,8 @@ present.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Name of the codec the stream is encoded with,
+e.g. "h264" or "aac".</td>
         </tr>
 
     
@@ -65695,7 +65885,7 @@ present.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Bitrate of this stream, in bits per second.</td>
         </tr>
 
     
@@ -65719,7 +65909,7 @@ present.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Duration of this stream, in seconds.</td>
         </tr>
 
     
@@ -65743,8 +65933,8 @@ present.</td>
 
             
 
-            <td class="description last">Video-specific fields (zero / empty for audio
-streams).</td>
+            <td class="description last">Width of the video frame, in pixels. Zero for
+audio streams.</td>
         </tr>
 
     
@@ -65768,7 +65958,8 @@ streams).</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Height of the video frame, in pixels. Zero for
+audio streams.</td>
         </tr>
 
     
@@ -65792,7 +65983,8 @@ streams).</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Frame rate of the stream, in frames
+per second. Zero for audio streams.</td>
         </tr>
 
     
@@ -65816,7 +66008,9 @@ streams).</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Rotation to apply on playback, in degrees, as
+recorded in the stream metadata. Zero for audio streams and for video that
+needs no rotation.</td>
         </tr>
 
     
@@ -65840,7 +66034,9 @@ streams).</td>
 
             
 
-            <td class="description last">e.g. "16:9"</td>
+            <td class="description last">Aspect ratio the video should be
+displayed at, as a "width:height" string, e.g. "16:9". Empty for audio
+streams.</td>
         </tr>
 
     
@@ -65864,8 +66060,8 @@ streams).</td>
 
             
 
-            <td class="description last">Audio-specific fields (zero / empty for video
-streams).</td>
+            <td class="description last">Number of audio channels in the stream. Zero
+for video streams.</td>
         </tr>
 
     
@@ -65889,7 +66085,8 @@ streams).</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Layout of the audio channels, e.g.
+"stereo". Empty for video streams.</td>
         </tr>
 
     
@@ -65913,7 +66110,8 @@ streams).</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Sample rate of the audio stream, in
+samples per second. Zero for video streams.</td>
         </tr>
 
     
@@ -65998,9 +66196,9 @@ when present.</td>
 <dd>
     
     <div class="description">
-        MS Office document metadata. Mirrors the internal `riviera.OfficeMetadata`
-message. Some fields apply only to specific document types (e.g. `slides` for
-PowerPoint, `words`/`pages` for Word).
+        MS Office document metadata. Some fields apply only to specific document
+types (e.g. ApiOfficeMetadata.slides for PowerPoint, ApiOfficeMetadata.words
+and ApiOfficeMetadata.pages for Word).
     </div>
     
 
@@ -66064,7 +66262,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Which kind of Office document
+this metadata was extracted from.</td>
         </tr>
 
     
@@ -66088,7 +66287,7 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Author recorded in the document properties.</td>
         </tr>
 
     
@@ -66112,7 +66311,7 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Company recorded in the document properties.</td>
         </tr>
 
     
@@ -66136,7 +66335,7 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Title recorded in the document properties.</td>
         </tr>
 
     
@@ -66160,7 +66359,7 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Subject recorded in the document properties.</td>
         </tr>
 
     
@@ -66184,7 +66383,9 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Keywords recorded in the document properties,
+in the document's own formatting (typically a single comma- or
+space-separated string).</td>
         </tr>
 
     
@@ -66208,7 +66409,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Description recorded in the document
+properties.</td>
         </tr>
 
     
@@ -66232,7 +66434,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Total editing time recorded in
+the document properties, in minutes.</td>
         </tr>
 
     
@@ -66256,7 +66459,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last">Word only.</td>
+            <td class="description last">Page count recorded in the document properties.
+Word documents only; zero for PowerPoint and Excel.</td>
         </tr>
 
     
@@ -66280,7 +66484,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Word count recorded in the document properties.
+Word documents only; zero for PowerPoint and Excel.</td>
         </tr>
 
     
@@ -66304,7 +66509,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last">PowerPoint only.</td>
+            <td class="description last">Slide count recorded in the document properties.
+PowerPoint documents only; zero for Word and Excel.</td>
         </tr>
 
     
@@ -66328,7 +66534,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Revision number recorded in the document
+properties.</td>
         </tr>
 
     
@@ -66452,7 +66659,7 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Number of pages in the document.</td>
         </tr>
 
     
@@ -66476,7 +66683,7 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last">Width / height of the first page, in PDF points.</td>
+            <td class="description last">Width of the first page, in PDF points.</td>
         </tr>
 
     
@@ -66500,7 +66707,7 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Height of the first page, in PDF points.</td>
         </tr>
 
     
@@ -66560,7 +66767,7 @@ PowerPoint, `words`/`pages` for Word).
 <dd>
     
     <div class="description">
-        Structured transcript for APIv2
+        A transcript, split into segments.
     </div>
     
 
@@ -66634,7 +66841,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The segments of
+the transcript, in playback order.</td>
         </tr>
 
     
@@ -66664,7 +66872,9 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The language of the transcript, as an
+ISO 639-1 code (e.g. "en"). This is the language detected in the audio, or
+the one supplied in GetTranscriptArgs.audio_language.</td>
         </tr>
 
     
@@ -66724,7 +66934,8 @@ PowerPoint, `words`/`pages` for Word).
 <dd>
     
     <div class="description">
-        Transcript segment for APIv2
+        A contiguous span of transcribed speech. The span covered by a segment
+depends on the requested TimestampLevel.
     </div>
     
 
@@ -66788,7 +66999,7 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The transcribed text of this segment.</td>
         </tr>
 
     
@@ -66812,7 +67023,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Offset of the start of this segment, in
+seconds from the beginning of the media.</td>
         </tr>
 
     
@@ -66836,7 +67048,8 @@ PowerPoint, `words`/`pages` for Word).
 
             
 
-            <td class="description last"></td>
+            <td class="description last">Offset of the end of this segment, in seconds
+from the beginning of the media.</td>
         </tr>
 
     
@@ -66896,11 +67109,11 @@ PowerPoint, `words`/`pages` for Word).
 <dd>
     
     <div class="description">
-        Reason a transcript job failed. Returned in the `failed` variant of
-`GetTranscriptAsyncCheckResult`. This is a semantic error union: the HTTP
-status of the poll request itself is unaffected (a poll that surfaces a
-failed job is still a normal successful poll response). Callers should branch
-on the variant.
+        Reason a transcript job failed. Returned in the
+GetTranscriptAsyncCheckResult.failed variant. This is a semantic error union:
+the HTTP status of the poll request itself is unaffected (a poll that
+surfaces a failed job is still a normal successful poll response). Callers
+should branch on the variant.
     </div>
     
 
@@ -67044,7 +67257,8 @@ will not help.</td>
             
 
             <td class="description last">Available if
-.tag is media_duration_error.</td>
+.tag is media_duration_error. The audio to transcribe is longer than the
+supported maximum.</td>
         </tr>
 
     
@@ -67232,7 +67446,8 @@ will not help.</td>
             
 
             <td class="description last">Available if .tag is file_id. A Dropbox-issued
-file id (format: "id:<id>") for a file the authenticated user has access to.</td>
+file ID for a file the authenticated user has access to, e.g.
+"id:a4ayc_80_OEAAAAAAAAAYa".</td>
         </tr>
 
     
@@ -67265,15 +67480,15 @@ file id (format: "id:<id>") for a file the authenticated user has access to.</td
             
 
             <td class="description last">Available if .tag is url. Either a Dropbox shared
-link (www.dropbox.com) or an external HTTP or HTTPS URL pointing to a
-supported file. - Dropbox shared links are resolved internally using the
-caller's authenticated identity and the link's visibility / download
-settings. They therefore require an authenticated user context (anonymous
-`url` requests against Dropbox links are rejected with an `access_error`).
-Links protected by a password are rejected with
-`shared_link_password_protected`; links with downloads disabled are rejected
-with `link_download_disabled_error`. - External URLs are fetched through the
-backend's egress proxy and must point at a supported file extension.</td>
+link (www.dropbox.com) or an internet-accessible URL pointing to a supported
+file. - Dropbox shared links are resolved internally using the caller's
+authenticated identity and the link's visibility / download settings. They
+therefore require an authenticated user context; requests made with app auth
+alone are rejected. Password-protected links and links with downloads
+disabled are rejected as well. - Other URLs are fetched by Dropbox's servers,
+so they must be reachable from the public internet -- not only from the
+calling application's network -- and must point at a supported file
+extension.</td>
         </tr>
 
     
@@ -67397,6 +67612,555 @@ path, e.g. "/folder/example.pdf".</td>
             
                 
 <hr>
+<dt class="name" id="RivieraGetKeyframesArgs">
+    <h4 id="RivieraGetKeyframesArgs">RivieraGetKeyframesArgs</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Arguments for the asynchronous `get_keyframes_async` route. Exactly one of
+`file_id`, `path`, or `url` must be supplied via `file_id_or_url` to identify
+the video whose scene-change keyframes should be extracted.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>file_id_or_url</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraFileIdOrUrl">RivieraFileIdOrUrl</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Identifier of the video
+file to extract keyframes from. Callers must set exactly one of the
+`FileIdOrUrl` variants. Keyframe extraction is supported for video files
+only; see the route description for the supported formats. Requests against
+unsupported formats return `unsupported_format_error`.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>scene_change_threshold</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Sensitivity of scene-change
+detection. A keyframe is emitted whenever the frame-to-frame scene score
+crosses this threshold, so a LOWER value yields MORE keyframes. Valid range
+is (0.0, 1.0]. When omitted (0.0) the service uses a default of 0.3, which is
+a good starting point for most videos.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>include_images</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">When true, each returned keyframe
+includes the JPEG image bytes, base64-encoded, in `ApiKeyframe.image_base64`.
+When false, the response contains only per-keyframe metadata (timestamp and
+scene score) and `image_base64` is left empty -- useful when you only need
+the scene boundaries and want a small response. NOTE: because the field
+defaults to false in proto3, callers who want images must set this explicitly
+to true.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="RivieraGetKeyframesAsyncCheckResult">
+    <h4 id="RivieraGetKeyframesAsyncCheckResult">RivieraGetKeyframesAsyncCheckResult</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Result type for EventBus async check - must end in "CheckResult"
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>complete</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraGetKeyframesResult">RivieraGetKeyframesResult</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+complete.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>failed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraKeyframesExtractionApiV2Error">RivieraKeyframesExtractionApiV2Error</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag
+is failed.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'in_progress'</span>
+|
+
+<span class="param-type">'complete'</span>
+|
+
+<span class="param-type">'failed'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="RivieraGetKeyframesResult">
+    <h4 id="RivieraGetKeyframesResult">RivieraGetKeyframesResult</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>frames</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="global.html#RivieraApiKeyframe">RivieraApiKeyframe</a>></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The extracted keyframes,
+ordered by `timestamp`. May be empty when no scene changes are detected in
+the source.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="RivieraGetMarkdownArgs">
     <h4 id="RivieraGetMarkdownArgs">RivieraGetMarkdownArgs</h4>
 
@@ -67405,9 +68169,10 @@ path, e.g. "/folder/example.pdf".</td>
 <dd>
     
     <div class="description">
-        Arguments for the asynchronous `get_markdown_async` route. Exactly one of
-`file_id`, `path`, or `url` must be supplied via `file_id_or_url` to identify
-the document to convert to markdown.
+        Arguments for the asynchronous get_markdown_async route. Exactly one of
+FileIdOrUrl.file_id, FileIdOrUrl.path, or FileIdOrUrl.url must be supplied
+via GetMarkdownArgs.file_id_or_url to identify the document to convert to
+markdown.
     </div>
     
 
@@ -67482,10 +68247,10 @@ the document to convert to markdown.
             
 
             <td class="description last">Identifier of the document
-to convert. Callers must set exactly one of the `FileIdOrUrl` variants. The
+to convert. Callers must set exactly one of the FileIdOrUrl variants. The
 referenced file must be a document in a supported format (see the route
-description for the list); requests against unsupported formats return
-`unsupported_format_error`.</td>
+description for the list); requests against unsupported formats fail with
+MarkdownConversionApiV2Error.user_error.</td>
         </tr>
 
     
@@ -67607,7 +68372,8 @@ URIs in the markdown output. This can significantly increase output size.</td>
 <dd>
     
     <div class="description">
-        Result type for EventBus async check
+        Status of a markdown conversion job started by get_markdown_async, as
+returned by get_markdown_async/check.
     </div>
     
 
@@ -67682,7 +68448,7 @@ URIs in the markdown output. This can significantly increase output size.</td>
             
 
             <td class="description last">Available if .tag is
-complete.</td>
+complete. The job finished successfully.</td>
         </tr>
 
     
@@ -67715,7 +68481,7 @@ complete.</td>
             
 
             <td class="description last">Available if .tag
-is failed.</td>
+is failed. The job finished unsuccessfully.</td>
         </tr>
 
     
@@ -67874,7 +68640,8 @@ is failed.</td>
 
             
 
-            <td class="description last">The converted markdown content</td>
+            <td class="description last">The markdown the source document was converted
+to.</td>
         </tr>
 
     
@@ -67934,9 +68701,10 @@ is failed.</td>
 <dd>
     
     <div class="description">
-        Arguments for the asynchronous `get_metadata_async` route. Exactly one of
-`file_id`, `path`, or `url` must be supplied via `file_id_or_url` to identify
-the file whose metadata should be extracted.
+        Arguments for the asynchronous get_metadata_async route. Exactly one of
+FileIdOrUrl.file_id, FileIdOrUrl.path, or FileIdOrUrl.url must be supplied
+via GetMetadataArgs.file_id_or_url to identify the file whose metadata should
+be extracted.
     </div>
     
 
@@ -68011,12 +68779,13 @@ the file whose metadata should be extracted.
             
 
             <td class="description last">Identifier of the file to
-extract metadata from. Callers must set exactly one of the `FileIdOrUrl`
+extract metadata from. Callers must set exactly one of the FileIdOrUrl
 variants. The kind of metadata returned is determined by the file type: image
 files return EXIF metadata, audio/video files return media metadata, PDFs
 return PDF metadata, and MS Office documents (docx, pptx, xlsx) return Office
 metadata. See the route description for the supported formats. Requests
-against unsupported formats return `unsupported_format_error`.</td>
+against unsupported formats fail with
+MetadataExtractionApiV2Error.user_error.</td>
         </tr>
 
     
@@ -68076,7 +68845,8 @@ against unsupported formats return `unsupported_format_error`.</td>
 <dd>
     
     <div class="description">
-        Result type for EventBus async check - must end in "CheckResult"
+        Status of a metadata extraction job started by get_metadata_async, as
+returned by get_metadata_async/check.
     </div>
     
 
@@ -68151,7 +68921,7 @@ against unsupported formats return `unsupported_format_error`.</td>
             
 
             <td class="description last">Available if .tag is
-complete.</td>
+complete. The job finished successfully.</td>
         </tr>
 
     
@@ -68184,7 +68954,7 @@ complete.</td>
             
 
             <td class="description last">Available if .tag
-is failed.</td>
+is failed. The job finished unsuccessfully.</td>
         </tr>
 
     
@@ -68352,8 +69122,8 @@ is failed.</td>
             
 
             <td class="description last">The kind of metadata that was
-extracted for the requested file. Callers should read the matching field of
-the `metadata` oneof.</td>
+extracted for the requested file. Callers should read the matching variant of
+GetMetadataResult.metadata.</td>
         </tr>
 
     
@@ -69421,9 +70191,10 @@ empty when no text is detected in the source.</td>
 <dd>
     
     <div class="description">
-        Arguments for the asynchronous `get_transcript_async` route. Exactly one of
-`file_id`, `path`, or `url` must be supplied via `file_id_or_url` to identify
-the audio or video asset to transcribe.
+        Arguments for the asynchronous get_transcript_async route. Exactly one of
+FileIdOrUrl.file_id, FileIdOrUrl.path, or FileIdOrUrl.url must be supplied
+via GetTranscriptArgs.file_id_or_url to identify the audio or video asset to
+transcribe.
     </div>
     
 
@@ -69498,10 +70269,10 @@ the audio or video asset to transcribe.
             
 
             <td class="description last">Identifier of the media
-asset to transcribe. Callers must set exactly one of the `FileIdOrUrl`
+asset to transcribe. Callers must set exactly one of the FileIdOrUrl
 variants. The referenced asset must be an audio or video file in a supported
 format (see the route description for the list); requests against files with
-no audio track return a `no_audio_error`.</td>
+no audio track fail with ContentApiV2Error.no_audio_error.</td>
         </tr>
 
     
@@ -69532,10 +70303,8 @@ no audio track return a `no_audio_error`.</td>
             
 
             <td class="description last">Granularity of the time
-offsets returned for each transcript segment. Defaults to `SENTENCE` when the
-field is omitted. - SENTENCE: one segment per spoken sentence (recommended).
-- WORD: one segment per word, useful for fine-grained alignment such as
-captioning or highlight-as-you-listen experiences.</td>
+offsets returned for each transcript segment. Defaults to
+TimestampLevel.sentence when the field is omitted.</td>
         </tr>
 
     
@@ -69598,11 +70367,11 @@ ignored. Leave empty to use the default filtering behavior.</td>
 
             
 
-            <td class="description last">Optional ISO 639-1 two-letter language
-code hinting the spoken language of the source audio (e.g. "en", "ja"). When
-empty, the service auto-detects the language; supplying a hint improves
-accuracy and latency for short or ambiguous clips. Unsupported languages fall
-back to auto-detection.</td>
+            <td class="description last">Hint for the spoken language of the
+source audio, as an ISO 639-1 code (e.g. "en", "ja"). When empty, the service
+auto-detects the language; supplying a hint improves accuracy and latency for
+short or ambiguous clips. Languages the service does not support fall back to
+auto-detection.</td>
         </tr>
 
     
@@ -69662,7 +70431,8 @@ back to auto-detection.</td>
 <dd>
     
     <div class="description">
-        Result type for EventBus async check - must end in "CheckResult"
+        Status of a transcript job started by get_transcript_async, as returned by
+get_transcript_async/check.
     </div>
     
 
@@ -69737,7 +70507,7 @@ back to auto-detection.</td>
             
 
             <td class="description last">Available if .tag is
-complete.</td>
+complete. The job finished successfully.</td>
         </tr>
 
     
@@ -69769,7 +70539,8 @@ complete.</td>
 
             
 
-            <td class="description last">Available if .tag is failed.</td>
+            <td class="description last">Available if .tag is failed.
+The job finished unsuccessfully.</td>
         </tr>
 
     
@@ -69939,9 +70710,7 @@ complete.</td>
             
 
             <td class="description last">The
-structured transcript produced for the requested media asset, with
-per-segment text, start/end offsets (in seconds from the beginning of the
-media), and the detected or caller-supplied locale.</td>
+transcript produced for the requested media asset.</td>
         </tr>
 
     
@@ -69993,16 +70762,16 @@ media), and the detected or caller-supplied locale.</td>
             
                 
 <hr>
-<dt class="name" id="RivieraMarkdownConversionApiV2Error">
-    <h4 id="RivieraMarkdownConversionApiV2Error">RivieraMarkdownConversionApiV2Error</h4>
+<dt class="name" id="RivieraKeyframesExtractionApiV2Error">
+    <h4 id="RivieraKeyframesExtractionApiV2Error">RivieraKeyframesExtractionApiV2Error</h4>
 
     
 </dt>
 <dd>
     
     <div class="description">
-        Reason a markdown conversion job failed. Returned in the `failed` variant of
-`GetMarkdownAsyncCheckResult`. This is a semantic error union: the HTTP
+        Reason a keyframe extraction job failed. Returned in the `failed` variant of
+`GetKeyframesAsyncCheckResult`. This is a semantic error union: the HTTP
 status of the poll request itself is unaffected (a poll that surfaces a
 failed job is still a normal successful poll response). Callers should branch
 on the variant.
@@ -70117,6 +70886,239 @@ human-readable message; retrying with backoff may succeed.</td>
 request could not be processed as supplied (a problem with the caller's
 input). The string is a human-readable message; retrying the same request
 will not help.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'server_error'</span>
+|
+
+<span class="param-type">'user_error'</span>
+|
+
+<span class="param-type">'unsupported_format_error'</span>
+|
+
+<span class="param-type">'link_download_disabled_error'</span>
+|
+
+<span class="param-type">'shared_link_password_protected'</span>
+|
+
+<span class="param-type">'limit_exceeded_error'</span>
+|
+
+<span class="param-type">'conversion_failure_error'</span>
+|
+
+<span class="param-type">'not_found_error'</span>
+|
+
+<span class="param-type">'is_a_folder_error'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="RivieraMarkdownConversionApiV2Error">
+    <h4 id="RivieraMarkdownConversionApiV2Error">RivieraMarkdownConversionApiV2Error</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Reason a markdown conversion job failed. Returned in the
+GetMarkdownAsyncCheckResult.failed variant. This is a semantic error union:
+the HTTP status of the poll request itself is unaffected (a poll that
+surfaces a failed job is still a normal successful poll response). Callers
+should branch on the variant.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>server_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is server_error. An
+unexpected, typically transient, server-side failure. The string is a
+human-readable message; retrying with backoff may succeed.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>user_error</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is user_error. The
+request could not be processed as supplied (a problem with the caller's
+input) -- for example an unsupported file format or a file over the size
+limit. The string is a human-readable message; retrying the same request will
+not help.</td>
         </tr>
 
     
@@ -70293,7 +71295,8 @@ will not help.</td>
 
             
 
-            <td class="description last"></td>
+            <td class="description last">The maximum supported duration, in seconds, of the
+audio to transcribe.</td>
         </tr>
 
     
@@ -70353,11 +71356,11 @@ will not help.</td>
 <dd>
     
     <div class="description">
-        Reason a metadata extraction job failed. Returned in the `failed` variant of
-`GetMetadataAsyncCheckResult`. This is a semantic error union: the HTTP
-status of the poll request itself is unaffected (a poll that surfaces a
-failed job is still a normal successful poll response). Callers should branch
-on the variant.
+        Reason a metadata extraction job failed. Returned in the
+GetMetadataAsyncCheckResult.failed variant. This is a semantic error union:
+the HTTP status of the poll request itself is unaffected (a poll that
+surfaces a failed job is still a normal successful poll response). Callers
+should branch on the variant.
     </div>
     
 
@@ -70467,8 +71470,9 @@ human-readable message; retrying with backoff may succeed.</td>
 
             <td class="description last">Available if .tag is user_error. The
 request could not be processed as supplied (a problem with the caller's
-input). The string is a human-readable message; retrying the same request
-will not help.</td>
+input) -- for example an unsupported file format or a file over the size
+limit for its metadata kind. The string is a human-readable message; retrying
+the same request will not help.</td>
         </tr>
 
     
@@ -70585,8 +71589,8 @@ will not help.</td>
 <dd>
     
     <div class="description">
-        Which metadata variant is populated in a `GetMetadataResult`, derived from
-the file type.
+        Which metadata variant is populated in a GetMetadataResult, derived from the
+file type.
     </div>
     
 
@@ -70725,7 +71729,8 @@ the file type.
 <dd>
     
     <div class="description">
-        Exactly one variant is populated, corresponding to `metadata_type`.
+        The extracted metadata. Exactly one variant is populated, corresponding to
+GetMetadataResult.metadata_type.
     </div>
     
 
@@ -70799,7 +71804,8 @@ the file type.
 
             
 
-            <td class="description last">Available if .tag is exif.</td>
+            <td class="description last">Available if .tag is exif. EXIF
+metadata, for image files.</td>
         </tr>
 
     
@@ -70831,7 +71837,8 @@ the file type.
 
             
 
-            <td class="description last">Available if .tag is media.</td>
+            <td class="description last">Available if .tag is media.
+Container and per-stream metadata, for audio and video files.</td>
         </tr>
 
     
@@ -70863,7 +71870,8 @@ the file type.
 
             
 
-            <td class="description last">Available if .tag is pdf.</td>
+            <td class="description last">Available if .tag is pdf. Document
+metadata, for PDFs.</td>
         </tr>
 
     
@@ -70895,7 +71903,8 @@ the file type.
 
             
 
-            <td class="description last">Available if .tag is office.</td>
+            <td class="description last">Available if .tag is office.
+Document metadata, for MS Office files.</td>
         </tr>
 
     
@@ -71229,7 +72238,7 @@ will not help.</td>
 <dd>
     
     <div class="description">
-        The kind of MS Office document that produced an `ApiOfficeMetadata` result.
+        The kind of MS Office document that produced an ApiOfficeMetadata result.
     </div>
     
 
@@ -71595,6 +72604,10 @@ will not help.</td>
     
 </dt>
 <dd>
+    
+    <div class="description">
+        Granularity of the time offsets returned for each transcript segment.
+    </div>
     
 
     
@@ -72652,39 +73665,6 @@ added as a comment on the file. Only meant for Paper files.</td>
         </tr>
 
     
-
-        <tr>
-            
-                <td class="name"><code>fp_sealed_result</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Field is only returned for "internal"
-callers. The FingerprintJS Sealed Client Result value</td>
-        </tr>
-
-    
     </tbody>
 </table>
 </dl>
@@ -73118,39 +74098,6 @@ email and device notifications of their invite.</td>
 
             <td class="description last">Optional message to display to added
 members in their invitation.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>fp_sealed_result</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">Field is only returned for "internal"
-callers. The FingerprintJS Sealed Client Result value</td>
         </tr>
 
     
@@ -183796,6 +184743,39 @@ protect_action_remove_collaborator_details.</td>
 
         <tr>
             
+                <td class="name"><code>protect_action_remove_domains_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogProtectActionRemoveDomainsDetails">TeamLogProtectActionRemoveDomainsDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+protect_action_remove_domains_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>protect_action_remove_link_details</code></td>
             
 
@@ -193310,6 +194290,72 @@ team_extensions_policy_changed_details.</td>
 
         <tr>
             
+                <td class="name"><code>team_external_sharing_controls_activation_state_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamExternalSharingControlsActivationStateChangedDetails">TeamLogTeamExternalSharingControlsActivationStateChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available
+if .tag is team_external_sharing_controls_activation_state_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>team_external_sharing_controls_recipient_lists_changed_details</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamExternalSharingControlsRecipientListsChangedDetails">TeamLogTeamExternalSharingControlsRecipientListsChangedDetails</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available
+if .tag is team_external_sharing_controls_recipient_lists_changed_details.</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>team_member_storage_request_policy_changed_details</code></td>
             
 
@@ -196136,6 +197182,9 @@ to an internal error.</td>
 <span class="param-type">'protect_action_remove_collaborator_details'</span>
 |
 
+<span class="param-type">'protect_action_remove_domains_details'</span>
+|
+
 <span class="param-type">'protect_action_remove_link_details'</span>
 |
 
@@ -197004,6 +198053,12 @@ to an internal error.</td>
 |
 
 <span class="param-type">'team_extensions_policy_changed_details'</span>
+|
+
+<span class="param-type">'team_external_sharing_controls_activation_state_changed_details'</span>
+|
+
+<span class="param-type">'team_external_sharing_controls_recipient_lists_changed_details'</span>
 |
 
 <span class="param-type">'team_member_storage_request_policy_changed_details'</span>
@@ -206681,6 +207736,39 @@ Dropbox Protect</td>
             <td class="description last">Available if .tag is
 protect_action_remove_collaborator. (protect) Removed collaborators via
 Dropbox Protect</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>protect_action_remove_domains</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogProtectActionRemoveDomainsType">TeamLogProtectActionRemoveDomainsType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag is
+protect_action_remove_domains. (protect) Removed domains via Dropbox Protect</td>
         </tr>
 
     
@@ -216421,6 +217509,74 @@ setting for team</td>
 
         <tr>
             
+                <td class="name"><code>team_external_sharing_controls_activation_state_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamExternalSharingControlsActivationStateChangedType">TeamLogTeamExternalSharingControlsActivationStateChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag
+is team_external_sharing_controls_activation_state_changed. (team_policies)
+Changed external sharing controls activation state</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>team_external_sharing_controls_recipient_lists_changed</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogTeamExternalSharingControlsRecipientListsChangedType">TeamLogTeamExternalSharingControlsRecipientListsChangedType</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Available if .tag
+is team_external_sharing_controls_recipient_lists_changed. (team_policies)
+Changed approved or blocked entries for external sharing controls</td>
+        </tr>
+
+    
+
+        <tr>
+            
                 <td class="name"><code>team_member_storage_request_policy_changed</code></td>
             
 
@@ -219262,6 +220418,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'protect_action_remove_collaborator'</span>
 |
 
+<span class="param-type">'protect_action_remove_domains'</span>
+|
+
 <span class="param-type">'protect_action_remove_link'</span>
 |
 
@@ -220130,6 +221289,12 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'team_extensions_policy_changed'</span>
+|
+
+<span class="param-type">'team_external_sharing_controls_activation_state_changed'</span>
+|
+
+<span class="param-type">'team_external_sharing_controls_recipient_lists_changed'</span>
 |
 
 <span class="param-type">'team_member_storage_request_policy_changed'</span>
@@ -221285,6 +222450,9 @@ merge your team into another Dropbox team</td>
 <span class="param-type">'protect_action_remove_collaborator'</span>
 |
 
+<span class="param-type">'protect_action_remove_domains'</span>
+|
+
 <span class="param-type">'protect_action_remove_link'</span>
 |
 
@@ -222153,6 +223321,12 @@ merge your team into another Dropbox team</td>
 |
 
 <span class="param-type">'team_extensions_policy_changed'</span>
+|
+
+<span class="param-type">'team_external_sharing_controls_activation_state_changed'</span>
+|
+
+<span class="param-type">'team_external_sharing_controls_recipient_lists_changed'</span>
 |
 
 <span class="param-type">'team_member_storage_request_policy_changed'</span>
@@ -224463,6 +225637,135 @@ external drive backup.</td>
             
 
             <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogExternalSharingControlsActivationState">
+    <h4 id="TeamLogExternalSharingControlsActivationState">TeamLogExternalSharingControlsActivationState</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>.tag</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">'active'</span>
+|
+
+<span class="param-type">'disabled'</span>
+|
+
+<span class="param-type">'legacy'</span>
+|
+
+<span class="param-type">'other'</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tag identifying the union variant.</td>
         </tr>
 
     
@@ -297968,6 +299271,250 @@ was sent to.</td>
             
                 
 <hr>
+<dt class="name" id="TeamLogProtectActionRemoveDomainsDetails">
+    <h4 id="TeamLogProtectActionRemoveDomainsDetails">TeamLogProtectActionRemoveDomainsDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Removed domains via Dropbox Protect.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>action_id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Action ID.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogProtectActionRemoveDomainsType">
+    <h4 id="TeamLogProtectActionRemoveDomainsType">TeamLogProtectActionRemoveDomainsType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
 <dt class="name" id="TeamLogProtectActionRemoveLinkDetails">
     <h4 id="TeamLogProtectActionRemoveLinkDetails">TeamLogProtectActionRemoveLinkDetails</h4>
 
@@ -353827,6 +355374,629 @@ policy.</td>
 <hr>
 <dt class="name" id="TeamLogTeamExtensionsPolicyChangedType">
     <h4 id="TeamLogTeamExtensionsPolicyChangedType">TeamLogTeamExtensionsPolicyChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamExternalSharingControlsActivationStateChangedDetails">
+    <h4 id="TeamLogTeamExternalSharingControlsActivationStateChangedDetails">TeamLogTeamExternalSharingControlsActivationStateChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed external sharing controls activation state.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>previous_activation_state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalSharingControlsActivationState">TeamLogExternalSharingControlsActivationState</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Previous external sharing controls activation
+state.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>new_activation_state</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamLogExternalSharingControlsActivationState">TeamLogExternalSharingControlsActivationState</a></span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">New external sharing controls activation state.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamExternalSharingControlsActivationStateChangedType">
+    <h4 id="TeamLogTeamExternalSharingControlsActivationStateChangedType">TeamLogTeamExternalSharingControlsActivationStateChangedType</h4>
+
+    
+</dt>
+<dd>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamExternalSharingControlsRecipientListsChangedDetails">
+    <h4 id="TeamLogTeamExternalSharingControlsRecipientListsChangedDetails">TeamLogTeamExternalSharingControlsRecipientListsChangedDetails</h4>
+
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Changed approved or blocked entries for external sharing controls.
+    </div>
+    
+
+    
+        <h5>Type:</h5>
+        <ul>
+            <li>
+                
+<span class="param-type">Object</span>
+
+
+
+            </li>
+        </ul>
+    
+
+    
+<dl class="details">
+    
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    <dl>
+
+<table class="props table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>added_approved_entries</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Added approved external
+sharing recipient entries.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>removed_approved_entries</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Removed approved
+external sharing recipient entries.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>added_blocked_entries</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Added blocked external
+sharing recipient entries.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>removed_blocked_entries</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">Removed blocked
+external sharing recipient entries.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+</dl>
+
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+</dd>
+
+            
+                
+<hr>
+<dt class="name" id="TeamLogTeamExternalSharingControlsRecipientListsChangedType">
+    <h4 id="TeamLogTeamExternalSharingControlsRecipientListsChangedType">TeamLogTeamExternalSharingControlsRecipientListsChangedType</h4>
 
     
 </dt>
@@ -411877,7 +414047,7 @@ if .tag is distinct_member_home.</td>
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2026-09-23T01:29:07+00:00
+		on 2026-09-23T04:38:47+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
