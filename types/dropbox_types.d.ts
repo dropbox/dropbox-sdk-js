@@ -6077,19 +6077,23 @@
 
     export interface UserInfoResult {
       /**
-       * Last name of user.
+       * Last name of the user.
        */
       family_name?: string;
       /**
-       * First name of user.
+       * First name of the user.
        */
       given_name?: string;
       /**
-       * Email address of user.
+       * The user's email address. Be aware it's possible that the user has
+       * since lost access to their email. Note: email is not a unique or stable
+       * identifier for a Dropbox account. Users can change their email, and
+       * emails can be reused by different accounts. Apps should not use email
+       * as a key for account identification; use sub instead.
        */
       email?: string;
       /**
-       * If user is email verified.
+       * If the user's email address is verified.
        */
       email_verified?: boolean;
       /**
@@ -46508,7 +46512,7 @@
      */
     export interface Account {
       /**
-       * The user's unique Dropbox ID.
+       * The user's unique and stable Dropbox ID.
        */
       account_id: users_common.AccountId;
       /**
@@ -46518,7 +46522,10 @@
       /**
        * The user's email address. Do not rely on this without checking the
        * email_verified field. Even then, it's possible that the user has since
-       * lost access to their email.
+       * lost access to their email. Note: email is not a unique or stable
+       * identifier for a Dropbox account. Users can change their email, and
+       * emails can be reused by different accounts. Apps should not use email
+       * as a key for account identification; use account_id instead.
        */
       email: string;
       /**
