@@ -11,7 +11,23 @@
     "no-undef": 0
   },
   "parserOptions": {
-    "ecmaVersion": 2017,
+    "ecmaVersion": "latest",
     "impliedStrict": false
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "rules": {
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "args": "none"
+          }
+        ]
+      }
+    }
+  ]
 }

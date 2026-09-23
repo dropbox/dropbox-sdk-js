@@ -3,6 +3,182 @@
 /*IMPORT*/
 export * from './dropbox_types';
 
+/**
+ * Optional transport settings for a single Dropbox API request.
+ */
+export interface DropboxRequestOptions {
+  /** An AbortSignal used to cancel the request. */
+  signal?: AbortSignal;
+
+  /** Maximum request duration in milliseconds. */
+  timeout?: number;
+
+  /** Additional HTTP headers for this request. */
+  extraHeaders?: Record<string, string>;
+}
+
+/** Binary download content returned by the SDK in Node.js environments. */
+export interface DropboxFileBinary extends Uint8Array {
+  toString(encoding?: string, start?: number, end?: number): string;
+}
+
+/** Blob download content returned by the SDK in browser and Worker environments. */
+export interface DropboxFileBlob {
+  readonly size: number;
+  readonly type: string;
+  arrayBuffer(): Promise<ArrayBuffer>;
+  slice(start?: number, end?: number, contentType?: string): DropboxFileBlob;
+  stream(): any;
+  text(): Promise<string>;
+}
+
+/** API result augmented with the downloaded file content for the current environment. */
+export type DropboxDownloadResult<T> = T & (
+  | { fileBinary: DropboxFileBinary; fileBlob?: never }
+  | { fileBinary?: never; fileBlob: DropboxFileBlob }
+);
+
+/** Progress reported by the local file download helper. */
+export interface DropboxFileDownloadProgress {
+  /** Cumulative bytes written to local storage. */
+  bytesWritten: number;
+
+  /** Expected total bytes from Dropbox metadata, when known. */
+  totalBytes: number;
+
+  /** Byte offset from an existing .part file. */
+  resumedFrom: number;
+}
+
+export interface DropboxFileDownloaderOptions {
+  /** Maximum number of download attempts. Defaults to 3. */
+  maxAttempts?: number;
+
+  /** Number of parallel ranged downloads for fresh downloads. Defaults to 1. */
+  parallelDownloads?: number;
+
+  /** Initial retry delay in milliseconds. Defaults to 200. */
+  retryDelay?: number;
+
+  /** Receives cumulative download progress updates. */
+  progress?: (progress: DropboxFileDownloadProgress) => void;
+
+  /** An AbortSignal used to cancel Dropbox requests. */
+  signal?: AbortSignal;
+
+  /** Maximum duration for each Dropbox request in milliseconds. Must be a positive integer. */
+  timeout?: number;
+}
+
+export interface DropboxFileDownloadResult {
+  /** Metadata returned by filesDownload. */
+  metadata: files.FileMetadata;
+
+  /** Byte offset used to resume from an existing .part file. */
+  resumedFrom: number;
+}
+
+export class DropboxFileDownloader {
+  constructor(client: Dropbox, options?: DropboxFileDownloaderOptions);
+
+  downloadFile(remotePath: string, localPath: string): Promise<DropboxFileDownloadResult>;
+}
+
+export function downloadFile(
+  client: Dropbox,
+  remotePath: string,
+  localPath: string,
+  options?: DropboxFileDownloaderOptions,
+): Promise<DropboxFileDownloadResult>;
+
+/** Progress reported by the local file upload helper. */
+export interface DropboxFileUploadProgress {
+  /** Cumulative bytes committed to Dropbox. */
+  bytesCommitted: number;
+
+  /** Total bytes in the upload source. */
+  totalBytes: number;
+}
+
+export interface DropboxFileUploaderOptions {
+  /** Maximum number of upload attempts. Defaults to 3. */
+  maxAttempts?: number;
+
+  /** Initial retry delay in milliseconds. Defaults to 200. */
+  retryDelay?: number;
+
+  /** Upload session chunk size in bytes. Defaults to 8 MiB. */
+  chunkSize?: number;
+
+  /** Maximum number of concurrent upload requests. Values below 2 disable concurrency. */
+  parallelUploads?: number;
+
+  /** Receives cumulative upload progress updates. */
+  progress?: (progress: DropboxFileUploadProgress) => void;
+
+  /** An AbortSignal used to cancel Dropbox requests. */
+  signal?: AbortSignal;
+
+  /** Maximum duration for each Dropbox request in milliseconds. Must be a positive integer. */
+  timeout?: number;
+}
+
+export interface DropboxRangedUploadSource {
+  /** Total bytes available from this source. */
+  size: number;
+
+  /** Reads a byte range from this source. */
+  read(offset: number, length: number): Promise<
+    Uint8Array | ArrayBuffer | DropboxFileBlob | AsyncIterable<Uint8Array>
+  >;
+}
+
+export interface DropboxSequentialUploadSource {
+  /** Opens this one-shot source from its beginning. */
+  open(): Promise<AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>>;
+
+  /** Total bytes when known. Omit when the size is unknown. */
+  size?: number;
+}
+
+export type DropboxUploadSource = DropboxRangedUploadSource | DropboxSequentialUploadSource;
+
+export interface DropboxFileUploadResult {
+  /** Metadata returned by the completed upload. */
+  metadata: files.FileMetadata;
+}
+
+export class DropboxFileUploader {
+  constructor(client: Dropbox, options?: DropboxFileUploaderOptions);
+
+  upload(
+    source: DropboxUploadSource,
+    commitInfo: files.CommitInfo,
+  ): Promise<DropboxFileUploadResult>;
+}
+
+export function bytesUpload(
+  contents: string | Uint8Array | ArrayBuffer | DropboxFileBlob,
+): DropboxRangedUploadSource;
+
+export function fileUpload(filePath: string): Promise<DropboxRangedUploadSource>;
+
+export function readerUpload(
+  reader: AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>,
+): DropboxSequentialUploadSource;
+
+export function sizedReaderUpload(
+  reader: AsyncIterable<Uint8Array> | ReadableStream<Uint8Array>,
+  size: number,
+): DropboxSequentialUploadSource;
+
+export function uploadFile(
+  client: Dropbox,
+  source: DropboxUploadSource,
+  commitInfo: files.CommitInfo,
+  options?: DropboxFileUploaderOptions,
+): Promise<DropboxFileUploadResult>;
+
 export interface DropboxAuthOptions {
   // An access token for making authenticated requests.
   accessToken?: string;
@@ -73,10 +249,10 @@ export class DropboxAuth {
    * @arg {boolean} [usePKCE] - Whether or not to use Sha256 based PKCE. PKCE should be only use on
    * client apps which doesn't call your server. It is less secure than non-PKCE flow but
    * can be used if you are unable to safely retrieve your app secret
-   * @returns {Promise<String>} - Url to send user to for Dropbox API authentication
+   * @returns {Promise<string>} - Url to send user to for Dropbox API authentication
    * returned in a promise
    */
-  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): Promise<String>;
+  getAuthenticationUrl(redirectUri: string, state?: string, authType?: 'token' | 'code', tokenAccessType?: null | 'legacy' | 'offline' | 'online', scope?: Array<String>, includeGrantedScopes?: 'none' | 'user' | 'team', usePKCE?: boolean): Promise<string>;
 
   /**
    * Get the client id
@@ -141,17 +317,17 @@ export class DropboxAuth {
   /**
    * Checks if a token is needed, can be refreshed and if the token is expired.
    * If so, attempts to refresh access token
-   * @returns {Promise<*>}
+   * @returns {Promise<void>}
    */
-  checkAndRefreshAccessToken(): void;
+  checkAndRefreshAccessToken(): Promise<void>;
 
   /**
    * Refreshes the access token using the refresh token, if available
    * @arg {List} scope - a subset of scopes from the original
    * refresh to acquire with an access token
-   * @returns {Promise<*>}
+   * @returns {Promise<void>}
    */
-  refreshAccessToken(scope?: Array<String>): void;
+  refreshAccessToken(scope?: Array<String>): Promise<void>;
 
 }
 
@@ -242,4 +418,3 @@ export class Dropbox {
   constructor(options: DropboxOptions);
 /*ROUTES*/
 }
-
