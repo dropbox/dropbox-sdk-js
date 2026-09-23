@@ -3,14 +3,12 @@
 // On the server logs, you should have the auth code, as well as the token
 // from exchanging it. This exchange is invisible to the app user
 
-const fetch = require('node-fetch');
 const app = require('express')();
 
 const hostname = 'localhost';
 const port = 3000;
 
 const config = {
-  fetch,
   clientId: 'APP_KEY_HERE',
   clientSecret: 'APP_SECRET_HERE',
 };
