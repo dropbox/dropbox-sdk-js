@@ -10087,11 +10087,20 @@
       '.tag': 'members';
     }
 
+    /**
+     * Link is accessible only by signed-in Dropbox users. This audience is
+     * currently read-only through API v2: API v2 write methods reject requests
+     * that set it.
+     */
+    export interface LinkAudiencePublicLoggedInOnly {
+      '.tag': 'public_logged_in_only';
+    }
+
     export interface LinkAudienceOther {
       '.tag': 'other';
     }
 
-    export type LinkAudience = LinkAudiencePublic | LinkAudienceTeam | LinkAudienceNoOne | LinkAudiencePassword | LinkAudienceMembers | LinkAudienceOther;
+    export type LinkAudience = LinkAudiencePublic | LinkAudienceTeam | LinkAudienceNoOne | LinkAudiencePassword | LinkAudienceMembers | LinkAudiencePublicLoggedInOnly | LinkAudienceOther;
 
     /**
      * check documentation for VisibilityPolicyDisallowedReason.
