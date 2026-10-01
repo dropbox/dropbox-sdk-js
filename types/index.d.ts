@@ -2470,6 +2470,26 @@ export class Dropbox {
     public paperFoldersCreate(arg: paper.PaperFolderCreateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<paper.PaperFolderCreateResult>>;
 
     /**
+     * Download the output of a completed `get_transform_async` job. Pass the
+     * `output_handle` from the job's `complete` result. The body is the
+     * produced file, and the `Dropbox-API-Result` header describes it. A handle
+     * can only be redeemed by the user who requested the transform, and only
+     * until its `expires_ts`; after that this route fails with
+     * `expired_handle_error`, and the transform has to be requested again. A
+     * handle that was never valid, or that belongs to another user, fails with
+     * `user_error`.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<riviera.TransformApiV2Error>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraDownloadTransformOutput(arg: riviera.DownloadTransformOutputArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<riviera.DownloadTransformOutputResult>>>;
+
+    /**
      * Asynchronous scene-change keyframe extraction for video files. Detects
      * scene changes in the source video and returns one representative keyframe
      * per detected scene, each tagged with its timestamp (seconds from the
@@ -2690,6 +2710,69 @@ export class Dropbox {
      * @param options Optional transport settings for this request.
      */
     public rivieraGetTranscriptAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetTranscriptAsyncCheckResult>>;
+
+    /**
+     * Asynchronous file transformation: produces a new file from an existing
+     * one. One route covers many conversions. Name the source file in
+     * `file_id_or_url`, say what you want back in `transform_type`, and supply
+     * that type's options message if it needs one: - `pdf`: documents and
+     * images, to PDF. - `html`: spreadsheets, to HTML, preserving the sheet
+     * layout. - `image`: images and single document pages, to JPEG or PNG. -
+     * `thumbnail`: any thumbnailable source, resized to a named size bucket. -
+     * `image_pdf`: documents, to a page image rendered by way of PDF. -
+     * `video_frame`: one still frame from a video, at a requested offset. The
+     * accepted input formats differ per transform -- they are not one shared
+     * list -- and each is the intersection of the source format with the
+     * pipeline that transform uses: - `pdf` and `image_pdf`: word-processing,
+     * presentation and spreadsheet documents (.doc, .docx, .ppt, .pptx, .xls,
+     * .xlsx, .odt, .odp, .ods, .rtf, .epub, .gdoc, .gslides, .hwp, .ai, .eps,
+     * .dwg among others). Images are not accepted. - `html`: spreadsheets only
+     * -- .xls, .xlsm, .xlsx, .ods, .gsheet. This is the complete list. Note
+     * that .csv and .txt are *not* accepted here. - `image`: the documents
+     * above, plus .pdf and .html, plus the iWork and design formats .pages,
+     * .key, .numbers, .sketch, .xd, .indd and .psd, plus .avif, .heic, .svg and
+     * camera RAW, plus fonts (.otf, .ttf), plus video. Formats a browser can
+     * already display (.bmp, .gif, .ico, .jpeg, .png, .tif, .tiff, .webp) are
+     * not accepted; use `thumbnail` for those. - `thumbnail`: everything
+     * `image` accepts, plus .bmp, .gif, .ico, .jpeg, .png, .tif, .tiff, .webp
+     * and JPEG 2000. - `video_frame`: .3g2, .3gp, .3gpp, .3gpp2, .asf, .avi,
+     * .dv, .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf,
+     * .ogv, .rm, .ts, .vob, .webm, .wmv. This is the complete list. These lists
+     * track Riviera's capability registry
+     * (`dropbox/riviera/supported_types/previews_supported_types.yaml`), which
+     * is generated and authoritative; treat it rather than this comment as the
+     * final word. Formats the requested transform does not support fail with
+     * `unsupported_format_error`. Options belonging to a different transform
+     * type than the one requested fail with `invalid_options_error`. The
+     * produced bytes are not returned by this route, and not by its `/check`
+     * poll either. Poll `get_transform_async/check` with the returned async job
+     * ID until it reports `complete` or `failed`; a `complete` result carries a
+     * `TransformOutput` whose `output_handle` `download_transform_output`
+     * exchanges for the bytes. Splitting retrieval out this way is what lets
+     * the route return outputs larger than an async result can carry.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetTransformAsync(arg: riviera.TransformArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Returns the status or result of specified get_transform_async task.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraGetTransformAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetTransformAsyncCheckResult>>;
 
     /**
      * Adds specified members to a file.

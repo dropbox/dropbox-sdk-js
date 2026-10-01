@@ -7574,6 +7574,36 @@
     export type ContentApiV2Error = ContentApiV2ErrorServerError | ContentApiV2ErrorUserError | ContentApiV2ErrorMediaDurationError | ContentApiV2ErrorNoAudioError | ContentApiV2ErrorLinkDownloadDisabledError | ContentApiV2ErrorSharedLinkPasswordProtected | ContentApiV2ErrorLimitExceededError | ContentApiV2ErrorNotFoundError | ContentApiV2ErrorIsAFolderError | ContentApiV2ErrorOther;
 
     /**
+     * Arguments for `download_transform_output`.
+     */
+    export interface DownloadTransformOutputArgs {
+      /**
+       * The `output_handle` from a `complete` `get_transform_async/check`
+       * result.
+       */
+      output_handle: string;
+    }
+
+    /**
+     * Describes the bytes in the response body. Returned in the
+     * `Dropbox-API-Result` header.
+     */
+    export interface DownloadTransformOutputResult {
+      /**
+       * Defaults to 0.
+       */
+      size?: number;
+      /**
+       * Defaults to .
+       */
+      format?: string;
+      /**
+       * Defaults to .
+       */
+      mime_type?: string;
+    }
+
+    /**
      * A Dropbox-issued file ID for a file the authenticated user has access to,
      * e.g. "id:a4ayc_80_OEAAAAAAAAAYa".
      */
@@ -7966,6 +7996,53 @@
        * The transcript produced for the requested media asset.
        */
       structured_transcript?: ApiStructuredTranscript;
+    }
+
+    /**
+     * The job has not finished yet. Poll again.
+     */
+    export interface GetTransformAsyncCheckResultInProgress {
+      '.tag': 'in_progress';
+    }
+
+    /**
+     * The job finished successfully.
+     */
+    export interface GetTransformAsyncCheckResultComplete extends TransformOutput {
+      '.tag': 'complete';
+    }
+
+    /**
+     * The job finished unsuccessfully.
+     */
+    export interface GetTransformAsyncCheckResultFailed {
+      '.tag': 'failed';
+      failed: TransformApiV2Error;
+    }
+
+    export interface GetTransformAsyncCheckResultOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Result type for EventBus async check - must end in "CheckResult"
+     */
+    export type GetTransformAsyncCheckResult = GetTransformAsyncCheckResultInProgress | GetTransformAsyncCheckResultComplete | GetTransformAsyncCheckResultFailed | GetTransformAsyncCheckResultOther;
+
+    /**
+     * Options for `TransformType.image` and `TransformType.image_pdf`.
+     * Supplying this message with any other transform type fails with
+     * `invalid_options_error`.
+     */
+    export interface ImageOptions {
+      /**
+       * Defaults to 1.
+       */
+      page_number?: number;
+      /**
+       * Defaults to 100.
+       */
+      scale_percent?: number;
     }
 
     /**
@@ -8479,6 +8556,182 @@
     export type TextExtractionApiV2Error = TextExtractionApiV2ErrorServerError | TextExtractionApiV2ErrorUserError | TextExtractionApiV2ErrorUnsupportedFormatError | TextExtractionApiV2ErrorLinkDownloadDisabledError | TextExtractionApiV2ErrorSharedLinkPasswordProtected | TextExtractionApiV2ErrorLimitExceededError | TextExtractionApiV2ErrorConversionFailureError | TextExtractionApiV2ErrorNotFoundError | TextExtractionApiV2ErrorIsAFolderError | TextExtractionApiV2ErrorOther;
 
     /**
+     * Lossy JPEG. The default, and the right choice for photographic sources.
+     */
+    export interface ThumbnailFormatJpeg {
+      '.tag': 'jpeg';
+    }
+
+    /**
+     * Lossless PNG, with alpha preserved.
+     */
+    export interface ThumbnailFormatPng {
+      '.tag': 'png';
+    }
+
+    /**
+     * WebP, which compresses better than either JPEG or PNG at comparable
+     * quality but is not readable by every consumer.
+     */
+    export interface ThumbnailFormatWebp {
+      '.tag': 'webp';
+    }
+
+    export interface ThumbnailFormatOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The encoding of the produced image. These match `files/get_thumbnail`'s
+     * formats: JPEG is the better choice for photographs, PNG for screenshots,
+     * line art, and anything with sharp text edges or transparency.
+     */
+    export type ThumbnailFormat = ThumbnailFormatJpeg | ThumbnailFormatPng | ThumbnailFormatWebp | ThumbnailFormatOther;
+
+    /**
+     * Scale down the image to fit within the given size.
+     */
+    export interface ThumbnailModeStrict {
+      '.tag': 'strict';
+    }
+
+    /**
+     * Scale down the image to fit within the given size or its transpose.
+     */
+    export interface ThumbnailModeBestfit {
+      '.tag': 'bestfit';
+    }
+
+    /**
+     * Scale down the image to completely cover the given size or its transpose.
+     */
+    export interface ThumbnailModeFitoneBestfit {
+      '.tag': 'fitone_bestfit';
+    }
+
+    /**
+     * Don't resize the image at all.
+     */
+    export interface ThumbnailModeOriginal {
+      '.tag': 'original';
+    }
+
+    export interface ThumbnailModeOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * How to resize and crop the source to reach the requested `ThumbnailSize`.
+     * These match `files/get_thumbnail`'s modes.
+     */
+    export type ThumbnailMode = ThumbnailModeStrict | ThumbnailModeBestfit | ThumbnailModeFitoneBestfit | ThumbnailModeOriginal | ThumbnailModeOther;
+
+    /**
+     * Options for `TransformType.thumbnail`. Supplying this message with any
+     * other transform type fails with `invalid_options_error`.
+     */
+    export interface ThumbnailOptions {
+      /**
+       * Defaults to TagRef(Union('ThumbnailSize', [UnionField('w32h32', Void,
+       * False, None), UnionField('w64h64', Void, False, None),
+       * UnionField('w128h128', Void, False, None), UnionField('w256h256', Void,
+       * False, None), UnionField('w480h320', Void, False, None),
+       * UnionField('w640h480', Void, False, None), UnionField('w960h640', Void,
+       * False, None), UnionField('w1024h768', Void, False, None),
+       * UnionField('w2048h1536', Void, False, None), UnionField('other', Void,
+       * True, None)]), 'w64h64').
+       */
+      size?: ThumbnailSize;
+      /**
+       * Defaults to TagRef(Union('ThumbnailMode', [UnionField('strict', Void,
+       * False, None), UnionField('bestfit', Void, False, None),
+       * UnionField('fitone_bestfit', Void, False, None), UnionField('original',
+       * Void, False, None), UnionField('other', Void, True, None)]), 'strict').
+       */
+      mode?: ThumbnailMode;
+      /**
+       * Defaults to TagRef(Union('ThumbnailFormat', [UnionField('jpeg', Void,
+       * False, None), UnionField('png', Void, False, None), UnionField('webp',
+       * Void, False, None), UnionField('other', Void, True, None)]), 'jpeg').
+       */
+      format?: ThumbnailFormat;
+    }
+
+    /**
+     * 32 by 32 px.
+     */
+    export interface ThumbnailSizeW32h32 {
+      '.tag': 'w32h32';
+    }
+
+    /**
+     * 64 by 64 px.
+     */
+    export interface ThumbnailSizeW64h64 {
+      '.tag': 'w64h64';
+    }
+
+    /**
+     * 128 by 128 px.
+     */
+    export interface ThumbnailSizeW128h128 {
+      '.tag': 'w128h128';
+    }
+
+    /**
+     * 256 by 256 px.
+     */
+    export interface ThumbnailSizeW256h256 {
+      '.tag': 'w256h256';
+    }
+
+    /**
+     * 480 by 320 px.
+     */
+    export interface ThumbnailSizeW480h320 {
+      '.tag': 'w480h320';
+    }
+
+    /**
+     * 640 by 480 px.
+     */
+    export interface ThumbnailSizeW640h480 {
+      '.tag': 'w640h480';
+    }
+
+    /**
+     * 960 by 640 px.
+     */
+    export interface ThumbnailSizeW960h640 {
+      '.tag': 'w960h640';
+    }
+
+    /**
+     * 1024 by 768 px.
+     */
+    export interface ThumbnailSizeW1024h768 {
+      '.tag': 'w1024h768';
+    }
+
+    /**
+     * 2048 by 1536 px.
+     */
+    export interface ThumbnailSizeW2048h1536 {
+      '.tag': 'w2048h1536';
+    }
+
+    export interface ThumbnailSizeOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The size of the thumbnail to produce. These are the same named size
+     * buckets `files/get_thumbnail` supports, with the same meanings; arbitrary
+     * pixel dimensions are not accepted.
+     */
+    export type ThumbnailSize = ThumbnailSizeW32h32 | ThumbnailSizeW64h64 | ThumbnailSizeW128h128 | ThumbnailSizeW256h256 | ThumbnailSizeW480h320 | ThumbnailSizeW640h480 | ThumbnailSizeW960h640 | ThumbnailSizeW1024h768 | ThumbnailSizeW2048h1536 | ThumbnailSizeOther;
+
+    /**
      * One segment per spoken sentence (recommended). This is the default when
      * GetTranscriptArgs.timestamp_level is omitted.
      */
@@ -8502,6 +8755,269 @@
      * Granularity of the time offsets returned for each transcript segment.
      */
     export type TimestampLevel = TimestampLevelSentence | TimestampLevelWord | TimestampLevelOther;
+
+    /**
+     * An unexpected, typically transient, server-side failure. The string is a
+     * human-readable message; retrying with backoff may succeed.
+     */
+    export interface TransformApiV2ErrorServerError {
+      '.tag': 'server_error';
+      server_error: string;
+    }
+
+    /**
+     * The request could not be processed as supplied (a problem with the
+     * caller's input). The string is a human-readable message; retrying the
+     * same request will not help.
+     */
+    export interface TransformApiV2ErrorUserError {
+      '.tag': 'user_error';
+      user_error: string;
+    }
+
+    /**
+     * The source file is not in a format the requested `transform_type` can
+     * convert.
+     */
+    export interface TransformApiV2ErrorUnsupportedFormatError {
+      '.tag': 'unsupported_format_error';
+    }
+
+    /**
+     * `FileIdOrUrl.url` referenced a Dropbox shared link whose owner has
+     * disabled downloads.
+     */
+    export interface TransformApiV2ErrorLinkDownloadDisabledError {
+      '.tag': 'link_download_disabled_error';
+    }
+
+    /**
+     * `FileIdOrUrl.url` referenced a password-protected Dropbox shared link.
+     * Riviera cannot supply the password, so such links cannot be transformed.
+     */
+    export interface TransformApiV2ErrorSharedLinkPasswordProtected {
+      '.tag': 'shared_link_password_protected';
+    }
+
+    /**
+     * A resource limit was exceeded while producing the result -- for example
+     * the source file is larger than the requested transform accepts.
+     */
+    export interface TransformApiV2ErrorLimitExceededError {
+      '.tag': 'limit_exceeded_error';
+    }
+
+    /**
+     * The source file was readable but could not be converted, for example
+     * because it is corrupt.
+     */
+    export interface TransformApiV2ErrorConversionFailureError {
+      '.tag': 'conversion_failure_error';
+    }
+
+    /**
+     * The referenced file does not exist or is not accessible.
+     */
+    export interface TransformApiV2ErrorNotFoundError {
+      '.tag': 'not_found_error';
+    }
+
+    /**
+     * The target is a folder, not a file.
+     */
+    export interface TransformApiV2ErrorIsAFolderError {
+      '.tag': 'is_a_folder_error';
+    }
+
+    /**
+     * `transform_type` was missing, or the supplied options did not match the
+     * requested transform type, or an option was out of range. The request is
+     * malformed; fix it rather than retrying it.
+     */
+    export interface TransformApiV2ErrorInvalidOptionsError {
+      '.tag': 'invalid_options_error';
+    }
+
+    /**
+     * The `output_handle` presented to `download_transform_output` has passed
+     * its `TransformOutput.expires_ts`. Request the transform again to get a
+     * fresh handle. Only `download_transform_output` produces this; a poll
+     * never does.
+     */
+    export interface TransformApiV2ErrorExpiredHandleError {
+      '.tag': 'expired_handle_error';
+    }
+
+    export interface TransformApiV2ErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Reason a transform job failed. Returned in the `failed` variant of
+     * `GetTransformAsyncCheckResult`, and by `download_transform_output`. This
+     * is a semantic error union: the HTTP status of the poll request itself is
+     * unaffected (a poll that surfaces a failed job is still a normal
+     * successful poll response). Callers should branch on the variant.
+     */
+    export type TransformApiV2Error = TransformApiV2ErrorServerError | TransformApiV2ErrorUserError | TransformApiV2ErrorUnsupportedFormatError | TransformApiV2ErrorLinkDownloadDisabledError | TransformApiV2ErrorSharedLinkPasswordProtected | TransformApiV2ErrorLimitExceededError | TransformApiV2ErrorConversionFailureError | TransformApiV2ErrorNotFoundError | TransformApiV2ErrorIsAFolderError | TransformApiV2ErrorInvalidOptionsError | TransformApiV2ErrorExpiredHandleError | TransformApiV2ErrorOther;
+
+    /**
+     * Arguments for the asynchronous `get_transform_async` route. Exactly one
+     * of `file_id`, `path`, or `url` must be supplied via `file_id_or_url` to
+     * identify the source file, and exactly one variant of `transform_type`
+     * must be set to say what to produce from it. At most one options message
+     * may be set, and it must be the one belonging to the requested
+     * `transform_type`. Options that belong to a different transform type are
+     * rejected with `invalid_options_error` rather than ignored, so that a
+     * request whose parameters were misassembled fails visibly instead of
+     * quietly producing the wrong output.
+     */
+    export interface TransformArgs {
+      /**
+       * Identifier of the source file to transform. Callers must set exactly
+       * one of the `FileIdOrUrl` variants. The referenced file must be in a
+       * format the requested `transform_type` supports; see the route
+       * description for the per-transform format lists. Requests against
+       * unsupported formats fail with `unsupported_format_error`.
+       */
+      file_id_or_url?: FileIdOrUrl;
+      /**
+       * What to produce from the source file. Required.
+       */
+      transform_type: TransformType;
+      /**
+       * Options for `TransformType.thumbnail`.
+       */
+      thumbnail?: ThumbnailOptions;
+      /**
+       * Options for `TransformType.image` and `TransformType.image_pdf`.
+       */
+      image?: ImageOptions;
+      /**
+       * Options for `TransformType.video_frame`.
+       */
+      video_frame?: VideoFrameOptions;
+    }
+
+    /**
+     * A completed transform: a handle for retrieving the produced bytes, plus
+     * enough metadata to decide whether to retrieve them. The bytes themselves
+     * are deliberately not carried here. A completed async result is persisted,
+     * so it is bounded by a row-size limit well below the size of a typical
+     * converted document -- an inline payload would fail for exactly the large
+     * documents this route exists to convert. The transform therefore completes
+     * by caching its output and handing back `output_handle`, which
+     * `download_transform_output` exchanges for the bytes.
+     */
+    export interface TransformOutput {
+      /**
+       * Defaults to .
+       */
+      output_handle?: string;
+      /**
+       * Defaults to 0.
+       */
+      size?: number;
+      /**
+       * Defaults to .
+       */
+      format?: string;
+      /**
+       * Defaults to .
+       */
+      mime_type?: string;
+      /**
+       * Defaults to 0.
+       */
+      expires_ts?: number;
+    }
+
+    /**
+     * Convert the source document to PDF. Supported for word-processing,
+     * presentation, and spreadsheet documents; images are not accepted.
+     */
+    export interface TransformTypePdf {
+      '.tag': 'pdf';
+    }
+
+    /**
+     * Convert the source document to HTML. Supported for spreadsheets only,
+     * where HTML preserves the sheet layout that a PDF rendering flattens.
+     */
+    export interface TransformTypeHtml {
+      '.tag': 'html';
+    }
+
+    /**
+     * Re-encode the source as a web-safe raster image (JPEG or PNG). This is
+     * the transform to use to normalize formats a browser cannot display
+     * directly -- HEIC, camera RAW, PSD, SVG -- and to render a single page of
+     * a document as an image. Formats a browser can already display, such as
+     * JPEG and PNG, are not accepted; use `thumbnail` to resize or re-encode
+     * those. Configured by `TransformArgs.image`.
+     */
+    export interface TransformTypeImage {
+      '.tag': 'image';
+    }
+
+    /**
+     * Produce a resized thumbnail of the source at one of the supported sizes.
+     * Configured by `TransformArgs.thumbnail`.
+     */
+    export interface TransformTypeThumbnail {
+      '.tag': 'thumbnail';
+    }
+
+    /**
+     * Render the source as a page image by way of a PDF conversion, rather than
+     * by whichever image pipeline the source format would otherwise use. Prefer
+     * `image` unless you specifically need the PDF-rendered result; the two
+     * differ for formats that have a native image pipeline of their own
+     * (ebooks, for example). Configured by `TransformArgs.image`.
+     */
+    export interface TransformTypeImagePdf {
+      '.tag': 'image_pdf';
+    }
+
+    /**
+     * Extract a single frame from a video as a still image. Configured by
+     * `TransformArgs.video_frame`. This produces one frame at one requested
+     * offset. To get the set of scene-change keyframes across a whole video,
+     * use `get_keyframes_async`, which returns every detected frame with its
+     * timestamp and scene score.
+     */
+    export interface TransformTypeVideoFrame {
+      '.tag': 'video_frame';
+    }
+
+    export interface TransformTypeOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Which derived file to produce from the source file. Unlike the other
+     * Riviera content routes, which each expose one capability,
+     * `get_transform_async` is a single route over many conversions: the caller
+     * names the source file and the output it wants, and the service picks the
+     * conversion pipeline. Exactly one variant must be set; a request with none
+     * set fails with `invalid_options_error`.
+     */
+    export type TransformType = TransformTypePdf | TransformTypeHtml | TransformTypeImage | TransformTypeThumbnail | TransformTypeImagePdf | TransformTypeVideoFrame | TransformTypeOther;
+
+    /**
+     * Options for `TransformType.video_frame`. Supplying this message with any
+     * other transform type fails with `invalid_options_error`.
+     */
+    export interface VideoFrameOptions {
+      /**
+       * Defaults to 0.0.
+       */
+      offset_in_seconds?: number;
+      /**
+       * Defaults to 100.
+       */
+      scale_percent?: number;
+    }
 
     /**
      * EXIF metadata, for image files.
