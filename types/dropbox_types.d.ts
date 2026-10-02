@@ -17337,6 +17337,172 @@
     export type MembersSetProfilePhotoError = MemberSelectorError | MembersSetProfilePhotoErrorSetProfileDisallowed | MembersSetProfilePhotoErrorPhotoError | MembersSetProfilePhotoErrorOther;
 
     /**
+     * Launches one action-specific member suspension batch job.
+     */
+    export interface MembersSuspendBatchArg {
+      /**
+       * Must contain between 1 and 500 targets. The launch handler also rejects
+       * duplicate client item IDs and duplicate member selectors.
+       */
+      members: Array<MembersSuspendBatchTarget>;
+    }
+
+    export interface MembersSuspendBatchComplete {
+      requested: number;
+      suspended: number;
+      failed: number;
+      unknown: number;
+      report_delivery: MembersSuspendBatchReportDeliveryStatus;
+    }
+
+    /**
+     * The request contains more than 500 members.
+     */
+    export interface MembersSuspendBatchErrorTooManyMembers {
+      '.tag': 'too_many_members';
+    }
+
+    /**
+     * More than one target uses the same client item ID.
+     */
+    export interface MembersSuspendBatchErrorDuplicateClientItemId {
+      '.tag': 'duplicate_client_item_id';
+    }
+
+    /**
+     * More than one target selects the same team member.
+     */
+    export interface MembersSuspendBatchErrorDuplicateTeamMemberId {
+      '.tag': 'duplicate_team_member_id';
+    }
+
+    /**
+     * The acting administrator cannot suspend their own account.
+     */
+    export interface MembersSuspendBatchErrorActingAdmin {
+      '.tag': 'acting_admin';
+    }
+
+    /**
+     * Suspending the selected members would leave the team without an active
+     * admin.
+     */
+    export interface MembersSuspendBatchErrorLastAdmin {
+      '.tag': 'last_admin';
+    }
+
+    export interface MembersSuspendBatchErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * A typed launch rejection. Authorization failures continue to use the API
+     * v2 authentication/permission error surface.
+     */
+    export type MembersSuspendBatchError = MembersSuspendBatchErrorTooManyMembers | MembersSuspendBatchErrorDuplicateClientItemId | MembersSuspendBatchErrorDuplicateTeamMemberId | MembersSuspendBatchErrorActingAdmin | MembersSuspendBatchErrorLastAdmin | MembersSuspendBatchErrorOther;
+
+    export interface MembersSuspendBatchJobStatusComplete extends MembersSuspendBatchComplete {
+      '.tag': 'complete';
+    }
+
+    export interface MembersSuspendBatchJobStatusFailed {
+      '.tag': 'failed';
+      failed: MembersSuspendBatchTaskFailure;
+    }
+
+    export interface MembersSuspendBatchJobStatusOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Coarse job state. Live row progress and report contents are intentionally
+     * omitted; the authorized team admin who initiated the batch receives row
+     * details in the terminal email report.
+     */
+    export type MembersSuspendBatchJobStatus = async.PollResultBase | MembersSuspendBatchJobStatusComplete | MembersSuspendBatchJobStatusFailed | MembersSuspendBatchJobStatusOther;
+
+    export interface MembersSuspendBatchReportDeliveryStatusMembersSuspendBatchReportDeliveryStatusUnspecified {
+      '.tag': 'members_suspend_batch_report_delivery_status_unspecified';
+    }
+
+    export interface MembersSuspendBatchReportDeliveryStatusMembersSuspendBatchReportDeliveryStatusPending {
+      '.tag': 'members_suspend_batch_report_delivery_status_pending';
+    }
+
+    export interface MembersSuspendBatchReportDeliveryStatusMembersSuspendBatchReportDeliveryStatusDelivered {
+      '.tag': 'members_suspend_batch_report_delivery_status_delivered';
+    }
+
+    export interface MembersSuspendBatchReportDeliveryStatusMembersSuspendBatchReportDeliveryStatusFailed {
+      '.tag': 'members_suspend_batch_report_delivery_status_failed';
+    }
+
+    export interface MembersSuspendBatchReportDeliveryStatusOther {
+      '.tag': 'other';
+    }
+
+    export type MembersSuspendBatchReportDeliveryStatus = MembersSuspendBatchReportDeliveryStatusMembersSuspendBatchReportDeliveryStatusUnspecified | MembersSuspendBatchReportDeliveryStatusMembersSuspendBatchReportDeliveryStatusPending | MembersSuspendBatchReportDeliveryStatusMembersSuspendBatchReportDeliveryStatusDelivered | MembersSuspendBatchReportDeliveryStatusMembersSuspendBatchReportDeliveryStatusFailed | MembersSuspendBatchReportDeliveryStatusOther;
+
+    export interface MembersSuspendBatchRowFailureProtectedActingAdmin {
+      '.tag': 'protected_acting_admin';
+    }
+
+    export interface MembersSuspendBatchRowFailurePermissionChanged {
+      '.tag': 'permission_changed';
+    }
+
+    export interface MembersSuspendBatchRowFailureSuspendFailed {
+      '.tag': 'suspend_failed';
+    }
+
+    /**
+     * Stable machine-readable reasons used by the terminal row report.
+     */
+    export type MembersSuspendBatchRowFailure = MembersSuspendError | MembersSuspendBatchRowFailureProtectedActingAdmin | MembersSuspendBatchRowFailurePermissionChanged | MembersSuspendBatchRowFailureSuspendFailed;
+
+    export interface MembersSuspendBatchRowOutcomeSuspended {
+      '.tag': 'suspended';
+    }
+
+    export interface MembersSuspendBatchRowOutcomeFailed {
+      '.tag': 'failed';
+      failed: MembersSuspendBatchRowFailure;
+    }
+
+    export interface MembersSuspendBatchRowOutcomeUnknown {
+      '.tag': 'unknown';
+    }
+
+    export interface MembersSuspendBatchRowOutcomeOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * The terminal outcome for one requested member. Row outcomes are delivered
+     * in the report rather than embedded in the status response.
+     */
+    export type MembersSuspendBatchRowOutcome = MembersSuspendBatchRowOutcomeSuspended | MembersSuspendBatchRowOutcomeFailed | MembersSuspendBatchRowOutcomeUnknown | MembersSuspendBatchRowOutcomeOther;
+
+    /**
+     * One member selected for suspension. The opaque client item ID correlates
+     * the eventual report row with the caller's input without sending CSV data.
+     */
+    export interface MembersSuspendBatchTarget {
+      client_item_id: string;
+      suspend_arg: MembersDeactivateArg;
+    }
+
+    export interface MembersSuspendBatchTaskFailureUnusableResult {
+      '.tag': 'unusable_result';
+    }
+
+    export interface MembersSuspendBatchTaskFailureOther {
+      '.tag': 'other';
+    }
+
+    export type MembersSuspendBatchTaskFailure = MembersSuspendBatchTaskFailureUnusableResult | MembersSuspendBatchTaskFailureOther;
+
+    /**
      * The user is not active, so it cannot be suspended.
      */
     export interface MembersSuspendErrorSuspendInactiveUser {

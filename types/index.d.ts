@@ -4449,6 +4449,33 @@ export class Dropbox {
     public teamMembersSuspend(arg: team.MembersDeactivateArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
 
     /**
+     * Launch a member suspension batch. The server enforces a maximum of 500
+     * members.
+     *
+     * Route attributes:
+     *   scope: members.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.MembersSuspendBatchError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public teamMembersSuspendBatch(arg: team.MembersSuspendBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Poll a previously launched member suspension batch job.
+     *
+     * Route attributes:
+     *   scope: members.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public teamMembersSuspendBatchJobStatusCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersSuspendBatchJobStatus>>;
+
+    /**
      * Unsuspend a member from a team. Permission : Team member management
      * Exactly one of team_member_id, email, or external_id must be provided to
      * identify the user account.
