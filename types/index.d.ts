@@ -4038,30 +4038,32 @@ export class Dropbox {
     public teamMembersAddJobStatusGetV2(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersAddJobStatusV2Result>>;
 
     /**
-     * Launch a bulk suspend job. The server enforces a maximum of 500 members.
+     * Deprecated compatibility alias for MembersSuspendBatch.
      *
      * Route attributes:
      *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<team.BulkSuspendError>.
+     * DropboxResponseError<team.MembersSuspendBatchError>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
-    public teamMembersBulkSuspend(arg: team.BulkSuspendArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+    public teamMembersBulkSuspend(arg: team.MembersSuspendBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
 
     /**
-     * Poll a previously launched bulk suspend job.
+     * Deprecated compatibility alias for MembersSuspendBatchJobStatusCheck.
      *
      * Route attributes:
      *   scope: members.write
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
-    public teamMembersBulkSuspendJobStatusCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.BulkSuspendJobStatus>>;
+    public teamMembersBulkSuspendJobStatusCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersSuspendBatchJobStatus>>;
 
     /**
      * Permanently delete the files of a user who has been removed from the
