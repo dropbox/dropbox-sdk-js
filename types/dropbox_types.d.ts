@@ -2611,6 +2611,12 @@
       '.tag': 'active';
     }
 
+    /**
+     * Field is deprecated. Deprecated. Deleted-file search does not work and
+     * should not be used. Use listFolder() with ListFolderArg.include_deleted
+     * set to true to enumerate deleted entries; this does not provide
+     * equivalent full-text search.
+     */
     export interface FileStatusDeleted {
       '.tag': 'deleted';
     }
