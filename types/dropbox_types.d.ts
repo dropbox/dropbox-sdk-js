@@ -11507,11 +11507,39 @@
       '.tag': 'must_automount';
     }
 
+    /**
+     * User will have too many mounts after this operation.
+     */
+    export interface MountFolderErrorTooManyMounts {
+      '.tag': 'too_many_mounts';
+      too_many_mounts: TooManyMountsError;
+    }
+
     export interface MountFolderErrorOther {
       '.tag': 'other';
     }
 
-    export type MountFolderError = MountFolderErrorAccessError | MountFolderErrorInsideSharedFolder | MountFolderErrorInsufficientQuota | MountFolderErrorAlreadyMounted | MountFolderErrorNoPermission | MountFolderErrorNotMountable | MountFolderErrorMustAutomount | MountFolderErrorOther;
+    export type MountFolderError = MountFolderErrorAccessError | MountFolderErrorInsideSharedFolder | MountFolderErrorInsufficientQuota | MountFolderErrorAlreadyMounted | MountFolderErrorNoPermission | MountFolderErrorNotMountable | MountFolderErrorMustAutomount | MountFolderErrorTooManyMounts | MountFolderErrorOther;
+
+    /**
+     * Information about the mount limit that the operation would exceed.
+     */
+    export interface MountLimitsInfo {
+      /**
+       * The maximum number allowed for this limit.
+       */
+      limit: number;
+      /**
+       * The current number of mounts for the user, or of namespaces in the
+       * folder tree.
+       */
+      current_count: number;
+      /**
+       * The number of mounts for the user, or of namespaces in the folder tree,
+       * if the operation were completed.
+       */
+      new_count: number;
+    }
 
     /**
      * Contains information about a parent folder that a member has access to.
@@ -12250,11 +12278,19 @@
       '.tag': 'disallowed_shared_link_policy';
     }
 
+    /**
+     * User will have too many mounts after the operation.
+     */
+    export interface ShareFolderErrorBaseTooManyMounts {
+      '.tag': 'too_many_mounts';
+      too_many_mounts: TooManyMountsError;
+    }
+
     export interface ShareFolderErrorBaseOther {
       '.tag': 'other';
     }
 
-    export type ShareFolderErrorBase = ShareFolderErrorBaseEmailUnverified | ShareFolderErrorBaseBadPath | ShareFolderErrorBaseTeamPolicyDisallowsMemberPolicy | ShareFolderErrorBaseDisallowedSharedLinkPolicy | ShareFolderErrorBaseOther;
+    export type ShareFolderErrorBase = ShareFolderErrorBaseEmailUnverified | ShareFolderErrorBaseBadPath | ShareFolderErrorBaseTeamPolicyDisallowsMemberPolicy | ShareFolderErrorBaseDisallowedSharedLinkPolicy | ShareFolderErrorBaseTooManyMounts | ShareFolderErrorBaseOther;
 
     /**
      * This user's email address is not verified. This functionality is only
@@ -13235,6 +13271,39 @@
        */
       member_id?: string;
     }
+
+    /**
+     * The user can't add more mounts because it would exceed the maximum number
+     * of mounts allowed.
+     */
+    export interface TooManyMountsErrorTotalMountsExceeded extends MountLimitsInfo {
+      '.tag': 'total_mounts_exceeded';
+    }
+
+    /**
+     * The user can't add more mounts because it would exceed the mount limit
+     * for their home namespace.
+     */
+    export interface TooManyMountsErrorHomeMountsExceeded extends MountLimitsInfo {
+      '.tag': 'home_mounts_exceeded';
+    }
+
+    /**
+     * The user can't create a new nested share because doing so would exceed
+     * the maximum number of namespaces allowed in the folder tree.
+     */
+    export interface TooManyMountsErrorTreeSizeExceeded extends MountLimitsInfo {
+      '.tag': 'tree_size_exceeded';
+    }
+
+    export interface TooManyMountsErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * This operation would exceed the maximum number of mounts allowed.
+     */
+    export type TooManyMountsError = TooManyMountsErrorTotalMountsExceeded | TooManyMountsErrorHomeMountsExceeded | TooManyMountsErrorTreeSizeExceeded | TooManyMountsErrorOther;
 
     export interface TransferFolderArg {
       /**
