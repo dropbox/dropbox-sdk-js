@@ -3221,20 +3221,6 @@ export class Dropbox {
     public sharingRelinquishFolderMembership(arg: sharing.RelinquishFolderMembershipArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchEmptyResult>>;
 
     /**
-     * Identical to remove_file_member_2 but with less information returned.
-     *
-     * Route attributes:
-     *   scope: sharing.write
-     *
-     * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<sharing.RemoveFileMemberError>.
-     * @deprecated
-     * @param arg The request parameters.
-     * @param options Optional transport settings for this request.
-     */
-    public sharingRemoveFileMember(arg: sharing.RemoveFileMemberArg, options?: DropboxRequestOptions): Promise<DropboxResponse<sharing.FileMemberActionIndividualResult>>;
-
-    /**
      * Removes a specified member from the file.
      *
      * Route attributes:
