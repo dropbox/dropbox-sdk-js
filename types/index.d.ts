@@ -4024,34 +4024,6 @@ export class Dropbox {
     public teamMembersAddJobStatusGetV2(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersAddJobStatusV2Result>>;
 
     /**
-     * Deprecated compatibility alias for MembersSuspendBatch.
-     *
-     * Route attributes:
-     *   scope: members.write
-     *
-     * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<team.MembersSuspendBatchError>.
-     * @deprecated
-     * @param arg The request parameters.
-     * @param options Optional transport settings for this request.
-     */
-    public teamMembersBulkSuspend(arg: team.MembersSuspendBatchArg, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
-
-    /**
-     * Deprecated compatibility alias for MembersSuspendBatchJobStatusCheck.
-     *
-     * Route attributes:
-     *   scope: members.write
-     *
-     * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<async.PollError>.
-     * @deprecated
-     * @param arg The request parameters.
-     * @param options Optional transport settings for this request.
-     */
-    public teamMembersBulkSuspendJobStatusCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.MembersSuspendBatchJobStatus>>;
-
-    /**
      * Permanently delete the files of a user who has been removed from the
      * team. After permanent deletion, those files will not be available to be
      * transferred to another team member. Permission : Team member management
@@ -4599,70 +4571,6 @@ export class Dropbox {
      * @param options Optional transport settings for this request.
      */
     public teamReportsGetStorage(arg: team.DateRange, options?: DropboxRequestOptions): Promise<DropboxResponse<team.GetStorageReport>>;
-
-    /**
-     * Endpoint adds Approve List entries. Changes are effective immediately.
-     * Changes are committed in transaction. In case of single validation error
-     * - all entries are rejected. Valid domains (RFC-1034/5) and emails
-     * (RFC-5322/822) are accepted. Added entries cannot overflow limit of 10000
-     * entries per team. Maximum 100 entries per call is allowed.
-     *
-     * Route attributes:
-     *   scope: team_info.write
-     *
-     * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<team.SharingAllowlistAddError>.
-     * @param arg The request parameters.
-     * @param options Optional transport settings for this request.
-     */
-    public teamSharingAllowlistAdd(arg: team.SharingAllowlistAddArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<team.SharingAllowlistAddResponse>>;
-
-    /**
-     * Lists Approve List entries for given team, from newest to oldest,
-     * returning up to `limit` entries at a time. If there are more than `limit`
-     * entries associated with the current team, more can be fetched by passing
-     * the returned `cursor` to sharingAllowlistListContinue().
-     *
-     * Route attributes:
-     *   scope: team_info.read
-     *
-     * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<team.SharingAllowlistListError>.
-     * @param arg The request parameters.
-     * @param options Optional transport settings for this request.
-     */
-    public teamSharingAllowlistList(arg: team.SharingAllowlistListArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.SharingAllowlistListResponse>>;
-
-    /**
-     * Lists entries associated with given team, starting from a the cursor. See
-     * sharingAllowlistList().
-     *
-     * Route attributes:
-     *   scope: team_info.read
-     *
-     * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<team.SharingAllowlistListContinueError>.
-     * @param arg The request parameters.
-     * @param options Optional transport settings for this request.
-     */
-    public teamSharingAllowlistListContinue(arg: team.SharingAllowlistListContinueArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.SharingAllowlistListResponse>>;
-
-    /**
-     * Endpoint removes Approve List entries. Changes are effective immediately.
-     * Changes are committed in transaction. In case of single validation error
-     * - all entries are rejected. Valid domains (RFC-1034/5) and emails
-     * (RFC-5322/822) are accepted. Entries being removed have to be present on
-     * the list. Maximum 1000 entries per call is allowed.
-     *
-     * Route attributes:
-     *   scope: team_info.write
-     *
-     * When an error occurs, the route rejects the promise with type
-     * DropboxResponseError<team.SharingAllowlistRemoveError>.
-     * @param arg The request parameters.
-     * @param options Optional transport settings for this request.
-     */
-    public teamSharingAllowlistRemove(arg: team.SharingAllowlistRemoveArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<team.SharingAllowlistRemoveResponse>>;
 
     /**
      * Sets an archived team folder's status to active. Permission : Team member
