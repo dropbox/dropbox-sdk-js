@@ -42851,6 +42851,10 @@
        * historical data gap.
        */
       shared_link_access_level?: SharedLinkAccessLevel;
+      /**
+       * Team subdomain associated with this shared-link action.
+       */
+      subdomain?: string;
     }
 
     export interface SharedLinkCreateType {
