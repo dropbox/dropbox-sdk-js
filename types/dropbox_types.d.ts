@@ -43170,6 +43170,10 @@
        * Shared link owner details. Might be missing due to historical data gap.
        */
       shared_link_owner?: NonTeamMemberLogInfoReference|TeamMemberLogInfoReference|TrustedNonTeamMemberLogInfoReference|UserLogInfoReference;
+      /**
+       * Team subdomain used to access the shared link.
+       */
+      subdomain?: string;
     }
 
     export interface SharedLinkViewType {
