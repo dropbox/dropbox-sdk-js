@@ -2490,6 +2490,46 @@ export class Dropbox {
     public rivieraDownloadTransformOutput(arg: riviera.DownloadTransformOutputArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<DropboxDownloadResult<riviera.DownloadTransformOutputResult>>>;
 
     /**
+     * Asynchronous content extraction from a single file. One route covers
+     * every Riviera extraction. Name the source file in `file_id_or_url`, and
+     * say what to extract in `extract_type`, whose variant carries that
+     * extraction's options: - `markdown`: a document, converted to markdown
+     * that preserves its structure. - `text`: the plain text of a document. -
+     * `ocr`: the text of an image or scanned PDF, plus hOCR with per-word
+     * coordinates. - `transcript`: the timestamped transcript of an audio or
+     * video file. - `keyframes`: one keyframe per scene change in a video. The
+     * accepted formats and size limits differ per extraction; see
+     * `ExtractType`. Formats the requested extraction does not support fail
+     * with `unsupported_format_error`, and files over its size limit fail with
+     * `limit_exceeded_error`. The result is not returned by this route. Poll
+     * `extract_async/check` with the returned async job ID until it reports
+     * `complete` or `failed`. A `complete` result is an `ExtractResult` whose
+     * variant matches the requested `extract_type`.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<void>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraExtractAsync(arg: riviera.ExtractArgs, options?: DropboxRequestOptions): Promise<DropboxResponse<async.LaunchResultBase>>;
+
+    /**
+     * Returns the status or result of specified extract_async task.
+     *
+     * Route attributes:
+     *   scope: files.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<async.PollError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public rivieraExtractAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.ExtractAsyncCheckResult>>;
+
+    /**
      * Asynchronous scene-change keyframe extraction for video files. Detects
      * scene changes in the source video and returns one representative keyframe
      * per detected scene, each tagged with its timestamp (seconds from the
