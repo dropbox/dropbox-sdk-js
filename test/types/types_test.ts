@@ -116,3 +116,44 @@ dropbox.sharingGetSharedLinkFile({ url: 'https://www.dropbox.com/example' })
       fileBlob.text();
     }
   });
+
+const fileDownloader = new Dropbox.DropboxFileDownloader(dropbox, {
+  maxAttempts: 2,
+  parallelDownloads: 4,
+  retryDelay: 1000,
+  progress: (progress: Dropbox.DropboxFileDownloadProgress) => {
+    const {
+      bytesWritten,
+      totalBytes,
+      resumedFrom,
+    }: Dropbox.DropboxFileDownloadProgress = progress;
+  },
+});
+
+fileDownloader.downloadFile('/test.txt', '/tmp/test.txt')
+  .then((result: Dropbox.DropboxFileDownloadResult) => {
+    const {
+      metadata,
+      resumedFrom,
+    }: Dropbox.DropboxFileDownloadResult = result;
+  });
+
+Dropbox.downloadFile(dropbox, '/test.txt', '/tmp/test.txt', {
+  timeout: 1000,
+});
+
+const uploadSource = Dropbox.bytesUpload('upload content');
+const fileUploader = new Dropbox.DropboxFileUploader(dropbox, {
+  parallelUploads: 2,
+  progress: (progress: Dropbox.DropboxFileUploadProgress) => {
+    const { bytesCommitted, totalBytes }: Dropbox.DropboxFileUploadProgress = progress;
+  },
+});
+
+fileUploader.upload(uploadSource, { path: '/upload.txt' })
+  .then((result: Dropbox.DropboxFileUploadResult) => result.metadata);
+
+const uploadReader = {} as AsyncIterable<Uint8Array>;
+
+Dropbox.readerUpload(uploadReader);
+Dropbox.sizedReaderUpload(uploadReader, 3);

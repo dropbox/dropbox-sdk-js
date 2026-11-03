@@ -34,7 +34,7 @@ jobs:
 
       - uses: actions/checkout@v7
       - name: Setup Python environment
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Setup Node.JS environment
@@ -91,9 +91,9 @@ jobs:
           cd ../..
       - name: Generate New Routes
         run: |
-          cd generator/stone
-          python setup.py install
-          cd ..
+          python -m pip install --upgrade pip
+          pip install -r generator/stone/requirements.txt
+          cd generator
           python generate_routes.py
           cd ..
 
@@ -140,8 +140,8 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
-      # - name: Enable Pull Request Automerge
-      #   if: steps.create-pr.outputs.pull-request-number
-      #   run: gh pr merge --merge --auto "${{ steps.create-pr.outputs.pull-request-number }}"
-      #   env:
-      #     GH_TOKEN: ${{ steps.app-token.outputs.token }}
+      - name: Enable Pull Request Automerge
+        if: steps.create-pr.outputs.pull-request-number
+        run: gh pr merge --squash --auto "${{ steps.create-pr.outputs.pull-request-number }}"
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}

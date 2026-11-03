@@ -58,7 +58,7 @@ exact SDK version so a future breaking release cannot change your application
 unexpectedly.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/dropbox@10.34.0/dist/Dropbox-sdk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dropbox@10.46.0/dist/Dropbox-sdk.min.js"></script>
 <script>
   const dbx = new Dropbox.Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN' });
 </script>
@@ -66,12 +66,18 @@ unexpectedly.
 
 Do not hard-code production access tokens in public source code.
 
+For debugging, use the unminified bundle:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/dropbox@10.46.0/dist/Dropbox-sdk.js"></script>
+```
+
 ### Web Worker
 
 The same browser bundle can be loaded in a Worker:
 
 ```js
-importScripts('https://cdn.jsdelivr.net/npm/dropbox@10.34.0/dist/Dropbox-sdk.min.js');
+importScripts('https://cdn.jsdelivr.net/npm/dropbox@10.46.0/dist/Dropbox-sdk.min.js');
 
 const dbx = new Dropbox.Dropbox({ accessToken: 'YOUR_ACCESS_TOKEN' });
 ```
@@ -124,10 +130,60 @@ in both JavaScript and TypeScript, with additional Node.js OAuth examples.
 
 - **Other Examples**
     - Basic - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/basic), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/basic) ] - A simple example that takes in a token and fetches files from your Dropbox account.
+    - Backend Download - [ [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/backend-download) ] - An example showing resumable backend downloads to local storage.
     - Download - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/download), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/download) ] - An example showing how to download a shared file.
     - Team As User - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/team-as-user), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/team-as-user) ] - An example showing how to act as a user.
     - Team - [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/team), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/team) ] - An example showing how to use the team functionality and list team devices.
     - Upload [ [TS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/typescript/upload), [JS](https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/upload) ] - An example showing how to upload a file to Dropbox.
+
+## Reliable file transfers
+
+For Node.js applications that need resumable local downloads or retrying uploads,
+the SDK exports file transfer helpers alongside the generated API methods.
+
+```js
+const {
+  Dropbox,
+  DropboxFileUploader,
+  bytesUpload,
+  downloadFile,
+  fileUpload,
+  readerUpload,
+  sizedReaderUpload,
+} = require('dropbox');
+
+const dbx = new Dropbox({ accessToken: process.env.DROPBOX_ACCESS_TOKEN });
+
+await downloadFile(dbx, '/large-file.bin', './large-file.bin', {
+  parallelDownloads: 4,
+  progress: ({ bytesWritten, totalBytes }) => {
+    console.log(`${bytesWritten}/${totalBytes}`);
+  },
+});
+
+const uploader = new DropboxFileUploader(dbx, {
+  progress: ({ bytesCommitted, totalBytes }) => {
+    console.log(`${bytesCommitted}/${totalBytes}`);
+  },
+});
+
+await uploader.upload(
+  await fileUpload('./large-file.bin'),
+  { path: '/large-file.bin', mode: { '.tag': 'overwrite' } },
+);
+
+await uploader.upload(
+  bytesUpload('hello from the Dropbox SDK\n'),
+  { path: '/hello.txt' },
+);
+```
+
+Downloads write to `localPath + ".part"` and rename the file after validating
+the final size and Dropbox `content_hash` metadata when present. Uploads retry
+transient failures at the individual session request, reconcile committed
+offsets after lost responses, and use upload sessions for every source. Pass
+`parallelUploads` for repeatable byte or file sources, or use `readerUpload()`
+and `sizedReaderUpload()` for one-shot Node readable streams.
 
 ## Getting Help
 

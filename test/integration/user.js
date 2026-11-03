@@ -1,10 +1,18 @@
 import fs from 'fs/promises';
+import os from 'os';
 import path from 'path';
 import { Readable } from 'stream';
 
 import chai from 'chai';
 
-import { Dropbox, DropboxAuth } from '../../index.js';
+import {
+  Dropbox,
+  DropboxAuth,
+  DropboxFileUploader,
+  bytesUpload,
+  downloadFile,
+  readerUpload,
+} from '../../index.js';
 import { DropboxResponse } from '../../src/response.js';
 import { DropboxResponseError } from '../../src/error.js';
 
@@ -73,6 +81,56 @@ for (const appType in appInfo) {
             })
             .catch(done);
         });
+
+        it('downloadFile helper resumes a live file from a part file', (done) => {
+          const prefix = 'already downloaded ';
+          const suffix = 'and resumed with a range request\n';
+          const contents = prefix + suffix;
+          const uploadPath = `/dropbox-sdk-js-download-helper-${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}.txt`;
+          const localDirPromise = fs.mkdtemp(path.join(os.tmpdir(), 'dropbox-sdk-js-download-helper-'));
+          let uploaded = false;
+          let localDir;
+          let localPath;
+          let testError;
+
+          const cleanup = () => Promise.all([
+            uploaded ? dbx.filesDeleteV2({ path: uploadPath }) : Promise.resolve(),
+            localDir ? fs.rm(localDir, { recursive: true, force: true }) : Promise.resolve(),
+          ]);
+
+          localDirPromise
+            .then((dir) => {
+              localDir = dir;
+              localPath = path.join(localDir, 'download.txt');
+              return dbx.filesUpload({ path: uploadPath, contents });
+            })
+            .then(() => {
+              uploaded = true;
+              return fs.writeFile(`${localPath}.part`, prefix);
+            })
+            .then(() => downloadFile(dbx, uploadPath, localPath, {
+              progress: ({ bytesWritten, totalBytes, resumedFrom }) => {
+                chai.assert.isAtLeast(bytesWritten, prefix.length);
+                chai.assert.equal(totalBytes, contents.length);
+                chai.assert.equal(resumedFrom, prefix.length);
+              },
+            }))
+            .then((result) => {
+              chai.assert.equal(result.resumedFrom, prefix.length);
+              chai.assert.equal(result.metadata.path_display, uploadPath);
+              chai.assert.equal(result.metadata.size, contents.length);
+              return fs.readFile(localPath, 'utf8');
+            })
+            .then((downloaded) => {
+              chai.assert.equal(downloaded, contents);
+            })
+            .catch((error) => {
+              testError = error;
+            })
+            .then(cleanup)
+            .then(() => done(testError))
+            .catch((cleanupError) => done(testError || cleanupError));
+        });
       });
 
       describe('upload', () => {
@@ -124,6 +182,40 @@ for (const appType in appInfo) {
             .then(cleanup)
             .then(() => done(testError))
             .catch((cleanupError) => done(testError || cleanupError));
+        });
+
+        it('file transfer uploader supports sequential and concurrent sessions', async () => {
+          const suffix = `${process.pid}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+          const sequentialPath = `/dropbox-sdk-js-transfer-sequential-${suffix}.txt`;
+          const concurrentPath = `/dropbox-sdk-js-transfer-concurrent-${suffix}.bin`;
+          const sequentialContents = Buffer.from('file transfer reader upload\n');
+          const concurrentContents = Buffer.alloc(8 * 1024 * 1024 + 1, 97);
+
+          try {
+            const sequentialUploader = new DropboxFileUploader(dbx, { chunkSize: 4 });
+            await sequentialUploader.upload(
+              readerUpload(Readable.from([sequentialContents])),
+              { path: sequentialPath },
+            );
+            const sequentialDownload = await dbx.filesDownload({ path: sequentialPath });
+            chai.assert.deepEqual(sequentialDownload.result.fileBinary, sequentialContents);
+
+            const concurrentUploader = new DropboxFileUploader(dbx, {
+              chunkSize: 4 * 1024 * 1024,
+              parallelUploads: 2,
+            });
+            await concurrentUploader.upload(
+              bytesUpload(concurrentContents),
+              { path: concurrentPath },
+            );
+            const concurrentDownload = await dbx.filesDownload({ path: concurrentPath });
+            chai.assert.deepEqual(concurrentDownload.result.fileBinary, concurrentContents);
+          } finally {
+            await Promise.allSettled([
+              dbx.filesDeleteV2({ path: sequentialPath }),
+              dbx.filesDeleteV2({ path: concurrentPath }),
+            ]);
+          }
         });
       });
 

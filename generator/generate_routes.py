@@ -92,7 +92,7 @@ def main():
     o = subprocess.check_output(
         (['python3', '-m', 'stone.cli', 'js_client', dropbox_pkg_path] +
          specs + ['-a', 'host', '-a', 'style', '-a', 'auth', '-a', 'scope'] +
-         ['--', 'routes.js', '-c', 'Dropbox', '--wrap-response-in', 'DropboxResponse', '--wrap-error-in', 'DropboxResponseError', '-a', 'scope']),
+         ['--', 'routes.js', '-c', 'Dropbox', '--wrap-response-in', 'DropboxResponse', '--wrap-error-in', 'DropboxResponseError', '--request-options', '-a', 'scope']),
         cwd=stone_path)
     if verbose:
         print(o)

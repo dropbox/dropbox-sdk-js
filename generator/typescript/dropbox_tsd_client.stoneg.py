@@ -39,6 +39,9 @@ class DropboxTSDClientBackend(tsd_client.TSDClientBackend):
 
         if route.arg_data_type.__class__ != Void:
             self.emit(' * @param arg The request parameters.')
+        self.emit(
+            ' * @param options Optional transport settings for this request.'
+        )
         self.emit(' */')
 
         result_type = fmt_type(route.result_data_type)
@@ -53,8 +56,16 @@ class DropboxTSDClientBackend(tsd_client.TSDClientBackend):
         else:
             return_type = 'Promise<{}>;'.format(result_type)
 
-        arg = ''
-        if route.arg_data_type.__class__ != Void:
-            arg = 'arg: {}'.format(fmt_type(route.arg_data_type))
+        params = []
 
-        self.emit('public {}({}): {}'.format(function_name, arg, return_type))
+        if route.arg_data_type.__class__ != Void:
+            params.append('arg: {}'.format(fmt_type(route.arg_data_type)))
+
+        params.append('options?: DropboxRequestOptions')
+        self.emit(
+            'public {}({}): {}'.format(
+                function_name,
+                ', '.join(params),
+                return_type,
+            )
+        )

@@ -20,6 +20,38 @@ const b64 = typeof btoa === 'undefined'
   ? (str) => Buffer.from(str).toString('base64')
   : btoa;
 
+const PROTECTED_HEADERS = new Set([
+  'authorization',
+  'content-type',
+  'dropbox-api-arg',
+]);
+
+/**
+ * Returns the AbortSignal to use for a request, combining a user-provided
+ * signal with an optional timeout.
+ */
+function buildRequestSignal({ signal, timeout } = {}) {
+  if (timeout == null) {
+    return signal;
+  }
+
+  return signal
+    ? AbortSignal.any([signal, AbortSignal.timeout(timeout)])
+    : AbortSignal.timeout(timeout);
+}
+
+function setExtraHeaders(options, fetchOptions) {
+  if (!options || !options.extraHeaders) {
+    return;
+  }
+
+  Object.entries(options.extraHeaders).forEach(([name, value]) => {
+    if (!PROTECTED_HEADERS.has(name.toLowerCase())) {
+      fetchOptions.headers[name] = value;
+    }
+  });
+}
+
 /**
  * @class Dropbox
  * @classdesc The Dropbox SDK class that provides methods to read, write and
@@ -73,28 +105,31 @@ export default class Dropbox {
     Object.assign(this, routes);
   }
 
-  request(path, args, auth, host, style) {
-    // scope is provided after "style", but unused in requests, so it's not in parameters
+  request(path, args, auth, host, style, scope, options) {
+    // scope is currently unused by the transport layer
     switch (style) {
       case RPC:
-        return this.rpcRequest(path, args, auth, host);
+        return this.rpcRequest(path, args, auth, host, options);
       case DOWNLOAD:
-        return this.downloadRequest(path, args, auth, host);
+        return this.downloadRequest(path, args, auth, host, options);
       case UPLOAD:
-        return this.uploadRequest(path, args, auth, host);
+        return this.uploadRequest(path, args, auth, host, options);
       default:
         throw new Error(`Invalid request style: ${style}`);
     }
   }
 
-  rpcRequest(path, body, auth, host) {
+  rpcRequest(path, body, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
         const fetchOptions = {
           method: 'POST',
-          body: (body) ? JSON.stringify(body) : null,
+          body: body ? JSON.stringify(body) : null,
           headers: {},
+          signal: buildRequestSignal(options),
         };
+
+        setExtraHeaders(options, fetchOptions);
 
         if (body) {
           fetchOptions.headers['Content-Type'] = 'application/json';
@@ -112,15 +147,18 @@ export default class Dropbox {
       .then((res) => parseResponse(res));
   }
 
-  downloadRequest(path, args, auth, host) {
+  downloadRequest(path, args, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
       .then(() => {
         const fetchOptions = {
           method: 'POST',
-          headers: {
-            'Dropbox-API-Arg': httpHeaderSafeJson(args),
-          },
+          headers: {},
+          signal: buildRequestSignal(options),
         };
+
+        setExtraHeaders(options, fetchOptions);
+
+        fetchOptions.headers['Dropbox-API-Arg'] = httpHeaderSafeJson(args);
 
         this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
@@ -134,7 +172,7 @@ export default class Dropbox {
       .then((res) => parseDownloadResponse(res));
   }
 
-  uploadRequest(path, args, auth, host) {
+  uploadRequest(path, args, auth, host, options) {
     return this.auth.checkAndRefreshAccessToken()
       .then(async () => {
         const requestArgs = Object.assign({}, args); // eslint-disable-line prefer-object-spread
@@ -149,15 +187,18 @@ export default class Dropbox {
         const fetchOptions = {
           body: contents,
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/octet-stream',
-            'Dropbox-API-Arg': httpHeaderSafeJson(requestArgs),
-          },
+          headers: {},
+          signal: buildRequestSignal(options),
         };
 
         if (contents && typeof contents.pipe === 'function') {
           fetchOptions.duplex = 'half';
         }
+
+        setExtraHeaders(options, fetchOptions);
+
+        fetchOptions.headers['Content-Type'] = 'application/octet-stream';
+        fetchOptions.headers['Dropbox-API-Arg'] = httpHeaderSafeJson(requestArgs);
 
         this.setAuthHeaders(auth, fetchOptions);
         this.setCommonHeaders(fetchOptions);
