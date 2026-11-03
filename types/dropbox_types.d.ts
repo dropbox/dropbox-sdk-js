@@ -6260,7 +6260,15 @@
       '.tag': 'doc_not_found';
     }
 
-    export type DocLookupError = PaperApiBaseError | DocLookupErrorDocNotFound;
+    /**
+     * Cloud Docs do not have legacy Paper folders. Use the Dropbox filesystem
+     * APIs to look up their containing folders.
+     */
+    export interface DocLookupErrorFolderNotFound {
+      '.tag': 'folder_not_found';
+    }
+
+    export type DocLookupError = PaperApiBaseError | DocLookupErrorDocNotFound | DocLookupErrorFolderNotFound;
 
     /**
      * No change email messages unless you're the creator.
