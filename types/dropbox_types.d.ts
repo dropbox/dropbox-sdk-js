@@ -7610,6 +7610,261 @@
     }
 
     /**
+     * An unexpected, typically transient, server-side failure. The string is a
+     * human-readable message; retrying with backoff may succeed.
+     */
+    export interface ExtractApiV2ErrorServerError {
+      '.tag': 'server_error';
+      server_error: string;
+    }
+
+    /**
+     * The request could not be processed as supplied (a problem with the
+     * caller's input), for example an out-of-range option. The string is a
+     * human-readable message; retrying the same request will not help.
+     */
+    export interface ExtractApiV2ErrorUserError {
+      '.tag': 'user_error';
+      user_error: string;
+    }
+
+    /**
+     * The source file is not in a format the requested `extract_type` supports.
+     */
+    export interface ExtractApiV2ErrorUnsupportedFormatError {
+      '.tag': 'unsupported_format_error';
+    }
+
+    /**
+     * `FileIdOrUrl.url` referenced a Dropbox shared link whose owner has
+     * disabled downloads.
+     */
+    export interface ExtractApiV2ErrorLinkDownloadDisabledError {
+      '.tag': 'link_download_disabled_error';
+    }
+
+    /**
+     * `FileIdOrUrl.url` referenced a password-protected Dropbox shared link.
+     * Riviera cannot supply the password, so such links cannot be read.
+     */
+    export interface ExtractApiV2ErrorSharedLinkPasswordProtected {
+      '.tag': 'shared_link_password_protected';
+    }
+
+    /**
+     * A resource limit was exceeded: the source file is larger than the
+     * requested `extract_type` accepts, or the result would be too large to
+     * return. For `keyframes`, raise `scene_change_threshold` or turn off
+     * `include_images`; for `markdown`, turn off `embed_images`.
+     */
+    export interface ExtractApiV2ErrorLimitExceededError {
+      '.tag': 'limit_exceeded_error';
+    }
+
+    /**
+     * The source file was readable but could not be processed, for example
+     * because it is corrupt.
+     */
+    export interface ExtractApiV2ErrorConversionFailureError {
+      '.tag': 'conversion_failure_error';
+    }
+
+    /**
+     * The referenced file does not exist or is not accessible.
+     */
+    export interface ExtractApiV2ErrorNotFoundError {
+      '.tag': 'not_found_error';
+    }
+
+    /**
+     * The target is a folder, not a file.
+     */
+    export interface ExtractApiV2ErrorIsAFolderError {
+      '.tag': 'is_a_folder_error';
+    }
+
+    /**
+     * `transcript` only: the source file has no audio track.
+     */
+    export interface ExtractApiV2ErrorNoAudioError {
+      '.tag': 'no_audio_error';
+    }
+
+    export interface ExtractApiV2ErrorOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Reason an extraction job failed. Returned in the `failed` variant of
+     * `ExtractAsyncCheckResult`. This is a semantic error union: the HTTP
+     * status of the poll request itself is unaffected (a poll that surfaces a
+     * failed job is still a normal successful poll response). Callers should
+     * branch on the variant.
+     */
+    export type ExtractApiV2Error = ExtractApiV2ErrorServerError | ExtractApiV2ErrorUserError | ExtractApiV2ErrorUnsupportedFormatError | ExtractApiV2ErrorLinkDownloadDisabledError | ExtractApiV2ErrorSharedLinkPasswordProtected | ExtractApiV2ErrorLimitExceededError | ExtractApiV2ErrorConversionFailureError | ExtractApiV2ErrorNotFoundError | ExtractApiV2ErrorIsAFolderError | ExtractApiV2ErrorNoAudioError | ExtractApiV2ErrorOther;
+
+    /**
+     * Arguments for the asynchronous `extract_async` route. Exactly one of
+     * `file_id`, `path`, or `url` must be supplied via `file_id_or_url` to
+     * identify the source file, and `extract_type` must say what to extract
+     * from it.
+     */
+    export interface ExtractArgs {
+      /**
+       * Identifier of the source file. Callers must set exactly one of the
+       * `FileIdOrUrl` variants. The file must be in a format the requested
+       * `extract_type` supports; see `ExtractType` for the per-type lists.
+       */
+      file_id_or_url?: FileIdOrUrl;
+      /**
+       * What to extract, and that extraction's options. Required.
+       */
+      extract_type: ExtractType;
+    }
+
+    /**
+     * The job has not finished yet. Poll again.
+     */
+    export interface ExtractAsyncCheckResultInProgress {
+      '.tag': 'in_progress';
+    }
+
+    /**
+     * The job finished successfully.
+     */
+    export interface ExtractAsyncCheckResultComplete {
+      '.tag': 'complete';
+      complete: ExtractResult;
+    }
+
+    /**
+     * The job finished unsuccessfully.
+     */
+    export interface ExtractAsyncCheckResultFailed {
+      '.tag': 'failed';
+      failed: ExtractApiV2Error;
+    }
+
+    export interface ExtractAsyncCheckResultOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Status of an extraction job started by `extract_async`, as returned by
+     * `extract_async/check`.
+     */
+    export type ExtractAsyncCheckResult = ExtractAsyncCheckResultInProgress | ExtractAsyncCheckResultComplete | ExtractAsyncCheckResultFailed | ExtractAsyncCheckResultOther;
+
+    /**
+     * The markdown the document was converted to. May be empty when the
+     * document has no extractable text.
+     */
+    export interface ExtractResultMarkdown extends GetMarkdownResult {
+      '.tag': 'markdown';
+    }
+
+    /**
+     * The plain text of the document. May be empty when no text is found.
+     */
+    export interface ExtractResultText extends GetTextResult {
+      '.tag': 'text';
+    }
+
+    /**
+     * The OCR text and hOCR. Both may be empty when no text is detected.
+     */
+    export interface ExtractResultOcr extends GetOcrResult {
+      '.tag': 'ocr';
+    }
+
+    /**
+     * The transcript. Its segments are empty when no speech is detected.
+     */
+    export interface ExtractResultTranscript extends GetTranscriptResult {
+      '.tag': 'transcript';
+    }
+
+    /**
+     * The keyframes. Empty when no scene changes are detected.
+     */
+    export interface ExtractResultKeyframes extends GetKeyframesResult {
+      '.tag': 'keyframes';
+    }
+
+    export interface ExtractResultOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * A completed extraction. The variant always matches the `ExtractType` that
+     * was requested.
+     */
+    export type ExtractResult = ExtractResultMarkdown | ExtractResultText | ExtractResultOcr | ExtractResultTranscript | ExtractResultKeyframes | ExtractResultOther;
+
+    /**
+     * Convert a document to markdown, preserving structure such as headings,
+     * lists, and tables. Supported formats: .binder, .docx, .html, .paper,
+     * .papert, .pptx, .xlsx, .gsheet, .ods, .pdf. At most 50 MB.
+     */
+    export interface ExtractTypeMarkdown extends MarkdownExtractOptions {
+      '.tag': 'markdown';
+    }
+
+    /**
+     * Extract the plain text of a document. Supported formats: .doc, .docx,
+     * .docm, .rtf, .ppt, .pptx, .pptm, .xls, .xlsx, .xlsm, .pdf, .paper,
+     * .papert, .binder, .gdoc, .gsheet, .gslides, .txt, .vtt. At most 50 MB.
+     */
+    export interface ExtractTypeText extends TextExtractOptions {
+      '.tag': 'text';
+    }
+
+    /**
+     * Run OCR on an image or a scanned PDF, returning reading-ordered text plus
+     * hOCR with per-word coordinates. Supported formats: .bmp, .gif, .heic,
+     * .jpeg, .jpg, .png, .tif, .tiff, .webp, .pdf. A PDF that already has a
+     * text layer is not OCRed and yields an empty result; use `text` for it.
+     * External (non-Dropbox) URLs are not supported.
+     */
+    export interface ExtractTypeOcr extends OcrExtractOptions {
+      '.tag': 'ocr';
+    }
+
+    /**
+     * Transcribe the audio of an audio or video file into timestamped segments.
+     * Supported audio formats: .aac, .aif, .aiff, .flac, .m4a, .m4r, .mp3,
+     * .oga, .ogg, .wav, .wma; video formats as for `keyframes`. At most 10 GB,
+     * with at most 1 hour of audio. A file with no audio track fails with
+     * `no_audio_error`.
+     */
+    export interface ExtractTypeTranscript extends TranscriptExtractOptions {
+      '.tag': 'transcript';
+    }
+
+    /**
+     * Detect scene changes in a video and return one keyframe per scene.
+     * Supported formats: .3gp, .3gpp, .3gpp2, .asf, .avi, .dv, .flv, .m2t,
+     * .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf, .oggtheora, .ogv,
+     * .rm, .ts, .vob, .webm, .wmv. At most 10 GB.
+     */
+    export interface ExtractTypeKeyframes extends KeyframesExtractOptions {
+      '.tag': 'keyframes';
+    }
+
+    export interface ExtractTypeOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * What to extract from the source file, with that extraction's options.
+     * Exactly one variant must be set. Every variant carries an options
+     * message, so always send the object form -- for example `{".tag": "text"}`
+     * -- rather than a bare tag string. Option fields may be omitted to take
+     * their defaults.
+     */
+    export type ExtractType = ExtractTypeMarkdown | ExtractTypeText | ExtractTypeOcr | ExtractTypeTranscript | ExtractTypeKeyframes | ExtractTypeOther;
+
+    /**
      * A Dropbox-issued file ID for a file the authenticated user has access to,
      * e.g. "id:a4ayc_80_OEAAAAAAAAAYa".
      */
@@ -8052,6 +8307,20 @@
     }
 
     /**
+     * Options for `ExtractType.keyframes`.
+     */
+    export interface KeyframesExtractOptions {
+      /**
+       * Defaults to 0.0.
+       */
+      scene_change_threshold?: number;
+      /**
+       * Defaults to False.
+       */
+      include_images?: boolean;
+    }
+
+    /**
      * An unexpected, typically transient, server-side failure. The string is a
      * human-readable message; retrying with backoff may succeed.
      */
@@ -8223,6 +8492,20 @@
      */
     export type MarkdownConversionApiV2Error = MarkdownConversionApiV2ErrorServerError | MarkdownConversionApiV2ErrorUserError | MarkdownConversionApiV2ErrorUnsupportedFormatError | MarkdownConversionApiV2ErrorLinkDownloadDisabledError | MarkdownConversionApiV2ErrorSharedLinkPasswordProtected | MarkdownConversionApiV2ErrorLimitExceededError | MarkdownConversionApiV2ErrorConversionFailureError | MarkdownConversionApiV2ErrorNotFoundError | MarkdownConversionApiV2ErrorIsAFolderError | MarkdownConversionApiV2ErrorOther;
 
+    /**
+     * Options for `ExtractType.markdown`.
+     */
+    export interface MarkdownExtractOptions {
+      /**
+       * Defaults to False.
+       */
+      enable_ocr?: boolean;
+      /**
+       * Defaults to False.
+       */
+      embed_images?: boolean;
+    }
+
     export interface MediaDurationError {
       /**
        * Defaults to 0.
@@ -8368,6 +8651,13 @@
     export type MetadataType = MetadataTypeMetadataTypeUnknown | MetadataTypeMetadataTypeExif | MetadataTypeMetadataTypeMedia | MetadataTypeMetadataTypePdf | MetadataTypeMetadataTypeOffice | MetadataTypeOther;
 
     /**
+     * Options for `ExtractType.ocr`. There are none yet; the variant carries a
+     * message so that options can be added later without changing its shape.
+     */
+    export interface OcrExtractOptions {
+    }
+
+    /**
      * An unexpected, typically transient, server-side failure. The string is a
      * human-readable message; retrying with backoff may succeed.
      */
@@ -8476,6 +8766,13 @@
      * result.
      */
     export type OfficeFileType = OfficeFileTypeOfficeFiletypeUnknown | OfficeFileTypeOfficeFiletypeWord | OfficeFileTypeOfficeFiletypePowerpoint | OfficeFileTypeOfficeFiletypeExcel | OfficeFileTypeOther;
+
+    /**
+     * Options for `ExtractType.text`. There are none yet; the variant carries a
+     * message so that options can be added later without changing its shape.
+     */
+    export interface TextExtractOptions {
+    }
 
     /**
      * An unexpected, typically transient, server-side failure. The string is a
@@ -8761,6 +9058,26 @@
      * Granularity of the time offsets returned for each transcript segment.
      */
     export type TimestampLevel = TimestampLevelSentence | TimestampLevelWord | TimestampLevelOther;
+
+    /**
+     * Options for `ExtractType.transcript`.
+     */
+    export interface TranscriptExtractOptions {
+      /**
+       * Defaults to TagRef(Union('TimestampLevel', [UnionField('sentence',
+       * Void, False, None), UnionField('word', Void, False, None),
+       * UnionField('other', Void, True, None)]), 'sentence').
+       */
+      timestamp_level?: TimestampLevel;
+      /**
+       * Defaults to .
+       */
+      included_special_words?: string;
+      /**
+       * Defaults to .
+       */
+      audio_language?: string;
+    }
 
     /**
      * An unexpected, typically transient, server-side failure. The string is a
