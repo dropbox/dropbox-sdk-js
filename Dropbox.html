@@ -24506,6 +24506,607 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="rivieraDownloadTransformOutput"><span class="type-signature"></span>rivieraDownloadTransformOutput(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Download the output of a completed `get_transform_async` job. Pass the
+`output_handle` from the job's `complete` result. The body is the produced
+file, and the `Dropbox-API-Result` header describes it. A handle can only be
+redeemed by the user who requested the transform, and only until its
+`expires_ts`; after that this route fails with `expired_handle_error`, and
+the transform has to be requested again. A handle that was never valid, or
+that belongs to another user, fails with `user_error`.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraDownloadTransformOutputArgs">RivieraDownloadTransformOutputArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#RivieraDownloadTransformOutputResult">RivieraDownloadTransformOutputResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#RivieraTransformApiV2Error">RivieraTransformApiV2Error</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraExtractAsync"><span class="type-signature"></span>rivieraExtractAsync(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Asynchronous content extraction from a single file. One route covers every
+Riviera extraction. Name the source file in `file_id_or_url`, and say what to
+extract in `extract_type`, whose variant carries that extraction's options: -
+`markdown`: a document, converted to markdown that preserves its structure. -
+`text`: the plain text of a document. - `ocr`: the text of an image or
+scanned PDF, plus hOCR with per-word coordinates. - `transcript`: the
+timestamped transcript of an audio or video file. - `keyframes`: one keyframe
+per scene change in a video. The accepted formats and size limits differ per
+extraction; see `ExtractType`. Formats the requested extraction does not
+support fail with `unsupported_format_error`, and files over its size limit
+fail with `limit_exceeded_error`. The result is not returned by this route.
+Poll `extract_async/check` with the returned async job ID until it reports
+`complete` or `failed`. A `complete` result is an `ExtractResult` whose
+variant matches the requested `extract_type`.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraExtractArgs">RivieraExtractArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchResultBase">AsyncLaunchResultBase</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraExtractAsyncCheck"><span class="type-signature"></span>rivieraExtractAsyncCheck(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the status or result of specified extract_async task.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#RivieraExtractAsyncCheckResult">RivieraExtractAsyncCheckResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="rivieraGetKeyframesAsync"><span class="type-signature"></span>rivieraGetKeyframesAsync(arg [, options])</h4>
     
     
@@ -26881,6 +27482,430 @@ Route attributes:
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#RivieraGetTranscriptAsyncCheckResult">RivieraGetTranscriptAsyncCheckResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraGetTransformAsync"><span class="type-signature"></span>rivieraGetTransformAsync(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Asynchronous file transformation: produces a new file from an existing one.
+One route covers many conversions. Name the source file in `file_id_or_url`,
+say what you want back in `transform_type`, and supply that type's options
+message if it needs one: - `pdf`: documents and images, to PDF. - `html`:
+spreadsheets, to HTML, preserving the sheet layout. - `image`: images and
+single document pages, to JPEG or PNG. - `thumbnail`: any thumbnailable
+source, resized to a named size bucket. - `image_pdf`: documents, to a page
+image rendered by way of PDF. - `video_frame`: one still frame from a video,
+at a requested offset. The accepted input formats differ per transform --
+they are not one shared list -- and each is the intersection of the source
+format with the pipeline that transform uses: - `pdf` and `image_pdf`:
+word-processing, presentation and spreadsheet documents (.doc, .docx, .ppt,
+.pptx, .xls, .xlsx, .odt, .odp, .ods, .rtf, .epub, .gdoc, .gslides, .hwp,
+.ai, .eps, .dwg among others). Images are not accepted. - `html`:
+spreadsheets only -- .xls, .xlsm, .xlsx, .ods, .gsheet. This is the complete
+list. Note that .csv and .txt are *not* accepted here. - `image`: the
+documents above, plus .pdf and .html, plus the iWork and design formats
+.pages, .key, .numbers, .sketch, .xd, .indd and .psd, plus .avif, .heic, .svg
+and camera RAW, plus fonts (.otf, .ttf), plus video. Formats a browser can
+already display (.bmp, .gif, .ico, .jpeg, .png, .tif, .tiff, .webp) are not
+accepted; use `thumbnail` for those. - `thumbnail`: everything `image`
+accepts, plus .bmp, .gif, .ico, .jpeg, .png, .tif, .tiff, .webp and JPEG
+2000. - `video_frame`: .3g2, .3gp, .3gpp, .3gpp2, .asf, .avi, .dv, .flv,
+.m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf, .ogv, .rm, .ts,
+.vob, .webm, .wmv. This is the complete list. These lists track Riviera's
+capability registry
+(`dropbox/riviera/supported_types/previews_supported_types.yaml`), which is
+generated and authoritative; treat it rather than this comment as the final
+word. Formats the requested transform does not support fail with
+`unsupported_format_error`. Options belonging to a different transform type
+than the one requested fail with `invalid_options_error`. The produced bytes
+are not returned by this route, and not by its `/check` poll either. Poll
+`get_transform_async/check` with the returned async job ID until it reports
+`complete` or `failed`; a `complete` result carries a `TransformOutput` whose
+`output_handle` `download_transform_output` exchanges for the bytes.
+Splitting retrieval out this way is what lets the route return outputs larger
+than an async result can carry.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#RivieraTransformArgs">RivieraTransformArgs</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchResultBase">AsyncLaunchResultBase</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;void>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="rivieraGetTransformAsyncCheck"><span class="type-signature"></span>rivieraGetTransformAsyncCheck(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Returns the status or result of specified get_transform_async task.
+Route attributes:
+  scope: files.content.read
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#RivieraGetTransformAsyncCheckResult">RivieraGetTransformAsyncCheckResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
 
 
 
@@ -32766,209 +33791,6 @@ Route attributes:
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchEmptyResult">AsyncLaunchEmptyResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#SharingRelinquishFolderMembershipError">SharingRelinquishFolderMembershipError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="sharingRemoveFileMember"><span class="type-signature"></span>sharingRemoveFileMember(arg [, options])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Identical to remove_file_member_2 but with less information returned.
-Route attributes:
-  scope: sharing.write
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#SharingRemoveFileMemberArg">SharingRemoveFileMemberArg</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request options.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-	<dt class="important tag-deprecated method-doc-label method-doc-details-label">Deprecated:</dt>
-	
-    <dd class="yes-def tag-deprecated">
-        <ul class="dummy">
-            <li>Yes</li>
-        </ul>
-    </dd>
-    
-    
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#SharingFileMemberActionIndividualResult">SharingFileMemberActionIndividualResult</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#SharingRemoveFileMemberError">SharingRemoveFileMemberError</a>>></span>
 
 
 
@@ -42753,394 +43575,6 @@ Route attributes:
             
 <hr>
 <dt>
-    <h4 class="name" id="teamMembersBulkSuspend"><span class="type-signature"></span>teamMembersBulkSuspend(arg [, options])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Launch a bulk suspend job. The server enforces a maximum of 500 members.
-Route attributes:
-  scope: members.write
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamBulkSuspendArg">TeamBulkSuspendArg</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request options.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchResultBase">AsyncLaunchResultBase</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamBulkSuspendError">TeamBulkSuspendError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamMembersBulkSuspendJobStatusCheck"><span class="type-signature"></span>teamMembersBulkSuspendJobStatusCheck(arg [, options])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Poll a previously launched bulk suspend job.
-Route attributes:
-  scope: members.write
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request options.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamBulkSuspendJobStatus">TeamBulkSuspendJobStatus</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
     <h4 class="name" id="teamMembersDeleteFormerMemberFiles"><span class="type-signature"></span>teamMembersDeleteFormerMemberFiles(arg [, options])</h4>
     
     
@@ -49561,6 +49995,395 @@ Route attributes:
             
 <hr>
 <dt>
+    <h4 class="name" id="teamMembersSuspendBatch"><span class="type-signature"></span>teamMembersSuspendBatch(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Launch a member suspension batch. The server enforces a maximum of 500
+members.
+Route attributes:
+  scope: members.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#TeamMembersSuspendBatchArg">TeamMembersSuspendBatchArg</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#AsyncLaunchResultBase">AsyncLaunchResultBase</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamMembersSuspendBatchError">TeamMembersSuspendBatchError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
+    <h4 class="name" id="teamMembersSuspendBatchJobStatusCheck"><span class="type-signature"></span>teamMembersSuspendBatchJobStatusCheck(arg [, options])</h4>
+    
+    
+</dt>
+<dd>
+
+    
+    <div class="description">
+        Poll a previously launched member suspension batch job.
+Route attributes:
+  scope: members.write
+    </div>
+    
+
+    
+
+    
+
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Argument</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>arg</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#AsyncPollArg">AsyncPollArg</a></span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request parameters.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">The request options.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+    
+
+    
+<dl class="details">
+    
+
+	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
+	
+
+
+
+	
+
+	
+
+	
+
+	
+</dl>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamMembersSuspendBatchJobStatus">TeamMembersSuspendBatchJobStatus</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#AsyncPollError">AsyncPollError</a>>></span>
+
+
+
+    </dd>
+</dl>
+
+
+        
+
+    
+</dd>
+
+        
+            
+<hr>
+<dt>
     <h4 class="name" id="teamMembersUnsuspend"><span class="type-signature"></span>teamMembersUnsuspend(arg [, options])</h4>
     
     
@@ -51357,794 +52180,6 @@ Route attributes:
     <dd>
         
 <span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamGetStorageReport">TeamGetStorageReport</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamDateRangeError">TeamDateRangeError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamSharingAllowlistAdd"><span class="type-signature"></span>teamSharingAllowlistAdd(arg [, options])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Endpoint adds Approve List entries. Changes are effective immediately.
-Changes are committed in transaction. In case of single validation error -
-all entries are rejected. Valid domains (RFC-1034/5) and emails
-(RFC-5322/822) are accepted. Added entries cannot overflow limit of 10000
-entries per team. Maximum 100 entries per call is allowed.
-Route attributes:
-  scope: team_info.write
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamSharingAllowlistAddArgs">TeamSharingAllowlistAddArgs</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request options.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamSharingAllowlistAddResponse">TeamSharingAllowlistAddResponse</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamSharingAllowlistAddError">TeamSharingAllowlistAddError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamSharingAllowlistList"><span class="type-signature"></span>teamSharingAllowlistList(arg [, options])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Lists Approve List entries for given team, from newest to oldest, returning
-up to `limit` entries at a time. If there are more than `limit` entries
-associated with the current team, more can be fetched by passing the returned
-`cursor` to sharing_allowlist/list/continue.
-Route attributes:
-  scope: team_info.read
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamSharingAllowlistListArg">TeamSharingAllowlistListArg</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request options.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamSharingAllowlistListResponse">TeamSharingAllowlistListResponse</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamSharingAllowlistListError">TeamSharingAllowlistListError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamSharingAllowlistListContinue"><span class="type-signature"></span>teamSharingAllowlistListContinue(arg [, options])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Lists entries associated with given team, starting from a the cursor. See
-sharing_allowlist/list.
-Route attributes:
-  scope: team_info.read
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamSharingAllowlistListContinueArg">TeamSharingAllowlistListContinueArg</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request options.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamSharingAllowlistListResponse">TeamSharingAllowlistListResponse</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamSharingAllowlistListContinueError">TeamSharingAllowlistListContinueError</a>>></span>
-
-
-
-    </dd>
-</dl>
-
-
-        
-
-    
-</dd>
-
-        
-            
-<hr>
-<dt>
-    <h4 class="name" id="teamSharingAllowlistRemove"><span class="type-signature"></span>teamSharingAllowlistRemove(arg [, options])</h4>
-    
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Endpoint removes Approve List entries. Changes are effective immediately.
-Changes are committed in transaction. In case of single validation error -
-all entries are rejected. Valid domains (RFC-1034/5) and emails
-(RFC-5322/822) are accepted. Entries being removed have to be present on the
-list. Maximum 1000 entries per call is allowed.
-Route attributes:
-  scope: team_info.write
-    </div>
-    
-
-    
-
-    
-
-    
-    
-        <h5>Parameters:</h5>
-        
-
-<table class="params table table-striped">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Argument</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>arg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="global.html#TeamSharingAllowlistRemoveArgs">TeamSharingAllowlistRemoveArgs</a></span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request parameters.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The request options.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-    
-
-    
-<dl class="details">
-    
-
-	
-
-	
-
-	
-
-    
-
-    
-
-    
-
-    
-
-	
-
-	
-
-	
-
-	
-
-	
-
-
-
-	
-
-	
-
-	
-
-	
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <h5>Returns:</h5>
-    
-            
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">Promise.&lt;DropboxResponse.&lt;<a href="global.html#TeamSharingAllowlistRemoveResponse">TeamSharingAllowlistRemoveResponse</a>>, <a href="DropboxResponseError.html">DropboxResponseError</a>.&lt;<a href="global.html#TeamSharingAllowlistRemoveError">TeamSharingAllowlistRemoveError</a>>></span>
 
 
 
@@ -55427,7 +55462,7 @@ Route attributes:
 <span class="jsdoc-message">
 	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
 	
-		on 2026-09-23T04:38:48+00:00
+		on 2026-11-04T20:36:49+00:00
 	
 	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
 </span>
