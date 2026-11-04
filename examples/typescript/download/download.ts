@@ -17,11 +17,11 @@ prompt.get({
 }, (error: any, result: any) => {
   const dbx = new Dropbox({ accessToken: result.accessToken });
   dbx.sharingGetSharedLinkFile({ url: result.sharedLink })
-    .then((data: any) => {
-      // Note: The fileBinary field is not part of the Dropbox SDK
-      // specification, so it is not included in the TypeScript type.
-      // It is injected by the SDK.
-      fs.writeFile(data.result.name, (<any> data).result.fileBinary, { encoding: 'binary' }, (err) => {
+    .then((data) => {
+      if (!data.result.fileBinary) {
+        throw new Error('Expected fileBinary in a Node.js environment.');
+      }
+      fs.writeFile(data.result.name, data.result.fileBinary, { encoding: 'binary' }, (err) => {
         if (err) { throw err; }
         console.log(`File: ${data.result.name} saved.`);
       });

@@ -1,8 +1,10 @@
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
-
+import { Readable } from 'stream';
 import { fail } from 'assert';
+import { contentHash as nodeContentHash } from '../../src/content-hasher.js';
+
 import {
   RPC,
   USER_AUTH,
@@ -96,6 +98,124 @@ describe('Dropbox', () => {
       chai.assert.deepEqual({}, dbx.rpcRequest.getCall(0).args[1]);
     });
 
+    it('passes a timeout signal to fetch', () => {
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({ fetch: fetchStub });
+
+      return dbx.rpcRequest(
+        'path',
+        {},
+        USER_AUTH,
+        'api',
+        { timeout: 1000 },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.instanceOf(fetchOptions.signal, AbortSignal);
+        chai.assert.isFalse(fetchOptions.signal.aborted);
+      });
+    });
+
+    it('combines a request signal with a timeout', () => {
+      const controller = new AbortController();
+
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({ fetch: fetchStub });
+
+      return dbx.rpcRequest(
+        'path',
+        {},
+        USER_AUTH,
+        'api',
+        {
+          signal: controller.signal,
+          timeout: 1000,
+        },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        controller.abort();
+        chai.assert.isTrue(fetchOptions.signal.aborted);
+      });
+    });
+
+    it('adds per-request headers to RPC requests', () => {
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: {
+          get: () => 'application/json',
+        },
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({
+        accessToken: 'token',
+        fetch: fetchStub,
+      });
+
+      return dbx.rpcRequest(
+        'path',
+        { value: true },
+        USER_AUTH,
+        'api',
+        {
+          extraHeaders: {
+            'X-Test-Header': 'test-value',
+            'Content-Type': 'incorrect',
+            'content-type': 'incorrect-lowercase',
+          },
+        },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+
+        chai.assert.strictEqual(
+          fetchOptions.headers['X-Test-Header'],
+          'test-value',
+        );
+
+        chai.assert.strictEqual(
+          fetchOptions.headers['Content-Type'],
+          'application/json',
+        );
+
+        chai.assert.isUndefined(fetchOptions.headers['content-type']);
+      });
+    });
+
+    it('passes request signal through a generated route', () => {
+      const controller = new AbortController();
+
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({
+        fetch: fetchStub,
+      });
+
+      return dbx.filesGetMetadata(
+        { path: '/test.txt' },
+        { signal: controller.signal },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(fetchOptions.signal, controller.signal);
+      });
+    });
+
     it('completes a cookie auth RPC request', () => {
       const dbxAuth = new DropboxAuth();
       const dbx = new Dropbox({ auth: dbxAuth });
@@ -120,6 +240,239 @@ describe('Dropbox', () => {
   });
 
   describe('Upload Requests', () => {
+    it('does not add content_hash for unsupported upload contents', () => {
+      const fetchStub = sinon.stub().resolves(
+        new Response('{}', { status: 200 }),
+      );
+
+      const auth = new DropboxAuth({
+        accessToken: 'token',
+        fetch: fetchStub,
+      });
+
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+
+      const contents = Readable.from([
+        Buffer.from('stream contents'),
+      ]);
+
+      return dbx.uploadRequest(
+        '/2/files/upload',
+        { path: '/test.txt', contents },
+        USER_AUTH,
+        'content',
+      ).then(() => {
+        const requestArgs = JSON.parse(
+          fetchStub.firstCall.args[1].headers['Dropbox-API-Arg'],
+        );
+        chai.assert.notProperty(requestArgs, 'content_hash');
+      });
+    });
+
+    it('adds per-request headers to upload requests', () => {
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: {
+          get: () => 'application/json',
+        },
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({
+        accessToken: 'token',
+        fetch: fetchStub,
+        autoContentHash: false,
+      });
+
+      return dbx.uploadRequest(
+        'path',
+        {
+          contents: Buffer.from('test'),
+        },
+        USER_AUTH,
+        'content',
+        {
+          extraHeaders: {
+            'X-Test-Header': 'test-value',
+            'Content-Type': 'incorrect',
+            'content-type': 'incorrect-lowercase',
+            'Dropbox-API-Arg': 'incorrect',
+            'dropbox-api-arg': 'incorrect-lowercase',
+          },
+        },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(
+          fetchOptions.headers['X-Test-Header'],
+          'test-value',
+        );
+
+        chai.assert.strictEqual(
+          fetchOptions.headers['Content-Type'],
+          'application/octet-stream',
+        );
+
+        chai.assert.notEqual(
+          fetchOptions.headers['Dropbox-API-Arg'],
+          'incorrect',
+        );
+
+        chai.assert.isUndefined(fetchOptions.headers['content-type']);
+        chai.assert.isUndefined(fetchOptions.headers['dropbox-api-arg']);
+      });
+    });
+
+    it('passes request signal to upload fetch', () => {
+      const controller = new AbortController();
+
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({
+        fetch: fetchStub,
+      });
+
+      return dbx.uploadRequest(
+        'path',
+        { contents: 'test' },
+        USER_AUTH,
+        'content',
+        { signal: controller.signal },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(fetchOptions.signal, controller.signal);
+      });
+    });
+
+    it('preserves an explicit content_hash', () => {
+      const fetchStub = sinon.stub().resolves(
+        new Response('{}', { status: 200 }),
+      );
+
+      const auth = new DropboxAuth({
+        accessToken: 'token',
+        fetch: fetchStub,
+      });
+
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+
+      const contents = Buffer.from('hello world');
+
+      return dbx.uploadRequest(
+        '/2/files/upload',
+        {
+          path: '/test.txt',
+          contents,
+          content_hash: 'explicit-hash',
+        },
+        USER_AUTH,
+        'content',
+      ).then(() => {
+        const requestArgs = JSON.parse(
+          fetchStub.firstCall.args[1].headers['Dropbox-API-Arg'],
+        );
+
+        chai.assert.equal(
+          requestArgs.content_hash,
+          'explicit-hash',
+        );
+      });
+    });
+
+    it('passes request signal to RPC fetch', () => {
+      const controller = new AbortController();
+
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: new Headers(),
+        text: () => Promise.resolve('{}'),
+      });
+
+      const dbx = new Dropbox({
+        fetch: fetchStub,
+      });
+
+      return dbx.rpcRequest(
+        'path',
+        {},
+        USER_AUTH,
+        'api',
+        { signal: controller.signal },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(fetchOptions.signal, controller.signal);
+      });
+    });
+
+    it('does not add content_hash when autoContentHash is false', () => {
+      const fetchStub = sinon.stub().resolves(
+        new Response('{}', { status: 200 }),
+      );
+
+      const auth = new DropboxAuth({
+        accessToken: 'token',
+        fetch: fetchStub,
+      });
+
+      const dbx = new Dropbox({
+        auth,
+        fetch: fetchStub,
+        autoContentHash: false,
+      });
+
+      return dbx.uploadRequest(
+        '/2/files/upload',
+        {
+          path: '/test.txt',
+          contents: Buffer.from('hello world'),
+        },
+        USER_AUTH,
+        'content',
+      ).then(() => {
+        const requestArgs = JSON.parse(
+          fetchStub.firstCall.args[1].headers['Dropbox-API-Arg'],
+        );
+        chai.assert.notProperty(requestArgs, 'content_hash');
+      });
+    });
+
+    it('adds content_hash for supported upload contents', () => {
+      const fetchStub = sinon.stub().resolves(
+        new Response('{}', { status: 200 }),
+      );
+
+      const auth = new DropboxAuth({
+        accessToken: 'token',
+        fetch: fetchStub,
+      });
+
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+
+      const contents = Buffer.from('hello world');
+
+      return dbx.uploadRequest(
+        '/2/files/upload',
+        { path: '/test.txt', contents },
+        USER_AUTH,
+        'content',
+      ).then(() => {
+        const requestArgs = JSON.parse(
+          fetchStub.firstCall.args[1].headers['Dropbox-API-Arg'],
+        );
+
+        chai.assert.equal(
+          requestArgs.content_hash,
+          nodeContentHash(contents),
+        );
+      });
+    });
+
     it('request() calls the correct request method', () => {
       const dbx = new Dropbox();
       const uploadSpy = sinon.spy(dbx, 'uploadRequest');
@@ -130,6 +483,68 @@ describe('Dropbox', () => {
       chai.assert.isTrue(uploadSpy.calledOnce);
       chai.assert.equal('path', dbx.uploadRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.uploadRequest.getCall(0).args[1]);
+    });
+
+    it('sets duplex for a Node Readable body', () => {
+      const fetchStub = sinon.stub().resolves(new Response('{}', { status: 200 }));
+      const auth = new DropboxAuth({ accessToken: 'token', fetch: fetchStub });
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+      const contents = Readable.from([Buffer.from('stream contents')]);
+
+      return dbx.uploadRequest(
+        '/files/upload',
+        { path: '/test.txt', contents },
+        USER_AUTH,
+        'content',
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(fetchOptions.body, contents);
+        chai.assert.equal(fetchOptions.duplex, 'half');
+      });
+    });
+
+    it('can reuse upload arguments after a successful request', () => {
+      const fetchStub = sinon.stub().callsFake(
+        () => Promise.resolve(new Response('{}', { status: 200 })),
+      );
+      const auth = new DropboxAuth({ accessToken: 'token', fetch: fetchStub });
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+      const contents = Buffer.from('reusable contents');
+      const args = { path: '/test.txt', contents };
+
+      return dbx.filesUpload(args)
+        .then(() => dbx.filesUpload(args))
+        .then(() => {
+          chai.assert.strictEqual(args.contents, contents);
+          chai.assert.strictEqual(fetchStub.firstCall.args[1].body, contents);
+          chai.assert.strictEqual(fetchStub.secondCall.args[1].body, contents);
+          chai.assert.deepEqual(
+            JSON.parse(fetchStub.firstCall.args[1].headers['Dropbox-API-Arg']),
+            { path: '/test.txt' },
+          );
+        });
+    });
+
+    it('can reuse upload arguments after a rejected request', () => {
+      const fetchStub = sinon.stub();
+      fetchStub.onFirstCall().resolves(new Response('{}', { status: 429 }));
+      fetchStub.onSecondCall().resolves(new Response('{}', { status: 200 }));
+      const auth = new DropboxAuth({ accessToken: 'token', fetch: fetchStub });
+      const dbx = new Dropbox({ auth, fetch: fetchStub });
+      const contents = Buffer.from('reusable contents');
+      const args = { path: '/test.txt', contents };
+
+      return chai.assert.isRejected(dbx.filesUpload(args))
+        .then(() => dbx.filesUpload(args))
+        .then(() => {
+          chai.assert.strictEqual(args.contents, contents);
+          chai.assert.strictEqual(fetchStub.firstCall.args[1].body, contents);
+          chai.assert.strictEqual(fetchStub.secondCall.args[1].body, contents);
+          chai.assert.deepEqual(
+            JSON.parse(fetchStub.secondCall.args[1].headers['Dropbox-API-Arg']),
+            { path: '/test.txt' },
+          );
+        });
     });
   });
 
@@ -144,6 +559,89 @@ describe('Dropbox', () => {
       chai.assert.isTrue(downloadSpy.calledOnce);
       chai.assert.equal('path', dbx.downloadRequest.getCall(0).args[0]);
       chai.assert.deepEqual({}, dbx.downloadRequest.getCall(0).args[1]);
+    });
+
+    it('adds per-request headers to download requests', () => {
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: {
+          get: (name) => (
+            name === 'dropbox-api-result' ? '{}' : null
+          ),
+        },
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
+      });
+
+      const dbx = new Dropbox({
+        accessToken: 'token',
+        fetch: fetchStub,
+      });
+
+      return dbx.downloadRequest(
+        'path',
+        { path: '/test.txt' },
+        USER_AUTH,
+        'content',
+        {
+          extraHeaders: {
+            Range: 'bytes=0-99',
+            Authorization: 'incorrect',
+            authorization: 'incorrect-lowercase',
+            'Dropbox-API-Arg': 'incorrect',
+            'dropbox-api-arg': 'incorrect-lowercase',
+          },
+        },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(
+          fetchOptions.headers.Range,
+          'bytes=0-99',
+        );
+
+        chai.assert.strictEqual(
+          fetchOptions.headers.Authorization,
+          'Bearer token',
+        );
+
+        chai.assert.notEqual(
+          fetchOptions.headers['Dropbox-API-Arg'],
+          'incorrect',
+        );
+
+        chai.assert.isUndefined(fetchOptions.headers.authorization);
+        chai.assert.isUndefined(fetchOptions.headers['dropbox-api-arg']);
+      });
+    });
+
+    it('passes request signal to download fetch', () => {
+      const controller = new AbortController();
+
+      const fetchStub = sinon.stub().resolves({
+        ok: true,
+        status: 200,
+        headers: {
+          get: (name) => (
+            name === 'dropbox-api-result' ? '{}' : null
+          ),
+        },
+        arrayBuffer: () => Promise.resolve(new ArrayBuffer(0)),
+      });
+
+      const dbx = new Dropbox({
+        fetch: fetchStub,
+      });
+
+      return dbx.downloadRequest(
+        'path',
+        {},
+        USER_AUTH,
+        'content',
+        { signal: controller.signal },
+      ).then(() => {
+        const fetchOptions = fetchStub.firstCall.args[1];
+        chai.assert.strictEqual(fetchOptions.signal, controller.signal);
+      });
     });
   });
 

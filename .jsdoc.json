@@ -9,7 +9,7 @@
     "recurse": true
   },
   "templates": {
-    "systemName": "Dropbox Node SDK",
+    "systemName": "Dropbox JavaScript SDK",
     "theme": "cosmo"
   }
 }

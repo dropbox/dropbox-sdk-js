@@ -9,14 +9,31 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
+  - package-ecosystem: npm
+    directory: "/test/build/node/js_cjs"
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: "/test/build/node/js_esm"
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: "/test/build/node/ts_es6"
+    schedule:
+      interval: weekly
   # Updates to TS examples
   - package-ecosystem: "npm"
     directory: "examples/typescript"
     schedule:
       interval: "monthly"
 
+  # Group all GitHub Actions updates into one PR
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      github-actions:
+        patterns:
+          - "*"

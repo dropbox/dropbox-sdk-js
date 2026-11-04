@@ -9,6 +9,6 @@
     },
     "devDependencies": {
         "dropbox": "file:../../../../",
-        "typescript": "^4.0.3"
+        "typescript": "^5.8.3"
     }
 }

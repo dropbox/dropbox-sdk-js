@@ -5,7 +5,6 @@
  * and to perform a basic sanity check that types are exported as intended.
  */
 
-import { Headers } from 'node-fetch';
 import * as Dropbox from '../../types/index'; // eslint-disable-line
 
 // Check DropboxAuth Constructor and Methods
@@ -33,13 +32,13 @@ dropboxAuth.getClientId();
 dropboxAuth.setClientSecret('myClientSecret');
 
 // Test other methods
-dropboxAuth.getAuthenticationUrl('myRedirect');
+const authenticationUrl: Promise<string> = dropboxAuth.getAuthenticationUrl('myRedirect');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'myState', 'code');
 dropboxAuth.getAuthenticationUrl('myRedirect', 'mystate', 'code', 'offline', ['scope', 'scope'], 'none', false);
 dropboxAuth.getAccessTokenFromCode('myRedirect', 'myCode');
-dropboxAuth.checkAndRefreshAccessToken();
-dropboxAuth.refreshAccessToken();
+const checkedAccessToken: Promise<void> = dropboxAuth.checkAndRefreshAccessToken();
+const refreshedAccessToken: Promise<void> = dropboxAuth.refreshAccessToken();
 dropboxAuth.refreshAccessToken(['files.metadata.read', 'files.metadata.write']);
 
 // Check Dropbox Constructor or Methods
@@ -74,3 +73,87 @@ dropbox.usersGetCurrentAccount()
     const errorObject: Dropbox.users.GetAccountError = error.error;
   });
 dropbox2.usersGetCurrentAccount();
+
+// New namespace variants and upload routes from the current API specification.
+const teamMemberRoot: Dropbox.team.NamespaceType = { '.tag': 'team_member_root' };
+teamMemberRoot['.tag'];
+dropbox.filesUploadSessionAppendBatch({
+  contents: new Uint8Array(),
+  entries: [{
+    cursor: { session_id: 'session-id', offset: 0 },
+    length: 0,
+  }],
+  content_hash: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+});
+
+// Download routes expose the SDK-injected body for both supported environments.
+dropbox.filesDownload({ path: '/test.txt' })
+  .then((response) => {
+    const {
+      fileBinary,
+      fileBlob,
+    } = response.result;
+
+    if (fileBinary) {
+      fileBinary.toString('utf8');
+    }
+    if (fileBlob) {
+      fileBlob.arrayBuffer();
+    }
+  });
+
+dropbox.sharingGetSharedLinkFile({ url: 'https://www.dropbox.com/example' })
+  .then((response) => {
+    const {
+      fileBinary,
+      fileBlob,
+    } = response.result;
+
+    if (fileBinary) {
+      fileBinary.toString('utf8');
+    }
+    if (fileBlob) {
+      fileBlob.text();
+    }
+  });
+
+const fileDownloader = new Dropbox.DropboxFileDownloader(dropbox, {
+  maxAttempts: 2,
+  parallelDownloads: 4,
+  retryDelay: 1000,
+  progress: (progress: Dropbox.DropboxFileDownloadProgress) => {
+    const {
+      bytesWritten,
+      totalBytes,
+      resumedFrom,
+    }: Dropbox.DropboxFileDownloadProgress = progress;
+  },
+});
+
+fileDownloader.downloadFile('/test.txt', '/tmp/test.txt')
+  .then((result: Dropbox.DropboxFileDownloadResult) => {
+    const {
+      metadata,
+      resumedFrom,
+    }: Dropbox.DropboxFileDownloadResult = result;
+  });
+
+Dropbox.downloadFile(dropbox, '/test.txt', '/tmp/test.txt', {
+  timeout: 1000,
+});
+
+const uploadSource = Dropbox.bytesUpload('upload content');
+const fileUploader = new Dropbox.DropboxFileUploader(dropbox, {
+  parallelUploads: 2,
+  progress: (progress: Dropbox.DropboxFileUploadProgress) => {
+    const { bytesCommitted, totalBytes }: Dropbox.DropboxFileUploadProgress = progress;
+  },
+});
+
+fileUploader.upload(uploadSource, { path: '/upload.txt' })
+  .then((result: Dropbox.DropboxFileUploadResult) => result.metadata);
+
+const uploadReader = {} as AsyncIterable<Uint8Array>;
+
+Dropbox.readerUpload(uploadReader);
+Dropbox.sizedReaderUpload(uploadReader, 3);
