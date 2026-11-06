@@ -18462,6 +18462,32 @@
 
     export type TeamFolderGetInfoItem = TeamFolderGetInfoItemIdNotFound | TeamFolderGetInfoItemTeamFolderMetadata;
 
+    /**
+     * Errors for teamFolderSpaceLimitGet().
+     */
+    export type TeamFolderGetSpaceLimitError = BaseTeamFolderError;
+
+    /**
+     * The space limit configuration of a team folder. If no space limit has
+     * ever been set for the team folder, space_limit_bytes is 0, caps_type is
+     * TeamFolderSpaceLimitCapsType.off, and notification_target is
+     * TeamFolderSpaceLimitNotificationTarget.admins.
+     */
+    export interface TeamFolderGetSpaceLimitResponse {
+      /**
+       * Defaults to 0.
+       */
+      space_limit_bytes?: number;
+      /**
+       * The caps type currently applied to the team folder.
+       */
+      caps_type: TeamFolderSpaceLimitCapsType;
+      /**
+       * Who currently receives usage notifications for the team folder.
+       */
+      notification_target: TeamFolderSpaceLimitNotificationTarget;
+    }
+
     export interface TeamFolderIdArg {
       /**
        * The ID of the team folder.
@@ -18630,6 +18656,132 @@
     }
 
     export type TeamFolderRestoreError = BaseTeamFolderError | TeamFolderRestoreErrorFolderCountLimitExceeded;
+
+    /**
+     * Arguments for teamFolderSpaceLimitSet().
+     */
+    export interface TeamFolderSetSpaceLimitArg extends TeamFolderIdArg {
+      /**
+       * The maximum total size, in bytes, of all content in the team folder and
+       * its subfolders. When caps_type is TeamFolderSpaceLimitCapsType.soft or
+       * TeamFolderSpaceLimitCapsType.hard, this must be at least 2 GB
+       * (2147483648 bytes). It must never exceed the team's total storage
+       * capacity. When caps_type is TeamFolderSpaceLimitCapsType.off, the value
+       * is stored but has no effect, and it may be 0.
+       */
+      space_limit_bytes: number;
+      /**
+       * The caps type to apply to the specified team folder.
+       */
+      caps_type: TeamFolderSpaceLimitCapsType;
+      /**
+       * Who receives usage notifications for the specified team folder.
+       */
+      notification_target: TeamFolderSpaceLimitNotificationTarget;
+    }
+
+    /**
+     * TeamFolderSetSpaceLimitArg.space_limit_bytes is below the 2 GB minimum.
+     * Only returned when TeamFolderSetSpaceLimitArg.caps_type is
+     * TeamFolderSpaceLimitCapsType.soft or TeamFolderSpaceLimitCapsType.hard.
+     */
+    export interface TeamFolderSetSpaceLimitErrorLimitBelowMinimum {
+      '.tag': 'limit_below_minimum';
+    }
+
+    /**
+     * TeamFolderSetSpaceLimitArg.space_limit_bytes exceeds the team's total
+     * storage capacity.
+     */
+    export interface TeamFolderSetSpaceLimitErrorLimitExceedsTeamQuota {
+      '.tag': 'limit_exceeds_team_quota';
+    }
+
+    /**
+     * Errors for teamFolderSpaceLimitSet().
+     */
+    export type TeamFolderSetSpaceLimitError = BaseTeamFolderError | TeamFolderSetSpaceLimitErrorLimitBelowMinimum | TeamFolderSetSpaceLimitErrorLimitExceedsTeamQuota;
+
+    /**
+     * No space limit is enforced and no usage notifications are sent. Any
+     * stored space limit value is ignored.
+     */
+    export interface TeamFolderSpaceLimitCapsTypeOff {
+      '.tag': 'off';
+    }
+
+    /**
+     * The space limit is advisory. Members can keep adding content after the
+     * team folder reaches the limit, but usage notifications are sent as
+     * described in team.TeamFolderSpaceLimitNotificationTarget.
+     */
+    export interface TeamFolderSpaceLimitCapsTypeSoft {
+      '.tag': 'soft';
+    }
+
+    /**
+     * The space limit is enforced. Once the total size of the team folder,
+     * including all of its subfolders, reaches the limit, uploads and other
+     * writes that add content to the team folder fail until space is freed or
+     * the limit is raised. Usage notifications are sent as for soft.
+     */
+    export interface TeamFolderSpaceLimitCapsTypeHard {
+      '.tag': 'hard';
+    }
+
+    export interface TeamFolderSpaceLimitCapsTypeOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * How a team folder's space limit is enforced.
+     */
+    export type TeamFolderSpaceLimitCapsType = TeamFolderSpaceLimitCapsTypeOff | TeamFolderSpaceLimitCapsTypeSoft | TeamFolderSpaceLimitCapsTypeHard | TeamFolderSpaceLimitCapsTypeOther;
+
+    /**
+     * Team admins who can manage team folders.
+     */
+    export interface TeamFolderSpaceLimitNotificationTargetAdmins {
+      '.tag': 'admins';
+    }
+
+    /**
+     * Members with edit access to the team folder, excluding team admins.
+     */
+    export interface TeamFolderSpaceLimitNotificationTargetEditors {
+      '.tag': 'editors';
+    }
+
+    /**
+     * Both team admins who can manage team folders and members with edit access
+     * to the team folder.
+     */
+    export interface TeamFolderSpaceLimitNotificationTargetBoth {
+      '.tag': 'both';
+    }
+
+    /**
+     * No usage notifications are sent.
+     */
+    export interface TeamFolderSpaceLimitNotificationTargetSilent {
+      '.tag': 'silent';
+    }
+
+    export interface TeamFolderSpaceLimitNotificationTargetOther {
+      '.tag': 'other';
+    }
+
+    /**
+     * Who receives email notifications when a team folder's usage reaches 80%
+     * of its space limit, and when usage reaches or exceeds the limit. These
+     * notifications are sent asynchronously, so they can arrive some time after
+     * usage crosses a threshold. They are only sent when the caps type is
+     * TeamFolderSpaceLimitCapsType.soft or TeamFolderSpaceLimitCapsType.hard.
+     * Regardless of this setting, team admins and all members with edit access
+     * to the team folder are notified when a space limit is added, changed, or
+     * removed.
+     */
+    export type TeamFolderSpaceLimitNotificationTarget = TeamFolderSpaceLimitNotificationTargetAdmins | TeamFolderSpaceLimitNotificationTargetEditors | TeamFolderSpaceLimitNotificationTargetBoth | TeamFolderSpaceLimitNotificationTargetSilent | TeamFolderSpaceLimitNotificationTargetOther;
 
     /**
      * The team folder and sub-folders are available to all members.
