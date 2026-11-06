@@ -4762,6 +4762,35 @@ export class Dropbox {
     public teamTeamFolderRestore(arg: team.TeamFolderIdArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderMetadata>>;
 
     /**
+     * Returns the space limit configuration of a team folder. See
+     * TeamFolderSpaceLimitCapsType for how space limits are enforced.
+     *
+     * Route attributes:
+     *   scope: team_data.content.read
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.TeamFolderGetSpaceLimitError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public teamTeamFolderSpaceLimitGet(arg: team.TeamFolderIdArg, options?: DropboxRequestOptions): Promise<DropboxResponse<team.TeamFolderGetSpaceLimitResponse>>;
+
+    /**
+     * Sets the space limit configuration of a team folder, replacing any
+     * existing configuration. See TeamFolderSpaceLimitCapsType for how space
+     * limits are enforced.
+     *
+     * Route attributes:
+     *   scope: team_data.content.write
+     *
+     * When an error occurs, the route rejects the promise with type
+     * DropboxResponseError<team.TeamFolderSetSpaceLimitError>.
+     * @param arg The request parameters.
+     * @param options Optional transport settings for this request.
+     */
+    public teamTeamFolderSpaceLimitSet(arg: team.TeamFolderSetSpaceLimitArg, options?: DropboxRequestOptions): Promise<DropboxResponse<void>>;
+
+    /**
      * Updates the sync settings on a team folder or its contents.  Use of this
      * endpoint requires that the team has team selective sync enabled.
      *
