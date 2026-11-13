@@ -2530,26 +2530,30 @@ export class Dropbox {
     public rivieraExtractAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.ExtractAsyncCheckResult>>;
 
     /**
-     * Asynchronous scene-change keyframe extraction for video files. Detects
-     * scene changes in the source video and returns one representative keyframe
-     * per detected scene, each tagged with its timestamp (seconds from the
-     * start of the video) and scene-change score. Set `include_images = true`
-     * to also receive each frame as a base64-encoded JPEG; when the field is
-     * omitted the response carries keyframe metadata only. Supported video
-     * formats: .3gp, .3gpp, .3gpp2, .asf, .avi, .dv, .flv, .m2t, .m2ts, .m4v,
-     * .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf, .oggtheora, .ogv, .rm, .ts,
-     * .vob, .webm, .wmv. Unsupported formats return an
-     * `unsupported_format_error`. Limits: the source file must be at most 10
-     * GB. To keep responses within service limits the number of keyframes and
-     * the total image payload are bounded; requests that would exceed these
-     * limits return a `limit_exceeded_error` -- raise `scene_change_threshold`
-     * or set `include_images = false` to stay within bounds.
+     * Deprecated: use extractAsync() with `extract_type` set to
+     * ExtractType.keyframes instead, which takes the same options. This route
+     * will be turned off by December 31, 2026. Asynchronous scene-change
+     * keyframe extraction for video files. Detects scene changes in the source
+     * video and returns one representative keyframe per detected scene, each
+     * tagged with its timestamp (seconds from the start of the video) and
+     * scene-change score. Set `include_images = true` to also receive each
+     * frame as a base64-encoded JPEG; when the field is omitted the response
+     * carries keyframe metadata only. Supported video formats: .3gp, .3gpp,
+     * .3gpp2, .asf, .avi, .dv, .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4,
+     * .mpeg, .mpg, .mts, .mxf, .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv.
+     * Unsupported formats return an `unsupported_format_error`. Limits: the
+     * source file must be at most 10 GB. To keep responses within service
+     * limits the number of keyframes and the total image payload are bounded;
+     * requests that would exceed these limits return a `limit_exceeded_error`
+     * -- raise `scene_change_threshold` or set `include_images = false` to stay
+     * within bounds.
      *
      * Route attributes:
      *   scope: files.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
@@ -2563,15 +2567,19 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
     public rivieraGetKeyframesAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetKeyframesAsyncCheckResult>>;
 
     /**
-     * Asynchronous document-to-markdown conversion for supported file formats.
-     * Supported formats: .binder, .docx, .html, .paper, .papert, .pptx, .xlsx,
-     * .gsheet, .ods, .pdf. Files in other formats fail with
+     * Deprecated: use extractAsync() with `extract_type` set to
+     * ExtractType.markdown instead, which takes the same options. This route
+     * will be turned off by December 31, 2026. Asynchronous
+     * document-to-markdown conversion for supported file formats. Supported
+     * formats: .binder, .docx, .html, .paper, .papert, .pptx, .xlsx, .gsheet,
+     * .ods, .pdf. Files in other formats fail with
      * MarkdownConversionApiV2Error.user_error. Size limit: the source file must
      * be at most 50 MB. Larger files fail with
      * MarkdownConversionApiV2Error.user_error. The markdown is not returned by
@@ -2584,6 +2592,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
@@ -2597,6 +2606,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
@@ -2647,10 +2657,12 @@ export class Dropbox {
     public rivieraGetMetadataAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetMetadataAsyncCheckResult>>;
 
     /**
-     * Asynchronous OCR (optical character recognition) text extraction for
-     * images and PDFs, including scanned / non-text PDFs. Supported formats: -
-     * Image formats: .bmp, .gif, .heic, .jpeg, .jpg, .png, .tif, .tiff, .webp.
-     * - PDF format: .pdf. Unsupported formats return an
+     * Deprecated: use extractAsync() with `extract_type` set to ExtractType.ocr
+     * instead, which takes the same options. This route will be turned off by
+     * December 31, 2026. Asynchronous OCR (optical character recognition) text
+     * extraction for images and PDFs, including scanned / non-text PDFs.
+     * Supported formats: - Image formats: .bmp, .gif, .heic, .jpeg, .jpg, .png,
+     * .tif, .tiff, .webp. - PDF format: .pdf. Unsupported formats return an
      * `unsupported_format_error`. For the `url` variant only Dropbox shared
      * links are supported; external URLs return `unsupported_format_error`.
      * Text-based PDFs already carry a text layer, so OCR is not run against
@@ -2663,6 +2675,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
@@ -2676,26 +2689,30 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
     public rivieraGetOcrAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetOcrAsyncCheckResult>>;
 
     /**
-     * Asynchronous plain-text extraction from documents. Supported formats
-     * include: - Word processing: .doc, .docx, .docm, .rtf. - Presentations:
-     * .ppt, .pptx, .pptm. - Spreadsheets: .xls, .xlsx, .xlsm. - PDF: .pdf. -
-     * Dropbox document types: .paper, .papert, .binder, .gdoc, .gsheet,
-     * .gslides. - Plain text / subtitles: .txt, .vtt. Unsupported formats
-     * return an `unsupported_format_error`. For the `url` variant only Dropbox
-     * shared links are supported; external URLs return
-     * `unsupported_format_error`.
+     * Deprecated: use extractAsync() with `extract_type` set to
+     * ExtractType.text instead, which takes the same options. This route will
+     * be turned off by December 31, 2026. Asynchronous plain-text extraction
+     * from documents. Supported formats include: - Word processing: .doc,
+     * .docx, .docm, .rtf. - Presentations: .ppt, .pptx, .pptm. - Spreadsheets:
+     * .xls, .xlsx, .xlsm. - PDF: .pdf. - Dropbox document types: .paper,
+     * .papert, .binder, .gdoc, .gsheet, .gslides. - Plain text / subtitles:
+     * .txt, .vtt. Unsupported formats return an `unsupported_format_error`. For
+     * the `url` variant only Dropbox shared links are supported; external URLs
+     * return `unsupported_format_error`.
      *
      * Route attributes:
      *   scope: files.content.read
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
@@ -2709,19 +2726,23 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
     public rivieraGetTextAsyncCheck(arg: async.PollArg, options?: DropboxRequestOptions): Promise<DropboxResponse<riviera.GetTextAsyncCheckResult>>;
 
     /**
-     * Asynchronous transcript generation for audio and video files. Supported
-     * audio formats: .aac, .aif, .aiff, .flac, .m4a, .m4r, .mp3, .oga, .ogg,
-     * .wav, .wma. Supported video formats: .3gp, .3gpp, .3gpp2, .asf, .avi,
-     * .dv, .flv, .m2t, .m2ts, .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf,
-     * .oggtheora, .ogv, .rm, .ts, .vob, .webm, .wmv. Files in other formats
-     * fail with ContentApiV2Error.user_error. Size limits: the source file must
-     * be at most 10 GB and its audio track at most 1 hour in duration. Files
+     * Deprecated: use extractAsync() with `extract_type` set to
+     * ExtractType.transcript instead, which takes the same options. This route
+     * will be turned off by December 31, 2026. Asynchronous transcript
+     * generation for audio and video files. Supported audio formats: .aac,
+     * .aif, .aiff, .flac, .m4a, .m4r, .mp3, .oga, .ogg, .wav, .wma. Supported
+     * video formats: .3gp, .3gpp, .3gpp2, .asf, .avi, .dv, .flv, .m2t, .m2ts,
+     * .m4v, .mkv, .mov, .mp4, .mpeg, .mpg, .mts, .mxf, .oggtheora, .ogv, .rm,
+     * .ts, .vob, .webm, .wmv. Files in other formats fail with
+     * ContentApiV2Error.user_error. Size limits: the source file must be at
+     * most 10 GB and its audio track at most 1 hour in duration. Files
      * exceeding either limit fail with ContentApiV2Error.user_error. The
      * transcript is not returned by this route. Poll getTranscriptAsyncCheck()
      * with the returned async job ID until it reports
@@ -2733,6 +2754,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<void>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
@@ -2746,6 +2768,7 @@ export class Dropbox {
      *
      * When an error occurs, the route rejects the promise with type
      * DropboxResponseError<async.PollError>.
+     * @deprecated
      * @param arg The request parameters.
      * @param options Optional transport settings for this request.
      */
