@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>View a Dropbox file in the browser</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/__build__/Dropbox-sdk.min.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <div class="container">
+      <nav>
+        <a href="/"><h1>JavaScript SDK Examples</h1></a>
+        <a href="https://github.com/dropbox/dropbox-sdk-js/tree/main/examples/javascript/view-file" class="view-source">View Source</a>
+      </nav>
+      <h2 class="code"><a href="/">examples</a> / view file</h2>
+    </div>
+  </header>
+  <section class="container main">
+    <p>Download a file by path using <code>filesDownload</code> and display its browser <code>fileBlob</code>. This example supports UTF-8 .txt files and PNG or JPEG images. The format is determined from the downloaded file name.</p>
+    <p>Use an access token with the <code>files.content.read</code> scope. For testing, generate one in the <a href="https://www.dropbox.com/developers/apps">App Console</a>. Paste the token here; it is kept only in memory. Paths start with <code>/</code> and are relative to your app's access root. You can also enter a file ID, such as <code>id:FILE_ID</code>.</p>
+    <p>This example downloads the entire file into memory before displaying it. Use small files; this is not a universal document viewer.</p>
+    <form id="view-form" autocomplete="off" novalidate>
+      <label for="access-token">Access token</label>
+      <input type="password" id="access-token" autocomplete="off">
+      <label for="path">Dropbox file path or ID</label>
+      <input type="text" id="path" placeholder="/example.txt or id:FILE_ID">
+      <button type="submit">View file</button>
+    </form>
+    <p id="status" role="status" aria-live="polite"></p>
+    <div id="result"></div>
+  </section>
+  <script src="/view-file.js"></script>
+</body>
+</html>
