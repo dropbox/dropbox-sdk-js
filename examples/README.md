@@ -18,6 +18,9 @@ node examples/javascript/server.js
 
 Open <http://localhost:8080/> in your browser.
 
+See [View a file in the browser](javascript/view-file/README.md) for a small
+PNG, JPEG, and UTF-8 text preview example using `filesDownload`.
+
 ## TypeScript examples
 
 From the repository root, install the example dependencies and compile the
